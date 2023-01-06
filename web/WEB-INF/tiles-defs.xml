@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+
+  
+
+    <definition name="${YOUR_DEFINITION_HERE}">
+
+    </definition>
+ <definition name="baseLayout" path="/WEB-INF/jsp/baseLayout.jsp">
+        <put name="title"  value="HILTI" />
+        <put name="header" value="/WEB-INF/jsp/header.jsp" />
+         <put name="topheader" value="/WEB-INF/jsp/topheader.jsp" />
+        <put name="body"   value="/WEB-INF/jsp/body.jsp" />
+        <put name="footer" value="/WEB-INF/jsp/footer.jsp" />        
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,70 @@
+2019-02-23 11:07:58,540 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:180)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:42)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:11:40,994 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:180)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:42)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:12:24,268 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:144)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:42)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:12:27,191 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:181)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:42)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:32:31,871 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:182)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:44)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:34:08,174 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:182)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:44)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:38:58,963 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at com.dao.ServiceDAO.consulta(ServiceDAO.java:32)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:183)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:44)
+	at Correo.NewMain.main(NewMain.java:20)
+2019-02-23 11:42:50,503 [main] ERROR com.management.util.Loggin - Error al tratar de abrir la base de Datos
+java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
+	at com.conexion.Conexion.conectar(Conexion.java:22)
+	at Correo.Emisiondecorreo.EjecutarConsulta(Emisiondecorreo.java:183)
+	at Correo.Emisiondecorreo.mandarCorreo(Emisiondecorreo.java:44)
+	at Correo.NewMain.main(NewMain.java:20)

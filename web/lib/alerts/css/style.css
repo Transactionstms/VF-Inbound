@@ -1,0 +1,55 @@
+.confirm {
+  background-color: #f27474 !important;
+}
+
+@keyframes pulseWarningInsCSS {
+  to {
+    transform: rotate(-360deg) rotatey(-360deg);
+  }
+}
+@keyframes pulseWarningIns {
+  to {
+    color: green !important;
+  }
+}
+.sweet-alert .sa-icon.sa-warning .sa-body {
+  background-color: #f27474;
+}
+.sweet-alert .sa-icon.sa-warning .sa-dot {
+  background-color: #f27474;
+}
+.sweet-alert .sa-icon.sa-success::before {
+  background: transparent;
+}
+.sweet-alert .sa-icon.sa-success::after {
+  background: transparent;
+}
+.sweet-alert .sa-icon.sa-success .sa-fix {
+  background: transparent;
+}
+.sweet-alert button.confirm {
+  border-radius: 5px 20px;
+  border: 1px solid #dd6b55;
+}
+.sweet-alert button.confirm:hover {
+  border: 1px solid red;
+}
+.sweet-alert button.cancel {
+  border-radius: 20px 5px;
+  border: 1px solid #999;
+}
+.sweet-alert button.cancel:hover {
+  border: 1px solid #777;
+}
+.sweet-alert p {
+  text-decoration: underline;
+}
+
+.showSweetAlert[data-animation=pop] {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+div.sa-icon.sa-warning.pulseWarning {
+  animation: pulseWarningInsCSS 1.5s 1 !important;
+  border-color: #f27474;
+}
