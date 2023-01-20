@@ -4,9 +4,14 @@
  * and open the template in the editor.
  */
     function save(){
-        swal("", "Información actualizada", "success");
-        alertclose();
-        location.reload();
+        fetch("../AlertaInbound?tipoEnvio=2&correos=jlmateos@tacts.mx/luis.mateosmc94@gmail.com", {
+            method: 'POST',
+        }).then(r => r.text())
+                .then(data => {
+                    swal("", "Información actualizada", "success");
+                    alertclose();
+                    location.reload();
+                }).catch(error => console.log(error));
     }
     
     function delete_registro() {

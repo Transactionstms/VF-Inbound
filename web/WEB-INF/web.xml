@@ -826,6 +826,10 @@
         <servlet-name>DetalleTotales</servlet-name>
         <servlet-class>com.tacts.detalles.facturacion.DetalleTotales</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AlertaInbound</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.AlertaInbound</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1646,6 +1650,10 @@
     <servlet-mapping>
         <servlet-name>DetalleTotales</servlet-name>
         <url-pattern>/DetalleTotales</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlertaInbound</servlet-name>
+        <url-pattern>/AlertaInbound</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

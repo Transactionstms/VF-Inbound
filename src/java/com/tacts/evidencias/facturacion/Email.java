@@ -36,9 +36,9 @@ import javax.activation.URLDataSource;
  */
 public class Email {
     
-    private final String CLAVE = "Alertas2017";
+    private final String CLAVE = "Tacts23*";
     private final String HOST = "smtp.gmail.com";
-    private final String REMITENTE = "alertas@tacts.mx";
+    private final String REMITENTE = "alertas1@tacts.mx";
     
     private Properties properties;
     private String asunto = "AvisosVF";
@@ -189,6 +189,84 @@ public class Email {
         return mensaje;
     }
     
+    private String getGTN(){
+         String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+                        + "    <div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
+                        + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
+                        + "                <p style=\"margin:0;color:#333333\">\n"
+                        + "                <div align=\"center\">\n"
+                        + "                 <h2>VF INBOUND</h2>\n"
+                        + "                </div>\n"
+                        + "            </div>\n"
+                        + "            <div style=\"padding:20px 30px\">\n"
+                        //+ "                 <h3>Información del cliente, para emisón de la factura electrónica: </h3>\n"
+                        + "                 <br>"
+                        + "                 <h4>Brand-Division: OD TIMBERLAND</h4>\n "
+                        + "                 <h4>Shipment ID: 5011885374</h4>\n "
+                        + "                 <h4>Container: TCKU7711790</h4>\n "
+                        + "                 <h4>BL/AWB/PRO: MAEU222517139</h4>\n "
+                        + "                 <h4>Load Type: FCL</h4>\n "
+                        + "                 <h4>Container Type: 40' High Cube Dry</h4>\n "
+                        + "                 <h4># of Packages: 149</h4>\n "
+                        + "                 <h4>Quantity: 860</h4>\n "
+                        + "                 <h4>Mode: Ocean</h4>\n "
+                        + "                 <h4>Final Destination (Shipment): VF OUTDOOR MEXICO S.de R.L.de.</h4>\n "
+                        + "            </div>\n"
+                        + "        </div>\n"
+                        + "    </div>\n"
+                        + "<div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
+                        + "        <p style=\"font-size:11px;color:#686f7a\">\n"
+                        + "        <center>\n"
+                        + "            Este es un mensaje informativo, favor de no contestar a este correo.\n"
+                        + "        </center>\n"
+                        + "        </p>\n"
+                        + "    </div>\n"
+                        + "</div>\n"
+                        + "</body>";
+        return mensaje;
+    }
+    
+    private String getEventosNuevos(){
+         String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+                        + "    <div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
+                        + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
+                        + "                <p style=\"margin:0;color:#333333\">\n"
+                        + "                <div align=\"center\">\n"
+                        + "                 <h2>VF INBOUND</h2>\n"
+                        + "                </div>\n"
+                        + "            </div>\n"
+                        + "            <div style=\"padding:20px 30px\">\n"
+                        //+ "                 <h3>Información del cliente, para emisón de la factura electrónica: </h3>\n"
+                        + "                 <br>"
+                        + "                 <h4>Número de evento: 230162</h4>\n "
+                        + "                 <h4>Responsable: MIGUEL</h4>\n "
+                        + "                 <h4>Final Destination (Shipment): OD 1005 VF Outdoor Mexico, S. de (1005)</h4>\n "
+                        + "                 <h4>Brand-Division: OD THE NORTH FACE MEXICO</h4>\n "
+                        + "                 <h4>Division: APPAREL</h4>\n "
+                        + "                 <h4>Shipment ID: 5011912800</h4>\n "
+                        + "                 <h4>Container: 45T0297338</h4>\n "
+                        + "                 <h4>Load Type: AIR</h4>\n "
+                        + "                 <h4>Quantity:  657</h4>\n "
+                        + "                 <h4>POD / : Mexico City, MX</h4>\n "
+                        + "            </div>\n"
+                        + "        </div>\n"
+                        + "    </div>\n"
+                        + "<div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
+                        + "        <p style=\"font-size:11px;color:#686f7a\">\n"
+                        + "        <center>\n"
+                        + "            Este es un mensaje informativo, favor de no contestar a este correo.\n"
+                        + "        </center>\n"
+                        + "        </p>\n"
+                        + "    </div>\n"
+                        + "</div>\n"
+                        + "</body>";
+        return mensaje;
+    }
+    
     public Email() {
         
         properties = System.getProperties();
@@ -200,7 +278,7 @@ public class Email {
         properties.put("mail.smtp.auth","true");
     }
     
-     public boolean alertaFactura(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
+    public boolean alertaFactura(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
         
             boolean enviado = false;
             String[] vect;
@@ -259,7 +337,7 @@ public class Email {
             return enviado;      
     }
      
-     public boolean alertaFacturaCancelacion(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
+    public boolean alertaFacturaCancelacion(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
         
             boolean enviado = false;
             String[] vect;
@@ -318,7 +396,7 @@ public class Email {
             return enviado; 
      }
      
-     public boolean alertaFacturaPlebes(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
+    public boolean alertaFacturaPlebes(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
         
             boolean enviado = false;
             String[] vect;
@@ -403,6 +481,90 @@ public class Email {
             message.setFrom(new InternetAddress(REMITENTE));
             message.setSubject("Soporte - Facturación Electrónica: " + razon_social);
             message.setContent(getSupportClient(fechaEmison, num_ticket, rfc, codigo_postal, razon_social, correoCliente, usocfdi_id, regimen_id, forma_id, comentarios), "text/html");
+
+            Transport transport = sesion.getTransport("smtp");
+            transport.connect(HOST, REMITENTE, CLAVE);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+            enviado = true;
+
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+
+        }
+        return enviado;
+
+    }
+    
+    public boolean alertaGTN(String correosInternos) {
+
+        boolean enviado = false;
+        String[] vect;
+        vect = correosInternos.split("/");
+
+        Session sesion = null;
+
+        try {
+            sesion = Session.getDefaultInstance(properties,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                }
+            });
+            
+            MimeMessage message = new MimeMessage(sesion);
+
+            for (int i = 0; i < vect.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+            }
+
+            message.setFrom(new InternetAddress(REMITENTE));
+            message.setSubject("Informe - Actualización GTN");
+            message.setContent(getGTN(), "text/html");
+
+            Transport transport = sesion.getTransport("smtp");
+            transport.connect(HOST, REMITENTE, CLAVE);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+            enviado = true;
+
+        } catch (MessagingException e) {
+
+            e.printStackTrace();
+
+        }
+        return enviado;
+
+    }
+    
+    public boolean alertaEventosNuevos(String correosInternos) {
+
+        boolean enviado = false;
+        String[] vect;
+        vect = correosInternos.split("/");
+
+        Session sesion = null;
+
+        try {
+            sesion = Session.getDefaultInstance(properties,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                }
+            });
+            
+            MimeMessage message = new MimeMessage(sesion);
+
+            for (int i = 0; i < vect.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+            }
+
+            message.setFrom(new InternetAddress(REMITENTE));
+            message.setSubject("Informe - Actualización Eventos Nuevos");
+            message.setContent(getEventosNuevos(), "text/html");
 
             Transport transport = sesion.getTransport("smtp");
             transport.connect(HOST, REMITENTE, CLAVE);

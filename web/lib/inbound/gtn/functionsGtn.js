@@ -8,9 +8,14 @@
     }
 
     function save(){
-        swal("", "Información actualizada", "success");
-        alertclose();
-        location.reload();
+        fetch("../AlertaInbound?tipoEnvio=1&correos=jlmateos@tacts.mx/luis.mateosmc94@gmail.com", {
+            method: 'POST',
+        }).then(r => r.text())
+                .then(data => {
+                    swal("", "Información actualizada", "success");
+                    alertclose();
+                    location.reload();
+                }).catch(error => console.log(error));
     }
     
     function delete_registro() {
@@ -28,6 +33,7 @@
     function(isConfirm){
       if (isConfirm) {
            window.location.href = "../Reportes/gtnDetalle.jsp";
+           
       }else{
           swal.close();
       } 
@@ -39,4 +45,5 @@
             swal.close();
         }, 2000);
     }
+  
 
