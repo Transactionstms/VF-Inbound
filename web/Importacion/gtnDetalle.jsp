@@ -1,5 +1,5 @@
 <%-- 
-    Document   : gtn
+    Document   : gtnDetalle
     Created on : 19/01/2023, 04:34:02 AM
     Author     : luis_
 --%>
@@ -52,6 +52,19 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
+        <style>
+            /*input {
+              border-top-style: hidden;
+              border-right-style: hidden;
+              border-left-style: hidden;
+              border-bottom-style: hidden;
+              background-color: #ffffff;
+            }
+
+            .no-outline:focus {
+              outline: none;
+            }*/
+        </style>
     </head>
     <body>
         <%
@@ -81,8 +94,19 @@
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
+                                            <div class="row">
+                                                <div align="right">
+                                                    <div id="example_filter" class="dataTables_filter">
+                                                        <label>
+                                                            Busqueda:
+                                                            <input id="searchTerm" type="text" onkeyup="doSearch()" autocomplete="off"/>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
                                             <div id="table-scroll" class="table-scroll">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:500%;">
+                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:650%;">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Shipment Details</th>	
@@ -122,7 +146,7 @@
                                                             <td class="font-numero"><select class="" id="brand" name="brand"><option value="1">OD RETAIL</option><option value="2" selected>OD TIMBERLAND</option><option value="3">OD THE NORT FACE</option></select></td>	
                                                             <td class="font-numero"><input type="hidden" id="shipment" name="shipment" value="5011885374">5011885374</td>	
                                                             <td class="font-numero"><input class="" type="text" id="container" name="container" value="TCKU7711790"></td>	
-                                                            <td class="font-texto"><input class="" type="text" id="blAwbPro" name="blAwbPro" value="MAEU222517139"></td>	
+                                                            <td class="font-texto"><input class="" type="text" id="blAwbPro" name="blAwbPro" value="TEST MAEU222517139"></td>	
                                                             <td class="font-numero"><input class="" type="text" id="loadType" name="loadType" value="FCL"></td>	
                                                             <td class="font-texto"><input class="" type="text" id="containerType" name="containerType" value="40' High Cube Dr"></td>	
                                                             <td class="font-numero"><input class="" type="text" id="packages" name="packages" value="149"></td>	
@@ -433,7 +457,7 @@
                                             <br>
                                             <!-- Botones controles -->
                                             <div class="col-lg-12" style="text-align: right;">
-                                                <a class="btn btn-default text-nowrap" role="button" href="../Reportes/gtn.jsp">Regresar</a>
+                                                <a class="btn btn-default text-nowrap" role="button" href="Importacion/gtn.jsp">Regresar</a>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
                                             </div>

@@ -28,7 +28,7 @@
     },
     function(isConfirm){
       if (isConfirm) {
-           window.location.href = "../Reportes/eventosDetalle.jsp";
+           window.location.href = "../Importacion/eventosDetalle.jsp";
       }else{
           swal.close();
       } 
@@ -39,5 +39,32 @@
         setTimeout(function () {
             swal.close();
         }, 2000);
+    }
+    
+    function doSearch() {
+        var tableReg = document.getElementById('main-table');
+        var searchText = document.getElementById('searchTerm').value.toLowerCase();
+        var cellsOfRow = "";
+        var found = false;
+        var compareWith = "";
+
+        // Recorremos todas las filas con contenido de la tabla
+        for (var i = 1; i < tableReg.rows.length; i++){
+            cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            found = false;
+            // Recorremos todas las celdas
+            for (var j = 0; j < cellsOfRow.length && !found; j++){
+                compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                // Buscamos el texto en el contenido de la celda
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)){
+                    found = true;
+                }
+            }
+            if (found){
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none'; // si no ha encontrado ninguna coincidencia, esconde la fila de la tabla
+            }
+        }
     }
 
