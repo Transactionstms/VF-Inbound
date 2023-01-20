@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Facturación Electrónica - TACTS</title>
+    <title>VF INBOUND - TMS</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -42,11 +42,11 @@
           <div class="col-lg-6 px-lg-4">
             <div class="card">
               <div class="card-header px-lg-5">
-                <div class="card-heading text-primary">TACTS Dashboard</div>
+                <div class="card-heading text-primary">Dashboard</div>
               </div>
               <div class="card-body p-lg-5">
                 <h3 class="mb-4">Bienvenido! 👋👋</h3>
-                <p class="text-muted text-sm mb-5">Bienvenido al portal de facturacion TACTS.</p>
+                <p class="text-muted text-sm mb-5">Bienvenido al sistema Inbound.</p>-->
                 <form id="loginForm"  action="Login" method="POST"> <!--action="index.jsp" -->
                   <div class="form-floating mb-3">
                     <input class="form-control"  name="user" id="user" type="text" placeholder="name@example.com">

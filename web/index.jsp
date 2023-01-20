@@ -42,11 +42,11 @@
           <div class="col-lg-6 px-lg-4">
             <div class="card">
               <div class="card-header px-lg-5">
-                  <div class="card-heading text-primary"><center>Facturación Electrónica 3.3</center></div>
+                  <div class="card-heading text-primary"><center>VF INBOUND</center></div>
               </div>
               <div class="card-body p-lg-5">
                 <h3 class="mb-4">Bienvenido! 👋👋</h3>
-                <p class="text-muted text-sm mb-5">Al portal del sistema de facturación electrónica.</p>
+                <!--<p class="text-muted text-sm mb-5">Al portal del sistema de facturación electrónica.</p>-->
                 <form id="loginForm"  action="Login" method="POST"> <!--action="index.jsp" -->
                   <div class="form-floating mb-3">
                       <input class="form-control"  name="user" id="user" type="text" placeholder="name@example.com" autocomplete="off">
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="col-lg-6 col-xl-5 ms-xl-auto px-lg-4 text-center text-primary"><img class="img-fluid mb-4" width="300" src="lib/img/drawkit-illustration.svg" alt="" style="transform: rotate(10deg)">
-            <h1 class="mb-4">TACTS<br class="d-none d-lg-inline"></h1>
+            <h1 class="mb-4">TMS<br class="d-none d-lg-inline"></h1>
             <p class="lead text-muted">TODO EN UN SOLO LUGAR</p>
           </div>
         </div>
