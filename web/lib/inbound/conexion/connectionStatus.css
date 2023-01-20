@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6/06/2022, 02:24:40 PM
+    Author     : Desarrollo Tacts
+*/
+.wired, .unwired {
+    display: none;
+}
+
+body.online .wired {
+    display: block;
+}
+
+body.offline .unwired {
+    display: block;
+}
+body.offline .wired {
+    display: none;
+}
