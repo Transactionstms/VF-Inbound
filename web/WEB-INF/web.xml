@@ -830,6 +830,10 @@
         <servlet-name>AlertaInbound</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.AlertaInbound</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EventoNuevo</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.EventoNuevo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1654,6 +1658,10 @@
     <servlet-mapping>
         <servlet-name>AlertaInbound</servlet-name>
         <url-pattern>/AlertaInbound</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventoNuevo</servlet-name>
+        <url-pattern>/EventoNuevo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

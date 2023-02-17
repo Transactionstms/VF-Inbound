@@ -59,8 +59,7 @@
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
 
-                ConsultasQuery fac = new ConsultasQuery();
-        %>
+         %>
         <!-- navbar-->
         <header class="header">
         </header>
@@ -75,7 +74,7 @@
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Modificar Eventos Nuevos</h2>
+                                                <h2 class="card-heading"> Eventos Nuevos</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +92,7 @@
                                             </div>
                                             <br>
                                             <div id="table-scroll" class="table-scroll">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:500%;">
+                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:200%;">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
@@ -110,13 +109,116 @@
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">Est. Eta DC <strong style="color:white">*</strong></th>
+                                                            
+                                                                <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
+                                                                <th scope="col" class="font-titulo" style="background-color:#C65911">DC </th>
+                                                                
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
-                                                            <th scope="col" class="font-titulo">Eliminar</th>
+                                                            
+                                                              <th scope="col" class="font-titulo">Observaciones </th>
+                                                              <th scope="col" class="font-titulo">Aceptar </th>
+                                                            <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        
+                                                        <%
+                             String sql2=" SELECT DISTINCT USER_NID, RESPONSABLE FROM TRA_DESTINO_RESPONSABLE";
+                             String options="";
+                                                         if (db.doDB(sql2)) {
+                                                for (String[] row : db.getResultado()) {
+                                               options+="<option value='"+row[0]+"'>"+row[1]+"</option>"; 
+                                                }}
+                                                        %>
+                                                        
+                                                          <%
+                                                              String sql=""
+   +" SELECT  DISTINCT"
++"  TIE.ID_EVENTO,"
++"  BP.RESPONSABLE,"
++"  GTN.FINAL_DESTINATION,"
++"  GTN.BRAND_DIVISION,"
++"  'DIVISION',"
++"  GTN.SHIPMENT_ID,"
++"  GTN.CONTAINER1,"
++"  GTN.BL_AWB_PRO,"
++"  GTN.LOAD_TYPE,"
++"   (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  as suma   ,"
++"   GTN.POD,"
++"  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
++"  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
++"    ("
++"  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
++"  where"
++"  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
++"  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
++"  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
++"  )as EST_ETA_DC,"
++"  'Inbound notification',"
++"  GTN.POL,"
++"  'A.A',"
++"  GTN.PLANTILLA_ID,"
++"  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
++"  from TRA_INB_EVENTO    TIE"
++"  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
++"  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
++"  order by 1"; 
+                                                              
+                                                if (db.doDB(sql)) {
+                                                for (String[] row : db.getResultado()) {
+                                                   // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
+                                                   //row[18]
+                                                   //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
+                                                    String fechas="";
+                                                    String fechas2="";
+                                                if (db.doDB("select to_char(to_date('"+row[18]+"','MM/DD/YYYY')+"+row[13]+", 'MM/DD/YYYY')  from dual")) {
+                                                for (String[] row1 : db.getResultado()) {
+                                                       fechas=row1[0];
+                                                      //fechas2=row1[1];
+                                                }
+                                                }
+                                                   %>
+                                                   
+                                                     
+                                                        <tr>
+                                                            <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
+                                                            <td class="font-numero"><select class="" id="responsable<%=row[0]%>" onchange="cambiarResponsable(<%=row[0]%>)"  ><option value="0"><%=row[1]%></option><%=options%></select></td>	
+                                                            <td class="font-texto"> <%=row[2]%></td>
+                                                            <td class="font-texto"> <%=row[3]%></td>
+                                                            <td class="font-texto"> <%=row[4]%></td>
+                                                            <td class="font-texto"> <%=row[5]%></td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[7]%></td>
+                                                            <td class="font-texto"> <%=row[8]%></td>		
+                                                            <td class="font-texto"> <%=row[9]%></td>	
+                                                            <td class="font-texto"> <%=row[10]%></td>
+                                                            <td class="font-texto"> <%=row[11]%></td>	
+                                                            <td class="font-texto"> <%=row[12]%></td>	
+                                                            <td class="font-texto"> <%=row[13]%></td>
+                                                            
+                                                            <td class="font-texto">  <%=fechas%></td>
+                                                            <td class="font-texto">  <%=fechas%></td>
+                                                            
+                                                            <td class="font-texto"> <%=row[14]%></td>
+                                                            <td class="font-texto"> <%=row[15]%></td>	
+                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            
+                                                             <td class="font-texto" contenteditable='true'>  </td>
+                                                             <td> <button type="button" class="btn btn-primary">Aceptar</button> </td>
+                                                            <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
+                                                       
+                                                            </tr>
+                                                   
+                                                   
+                                                        
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                        
+                                                    <!--    
                                                         <tr>
                                                             <th class="font-numero">230162</th>	
                                                             <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
@@ -137,186 +239,9 @@
                                                             <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
                                                             <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
                                                         </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="font-numero">230162</th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                        </tr>
+                                                     -->   
+                                                        
+                                                     
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -348,7 +273,17 @@
                 </footer>
             </div>
         </div>    
-                            
+                            <script>
+           function cambiarResponsable(id){
+               console.log(id);
+           }
+           function editarEvento(id){
+               console.log('editar');//
+               console.log(id);
+                window.location.href =  '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id='+id;
+               
+           }
+                            </script>                     
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->

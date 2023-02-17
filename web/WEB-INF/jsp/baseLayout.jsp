@@ -132,7 +132,7 @@
 
         <div class="d-flex align-items-stretch">
              <div class="sidebar py-3" id="sidebar">
-        <h6 class="sidebar-heading">Main</h6>
+        <h6 class="sidebar-heading">Menu</h6>
         <ul class="list-unstyled">
               <li class="sidebar-list-item"><a class="sidebar-link text-muted active" href="forms/main.jsp" target="data">
                       <svg class="svg-icon svg-icon-md me-3">
@@ -141,58 +141,21 @@
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="forms/main.jsp" data-bs-target="#cmsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                       <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#reading-1"> </use>
-                      </svg><span class="sidebar-link-title">Productos y Servicios</span></a>
+                      </svg><span class="sidebar-link-title">Catálogos</span></a>
                 <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Productos/List.jsp" target="data">Productos y Servicios</a></li>
-                  <!--<li class="sidebar-list-item"><a class="sidebar-link text-muted" href="cms-post-new.jsp">Add new post</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="cms-category.jsp">Categories</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="cms-media.jsp">Media library</a></li>-->
                 </ul>
               </li>
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#widgetsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                       <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#statistic-1"> </use>
-                      </svg><span class="sidebar-link-title">Clientes</span></a>
+                      </svg><span class="sidebar-link-title">Importación</span></a>
                 <ul class="sidebar-menu list-unstyled collapse " id="widgetsDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Clientes/List.jsp" target="data">Clientes</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=20" target="data">Plantilla Inbound</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Modificar Eventos Nuevos</a></li>
                 </ul>
               </li>
-              <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#e-commerceDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#delivery-truck-1"> </use>
-                      </svg><span class="sidebar-link-title">Facturación</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="e-commerceDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Facturacion/Create.jsp" target="data">Facturación</a></li>
-                </ul>
-              </li>
-              <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#pagesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#paper-stack-1"> </use>
-                      </svg><span class="sidebar-link-title">Recibo de Pago</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="pagesDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="ReciboPago/Search.jsp" target="data">Recibo de Pago</a></li>
-                </ul>
-              </li>
-              <!--<li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#userDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#man-1"> </use>
-                      </svg><span class="sidebar-link-title">Nómina</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="userDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Nomina/IndexEmpleados.jsp" target="data">Empleados</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Nomina/GenerarRecibo.jsp" target="data">Generar Nómina</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Nomina/BuscarRecibo.jsp" target="data">Recibos de Nómina</a></li>
-                </ul>
-              </li>-->
-              <!--<li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#componentsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#sorting-1"> </use>
-                      </svg><span class="sidebar-link-title">Addendas</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="componentsDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Addenda/Search.jsp" target="data">Agregar Addenda</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Addenda/Index.jsp"  target="data">Buscar y Descargar</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="CanalesDeEnvio/IndexSoriana.jsp" target="data">Canales de Envío</a></li>
-                </ul>
-              </li>-->
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                       <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#pie-chart-1"> </use>
@@ -202,19 +165,6 @@
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="ReciboPago/Index.jsp" target="data">Buscar Pagos</a></li>
                 </ul>
               </li>
-              <!--<li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#formsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#file-storage-1"> </use>
-                      </svg><span class="sidebar-link-title">Contratación</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="formsDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/Create.jsp" target="data">Folios</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/ContrataServicio.jsp" target="data">Complementos</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/ContrataServicio.jsp" target="data">Addendas</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/ContrataServicio.jsp" target="data">Retenciones</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/ContrataServicio.jsp" target="data">Complementos de Retenciones</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Contratacion/Index.jsp" target="data">Mis compras</a></li>
-                </ul>
-              </li>-->
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#tablesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                       <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#grid-1"> </use>
