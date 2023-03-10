@@ -151,6 +151,9 @@
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#statistic-1"> </use>
                       </svg><span class="sidebar-link-title">Importación</span></a>
                 <ul class="sidebar-menu list-unstyled collapse " id="widgetsDropdown">
+                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=22" target="data">Plantilla UVAs</a></li>
+                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=23" target="data">Plantilla Previos</a></li>
+
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=20" target="data">Plantilla Inbound</a></li>
                    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=21" target="data">Plantilla DNS</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
