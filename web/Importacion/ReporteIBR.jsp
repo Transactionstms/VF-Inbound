@@ -132,9 +132,9 @@
 +"  GTN.BL_AWB_PRO,"
 +"  GTN.SHIPMENT_ID,"
 +"  GTN.LOAD_TYPE,"
-+" 'LUM BRIO' ,"
++" (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  LUM_BRIO ,"
 +"  GTN.BRAND_DIVISION,"
-+" 'Sbu Name' ,"
++" nvl(dns.SBU_NAME,' ')  ,"
 +"  GTN.POL,"
 +"  to_char(GTN.ACTUAL_CRD,'MM/DD/YYYY'),"
 +"  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
@@ -179,6 +179,7 @@
 +"   from TRA_INB_EVENTO    TIE"
 +"  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID  " 
 +"  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
++"  left join tra_inb_dns                dns on dns.SHIPMENT_NUM=TIE.SHIPMENT_ID     "
 +"  order by 1"
                                                                     + ""
                                                                     + ""
@@ -249,6 +250,7 @@
                 </footer>
             </div>
         </div>    
+                            
         <script>
             function cambiarResponsable(id) {
                 console.log(id);
