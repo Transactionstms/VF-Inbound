@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.tacts.evidencias.inbound.CreatExcel;
 
 /**
  *
@@ -46,6 +47,8 @@ public class AlertaInbound extends HttpServlet {
 
         Email correo = new Email();
         ConsultasQuery fac = new ConsultasQuery();
+        String rutaFichero = CreatExcel.crearAPartirDeArrayList("");
+        System.out.println("Resultado:"+rutaFichero);
         
         //Extracción de Fecha
         Date date = new Date();
@@ -68,7 +71,6 @@ public class AlertaInbound extends HttpServlet {
         
         String tipoEnvio = request.getParameter("tipoEnvio");
         String correos = request.getParameter("correos").replaceFirst(" ", "/"); 
-        String fileName = "";
         
         /*
           1 = GTN
@@ -76,9 +78,9 @@ public class AlertaInbound extends HttpServlet {
         */
 
         if(tipoEnvio.equals("1")){
-            correo.alertaGTN(correos);  
+            //correo.alertaGTN(correos);  
         }else if(tipoEnvio.equals("2")){
-            correo.alertaEventosNuevos(correos); 
+            correo.alertaModificarEventos(correos,rutaFichero.trim()); 
         }
         
          oraDB.close(); //cerrar conexión

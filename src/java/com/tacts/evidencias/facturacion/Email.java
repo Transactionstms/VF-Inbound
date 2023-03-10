@@ -5,10 +5,10 @@
  */
 package com.tacts.evidencias.facturacion;
 
-import com.dao.ServiceDAO;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Iterator;
 import javax.activation.URLDataSource;
-
+import com.dao.ServiceDAO;
+import java.sql.ResultSet;
+import java.sql.Statement;
 /**
  *
  * @author luis_
@@ -228,29 +230,104 @@ public class Email {
         return mensaje;
     }
     
-    private String getEventosNuevos(){
-         String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+    private String getModificarEventos(){
+        
+        ServiceDAO dao = new ServiceDAO();
+        String mensaje = "";
+        
+        try {
+            String consulta = " SELECT DISTINCT " 
+                            + " TIE.ID_EVENTO, " 
+                            + " BP.RESPONSABLE, " 
+                            + " GTN.FINAL_DESTINATION, " 
+                            + " GTN.BRAND_DIVISION, " 
+                            + " 'DIVISION', " 
+                            + " GTN.SHIPMENT_ID, " 
+                            + " GTN.CONTAINER1, " 
+                            + " GTN.BL_AWB_PRO, " 
+                            + " GTN.LOAD_TYPE, " 
+                            + " (SELECT SUM(tt.QUANTITY) FROM TRA_INC_GTN_TEST tt WHERE tt.PLANTILLA_ID =GTN.PLANTILLA_ID ) AS SUMA, GTN.POD, TO_CHAR(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'), " 
+                            + " TO_CHAR(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY') AS ETA_REAL_PORT, " 
+                            + " (SELECT MAX(RECOMMENDED_LT2) FROM TRA_INB_COSTOFLETEYTD WHERE TRIM(UPPER(SUBSTR(BRAND_DIVISION,0,8))) IN TRIM(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) AND TRIM(UPPER(SUBSTR(POD,0,6))) IN TRIM(UPPER(SUBSTR(GTN.POD,0,6))) AND TRIM(UPPER(SUBSTR(POL,0,6))) IN TRIM(UPPER(SUBSTR(GTN.POL,0,6))))AS EST_ETA_DC, " 
+                            + " 'INBOUND NOTIFICATION', " 
+                            + " GTN.POL, " 
+                            + " 'A.A', " 
+                            + " GTN.PLANTILLA_ID, " 
+                            + " TO_CHAR(GTN.FECHA_CAPTURA,'MM/DD/YYYY') " 
+                            + " FROM TRA_INB_EVENTO TIE " 
+                            + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID=TIE.USER_NID " 
+                            + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID ORDER BY 1 ";
+            Statement stmt = dao.conectar().prepareStatement(consulta);
+            ResultSet rsc = stmt.executeQuery(consulta);
+
+                mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
                         + "    <div style=\"max-width:600px;margin:0 auto\">\n"
                         + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
                         + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
                         + "                <p style=\"margin:0;color:#333333\">\n"
                         + "                <div align=\"center\">\n"
-                        + "                 <h2>VF INBOUND</h2>\n"
+                        + "                 <h2>Modificación de Eventos</h2>\n"
                         + "                </div>\n"
                         + "            </div>\n"
                         + "            <div style=\"padding:20px 30px\">\n"
-                        //+ "                 <h3>Información del cliente, para emisón de la factura electrónica: </h3>\n"
                         + "                 <br>"
-                        + "                 <h4>Número de evento: 230162</h4>\n "
-                        + "                 <h4>Responsable: MIGUEL</h4>\n "
-                        + "                 <h4>Final Destination (Shipment): OD 1005 VF Outdoor Mexico, S. de (1005)</h4>\n "
-                        + "                 <h4>Brand-Division: OD THE NORTH FACE MEXICO</h4>\n "
-                        + "                 <h4>Division: APPAREL</h4>\n "
-                        + "                 <h4>Shipment ID: 5011912800</h4>\n "
-                        + "                 <h4>Container: 45T0297338</h4>\n "
-                        + "                 <h4>Load Type: AIR</h4>\n "
-                        + "                 <h4>Quantity:  657</h4>\n "
-                        + "                 <h4>POD / : Mexico City, MX</h4>\n "
+                        + "<table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:200%;\">\n"
+                        + "    <thead>\n"
+                        + "        <tr>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Número de evento <strong style=\"color:red\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Responsable <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Final Destination (Shipment) <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Brand-Division <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Division <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Shipment ID <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Container <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">BL/ AWB/ PRO <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Load Type <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Quantity <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">POD /&nbsp; <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Est. Departure from POL <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">ETA REAL PORT <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">Est. Eta DC <strong style=\"color:white\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">ETA DC  </th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">DC </th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Inbound notification <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">POL <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">A.A. <strong style=\"color:red\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Observaciones </th>\n"
+                        + "        </tr>\n"
+                        + "    </thead>\n"
+                        + "    <tbody>\n";
+                          
+                        while(rsc.next()){
+                        
+               mensaje += "        <tr>\n"
+                        + "            <th class=\"font-numero\" style=\"cursor: pointer\" onclick=\"editarEvento('2023028')\">" + rsc.getInt(1) + "</th>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(2) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(3) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(4) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(5) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(6) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(7) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(8) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(9) + "</td>\n"		
+                        + "            <td class=\"font-texto\">" + rsc.getString(10) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(11) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(12) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(13) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(14) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(15) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(16) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(17) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(18) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(19) + "</td>\n"
+                        + "        </tr>\n";
+                
+                        }
+            
+                    rsc.close();
+       
+               mensaje += "    </tbody>\n"
+                        + "</table>\n"
                         + "            </div>\n"
                         + "        </div>\n"
                         + "    </div>\n"
@@ -264,6 +341,11 @@ public class Email {
                         + "    </div>\n"
                         + "</div>\n"
                         + "</body>";
+                
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        
         return mensaje;
     }
     
@@ -540,45 +622,61 @@ public class Email {
 
     }
     
-    public boolean alertaEventosNuevos(String correosInternos) {
+    public boolean alertaModificarEventos(String correosInternos, String fichero) throws SQLException {
+        
+            boolean enviado = false;
+            String[] vect;
+            vect = correosInternos.split("/");
 
-        boolean enviado = false;
-        String[] vect;
-        vect = correosInternos.split("/");
+            try {
+                Session session = Session.getDefaultInstance(properties,
+                        new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    }
+                });
+                // Session sesion = Session.getDefaultInstance(properties, null);
+                MimeMessage message = new MimeMessage(session);
 
-        Session sesion = null;
+                for (int i = 0; i < vect.length; i++) {
 
-        try {
-            sesion = Session.getDefaultInstance(properties,
-                    new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+
                 }
-            });
-            
-            MimeMessage message = new MimeMessage(sesion);
 
-            for (int i = 0; i < vect.length; i++) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+                message.setFrom(new InternetAddress(REMITENTE));
+                message.setHeader("X-Priority", "1");
+                message.setSubject("Informe - Actualización Eventos Nuevos");
+                BodyPart messageBodyPart = new MimeBodyPart();
+
+                // Now set the actual message
+                messageBodyPart.setContent(getModificarEventos(),"text/html");
+
+                Multipart multipart = new MimeMultipart();
+
+                // Set text message part
+                multipart.addBodyPart(messageBodyPart);
+
+                //Part two is attachment
+                messageBodyPart = new MimeBodyPart();
+                
+                messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
+                messageBodyPart.setFileName("Excel-ModificaciónEventos.xls");
+
+                multipart.addBodyPart(messageBodyPart);
+                message.setContent(multipart);
+                
+                Transport transport = session.getTransport("smtp");
+                transport.connect(HOST, REMITENTE, CLAVE);
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
+                System.out.println("Se envío correo");
+                enviado = true;
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
-
-            message.setFrom(new InternetAddress(REMITENTE));
-            message.setSubject("Informe - Actualización Eventos Nuevos");
-            message.setContent(getEventosNuevos(), "text/html");
-
-            Transport transport = sesion.getTransport("smtp");
-            transport.connect(HOST, REMITENTE, CLAVE);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-
-            enviado = true;
-
-        } catch (MessagingException e) {
-
-            e.printStackTrace();
-
-        }
-        return enviado;
-
+            return enviado;
+        
     }
 }
