@@ -144,6 +144,7 @@
                       </svg><span class="sidebar-link-title">Catálogos</span></a>
                 <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Productos/List.jsp" target="data">Productos y Servicios</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm.jsp" target="data">Personalizar Evento</a></li>
                 </ul>
               </li>
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#widgetsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
@@ -158,8 +159,8 @@
                    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=21" target="data">Plantilla DNS</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Modificar Eventos Nuevos</a></li>
-                <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
-
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/modificarEventos.jsp" target="data">Modificar Evento</a></li>
                 </ul>
               </li>
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
