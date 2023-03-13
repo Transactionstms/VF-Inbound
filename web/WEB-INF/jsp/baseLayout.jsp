@@ -155,11 +155,10 @@
                    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=22" target="data">Plantilla UVAs</a></li>
                    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=23" target="data">Plantilla Previos</a></li>
 
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=20" target="data">Plantilla Inbound</a></li>
+                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=20" target="data">Plantilla Inbound</a></li>
                    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=21" target="data">Plantilla DNS</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Modificar Eventos Nuevos</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/modificarEventos.jsp" target="data">Modificar Evento</a></li>
                 </ul>
               </li>
@@ -168,8 +167,10 @@
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#pie-chart-1"> </use>
                       </svg><span class="sidebar-link-title">Reportes</span></a>
                 <ul class="sidebar-menu list-unstyled collapse " id="chartsDropdown">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Facturacion/Index.jsp" target="data">Buscar CFDI</a></li>
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="ReciboPago/Index.jsp" target="data">Buscar Pagos</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteUvas.jsp" target="data">Reporte UVAs</a></li>
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReportePO.jsp" target="data">Reporte PO</a></li>
+
                 </ul>
               </li>
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#tablesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
