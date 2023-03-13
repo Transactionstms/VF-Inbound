@@ -262,14 +262,14 @@ public class Email {
 
                 mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
                         + "    <div style=\"max-width:600px;margin:0 auto\">\n"
-                        + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
+                        //+ "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
                         + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
                         + "                <p style=\"margin:0;color:#333333\">\n"
                         + "                <div align=\"center\">\n"
                         + "                 <h2>Modificación de Eventos</h2>\n"
                         + "                </div>\n"
                         + "            </div>\n"
-                        + "            <div style=\"padding:20px 30px\">\n"
+                        //+ "            <div style=\"padding:20px 30px\">\n"
                         + "                 <br>"
                         + "<table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:200%;\">\n"
                         + "    <thead>\n"
@@ -328,8 +328,8 @@ public class Email {
        
                mensaje += "    </tbody>\n"
                         + "</table>\n"
-                        + "            </div>\n"
-                        + "        </div>\n"
+                        //+ "            </div>\n"
+                        //+ "        </div>\n"
                         + "    </div>\n"
                         + "<div style=\"max-width:600px;margin:0 auto\">\n"
                         + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
@@ -646,7 +646,7 @@ public class Email {
 
                 message.setFrom(new InternetAddress(REMITENTE));
                 message.setHeader("X-Priority", "1");
-                message.setSubject("Informe - Actualización Eventos Nuevos");
+                message.setSubject("Informe - Modificación de Eventos Nuevos");
                 BodyPart messageBodyPart = new MimeBodyPart();
 
                 // Now set the actual message
@@ -661,7 +661,7 @@ public class Email {
                 messageBodyPart = new MimeBodyPart();
                 
                 messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
-                messageBodyPart.setFileName("Excel-ModificaciónEventos.xls");
+                messageBodyPart.setFileName("Excel-ModifaciónDeEventos.xls");
 
                 multipart.addBodyPart(messageBodyPart);
                 message.setContent(multipart);
