@@ -6,8 +6,9 @@
 
     function AddCustoms() {
     
-      let evento = document.getElementById("evento");                    
-      let shipment_id = document.getElementById("shipment_id");            
+      let evento = document.getElementById("evento_id");       
+      let pais_origen = document.getElementById("pais_origen"); 
+      let size_container = document.getElementById("size_container"); 
       let valor_usd = document.getElementById("valor_usd");                
       let eta_port_discharge = document.getElementById("eta_port_discharge");        
       let agente_aduanal = document.getElementById("agente_aduanal");            
@@ -17,6 +18,9 @@
       let pedimento_r1_2do = document.getElementById("pedimento_r1_2do");          
       let motivo_rectificacion_2do = document.getElementById("motivo_rectificacion_2do");  
       let fecha_recepcion_doc = document.getElementById("fecha_recepcion_doc");       
+      let recinto = document.getElementById("recinto"); 
+      let naviera = document.getElementById("naviera"); 
+      let buque = document.getElementById("buque"); 
       let fecha_revalidacion = document.getElementById("fecha_revalidacion");        
       let fecha_previo_origen = document.getElementById("fecha_previo_origen");       
       let fecha_previo_destino = document.getElementById("fecha_previo_destino");      
@@ -29,7 +33,11 @@
       let fecha_permisos_aut = document.getElementById("fecha_permisos_aut");        
       let co_pref_arancelaria = document.getElementById("co_pref_arancelaria");       
       let aplic_pref_arancelaria = document.getElementById("aplic_pref_arancelaria");    
-      let req_uva = document.getElementById("req_uva");                   
+      let req_uva = document.getElementById("req_uva");     
+      let req_ca = document.getElementById("req_ca");      
+      let fecha_recepcion_ca = document.getElementById("fecha_recepcion_ca");      
+      let num_constancia_ca = document.getElementById("num_constancia_ca");      
+      let monto_ca = document.getElementById("monto_ca");     
       let fecha_doc_completos = document.getElementById("fecha_doc_completos");       
       let fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento");      
       let fecha_solicitud_transporte = document.getElementById("fecha_solicitud_transporte");
@@ -46,8 +54,9 @@
       let motivo_atraso = document.getElementById("motivo_atraso");             
       let observaciones = document.getElementById("observaciones");
 
-      fetch("../InsertarCustomsForms?evento = "+ evento +
-            "&shipment_id = "+ shipment_id +            
+      fetch("../InsertarCustomsForms?evento = "+ evento +       
+            "&pais_origen = "+ pais_origen +   
+            "&size_container = "+ size_container +   
             "&valor_usd = "+ valor_usd +               
             "&eta_port_discharge = "+ eta_port_discharge +       
             "&agente_aduanal = "+ agente_aduanal +            
@@ -57,6 +66,9 @@
             "&pedimento_r1_2do = "+ pedimento_r1_2do +         
             "&motivo_rectificacion_2do = "+ motivo_rectificacion_2do + 
             "&fecha_recepcion_doc = "+ fecha_recepcion_doc +      
+            "&recinto = "+ recinto +     
+            "&naviera = "+ naviera +     
+            "&buque = "+ buque +    
             "&fecha_revalidacion = "+ fecha_revalidacion +       
             "&fecha_previo_origen = "+ fecha_previo_origen +       
             "&fecha_previo_destino = "+ fecha_previo_destino +    
@@ -69,7 +81,11 @@
             "&fecha_permisos_aut = "+ fecha_permisos_aut +        
             "&co_pref_arancelaria = "+ co_pref_arancelaria +       
             "&aplic_pref_arancelaria = "+ aplic_pref_arancelaria +  
-            "&req_uva = "+ req_uva +                   
+            "&req_uva = "+ req_uva +   
+            "&req_ca = "+ req_ca +  
+            "&fecha_recepcion_ca = "+ fecha_recepcion_ca +  
+            "&num_constancia_ca = "+ num_constancia_ca +  
+            "&monto_ca = "+ monto_ca +  
             "&fecha_doc_completos = "+ fecha_doc_completos +       
             "&fecha_pago_pedimento = "+ fecha_pago_pedimento +      
             "&fecha_solicitud_transporte = "+ fecha_solicitud_transporte +

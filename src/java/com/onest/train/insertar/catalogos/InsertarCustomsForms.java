@@ -49,8 +49,9 @@ public class InsertarCustomsForms extends HttpServlet {
         String fecha_registro = formato.format(date);
         ConsultasQuery fac = new ConsultasQuery();
     
-          String evento = request.getParameter("evento");                    
-          String shipment_id = request.getParameter("shipment_id");            
+          String evento = request.getParameter("evento");    
+          String pais_origen = request.getParameter("pais_origen"); 
+          String size_container = request.getParameter("size_container"); 
           String valor_usd = request.getParameter("valor_usd");                
           String eta_port_discharge = request.getParameter("eta_port_discharge");        
           String agente_aduanal = request.getParameter("agente_aduanal");            
@@ -59,7 +60,10 @@ public class InsertarCustomsForms extends HttpServlet {
           String motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er");  
           String pedimento_r1_2do = request.getParameter("pedimento_r1_2do");          
           String motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do");  
-          String fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc");       
+          String fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc");  
+          String recinto = request.getParameter("recinto");
+          String naviera = request.getParameter("naviera");
+          String buque = request.getParameter("buque");
           String fecha_revalidacion = request.getParameter("fecha_revalidacion");        
           String fecha_previo_origen = request.getParameter("fecha_previo_origen");       
           String fecha_previo_destino = request.getParameter("fecha_previo_destino");      
@@ -72,7 +76,11 @@ public class InsertarCustomsForms extends HttpServlet {
           String fecha_permisos_aut = request.getParameter("fecha_permisos_aut");        
           String co_pref_arancelaria = request.getParameter("co_pref_arancelaria");       
           String aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria");    
-          String req_uva = request.getParameter("req_uva");                   
+          String req_uva = request.getParameter("req_uva");   
+          String req_ca = request.getParameter("req_ca");   
+          String fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca");   
+          String num_constancia_ca = request.getParameter("num_constancia_ca");   
+          String monto_ca = request.getParameter("monto_ca");   
           String fecha_doc_completos = request.getParameter("fecha_doc_completos");       
           String fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento");      
           String fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte");
@@ -90,11 +98,11 @@ public class InsertarCustomsForms extends HttpServlet {
           String observaciones = request.getParameter("observaciones"); 
           String salida = "";
         
-
          String insertarClie =  " INSERT INTO TRA_CUSTOMS " 
                               + " (REG_ID, "  
-                              + " EVENTO, "                    
-                              + " SHIPMENT_ID, "               
+                              + " EVENTO, "  
+                              + " PAIS_ORIGEN, "  
+                              + " SIZE_CONTAINER, "  
                               + " VALOR_USD, "                
                               + " ETA_PORT_DISCHARGE, "        
                               + " AGENTE_ADUANAL, "            
@@ -103,7 +111,10 @@ public class InsertarCustomsForms extends HttpServlet {
                               + " MOTIVO_RECTIFICACION_1ER, "  
                               + " PEDIMENTO_R1_2DO, "          
                               + " MOTIVO_RECTIFICACION_2DO, "  
-                              + " FECHA_RECEPCION_DOC, "       
+                              + " FECHA_RECEPCION_DOC, "    
+                              + " RECINTO, "    
+                              + " NAVIERA, "    
+                              + " BUQUE, "   
                               + " FECHA_REVALIDACION, "        
                               + " FECHA_PREVIO_ORIGEN, "       
                               + " FECHA_PREVIO_DESTINO, "      
@@ -116,7 +127,11 @@ public class InsertarCustomsForms extends HttpServlet {
                               + " FECHA_PERMISOS_AUT, "        
                               + " CO_PREF_ARANCELARIA, "       
                               + " APLIC_PREF_ARANCELARIA, "    
-                              + " REQ_UVA, "                   
+                              + " REQ_UVA, "    
+                              + " REQ_CA, "  
+                              + " FECHA_RECEPCION_CA, "  
+                              + " NUM_CONSTANCIA_CA, "  
+                              + " MONTO_CA, "  
                               + " FECHA_DOC_COMPLETOS, "       
                               + " FECHA_PAGO_PEDIMENTO, "      
                               + " FECHA_SOLICITUD_TRANSPORTE, "
@@ -138,8 +153,9 @@ public class InsertarCustomsForms extends HttpServlet {
                               + " USER_NID) "
                               + " VALUES " 
                               + " (NULL, "  
-                              + " '" + evento + "', "                    
-                              + " '" + shipment_id + "', "             
+                              + " '" + evento + "', "  
+                              + " '" + pais_origen + "', "  
+                              + " '" + size_container + "', "  
                               + " '" + valor_usd + "', "                
                               + " '" + eta_port_discharge + "', "        
                               + " '" + agente_aduanal + "', "            
@@ -148,7 +164,10 @@ public class InsertarCustomsForms extends HttpServlet {
                               + " '" + motivo_rectificacion_1er + "', "
                               + " '" + pedimento_r1_2do + "', "          
                               + " '" + motivo_rectificacion_2do + "', "  
-                              + " '" + fecha_recepcion_doc + "', "       
+                              + " '" + fecha_recepcion_doc + "', "   
+                              + " '" + recinto + "', " 
+                              + " '" + naviera + "', " 
+                              + " '" + buque + "', " 
                               + " '" + fecha_revalidacion + "', "        
                               + " '" + fecha_previo_origen + "', "       
                               + " '" + fecha_previo_destino + "', "      
@@ -161,7 +180,11 @@ public class InsertarCustomsForms extends HttpServlet {
                               + " '" + fecha_permisos_aut + "', "        
                               + " '" + co_pref_arancelaria + "', "       
                               + " '" + aplic_pref_arancelaria + "', "    
-                              + " '" + req_uva + "', "                   
+                              + " '" + req_uva + "', "   
+                              + " '" + req_ca + "', "   
+                              + " '" + fecha_recepcion_ca + "', "   
+                              + " '" + num_constancia_ca + "', "   
+                              + " '" + monto_ca + "', "  
                               + " '" + fecha_doc_completos + "', "       
                               + " '" + fecha_pago_pedimento + "', "      
                               + " '" + fecha_solicitud_transporte + "', "
