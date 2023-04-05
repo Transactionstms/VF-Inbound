@@ -92,7 +92,7 @@
                                             </div>
                                             <br>
                                                 <!-- main-table   class="main-table" style="table-layout:fixed; width:200%;"-->
-                                                  <div id="table-scroll" class="table-scroll">
+                                                  <div id="table-scroll" class="table-scroll"  style="height: 650px;">
                                                 <table id="main-table" class="main-table" style="table-layout:fixed; width:200%;">
                                                   
                                                     <thead>

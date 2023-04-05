@@ -52,27 +52,14 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
-        <style>
-            /*input {
-              border-top-style: hidden;
-              border-right-style: hidden;
-              border-left-style: hidden;
-              border-bottom-style: hidden;
-              background-color: #ffffff;
-            }
-
-            .no-outline:focus {
-              outline: none;
-            }*/
-        </style>
+      
     </head>
     <body>
         <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
-
-                ConsultasQuery fac = new ConsultasQuery();
+                 ConsultasQuery fac = new ConsultasQuery();
         %>
         <!-- navbar-->
         <header class="header">
@@ -105,7 +92,7 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <div id="table-scroll" class="table-scroll">
+                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
                                                 <table id="main-table" class="main-table" style="table-layout:fixed; width:650%;">
                                                     <thead>
                                                         <tr>

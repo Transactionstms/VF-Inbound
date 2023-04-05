@@ -120,3 +120,8 @@ tfoot th:first-child {
     /*font-size: 7px;*/
 }
 
+table {
+    table-layout:fixed; 
+    width:650%; 
+    height: 600px;
+}

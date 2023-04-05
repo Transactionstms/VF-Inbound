@@ -124,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <div id="table-scroll" class="table-scroll">
+                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
                                                 <table id="main-table" class="main-table" style="table-layout:fixed; width:600%;">
                                                     <thead>
                                                         <tr>
