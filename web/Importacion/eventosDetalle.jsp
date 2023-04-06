@@ -109,11 +109,9 @@
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">Est. Eta DC <strong style="color:white">*</strong></th>
-                                                            
-                                                                <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
+                                                                 <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
                                                                 <th scope="col" class="font-titulo" style="background-color:#C65911">DC </th>
-                                                                
-                                                            <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
+                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
                                                             
@@ -150,20 +148,23 @@
 +"  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
 +"  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
 +"    ("
-+"  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
-+"  where"
-+"  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
-+"  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
-+"  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
+               + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+
 +"  )as EST_ETA_DC,"
 +"  'Inbound notification',"
 +"  GTN.POL,"
 +"  'A.A',"
 +"  GTN.PLANTILLA_ID,"
 +"  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
+                       + " ,TIP1.NOMBRE_POD,"//19
+                        + " TIP2.NOMBRE_POL,"
+                        + " tibd.NOMBRE_BD "
 +"  from TRA_INB_EVENTO    TIE"
 +"  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
 +"  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
+                        + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
+                        + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
+                        + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
 +"  order by 1"; 
                                                               
                                                 if (db.doDB(sql)) {
@@ -186,14 +187,14 @@
                                                             <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
                                                             <td class="font-numero"><select class="" id="responsable<%=row[0]%>" onchange="cambiarResponsable(<%=row[0]%>)"  ><option value="0"><%=row[1]%></option><%=options%></select></td>	
                                                             <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[3]%></td>
+                                                            <td class="font-texto"> <%=row[21]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>
                                                             <td class="font-texto"> <%=row[5]%></td>	
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
                                                             <td class="font-texto"> <%=row[8]%></td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[10]%></td>
+                                                            <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	
                                                             <td class="font-texto"> <%=row[13]%></td>
@@ -202,7 +203,7 @@
                                                             <td class="font-texto">  <%=fechas%></td>
                                                             
                                                             <td class="font-texto"> <%=row[14]%></td>
-                                                            <td class="font-texto"> <%=row[15]%></td>	
+                                                            <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
                                                             
                                                              <td class="font-texto" contenteditable='true'>  </td>

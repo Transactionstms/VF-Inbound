@@ -60,6 +60,59 @@
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
 
+                String sql = ""
+                        + "SELECT  DISTINCT"
+                        + "  TIE.ID_EVENTO,"
+                        + "  GTN.CONTAINER1,"
+                        + "  GTN.BL_AWB_PRO,"
+                        + "  GTN.SHIPMENT_ID,"
+                        + "  GTN.LOAD_TYPE,"
+                        + " (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  LUM_BRIO ,"
+                        + "  GTN.BRAND_DIVISION,"
+                        + " nvl(dns.SBU_NAME,' ')  ,"
+                        + "  GTN.POL,"
+                        + "  to_char(GTN.ACTUAL_CRD,'MM/DD/YYYY'),"
+                        + "  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
+                        + "123,"
+                        + "456,"
+                        + "GTN.POD,"
+                        + "'ETA MX Port',"
+                        + "  to_char(GTN.ACTUAL_CRD"
+                        + "  + "
+                        + "  ( "
+                + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+                        + "  )-2 "
+                        + "  ,'MM/DD/YYYY') as ETA_DC,"//--+DIAS
+                        + "  "
+                        + "    to_char(GTN.ACTUAL_CRD"
+                        + "  + "
+                        + "  ( "
+               + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+                         + "  )"
+                        + "  ,'MM/DD/YYYY') as ETA_DC,"//--+DIAS
+                        + "  "
+                        //+"  to_char(GTN.ACTUAL_CRD,'MM/DD/YYYY'),"//--+DIAS
+                        + "' Arribo real  DC',"
+                        + "' Comentarios',"
+                        + " "
+                        + "    ( "
+               + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+                        + "  )as EST_ETA_DC "
+                        + " ,TIP1.NOMBRE_POD,"
+                        + " TIP2.NOMBRE_POL,"
+                        + " tibd.NOMBRE_BD "
+                        + "   from TRA_INB_EVENTO    TIE"
+                        + "  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID  "
+                        + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
+                        + "  left join tra_inb_dns                dns on dns.SHIPMENT_NUM=TIE.SHIPMENT_ID     "
+                        + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
+                        + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
+                        + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
+                        + "  order by 1"
+                        + ""
+                        + ""
+                        + "";
+
         %>
         <!-- navbar-->
         <header class="header">
@@ -67,6 +120,7 @@
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
+                   
                     <!--<div class="unwired alert alert-danger">¡Se ha perdido su conexión! TMS debe de estar conectado a Internet para su correcto funcionamiento.</div>-->
                     <section>
                         <div class="row">
@@ -96,98 +150,36 @@
                                                 <table id="main-table" class="main-table" style="table-layout:fixed; width:200%;">
                                                     <thead>
                                                         <tr>
-                                                          
-     <th scope="col" class="font-titulo">Evento </th>
-     <th scope="col" class="font-titulo">Container# </th>
-     <th scope="col" class="font-titulo">BL </th>
-     <th scope="col" class="font-titulo">Shipment </th>
-     <th scope="col" class="font-titulo">Load Type </th>
-     <th scope="col" class="font-titulo">LUM BRIO </th>
-     <th scope="col" class="font-titulo">Brand</th>
-     <th scope="col" class="font-titulo">Sbu Name </th>
-     <th scope="col" class="font-titulo">POL </th>
-     <th scope="col" class="font-titulo">Actual CRD </th>
-     <th scope="col" class="font-titulo">Departure Date </th>
-   <!--  <th scope="col" class="font-titulo">123 </th>
-     <th scope="col" class="font-titulo">456 </th>-->
-     <th scope="col" class="font-titulo">MX Port </th>
-     <th scope="col" class="font-titulo">ETA MX Port </th>
-     <th scope="col" class="font-titulo">ETA DC </th>
-     <th scope="col" class="font-titulo">INDC +2 Days Put Away </th>
-     <th scope="col" class="font-titulo">Arribo real DC </th>
-     <th scope="col" class="font-titulo">Comentarios </th> 
-     
-     
+
+                                                            <th scope="col" class="font-titulo">Evento </th>
+                                                            <th scope="col" class="font-titulo">Container# </th>
+                                                            <th scope="col" class="font-titulo">BL </th>
+                                                            <th scope="col" class="font-titulo">Shipment </th>
+                                                            <th scope="col" class="font-titulo">Load Type </th>
+                                                            <th scope="col" class="font-titulo">LUM BRIO </th>
+                                                            <th scope="col" class="font-titulo">Brand</th>
+                                                            <th scope="col" class="font-titulo">Sbu Name </th>
+                                                            <th scope="col" class="font-titulo">POL </th>
+                                                            <th scope="col" class="font-titulo">Actual CRD </th>
+                                                            <th scope="col" class="font-titulo">Departure Date </th>
+                                                            <!--  <th scope="col" class="font-titulo">123 </th>
+                                                              <th scope="col" class="font-titulo">456 </th>-->
+                                                            <th scope="col" class="font-titulo">MX Port </th>
+                                                            <th scope="col" class="font-titulo">ETA MX Port </th>
+                                                            <th scope="col" class="font-titulo">ETA DC </th>
+                                                            <th scope="col" class="font-titulo">INDC +2 Days Put Away </th>
+                                                            <th scope="col" class="font-titulo">Arribo real DC </th>
+                                                            <th scope="col" class="font-titulo">Comentarios </th> 
+
+
                                                             <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
 
-                                                        <%                                                        
-                                                        
-                                                            String sql = ""
-                                                                    + "SELECT  DISTINCT"
-+"  TIE.ID_EVENTO,"
-+"  GTN.CONTAINER1,"
-+"  GTN.BL_AWB_PRO,"
-+"  GTN.SHIPMENT_ID,"
-+"  GTN.LOAD_TYPE,"
-+" (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  LUM_BRIO ,"
-+"  GTN.BRAND_DIVISION,"
-+" nvl(dns.SBU_NAME,' ')  ,"
-+"  GTN.POL,"
-+"  to_char(GTN.ACTUAL_CRD,'MM/DD/YYYY'),"
-+"  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
-+"123,"
-+"456,"
-+"GTN.POD,"
-+"'ETA MX Port',"
-+"  to_char(GTN.ACTUAL_CRD"
-+"  + "
-+"  ( "
-+"  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd "
-+"  where "
-+"  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and "
-+"  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
-+"  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
-+"  )-2 "
-+"  ,'MM/DD/YYYY') as ETA_DC,"//--+DIAS
-+"  "
-+"    to_char(GTN.ACTUAL_CRD"
-+"  + "
-+"  ( "
-+"  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
-+"  where"
-+"  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
-+"  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
-+"  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
-+"  )"
-+"  ,'MM/DD/YYYY') as ETA_DC,"//--+DIAS
-+"  "
-//+"  to_char(GTN.ACTUAL_CRD,'MM/DD/YYYY'),"//--+DIAS
-+"' Arribo real  DC',"
-+"' Comentarios',"
-+" "
-+"    ( "
-+"  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
-+"  where"
-+"  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
-+"  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
-+"  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
-+"  )as EST_ETA_DC "
-//+"  gtn.ID_GTN"
-+"   from TRA_INB_EVENTO    TIE"
-+"  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID  " 
-+"  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-+"  left join tra_inb_dns                dns on dns.SHIPMENT_NUM=TIE.SHIPMENT_ID     "
-+"  order by 1"
-                                                                    + ""
-                                                                    + ""
-                                                                    + "";
-
-                                                            if (db.doDB(sql)) {
+                                                        <%                                                            if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
-                                                                   
+
                                                         %>
 
 
@@ -203,10 +195,10 @@
                                                             <td class="font-texto"> <%=row[8]%></td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
                                                             <td class="font-texto"> <%=row[10]%></td>
-                                                            
-                                                           <!-- <td class="font-texto"> <%=row[11]%></td>	
-                                                            <td class="font-texto"> <%=row[12]%></td>-->
-                                                            
+
+<!-- <td class="font-texto"> <%=row[11]%></td>	
+<td class="font-texto"> <%=row[12]%></td>-->
+
                                                             <td class="font-texto"> <%=row[13]%></td> 
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[15]%></td>	
@@ -222,13 +214,13 @@
                                                             }
                                                         %>
 
-                                                       
+
 
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <br>
-                                          
+
                                         </form>
                                     </div>
                                 </div>
@@ -250,7 +242,7 @@
                 </footer>
             </div>
         </div>    
-                            
+
         <script>
             function cambiarResponsable(id) {
                 console.log(id);
@@ -258,7 +250,7 @@
             function editarEvento(id) {
                 console.log('editar');//
                 console.log(id);
-                                    window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
+                window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
 
             }
         </script>                     
@@ -279,13 +271,13 @@
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <script type="text/javascript">
-                                // Optional
-                                Prism.plugins.NormalizeWhitespace.setDefaults({
-                                    'remove-trailing': true,
-                                    'remove-indent': true,
-                                    'left-trim': true,
-                                    'right-trim': true,
-                                });
+            // Optional
+            Prism.plugins.NormalizeWhitespace.setDefaults({
+                'remove-trailing': true,
+                'remove-indent': true,
+                'left-trim': true,
+                'right-trim': true,
+            });
 
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
