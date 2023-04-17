@@ -31,30 +31,20 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Personalizar Evento</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="all,follow">
-        <!-- Google fonts - Popppins for copy-->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-        <!-- Prism Syntax Highlighting-->
-        <link rel="stylesheet" href="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.css">
-        <link rel="stylesheet" href="../lib/vendor/prismjs/themes/prism-okaidia.css">
-        <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+        <title>Personalizar Evento</title>
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
-        <!-- Custom stylesheet - for your changes-->
         <link rel="stylesheet" href="../lib/css/custom.css">
-        <!-- Favicon-->
-        <link rel="shortcut icon" href="../lib/img/favicon.png">
+        <script src="lib/JSplantilla.js" type="text/javascript"></script>
         <!-- Table css -->
         <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- jQuery/show modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
-        <!-- Connection Status Red -->
-        <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
         <style>
             #contenedor {
               display: flex;
@@ -64,6 +54,18 @@
 
             #contenedor > div {
               width: 50%;
+            }
+
+            .columna {
+              width:25%;
+              float:right;
+            }
+
+            @media (max-width: 500px) {
+              .columna {
+                width:auto;
+                float:none;
+              }
             }
         </style>
     </head>
@@ -78,6 +80,33 @@
                 Usuario root = (Usuario) ownsession.getAttribute("login.root");
                 String tipoAgente = "3";  // (1)LOGIX       (2)CUSA       (3)GRAL
                 String nombre = "";
+                String idPlantilla = "26";
+                
+                String sql = " SELECT DISTINCT "
+                           + " NVL(TIE.ID_EVENTO,0), "
+                           + " NVL(UPPER(TDR.RESPONSABLE),' '), "
+                           + " NVL(TIGT.FINAL_DESTINATION,' '), "
+                           + " NVL(TIBD.NOMBRE_BD,' '), "
+                           + " NVL(TIGT.CBDIV_ID,0), "
+                           + " NVL(TIE.SHIPMENT_ID,' '), "
+                           + " NVL(TIE.CONTAINER1,' '), "
+                           + " NVL(TIGT.BL_AWB_PRO,' '), "
+                           + " NVL(TIGT.LOAD_TYPE,' '), "
+                           + " NVL(TIGT.QUANTITY,0), "
+                           + " NVL(TIP.NOMBRE_POD,' '), "
+                           + " NVL(TO_CHAR(TIGT.EST_DEPARTURE_POL, 'dd/mm/yyyy'),' '), "
+                           + " NVL(TO_CHAR(TIGT.ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' '), "
+                           + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'dd/mm/yyyy'),' '), "
+                           + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "
+                           + " NVL(TIPL.NOMBRE_POL,' ') "
+                           + " FROM TRA_INB_EVENTO TIE "
+                           + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
+                           + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
+                           + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
+                           + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
+                           + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
+                           + " WHERE TIGT.ESTATUS = 1 "
+                           + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
                 
                 if (db.doDB("select NOMBRE from TRA_PLANTILLA where id='" + view + "' ")) {
                     for (String[] row : db.getResultado()) {
@@ -86,12 +115,10 @@
                 }
         %>
         <!-- navbar-->
-        <header class="header">
-        </header>
+        <header class="header"></header>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
-                    <!--<div class="unwired alert alert-danger">¡Se ha perdido su conexión! TMS debe de estar conectado a Internet para su correcto funcionamiento.</div>-->
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
@@ -106,20 +133,59 @@
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
                                             <div id="contenedor">
-                                                <div style="text-align: left;">
-                                                    <button type="button" class="btn btn-success" onclick="openModalPlantilla()">Subir Plantilla</button>
-                                                </div>
+                                                <div class="row">
+                                                    <div class="columna">
+                                                        <button type="button" class="btn btn-success" onclick="openModalPlantilla()">Subir Plantilla</button>
+                                                    </div>
+                                                    <div class="columna">
+                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,1)" required="true">
+                                                            <option value="0" disabled selected>Evento</option>
+                                                            <%
+                                                                if (db.doDB("SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC")) {
+                                                                    for (String[] row : db.getResultado()) {
+                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="columna">
+                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,2)" required="true">
+                                                            <option value="0" disabled selected>Shipment</option>
+                                                            <%
+                                                                if (db.doDB("SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY SHIPMENT_ID ASC")) {
+                                                                    for (String[] row : db.getResultado()) {
+                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="columna">
+                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,3)" required="true">
+                                                            <option value="0" disabled selected>Container</option>
+                                                            <%
+                                                                if (db.doDB("SELECT DISTINCT CONTAINER1 FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY CONTAINER1 ASC")) {
+                                                                    for (String[] row : db.getResultado()) {
+                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                </div>       
                                                 <div style="text-align: right;">
                                                     <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
                                                     <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
                                                 </div>
                                             </div>
                                             <br>
-                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
+                                            <div id="table-scroll" class="table-scroll"  style="height:500px;">
                                                 <table id="main-table" class="main-table" style="table-layout:fixed; width:800%;">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Referencia AA</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Responsable</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Final Destination (Shipment)</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Brand-Division</th>
@@ -197,14 +263,14 @@
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha confirmacion Clave de Pedimento</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Recepcion de Incrementables</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">T&E</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Vencimiento del Inbond</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Vencimiento del Inbound</th>
                                                         <%
                                                             }else if(tipoAgente.equals("2")){  //Cusa
                                                         %>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">No. BULTOS</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Peso (KG)</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Transferencia (SI / NO)</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Iinicio Etiquetado</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Inicio Etiquetado</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Termino Etiquetado</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Hora de termino Etiquetado</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Proveedor</th>
@@ -214,11 +280,12 @@
                                                         %> 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>         
+                                                    <tbody>  
                                                          <tr>
-                                                              <th class="font-numero">
+                                                              <th class="font-numero">                    <!-- Número de Evento -->
                                                                 <select class="form-control" id="evento_id" name="evento_id" required="true">
-                                                                    <option value="0" disabled selected> --- </option>
+                                                                    <!--<option value="0" disabled selected> --- </option>-->
+                                                                    <option value="" disabled selected></option>
                                                                     <%
                                                                         if (db.doDB("SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC")) {
                                                                             for (String[] row : db.getResultado()) {
@@ -228,25 +295,31 @@
                                                                     %>
                                                                 </select>
                                                               </th>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
-                                                              <td class="font-numero"></td>
+                                                              <td class="font-numero"></td>          <!-- Referencia AA -->
+                                                              <td class="font-numero">rowP[1]</td>   <!-- Responsable -->
+                                                              <td class="font-numero">rowP[2]</td>   <!-- Final Destination -->
+                                                              <td class="font-numero">rowP[3]</td>   <!-- Brand-Division -->
+                                                              <td class="font-numero">rowP[4]</td>   <!-- Division -->
+                                                              <td class="font-numero">rowP[5]</td>   <!-- Shipment ID -->
+                                                              <td class="font-numero">rowP[6]</td>   <!-- Container -->
+                                                              <td class="font-numero">rowP[7]</td>   <!-- BL/AWB/PRO -->
+                                                              <td class="font-numero">rowP[8]</td>   <!-- LoadType -->
+                                                              <td class="font-numero">rowP[9]</td>   <!-- Quantity -->            
+                                                              <td class="font-numero">rowP[10]</td>  <!-- POD -->
+                                                              <td class="font-numero">rowP[11]</td>  <!-- Est. Departure from POL -->
+                                                              <td class="font-numero">rowP[12]</td>  <!-- ETA REAL Port of Discharge -->
+                                                              <td class="font-numero">rowP[13]</td>  <!-- Est. Eta DC -->
+                                                              <td class="font-numero"></td>          <!-- Inbound notification -->
+                                                              <td class="font-numero">rowP[15]</td>  <!-- POL -->
+                                                              <td class="font-numero"></td>          <!-- A.A. -->
+                                                              <td class="font-numero"></td>          <!-- Fecha Mes de Venta -->
+                                                              <td class="font-numero">               <!-- Prioridad Si/No -->
+                                                                 <select class="form-control" id="shipment_id" name="shipment_id" required="true">
+                                                                    <option value="Si">SI</option>
+                                                                    <option value="No" disabled selected>NO</option>
+                                                                 </select> 
+                                                              </td>                                       
+                                                              <td class="font-numero"></td>          <!-- CAMPO EN BLANCO -->
                                                               <td class="font-numero">
                                                                   <input class="form-control" id="pais_origen" name="pais_origen" type="text" autocomplete="off">
                                                               </td>
@@ -457,7 +530,7 @@
                                                             <%
                                                                 }
                                                             %>
-                                                         </tr>
+                                                         </tr>                                                     
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -485,31 +558,61 @@
         </div> 
         <!-- modal - Subir Plantilla --> 
         <div class="modal fade text-start" id="modalSubirPlantilla" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-0 bg-gray-100">
                         <h3 class="h6 modal-title" id="exampleModalLabel"><i class="fas fa-folder-open"></i>&nbsp;<%=nombre%></h3>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="container"> 
-                            <div class="mb-3">
-                                <input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="card-heading">*Descarga el archivo, llena los datos y sube tu documento</div>
                             </div>
-                            <div class="row position-relative" style="top: 10px;">
-                                <div class="col-6 text-center">
-                                    <button class="btn float-start btn-primary" id="created_file"  >Descargar</button>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <button class="btn float-end btn-success"  id="upload_file"   >Subir</button>
-                                </div>
+                            <div class="card-body text-muted">
+                                <!-- Selección de Clientes -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">  
+                                            <div class="row">
+                                                <div class="col-lg-3"></div> 
+                                                <div class="col-md-6 col-lg-11 mb-4">
+                                                    <div class="card h-100">
+                                                        <div class="card-header py-4">
+                                                            <!--<h6 class="card-heading">nombre</h6>-->
+                                                        </div>
+                                                        <div class="card-body pt-3">
+                                                            <div class="mb-3">
+                                                                <label for="input-id" class="form-label">Selecciona </label>
+                                                                <input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                            </div>
+                                                            <div class="row position-relative" style="top: 10px;">
+                                                                <div class="col-6 text-center">
+                                                                    <button class="btn float-start btn-primary" id="created_file">Descargar</button>
+                                                                </div>
+                                                                <div class="col-6 text-center">
+                                                                    <button class="btn float-end btn-success" id="upload_file">Subir</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div align="center" class="col-md-8">
+                                                    <div align="center" id="divResultado" name="divResultado"></div>
+                                                </div>
+                                                <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
+                                                <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
+                                                <input type="hidden" name="idLenguaje" value="1" id="idLenguaje"/>
+                                                <input type="hidden" name="idDivision" value="<%=idDivision%>" id="idDivision"/>
+                                                <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
+                                                <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
+                                                <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>  
                             </div>
-                            <br>
-                            <div align="center" class="col-md-11">
-                                <div align="center" id="divResultado" name="divResultado"></div>
-                            </div>
-                        </div>
-                        <input type="hidden" name="idPlantilla" value="<%=view%>" id="idPlantilla"/>
+                        </div> 
                         <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
                         <input type="hidden" name="idLenguaje" value="1" id="idLenguaje"/>
                         <input type="hidden" name="idDivision" value="<%=idDivision%>" id="idDivision"/>
@@ -519,40 +622,29 @@
                     </div>
                 </div>
             </div>
-        </div>                    
+        </div>                
         <script>
+            function customForm(regId) {
+                fetch("<%=request.getContextPath()%>/ConsultarCustom?regId=" + regId, {
+                    method: 'POST',
+                }).then(r => r.text())
+                        .then(data => {
+                            document.getElementById('detalle_cfdi').innerHTML = data;
+                        }).catch(error => console.log(error));
+            }
+
             function openModalPlantilla() {
                 $("#modalSubirPlantilla").modal("show");
             }
-        </script>                    
-        <!-- Conexión estatus red -->                    
-        <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
+        </script>  
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <!-- Main Theme JS File-->
-        <script src="../lib/js/theme.js"></script>
-        <!-- Prism for syntax highlighting-->
-        <script src="../lib/vendor/prismjs/prism.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <!-- upload js -->
+        <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
         <!-- actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
-        <!-- excel -->
-        <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            // Optional
-            Prism.plugins.NormalizeWhitespace.setDefaults({
-                'remove-trailing': true,
-                'remove-indent': true,
-                'left-trim': true,
-                'right-trim': true,
-            });
-
-        </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

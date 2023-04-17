@@ -838,6 +838,10 @@
         <servlet-name>InsertarCustomsForms</servlet-name>
         <servlet-class>com.onest.train.insertar.catalogos.InsertarCustomsForms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarCustom</servlet-name>
+        <servlet-class>com.tacts.consultar.facturacion.ConsultarCustom</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1670,6 +1674,10 @@
     <servlet-mapping>
         <servlet-name>InsertarCustomsForms</servlet-name>
         <url-pattern>/InsertarCustomsForms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarCustom</servlet-name>
+        <url-pattern>/ConsultarCustom</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
