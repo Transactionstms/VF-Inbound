@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
     function save(){
-        fetch("../AlertaInbound?tipoEnvio=2&correos=oamorales@tacts.mx/jlmateos@tacts.mx", {
+        fetch("../AlertaInbound?tipoEnvio=2&agenteAduanal=4006", {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {

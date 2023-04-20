@@ -33,6 +33,7 @@ public class CreatExcel {
         ServiceDAO dao = new ServiceDAO();
         
         try {
+            
             String consulta = " SELECT DISTINCT " 
                             + " TIE.ID_EVENTO, " 
                             + " BP.RESPONSABLE, " 
@@ -45,26 +46,24 @@ public class CreatExcel {
                             + " GTN.LOAD_TYPE, " 
                             + " (SELECT SUM(tt.QUANTITY) FROM TRA_INC_GTN_TEST tt WHERE tt.PLANTILLA_ID =GTN.PLANTILLA_ID ) AS SUMA, GTN.POD, TO_CHAR(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'), " 
                             + " TO_CHAR(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY') AS ETA_REAL_PORT, " 
-                            + " ("
-                     + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
-                  + ")AS EST_ETA_DC, " 
+                            + " (SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+                            + " )AS EST_ETA_DC, " 
                             + " 'INBOUND NOTIFICATION', " 
                             + " GTN.POL, " 
                             + " 'A.A', " 
                             + " GTN.PLANTILLA_ID, " 
                             + " TO_CHAR(GTN.FECHA_CAPTURA,'MM/DD/YYYY') " 
-                    
-                        + " ,TIP1.NOMBRE_POD,"//19
-                        + " TIP2.NOMBRE_POL,"
-                        + " tibd.NOMBRE_BD "
-                    
+                            + " ,TIP1.NOMBRE_POD," 
+                            + " TIP2.NOMBRE_POL,"
+                            + " tibd.NOMBRE_BD "
                             + " FROM TRA_INB_EVENTO TIE " 
                             + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID=TIE.USER_NID " 
                             + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID "
-                    + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                    + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                    + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                    + "ORDER BY 1 ";
+                            + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
+                            + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
+                            + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
+                            + " ORDER BY 1 ";
+            
             Statement stmt = dao.conectar().prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery(consulta);
 

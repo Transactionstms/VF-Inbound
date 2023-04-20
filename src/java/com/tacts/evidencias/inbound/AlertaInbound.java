@@ -50,37 +50,24 @@ public class AlertaInbound extends HttpServlet {
         String rutaFichero = CreatExcel.crearAPartirDeArrayList("");
         System.out.println("Resultado:"+rutaFichero);
         
-        //Extracción de Fecha
-        Date date = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = formato.format(date);
-        String[] par1 = fecha.split("/");
-        String dia = par1[0];
-        String mes = par1[1];
-        String anio = par1[2];
-
-        //Extracción de Hora   
-        Date hr = new Date();
-        DateFormat hours = new SimpleDateFormat("HH:mm:ss");
-        String hour = hours.format(hr);
-        String[] par2 = hour.split(":");
-        String hora = par2[0]; 
-        String minutos = par2[1];
-        String segundos = par2[2];
-
-        
         String tipoEnvio = request.getParameter("tipoEnvio");
-        String correos = request.getParameter("correos").replaceFirst(" ", "/"); 
+        String agenteAduanal = request.getParameter("agenteAduanal");
+        String preEmails = "";
+        String emails = "";
         
-        /*
-          1 = GTN
-          2 = Eventos Nuevos
-        */
-
+        String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN ('" + agenteAduanal + "') AND ESTATUS = 1 AND CBDIV_ID = 20";
+        if (db.doDB(consulta)) {
+            for (String[] rowE : db.getResultado()) {
+                preEmails += rowE[0] + "/";
+            }
+        }
+        
+        emails = preEmails.replaceFirst(" ", "/");  
+        
         if(tipoEnvio.equals("1")){
             //correo.alertaGTN(correos);  
         }else if(tipoEnvio.equals("2")){
-            correo.alertaModificarEventos(correos,rutaFichero.trim()); 
+            correo.alertaModificarEventos(emails,rutaFichero.trim()); 
         }
         
          oraDB.close(); //cerrar conexión
