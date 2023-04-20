@@ -185,9 +185,9 @@
                                                 }catch(NumberFormatException e){
                                                 lcdN=0;
                                                 }
-                                                String lcd=" ";
+                                                 String lcd="FCL";
                                                 
-                                                if(lcdN>1){lcd=" - LCD";}
+                                                if(lcdN>1){lcd="FCL / LCL";}
                                                         %>
                                                         <tr>
                                                             <td class="font-numero" > 
@@ -203,7 +203,7 @@
                                                             <th class="font-numero"><%=row[3]%></th><!--<td class="font-numero"><input type="hidden" id="shipment" name="shipment" value="5011885374">5011885374</td>	-->
                                                             <th class="font-numero"><%=row[4]%></th><!--<td class="font-numero"><input class="" type="text" id="container" name="container" value="TCKU7711790"></td>	-->
                                                             <th class="font-numero"><%=row[5]%></th><!--<td class="font-texto"><input class="" type="text" id="blAwbPro" name="blAwbPro" value="TEST MAEU222517139"></td>-->	
-                                                            <td class="font-numero"><%=row[6]%>*** <%=lcd%></td> <!--<td class="font-numero"><input class="" type="text" id="loadType" name="loadType" value="FCL"></td>	-->
+                                                            <td class="font-numero"> <%=lcd%> </td> <!--<td class="font-numero"><input class="" type="text" id="loadType" name="loadType" value="FCL"></td>	-->
                                                             <td class="font-numero"><%=row[7]%></td> <!--<td class="font-texto"><input class="" type="text" id="containerType" name="containerType" value="40' High Cube Dr"></td>-->	
                                                             <td class="font-numero"><%=row[8]%></td> <!--<td class="font-numero"><input class="" type="text" id="packages" name="packages" value="149"></td>	-->
                                                             <td class="font-numero"><%=row[9]%></td> <!--<td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="860"></td>	-->

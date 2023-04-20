@@ -195,9 +195,9 @@
                                                 }catch(NumberFormatException e){
                                                 lcdN=0;
                                                 }
-                                                String lcd=" ";
+                                                String lcd="FCL";
                                                 
-                                                if(lcdN>1){lcd=" - LCD";}
+                                                if(lcdN>1){lcd="FCL / LCL";}
                                                    %>
                                                    
                                                      
@@ -210,7 +210,7 @@
                                                             <td class="font-texto"> <%=row[5]%></td>	
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[8]%>  <%=lcd%> </td>		
+                                                            <td class="font-texto">   <%=lcd%> </td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
