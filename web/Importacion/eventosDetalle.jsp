@@ -88,7 +88,8 @@
 +"  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
                         + " ,TIP1.NOMBRE_POD,"//19
                         + " TIP2.NOMBRE_POL,"
-                        + " tibd.NOMBRE_BD "
+                        + " tibd.NOMBRE_BD,"
+                        + "nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0) "
                         + "  "
 +"  from TRA_INB_EVENTO    TIE"
 +"  left JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
@@ -150,9 +151,9 @@
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">Est. Eta DC <strong style="color:white">*</strong></th>
-                                                                 <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
-                                                                <th scope="col" class="font-titulo" style="background-color:#C65911">DC </th>
-                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">DC </th>
+                                                            <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
                                                             
@@ -188,6 +189,15 @@
                                                       //fechas2=row1[1];
                                                 }
                                                 }
+                                                int lcdN=0;
+                                                try{
+                                                lcdN=Integer.parseInt(row[22]);
+                                                }catch(NumberFormatException e){
+                                                lcdN=0;
+                                                }
+                                                String lcd=" ";
+                                                
+                                                if(lcdN>1){lcd=" - LCD";}
                                                    %>
                                                    
                                                      
@@ -200,7 +210,7 @@
                                                             <td class="font-texto"> <%=row[5]%></td>	
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[8]%></td>		
+                                                            <td class="font-texto"> <%=row[8]%>  <%=lcd%> </td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	

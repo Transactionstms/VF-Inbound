@@ -166,7 +166,9 @@
                                                                     + " gtn.FECHA_CAPTURA                 , "
                                                                     + " gtn.BODEGA_ID                     , "
                                                                     + " gtn.CBDIV_ID                      , "
-                                                                    + " gtn.PLANTILLA_ID                   "
+                                                                    + " gtn.PLANTILLA_ID                  , "
+                                                                    + " nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0) "
+
                                                                     + " from TRA_INC_GTN_TEST gtn"
                                                                       + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
                                                                       + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
@@ -176,6 +178,16 @@
                                                                     + " order by gtn.ID_GTN";
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
+                                                                    
+                                                                   int lcdN=0;
+                                                try{
+                                                lcdN=Integer.parseInt(row[34]);
+                                                }catch(NumberFormatException e){
+                                                lcdN=0;
+                                                }
+                                                String lcd=" ";
+                                                
+                                                if(lcdN>1){lcd=" - LCD";}
                                                         %>
                                                         <tr>
                                                             <td class="font-numero" > 
@@ -191,7 +203,7 @@
                                                             <th class="font-numero"><%=row[3]%></th><!--<td class="font-numero"><input type="hidden" id="shipment" name="shipment" value="5011885374">5011885374</td>	-->
                                                             <th class="font-numero"><%=row[4]%></th><!--<td class="font-numero"><input class="" type="text" id="container" name="container" value="TCKU7711790"></td>	-->
                                                             <th class="font-numero"><%=row[5]%></th><!--<td class="font-texto"><input class="" type="text" id="blAwbPro" name="blAwbPro" value="TEST MAEU222517139"></td>-->	
-                                                            <td class="font-numero"><%=row[6]%></td> <!--<td class="font-numero"><input class="" type="text" id="loadType" name="loadType" value="FCL"></td>	-->
+                                                            <td class="font-numero"><%=row[6]%>*** <%=lcd%></td> <!--<td class="font-numero"><input class="" type="text" id="loadType" name="loadType" value="FCL"></td>	-->
                                                             <td class="font-numero"><%=row[7]%></td> <!--<td class="font-texto"><input class="" type="text" id="containerType" name="containerType" value="40' High Cube Dr"></td>-->	
                                                             <td class="font-numero"><%=row[8]%></td> <!--<td class="font-numero"><input class="" type="text" id="packages" name="packages" value="149"></td>	-->
                                                             <td class="font-numero"><%=row[9]%></td> <!--<td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="860"></td>	-->
