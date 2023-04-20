@@ -58,48 +58,19 @@
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
-                
-
-
-
-   String sql=""
-   +" SELECT  DISTINCT"
-+"  TIE.ID_EVENTO,"
-+"  nvl(BP.RESPONSABLE,' '),"
-+"  GTN.FINAL_DESTINATION,"
-+"  GTN.BRAND_DIVISION,"
-+"  nvl((select  SBU_NAME from tra_inb_dns  where SBU_NAME is not null and SHIPMENT_NUM = gtn.SHIPMENT_ID and ID_DNS = (SELECT MAX(ID_DNS) FROM tra_inb_dns where SBU_NAME is not null and SHIPMENT_NUM =gtn.SHIPMENT_ID)  ) ,' ') ,"
-+"  GTN.SHIPMENT_ID,"
-+"  GTN.CONTAINER1,"
-+"  GTN.BL_AWB_PRO,"
-+"  GTN.LOAD_TYPE,"
-+"   (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  as suma   ,"
-+"   GTN.POD,"
-+"  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
-+"  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
-+"   nvl( ("
-               + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
-
-+"  ),'80') as EST_ETA_DC,"
-+"  'Inbound notification',"
-+"  GTN.POL,"
-+"  nvl(taa.AGENTE_ADUANAL_NOMBRE,' '),"
-+"  GTN.PLANTILLA_ID,"
-+"  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
-                        + " ,TIP1.NOMBRE_POD,"//19
-                        + " TIP2.NOMBRE_POL,"
-                        + " tibd.NOMBRE_BD,"
-                        + "nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0) "
-                        + "  "
-+"  from TRA_INB_EVENTO    TIE"
-+"  left JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
-+"  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-                        + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                        + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                        + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                        + " LEFT JOIN TRA_INB_AGENTE_ADUANAL  taa ON taa.AGENTE_ADUANAL_ID = tip1.AGENTE_ADUANAL_ID"
-                        + " "
-+"  order by 1 "; 
+                ConsultasQuery fac = new ConsultasQuery();
+                String agenteAduanal = "";
+                String coma = ",";
+                String aa= "";
+  
+                if (db.doDB(fac.consultarAAEventosDetalle())) {
+                    for (String[] rowA : db.getResultado()) {
+                        aa = rowA[0];
+                        aa = aa + coma;
+                        agenteAduanal = agenteAduanal + aa;
+                    }
+                       agenteAduanal = "4006,"+agenteAduanal.replaceAll(",$", ""); 
+                }
 
          %>
         <!-- navbar-->
@@ -122,6 +93,9 @@
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
+                                            
+                                           <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
+                                                                                        
                                             <div class="row">
                                                 <div align="right">
                                                     <div id="example_filter" class="dataTables_filter">
@@ -176,7 +150,7 @@
                                                           <%
                                                            
                                                               
-                                                if (db.doDB(sql)) {
+                                                if (db.doDB(fac.consultarEventosDetalle())) {
                                                 for (String[] row : db.getResultado()) {
                                                    // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
                                                    //row[18]

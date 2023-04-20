@@ -44,30 +44,22 @@ public class AlertaInbound extends HttpServlet {
         
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
-
+        
+        String agenteAduanal = request.getParameter("agenteAduanal");
+        String emails = "";
+        String rutaFichero = "";
+        
         Email correo = new Email();
         ConsultasQuery fac = new ConsultasQuery();
-        String rutaFichero = CreatExcel.crearAPartirDeArrayList("");
-        System.out.println("Resultado:"+rutaFichero);
-        
-        String tipoEnvio = request.getParameter("tipoEnvio");
-        String agenteAduanal = request.getParameter("agenteAduanal");
-        String preEmails = "";
-        String emails = "";
-        
-        String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN ('" + agenteAduanal + "') AND ESTATUS = 1 AND CBDIV_ID = 20";
+                
+        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
         if (db.doDB(consulta)) {
             for (String[] rowE : db.getResultado()) {
-                preEmails += rowE[0] + "/";
+                rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
+                emails = rowE[1].replaceFirst(" ", "/");  
+                
+                correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); 
             }
-        }
-        
-        emails = preEmails.replaceFirst(" ", "/");  
-        
-        if(tipoEnvio.equals("1")){
-            //correo.alertaGTN(correos);  
-        }else if(tipoEnvio.equals("2")){
-            correo.alertaModificarEventos(emails,rutaFichero.trim()); 
         }
         
          oraDB.close(); //cerrar conexión

@@ -27,7 +27,7 @@ import java.sql.Statement;
 
 public class CreatExcel {
 
-    public static String crearAPartirDeArrayList(String res) {
+    public static String crearAPartirDeArrayList(String agenteId) {
 
         ArrayList<Persona> personas = new ArrayList<>();
         ServiceDAO dao = new ServiceDAO();
@@ -59,10 +59,13 @@ public class CreatExcel {
                             + " FROM TRA_INB_EVENTO TIE " 
                             + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID=TIE.USER_NID " 
                             + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID "
-                            + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                            + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                            + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                            + " ORDER BY 1 ";
+                            + " LEFT JOIN tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
+                            + " LEFT JOIN tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
+                            + " LEFT JOIN tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION";
+                if(!agenteId.equals("4006")){ //VF
+                  consulta += " WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteId +") ";       
+                }
+                  consulta += " ORDER BY 1 ";
             
             Statement stmt = dao.conectar().prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery(consulta);
@@ -80,7 +83,7 @@ public class CreatExcel {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFCellStyle style = workbook.createCellStyle();
         
-        final String nombreArchivo = "Excel-ModifaciónDeEventos.xls";
+        final String nombreArchivo = "ModifaciónDeEventos"+agenteId+".xls";
         Sheet hoja = workbook.createSheet("Modificación de Eventos");
         
         String[] encabezados = {"Número de evento", "Responsable", "Final Destination (Shipment)", "Brand-Division", "Division", "Shipment ID", "Container", "BL/AWB/PRO", "Load Type", "Quantity", "POD /", "Est. Departure from POL", "ETA REAL PORT", "Est. Eta DC", "Inbound notification", "POL", "A.A."};

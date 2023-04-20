@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
     function save(){
-        fetch("../AlertaInbound?tipoEnvio=2&agenteAduanal=4006", {
+        
+        let agenteId = document.getElementById("agenteId").value;
+        
+        fetch("../AlertaInbound?agenteAduanal="+agenteId, {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {

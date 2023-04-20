@@ -630,7 +630,7 @@ public class Email {
 
     }
     
-    public boolean alertaModificarEventos(String correosInternos, String fichero) throws SQLException {
+    public boolean alertaModificarEventos(String correosInternos, String fichero, String agenteId) throws SQLException {
         
             boolean enviado = false;
             String[] vect;
@@ -669,7 +669,7 @@ public class Email {
                 messageBodyPart = new MimeBodyPart();
                 
                 messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
-                messageBodyPart.setFileName("Excel-ModifaciónDeEventos.xls");
+                messageBodyPart.setFileName("ModifaciónDeEventos"+agenteId+".xls");
 
                 multipart.addBodyPart(messageBodyPart);
                 message.setContent(multipart);
