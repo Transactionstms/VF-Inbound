@@ -230,41 +230,49 @@ public class Email {
         return mensaje;
     }
     
-    private String getModificarEventos(){
+    private String getModificarEventos(String agenteId){
         
         ServiceDAO dao = new ServiceDAO();
         String mensaje = "";
         
         try {
-            String consulta = " SELECT DISTINCT " 
-                            + " TIE.ID_EVENTO, " 
-                            + " BP.RESPONSABLE, " 
-                            + " GTN.FINAL_DESTINATION, " 
-                            + " GTN.BRAND_DIVISION, " 
-                            + " 'DIVISION', " 
-                            + " GTN.SHIPMENT_ID, " 
-                            + " GTN.CONTAINER1, " 
-                            + " GTN.BL_AWB_PRO, " 
-                            + " GTN.LOAD_TYPE, " 
-                            + " (SELECT SUM(tt.QUANTITY) FROM TRA_INC_GTN_TEST tt WHERE tt.PLANTILLA_ID =GTN.PLANTILLA_ID ) AS SUMA, GTN.POD, TO_CHAR(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'), " 
-                            + " TO_CHAR(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY') AS ETA_REAL_PORT, " 
-                            + " (SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
-                            + " )AS EST_ETA_DC, " 
-                            + " 'INBOUND NOTIFICATION', " 
-                            + " GTN.POL, " 
-                            + " 'A.A', " 
-                            + " GTN.PLANTILLA_ID, " 
-                            + " TO_CHAR(GTN.FECHA_CAPTURA,'MM/DD/YYYY') " 
-                            + " ,TIP1.NOMBRE_POD,"//
-                            + " TIP2.NOMBRE_POL,"
-                            + " tibd.NOMBRE_BD "
-                            + " FROM TRA_INB_EVENTO TIE " 
-                            + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID=TIE.USER_NID " 
-                            + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-                            + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                            + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                            + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                            + " ORDER BY 1 ";
+            String consulta = "SELECT DISTINCT "
+                            + "    tie.id_evento, "
+                            + "    bp.responsable, "
+                            + "    gtn.final_destination, "
+                            + "    NVL(TIBD.NOMBRE_BD,' '), "
+                            + "    TID.SBU_NAME, "
+                            + "    gtn.shipment_id, "
+                            + "    gtn.container1, "
+                            + "    gtn.bl_awb_pro, "
+                            + "    gtn.load_type, "
+                            + "    (SELECT SUM(tt.quantity) FROM tra_inc_gtn_test tt WHERE tt.plantilla_id = gtn.plantilla_id) AS suma, "
+                            + "    NVL(tip1.NOMBRE_POD,' '), "
+                            + "    to_char(gtn.est_departure_pol, 'MM/DD/YYYY'), "
+                            + "    to_char(gtn.eta_port_discharge, 'MM/DD/YYYY') AS eta_real_port, "
+                            + "    (SELECT MAX(nvl(recommended_lt2, 80)) FROM tra_inb_costofleteytd WHERE TRIM(id_bd) = TRIM(gtn.brand_division) AND TRIM(id_pod) = TRIM(gtn.pod) AND TRIM(id_pol) = TRIM(gtn.pol)) AS est_eta_dc, "
+                            + "    'INBOUND NOTIFICATION', "
+                            + "    NVL(tip2.NOMBRE_POL,' '), "
+                            + "    TAA.AGENTE_ADUANAL_NOMBRE, "
+                            + "    gtn.plantilla_id, "
+                            + "    to_char(gtn.fecha_captura, 'MM/DD/YYYY'), "
+                            + "    tip1.nombre_pod, "
+                            + "    tip2.nombre_pol, "
+                            + "    tibd.nombre_bd "
+                            + "FROM "
+                            + "    tra_inb_evento tie "
+                            + "    INNER JOIN tra_destino_responsable  bp ON bp.user_nid = tie.user_nid "
+                            + "    INNER JOIN tra_inc_gtn_test         gtn ON gtn.plantilla_id = tie.plantilla_id "
+                            + "    LEFT JOIN tra_inb_pod              tip1 ON tip1.id_pod = gtn.pod "
+                            + "    LEFT JOIN tra_inb_pol              tip2 ON tip2.id_pol = gtn.pol "
+                            + "    LEFT JOIN tra_inb_brand_division   tibd ON tibd.id_bd = gtn.brand_division "
+                            + "    INNER JOIN TRA_INB_AGENTE_ADUANAL taa ON taa.AGENTE_ADUANAL_ID = tip1.AGENTE_ADUANAL_ID "
+                            + "    INNER JOIN TRA_INB_DNS TID ON GTN.SHIPMENT_ID = TID.SHIPMENT_NUM ";
+                if(!agenteId.equals("4006")){ //VF
+                  consulta += "WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteId +") ";       
+                }
+                  consulta += "ORDER BY 1 ";
+                  
             Statement stmt = dao.conectar().prepareStatement(consulta);
             ResultSet rsc = stmt.executeQuery(consulta);
 
@@ -274,7 +282,8 @@ public class Email {
                         + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
                         + "                <p style=\"margin:0;color:#333333\">\n"
                         + "                <div align=\"center\">\n"
-                        + "                 <h2>Modificación de Eventos</h2>\n"
+                        + "                 <h2>Modificación de Eventos Pruebas</h2>\n"
+                        + "                 <h2>Favor de hacer caso omiso a este correo.</h2>\n"
                         + "                </div>\n"
                         + "            </div>\n"
                         //+ "            <div style=\"padding:20px 30px\">\n"
@@ -654,11 +663,11 @@ public class Email {
 
                 message.setFrom(new InternetAddress(REMITENTE));
                 message.setHeader("X-Priority", "1");
-                message.setSubject("Informe - Modificación de Eventos Nuevos");
+                message.setSubject("Informe - Modificación de Eventos Nuevos PRUEBAS");
                 BodyPart messageBodyPart = new MimeBodyPart();
 
                 // Now set the actual message
-                messageBodyPart.setContent(getModificarEventos(),"text/html");
+                messageBodyPart.setContent(getModificarEventos(agenteId),"text/html");
 
                 Multipart multipart = new MimeMultipart();
 
