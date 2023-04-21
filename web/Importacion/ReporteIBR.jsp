@@ -100,7 +100,9 @@
                         + "  )as EST_ETA_DC "
                         + " ,TIP1.NOMBRE_POD,"
                         + " TIP2.NOMBRE_POL,"
-                        + " tibd.NOMBRE_BD "
+                        + " tibd.NOMBRE_BD,"
+                        + " nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0) "
+
                         + "   from TRA_INB_EVENTO    TIE"
                         + "  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID  "
                         + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
@@ -177,8 +179,20 @@
                                                     </thead>
                                                     <tbody>
 
-                                                        <%                                                            if (db.doDB(sql)) {
+                                                        <%       if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
+                                                                    
+                                             int lcdN=0;
+                                                try{
+                                                      lcdN=Integer.parseInt(row[23]);
+                                                    }catch(NumberFormatException e){
+                                                      lcdN=0;
+                                                    }
+                                                
+                                                String lcd="FCL"; 
+                                                if(lcdN>1){
+                                                    lcd="FCL / LCL";
+                                                }
 
                                                         %>
 
@@ -188,11 +202,14 @@
                                                             <td class="font-texto"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[3]%></td>
-                                                            <td class="font-texto"> <%=row[4]%></td>
+                                                            <td class="font-texto"> <%=lcd%> 
+                                                               <!-- <%=row[20]%>pod-->      
+                                                                    
+                                                            </td>
                                                             <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[22]%>   </td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[8]%></td>		
+                                                            <td class="font-texto">  <%=row[21]%></td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
                                                             <td class="font-texto"> <%=row[10]%></td>
 
