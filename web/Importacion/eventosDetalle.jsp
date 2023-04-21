@@ -98,8 +98,8 @@
             +"  tibd.NOMBRE_BD,"
             +"  nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0), "
                                
-                 + "  to_char(GTN.ACTUAL_CRD+GTN.MAX_FLETE,'DD/MM/YYYY') as ETA_DC,"//--+DIAS
-                 + "  to_char(GTN.ACTUAL_CRD+GTN.MAX_FLETE-2,'DD/MM/YYYY') as ETA_DC1 "//--+DIAS
+                 + " nvl(  to_char(GTN.ETA_PLUS2,'MM/DD/YYYY') ,' ' )as ETA_DC,"//--+DIAS
+                 + " nvl(  to_char(GTN.ETA_PLUS,'MM/DD/YYYY') ,' ' ) as ETA_DC1 "//--+DIAS
                  
             +"  from TRA_INB_EVENTO    TIE"
             +"  left JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
