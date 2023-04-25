@@ -82,40 +82,12 @@
                 String nombre = "";
                 String idPlantilla = "26";
                 
-                String sql = " SELECT DISTINCT "
-                           + " NVL(TIE.ID_EVENTO,0), "
-                           + " NVL(UPPER(TDR.RESPONSABLE),' '), "
-                           + " NVL(TIGT.FINAL_DESTINATION,' '), "
-                           + " NVL(TIBD.NOMBRE_BD,' '), "
-                           + " NVL(TIGT.CBDIV_ID,0), "
-                           + " NVL(TIE.SHIPMENT_ID,' '), "
-                           + " NVL(TIE.CONTAINER1,' '), "
-                           + " NVL(TIGT.BL_AWB_PRO,' '), "
-                           + " NVL(TIGT.LOAD_TYPE,' '), "
-                           + " NVL(TIGT.QUANTITY,0), "
-                           + " NVL(TIP.NOMBRE_POD,' '), "
-                           + " NVL(TO_CHAR(TIGT.EST_DEPARTURE_POL, 'dd/mm/yyyy'),' '), "
-                           + " NVL(TO_CHAR(TIGT.ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' '), "
-                           + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'dd/mm/yyyy'),' '), "
-                           + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "
-                           + " NVL(TIPL.NOMBRE_POL,' ') "
-                           + " FROM TRA_INB_EVENTO TIE "
-                           + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
-                           + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
-                           + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
-                           + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
-                           + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
-                           + " WHERE TIGT.ESTATUS = 1 "
-                           + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
-                
                 if (db.doDB("select NOMBRE from TRA_PLANTILLA where id='" + view + "' ")) {
                     for (String[] row : db.getResultado()) {
                         nombre = row[0];
                     }
                 }
         %>
-        <!-- navbar-->
-        <header class="header"></header>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
@@ -138,7 +110,7 @@
                                                         <button type="button" class="btn btn-success" onclick="openModalPlantilla()">Subir Plantilla</button>
                                                     </div>
                                                     <div class="columna">
-                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,1)" required="true">
+                                                        <select class="form-control" id="id" name="id" onchange="customForm('1')" required="true">
                                                             <option value="0" disabled selected>Evento</option>
                                                             <%
                                                                 if (db.doDB("SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC")) {
@@ -150,7 +122,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="columna">
-                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,2)" required="true">
+                                                        <select class="form-control" id="id" name="id" onchange="customForm('2')" required="true">
                                                             <option value="0" disabled selected>Shipment</option>
                                                             <%
                                                                 if (db.doDB("SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY SHIPMENT_ID ASC")) {
@@ -162,7 +134,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="columna">
-                                                        <select class="form-control" id="regId" name="regId" onchange="customForm(this.value,3)" required="true">
+                                                        <select class="form-control" id="id" name="id" onchange="customForm('3')" required="true">
                                                             <option value="0" disabled selected>Container</option>
                                                             <%
                                                                 if (db.doDB("SELECT DISTINCT CONTAINER1 FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY CONTAINER1 ASC")) {
@@ -185,6 +157,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Semaforo</th>                                                 
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Referencia AA</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Responsable</th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Final Destination (Shipment)</th>
@@ -280,258 +253,7 @@
                                                         %> 
                                                         </tr>
                                                     </thead>
-                                                    <tbody>  
-                                                         <tr>
-                                                              <th class="font-numero">                    <!-- Número de Evento -->
-                                                                <select class="form-control" id="evento_id" name="evento_id" required="true">
-                                                                    <!--<option value="0" disabled selected> --- </option>-->
-                                                                    <option value="" disabled selected></option>
-                                                                    <%
-                                                                        if (db.doDB("SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC")) {
-                                                                            for (String[] row : db.getResultado()) {
-                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
-                                                                            }
-                                                                        }
-                                                                    %>
-                                                                </select>
-                                                              </th>
-                                                              <td class="font-numero"></td>          <!-- Referencia AA -->
-                                                              <td class="font-numero">rowP[1]</td>   <!-- Responsable -->
-                                                              <td class="font-numero">rowP[2]</td>   <!-- Final Destination -->
-                                                              <td class="font-numero">rowP[3]</td>   <!-- Brand-Division -->
-                                                              <td class="font-numero">rowP[4]</td>   <!-- Division -->
-                                                              <td class="font-numero">rowP[5]</td>   <!-- Shipment ID -->
-                                                              <td class="font-numero">rowP[6]</td>   <!-- Container -->
-                                                              <td class="font-numero">rowP[7]</td>   <!-- BL/AWB/PRO -->
-                                                              <td class="font-numero">rowP[8]</td>   <!-- LoadType -->
-                                                              <td class="font-numero">rowP[9]</td>   <!-- Quantity -->            
-                                                              <td class="font-numero">rowP[10]</td>  <!-- POD -->
-                                                              <td class="font-numero">rowP[11]</td>  <!-- Est. Departure from POL -->
-                                                              <td class="font-numero">rowP[12]</td>  <!-- ETA REAL Port of Discharge -->
-                                                              <td class="font-numero">rowP[13]</td>  <!-- Est. Eta DC -->
-                                                              <td class="font-numero"></td>          <!-- Inbound notification -->
-                                                              <td class="font-numero">rowP[15]</td>  <!-- POL -->
-                                                              <td class="font-numero"></td>          <!-- A.A. -->
-                                                              <td class="font-numero"></td>          <!-- Fecha Mes de Venta -->
-                                                              <td class="font-numero">               <!-- Prioridad Si/No -->
-                                                                 <select class="form-control" id="shipment_id" name="shipment_id" required="true">
-                                                                    <option value="Si">SI</option>
-                                                                    <option value="No" disabled selected>NO</option>
-                                                                 </select> 
-                                                              </td>                                       
-                                                              <td class="font-numero"></td>          <!-- CAMPO EN BLANCO -->
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="pais_origen" name="pais_origen" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="size_container" name="size_container" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="valor_usd" name="valor_usd" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="eta_port_discharge" name="eta_port_discharge" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="agente_aduanal" name="agente_aduanal" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="pedimento_a1" name="pedimento_a1" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="pedimento_r1_1er" name="pedimento_r1_1er" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="motivo_rectificacion_1er" name="motivo_rectificacion_1er" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="pedimento_r1_2do" name="pedimento_r1_2do" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="motivo_rectificacion_2do" name="motivo_rectificacion_2do" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_recepcion_doc" name="fecha_recepcion_doc" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="recinto" name="recinto" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="naviera" name="naviera" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="buque" name="buque" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_revalidacion" name="fecha_revalidacion" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_previo_origen" name="fecha_previo_origen" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_previo_destino" name="fecha_previo_destino" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_resultado_previo" name="fecha_resultado_previo" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="proforma_final" name="proforma_final" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="permiso" name="permiso" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_envio" name="fecha_envio" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_recepcion_perm" name="fecha_recepcion_perm" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_activacion_perm" name="fecha_activacion_perm" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_permisos_aut" name="fecha_permisos_aut" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="co_pref_arancelaria" name="co_pref_arancelaria" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="aplic_pref_arancelaria" name="aplic_pref_arancelaria" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="req_uva" name="req_uva" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="req_ca" name="req_ca" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_recepcion_ca" name="fecha_recepcion_ca" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="num_constancia_ca" name="num_constancia_ca" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="monto_ca" name="monto_ca" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_doc_completos" name="fecha_doc_completos" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_pago_pedimento" name="fecha_pago_pedimento" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_solicitud_transporte" name="fecha_solicitud_transporte" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_modulacion" name="fecha_modulacion" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="modalidad" name="modalidad" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="resultado_modulacion" name="resultado_modulacion" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_reconocimiento" name="fecha_reconocimiento" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_liberacion" name="fecha_liberacion" type="date" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="sello_origen" name="sello_origen" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="sello_final" name="sello_final" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_retencion_aut" name="fecha_retencion_aut" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="fecha_liberacion_aut" name="fecha_liberacion_aut" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <select class="form-control" id="estatus_operacion" name="estatus_operacion" required="true">
-                                                                    <option value="0" disabled selected> --- </option>
-                                                                    <%
-                                                                        if (db.doDB("SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1")) {
-                                                                            for (String[] row : db.getResultado()) {
-                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[1] + "</option>");
-                                                                            }
-                                                                        }
-                                                                    %>
-                                                                </select>
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="motivo_atraso" name="motivo_atraso" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                <input class="form-control" id="observaciones" name="observaciones" type="text" autocomplete="off">
-                                                              </td>
-                                                            <%
-                                                                if(tipoAgente.equals("1")){        //Logix
-                                                            %>    
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                            <%
-                                                                }else if(tipoAgente.equals("2")){  //Cusa
-                                                            %>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                              <td class="font-numero">
-                                                                  <input class="form-control" id="" name="" type="text" autocomplete="off">
-                                                              </td>
-                                                            <%
-                                                                }
-                                                            %>
-                                                         </tr>                                                     
-                                                    </tbody>
+                                                    <tbody id="detalleCustom"></tbody>
                                                 </table>
                                             </div>
                                             <br>
@@ -624,12 +346,24 @@
             </div>
         </div>                
         <script>
-            function customForm(regId) {
-                fetch("<%=request.getContextPath()%>/ConsultarCustom?regId=" + regId, {
+            $(document).ready(function () {
+                //customForm('0');
+            });
+            
+            function customForm(tipoConsulta) {
+                let id = "";
+                
+                if(id===0){
+                    id = "0";
+                }else{
+                    id = document.getElementById("id").value;
+                }
+                
+                fetch("<%=request.getContextPath()%>/ConsultarCustom?tipoAgente="+<%=tipoAgente%>+"&tipoConsulta=" + tipoConsulta + "&id=" + id, {
                     method: 'POST',
                 }).then(r => r.text())
                         .then(data => {
-                            document.getElementById('detalle_cfdi').innerHTML = data;
+                            document.getElementById('detalleCustom').innerHTML = data;
                         }).catch(error => console.log(error));
             }
 
@@ -637,6 +371,14 @@
                 $("#modalSubirPlantilla").modal("show");
             }
         </script>  
+        <script>
+            $( '#multiple-select-field' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                closeOnSelect: false,
+            } );
+        </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- upload js -->

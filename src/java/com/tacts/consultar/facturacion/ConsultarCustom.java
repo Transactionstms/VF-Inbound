@@ -47,29 +47,16 @@ public class ConsultarCustom extends HttpServlet {
             ConsultasQuery fac = new ConsultasQuery();
             NumberFormat formatter = new DecimalFormat("#0.00");
 
-            String regId = request.getParameter("regId");
-            String[] parts = regId.split(",");
-            String id = parts[0];   //id principal 
-            String tipo = parts[1]; //Tipo Consulta (evento/shipment/container)
+            String tipoAgente = request.getParameter("tipoAgente");
+            String tipoConsulta = request.getParameter("tipoConsulta"); //(evento/shipment/container)
+            String id = request.getParameter("id"); //id
+            String salida = "";
+            int sal = 0;
             
-           
-            String serie = "";
-            String folio = "";
-            String uuid = "";
-            String cliente_descripcion = "";
-            String fecha_emision = "";
-            String fecha_timbrado = "";
-            String id_factura = "";
-            String rfc_emisor = "";
-            String rfc_receptor = "";
-            String folio_fiscal = "";
-            String email_1 = "";
-            String email_2 = "";
-            String email_3 = "";
-            String coma = ",";
-            String emails = "";
-            float totalGloblal = 0;
-
+            System.out.println("tipoAgente:" + tipoAgente);
+            System.out.println("tipoConsulta:" + tipoConsulta);
+            System.out.println("id:" + id);
+            
             String sql = " SELECT DISTINCT "
                        + " NVL(TIE.ID_EVENTO,0), "
                        + " NVL(UPPER(TDR.RESPONSABLE),' '), "
@@ -92,56 +79,262 @@ public class ConsultarCustom extends HttpServlet {
                        + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
                        + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
                        + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
-                       + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
-                       + " WHERE ";
+                       + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL ";
             
-                if(tipo.equals("1")){
-                  sql += "TIE.ID_EVENTO = '" + id + "'";
-                }else if(tipo.equals("2")){
-                  sql += "TIE.SHIPMENT_ID = '" + id + "'";
-                }else if(tipo.equals("3")){
-                  sql += "TIE.CONTAINER1 = '" + id + "'";
+                if(tipoConsulta.equals("1")){         //Evento
+                  sql += " WHERE TIE.ID_EVENTO = '" + id + "'";
+                }else if(tipoConsulta.equals("2")){   //Shipment
+                  sql += " WHERE TIE.SHIPMENT_ID = '" + id + "'";
+                }else if(tipoConsulta.equals("3")){   //Container
+                  sql += " WHERE TIE.CONTAINER1 = '" + id + "'";
                 }
                 
                  sql += " AND TIGT.ESTATUS = 1 "
                       + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
-
+             
             ServiceDAO dao = new ServiceDAO();
             ResultSet rs = dao.consulta(sql);
-            int sal = 0;
-
-            String salida = " ";
+            
+            System.out.println("Consulta:"+sql);
+            
             while (rs.next()) {
 
-                serie = rs.getString(1);
-                folio = rs.getString(2);
-                uuid = rs.getString(3);
-                cliente_descripcion = rs.getString(4);
-                fecha_emision = rs.getString(5);
-                totalGloblal = Float.parseFloat(rs.getString(6));
-                id_factura = rs.getString(7);
-                rfc_receptor = rs.getString(8);
-                folio_fiscal = rs.getString(9).substring(Math.max(0, rs.getString(9).length() - 8));
-                fecha_timbrado = rs.getString(10);
-
                 salida += " <tr> "
-                        + "    <td>" + serie + "</td> "
-                        + "    <td>" + folio + "</td> "
-                        + "    <td>" + uuid + "</td> "
-                        + "    <td>" + cliente_descripcion + "</td> "
-                        + "    <td>" + fecha_emision + "</td> "
-                        + "    <td>$ " + formatter.format(totalGloblal) + "</td> "
-                        + "    <td>ACTIVO</td> "
-                        + "    <td>No Pagada</td> "
-                        + "    <td>"
-                        + "        <a class=\"text-lg text-info\" onclick=\"detalle_factura('" + id_factura + "')\"><i class=\"fa fa-info-circle\"></i></a>"
-                        + "        <a class=\"text-lg text-info\" onclick=\"visor_factura('" + id_factura + "')\"><i class=\"fa fa-file\"></i></a>"
-                        + "        <a class=\"text-lg text-info\" onclick=\"consultarEstatusSATCFDI('" + id_factura + "', '" + serie + "', '" + folio + "', '" + rfc_emisor + "', '" + rfc_receptor + "', '" + formatter.format(totalGloblal) + "', '" + uuid + "', '" + folio_fiscal + "', '" + fecha_emision + "', '" + fecha_timbrado + "', '" + emails + "')\"><i class=\"far fa-trash-alt\"></i></a>"
-                        + "    </td>"
-                        + " </tr>";
+                        + "    <th class=\"font-numero\">"+rs.getString(1)+"</th> "  // Número de Evento
+                        + "    <td class=\"font-numero\"><center><img src=\"../img/circle-green.png\" width=\"40%\"/></center></td> "  //Semaforo            // Semaforo
+                        + "    <td class=\"font-numero\">"+tipoAgente+"</td> "       // Referencia AA
+                        + "    <td class=\"font-numero\">"+rs.getString(2)+"</td> "  // Responsable
+                        + "    <td class=\"font-numero\">"+rs.getString(3)+"</td> "  // Final Destination
+                        + "    <td class=\"font-numero\">"+rs.getString(4)+"</td> "  // Brand-Division
+                        + "    <td class=\"font-numero\">"+rs.getString(5)+"</td> "  // Division
+                        + "    <td class=\"font-numero\">"+rs.getString(6)+"</td> "  // Shipment ID
+                        + "    <td class=\"font-numero\">"+rs.getString(7)+"</td> "  // Container
+                        + "    <td class=\"font-numero\">"+rs.getString(8)+"</td> "  // BL/AWB/PRO
+                        + "    <td class=\"font-numero\">"+rs.getString(9)+"</td> "  // LoadType
+                        + "    <td class=\"font-numero\">"+rs.getString(10)+"</td> " // Quantity
+                        + "    <td class=\"font-numero\">"+rs.getString(11)+"</td> " // POD
+                        + "    <td class=\"font-numero\">"+rs.getString(12)+"</td> " // Est. Departure from POL
+                        + "    <td class=\"font-numero\">"+rs.getString(13)+"</td> " // ETA REAL Port of Discharge
+                        + "    <td class=\"font-numero\">"+rs.getString(14)+"</td> " // Est. Eta DC
+                        + "    <td class=\"font-numero\"></td> "                     // Inbound notification
+                        + "    <td class=\"font-numero\">"+rs.getString(16)+"</td> " // POL
+                        + "    <td class=\"font-numero\"></td> "                     // A.A.
+                        + "    <td class=\"font-numero\"></td> "                     // Fecha Mes de Venta 
+                        + "    <td class=\"font-numero\"> "                          // Prioridad Si/No
+                        + "      <select class=\"form-control\" id=\"shipment_id\" name=\"shipment_id\" required=\"true\">" 
+                        + "         <option value=\"Si\">SI</option>" 
+                        + "         <option value=\"No\" disabled selected>NO</option>" 
+                        + "      </select>" 
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"></td> "                     // Campo en blanco
+                        + "    <td class=\"font-numero\"> "
+                        + "        <input class=\"form-control\" id=\"pais_origen\" name=\"pais_origen\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "        <input class=\"form-control\" id=\"size_container\" name=\"size_container\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "        <input class=\"form-control\" id=\"valor_usd\" name=\"valor_usd\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"eta_port_discharge\" name=\"eta_port_discharge\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"agente_aduanal\" name=\"agente_aduanal\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"pedimento_a1\" name=\"pedimento_a1\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"pedimento_r1_1er\" name=\"pedimento_r1_1er\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"motivo_rectificacion_1er\" name=\"motivo_rectificacion_1er\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"pedimento_r1_2do\" name=\"pedimento_r1_2do\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"motivo_rectificacion_2do\" name=\"motivo_rectificacion_2do\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_recepcion_doc\" name=\"fecha_recepcion_doc\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"recinto\" name=\"recinto\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"naviera\" name=\"naviera\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"buque\" name=\"buque\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_revalidacion\" name=\"fecha_revalidacion\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_previo_origen\" name=\"fecha_previo_origen\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_previo_destino\" name=\"fecha_previo_destino\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_resultado_previo\" name=\"fecha_resultado_previo\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"proforma_final\" name=\"proforma_final\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"permiso\" name=\"permiso\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_envio\" name=\"fecha_envio\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_recepcion_perm\" name=\"fecha_recepcion_perm\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_activacion_perm\" name=\"fecha_activacion_perm\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_permisos_aut\" name=\"fecha_permisos_aut\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"co_pref_arancelaria\" name=\"co_pref_arancelaria\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"aplic_pref_arancelaria\" name=\"aplic_pref_arancelaria\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"req_uva\" name=\"req_uva\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"req_ca\" name=\"req_ca\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_recepcion_ca\" name=\"fecha_recepcion_ca\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> " 
+                        + "    <td class=\"font-numero\"> " 
+                        + "      <input class=\"form-control\" id=\"num_constancia_ca\" name=\"num_constancia_ca\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> " 
+                        + "    <td class=\"font-numero\"> " 
+                        + "      <input class=\"form-control\" id=\"monto_ca\" name=\"monto_ca\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_doc_completos\" name=\"fecha_doc_completos\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_pago_pedimento\" name=\"fecha_pago_pedimento\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_solicitud_transporte\" name=\"fecha_solicitud_transporte\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_modulacion\" name=\"fecha_modulacion\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"modalidad\" name=\"modalidad\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"resultado_modulacion\" name=\"resultado_modulacion\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_reconocimiento\" name=\"fecha_reconocimiento\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_liberacion\" name=\"fecha_liberacion\" type=\"date\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"sello_origen\" name=\"sello_origen\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"sello_final\" name=\"sello_final\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_retencion_aut\" name=\"fecha_retencion_aut\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"fecha_liberacion_aut\" name=\"fecha_liberacion_aut\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <select class=\"form-control\" id=\"estatus_operacion\" name=\"estatus_operacion\" required=\"true\"> "
+                        + "          <option value=\"0\" disabled selected> --- </option> ";
+                                     /* if (db.doDB("SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1")) {
+                                          for (String[] row : db.getResultado()) {
+                                              out.println("<option value=\"" + row[0] + "\" >" + row[1] + "</option>");
+                                          }
+                                      }*/
+                salida += "      </select> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"motivo_atraso\" name=\"motivo_atraso\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
+                        + "    <td class=\"font-numero\"> "
+                        + "      <input class=\"form-control\" id=\"observaciones\" name=\"observaciones\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> ";
+                
+            if(tipoAgente.equals("1")){        //Logix
+                salida += " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> ";
+                    
+            }else if(tipoAgente.equals("2")){  //Cusa
+                salida += " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> ";
+            }
+                salida += "</tr>";
                 sal++;
             }
-            
+            System.out.println("Tabla:"+salida);
             dao.CerrarConexion();
             oraDB.close();
 
