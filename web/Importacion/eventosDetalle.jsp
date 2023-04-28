@@ -236,8 +236,11 @@
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
-                                                            <td class="font-texto" contenteditable='true'>  </td>
-                                                            <td> <button type="button" class="btn btn-primary">Aceptar</button> </td>
+                                                            
+                                                            <td class="font-texto" contenteditable='true'>  
+                                                                <input type="text" id="observaciones" name="observaciones" autocomplete="off">
+                                                            </td>
+                                                             <td> <button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>')">Aceptar</button> </td>
                                                             <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
 
                                                         </tr>
@@ -475,6 +478,17 @@
                 window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
 
             }
+           
+           function saveObservaciones(evento){
+               let observaciones = document.getElementById("observaciones").value;
+               
+               fetch("<%=request.getContextPath()%>/ModificarObservaciones?evento="+evento+"&observaciones=" + observaciones, {
+                    method: 'POST',
+                }).then(r => r.text())
+                        .then(data => {
+                              
+                        }).catch(error => console.log(error));
+           }
         </script>                     
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
