@@ -9,8 +9,14 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-
-
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="com.onest.train.consultas.ConsultasQuery"%>
+<%@page import="com.onest.security.menu.*" %>
+<%@page import="com.onest.net.*" %>
+<%@page import="com.onest.oracle.*" %>
+<%@page import="com.onest.misc.*" %> 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,7 +27,7 @@
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Facturación Electrónica - TACTS</title>
+        <title>VF INBOUND - TACTS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
@@ -37,20 +43,28 @@
         <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/css/custom.css">
         <!-- Favicon-->
         <link rel="shortcut icon" href="<%=request.getContextPath()%>/lib/img/favicon.png">
-
-
     </head>
-
-
+        <%
+            try {
+                HttpSession ownsession = request.getSession();
+                DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+                String cve = (String) ownsession.getAttribute("cbdivcuenta");
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
+                ConsultasQuery fac = new ConsultasQuery();
+                String nameUsuario = "";
+                
+                if (db.doDB(fac.consultarUsuarioName(UserId))) {
+                    for (String[] rowFT : db.getResultado()) {   
+                        nameUsuario = rowFT[0];
+                    }
+                }
+        %>
     <body>
 
         <header class="header">
             <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
-                <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
-                <a class="navbar-brand fw-bold text-uppercase text-base" href="#">
-                    <span class="d-none d-brand-partial">TACTS </span>
-                    <span class="d-none d-sm-inline">Dashboard</span>
-                </a>
+                <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left">&nbsp;&nbsp;&nbsp;&nbsp;VF Inbound</i></a>
+                <a class="navbar-brand fw-bold text-uppercase text-base" href="#"><span class="d-none d-brand-partial"><%=nameUsuario%></span></a>
                 <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
                     <li class="nav-item dropdown">
                         <!--<form class="ms-auto me-4 d-none d-lg-block" id="searchForm">
@@ -216,5 +230,13 @@
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     </body>
-
+    <%
+        } catch (NullPointerException e) {
+            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+            out.println("<script>window.close();</script>");
+        } catch (Exception e) {
+            out.println("Excepcion revise por favor! " + e);
+            e.printStackTrace();
+        }
+    %>
 </html>
