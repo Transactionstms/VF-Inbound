@@ -77,14 +77,24 @@
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                 String view = request.getParameter("view");
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String idDivision = ownsession.getAttribute("cbdivcuenta").toString();
                 String idBodega = ownsession.getAttribute("cbbodegaId").toString();
                 Usuario root = (Usuario) ownsession.getAttribute("login.root");
                 ConsultasQuery fac = new ConsultasQuery();
-                String tipoAgente = "3";  // (1)LOGIX       (2)CUSA       (3)GRAL
+                String tipoAgente = ""; // (4001)LOGIX       (4002)CUSA       (4006)VF
                 String nombre = "";
                 String idPlantilla = "26";
                 
+                
+               //Obtener el agente aduanal 
+                if (db.doDB("SELECT AGENTE_ADUANAL_ID FROM TRA_INB_USUARIO_AA_RELACION WHERE USER_NID = '" + UserId + "'")) {
+                    for (String[] row : db.getResultado()) {
+                        tipoAgente = row[0]; 
+                    }
+                }
+                
+                //Obtener la plantilla ligada al agente aduanal
                 if (db.doDB("select NOMBRE from TRA_PLANTILLA where id='" + view + "' ")) {
                     for (String[] row : db.getResultado()) {
                         nombre = row[0];
@@ -107,6 +117,7 @@
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
+                                            <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
                                             <div id="contenedor">
                                                 <div class="row">
                                                     <div class="columna">
@@ -115,7 +126,7 @@
                                                 </div>       
                                                 <div style="text-align: right;">
                                                     <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
-                                                    <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
+                                                    <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="AddCustoms()">Guardar Información</a>
                                                 </div>
                                             </div>
                                             <br>
@@ -164,7 +175,7 @@
                                                                 </select>
                                                             </th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
-                                                                <font size="1">Final Destination (Shipment)</font>
+                                                                <font size="1">Final Destination</font>
                                                                 <select class="form-control" id="id" name="id" onchange="customForm('4')" required="true">
                                                                     <option value="0" disabled selected>Buscar</option>
                                                                     <%
@@ -432,7 +443,7 @@
                                                             <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo Atraso</font></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Observaciones</font></th>
                                                         <%
-                                                            if(tipoAgente.equals("1")){        //Logix
+                                                            if(tipoAgente.equals("4001")){        //Logix
                                                         %>    
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a NOVA</font></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a Globe trade SD</font></th>
@@ -445,7 +456,7 @@
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">T&E</font></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Vencimiento del Inbound</font></th>
                                                         <%
-                                                            }else if(tipoAgente.equals("2")){  //Cusa
+                                                            }else if(tipoAgente.equals("4002")){  //Cusa
                                                         %>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">No. BULTOS</font></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Peso (KG)</font></th>
@@ -458,6 +469,7 @@
                                                         <%
                                                             }
                                                         %> 
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">FY</font></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="detalleCustom"></tbody>

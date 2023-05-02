@@ -6,7 +6,15 @@
 
     function AddCustoms() {
     
-      let evento = document.getElementById("evento_id");       
+      //Parametros Indicadores
+      let evento = document.getElementById("evento"); 
+      let shipmentId = document.getElementById("shipmentId"); 
+      let containerId = document.getElementById("containerId"); 
+      let referenciaAA = document.getElementById("referenciaAA");
+      let prioridad = document.getElementById("prioridad");
+      let idAgenteAduanal = document.getElementById("idAgenteAduanal");
+      
+      //Parametros Generales
       let pais_origen = document.getElementById("pais_origen"); 
       let size_container = document.getElementById("size_container"); 
       let valor_usd = document.getElementById("valor_usd");                
@@ -53,8 +61,36 @@
       let estatus_operacion = document.getElementById("estatus_operacion");         
       let motivo_atraso = document.getElementById("motivo_atraso");             
       let observaciones = document.getElementById("observaciones");
+      let fy = document.getElementById("fy");
 
-      fetch("../InsertarCustomsForms?evento = "+ evento +       
+      //Parametros Logix
+      let llegada_a_nova = document.getElementById("llegada_a_nova");
+      let llegada_a_globe_trade_sd = document.getElementById("llegada_a_globe_trade_sd");
+      let archivo_m = document.getElementById("archivo_m");
+      let fecha_archivo_m = document.getElementById("fecha_archivo_m");
+      let fecha_solicit_manip = document.getElementById("fecha_solicit_manip");
+      let fecha_vencim_manip = document.getElementById("fecha_vencim_manip");
+      let fecha_confirm_clave_pedim = document.getElementById("fecha_confirm_clave_pedim");
+      let fecha_recep_increment = document.getElementById("fecha_recep_increment");
+      let t_e = document.getElementById("t_e");
+      let fecha_vencim_inbound = document.getElementById("fecha_vencim_inbound");
+      
+      //Parametros Cusa
+      let no_bultos = document.getElementById("no_bultos");
+      let peso_kg = document.getElementById("peso_kg");
+      let transferencia = document.getElementById("transferencia");
+      let fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado");
+      let fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado");
+      let hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado");
+      let proveedor = document.getElementById("proveedor");
+      let proveedor_carga = document.getElementById("proveedor_carga");
+      
+      fetch("../InsertarCustomsForms?evento = "+ evento +      
+            "&shipmentId = "+ shipmentId +  
+            "&containerId = "+ containerId +  
+            "&referenciaAA = "+ referenciaAA +  
+            "&prioridad = "+ prioridad +  
+            "&idAgenteAduanal = "+ idAgenteAduanal + 
             "&pais_origen = "+ pais_origen +   
             "&size_container = "+ size_container +   
             "&valor_usd = "+ valor_usd +               
@@ -100,7 +136,26 @@
             "&fecha_liberacion_aut = "+ fecha_liberacion_aut +   
             "&estatus_operacion = "+ estatus_operacion +        
             "&motivo_atraso = "+ motivo_atraso +            
-            "&observaciones = "+ observaciones, {
+            "&observaciones = "+ observaciones + 
+            "&fy = "+ fy + 
+            "&llegada_a_nova = "+ llegada_a_nova + 
+            "&llegada_a_globe_trade_sd = "+ llegada_a_globe_trade_sd + 
+            "&archivo_m = "+ archivo_m + 
+            "&fecha_archivo_m = "+ fecha_archivo_m + 
+            "&fecha_solicit_manip = "+ fecha_solicit_manip + 
+            "&fecha_vencim_manip = "+ fecha_vencim_manip + 
+            "&fecha_confirm_clave_pedim = "+ fecha_confirm_clave_pedim + 
+            "&fecha_recep_increment = "+ fecha_recep_increment + 
+            "&t_e = "+ t_e + 
+            "&fecha_vencim_inbound = "+ fecha_vencim_inbound + 
+            "&no_bultos = "+ no_bultos + 
+            "&peso_kg = "+ peso_kg + 
+            "&transferencia = "+ transferencia + 
+            "&fecha_inicio_etiquetado = "+ fecha_inicio_etiquetado + 
+            "&fecha_termino_etiquetado = "+ fecha_termino_etiquetado + 
+            "&hora_termino_etiquetado = "+ hora_termino_etiquetado + 
+            "&proveedor = "+ proveedor + 
+            "&proveedor_carga = "+ proveedor_carga, {
                 method: 'POST',
             }).then(r => r.text())
             .then(data => {

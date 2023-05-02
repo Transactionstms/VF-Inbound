@@ -63,7 +63,7 @@ public class ConsultarCustom extends HttpServlet {
 
                 salida += " <tr> "
                         + "    <td class=\"font-numero\"><center><img src=\"../img/circle-green.png\" width=\"40%\"/></center></td> "  //Semaforo            // Semaforo
-                        + "    <th class=\"font-numero\">"+rs.getString(1)+"</th> "  // Número de Evento
+                        + "    <th class=\"font-numero\">"+rs.getString(1)+"<input type=\"hidden\" id=\"evento\" name=\"evento\" value=\""+rs.getString(1)+"\"></th> "  // Número de Evento
                         + "    <td class=\"font-numero\"> "                          // Referencia Aduanal
                         + "        <input class=\"form-control\" id=\"referenciaAA\" name=\"referenciaAA\" type=\"text\" autocomplete=\"off\"> "
                         + "    </td> "
@@ -71,8 +71,8 @@ public class ConsultarCustom extends HttpServlet {
                         + "    <td class=\"font-numero\">"+rs.getString(3)+"</td> "  // Final Destination
                         + "    <td class=\"font-numero\">"+rs.getString(4)+"</td> "  // Brand-Division
                         + "    <td class=\"font-numero\">"+rs.getString(5)+"</td> "  // Division
-                        + "    <td class=\"font-numero\">"+rs.getString(6)+"</td> "  // Shipment ID
-                        + "    <td class=\"font-numero\">"+rs.getString(7)+"</td> "  // Container
+                        + "    <td class=\"font-numero\">"+rs.getString(6)+"<input type=\"hidden\" id=\"shipmentId\" name=\"shipmentId\" value=\""+rs.getString(6)+"\"></td> "  // Shipment ID
+                        + "    <td class=\"font-numero\">"+rs.getString(7)+"<input type=\"hidden\" id=\"containerId\" name=\"containerId\" value=\""+rs.getString(7)+"\"></td> "  // Container
                         + "    <td class=\"font-numero\">"+rs.getString(8)+"</td> "  // BL/AWB/PRO
                         + "    <td class=\"font-numero\">"+rs.getString(9)+"</td> "  // LoadType
                         + "    <td class=\"font-numero\">"+rs.getString(10)+"</td> " // Quantity
@@ -85,7 +85,7 @@ public class ConsultarCustom extends HttpServlet {
                         + "    <td class=\"font-numero\">"+rs.getString(17)+"</td> " // A.A.
                         + "    <td class=\"font-numero\"></td> "                     // Fecha Mes de Venta 
                         + "    <td class=\"font-numero\"> "                          // Prioridad Si/No
-                        + "      <select class=\"form-control\" id=\"shipment_id\" name=\"shipment_id\" required=\"true\">" 
+                        + "      <select class=\"form-control\" id=\"prioridad\" name=\"prioridad\">" 
                         + "         <option value=\"Si\">SI</option>" 
                         + "         <option value=\"No\" disabled selected>NO</option>" 
                         + "      </select>" 
@@ -250,65 +250,69 @@ public class ConsultarCustom extends HttpServlet {
                         + "      <input class=\"form-control\" id=\"observaciones\" name=\"observaciones\" type=\"text\" autocomplete=\"off\"> "
                         + "    </td> ";
                 
-            if(tipoAgente.equals("1")){        //Logix
+            if(tipoAgente.equals("4001")){        //Logix
                 salida += " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"llegada_a_nova\" name=\"llegada_a_nova\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"llegada_a_globe_trade_sd\" name=\"llegada_a_globe_trade_sd\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"archivo_m\" name=\"archivo_m\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_archivo_m\" name=\"fecha_archivo_m\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_solicit_manip\" name=\"fecha_solicit_manip\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_vencim_manip\" name=\"fecha_vencim_manip\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_confirm_clave_pedim\" name=\"fecha_confirm_clave_pedim\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_recep_increment\" name=\"fecha_recep_increment\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"t_e\" name=\"t_e\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_vencim_inbound\" name=\"fecha_vencim_inbound\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> ";
                     
-            }else if(tipoAgente.equals("2")){  //Cusa
+            }else if(tipoAgente.equals("4002")){  //Cusa
                 salida += " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"no_bultos\" name=\"no_bultos\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"peso_kg\" name=\"peso_kg\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"transferencia\" name=\"transferencia\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_inicio_etiquetado\" name=\"fecha_inicio_etiquetado\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"fecha_termino_etiquetado\" name=\"fecha_termino_etiquetado\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"hora_termino_etiquetado\" name=\"hora_termino_etiquetado\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"proveedor\" name=\"proveedor\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"\" name=\"\" type=\"text\" autocomplete=\"off\"> "
+                        + "     <input class=\"form-control\" id=\"proveedor_carga\" name=\"proveedor_carga\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> ";
             }
-                salida += "</tr>";
+            
+                salida += " <td class=\"font-numero\"> "
+                        + "     <input class=\"form-control\" id=\"fy\" name=\"fy\" type=\"text\" autocomplete=\"off\"> "
+                        + " </td> "
+                        + "</tr>";
                 sal++;
             }
             System.out.println("Tabla:"+salida);
