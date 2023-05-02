@@ -56,7 +56,8 @@ public class CreatExcel {
                             + "    to_char(gtn.fecha_captura, 'MM/DD/YYYY'), "
                             + "    tip1.nombre_pod, "
                             + "    tip2.nombre_pol, "
-                            + "    tibd.nombre_bd "
+                            + "    tibd.nombre_bd, "
+                            + "    tie.observaciones "
                             + "FROM "
                             + "    tra_inb_evento tie "
                             + "    INNER JOIN tra_destino_responsable  bp ON bp.user_nid = tie.user_nid "
@@ -75,7 +76,7 @@ public class CreatExcel {
             ResultSet rs = stmt.executeQuery(consulta);
 
             while(rs.next()){
-                personas.add(new Persona(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17)));
+                personas.add(new Persona(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18)));
             }
             
             rs.close();
@@ -90,7 +91,7 @@ public class CreatExcel {
         final String nombreArchivo = "ModifaciónDeEventos"+agenteId+".xls";
         Sheet hoja = workbook.createSheet("Modificación de Eventos");
         
-        String[] encabezados = {"Número de evento", "Responsable", "Final Destination (Shipment)", "Brand-Division", "Division", "Shipment ID", "Container", "BL/AWB/PRO", "Load Type", "Quantity", "POD /", "Est. Departure from POL", "ETA REAL PORT", "Est. Eta DC", "Inbound notification", "POL", "A.A."};
+        String[] encabezados = {"Número de evento", "Responsable", "Final Destination (Shipment)", "Brand-Division", "Division", "Shipment ID", "Container", "BL/AWB/PRO", "Load Type", "Quantity", "POD /", "Est. Departure from POL", "ETA REAL PORT", "Est. Eta DC", "Inbound notification", "POL", "A.A.", "Observaciones"};
         int indiceFila = 0;
 
         Row fila = hoja.createRow(indiceFila);
@@ -122,6 +123,7 @@ public class CreatExcel {
             fila.createCell(14).setCellValue(persona.getInboundNotif());
             fila.createCell(15).setCellValue(persona.getPol());
             fila.createCell(16).setCellValue(persona.getAa());
+            fila.createCell(17).setCellValue(persona.getObservaciones());
             
             indiceFila++;
         }
@@ -153,9 +155,9 @@ public class CreatExcel {
 class Persona {
 
     private int numEvento;
-    private String responsable, finalDestination, brandDivision, division, shipmentId, container, blAwbPro, loadType, quantity, pod, departurePol, realPort, etaDc, inboundNotif, pol, aa;
+    private String responsable, finalDestination, brandDivision, division, shipmentId, container, blAwbPro, loadType, quantity, pod, departurePol, realPort, etaDc, inboundNotif, pol, aa, observaciones;
     
-    public Persona(int numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String etaDc, String inboundNotif, String pol, String aa) {
+    public Persona(int numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String etaDc, String inboundNotif, String pol, String aa, String observaciones) {
         this.numEvento = numEvento;
         this.responsable = responsable;
         this.finalDestination = finalDestination;
@@ -173,6 +175,7 @@ class Persona {
         this.inboundNotif = inboundNotif;
         this.pol = pol;
         this.aa = aa;
+        this.observaciones = observaciones;
     }
 
     public int getnumEvento() {
@@ -309,6 +312,14 @@ class Persona {
 
     public void setAa(String aa) {
         this.aa = aa;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     
 }

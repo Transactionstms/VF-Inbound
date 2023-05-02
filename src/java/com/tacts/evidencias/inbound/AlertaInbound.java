@@ -51,6 +51,17 @@ public class AlertaInbound extends HttpServlet {
         
         Email correo = new Email();
         ConsultasQuery fac = new ConsultasQuery();
+        
+        if (db.doDB(fac.consultarEventosDetalle())) {
+            for (String[] rowE : db.getResultado()) {
+                
+                String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '"+ rowE[8] +"' WHERE PLANTILLA_ID = '" + rowE[17] + "'";
+                boolean oraOut1 = oraDB.execute(LoadTypeFinal);
+                
+                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1 WHERE PLANTILLA_ID = '" + rowE[17] + "'";
+                boolean oraOut2 = oraDB.execute(estatusInicial);
+            }
+        }
                 
         String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
         if (db.doDB(consulta)) {

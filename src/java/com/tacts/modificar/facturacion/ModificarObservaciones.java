@@ -47,7 +47,7 @@ public class ModificarObservaciones extends HttpServlet {
         
         String insertarClie = "UPDATE TRA_INB_EVENTO SET OBSERVACIONES = '"+ observaciones +"' WHERE ID_EVENTO = '" + evento + "'";
         boolean oraOut = oraDB.execute(insertarClie);
-             
+           
             if(oraOut){
                 salida = "true";
             }else{

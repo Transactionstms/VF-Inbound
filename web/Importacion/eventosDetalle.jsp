@@ -106,7 +106,8 @@
                         + "  when GTN.LOAD_TYPE in ('LCL') then 'LCL' "
                         + "  ELSE  '-'   END as estado    ,  "
                         + "  nvl(  to_char(GTN.ETA_PLUS2,'MM/DD/YY') ,' ' )as ETA_DC,"
-                        + "  nvl(  to_char(GTN.ETA_PLUS,'MM/DD/YY') ,' ' )as ETA_DC1 "
+                        + "  nvl(  to_char(GTN.ETA_PLUS,'MM/DD/YY') ,' ' )as ETA_DC1,"
+                        + "  NVL(TIE.OBSERVACIONES,' ') "
                         + "  from TRA_INB_EVENTO    TIE"
                         + "  left JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
                         + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
@@ -154,7 +155,7 @@
                                             </div>
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 650px;">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:200%;">
+                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:400%;">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
@@ -180,7 +181,7 @@
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
 
                                                             <th scope="col" class="font-titulo">Observaciones </th>
-                                                            <th scope="col" class="font-titulo">Aceptar </th>
+                                                            <th scope="col" class="font-titulo"></th>
                                                             <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
@@ -238,9 +239,9 @@
                                                             <td class="font-texto"> <%=row[16]%></td>
                                                             
                                                             <td class="font-texto" contenteditable='true'>  
-                                                                <input type="text" id="observaciones" name="observaciones" autocomplete="off">
+                                                                <input type="text" style="border: none;" id="observaciones" name="observaciones" value="<%=row[25]%>" autocomplete="off">
                                                             </td>
-                                                             <td> <button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>')">Aceptar</button> </td>
+                                                            <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>')">Actualizar</button></center></td>
                                                             <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
 
                                                         </tr>
@@ -324,7 +325,7 @@
                                             <div id="table-scroll" class="table-scroll"  style="height: 650px;">
 
 
-                                                <table id="example" class="display" style="width:100%">
+                                                <table id="example" class="display" style="width:300%">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
@@ -350,7 +351,7 @@
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
 
                                                             <th scope="col" class="font-titulo">Observaciones </th>
-                                                            <th scope="col" class="font-titulo">Aceptar </th>
+                                                            <th scope="col" class="font-titulo"></th>
                                                             <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
@@ -409,7 +410,7 @@
                                                             <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
                                                             <td class="font-texto" contenteditable='true'>  </td>
-                                                            <td> <button type="button" class="btn btn-primary">Aceptar</button> </td>
+                                                            <td><center><button type="button" class="btn btn-primary">Aceptar</button></center></td>
                                                             <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
 
                                                         </tr>
@@ -486,7 +487,13 @@
                     method: 'POST',
                 }).then(r => r.text())
                         .then(data => {
-                              
+                              if(data === "true"){
+                                  swal("", "Observaciones actualizadas", "success");
+                                  alertclose();
+                              }else{
+                                  swal("", "Información no actualizada", "error");
+                                  location.reload();
+                              }
                         }).catch(error => console.log(error));
            }
         </script>                     
