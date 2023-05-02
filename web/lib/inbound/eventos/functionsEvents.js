@@ -17,6 +17,20 @@
                 }).catch(error => console.log(error));
     }
     
+    function updateModificarEventos(){
+        
+        
+        
+        fetch("../AlertaInbound?agenteAduanal="+agenteId, {
+            method: 'POST',
+        }).then(r => r.text())
+                .then(data => {
+                    swal("", "Información actualizada", "success");
+                    alertclose();
+                    location.reload();
+                }).catch(error => console.log(error));
+    }
+    
     function delete_registro() {
             swal({
       title: "¿Estás seguro?",

@@ -67,6 +67,8 @@
                 float:none;
               }
             }
+            
+            select { width: 400px; text-align-last:center; }
         </style>
     </head>
     <body>
@@ -78,6 +80,7 @@
                 String idDivision = ownsession.getAttribute("cbdivcuenta").toString();
                 String idBodega = ownsession.getAttribute("cbbodegaId").toString();
                 Usuario root = (Usuario) ownsession.getAttribute("login.root");
+                ConsultasQuery fac = new ConsultasQuery();
                 String tipoAgente = "3";  // (1)LOGIX       (2)CUSA       (3)GRAL
                 String nombre = "";
                 String idPlantilla = "26";
@@ -109,42 +112,6 @@
                                                     <div class="columna">
                                                         <button type="button" class="btn btn-success" onclick="openModalPlantilla()">Subir Plantilla</button>
                                                     </div>
-                                                    <div class="columna">
-                                                        <select class="form-control" id="id" name="id" onchange="customForm('1')" required="true">
-                                                            <option value="0" disabled selected>Evento</option>
-                                                            <%
-                                                                if (db.doDB("SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC")) {
-                                                                    for (String[] row : db.getResultado()) {
-                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </select>
-                                                    </div>
-                                                    <div class="columna">
-                                                        <select class="form-control" id="id" name="id" onchange="customForm('2')" required="true">
-                                                            <option value="0" disabled selected>Shipment</option>
-                                                            <%
-                                                                if (db.doDB("SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY SHIPMENT_ID ASC")) {
-                                                                    for (String[] row : db.getResultado()) {
-                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </select>
-                                                    </div>
-                                                    <div class="columna">
-                                                        <select class="form-control" id="id" name="id" onchange="customForm('3')" required="true">
-                                                            <option value="0" disabled selected>Container</option>
-                                                            <%
-                                                                if (db.doDB("SELECT DISTINCT CONTAINER1 FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY CONTAINER1 ASC")) {
-                                                                    for (String[] row : db.getResultado()) {
-                                                                        out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
-                                                                    }
-                                                                }
-                                                            %>
-                                                        </select>
-                                                    </div>
                                                 </div>       
                                                 <div style="text-align: right;">
                                                     <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
@@ -153,101 +120,341 @@
                                             </div>
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height:500px;">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:800%;">
+                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:1000%;">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Semaforo</th>                                                 
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Referencia AA</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Responsable</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Final Destination (Shipment)</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Brand-Division</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Division</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Shipment ID</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Container</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">BL/AWB/PRO</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">LoadType</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Quantity</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">POD</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Est. Departure from POL</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">ETA REAL Port of Discharge</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Est. Eta DC</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Inbound notification</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">POL</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">A.A.</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Mes de Venta</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Prioridad Si/No</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Semaforo</th>    
+                                                            <th scope="col" class="font-titulo">
+                                                                <font size="2">Número de evento <strong style="color:red">*</strong></font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('1')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchEventos())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Referencia AA</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('2')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchReferenciaAA())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Responsable</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('3')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchResponsable())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="1">Final Destination (Shipment)</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('4')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchShipment())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Brand-Division</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('5')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchBrandDivision())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Division</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('6')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchDivision())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Shipment ID</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('7')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchShipmentId())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Container</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('8')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchContainer())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">BL/AWB/PRO</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('9')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchBlAwbPro())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">LoadType</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('10')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchLoadType())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Quantity</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('11')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchQuantity())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">POD</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('12')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchPod())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="1">Est. Departure from POL</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('13')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchDepartureFromPOL())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="1">ETA REAL Port of Discharge</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('14')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchRealPortDischarge())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Est. Eta DC</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('15')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchEtaDC())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="1">Inbound notification</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('16')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchInboundNotificacion())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">POL</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('17')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchPol())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">A.A.</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('18')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchAA())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Fecha Mes de Venta</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('19')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchFechaMesVenta())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">
+                                                                <font size="2">Prioridad Si/No</font>
+                                                                <select class="form-control" id="id" name="id" onchange="customForm('20')" required="true">
+                                                                    <option value="0" disabled selected>Buscar</option>
+                                                                    <%
+                                                                        if (db.doDB(fac.searchEventosPrioritarios())) {
+                                                                            for (String[] row : db.getResultado()) {
+                                                                                out.println("<option value=\"" + row[0] + "\" >" + row[0] + "</option>");
+                                                                            }
+                                                                        }
+                                                                    %>
+                                                                </select>
+                                                            </th>
                                                             <th scope="col" class="font-titulo" style="background-color:#8BC4C4"> </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">País Origen</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Size Container</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Valor USD</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">ETA Port Of Discharge</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Agente Aduanal</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Pedimento A1</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Pedimento R1</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Motivo rectificación 1</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Pedimento R1 (2do)</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Motivo rectificación 2</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Recepción Documentos</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040">Recinto</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040">Naviera / Forwarder</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040">Buque</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Revalidación/Liberación de BL</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Previo Origen</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Previo en destino</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Resultado Previo</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Proforma Final</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Requiere permiso Si/No</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha envío Fichas/notas</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fec. Recepción de permisos tramit.</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fec. Act Permisos (Inic Vigencia)</th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fec. Perm. Aut. (Fin de Vigencia)</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Cuenta con CO para aplicar preferencia Arancelaria Si/No</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Aplico Preferencia Arancelaria (CO) Si/No Razon</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Requiere UVA Si/No</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#626567">Requiere CA Si/No</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#626567">Fecha Recepción CA</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#626567">Número de Constancia CA</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#626567">Monto CA</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Documentos Completos</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Pago Pedimento</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Solicitud de transporte</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Modulacion</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Modalidad Camion/Tren</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Resultado Modulacion Verde / Rojo</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Reconocimiento</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha Liberacion</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Sello Origen</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Sello Final</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fecha de retencion por la autoridad</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Fec. de liberacion por ret. de la aut.</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Estatus de la operación</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Motivo Atraso</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF">Observaciones</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">País Origen</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Size Container</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Valor USD</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">ETA Port Of Discharge</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Agente Aduanal</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento A1</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 1</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1 (2do)</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 2</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Recepción Documentos</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Recinto</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Naviera / Forwarder</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Buque</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Revalidación/Liberación de BL</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo Origen</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo en destino</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Resultado Previo</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Proforma Final</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere permiso Si/No</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha envío Fichas/notas</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Recepción de permisos tramit.</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Act Permisos (Inic Vigencia)</font></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Perm. Aut. (Fin de Vigencia)</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Cuenta con CO para aplicar preferencia Arancelaria Si/No</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Aplico Preferencia Arancelaria (CO) Si/No Razon</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere UVA Si/No</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Requiere CA Si/No</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Fecha Recepción CA</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Número de Constancia CA</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Monto CA</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Documentos Completos</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Pago Pedimento</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Solicitud de transporte</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Modulacion</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Modalidad Camion/Tren</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Resultado Modulacion Verde / Rojo</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Reconocimiento</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Liberacion</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Origen</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Final</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha de retencion por la autoridad</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. de liberacion por ret. de la aut.</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Estatus de la operación</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo Atraso</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Observaciones</font></th>
                                                         <%
                                                             if(tipoAgente.equals("1")){        //Logix
                                                         %>    
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Llegada a NOVA</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Llegada a Globe trade SD </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Archivo M</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Archivo M</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Solicitud de Manipulacion</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de vencimiento de Manipulacion</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha confirmacion Clave de Pedimento</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Recepcion de Incrementables</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">T&E</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha de Vencimiento del Inbound</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a NOVA</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a Globe trade SD</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Archivo M</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Archivo M</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Solicitud de Manipulacion</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de vencimiento de Manipulacion</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha confirmacion Clave de Pedimento</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Recepcion de Incrementables</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">T&E</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Vencimiento del Inbound</font></th>
                                                         <%
                                                             }else if(tipoAgente.equals("2")){  //Cusa
                                                         %>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">No. BULTOS</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Peso (KG)</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Transferencia (SI / NO)</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Inicio Etiquetado</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Fecha Termino Etiquetado</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Hora de termino Etiquetado</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Proveedor</th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Proveedor de Carga</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">No. BULTOS</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Peso (KG)</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Transferencia (SI / NO)</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Inicio Etiquetado</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Termino Etiquetado</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Hora de termino Etiquetado</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor</font></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor de Carga</font></th>
                                                         <%
                                                             }
                                                         %> 

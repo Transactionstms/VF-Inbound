@@ -56,53 +56,17 @@ public class ConsultarCustom extends HttpServlet {
             System.out.println("tipoAgente:" + tipoAgente);
             System.out.println("tipoConsulta:" + tipoConsulta);
             System.out.println("id:" + id);
-            
-            String sql = " SELECT DISTINCT "
-                       + " NVL(TIE.ID_EVENTO,0), "
-                       + " NVL(UPPER(TDR.RESPONSABLE),' '), "
-                       + " NVL(TIGT.FINAL_DESTINATION,' '), "
-                       + " NVL(TIBD.NOMBRE_BD,' '), "
-                       + " NVL(TIGT.CBDIV_ID,0), "
-                       + " NVL(TIE.SHIPMENT_ID,' '), "
-                       + " NVL(TIE.CONTAINER1,' '), "
-                       + " NVL(TIGT.BL_AWB_PRO,' '), "
-                       + " NVL(TIGT.LOAD_TYPE,' '), "
-                       + " NVL(TIGT.QUANTITY,0), "
-                       + " NVL(TIP.NOMBRE_POD,' '), "
-                       + " NVL(TO_CHAR(TIGT.EST_DEPARTURE_POL, 'dd/mm/yyyy'),' '), "
-                       + " NVL(TO_CHAR(TIGT.ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' '), "
-                       + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'dd/mm/yyyy'),' '), "
-                       + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "
-                       + " NVL(TIPL.NOMBRE_POL,' ') "
-                       + " FROM TRA_INB_EVENTO TIE "
-                       + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
-                       + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
-                       + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
-                       + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
-                       + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL ";
-            
-                if(tipoConsulta.equals("1")){         //Evento
-                  sql += " WHERE TIE.ID_EVENTO = '" + id + "'";
-                }else if(tipoConsulta.equals("2")){   //Shipment
-                  sql += " WHERE TIE.SHIPMENT_ID = '" + id + "'";
-                }else if(tipoConsulta.equals("3")){   //Container
-                  sql += " WHERE TIE.CONTAINER1 = '" + id + "'";
-                }
-                
-                 sql += " AND TIGT.ESTATUS = 1 "
-                      + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
              
             ServiceDAO dao = new ServiceDAO();
-            ResultSet rs = dao.consulta(sql);
-            
-            System.out.println("Consulta:"+sql);
-            
+            ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoConsulta,id));
             while (rs.next()) {
 
                 salida += " <tr> "
-                        + "    <th class=\"font-numero\">"+rs.getString(1)+"</th> "  // Número de Evento
                         + "    <td class=\"font-numero\"><center><img src=\"../img/circle-green.png\" width=\"40%\"/></center></td> "  //Semaforo            // Semaforo
-                        + "    <td class=\"font-numero\">"+tipoAgente+"</td> "       // Referencia AA
+                        + "    <th class=\"font-numero\">"+rs.getString(1)+"</th> "  // Número de Evento
+                        + "    <td class=\"font-numero\"> "                          // Referencia Aduanal
+                        + "        <input class=\"form-control\" id=\"referenciaAA\" name=\"referenciaAA\" type=\"text\" autocomplete=\"off\"> "
+                        + "    </td> "
                         + "    <td class=\"font-numero\">"+rs.getString(2)+"</td> "  // Responsable
                         + "    <td class=\"font-numero\">"+rs.getString(3)+"</td> "  // Final Destination
                         + "    <td class=\"font-numero\">"+rs.getString(4)+"</td> "  // Brand-Division
@@ -118,7 +82,7 @@ public class ConsultarCustom extends HttpServlet {
                         + "    <td class=\"font-numero\">"+rs.getString(14)+"</td> " // Est. Eta DC
                         + "    <td class=\"font-numero\"></td> "                     // Inbound notification
                         + "    <td class=\"font-numero\">"+rs.getString(16)+"</td> " // POL
-                        + "    <td class=\"font-numero\"></td> "                     // A.A.
+                        + "    <td class=\"font-numero\">"+rs.getString(17)+"</td> " // A.A.
                         + "    <td class=\"font-numero\"></td> "                     // Fecha Mes de Venta 
                         + "    <td class=\"font-numero\"> "                          // Prioridad Si/No
                         + "      <select class=\"form-control\" id=\"shipment_id\" name=\"shipment_id\" required=\"true\">" 
@@ -258,13 +222,26 @@ public class ConsultarCustom extends HttpServlet {
                         + "    </td> "
                         + "    <td class=\"font-numero\"> "
                         + "      <select class=\"form-control\" id=\"estatus_operacion\" name=\"estatus_operacion\" required=\"true\"> "
-                        + "          <option value=\"0\" disabled selected> --- </option> ";
-                                     /* if (db.doDB("SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1")) {
-                                          for (String[] row : db.getResultado()) {
-                                              out.println("<option value=\"" + row[0] + "\" >" + row[1] + "</option>");
-                                          }
-                                      }*/
-                salida += "      </select> "
+                        + "          <option value=\"0\" disabled selected> SELECCIONE </option> "
+                        + "          <option value=\"1\">EN TRANSITO</option> "
+                        + "          <option value=\"2\">EN TRANSITO - PENDIENTE REVALIDACION</option> "
+                        + "          <option value=\"3\">EN TRANSITO - REVALIDADO</option> "
+                        + "          <option value=\"4\">EN PROCESO DE ARRIBO</option> "
+                        + "          <option value=\"5\">EN PROCESO DE RECOLECCION</option> "
+                        + "          <option value=\"6\">ARRIBADO</option> "
+                        + "          <option value=\"7\">ARRIBADO - PENDIENTE REVALIDACION</option> "
+                        + "          <option value=\"8\">REVALIDADO</option> "
+                        + "          <option value=\"9\">EN ESPERA DE PREVIO</option> "
+                        + "          <option value=\"10\">RETENIDO POR LA AUTORIDAD</option> "
+                        + "          <option value=\"11\">EN PREVIO</option> "
+                        + "          <option value=\"12\">EN GLOSA</option> "
+                        + "          <option value=\"13\">EN ESPERA DE DOCUMENTOS</option> "
+                        + "          <option value=\"14\">EN PROCESO DE PAGO DE PEDIMENTO</option> "
+                        + "          <option value=\"15\">PEDIMENTO PAGADO</option> "
+                        + "          <option value=\"16\">EN ESPERA DE INSTRUCCIONES PARA DESPACHO</option> "
+                        + "          <option value=\"17\">EN PROGRAMACION DE DESPACHO</option> "
+                        + "          <option value=\"18\">EN DESPACHO</option> "
+                        + "      </select> "
                         + "    </td> "
                         + "    <td class=\"font-numero\"> "
                         + "      <input class=\"form-control\" id=\"motivo_atraso\" name=\"motivo_atraso\" type=\"text\" autocomplete=\"off\"> "

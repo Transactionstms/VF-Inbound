@@ -1906,5 +1906,184 @@ public class ConsultasQuery {
              + " AND nvl(taa.AGENTE_ADUANAL_NOMBRE,' ') IS NOT NULL ";
         return sql;
     }
+    
+    public String consultarEventosCustoms(String tipoConsulta, String id){
+           sql = " SELECT DISTINCT "
+               + " NVL(TIE.ID_EVENTO,0), "
+               + " NVL(UPPER(TDR.RESPONSABLE),' '), "
+               + " NVL(TIGT.FINAL_DESTINATION,' '), "
+               + " NVL(TIBD.NOMBRE_BD,' '), "
+               + " NVL(TIGT.CBDIV_ID,0), "
+               + " NVL(TIE.SHIPMENT_ID,' '), "
+               + " NVL(TIE.CONTAINER1,' '), "
+               + " NVL(TIGT.BL_AWB_PRO,' '), "
+               + " NVL(TIGT.LOAD_TYPE,' '), "
+               + " NVL(TIGT.QUANTITY,0), "
+               + " NVL(TIP.NOMBRE_POD,' '), "
+               + " NVL(TO_CHAR(TIGT.EST_DEPARTURE_POL, 'dd/mm/yyyy'),' '), "
+               + " NVL(TO_CHAR(TIGT.ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' '), "
+               + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'dd/mm/yyyy'),' '), "
+               + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "
+               + " NVL(TIPL.NOMBRE_POL,' '), "
+               + " NVL(TIAA.AGENTE_ADUANAL_NOMBRE,' ')  "
+               + " FROM TRA_INB_EVENTO TIE "
+               + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
+               + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
+               + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
+               + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
+               + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
+               + " INNER JOIN TRA_INB_AGENTE_ADUANAL TIAA ON TIP.AGENTE_ADUANAL_ID = TIAA.AGENTE_ADUANAL_ID ";
+
+        if(tipoConsulta.equals("1")){         //Evento
+          sql += " WHERE TIE.ID_EVENTO = '" + id + "'";
+        }else if(tipoConsulta.equals("2")){   //Referncia AA
+          sql += "";
+        }else if(tipoConsulta.equals("3")){   //Responsable
+          sql += " WHERE TDR.RESPONSABLE = '" + id + "'";
+        }else if(tipoConsulta.equals("4")){   //Destino Shipment
+          sql += " WHERE TIGT.FINAL_DESTINATION = '" + id + "'";
+        }else if(tipoConsulta.equals("5")){   //Brand-Division
+          sql += " WHERE TIBD.NOMBRE_BD = '" + id + "'";
+        }else if(tipoConsulta.equals("6")){   //División
+          sql += " WHERE TIGT.CBDIV_ID = '" + id + "'";
+        }else if(tipoConsulta.equals("7")){   //Shipment Id
+          sql += " WHERE TIE.SHIPMENT_ID = '" + id + "'";
+        }else if(tipoConsulta.equals("8")){   //Container
+          sql += " WHERE TIE.CONTAINER1 = '" + id + "'";
+        }else if(tipoConsulta.equals("9")){   //BL/AWB/PRO
+          sql += " WHERE TIGT.BL_AWB_PRO = '" + id + "'";
+        }else if(tipoConsulta.equals("10")){  //Load Type
+          sql += " WHERE TIGT.LOAD_TYPE = '" + id + "'";
+        }else if(tipoConsulta.equals("11")){  //Quantity
+          sql += " WHERE TIGT.QUANTITY = '" + id + "'";
+        }else if(tipoConsulta.equals("12")){  //Pod
+          sql += " WHERE TIP.NOMBRE_POD = '" + id + "'";
+        }else if(tipoConsulta.equals("13")){  //Departure Pol 
+          sql += " WHERE TIGT.EST_DEPARTURE_POL = '" + id + "'";
+        }else if(tipoConsulta.equals("14")){ //ETA REAL Port of Discharge
+          sql += " WHERE TIGT.ETA_PORT_DISCHARGE = '" + id + "'";
+        }else if(tipoConsulta.equals("15")){ //Est. Eta DC
+          sql += " WHERE TIE.EST_ETA_DC = '" + id + "'";
+        }else if(tipoConsulta.equals("16")){ //Inbound notification
+          sql += "";
+        }else if(tipoConsulta.equals("17")){ //Pol
+          sql += " WHERE TIPL.NOMBRE_POL = '" + id + "'";
+        }else if(tipoConsulta.equals("18")){ //Agente Aduanal
+          sql += " WHERE TIAA.AGENTE_ADUANAL_NOMBRE = '" + id + "'";
+        }else if(tipoConsulta.equals("19")){ //Fecha Mes de Venta
+          sql += " WHERE TIE.FECHA_CAPTURA = '" + id + "'";
+        }else if(tipoConsulta.equals("20")){ //Prioridad
+          sql += " ";
+        }
+        
+         sql += " AND TIGT.ESTATUS = 1 "
+              + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
+        return sql;
+    }
+    
+    public String consultarEstatusOperacionCustoms(){
+         sql = "SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1";
+        return sql;
+    }
+    
+    public String searchEventos(){
+         sql = "SELECT DISTINCT ID_EVENTO FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY ID_EVENTO ASC";
+        return sql;
+    }
+    
+    public String searchShipment(){
+         sql = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY SHIPMENT_ID ASC";
+        return sql;
+    }
+    
+    public String searchContainer(){
+         sql = "SELECT DISTINCT CONTAINER1 FROM TRA_INB_EVENTO WHERE ESTADO = 1 AND USER_NID IS NOT NULL ORDER BY CONTAINER1 ASC";
+        return sql;
+    }
+    
+    public String searchReferenciaAA(){
+         sql = "";
+        return sql;
+    }
+    
+    public String searchResponsable(){
+         sql = "SELECT DISTINCT RESPONSABLE FROM TRA_DESTINO_RESPONSABLE WHERE ESTATUS = 1 ORDER BY RESPONSABLE ASC";
+        return sql;
+    }
+    
+    public String searchBrandDivision(){
+         sql = "SELECT DISTINCT NOMBRE_BD FROM TRA_INB_BRAND_DIVISION WHERE STATUS = 1 ORDER BY NOMBRE_BD ASC";
+        return sql;
+    }
+    
+    public String searchDivision(){
+         sql = "SELECT DISTINCT SBU_NAME FROM TRA_INB_DNS WHERE STATUS = 1 ORDER BY SBU_NAME ASC";
+        return sql;
+    }
+    
+    public String searchShipmentId(){
+         sql = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_EVENTO WHERE ESTADO = 1 ORDER BY SHIPMENT_ID ASC";
+        return sql;
+    }
+    
+    public String searchBlAwbPro(){
+         sql = "SELECT DISTINCT BL_AWB_PRO FROM TRA_INC_GTN_TEST WHERE ESTATUS = 1 ORDER BY BL_AWB_PRO ASC";
+        return sql;
+    }
+    
+    public String searchLoadType(){
+         sql = "";
+        return sql;
+    }
+    
+    public String searchQuantity(){
+         sql = "SELECT DISTINCT QUANTITY FROM TRA_INC_GTN_TEST WHERE ESTATUS = 1 ORDER BY QUANTITY ASC";
+        return sql;
+    }
+    
+    public String searchPod(){
+         sql = "SELECT DISTINCT NOMBRE_POD FROM TRA_INB_POD WHERE STATUS = 1 ORDER BY NOMBRE_POD ASC";
+        return sql;
+    }
+    
+    public String searchDepartureFromPOL(){
+         sql = "SELECT DISTINCT NVL(TO_CHAR(EST_DEPARTURE_POL, 'dd/mm/yyyy'),' ') FROM TRA_INC_GTN_TEST WHERE ESTATUS = 1 ORDER BY NVL(TO_CHAR(EST_DEPARTURE_POL, 'dd/mm/yyyy'),' ') ASC";
+        return sql;
+    }
+    
+    public String searchRealPortDischarge(){
+         sql = "SELECT DISTINCT NVL(TO_CHAR(ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' ') FROM TRA_INC_GTN_TEST WHERE ESTATUS = 1 ORDER BY NVL(TO_CHAR(ETA_PORT_DISCHARGE, 'dd/mm/yyyy'),' ') ASC";
+        return sql;
+    }
+    
+    public String searchEtaDC(){
+         sql = "SELECT DISTINCT NVL(TO_CHAR(EST_ETA_DC, 'dd/mm/yyyy'),' ') FROM TRA_INB_EVENTO WHERE ESTADO = 1 ORDER BY NVL(TO_CHAR(EST_ETA_DC, 'dd/mm/yyyy'),' ') ASC";
+        return sql;
+    }
+    
+    public String searchInboundNotificacion(){
+         sql = "";
+        return sql;
+    }
+    
+    public String searchPol(){
+         sql = "SELECT DISTINCT NOMBRE_POL FROM TRA_INB_POL WHERE STATUS = 1 ORDER BY NOMBRE_POL ASC";
+        return sql;
+    }
+    
+    public String searchAA(){
+         sql = "SELECT DISTINCT AGENTE_ADUANAL_NOMBRE FROM TRA_INB_AGENTE_ADUANAL WHERE ESTATUS = 1 ORDER BY AGENTE_ADUANAL_NOMBRE ASC";
+        return sql;
+    }
+    
+    public String searchFechaMesVenta(){
+         sql = "SELECT DISTINCT NVL(TO_CHAR(FECHA_CAPTURA, 'dd/mm/yyyy'),' ') FROM TRA_INB_EVENTO WHERE ESTADO = 1 ORDER BY NVL(TO_CHAR(FECHA_CAPTURA, 'dd/mm/yyyy'),' ') ASC";
+        return sql;
+    }
+    
+    public String searchEventosPrioritarios(){
+         sql = "";
+        return sql;
+    }
 } 
  
