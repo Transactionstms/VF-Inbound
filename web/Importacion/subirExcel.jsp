@@ -162,22 +162,9 @@
                         </div>
                           <span class="loader" id="loader" ></span>
                          
-                         <div class="overflow-scroll" style="height: 300px;overflow: auto;"  id="respuesta"> 
-                           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec mauris vestibulum, bibendum est ac, luctus mi. Nullam tempor, justo vitae interdum tincidunt, erat mauris ullamcorper orci, nec gravida sapien turpis a velit.</p>
-
-                         </div>
+                         <div class="overflow-scroll" style="height: 300px;overflow: auto;"  id="respuesta">   </div> 
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                      </div>
-                    
-                    
-                   
+                      </div> 
                 </div>
             </div>
         </a> 
@@ -218,10 +205,12 @@
 
 
             async function fetchData() {
-                console.log('aqui')
+                console.log('aqui');
+                 let fecha=Date.now();
+     console.log(fecha);
                 try {
-                   // let urlF='https://www.rtms.mx/PLANTILLAS/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>';
-                    let urlF='http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>';
+                    let urlF='https://www.rtms.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                   // let urlF='http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
 

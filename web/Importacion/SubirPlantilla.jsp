@@ -154,7 +154,11 @@
 
  </body>
 
-
+ <script>
+     
+    
+     
+ </script>
 
 <%                } catch (NullPointerException e) {
         out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
