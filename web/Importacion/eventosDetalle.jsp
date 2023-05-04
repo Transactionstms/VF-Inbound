@@ -30,7 +30,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar Eventos Nuevos</title>
+        <title>Eventos </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
@@ -118,6 +118,67 @@
                         + "  LEFT JOIN  tra_inb_division tid  on  tid.ID_DIVISION=GTN.SBU_NAME "
                         + "  order by 1 ";
 
+
+
+String sql2=""
+        + ""
+       + "WITH sum_quantity AS ("
++"   SELECT shipment_id, container1, SUM(quantity) AS suma"
++"   FROM tra_inc_gtn_test"
++"   GROUP BY shipment_id, container1"
++" )"
++" SELECT DISTINCT"
++"   tie.id_evento,"
++"   NVL(bp.responsable, ' ') AS responsable,"
++"   gtn.final_destination,"
++"   gtn.brand_division,"
++"   tid.division_nombre,"
++"   gtn.shipment_id,"
++"   gtn.container1,"
++"   gtn.bl_awb_pro,"
++"   gtn.load_type,"
++"   sq.suma,"
++"   gtn.pod,"
++"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
++"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
++"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
++"   'Inbound notification' AS notification_type,"
++"   gtn.pol,"
++"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
++"   gtn.plantilla_id,"
++"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
++"   tip1.nombre_pod,"
++"   tip2.nombre_pol,"
++"   tibd.nombre_bd,"
++"   CASE"
++"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
++"     WHEN EXISTS ("
++"       SELECT 1"
++"       FROM tra_inc_gtn_test"
++"       WHERE container1 = gtn.container1"
++"       HAVING COUNT(DISTINCT brand_division) > 1"
++"     ) THEN 'FCL / LCL'"
++"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
++"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
++"     ELSE '-'"
++"   END AS estado,"
++"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
++"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
++"   NVL(tie.observaciones, ' ') AS observaciones"
++" FROM"
++"   tra_inb_evento tie"
++"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
++"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
++"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
++"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
++"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
++"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
++"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
++"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
++" ORDER BY"
++"   tie.id_evento"
+        + ""
+        + "";
         %>
         <!-- navbar-->
         <header class="header">
@@ -136,8 +197,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                   
+                                     
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
 
@@ -196,8 +256,8 @@
                                                             //                     }}
                                                         %>
 
-                                                        <%
-                                                            if (db.doDB(sqlor)) {
+                                                        <%//sqlor
+                                                            if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
                                                                     // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
                                                                     //row[18]
@@ -308,7 +368,7 @@
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
+                                <div class="card ">
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -317,12 +377,12 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form id="uploadFileFormData" name="uploadFileFormData">
+                                        <form id="uploadFileFormData1" name="uploadFileFormData1">
 
                                             <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
  
                                             <br>
-                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
+                                            <div id="table-scroll" class="table-scroll"  style="height: 100%;">
 
 
                                                 <table id="example" class="display" style="width:300%">
@@ -369,7 +429,7 @@
                                                         %>
 
                                                         <%
-                                                            if (db.doDB(sqlor)) {
+                                                            if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
                                                                     // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
                                                                     //row[18]
@@ -514,8 +574,16 @@
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 
-        <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
-        <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
+      
+         <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+ <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
+
 
         <script type="text/javascript">
             // Optional
@@ -526,14 +594,28 @@
                 'right-trim': true,
             });
 
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    order: [[3, 'desc']],
-                       buttons: [
-        'excel'
-    ]
-                });
-            });
+          $(document).ready(function () {
+  $('#example').DataTable({
+    dom: 'lBfrtip', // Incluye el elemento de paginación
+    buttons: [
+      {
+        extend: 'copy',
+        text: 'Copiar'
+      },
+      {
+        extend: 'csv',
+        text: 'CSV'
+      },
+      {
+        extend: 'excel',
+        text: 'Excel'
+      }
+    ],
+    lengthMenu: [10, 15, 25, 50, 100], // Define las opciones de "Mostrar entradas"
+    pageLength: 10 // Establece el número predeterminado de entradas por página
+  });
+});
+
 
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
