@@ -1933,59 +1933,62 @@ public class ConsultasQuery {
                + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'dd/mm/yyyy'),' '), "
                + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "
                + " NVL(TIPL.NOMBRE_POL,' '), "
-               + " NVL(TIAA.AGENTE_ADUANAL_NOMBRE,' ')  "
+               + " NVL(TIAA.AGENTE_ADUANAL_NOMBRE,' '), "
+               + " TIE.ESTATUS_EVENTO, "
+               + " NVL(TIE.REFERENCIA_AA,' '), "
+               + " NVL(TIE.PRIORIDAD,' ')  "
                + " FROM TRA_INB_EVENTO TIE "
-               + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
-               + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
-               + " INNER JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
-               + " INNER JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
-               + " INNER JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
-               + " INNER JOIN TRA_INB_AGENTE_ADUANAL TIAA ON TIP.AGENTE_ADUANAL_ID = TIAA.AGENTE_ADUANAL_ID ";
+               + " LEFT JOIN TRA_INC_GTN_TEST TIGT ON TIE.PLANTILLA_ID = TIGT.PLANTILLA_ID "
+               + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD "
+               + " LEFT JOIN TRA_DESTINO_RESPONSABLE TDR ON TIE.USER_NID = TDR.USER_NID "
+               + " LEFT JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
+               + " LEFT JOIN TRA_INB_POL TIPL ON TIGT.POL = TIPL.ID_POL "
+               + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TIAA ON TIP.AGENTE_ADUANAL_ID = TIAA.AGENTE_ADUANAL_ID "
+               + " WHERE TIE.ESTATUS_EVENTO = 1 ";
 
         if(tipoConsulta.equals("1")){         //Evento
-          sql += " WHERE TIE.ID_EVENTO = '" + id + "'";
+          sql += " AND TIE.ID_EVENTO IN ('" + id + "')";
         }else if(tipoConsulta.equals("2")){   //Referncia AA
-          sql += "";
+          sql += " AND TIE.REFERENCIA_AA IN ('" + id + "')";
         }else if(tipoConsulta.equals("3")){   //Responsable
-          sql += " WHERE TDR.RESPONSABLE = '" + id + "'";
+          sql += " AND TDR.RESPONSABLE IN ('" + id + "')";
         }else if(tipoConsulta.equals("4")){   //Destino Shipment
-          sql += " WHERE TIGT.FINAL_DESTINATION = '" + id + "'";
+          sql += " AND TIGT.FINAL_DESTINATION IN ('" + id + "')";
         }else if(tipoConsulta.equals("5")){   //Brand-Division
-          sql += " WHERE TIBD.NOMBRE_BD = '" + id + "'";
+          sql += " AND TIBD.NOMBRE_BD IN ('" + id + "')";
         }else if(tipoConsulta.equals("6")){   //División
-          sql += " WHERE TIGT.CBDIV_ID = '" + id + "'";
+          sql += " AND TIGT.CBDIV_ID IN ('" + id + "')";
         }else if(tipoConsulta.equals("7")){   //Shipment Id
-          sql += " WHERE TIE.SHIPMENT_ID = '" + id + "'";
+          sql += " AND TIE.SHIPMENT_ID IN ('" + id + "')";
         }else if(tipoConsulta.equals("8")){   //Container
-          sql += " WHERE TIE.CONTAINER1 = '" + id + "'";
+          sql += " AND TIE.CONTAINER1 IN ('" + id + "')";
         }else if(tipoConsulta.equals("9")){   //BL/AWB/PRO
-          sql += " WHERE TIGT.BL_AWB_PRO = '" + id + "'";
+          sql += " AND TIGT.BL_AWB_PRO IN ('" + id + "')";
         }else if(tipoConsulta.equals("10")){  //Load Type
-          sql += " WHERE TIGT.LOAD_TYPE = '" + id + "'";
+          sql += " AND TIGT.LOAD_TYPE IN ('" + id + "')";
         }else if(tipoConsulta.equals("11")){  //Quantity
-          sql += " WHERE TIGT.QUANTITY = '" + id + "'";
+          sql += " AND TIGT.QUANTITY IN ('" + id + "')";
         }else if(tipoConsulta.equals("12")){  //Pod
-          sql += " WHERE TIP.NOMBRE_POD = '" + id + "'";
+          sql += " AND TIP.NOMBRE_POD IN ('" + id + "')";
         }else if(tipoConsulta.equals("13")){  //Departure Pol 
-          sql += " WHERE TIGT.EST_DEPARTURE_POL = '" + id + "'";
+          sql += " AND TIGT.EST_DEPARTURE_POL IN ('" + id + "')";
         }else if(tipoConsulta.equals("14")){ //ETA REAL Port of Discharge
-          sql += " WHERE TIGT.ETA_PORT_DISCHARGE = '" + id + "'";
+          sql += " AND TIGT.ETA_PORT_DISCHARGE IN ('" + id + "')";
         }else if(tipoConsulta.equals("15")){ //Est. Eta DC
-          sql += " WHERE TIE.EST_ETA_DC = '" + id + "'";
+          sql += " AND TIE.EST_ETA_DC IN ('" + id + "')";
         }else if(tipoConsulta.equals("16")){ //Inbound notification
           sql += "";
         }else if(tipoConsulta.equals("17")){ //Pol
-          sql += " WHERE TIPL.NOMBRE_POL = '" + id + "'";
+          sql += " AND TIPL.NOMBRE_POL IN ('" + id + "')";
         }else if(tipoConsulta.equals("18")){ //Agente Aduanal
-          sql += " WHERE TIAA.AGENTE_ADUANAL_NOMBRE = '" + id + "'";
+          sql += " AND TIAA.AGENTE_ADUANAL_NOMBRE IN ('" + id + "')";
         }else if(tipoConsulta.equals("19")){ //Fecha Mes de Venta
-          sql += " WHERE TIE.FECHA_CAPTURA = '" + id + "'";
+          sql += " AND TIE.FECHA_CAPTURA IN ('" + id + "')";
         }else if(tipoConsulta.equals("20")){ //Prioridad
           sql += " ";
         }
-        
-         sql += " AND TIGT.ESTATUS = 1 "
-              + " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
+         sql += " ORDER BY NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' ') DESC ";
+         System.out.println("Consulta Principal: " + sql);
         return sql;
     }
     

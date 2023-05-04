@@ -49,253 +49,289 @@ public class InsertarCustomsForms extends HttpServlet {
         String fecha_registro = formato.format(date);
         ConsultasQuery fac = new ConsultasQuery();
     
-          //Parametros Indicadores
-          String evento = request.getParameter("evento");
-          String shipmentId = request.getParameter("shipmentId");
-          String containerId = request.getParameter("containerId");
-          String referenciaAA = request.getParameter("referenciaAA"); 
-          String prioridad = request.getParameter("prioridad"); 
           String idAgenteAduanal = request.getParameter("idAgenteAduanal"); 
           
-          //Parametros Generales
-          String pais_origen = request.getParameter("pais_origen"); 
-          String size_container = request.getParameter("size_container"); 
-          String valor_usd = request.getParameter("valor_usd");                
-          String eta_port_discharge = request.getParameter("eta_port_discharge");        
-          String agente_aduanal = request.getParameter("agente_aduanal");            
-          String pedimento_a1 = request.getParameter("pedimento_a1");             
-          String pedimento_r1_1er = request.getParameter("pedimento_r1_1er");          
-          String motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er");  
-          String pedimento_r1_2do = request.getParameter("pedimento_r1_2do");          
-          String motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do");  
-          String fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc");  
-          String recinto = request.getParameter("recinto");
-          String naviera = request.getParameter("naviera");
-          String buque = request.getParameter("buque");
-          String fecha_revalidacion = request.getParameter("fecha_revalidacion");        
-          String fecha_previo_origen = request.getParameter("fecha_previo_origen");       
-          String fecha_previo_destino = request.getParameter("fecha_previo_destino");      
-          String fecha_resultado_previo = request.getParameter("fecha_resultado_previo");    
-          String proforma_final = request.getParameter("proforma_final");            
-          String permiso = request.getParameter("permiso");                   
-          String fecha_envio = request.getParameter("fecha_envio");               
-          String fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm");    
-          String fecha_activacion_perm = request.getParameter("fecha_activacion_perm");     
-          String fecha_permisos_aut = request.getParameter("fecha_permisos_aut");        
-          String co_pref_arancelaria = request.getParameter("co_pref_arancelaria");       
-          String aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria");    
-          String req_uva = request.getParameter("req_uva");   
-          String req_ca = request.getParameter("req_ca");   
-          String fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca");   
-          String num_constancia_ca = request.getParameter("num_constancia_ca");   
-          String monto_ca = request.getParameter("monto_ca");   
-          String fecha_doc_completos = request.getParameter("fecha_doc_completos");       
-          String fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento");      
-          String fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte");
-          String fecha_modulacion = request.getParameter("fecha_modulacion");          
-          String modalidad = request.getParameter("modalidad");                 
-          String resultado_modulacion = request.getParameter("resultado_modulacion");      
-          String fecha_reconocimiento = request.getParameter("fecha_reconocimiento");      
-          String fecha_liberacion = request.getParameter("fecha_liberacion");         
-          String sello_origen = request.getParameter("sello_origen");              
-          String sello_final = request.getParameter("sello_final");               
-          String fecha_retencion_aut = request.getParameter("fecha_retencion_aut");       
-          String fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut");     
-          String estatus_operacion = request.getParameter("estatus_operacion");         
-          String motivo_atraso = request.getParameter("motivo_atraso");             
-          String observaciones = request.getParameter("observaciones"); 
-          String fy = request.getParameter("fy"); 
+          //Contadores
+            String contCustoms = request.getParameter("numCustoms");
+            int numCustoms = Integer.parseInt(contCustoms);
           
           //Parametros Logix
-          String llegada_a_nova = request.getParameter("llegada_a_nova"); 
-          String llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd"); 
-          String archivo_m = request.getParameter("archivo_m"); 
-          String fecha_archivo_m = request.getParameter("fecha_archivo_m"); 
-          String fecha_solicit_manip = request.getParameter("fecha_solicit_manip"); 
-          String fecha_vencim_manip = request.getParameter("fecha_vencim_manip"); 
-          String fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim"); 
-          String fecha_recep_increment = request.getParameter("fecha_recep_increment"); 
-          String t_e = request.getParameter("t_e"); 
-          String fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound"); 
-          
-          //Parametros Cusa
-          String no_bultos = request.getParameter("no_bultos"); 
-          String peso_kg = request.getParameter("peso_kg"); 
-          String transferencia = request.getParameter("transferencia"); 
-          String fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado"); 
-          String fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado"); 
-          String hora_termino_etiquetado = request.getParameter("hora_termino_etiquetado"); 
-          String proveedor = request.getParameter("proveedor"); 
-          String proveedor_carga = request.getParameter("proveedor_carga"); 
-          
-      String salida = "";
+            String llegada_a_nova = "";
+            String llegada_a_globe_trade_sd = "";
+            String archivo_m = "";
+            String fecha_archivo_m = "";
+            String fecha_solicit_manip = "";
+            String fecha_vencim_manip = "";
+            String fecha_confirm_clave_pedim = "";
+            String fecha_recep_increment = "";
+            String t_e = "";
+            String fecha_vencim_inbound = ""; 
         
-      String insertarCustoms =  " INSERT INTO TRA_INB_CUSTOMS " 
-                              + " (CUSTREG_ID, "  
-                              + " NUMERO_DE_EVENTO, "  
-                              + " SHIPMENT_ID, "  
-                              + " CONTAINER_ID, "  
-                              + " REFERENCIA_AA, "
-                              + " PAIS_ORIGEN, "  
-                              + " SIZE_CONTAINER, "  
-                              + " VALOR_USD, "                
-                              + " ETA_PORT_DISCHARGE, "        
-                              + " AGENTE_ADUANAL, "            
-                              + " PEDIMENTO_A1, "              
-                              + " PEDIMENTO_R1_1ER, "          
-                              + " MOTIVO_RECTIFICACION_1ER, "  
-                              + " PEDIMENTO_R1_2DO, "          
-                              + " MOTIVO_RECTIFICACION_2DO, "  
-                              + " FECHA_RECEPCION_DOC, "    
-                              + " RECINTO, "    
-                              + " NAVIERA, "    
-                              + " BUQUE, "   
-                              + " FECHA_REVALIDACION, "        
-                              + " FECHA_PREVIO_ORIGEN, "       
-                              + " FECHA_PREVIO_DESTINO, "      
-                              + " FECHA_RESULTADO_PREVIO, "    
-                              + " PROFORMA_FINAL, "            
-                              + " PERMISO, "                   
-                              + " FECHA_ENVIO, "               
-                              + " FECHA_RECEPCION_PERM, "      
-                              + " FECHA_ACTIVACION_PERM, "     
-                              + " FECHA_PERMISOS_AUT, "        
-                              + " CO_PREF_ARANCELARIA, "       
-                              + " APLIC_PREF_ARANCELARIA, "    
-                              + " REQ_UVA, "    
-                              + " REQ_CA, "  
-                              + " FECHA_RECEPCION_CA, "  
-                              + " NUM_CONSTANCIA_CA, "  
-                              + " MONTO_CA, "  
-                              + " FECHA_DOC_COMPLETOS, "       
-                              + " FECHA_PAGO_PEDIMENTO, "      
-                              + " FECHA_SOLICITUD_TRANSPORTE, "
-                              + " FECHA_MODULACION, "          
-                              + " MODALIDAD, "                 
-                              + " RESULTADO_MODULACION, "      
-                              + " FECHA_RECONOCIMIENTO, "      
-                              + " FECHA_LIBERACION, "         
-                              + " SELLO_ORIGEN, "              
-                              + " SELLO_FINAL, "               
-                              + " FECHA_RETENCION_AUT, "       
-                              + " FECHA_LIBERACION_AUT, "      
-                              + " ESTATUS_OPERACION, "         
-                              + " MOTIVO_ATRASO, "             
-                              + " OBSERVACIONES, ";        
-        if(idAgenteAduanal.equals("4001")){ //LOGIX
-              insertarCustoms  += " LLEGADA_A_NOVA, "
-                             + " LLEGADA_A_GLOBE_TRADE_SD, " 
-                             + " ARCHIVO_M, " 
-                             + " FECHA_ARCHIVO_M, " 
-                             + " FECHA_SOLICIT_MANIP, " 
-                             + " FECHA_VENCIM_MANIP, " 
-                             + " FECHA_CONFIRM_CLAVE_PEDIM, " 
-                             + " FECHA_RECEP_INCREMENT, " 
-                             + " T_E, " 
-                             + " FECHA_VENCIM_INBOUND, ";
-        }           
-        if(idAgenteAduanal.equals("4002")){ //CUSA
-              insertarCustoms  += " NO_BULTOS, "
-                             + " PESO_KG, " 
-                             + " TRANSFERENCIA, " 
-                             + " FECHA_INICIO_ETIQUETADO, " 
-                             + " FECHA_TERMINO_ETIQUETADO, " 
-                             + " HORA_TERMINO_ETIQUETADO, " 
-                             + " PROVEEDOR, " 
-                             + " PROVEEDOR_CARGA, ";
-        } 
-               insertarCustoms  += " FY, "
-                              + " AGENTE_ADUANAL_ID, "
-                              + " PRIORIDAD, "
-                              + " FECHA_REGISTRO, "            
-                              + " ESTATUS_ID, "                
-                              + " CBDIV_ID, "
-                              + " USER_NID) "
-                              + " VALUES " 
-                              + " (NULL, "  
-                              + " '" + evento + "', "  
-                              + " '" + shipmentId + "', "  
-                              + " '" + containerId + "', "  
-                              + " '" + referenciaAA + "', "
-                              + " '" + pais_origen + "', "  
-                              + " '" + size_container + "', "  
-                              + " '" + valor_usd + "', "                
-                              + " TO_DATE('" + eta_port_discharge + "', 'mm/dd/yy HH24:MI:SS'), "        
-                              + " '" + agente_aduanal + "', "            
-                              + " '" + pedimento_a1 + "', "              
-                              + " '" + pedimento_r1_1er + "', "          
-                              + " '" + motivo_rectificacion_1er + "', "
-                              + " '" + pedimento_r1_2do + "', "          
-                              + " '" + motivo_rectificacion_2do + "', "  
-                              + " TO_DATE('" + fecha_recepcion_doc + "', 'mm/dd/yy HH24:MI:SS'), "       
-                              + " '" + recinto + "', " 
-                              + " '" + naviera + "', " 
-                              + " '" + buque + "', " 
-                              + " TO_DATE('" + fecha_revalidacion + "', 'mm/dd/yy HH24:MI:SS'), "         
-                              + " TO_DATE('" + fecha_previo_origen + "', 'mm/dd/yy HH24:MI:SS'), "           
-                              + " TO_DATE('" + fecha_previo_destino + "', 'mm/dd/yy HH24:MI:SS'), "          
-                              + " TO_DATE('" + fecha_resultado_previo + "', 'mm/dd/yy HH24:MI:SS'), "        
-                              + " TO_DATE('" + proforma_final + "', 'mm/dd/yy HH24:MI:SS'), "                
-                              + " '" + permiso + "', "                   
-                              + " TO_DATE('" + fecha_envio + "', 'mm/dd/yy HH24:MI:SS'), "                   
-                              + " TO_DATE('" + fecha_recepcion_perm + "', 'mm/dd/yy HH24:MI:SS'), "          
-                              + " TO_DATE('" + fecha_activacion_perm + "', 'mm/dd/yy HH24:MI:SS'), "         
-                              + " TO_DATE('" + fecha_permisos_aut + "', 'mm/dd/yy HH24:MI:SS'), "            
-                              + " '" + co_pref_arancelaria + "', "       
-                              + " '" + aplic_pref_arancelaria + "', "    
-                              + " '" + req_uva + "', "   
-                              + " '" + req_ca + "', "   
-                              + " TO_DATE('" + fecha_recepcion_ca + "', 'mm/dd/yy HH24:MI:SS'), "       
-                              + " '" + num_constancia_ca + "', "   
-                              + " '" + monto_ca + "', "  
-                              + " TO_DATE('" + fecha_doc_completos + "', 'mm/dd/yy HH24:MI:SS'), "           
-                              + " TO_DATE('" + fecha_pago_pedimento + "', 'mm/dd/yy HH24:MI:SS'), "          
-                              + " TO_DATE('" + fecha_solicitud_transporte + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_modulacion + "', 'mm/dd/yy HH24:MI:SS'), "              
-                              + " '" + modalidad + "', "                 
-                              + " '" + resultado_modulacion + "', "      
-                              + " TO_DATE('" + fecha_reconocimiento + "', 'mm/dd/yy HH24:MI:SS'), "          
-                              + " TO_DATE('" + fecha_liberacion + "', 'mm/dd/yy HH24:MI:SS'), "             
-                              + " '" + sello_origen + "', "              
-                              + " '" + sello_final + "', "               
-                              + " TO_DATE('" + fecha_retencion_aut + "', 'mm/dd/yy HH24:MI:SS'), "           
-                              + " TO_DATE('" + fecha_liberacion_aut + "', 'mm/dd/yy HH24:MI:SS'), "          
-                              + " '" + estatus_operacion + "', "         
-                              + " '" + motivo_atraso + "', "             
-                              + " '" + observaciones + "', "; 
-        if(idAgenteAduanal.equals("4001")){ //LOGIX
-              insertarCustoms  +=  " TO_DATE('" + llegada_a_nova + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + llegada_a_globe_trade_sd + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " '" + archivo_m + "', "
-                              + " TO_DATE('" + fecha_archivo_m + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_solicit_manip + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_vencim_manip + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_confirm_clave_pedim + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_recep_increment + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " '" + t_e + "', "
-                              + " TO_DATE('" + fecha_vencim_inbound + "', 'mm/dd/yy HH24:MI:SS'), ";     
-        }   
-        if(idAgenteAduanal.equals("4002")){ //CUSA
-              insertarCustoms  +=  " '" + no_bultos + "', "
-                              + " '" + peso_kg + "', "
-                              + " '" + transferencia + "', "
-                              + " TO_DATE('" + fecha_inicio_etiquetado + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " TO_DATE('" + fecha_termino_etiquetado + "', 'mm/dd/yy HH24:MI:SS'), "    
-                              + " '" + hora_termino_etiquetado + "', "
-                              + " '" + proveedor + "', "
-                              + " '" + proveedor_carga + "', "; 
-        }        
-              insertarCustoms  +=  " '" + fy + "', "
-                              + " '" + idAgenteAduanal + "', "
-                              + " '" + prioridad + "', "
-                              + " TO_DATE(SYSDATE, 'mm/dd/yy HH24:MI:SS'), "               
-                              + " 1, "                
-                              + " '" + cve + "', "
-                              + " '" + UserId + "') ";  
-        boolean oraOut1 = oraDB.execute(insertarCustoms);
-        
-       
-         String historicoCustoms =  " INSERT INTO TRA_HIST_INB_CUSTOMS " 
+           //Parametros Cusa
+            String no_bultos = "";
+            String peso_kg = "";
+            String transferencia = "";
+            String fecha_inicio_etiquetado = "";
+            String fecha_termino_etiquetado = "";
+            String hora_termino_etiquetado = "";
+            String proveedor = "";
+            String proveedor_carga = "";   
+          
+            String insertarCustoms = "";
+            String regPrioridad = "";
+            String salida = "";
+          
+          if(numCustoms > 0){
+              for (int i = 0; i < numCustoms; i++){
+                  
+                  //Parametros Indicadores
+                  String evento = request.getParameter("evento[" + i + "]");
+                  String shipmentId = request.getParameter("shipmentId[" + i + "]");
+                  String containerId = request.getParameter("containerId[" + i + "]");
+                  String referenciaAA = request.getParameter("referenciaAA[" + i + "]"); 
+                  String prioridad = request.getParameter("prioridad[" + i + "]"); 
+                  
+                  //Parametros Generales
+                  String pais_origen = request.getParameter("pais_origen[" + i + "]"); 
+                  String size_container = request.getParameter("size_container[" + i + "]"); 
+                  String valor_usd = request.getParameter("valor_usd[" + i + "]");                
+                  String eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]");        
+                  String agente_aduanal = request.getParameter("agente_aduanal[" + i + "]");            
+                  String pedimento_a1 = request.getParameter("pedimento_a1[" + i + "]");             
+                  String pedimento_r1_1er = request.getParameter("pedimento_r1_1er[" + i + "]");          
+                  String motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er[" + i + "]");  
+                  String pedimento_r1_2do = request.getParameter("pedimento_r1_2do[" + i + "]");          
+                  String motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]");  
+                  String fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]");  
+                  String recinto = request.getParameter("recinto[" + i + "]");
+                  String naviera = request.getParameter("naviera[" + i + "]");
+                  String buque = request.getParameter("buque[" + i + "]");
+                  String fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]");        
+                  String fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]");       
+                  String fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]");      
+                  String fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]");    
+                  String proforma_final = request.getParameter("proforma_final[" + i + "]");            
+                  String permiso = request.getParameter("permiso[" + i + "]");                   
+                  String fecha_envio = request.getParameter("fecha_envio[" + i + "]");               
+                  String fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]");    
+                  String fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]");     
+                  String fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]");        
+                  String co_pref_arancelaria = request.getParameter("co_pref_arancelaria[" + i + "]");       
+                  String aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria[" + i + "]");    
+                  String req_uva = request.getParameter("req_uva[" + i + "]");   
+                  String req_ca = request.getParameter("req_ca[" + i + "]");   
+                  String fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]");   
+                  String num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]");   
+                  String monto_ca = request.getParameter("monto_ca[" + i + "]");   
+                  String fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]");       
+                  String fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]");      
+                  String fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]");
+                  String fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]");          
+                  String modalidad = request.getParameter("modalidad[" + i + "]");                 
+                  String resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]");      
+                  String fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]");      
+                  String fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]");         
+                  String sello_origen = request.getParameter("sello_origen[" + i + "]");              
+                  String sello_final = request.getParameter("sello_final[" + i + "]");               
+                  String fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]");       
+                  String fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]");     
+                  String estatus_operacion = request.getParameter("estatus_operacion[" + i + "]");         
+                  String motivo_atraso = request.getParameter("motivo_atraso[" + i + "]");             
+                  String observaciones = request.getParameter("observaciones[" + i + "]"); 
+                  String fy = request.getParameter("fy[" + i + "]");
+                  
+            if(idAgenteAduanal.equals("4001")){ //LOGIX      
+
+                llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]"); 
+                llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]"); 
+                archivo_m = request.getParameter("archivo_m[" + i + "]"); 
+                fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]"); 
+                fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]"); 
+                fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]"); 
+                fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]"); 
+                fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]"); 
+                t_e = request.getParameter("t_e[" + i + "]"); 
+                fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]"); 
+                  
+            }else if(idAgenteAduanal.equals("4002")){ //CUSA
+                 
+                no_bultos = request.getParameter("no_bultos[" + i + "]"); 
+                peso_kg = request.getParameter("peso_kg[" + i + "]"); 
+                transferencia = request.getParameter("transferencia[" + i + "]"); 
+                fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado[" + i + "]"); 
+                fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]"); 
+                hora_termino_etiquetado = request.getParameter("hora_termino_etiquetado[" + i + "]"); 
+                proveedor = request.getParameter("proveedor[" + i + "]"); 
+                proveedor_carga = request.getParameter("proveedor_carga[" + i + "]"); 
+            
+            }
+            
+                     insertarCustoms =  " INSERT INTO TRA_INB_CUSTOMS " 
+                                      + " (CUSTREG_ID, "  
+                                      + " NUMERO_DE_EVENTO, "  
+                                      + " SHIPMENT_ID, "  
+                                      + " CONTAINER_ID, "  
+                                      + " REFERENCIA_AA, "
+                                      + " PAIS_ORIGEN, "  
+                                      + " SIZE_CONTAINER, "  
+                                      + " VALOR_USD, "                
+                                      + " ETA_PORT_OF_DISCHARGE, "        
+                                      + " AGENTE_ADUANAL, "            
+                                      + " PEDIMENTO_A1, "              
+                                      + " PEDIMENTO_R1, "          
+                                      + " MOTIVO_RECTIFICACION_1, "  
+                                      + " PEDIMENTO_R1_2DO, "          
+                                      + " MOTIVO_RECTIFICACION_2, "  
+                                      + " FECHA_RECEPCION_DOCUMENTOS, "    
+                                      + " RECINTO, "    
+                                      + " NAVIERA_FORWARDER, "    
+                                      + " BUQUE, "   
+                                      + " FECHA_REVALID_LIBE_BL, "        
+                                      + " FECHA_PREVIO_ORIGEN, "       
+                                      + " FECHA_PREVIO_DESTINO, "      
+                                      + " FECHA_RESULTADO_PREVIO, "    
+                                      + " PROFORMA_FINAL, "            
+                                      + " REQUIERE_PERMISO, "                   
+                                      + " FECHA_ENVIO_FICHAS_NOTAS, "               
+                                      + " FEC_RECEPCION_PERMISOS_TRAMIT, "      
+                                      + " FEC_ACT_PERMISOS, "     
+                                      + " FEC_PERM_AUT, "        
+                                      + " CO_APLIC_PREF_ARANCELARIA, "       
+                                      + " APLIC_PREF_ARANCELARIA_CO, "    
+                                      + " REQUIERE_UVA, "    
+                                      + " REQUIERE_CA, "  
+                                      + " FECHA_RECEPCION_CA, "  
+                                      + " NÚMERO_CONSTANCIA_CA, "  
+                                      + " MONTO_CA, "  
+                                      + " FECHA_DOCUMENTOS_COMPLETOS, "       
+                                      + " FECHA_PAGO_PEDIMENTO, "      
+                                      + " FECHA_SOLICITUD_TRANSPORTE, "
+                                      + " FECHA_MODULACION, "          
+                                      + " MODALIDAD_CAMION_TREN, "                 
+                                      + " RESULT_MODULACION_VERDE_ROJO, "      
+                                      + " FECHA_RECONOCIMIENTO, "      
+                                      + " FECHA_LIBERACION, "         
+                                      + " SELLO_ORIGEN, "              
+                                      + " SELLO_FINAL, "               
+                                      + " FECHA_RETENCION_AUTORIDAD, "       
+                                      + " FECHA_LIB_POR_RET_AUT, "      
+                                      + " ESTATUS_OPERACION, "         
+                                      + " MOTIVO_ATRASO, "             
+                                      + " OBSERVACIONES, ";        
+                if(idAgenteAduanal.equals("4001")){ //LOGIX
+                    insertarCustoms += " LLEGADA_A_NOVA, "
+                                     + " LLEGADA_A_GLOBE_TRADE_SD, " 
+                                     + " ARCHIVO_M, " 
+                                     + " FECHA_ARCHIVO_M, " 
+                                     + " FECHA_SOLICIT_MANIP, " 
+                                     + " FECHA_VENCIM_MANIP, " 
+                                     + " FECHA_CONFIRM_CLAVE_PEDIM, " 
+                                     + " FECHA_RECEP_INCREMENT, " 
+                                     + " T_E, " 
+                                     + " FECHA_VENCIM_INBOUND, ";
+                }else if(idAgenteAduanal.equals("4002")){ //CUSA
+                    insertarCustoms += " NO_BULTOS, "
+                                     + " PESO_KG, " 
+                                     + " TRANSFERENCIA, " 
+                                     + " FECHA_INICIO_ETIQUETADO, " 
+                                     + " FECHA_TERMINO_ETIQUETADO, " 
+                                     + " HORA_TERMINO_ETIQUETADO, " 
+                                     + " PROVEEDOR, " 
+                                     + " PROVEEDOR_CARGA, ";
+                } 
+                     insertarCustoms += " FY, "
+                                      + " AGENTE_ADUANAL_ID, "
+                                      + " PRIORIDAD, "
+                                      + " FECHA_REGISTRO, "        
+                                      + " CBDIV_ID, "
+                                      + " USER_NID) "
+                                      + " VALUES " 
+                                      + " (NULL, "  
+                                      + " '" + evento + "', "  
+                                      + " '" + shipmentId + "', "  
+                                      + " '" + containerId + "', "  
+                                      + " '" + referenciaAA + "', "
+                                      + " '" + pais_origen + "', "  
+                                      + " '" + size_container + "', "  
+                                      + " '" + valor_usd + "', "                
+                                      + " TO_DATE('" + eta_port_discharge + "', 'mm/dd/yy HH24:MI:SS'), "        
+                                      + " '" + agente_aduanal + "', "            
+                                      + " '" + pedimento_a1 + "', "              
+                                      + " '" + pedimento_r1_1er + "', "          
+                                      + " '" + motivo_rectificacion_1er + "', "
+                                      + " '" + pedimento_r1_2do + "', "          
+                                      + " '" + motivo_rectificacion_2do + "', "  
+                                      + " TO_DATE('" + fecha_recepcion_doc + "', 'mm/dd/yy HH24:MI:SS'), "       
+                                      + " '" + recinto + "', " 
+                                      + " '" + naviera + "', " 
+                                      + " '" + buque + "', " 
+                                      + " TO_DATE('" + fecha_revalidacion + "', 'mm/dd/yy HH24:MI:SS'), "         
+                                      + " TO_DATE('" + fecha_previo_origen + "', 'mm/dd/yy HH24:MI:SS'), "           
+                                      + " TO_DATE('" + fecha_previo_destino + "', 'mm/dd/yy HH24:MI:SS'), "          
+                                      + " TO_DATE('" + fecha_resultado_previo + "', 'mm/dd/yy HH24:MI:SS'), "        
+                                      + " TO_DATE('" + proforma_final + "', 'mm/dd/yy HH24:MI:SS'), "                
+                                      + " '" + permiso + "', "                   
+                                      + " TO_DATE('" + fecha_envio + "', 'mm/dd/yy HH24:MI:SS'), "                   
+                                      + " TO_DATE('" + fecha_recepcion_perm + "', 'mm/dd/yy HH24:MI:SS'), "          
+                                      + " TO_DATE('" + fecha_activacion_perm + "', 'mm/dd/yy HH24:MI:SS'), "         
+                                      + " TO_DATE('" + fecha_permisos_aut + "', 'mm/dd/yy HH24:MI:SS'), "            
+                                      + " '" + co_pref_arancelaria + "', "       
+                                      + " '" + aplic_pref_arancelaria + "', "    
+                                      + " '" + req_uva + "', "   
+                                      + " '" + req_ca + "', "   
+                                      + " TO_DATE('" + fecha_recepcion_ca + "', 'mm/dd/yy HH24:MI:SS'), "       
+                                      + " '" + num_constancia_ca + "', "   
+                                      + " '" + monto_ca + "', "  
+                                      + " TO_DATE('" + fecha_doc_completos + "', 'mm/dd/yy HH24:MI:SS'), "           
+                                      + " TO_DATE('" + fecha_pago_pedimento + "', 'mm/dd/yy HH24:MI:SS'), "          
+                                      + " TO_DATE('" + fecha_solicitud_transporte + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_modulacion + "', 'mm/dd/yy HH24:MI:SS'), "              
+                                      + " '" + modalidad + "', "                 
+                                      + " '" + resultado_modulacion + "', "      
+                                      + " TO_DATE('" + fecha_reconocimiento + "', 'mm/dd/yy HH24:MI:SS'), "          
+                                      + " TO_DATE('" + fecha_liberacion + "', 'mm/dd/yy HH24:MI:SS'), "             
+                                      + " '" + sello_origen + "', "              
+                                      + " '" + sello_final + "', "               
+                                      + " TO_DATE('" + fecha_retencion_aut + "', 'mm/dd/yy HH24:MI:SS'), "           
+                                      + " TO_DATE('" + fecha_liberacion_aut + "', 'mm/dd/yy HH24:MI:SS'), "          
+                                      + " '" + estatus_operacion + "', "         
+                                      + " '" + motivo_atraso + "', "             
+                                      + " '" + observaciones + "', "; 
+                if(idAgenteAduanal.equals("4001")){ //LOGIX
+                     insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + llegada_a_globe_trade_sd + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " '" + archivo_m + "', "
+                                      + " TO_DATE('" + fecha_archivo_m + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_solicit_manip + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_vencim_manip + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_confirm_clave_pedim + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_recep_increment + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " '" + t_e + "', "
+                                      + " TO_DATE('" + fecha_vencim_inbound + "', 'mm/dd/yy HH24:MI:SS'), ";     
+                }else if(idAgenteAduanal.equals("4002")){ //CUSA
+                     insertarCustoms += " '" + no_bultos + "', "
+                                      + " '" + peso_kg + "', "
+                                      + " '" + transferencia + "', "
+                                      + " TO_DATE('" + fecha_inicio_etiquetado + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_termino_etiquetado + "', 'mm/dd/yy HH24:MI:SS'), "    
+                                      + " '" + hora_termino_etiquetado + "', "
+                                      + " '" + proveedor + "', "
+                                      + " '" + proveedor_carga + "', "; 
+                }        
+                    insertarCustoms  += " '" + fy + "', "
+                                      + " '" + idAgenteAduanal + "', "
+                                      + " '" + prioridad + "', "
+                                      + " TO_DATE(SYSDATE, 'mm/dd/yy HH24:MI:SS'), "            
+                                      + " '" + cve + "', "
+                                      + " '" + UserId + "') ";
+                      boolean oraOut1 = oraDB.execute(insertarCustoms);
+                      
+                      regPrioridad = " UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE ID_EVENTO = '" + evento + "'";
+                      boolean oraOut2 = oraDB.execute(regPrioridad);
+                }
+          }
+          
+         /*String historicoCustoms =  " INSERT INTO TRA_HIST_INB_CUSTOMS " 
                                   + " (CUSTREG_ID, "  
                                   + " NUMERO_DE_EVENTO, "  
                                   + " SHIPMENT_ID, "  
@@ -358,8 +394,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                  + " FECHA_RECEP_INCREMENT, " 
                                  + " T_E, " 
                                  + " FECHA_VENCIM_INBOUND, ";
-            } 
-            if(idAgenteAduanal.equals("4002")){ //CUSA
+            }else if(idAgenteAduanal.equals("4002")){ //CUSA
                   insertarCustoms  += " NO_BULTOS, "
                                  + " PESO_KG, " 
                                  + " TRANSFERENCIA, " 
@@ -439,8 +474,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                   + " TO_DATE('" + fecha_recep_increment + "', 'mm/dd/yy HH24:MI:SS'), "    
                                   + " '" + t_e + "', "
                                   + " TO_DATE('" + fecha_vencim_inbound + "', 'mm/dd/yy HH24:MI:SS'), ";     
-            }   
-            if(idAgenteAduanal.equals("4002")){ //CUSA
+            }else if(idAgenteAduanal.equals("4002")){ //CUSA
                   insertarCustoms  +=  " '" + no_bultos + "', "
                                   + " '" + peso_kg + "', "
                                   + " '" + transferencia + "', "
@@ -454,21 +488,22 @@ public class InsertarCustomsForms extends HttpServlet {
                                   + " '" + idAgenteAduanal + "', "
                                   + " '" + prioridad + "', "
                                   + " TO_DATE(SYSDATE, 'mm/dd/yy HH24:MI:SS'), "               
-                                  + " 1, "                
+                                  + " '" + estatus_operacion + "', "                
                                   + " '" + cve + "', "
                                   + " '" + UserId + "') ";  
-            boolean oraOut2 = oraDB.execute(historicoCustoms);
+            boolean oraOut3 = oraDB.execute(historicoCustoms);*/
+            
+        //System.out.println("Insert Customs: " + insertarCustoms);
+        //System.out.println("Insert Historico: " + historicoCustoms);
+        //System.out.println("Insert Prioridad: " + regPrioridad);
         
-        System.out.println("Insert Customs: " + insertarCustoms);
-        System.out.println("Insert Historico: " + historicoCustoms);
-             
-            if(oraOut1&&oraOut2){
+            /*if(oraOut1){
                 salida = "1";
             }else{
                 salida = "0";
-            }
+            }*/
             
-         out.print(salida);
+         out.print("1");
          oraDB.close(); //cerrar conexión
          
          } catch (Exception e) {
