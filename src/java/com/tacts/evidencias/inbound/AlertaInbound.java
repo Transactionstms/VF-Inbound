@@ -58,7 +58,7 @@ public class AlertaInbound extends HttpServlet {
                 String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '"+ rowE[8] +"' WHERE PLANTILLA_ID = '" + rowE[17] + "'";
                 boolean oraOut1 = oraDB.execute(LoadTypeFinal);
                 
-                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1 WHERE PLANTILLA_ID = '" + rowE[17] + "'";
+                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + rowE[17] + "'";
                 boolean oraOut2 = oraDB.execute(estatusInicial);
             }
         }
