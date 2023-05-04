@@ -31,7 +31,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar Eventos</title>
+        <title>Armado de Embarque</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
@@ -56,13 +56,27 @@
         <link href="../lib/css/loader.css" rel="stylesheet" type="text/css"/> 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </head>
-    <body>
         <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+        
+            String sqldb = "";
+            
+            String tcarga = request.getParameter("tcarga");
+            String shipment = request.getParameter("shipment");
+            String container = request.getParameter("container");
+            String evento = request.getParameter("evento");
+            
+             //sqldb = " where  gtn.CONTAINER1='"+ container +"' "; // crear validacion 
+            
 
         %>
+
+    <body>
+    
+
+
         <!-- navbar-->
         <header class="header">
         </header>
@@ -77,7 +91,7 @@
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">PLANTILLA SOLICITUD DE TRANSPORTE</h2>
+                                                <h2 class="card-heading">ARMADO DE EMBARQUE</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -98,6 +112,7 @@
                                                 <table id="main-table" className="main-table">
                                                     <thead>
                                                         <tr>
+                                                            <th scope="col" class="font-titulo"></th>
                                                             <th scope="col" class="font-titulo">Evento </th>
                                                             <th scope="col" class="font-titulo">Container #</th>
                                                             <th scope="col" class="font-titulo">BL</th>
@@ -109,42 +124,60 @@
                                                             <th scope="col" class="font-titulo">MX Port</th>
                                                             <th scope="col" class="font-titulo">ETA MX Port</th>
                                                             <th scope="col" class="font-titulo">ETA DC</th>
-
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
 
-                                                        <%                                                            String sql = "  "
-                                                                    + " SELECT "
-                                                                    + " nvl(SHIPMENT,' '),"
-                                                                    + " nvl(FECHA_BOOKING_ORIGEN,' '),"
-                                                                    + " nvl(FECHA_PREVIO_ORIGEN,' '),"
-                                                                    + " nvl(NOTIFICACION_REPORTE_VF,' '),"
-                                                                    + " nvl(REFERENCIA_AI,' '),"
-                                                                    + " nvl(PO,' '),"
-                                                                    + " nvl(DESCRIPCION_MERCANCIA,' '),"
-                                                                    + " nvl(ESTILO,' '),"
-                                                                    + " nvl(FABRICANTE,' '),"
-                                                                    + " nvl(BULTOS_CARTONES,' '),"
-                                                                    + " nvl(PIEZAS,' '),"
-                                                                    + " nvl(LUGAR_INSPECCION,' '),"
-                                                                    + " nvl(OBSERVACIONES,' '),"
-                                                                    + " nvl(FACTURA_LLANES_TRADUCCION,' '),"
-                                                                    + " nvl(COSTO_PREVIO_ORIGEN,' '),"
-                                                                    + " nvl(TRADUCCION_FACTURA,' '),"
-                                                                    + " nvl(FACTURA_LLANES,' '),"
-                                                                    + " nvl(HOJAS_TRADUCIDAS,' '),"
-                                                                    + " nvl(COSTO_TRADUCCION_FACTURA,' ')"
-                                                                    + " FROM  TRA_INB_PO";
+                                                        
+                                                      
+
+                                                        <%
+                                                            String sql = ""
+                                                                    + " SELECT  DISTINCT"
+                                                                    + "  TIE.ID_EVENTO,"
+                                                                    + "  BP.RESPONSABLE,"
+                                                                    + "  GTN.FINAL_DESTINATION,"
+                                                                    + "  GTN.BRAND_DIVISION,"
+                                                                    + "  'DIVISION',"
+                                                                    + "  GTN.SHIPMENT_ID,"
+                                                                    + "  GTN.CONTAINER1,"
+                                                                    + "  GTN.BL_AWB_PRO,"
+                                                                    + "  GTN.LOAD_TYPE,"
+                                                                    + "   (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  as suma   ,"
+                                                                    + "   GTN.POD,"
+                                                                    + "  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
+                                                                    + "  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
+                                                                    + "    ("
+                                                                    + "  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
+                                                                    + "  where"
+                                                                    + "  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
+                                                                    + "  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
+                                                                    + "  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
+                                                                    + "  )as EST_ETA_DC,"
+                                                                    + "  'Inbound notification',"
+                                                                    + "  GTN.POL,"
+                                                                    + "  'A.A',"
+                                                                    + "  GTN.PLANTILLA_ID,"
+                                                                    + "  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
+                                                                    + "  from TRA_INB_EVENTO    TIE"
+                                                                    + "  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
+                                                                    + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
+                                                                    + "  order by 1"; 
 
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
-
+                                                                    // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
+                                                                    //row[18]
+                                                                    //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
                                                         %>
 
-
-                                                        <tr> 
+                                                        <tr>                                            
+                                                            <td> 
+                                                                <div class="form-check checkbox-xl">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="inputCheck" style="center">
+                                                                    <label class="form-check-label" for="flexCheckIndeterminate"></label>
+                                                                </div>
+                                                            </td>
                                                             <td class="font-texto"> <%=row[0]%></td>
                                                             <td class="font-texto"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
@@ -158,15 +191,11 @@
                                                             <td class="font-texto"> <%=row[10]%></td>
                                                         </tr>
 
+                                                        
+                                                       <% }
 
-
-                                                        <%
-                                                                }
                                                             }
-                                                        %>
-
-
-
+                                                       %>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -196,6 +225,24 @@
         </div>    
 
         <script>
+
+            function getData(form) {
+                var formData = new FormData(form);
+
+                // iterate through entries...
+                for (var pair of formData.entries()) {
+                    console.log(pair[0] + ": " + pair[1]);
+                }
+
+                // ...or output as an object
+                console.log(Object.fromEntries(formData));
+            }
+
+            document.getElementById("myForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                getData(e.target);
+            });
+
             function cambiarResponsable(id) {
                 console.log(id);
             }
@@ -235,7 +282,7 @@
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
-    <%
+   <%
         } catch (NullPointerException e) {
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");

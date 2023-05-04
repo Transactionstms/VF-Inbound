@@ -3,11 +3,7 @@
     Created on : Apr 5, 2023, 2:37:22 PM
     Author     : dan_i
 --%>
-<%-- 
-    Document   : modificarEventos
-    Created on : 10/03/2023, 11:28:29 AM
-    Author     : Desarrollo Tacts
---%>
+ 
 
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -29,6 +25,8 @@
     Date hr = new Date();
     DateFormat hours = new SimpleDateFormat("HH:mm:ss");
     String hora = hours.format(hr);
+    
+
 %>
 <!DOCTYPE html>
 <html>
@@ -61,8 +59,16 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     </head>
+    <%
+    try {
+                HttpSession ownsession = request.getSession();
+                DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+    
+    %>
 
     <body>
+
+
         <div class="preloader" id="loaders">  
             <div class="loader2" ></div>
             <div class="loader" ></div>
@@ -87,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body " style="auto">
-                                        <form class="col-sm-5 col-4" id="" name="" >
+                                        <form class="col-sm-5 col-4" id="" name="" action="../Logistica/plantillaSolicitudTransporte.jsp">
                                             <div class="form-group" >
 
                                                 <div class="mb-4" autocomplete="off">
@@ -96,29 +102,27 @@
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Tipo de carga</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" aria-label="Default select example" name="tcarga">
                                                         <option selected>Elija una opcion</option>
                                                         <option value="1">FLC</option>
                                                         <option value="2">LCL</option>
                                                         <option value="3">FCL/LCL</option>
                                                     </select>
                                                 </div>
-
                                                 <div class="mb-4">
                                                     <label class="form-label">Shipment</label>
-                                                    <input type="text" class="form-control" id="" autocomplete="false">
+                                                    <input type="text" class="form-control" id="one" name="shipment">
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Contenedor</label>
-                                                    <input type="text" class="form-control" id="" autocomplete="false">
+                                                    <input type="text" class="form-control" id="two" name="container">
                                                 </div>
-                                                <div class="mb-4">
-                                                    <label class="form-label">Documento</label>
-                                                    <input type="text" class="form-control" id="" autocomplete="false">
+                                                <div class="mb-4"> 
+                                                    <label class="form-label">Evento</label>
+                                                    <input type="text" class="form-control" id="three" name="evento">
                                                 </div>
                                                 <!--button-->
-                                                <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
-                                                <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
+                                                <button class="btn btn-primary text-nowrap" type="submit"  name="">Enviar</button>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                             </div>
@@ -148,6 +152,30 @@
             </div>
         </div>    
 
+        <script>
+            var one = document.getElementById('one');
+            var two = document.getElementById('two');
+            var three = document.getElementById('three');
+
+            var checker = setInterval(function () {
+                if (two.value !== '' || three.value !== '') {
+                    one.disabled = true;
+                } else {
+                    one.disabled = false;
+                }
+                if (one.value !== '' || three.value !== '') {
+                    two.disabled = true;
+                } else {
+                    two.disabled = false;
+                }
+                if (one.value !== '' || two.value !== '') {
+                    three.disabled = true;
+                } else {
+                    three.disabled = false;
+                }
+            }, 30);
+        </script>
+
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->
@@ -164,16 +192,29 @@
         <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/js/bootstrap.min.js"></script>
+
         <script type="text/javascript">
-                                                        // Optional
-                                                        Prism.plugins.NormalizeWhitespace.setDefaults({
-                                                            'remove-trailing': true,
-                                                            'remove-indent': true,
-                                                            'left-trim': true,
-                                                            'right-trim': true,
-                                                        });
+
+            // Optional
+            Prism.plugins.NormalizeWhitespace.setDefaults({
+                'remove-trailing': true,
+                'remove-indent': true,
+                'left-trim': true,
+                'right-trim': true,
+            });
 
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
     </body>
+    <%
+        } catch (NullPointerException e) {
+            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+            out.println("<script>window.close();</script>");
+        } catch (Exception e) {
+            out.println("Excepcion revise por favor! " + e);
+            e.printStackTrace();
+        }
+    %>
 </html>
