@@ -187,6 +187,21 @@
                   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteCustom.jsp" target="data">Reporte CUSTOM</a></li>
                 </ul>
               </li>
+              
+              
+               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown1" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
+                      <svg class="svg-icon svg-icon-md me-3">
+                        <use xlink:href="lib/icons/orion-svg-sprite.svg#pie-chart-1"> </use>
+                      </svg><span class="sidebar-link-title">Logistica</span></a>
+                <ul class="sidebar-menu list-unstyled collapse " id="chartsDropdown1">
+                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/solicitudTransporte.jsp" target="data">Solicitud Transporte</a></li>
+                 </ul>
+              </li>
+              
+              
+              
+              
+              
               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#tablesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                       <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="lib/icons/orion-svg-sprite.svg#grid-1"> </use>
