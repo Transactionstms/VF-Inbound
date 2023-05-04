@@ -189,16 +189,27 @@
               </li>
               
               
-               <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown1" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                      <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="lib/icons/orion-svg-sprite.svg#pie-chart-1"> </use>
-                      </svg><span class="sidebar-link-title">Logistica</span></a>
-                <ul class="sidebar-menu list-unstyled collapse " id="chartsDropdown1">
-                  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/solicitudTransporte.jsp" target="data">Solicitud Transporte</a></li>
-                 </ul>
-              </li>
+             
               
               
+              
+              <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
+                            <svg class="svg-icon svg-icon-md me-3">
+                            </svg><span class="sidebar-link-title">Logistica</span></a>
+                        <ul class="sidebar-menu list-unstyled collapse " id="templetesDropdown">
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/solicitudTransporte.jsp" target="data">Solicitud Transporte</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/plantillaSolicitudTransporte.jsp" target="data">Armado de Embarque</a></li> 
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/documentosSeleccionados.jsp" target="data">Documentos Seleccionados</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/docDatosAdicionales.jsp" target="data">Datos Adicionales</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/datosComplementarios.jsp" target="data">Datos Complementarios</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/detalleTransportista.jsp" target="data">Detalle Transportista</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/busquedaEmbarque.jsp" target="data">Busqueda Embarque</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/subirFactura.jsp" target="data">Subir Factura</a></li>
+
+                        </ul>
+                    </li>
+                    
+                    
               
               
               
