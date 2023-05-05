@@ -54,7 +54,7 @@ public class ConsultarCustom extends HttpServlet {
             int sal = 0;
              
             ServiceDAO dao = new ServiceDAO();
-            ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoConsulta,id));
+            ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoConsulta, tipoAgente, id));
             while (rs.next()) {
 
                 salida += " <tr id=\"tr" + sal + "\"> "
@@ -306,7 +306,10 @@ public class ConsultarCustom extends HttpServlet {
                         + "     <input class=\"form-control\" id=\"peso_kg[" + sal + "]\" name=\"peso_kg[" + sal + "]\" type=\"text\" autocomplete=\"off\"> "
                         + " </td> "
                         + " <td class=\"font-numero\"> "
-                        + "     <input class=\"form-control\" id=\"transferencia[" + sal + "]\" name=\"transferencia[" + sal + "]\" type=\"text\" autocomplete=\"off\"> "
+                        + "      <select class=\"form-control\" id=\"transferencia[" + sal + "]\" name=\"transferencia[" + sal + "]\" value=\"\">" 
+                        + "         <option value=\"Si\">SI</option>" 
+                        + "         <option value=\"No\" disabled selected>NO</option>" 
+                        + "      </select>" 
                         + " </td> "
                         + " <td class=\"font-numero\"> "
                         + "     <input class=\"form-control\" id=\"fecha_inicio_etiquetado[" + sal + "]\" name=\"fecha_inicio_etiquetado[" + sal + "]\" type=\"text\" autocomplete=\"off\"> "

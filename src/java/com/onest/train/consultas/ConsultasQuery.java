@@ -1915,7 +1915,7 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarEventosCustoms(String tipoConsulta, String id){
+    public String consultarEventosCustoms(String tipoConsulta, String tipoAgente, String id){
            sql = " SELECT DISTINCT "
                + " NVL(TIE.ID_EVENTO,0), "
                + " NVL(UPPER(TDR.RESPONSABLE),' '), "
