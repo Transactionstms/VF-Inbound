@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.dao.ServiceDAO;
+import com.onest.train.consultas.ConsultasQuery;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -31,50 +32,12 @@ public class CreatExcel {
 
         ArrayList<Persona> personas = new ArrayList<>();
         ServiceDAO dao = new ServiceDAO();
+        ConsultasQuery fac = new ConsultasQuery();
         
         try {
-            
-            String consulta = "SELECT DISTINCT "
-                            + "    tie.id_evento, "
-                            + "    bp.responsable, "
-                            + "    gtn.final_destination, "
-                            + "    NVL(TIBD.NOMBRE_BD,' '), "
-                            + "    TID.SBU_NAME, "
-                            + "    gtn.shipment_id, "
-                            + "    gtn.container1, "
-                            + "    gtn.bl_awb_pro, "
-                            + "    gtn.load_type, "
-                            + "    (SELECT SUM(tt.quantity) FROM tra_inc_gtn_test tt WHERE tt.plantilla_id = gtn.plantilla_id) AS suma, "
-                            + "    NVL(tip1.NOMBRE_POD,' '), "
-                            + "    to_char(gtn.est_departure_pol, 'MM/DD/YYYY'), "
-                            + "    to_char(gtn.eta_port_discharge, 'MM/DD/YYYY') AS eta_real_port, "
-                            + "    (SELECT MAX(nvl(recommended_lt2, 80)) FROM tra_inb_costofleteytd WHERE TRIM(id_bd) = TRIM(gtn.brand_division) AND TRIM(id_pod) = TRIM(gtn.pod) AND TRIM(id_pol) = TRIM(gtn.pol)) AS est_eta_dc, "
-                            + "    'INBOUND NOTIFICATION', "
-                            + "    NVL(tip2.NOMBRE_POL,' '), "
-                            + "    TAA.AGENTE_ADUANAL_NOMBRE, "
-                            + "    gtn.plantilla_id, "
-                            + "    to_char(gtn.fecha_captura, 'MM/DD/YYYY'), "
-                            + "    tip1.nombre_pod, "
-                            + "    tip2.nombre_pol, "
-                            + "    tibd.nombre_bd, "
-                            + "    tie.observaciones "
-                            + "FROM "
-                            + "    tra_inb_evento tie "
-                            + "    INNER JOIN tra_destino_responsable  bp ON bp.user_nid = tie.user_nid "
-                            + "    INNER JOIN tra_inc_gtn_test         gtn ON gtn.plantilla_id = tie.plantilla_id "
-                            + "    LEFT JOIN tra_inb_pod              tip1 ON tip1.id_pod = gtn.pod "
-                            + "    LEFT JOIN tra_inb_pol              tip2 ON tip2.id_pol = gtn.pol "
-                            + "    LEFT JOIN tra_inb_brand_division   tibd ON tibd.id_bd = gtn.brand_division "
-                            + "    INNER JOIN TRA_INB_AGENTE_ADUANAL taa ON taa.AGENTE_ADUANAL_ID = tip1.AGENTE_ADUANAL_ID "
-                            + "    INNER JOIN TRA_INB_DNS TID ON GTN.SHIPMENT_ID = TID.SHIPMENT_NUM ";
-                if(!agenteId.equals("4006")){ //VF
-                  consulta += "WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteId +") ";       
-                }
-                  consulta += "ORDER BY 1 ";
 
-            Statement stmt = dao.conectar().prepareStatement(consulta);
-            ResultSet rs = stmt.executeQuery(consulta);
-
+            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+            ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
             while(rs.next()){
                 personas.add(new Persona(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18)));
             }

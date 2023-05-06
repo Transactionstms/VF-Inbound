@@ -74,111 +74,64 @@
                     }
                     agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
                 }
+                
+String sql2= "WITH sum_quantity AS ("
+        +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
+        +"   FROM tra_inc_gtn_test"
+        +"   GROUP BY shipment_id, container1"
+        +" )"
+        +" SELECT DISTINCT"
+        +"   tie.id_evento,"
+        +"   NVL(bp.responsable, ' ') AS responsable,"
+        +"   gtn.final_destination,"
+        +"   gtn.brand_division,"
+        +"   tid.division_nombre,"
+        +"   gtn.shipment_id,"
+        +"   gtn.container1,"
+        +"   gtn.bl_awb_pro,"
+        +"   gtn.load_type,"
+        +"   sq.suma,"
+        +"   gtn.pod,"
+        +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
+        +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
+        +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
+        +"   'Inbound notification' AS notification_type,"
+        +"   gtn.pol,"
+        +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
+        +"   gtn.plantilla_id,"
+        +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
+        +"   tip1.nombre_pod,"
+        +"   tip2.nombre_pol,"
+        +"   tibd.nombre_bd,"
+        +"   CASE"
+        +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
+        +"     WHEN EXISTS ("
+        +"       SELECT 1"
+        +"       FROM tra_inc_gtn_test"
+        +"       WHERE container1 = gtn.container1"
+        +"       HAVING COUNT(DISTINCT brand_division) > 1"
+        +"     ) THEN 'FCL / LCL'"
+        +"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
+        +"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
+        +"     ELSE '-'"
+        +"   END AS estado,"
+        +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
+        +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
+        +"   NVL(tie.observaciones, ' ') AS observaciones"
+        +" FROM"
+        +"   tra_inb_evento tie"
+        +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
+        +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
+        +"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
+        +"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
+        +"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
+        +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
+        +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
+        +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
+        +" ORDER BY"
+        +"   tie.id_evento";
 
-                String sqlor = "  "
-                        + "  SELECT  DISTINCT"
-                        + "  TIE.ID_EVENTO,"
-                        + "  nvl(BP.RESPONSABLE,' '),"
-                        + "  GTN.FINAL_DESTINATION,"
-                        + "  GTN.BRAND_DIVISION,"
-                        + "  tid.DIVISION_NOMBRE,"
-                        + "  GTN.SHIPMENT_ID,"
-                        + "  GTN.CONTAINER1,"
-                        + "  GTN.BL_AWB_PRO,"
-                        + "  GTN.LOAD_TYPE,"
-                        + "  GTN.QUANTITY  as suma   ,"
-                        + "  GTN.POD,"
-                        + "  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
-                        + "  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
-                        + "   nvl(GTN.MAX_FLETE,0 ) as EST_ETA_DC,"
-                        + "  'Inbound notification',"
-                        + "  GTN.POL,"
-                        + "  nvl(taa.AGENTE_ADUANAL_NOMBRE,' '),"
-                        + "  GTN.PLANTILLA_ID,"
-                        + "  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
-                        + "  ,TIP1.NOMBRE_POD,"
-                        + "  TIP2.NOMBRE_POL,"
-                        + "  tibd.NOMBRE_BD,"
-                        + " case  "
-                        + " when GTN.LOAD_TYPE in ('LTL') then 'LTL'  "
-                        + " when (select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1) > 1  then 'FCL / LCL' "
-                        + " when GTN.LOAD_TYPE in ('FCL') then 'FCL' "
-                        + "  when GTN.LOAD_TYPE in ('LCL') then 'LCL' "
-                        + "  ELSE  '-'   END as estado    ,  "
-                        + "  nvl(  to_char(GTN.ETA_PLUS2,'MM/DD/YY') ,' ' )as ETA_DC,"
-                        + "  nvl(  to_char(GTN.ETA_PLUS,'MM/DD/YY') ,' ' )as ETA_DC1,"
-                        + "  NVL(TIE.OBSERVACIONES,' ') "
-                        + "  from TRA_INB_EVENTO    TIE"
-                        + "  left JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
-                        + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-                        + "  left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                        + "  left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                        + "  left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                        + "  LEFT JOIN TRA_INB_AGENTE_ADUANAL  taa ON taa.AGENTE_ADUANAL_ID = tip1.AGENTE_ADUANAL_ID"
-                        + "  LEFT JOIN  tra_inb_division tid  on  tid.ID_DIVISION=GTN.SBU_NAME "
-                        + "  order by 1 ";
-
-
-
-String sql2=""
-        + ""
-       + "WITH sum_quantity AS ("
-+"   SELECT shipment_id, container1, SUM(quantity) AS suma"
-+"   FROM tra_inc_gtn_test"
-+"   GROUP BY shipment_id, container1"
-+" )"
-+" SELECT DISTINCT"
-+"   tie.id_evento,"
-+"   NVL(bp.responsable, ' ') AS responsable,"
-+"   gtn.final_destination,"
-+"   gtn.brand_division,"
-+"   tid.division_nombre,"
-+"   gtn.shipment_id,"
-+"   gtn.container1,"
-+"   gtn.bl_awb_pro,"
-+"   gtn.load_type,"
-+"   sq.suma,"
-+"   gtn.pod,"
-+"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
-+"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
-+"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
-+"   'Inbound notification' AS notification_type,"
-+"   gtn.pol,"
-+"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
-+"   gtn.plantilla_id,"
-+"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
-+"   tip1.nombre_pod,"
-+"   tip2.nombre_pol,"
-+"   tibd.nombre_bd,"
-+"   CASE"
-+"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
-+"     WHEN EXISTS ("
-+"       SELECT 1"
-+"       FROM tra_inc_gtn_test"
-+"       WHERE container1 = gtn.container1"
-+"       HAVING COUNT(DISTINCT brand_division) > 1"
-+"     ) THEN 'FCL / LCL'"
-+"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
-+"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
-+"     ELSE '-'"
-+"   END AS estado,"
-+"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
-+"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
-+"   NVL(tie.observaciones, ' ') AS observaciones"
-+" FROM"
-+"   tra_inb_evento tie"
-+"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
-+"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
-+"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
-+"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
-+"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
-+"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
-+"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
-+"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-+" ORDER BY"
-+"   tie.id_evento"
-        + ""
-        + "";
+        int cont =0; 
         %>
         <!-- navbar-->
         <header class="header">
@@ -189,202 +142,19 @@ String sql2=""
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
-                                    <div class="col-md-12 card-header justify-content-between">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h2 class="card-heading"> Eventos Nuevos </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="card-body">
-                                        <form id="uploadFileFormData" name="uploadFileFormData">
-
-                                            <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
-
-                                            <div class="row">
-                                                <div align="right">
-                                                    <div id="example_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Busqueda:
-                                                            <input id="searchTerm" type="text" onkeyup="doSearch()" autocomplete="off"/>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:400%;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Responsable <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Final Destination (Shipment) <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Brand-Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Shipment ID <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Container <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Load Type <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Quantity <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
-
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
-
-                                                            <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
-
-                                                            <th scope="col" class="font-titulo">Observaciones </th>
-                                                            <th scope="col" class="font-titulo"></th>
-                                                            <!--<th scope="col" class="font-titulo">Eliminar</th>-->
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                        <%
-                                                            //  String sql2=" SELECT DISTINCT USER_NID, RESPONSABLE FROM TRA_DESTINO_RESPONSABLE";
-                                                            //  String options="";
-                                                            //                              if (db.doDB(sql2)) {
-                                                            //                     for (String[] row : db.getResultado()) {
-                                                            //                    options+="<option value='"+row[0]+"'>"+row[1]+"</option>"; 
-                                                            //                     }}
-                                                        %>
-
-                                                        <%//sqlor
-                                                            if (db.doDB(sql2)) {
-                                                                for (String[] row : db.getResultado()) {
-                                                                    // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
-                                                                    //row[18]
-
-                                                                    String fechas = "";
-                                                                    String fechas2 = "";
-
-                                                                    //    int lcdN=0;
-                                                                    //    try{
-                                                                    //    lcdN=Integer.parseInt(row[22]);
-                                                                    //    }catch(NumberFormatException e){
-                                                                    //    lcdN=0;
-                                                                    //    }
-                                                                    //    String lcd="FCL";
-                                                                      //    
-                                                                      //    if(lcdN>1){lcd="FCL / LCL";}
-%>
-
-
-                                                        <tr>
-                                                            <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
-                                                            <td class="font-numero"><%=row[1]%></td>	<!--<select class="" id="responsable<%=row[0]%>" onchange="cambiarResponsable(<%=row[0]%>)"  ><option value="0"></option> </select>-->
-                                                            <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[21]%></td>
-                                                            <td class="font-texto"> <%=row[4]%></td>
-                                                            <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[6]%></td>	
-                                                            <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[22]%> </td>		
-                                                            <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[19]%></td>
-                                                            <td class="font-texto"> <%=row[11]%></td>	
-                                                            <td class="font-texto"> <%=row[12]%></td>	
-                                                            <td class="font-texto"> <%=row[13]%></td>
-                                                            <td class="font-texto">  <%= row[23]%></td>
-                                                            <td class="font-texto">  <%= row[24]%></td>
-                                                            <td class="font-texto"> <%=row[14]%></td>
-                                                            <td class="font-texto"> <%=row[20]%></td>	
-                                                            <td class="font-texto"> <%=row[16]%></td>
-                                                            
-                                                            <td class="font-texto" contenteditable='true'>  
-                                                                <input type="text" style="border: none;" id="observaciones" name="observaciones" value="<%=row[25]%>" autocomplete="off">
-                                                            </td>
-                                                            <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>')">Actualizar</button></center></td>
-                                                            <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
-
-                                                        </tr>
-
-
-
-                                                        <%
-                                                                }
-                                                            }
-                                                        %>
-
-                                                        <!--    
-                                                            <tr>
-                                                                <th class="font-numero">230162</th>	
-                                                                <td class="font-numero"><select class="" id="responsable" name="responsable"><option value="1">CLAUDIO</option><option value="2" selected>MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                                <td class="font-texto"><select class="" id="destination" name="destination"><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" selected>OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                                <td class="font-texto"><select class="" id="brand" name="brand"><option value="1">OD VANS MEXICO</option><option value="2" selected>OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                                <td class="font-numero"><select class="" id="division" name="division"><option value="1">APP</option><option value="2" selected>APPAREL</option><option value="3">OTROS</option></select></td>
-                                                                <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="5011912800"></td>	
-                                                                <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="45T0297338">45T0297338</td>	
-                                                                <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="45T0297338">45T0297338</td>	
-                                                                <td class="font-numero"><select class="" id="loadType" name="loadType"><option value="1">LCL</option><option value="2" selected>AIR</option><option value="3">OTROS</option></select></td>		
-                                                                <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="657"></td>	
-                                                                <td class="font-numero"><select class="" id="pod" name="pod"><option value="1">Guadalajara</option><option value="2" selected>México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                                <td class="font-numero"><input class="" type="date" id="departure" name="departure"></td>	
-                                                                <td class="font-numero"><input class="" type="date" id="port" name="port"></td>	
-                                                                <td class="font-texto"><input class="" type="date" id="eta" name="eta"></td>	
-                                                                <td class="font-texto"><input class="" type="date" id="notificacion" name="notificacion"></td>
-                                                                <td class="font-numero"><select class="" id="pol" name="pol"><option value="1">Ningbo, CN</option><option value="2" selected>Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                                <td class="font-numero"><select class="" id="aa" name="aa"><option value="1">SESMA</option><option value="2" selected>CUSA</option><option value="3">OTROS</option></select></td>
-                                                                <td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>
-                                                            </tr>
-                                                        -->   
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <br>
-                                            <!-- Botones controles -->
-                                            <div class="col-lg-12" style="text-align: right;">
-                                                <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>        
-                            </div>
-                        </div>   
-
-
-
-
-
-                    </section>
-
-
-
-
-
-<br><br><br>
-
-                    <section>
-                        <div class="row">
-                            <div class="col-lg-12 mb-4 mb-lg-0">
                                 <div class="card ">
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading"> Eventos Nuevos </h2>
+                                                <h2 class="card-heading"> Eventos Nuevos </h2><%=sql2%> 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData1" name="uploadFileFormData1">
-
                                             <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
- 
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 100%;">
-
-
                                                 <table id="example" class="display" style="width:300%">
                                                     <thead>
                                                         <tr>
@@ -401,57 +171,26 @@ String sql2=""
                                                             <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
-
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
-
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
-
                                                             <th scope="col" class="font-titulo">Observaciones </th>
                                                             <th scope="col" class="font-titulo"></th>
                                                             <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
-
-
-                                                        <%
-                                                            //  String sql2=" SELECT DISTINCT USER_NID, RESPONSABLE FROM TRA_DESTINO_RESPONSABLE";
-                                                            //  String options="";
-                                                            //                              if (db.doDB(sql2)) {
-                                                            //                     for (String[] row : db.getResultado()) {
-                                                            //                    options+="<option value='"+row[0]+"'>"+row[1]+"</option>"; 
-                                                            //                     }}
-                                                        %>
-
                                                         <%
                                                             if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
-                                                                    // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
-                                                                    //row[18]
-
-                                                                    String fechas = "";
-                                                                    String fechas2 = "";
-
-                                                                    //    int lcdN=0;
-                                                                    //    try{
-                                                                    //    lcdN=Integer.parseInt(row[22]);
-                                                                    //    }catch(NumberFormatException e){
-                                                                    //    lcdN=0;
-                                                                    //    }
-                                                                    //    String lcd="FCL";
-                                                                      //    
-                                                                      //    if(lcdN>1){lcd="FCL / LCL";}
-%>
-
-
+                                                                    cont++;
+                                                        %>
                                                         <tr>
                                                             <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
-                                                            <td class="font-numero"><%=row[1]%></td>	<!--<select class="" id="responsable<%=row[0]%>" onchange="cambiarResponsable(<%=row[0]%>)"  ><option value="0"></option> </select>-->
+                                                            <td class="font-numero"><%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[21]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>
@@ -469,26 +208,17 @@ String sql2=""
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
-                                                            <td class="font-texto" contenteditable='true'>  </td>
-                                                            <td><center><button type="button" class="btn btn-primary">Aceptar</button></center></td>
-                                                            <!--<td class="font-numero"><input type="hidden" id="numEvento" name="numEvento" value="230162TEST1"><a class="text-lg text-info" onclick="delete_registro()"><i class="far fa-trash-alt"></i></a></td>-->
-
+                                                            <td class="font-texto" contenteditable='true'>  
+                                                                <input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off">
+                                                            </td>
+                                                            <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>',<%=cont%>)">Actualizar</button></center></td>
                                                         </tr>
-
-
-
                                                         <%
                                                                 }
                                                             }
                                                         %>
-
                                                     </tbody>
-
                                                 </table>
-
-
-
-
                                             </div>
                                             <br>
                                             <!-- Botones controles -->
@@ -502,18 +232,7 @@ String sql2=""
                                 </div>              
                             </div>
                         </div>   
-
-
-
-
-
                     </section>
-
-
-
-
-
-
                 </div>  
                 <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
                     <div class="container-fluid">
@@ -540,8 +259,8 @@ String sql2=""
 
             }
            
-           function saveObservaciones(evento){
-               let observaciones = document.getElementById("observaciones").value;
+           function saveObservaciones(evento,position){
+               let observaciones = document.getElementById("observaciones"+position).value;
                
                fetch("<%=request.getContextPath()%>/ModificarObservaciones?evento="+evento+"&observaciones=" + observaciones, {
                     method: 'POST',
