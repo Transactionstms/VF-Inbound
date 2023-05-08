@@ -39,7 +39,28 @@ public class CreatExcel {
             Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanal(agenteId));
             ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
             while(rs.next()){
-                personas.add(new Persona(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18)));
+                personas.add(new Persona(
+                        rs.getInt(1),
+                        rs.getString(2),  
+                        rs.getString(3), 
+                        rs.getString(22), 
+                        rs.getString(5),  
+                        rs.getString(6),  
+                        rs.getString(7),  
+                        rs.getString(8),  
+                        rs.getString(23), 
+                        rs.getString(10), 
+                        rs.getString(20), 
+                        rs.getString(12), 
+                        rs.getString(13), 
+                        rs.getString(14), 
+                        rs.getString(24), 
+                        rs.getString(25), 
+                        rs.getString(15), 
+                        rs.getString(21), 
+                        rs.getString(17), 
+                        rs.getString(26) 
+                ));
             }
             
             rs.close();
@@ -54,7 +75,27 @@ public class CreatExcel {
         final String nombreArchivo = "ModifaciónDeEventos"+agenteId+".xls";
         Sheet hoja = workbook.createSheet("Modificación de Eventos");
         
-        String[] encabezados = {"Número de evento", "Responsable", "Final Destination (Shipment)", "Brand-Division", "Division", "Shipment ID", "Container", "BL/AWB/PRO", "Load Type", "Quantity", "POD /", "Est. Departure from POL", "ETA REAL PORT", "Est. Eta DC", "Inbound notification", "POL", "A.A.", "Observaciones"};
+        String[] encabezados = {
+             "Número de evento", 
+             "Responsable", 
+             "Final Destination (Shipment)", 
+             "Brand-Division", 
+             "Division", 
+             "Shipment ID", 
+             "Container", 
+             "BL/AWB/PRO", 
+             "Load Type", 
+             "Quantity", 
+             "POD /", 
+             "Est. Departure from POL", 
+             "ETA REAL PORT", 
+             "LT2", 
+             "ETA DC", 
+             "INDC +2 Days Put Away", 
+             "Inbound notification", 
+             "POL", 
+             "A.A.", 
+             "Observaciones"};
         int indiceFila = 0;
 
         Row fila = hoja.createRow(indiceFila);
@@ -82,11 +123,13 @@ public class CreatExcel {
             fila.createCell(10).setCellValue(persona.getPod());
             fila.createCell(11).setCellValue(persona.getDeparturePol());
             fila.createCell(12).setCellValue(persona.getRealPort());
-            fila.createCell(13).setCellValue(persona.getEtaDc());
-            fila.createCell(14).setCellValue(persona.getInboundNotif());
-            fila.createCell(15).setCellValue(persona.getPol());
-            fila.createCell(16).setCellValue(persona.getAa());
-            fila.createCell(17).setCellValue(persona.getObservaciones());
+            fila.createCell(13).setCellValue(persona.getLt2());  
+            fila.createCell(14).setCellValue(persona.getEtaDc());
+            fila.createCell(15).setCellValue(persona.getIndc2DaysPutAway());  
+            fila.createCell(16).setCellValue(persona.getInboundNotif());
+            fila.createCell(17).setCellValue(persona.getPol());
+            fila.createCell(18).setCellValue(persona.getAa());       
+            fila.createCell(19).setCellValue(persona.getObservaciones());
             
             indiceFila++;
         }
@@ -118,9 +161,28 @@ public class CreatExcel {
 class Persona {
 
     private int numEvento;
-    private String responsable, finalDestination, brandDivision, division, shipmentId, container, blAwbPro, loadType, quantity, pod, departurePol, realPort, etaDc, inboundNotif, pol, aa, observaciones;
+    private String 
+            responsable, 
+            finalDestination, 
+            brandDivision, 
+            division, 
+            shipmentId, 
+            container, 
+            blAwbPro, 
+            loadType, 
+            quantity, 
+            pod, 
+            departurePol, 
+            realPort, 
+            lt2,
+            etaDc, 
+            indc2DaysPutAway,
+            inboundNotif, 
+            pol, 
+            aa, 
+            observaciones;
     
-    public Persona(int numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String etaDc, String inboundNotif, String pol, String aa, String observaciones) {
+    public Persona(int numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String lt2, String etaDc, String indc2DaysPutAway, String inboundNotif, String pol, String aa, String observaciones) {
         this.numEvento = numEvento;
         this.responsable = responsable;
         this.finalDestination = finalDestination;
@@ -134,10 +196,12 @@ class Persona {
         this.pod = pod;
         this.departurePol = departurePol;
         this.realPort =realPort;
+        this.lt2 = lt2;
         this.etaDc = etaDc;
+        this.indc2DaysPutAway = indc2DaysPutAway;
         this.inboundNotif = inboundNotif;
         this.pol = pol;
-        this.aa = aa;
+        this.aa = aa; 
         this.observaciones = observaciones;
     }
 
@@ -245,6 +309,14 @@ class Persona {
         this.realPort = realPort;
     }
 
+    public String getLt2() {
+        return lt2;
+    }
+
+    public void setLt2(String lt2) {
+        this.lt2 = lt2;
+    }
+
     public String getEtaDc() {
         return etaDc;
     }
@@ -253,6 +325,14 @@ class Persona {
         this.etaDc = etaDc;
     }
 
+    public String getIndc2DaysPutAway() {
+        return indc2DaysPutAway;
+    }
+
+    public void setIndc2DaysPutAway(String indc2DaysPutAway) {
+        this.indc2DaysPutAway = indc2DaysPutAway;
+    }
+    
     public String getInboundNotif() {
         return inboundNotif;
     }
@@ -276,7 +356,7 @@ class Persona {
     public void setAa(String aa) {
         this.aa = aa;
     }
-
+    
     public String getObservaciones() {
         return observaciones;
     }
@@ -285,4 +365,11 @@ class Persona {
         this.observaciones = observaciones;
     }
     
+    public int getNumEvento() {
+        return numEvento;
+    }
+
+    public void setNumEvento(int numEvento) {
+        this.numEvento = numEvento;
+    }
 }

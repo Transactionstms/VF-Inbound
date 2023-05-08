@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import javax.activation.URLDataSource;
 import com.dao.ServiceDAO;
+import com.onest.train.consultas.ConsultasQuery;
 import java.sql.ResultSet;
 import java.sql.Statement;
 /**
@@ -234,49 +235,14 @@ public class Email {
         
         ServiceDAO dao = new ServiceDAO();
         String mensaje = "";
+        ConsultasQuery fac = new ConsultasQuery();
         
         try {
-            String consulta = "SELECT DISTINCT "
-                            + "    tie.id_evento, "
-                            + "    bp.responsable, "
-                            + "    gtn.final_destination, "
-                            + "    NVL(TIBD.NOMBRE_BD,' '), "
-                            + "    TID.SBU_NAME, "
-                            + "    gtn.shipment_id, "
-                            + "    gtn.container1, "
-                            + "    gtn.bl_awb_pro, "
-                            + "    gtn.load_type, "
-                            + "    (SELECT SUM(tt.quantity) FROM tra_inc_gtn_test tt WHERE tt.plantilla_id = gtn.plantilla_id) AS suma, "
-                            + "    NVL(tip1.NOMBRE_POD,' '), "
-                            + "    to_char(gtn.est_departure_pol, 'MM/DD/YYYY'), "
-                            + "    to_char(gtn.eta_port_discharge, 'MM/DD/YYYY') AS eta_real_port, "
-                            + "    (SELECT MAX(nvl(recommended_lt2, 80)) FROM tra_inb_costofleteytd WHERE TRIM(id_bd) = TRIM(gtn.brand_division) AND TRIM(id_pod) = TRIM(gtn.pod) AND TRIM(id_pol) = TRIM(gtn.pol)) AS est_eta_dc, "
-                            + "    'INBOUND NOTIFICATION', "
-                            + "    NVL(tip2.NOMBRE_POL,' '), "
-                            + "    TAA.AGENTE_ADUANAL_NOMBRE, "
-                            + "    gtn.plantilla_id, "
-                            + "    to_char(gtn.fecha_captura, 'MM/DD/YYYY'), "
-                            + "    tip1.nombre_pod, "
-                            + "    tip2.nombre_pol, "
-                            + "    tibd.nombre_bd "
-                            + "FROM "
-                            + "    tra_inb_evento tie "
-                            + "    INNER JOIN tra_destino_responsable  bp ON bp.user_nid = tie.user_nid "
-                            + "    INNER JOIN tra_inc_gtn_test         gtn ON gtn.plantilla_id = tie.plantilla_id "
-                            + "    LEFT JOIN tra_inb_pod              tip1 ON tip1.id_pod = gtn.pod "
-                            + "    LEFT JOIN tra_inb_pol              tip2 ON tip2.id_pol = gtn.pol "
-                            + "    LEFT JOIN tra_inb_brand_division   tibd ON tibd.id_bd = gtn.brand_division "
-                            + "    INNER JOIN TRA_INB_AGENTE_ADUANAL taa ON taa.AGENTE_ADUANAL_ID = tip1.AGENTE_ADUANAL_ID "
-                            + "    INNER JOIN TRA_INB_DNS TID ON GTN.SHIPMENT_ID = TID.SHIPMENT_NUM ";
-                if(!agenteId.equals("4006")){ //VF
-                  consulta += "WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteId +") ";       
-                }
-                  consulta += "ORDER BY 1 ";
-                  
-            Statement stmt = dao.conectar().prepareStatement(consulta);
-            ResultSet rsc = stmt.executeQuery(consulta);
 
-                mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+            ResultSet rsc = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+
+                /*mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
                         + "    <div style=\"max-width:600px;margin:0 auto\">\n"
                         //+ "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
                         + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
@@ -313,11 +279,11 @@ public class Email {
                         + "            <th scope=\"col\" class=\"font-titulo\">Observaciones </th>\n"
                         + "        </tr>\n"
                         + "    </thead>\n"
-                        + "    <tbody>\n";
+                        + "    <tbody>\n";*/
                           
                         while(rsc.next()){
                         
-               mensaje += "        <tr>\n"
+               /*mensaje += "        <tr>\n"
                         + "            <th class=\"font-numero\" style=\"cursor: pointer\" onclick=\"editarEvento('2023028')\">" + rsc.getInt(1) + "</th>\n"	
                         + "            <td class=\"font-texto\">" + rsc.getString(2) + "</td>\n"	
                         + "            <td class=\"font-texto\">" + rsc.getString(3) + "</td>\n"
@@ -337,16 +303,14 @@ public class Email {
                         + "            <td class=\"font-texto\">" + rsc.getString(17) + "</td>\n"
                         + "            <td class=\"font-texto\">" + rsc.getString(18) + "</td>\n"	
                         + "            <td class=\"font-texto\">" + rsc.getString(19) + "</td>\n"
-                        + "        </tr>\n";
+                        + "        </tr>\n";*/
                 
                         }
             
                     rsc.close();
        
-               mensaje += "    </tbody>\n"
+               /*mensaje += "    </tbody>\n"
                         + "</table>\n"
-                        //+ "            </div>\n"
-                        //+ "        </div>\n"
                         + "    </div>\n"
                         + "<div style=\"max-width:600px;margin:0 auto\">\n"
                         + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
@@ -357,7 +321,7 @@ public class Email {
                         + "        </p>\n"
                         + "    </div>\n"
                         + "</div>\n"
-                        + "</body>";
+                        + "</body>";*/
                 
             }catch(Exception e){
                 e.printStackTrace();

@@ -1866,19 +1866,19 @@ public class ConsultasQuery {
         +"   tie.id_evento,"
         +"   NVL(bp.responsable, ' ') AS responsable,"
         +"   gtn.final_destination,"
-        +"   gtn.brand_division,"
+        +"   tibd.NOMBRE_BD,"
         +"   tid.division_nombre,"
         +"   gtn.shipment_id,"
         +"   gtn.container1,"
         +"   gtn.bl_awb_pro,"
         +"   gtn.load_type,"
         +"   sq.suma,"
-        +"   gtn.pod,"
+        +"   tip1.NOMBRE_POD,"
         +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
         +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
         +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
         +"   'Inbound notification' AS notification_type,"
-        +"   gtn.pol,"
+        +"   tip2.NOMBRE_POL,"
         +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
         +"   gtn.plantilla_id,"
         +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
@@ -2120,7 +2120,7 @@ public class ConsultasQuery {
     }
     
     public String consultarEventosDetalleAgenteAduanal(String agenteAduanalId) {
-        sql= " WITH sum_quantity AS ("
+        sql= "WITH sum_quantity AS ("
             +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
             +"   FROM tra_inc_gtn_test"
             +"   GROUP BY shipment_id, container1"
@@ -2129,19 +2129,19 @@ public class ConsultasQuery {
             +"   tie.id_evento,"
             +"   NVL(bp.responsable, ' ') AS responsable,"
             +"   gtn.final_destination,"
-            +"   gtn.brand_division,"
+            +"   tibd.NOMBRE_BD,"
             +"   tid.division_nombre,"
             +"   gtn.shipment_id,"
             +"   gtn.container1,"
             +"   gtn.bl_awb_pro,"
             +"   gtn.load_type,"
             +"   sq.suma,"
-            +"   gtn.pod,"
+            +"   tip1.NOMBRE_POD,"
             +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
             +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
             +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
             +"   'Inbound notification' AS notification_type,"
-            +"   gtn.pol,"
+            +"   tip2.NOMBRE_POL, "
             +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
             +"   gtn.plantilla_id,"
             +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
@@ -2172,12 +2172,12 @@ public class ConsultasQuery {
             +"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
             +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
             +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
-            +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1";
+            +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1 ";
         
         if(!agenteAduanalId.equals("4006")){ //VF
-          sql += "WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteAduanalId +") ";       
+          sql += " WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteAduanalId +") ";       
         }
-          sql += "ORDER BY tie.id_evento ";
+          sql += " ORDER BY tie.id_evento ";
         
         return sql;
     }

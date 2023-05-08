@@ -85,18 +85,18 @@ String sql2= "WITH sum_quantity AS ("
         +"   NVL(bp.responsable, ' ') AS responsable,"
         +"   gtn.final_destination,"
         +"   gtn.brand_division,"
-        +"   tid.division_nombre,"
+        +"   nvl(tid.division_nombre,' '), "
         +"   gtn.shipment_id,"
         +"   gtn.container1,"
         +"   gtn.bl_awb_pro,"
         +"   gtn.load_type,"
         +"   sq.suma,"
-        +"   gtn.pod,"
+        +"   tip1.NOMBRE_POD,"
         +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
         +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
         +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
         +"   'Inbound notification' AS notification_type,"
-        +"   gtn.pol,"
+        +"   tip2.NOMBRE_POL,"
         +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
         +"   gtn.plantilla_id,"
         +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
@@ -146,7 +146,7 @@ String sql2= "WITH sum_quantity AS ("
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading"> Eventos Nuevos </h2><%=sql2%> 
+                                                <h2 class="card-heading"> Eventos Nuevos </h2>
                                             </div>
                                         </div>
                                     </div>
