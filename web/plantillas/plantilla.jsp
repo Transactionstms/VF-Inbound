@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page import="com.pantalla.BLPantalla"%>
 <%@page import="com.pantalla.Pantalla"%>
 <%@page import="com.usuario.Usuario"%>
@@ -120,6 +121,19 @@
                                                 <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
                                                 <input type="hidden" name="idLenguaje" value="1" id="idLenguaje"/>
                                                 <input type="hidden" name="idDivision" value="<%=idDivision%>" id="idDivision"/>
+                                                
+                                                <%
+                                                    long fechaMillis = System.currentTimeMillis();
+                                                 Date fecha = new Date(fechaMillis);
+
+                                                if(idPlantilla.equals("27")){
+                                                idBodega= fecha.getDate()+""+fecha.getMonth()+ fecha.getYear()+fecha.getMinutes()+""+fecha.getSeconds();
+
+                                                        //fecha.getDate()+""+fecha.getMonth()+""+fecha.getDate()+""+fecha.getYear()+""+fecha.getHours()+""+fecha.getMinutes()+""+fecha.getSeconds();
+                                                }
+                                                %>
+                                               
+                                                
                                                 <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
                                                 <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
                                                 <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
