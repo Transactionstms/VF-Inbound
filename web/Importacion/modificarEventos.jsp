@@ -3,7 +3,6 @@
     Created on : 10/03/2023, 11:28:29 AM
     Author     : Desarrollo Tacts
 --%>
-
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -13,24 +12,13 @@
 <%@page import="com.onest.oracle.*" %>
 <%@page import="com.onest.misc.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    Date date = new Date();
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    String fecha = formato.format(date);
-    String[] par = fecha.split("/");
-    String part3 = par[2];
-
-    //Extracción de Hora   
-    Date hr = new Date();
-    DateFormat hours = new SimpleDateFormat("HH:mm:ss");
-    String hora = hours.format(hr);
-%>
+ 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar Eventos</title>
+        <title>Eventos </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
@@ -52,82 +40,110 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
+
+        <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
     </head>
     <body>
         <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+                ConsultasQuery fac = new ConsultasQuery();
+                String agenteAduanal = "";
+                String coma = ",";
+                String aa = "";
 
-                 String fechas = "";
-                String sql=" SELECT  DISTINCT"
-                         + " TIE.ID_EVENTO,"
-                         + " BP.RESPONSABLE,"
-                         + " GTN.FINAL_DESTINATION,"
-                         + " GTN.BRAND_DIVISION,"
-                         + " 'DIVISION',"
-                         + " GTN.SHIPMENT_ID,"
-                         + " GTN.CONTAINER1,"
-                         + " GTN.BL_AWB_PRO,"
-                         + " GTN.LOAD_TYPE,"
-                         + " (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  as suma   ,"
-                         + " GTN.POD,"
-                         + " to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
-                         + " to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
-                         + " ("
-                     + "   SELECT   MAX(nvl(recommended_lt2,80))  FROM   tra_inb_costofleteytd   WHERE  TRIM(id_bd) = TRIM(gtn.brand_division)   AND TRIM(id_pod) = TRIM(gtn.pod)   AND TRIM(id_pol) = TRIM(gtn.pol) "
+                if (db.doDB(fac.consultarAAEventosDetalle())) {
+                    for (String[] rowA : db.getResultado()) {
+                        aa = rowA[0];
+                        aa = aa + coma;
+                        agenteAduanal = agenteAduanal + aa;
+                    }
+                    agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
+                }
+                
+String sql2= "WITH sum_quantity AS ("
+        +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
+        +"   FROM tra_inc_gtn_test"
+        +"   GROUP BY shipment_id, container1"
+        +" )"
+        +" SELECT DISTINCT"
+        +"   tie.id_evento,"
+        +"   NVL(bp.responsable, ' ') AS responsable,"
+        +"   gtn.final_destination,"
+        +"   gtn.brand_division,"
+        +"   nvl(tid.division_nombre,' '), "
+        +"   gtn.shipment_id,"
+        +"   gtn.container1,"
+        +"   gtn.bl_awb_pro,"
+        +"   gtn.load_type,"
+        +"   sq.suma,"
+        +"   tip1.NOMBRE_POD,"
+        +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
+        +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
+        +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
+        +"   'Inbound notification' AS notification_type,"
+        +"   tip2.NOMBRE_POL,"
+        +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
+        +"   gtn.plantilla_id,"
+        +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
+        +"   tip1.nombre_pod,"
+        +"   tip2.nombre_pol,"
+        +"   tibd.nombre_bd,"
+        +"   CASE"
+        +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
+        +"     WHEN EXISTS ("
+        +"       SELECT 1"
+        +"       FROM tra_inc_gtn_test"
+        +"       WHERE container1 = gtn.container1"
+        +"       HAVING COUNT(DISTINCT brand_division) > 1"
+        +"     ) THEN 'FCL / LCL'"
+        +"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
+        +"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
+        +"     ELSE '-'"
+        +"   END AS estado,"
+        +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
+        +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
+        +"   NVL(tie.observaciones, ' ') AS observaciones"
+        +" FROM"
+        +"   tra_inb_evento tie"
+        +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
+        +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
+        +"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
+        +"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
+        +"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
+        +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
+        +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
+        +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
+        +" ORDER BY"
+        +"   tie.id_evento";
 
-                         + " )as EST_ETA_DC,"
-                         + " 'Inbound notification',"
-                         + " GTN.POL,"
-                         + " 'A.A',"
-                         + " GTN.PLANTILLA_ID,"
-                         + " to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
-                        + " ,TIP1.NOMBRE_POD,"
-                        + " TIP2.NOMBRE_POL,"
-                        + " tibd.NOMBRE_BD "
-                         + " from TRA_INB_EVENTO    TIE"
-                         + " inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
-                         + " inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-                        + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                        + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                        + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
-                         + " order by 1"; 
-
-         %>
-        <!-- navbar-->
-        <header class="header">
-        </header>
+        int cont =0; 
+        %>
+        <!-- <%=sql2%>-->
+        
+        
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
-                    <!--<div class="unwired alert alert-danger">¡Se ha perdido su conexión! TMS debe de estar conectado a Internet para su correcto funcionamiento.</div>-->
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
+                                <div class="card ">
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Modificar Eventos</h2>
+                                                <h2 class="card-heading"> Modificar Evento   </h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form id="uploadFileFormData" name="uploadFileFormData">
-                                            <div class="row">
-                                                <div align="right">
-                                                    <div id="example_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Busqueda:
-                                                            <input id="searchTerm" type="text" onkeyup="doSearch()" autocomplete="off"/>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <form id="uploadFileFormData1" name="uploadFileFormData1">
+                                            <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
                                             <br>
-                                            <div id="table-scroll" class="table-scroll"  style="height: 650px;">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:600%;">
+                                            <div id="table-scroll" class="table-scroll"  style="height: 100%;">
+                                                <table id="example" class="display" style="width:300%">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
@@ -143,51 +159,49 @@
                                                             <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">Est. Eta DC <strong style="color:white">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC <strong style="color:white">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">DC <strong style="color:white">*</strong></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
-                                                            <th scope="col" class="font-titulo">Observaciones</th>
+                                                            <th scope="col" class="font-titulo">Observaciones </th>
                                                             <th scope="col" class="font-titulo"></th>
+                                                            <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            if (db.doDB(sql)) {
-                                                                 for (String[] row : db.getResultado()) {
-                                                                     
-                                                                    if (db.doDB("select NVL(to_char(to_date('" + row[18] + "','MM/DD/YYYY')+" + row[13] + ", 'MM/DD/YYYY'),' ') from dual")) {
-                                                                        for (String[] row1 : db.getResultado()) {
-                                                                            fechas = row1[0];
-                                                                        }
-                                                                    }                  
-                                                        %>             
+                                                            if (db.doDB(sql2)) {
+                                                                for (String[] row : db.getResultado()) {
+                                                                    cont++;
+                                                        %>
                                                         <tr>
-                                                            <th class="font-numero"><%=row[0]%></th>	
-                                                            <td class="font-numero"><select class="" id="responsable" name="responsable"><option><%=row[1]%></option><option value="1">CLAUDIO</option><option value="2" >MIGUEL</option><option value="3">JESUS</option></select></td>	
-                                                            <td class="font-texto"><select class="" id="destination" name="destination"><option><%=row[2]%></option><option value="1">CENTRO DE DISTRIBUCIÓN</option><option value="2" >OD 1005 VF Outdoor Mexico</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><select class="" id="brand" name="brand"><option><%=row[3]%></option><option value="1">OD VANS MEXICO</option><option value="2" >OD THE NORTH FACE MEXICO</option><option value="3">OTROS</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="division" name="division"><option><%=row[4]%></option><option value="1">APP</option><option value="2" >APPAREL</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="shipmentId" name="shipmentId" value="<%=row[5]%>" readonly></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="container" name="container" value="<%=row[6]%>"><%=row[6]%></td>	
-                                                            <td class="font-numero" style="background-color:#FFC7CE; color:#AD0055;"><input class="" type="hidden" id="blAwbPro" name="blAwbPro" value="<%=row[7]%>"><%=row[7]%></td>	
-                                                            <td class="font-numero"><select class="" id="loadType" name="loadType"><option><%=row[8]%></option><option value="1">LCL</option><option value="2" >AIR</option><option value="3">OTROS</option></select></td>		
-                                                            <td class="font-numero"><input class="" type="text" id="quantity" name="quantity" value="<%=row[9]%>"></td>	
-                                                            <td class="font-numero"><select class="" id="pod" name="pod"><option><%=row[10]%></option><option value="1">Guadalajara</option><option value="2" >México City, MX</option><option value="3">Edo.México</option></select></td>
-                                                            <td class="font-numero"><input class="" type="date" id="departure" name="departure" value="<%=row[11]%>"><%=row[11]%></td>	
-                                                            <td class="font-numero"><input class="" type="date" id="port" name="port" value="<%=row[12]%>"><%=row[12]%></td>	
-                                                            <td class="font-texto"><input class="" type="text" id="eta" name="eta" value="<%=row[13]%>"></td>	
-                                                            <td class="font-texto"><input class="" type="date" id="eta_dc" name="eta_dc" value="<%=fechas%>"><%=fechas%></td>
-                                                            <td class="font-texto"><input class="" type="date" id="dc" name="dc" value="<%=fechas%>"><%=fechas%></td>
-                                                            <td class="font-texto"><input class="" type="text" id="notificacion" name="notificacion" value="<%=row[14]%>"></td>
-                                                            <td class="font-numero"><select class="" id="pol" name="pol"><option><%=row[15]%></option><option value="1">Ningbo, CN</option><option value="2" >Hanoi, VN</option><option value="3">Otros</option></select></td>	
-                                                            <td class="font-numero"><select class="" id="aa" name="aa"><option><%=row[16]%></option><option value="1">SESMA</option><option value="2" >CUSA</option><option value="3">OTROS</option></select></td>
-                                                            <td class="font-texto"><input class="" type="text" id="observaciones" name="observaciones" value="<%=row[17]%>"></td>
-                                                            <td class="font-texto"><center><button type="button" class="btn btn-primary">Actualizar</button></center></td>
+                                                            <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>','<%=row[5]%>','<%=row[6]%>')"><%=row[0]%></th>	
+                                                            <td class="font-numero"> <%=row[1]%></td>
+                                                            <td class="font-texto"> <%=row[2]%></td>
+                                                            <td class="font-texto"> <%=row[21]%></td>
+                                                            <td class="font-texto"> <%=row[4]%></td>
+                                                            <td class="font-texto"> <%=row[5]%></td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[7]%></td>
+                                                            <td class="font-texto"> <%=row[22]%> </td>		
+                                                            <td class="font-texto"> <%=row[9]%></td>	
+                                                            <td class="font-texto"> <%=row[19]%></td>
+                                                            <td class="font-texto"> <%=row[11]%></td>	
+                                                            <td class="font-texto"> <%=row[12]%></td>	
+                                                            <td class="font-texto"> <%=row[13]%></td>
+                                                            <td class="font-texto"> <%= row[23]%></td>
+                                                            <td class="font-texto"> <%= row[24]%></td>
+                                                            <td class="font-texto"> <%=row[14]%></td>
+                                                            <td class="font-texto"> <%=row[20]%></td>	
+                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            <td class="font-texto" contenteditable='true'>  
+                                                                <input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off">
+                                                            </td>
+                                                            <td><center><button type="button" class="btn btn-primary" onclick="editarEvento('<%=row[0]%>','<%=row[5]%>','<%=row[6]%>')">Modificar</button></center></td>
                                                         </tr>
-                                                        <%       
+                                                        <%
                                                                 }
                                                             }
                                                         %>
@@ -196,33 +210,32 @@
                                             </div>
                                             <br>
                                             <!-- Botones controles -->
-                                            <div class="col-lg-12" style="text-align: right;">
-                                                <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Guardar Información</a>
-                                            </div>
+                                         
                                         </form>
                                     </div>
-                                </div>
+                                </div>              
                             </div>
                         </div>   
                     </section>
                 </div>  
-                <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 text-center text-md-start fw-bold">
-                                <p class="mb-2 mb-md-0 fw-bold">Transactions TMS &copy; <%=part3%></p>
-                            </div>
-                            <div class="col-md-6 text-center text-md-end text-gray-400">
-                                <p class="mb-0">Version 1.1.0</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+              
             </div>
         </div>    
-                            
+        <script>
+           
+           
+            function editarEvento(id,ship,conteiner) {
+                console.log('editar');//
+                  console.log(id);
+                  console.log(ship);
+                  console.log(conteiner);
+                window.location.href = '<%=request.getContextPath()%>/Importacion/modificarEventos2.jsp?id=' + id+"&ship="+ship+"&con="+conteiner;
+
+            }
+            
+           
+          
+        </script>                     
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->
@@ -239,6 +252,18 @@
         <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+
+      
+         <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+ <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
+
+
         <script type="text/javascript">
             // Optional
             Prism.plugins.NormalizeWhitespace.setDefaults({
@@ -247,6 +272,29 @@
                 'left-trim': true,
                 'right-trim': true,
             });
+
+          $(document).ready(function () {
+  $('#example').DataTable({
+    dom: 'lBfrtip', // Incluye el elemento de paginación
+    buttons: [
+      {
+        extend: 'copy',
+        text: 'Copiar'
+      },
+      {
+        extend: 'csv',
+        text: 'CSV'
+      },
+      {
+        extend: 'excel',
+        text: 'Excel'
+      }
+    ],
+    lengthMenu: [10, 15, 25, 50, 100], // Define las opciones de "Mostrar entradas"
+    pageLength: 10 // Establece el número predeterminado de entradas por página
+  });
+});
+
 
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
