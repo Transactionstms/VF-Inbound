@@ -81,7 +81,7 @@
                                                 </div> 
 
                                                 <div class="col-md-6 col-lg-3 mb-4">
-                                                    <div class="card h-100">
+                                                    <div class="card h-100" style="width: 600px;">
                                                         <div class="card-header py-4">
                                                             <h6 class="card-heading"><%=nombre%>                </h6>
                                                         </div>
