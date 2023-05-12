@@ -846,6 +846,10 @@
         <servlet-name>ModificarObservaciones</servlet-name>
         <servlet-class>com.tacts.modificar.facturacion.ModificarObservaciones</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModificarEvento</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.ModificarEvento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1686,6 +1690,10 @@
     <servlet-mapping>
         <servlet-name>ModificarObservaciones</servlet-name>
         <url-pattern>/ModificarObservaciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarEvento</servlet-name>
+        <url-pattern>/ModificarEvento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
