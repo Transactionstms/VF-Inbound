@@ -48,13 +48,11 @@ public class ConsultarCustom extends HttpServlet {
             NumberFormat formatter = new DecimalFormat("#0.00");
 
             String tipoAgente = request.getParameter("tipoAgente");
-            String tipoConsulta = request.getParameter("tipoConsulta"); //(evento/shipment/container)
-            String id = request.getParameter("id"); //id
             String salida = "";
             int sal = 0;
              
             ServiceDAO dao = new ServiceDAO();
-            ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoConsulta, tipoAgente, id));
+            ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoAgente));
             while (rs.next()) {
 
                 salida += " <tr id=\"tr" + sal + "\"> "

@@ -5,60 +5,12 @@
  */
 
     $(document).ready(function () {
-        //customForm('0');
+        customForm();
     });
             
-    function customForm(tipoConsulta) {
-                
+    function customForm() {
         let idAgente = document.getElementById("idAgenteAduanal").value;   
-        var selectedValues = "";
-        
-        
-        if(tipoConsulta==="0"){
-            selectedValues = "0";
-        }if(tipoConsulta==="1"){
-            selectedValues = $('#evento').val();
-        }else if(tipoConsulta==="2"){
-            selectedValues = $('#referencia').val();
-        }else if(tipoConsulta==="3"){
-            selectedValues = $('#responsable').val();
-        }else if(tipoConsulta==="4"){
-            selectedValues = $('#fDestination').val();
-        }else if(tipoConsulta==="5"){
-            selectedValues = $('#brandDivision').val();
-        }else if(tipoConsulta==="6"){
-            selectedValues = $('#division').val();
-        }else if(tipoConsulta==="7"){
-            selectedValues = $('#shipmentId').val();
-        }else if(tipoConsulta==="8"){
-            selectedValues = $('#container').val();
-        }else if(tipoConsulta==="9"){
-            selectedValues = $('#blAwbPro').val();
-        }else if(tipoConsulta==="10"){
-            selectedValues = $('#loadType').val();
-        }else if(tipoConsulta==="11"){
-            selectedValues = $('#quantity').val();
-        }else if(tipoConsulta==="12"){
-            selectedValues = $('#pod').val();
-        }else if(tipoConsulta==="13"){
-            selectedValues = $('#departurePol').val();
-        }else if(tipoConsulta==="14"){
-            selectedValues = $('#realPortDischarge').val();
-        }else if(tipoConsulta==="15"){
-            selectedValues = $('#etaDc').val();
-        }else if(tipoConsulta==="16"){
-            selectedValues = $('#inbNotification').val();
-        }else if(tipoConsulta==="17"){
-            selectedValues = $('#pol').val();
-        }else if(tipoConsulta==="18"){
-            selectedValues = $('#agenteAduanal').val();
-        }else if(tipoConsulta==="19"){
-            selectedValues = $('#fechaVenta').val();
-        }else if(tipoConsulta==="20"){
-            selectedValues = $('#prioridad').val();
-        }
-
-        fetch("../ConsultarCustom?tipoAgente="+idAgente+"&tipoConsulta=" + tipoConsulta + "&id=" + selectedValues, {
+        fetch("../ConsultarCustom?tipoAgente="+idAgente, {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {

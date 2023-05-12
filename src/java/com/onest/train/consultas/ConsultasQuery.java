@@ -1929,7 +1929,7 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarEventosCustoms(String tipoConsulta, String tipoAgente, String id){
+    public String consultarEventosCustoms(String tipoAgente){
            sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
                + " SELECT DISTINCT "
                + " TIE.ID_EVENTO, "
@@ -2040,51 +2040,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON TIE.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               //+ " WHERE TIE.ID_EVENTO IN (235650) "   
+               //+ " WHERE TIE.ID_EVENTO IN (236037, 236038, 236039, 236040, 236041, 236042) "   
                + " ORDER BY TIE.ID_EVENTO " ;
-              
-        /*if(tipoConsulta.equals("1")){         //Evento
-          sql += " AND TIE.ID_EVENTO IN ('" + id + "')";
-        }else if(tipoConsulta.equals("2")){   //Referncia AA
-          sql += " AND TIE.REFERENCIA_AA IN ('" + id + "')";
-        }else if(tipoConsulta.equals("3")){   //Responsable
-          sql += " AND TDR.RESPONSABLE IN ('" + id + "')";
-        }else if(tipoConsulta.equals("4")){   //Destino Shipment
-          sql += " AND TIGT.FINAL_DESTINATION IN ('" + id + "')";
-        }else if(tipoConsulta.equals("5")){   //Brand-Division
-          sql += " AND TIBD.NOMBRE_BD IN ('" + id + "')";
-        }else if(tipoConsulta.equals("6")){   //División
-          sql += " AND TIGT.CBDIV_ID IN ('" + id + "')";
-        }else if(tipoConsulta.equals("7")){   //Shipment Id
-          sql += " AND TIE.SHIPMENT_ID IN ('" + id + "')";
-        }else if(tipoConsulta.equals("8")){   //Container
-          sql += " AND TIE.CONTAINER1 IN ('" + id + "')";
-        }else if(tipoConsulta.equals("9")){   //BL/AWB/PRO
-          sql += " AND TIGT.BL_AWB_PRO IN ('" + id + "')";
-        }else if(tipoConsulta.equals("10")){  //Load Type
-          sql += " AND TIGT.LOAD_TYPE IN ('" + id + "')";
-        }else if(tipoConsulta.equals("11")){  //Quantity
-          sql += " AND TIGT.QUANTITY IN ('" + id + "')";
-        }else if(tipoConsulta.equals("12")){  //Pod
-          sql += " AND TIP.NOMBRE_POD IN ('" + id + "')";
-        }else if(tipoConsulta.equals("13")){  //Departure Pol 
-          sql += " AND TIGT.EST_DEPARTURE_POL IN ('" + id + "')";
-        }else if(tipoConsulta.equals("14")){ //ETA REAL Port of Discharge
-          sql += " AND TIGT.ETA_PORT_DISCHARGE IN ('" + id + "')";
-        }else if(tipoConsulta.equals("15")){ //Est. Eta DC
-          sql += " AND TIE.EST_ETA_DC IN ('" + id + "')";
-        }else if(tipoConsulta.equals("16")){ //Inbound notification
-          sql += "";
-        }else if(tipoConsulta.equals("17")){ //Pol
-          sql += " AND TIPL.NOMBRE_POL IN ('" + id + "')";
-        }else if(tipoConsulta.equals("18")){ //Agente Aduanal
-          sql += " AND TIAA.AGENTE_ADUANAL_NOMBRE IN ('" + id + "')";
-        }else if(tipoConsulta.equals("19")){ //Fecha Mes de Venta
-          sql += " AND TIE.FECHA_CAPTURA IN ('" + id + "')";
-        }else if(tipoConsulta.equals("20")){ //Prioridad
-          sql += " ";
-        }*/
-         //sql += " ";
+
         System.out.println("Consulta Principal: " + sql);
         return sql;
     }
