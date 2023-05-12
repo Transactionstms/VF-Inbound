@@ -40,26 +40,26 @@ public class CreatExcel {
             ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
             while(rs.next()){
                 personas.add(new Persona(
-                        rs.getInt(1),
-                        rs.getString(2),  
-                        rs.getString(3), 
-                        rs.getString(22), 
-                        rs.getString(5),  
-                        rs.getString(6),  
-                        rs.getString(7),  
-                        rs.getString(8),  
-                        rs.getString(23), 
-                        rs.getString(10), 
-                        rs.getString(20), 
-                        rs.getString(12), 
-                        rs.getString(13), 
-                        rs.getString(14), 
-                        rs.getString(24), 
-                        rs.getString(25), 
-                        rs.getString(15), 
-                        rs.getString(21), 
-                        rs.getString(17), 
-                        rs.getString(26) 
+                        rs.getInt(1),       // numEvento
+                        rs.getString(2),    // Responsable
+                        rs.getString(3),    // FinalDestination
+                        rs.getString(22),   // BrandDivision
+                        rs.getString(5),    // Division
+                        rs.getString(6),    // ShipmentId
+                        rs.getString(7),    // Container
+                        rs.getString(8),    // BlAwbPro 
+                        rs.getString(23),   // LoadType
+                        rs.getString(10),   // Quantity
+                        rs.getString(20),   // Pod 
+                        rs.getString(12),   // DeparturePol
+                        rs.getString(13),   // RealPort
+                        rs.getString(14),   // Lt2  
+                        rs.getString(24),   // EtaDc
+                        rs.getString(25),   // Indc2DaysPutAway 
+                        rs.getString(15),   // InboundNotif
+                        rs.getString(21),   // Pol
+                        rs.getString(17),   // Aa   
+                        rs.getString(26)    // Observaciones
                 ));
             }
             
