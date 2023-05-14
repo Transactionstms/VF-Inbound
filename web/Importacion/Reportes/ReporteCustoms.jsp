@@ -130,117 +130,105 @@
                                     </div>
                                     <div class="card-body">
                                         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
-                                        <div id="contenedor">
-                                            <div class="row">
-                                                <div class="columna">
-                                                    <button type="button" class="btn btn-success" onclick="openModalPlantilla()">Subir Plantilla</button>
-                                                </div>
-                                            </div>       
-                                            <div style="text-align: right;">
-                                                <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="AddCustoms()">Guardar Información</a>
-                                            </div>
-                                        </div>
-                                        <br>
                                         <div id="table-scroll" class="table-scroll"  style="height:500px;">
                                             <table id="main-table" class="main-table" style="table-layout:fixed; width:1000%;">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4">Semaforo</th>  
-                                                        <th scope="col" class="font-titulo" style="text-align:left"><font size="2">Número de evento <strong style="color:red">*</strong></font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Referencia AA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Responsable</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Final Destination</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Brand-Division</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Division</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Shipment ID</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Container</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">BL/AWB/PRO</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">LoadType</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Quantity</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">POD</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Est. Departure from POL</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">ETA REAL Port of Discharge</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Est. Eta DC</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Inbound notification</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">POL</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">A.A.</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Fecha Mes de Venta</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Prioridad Si/No</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"> </th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">País Origen</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Size Container</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Valor USD</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">ETA Port Of Discharge</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Agente Aduanal</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento A1</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 1</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1 (2do)</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 2</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Recepción Documentos</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Recinto</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Naviera / Forwarder</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#FF4040"><font size="2">Buque</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Revalidación/Liberación de BL</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo Origen</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo en destino</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Resultado Previo</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Proforma Final</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere permiso</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha envío Fichas/notas</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Recepción de permisos tramit.</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Act Permisos (Inic Vigencia)</font></th>	
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Perm. Aut. (Fin de Vigencia)</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Cuenta con CO para aplicar preferencia Arancelaria</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Aplico Preferencia Arancelaria</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere UVA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Requiere CA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Fecha Recepción CA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Número de Constancia CA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#626567"><font size="2">Monto CA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Documentos Completos</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Pago Pedimento</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Solicitud de transporte</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Modulacion</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Modalidad</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Resultado Modulacion</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Reconocimiento</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Liberacion</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Origen</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Final</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha de retencion por la autoridad</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. de liberacion por ret. de la aut.</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Estatus de la operación</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo Atraso</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#00BFBF"><font size="2">Observaciones</font></th>
+                                                        <th class="col-sm-1" class="font-titulo" style="background-color:#8BC4C4"></th>  
+                                                        <th class="col-sm-3" class="font-titulo" style="text-align:left"><font size="2">Número de evento <strong style="color:red">*</strong></font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Referencia AA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Responsable</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Final Destination</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Brand-Division</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Division</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Shipment ID</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Container</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">BL/AWB/PRO</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">LoadType</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Quantity</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">POD</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Est. Departure from POL</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">ETA REAL Port of Discharge</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Est. Eta DC</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="1">Inbound notification</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">POL</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">A.A.</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Fecha Mes de Venta</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4;"><font size="2">Prioridad Si/No</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">País Origen</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Size Container</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Valor USD</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">ETA Port Of Discharge</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Agente Aduanal</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento A1</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 1</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Pedimento R1 (2do)</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo rectificación 2</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Recepción Documentos</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#FF4040"><font size="2">Recinto</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#FF4040"><font size="2">Naviera / Forwarder</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#FF4040"><font size="2">Buque</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Revalidación/Liberación de BL</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo Origen</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Previo en destino</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Resultado Previo</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Proforma Final</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere permiso</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha envío Fichas/notas</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Recepción de permisos tramit.</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Act Permisos (Inic Vigencia)</font></th>	
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. Perm. Aut. (Fin de Vigencia)</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Cuenta con CO para aplicar preferencia Arancelaria</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Aplico Preferencia Arancelaria</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Requiere UVA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#626567"><font size="2">Requiere CA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#626567"><font size="2">Fecha Recepción CA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#626567"><font size="2">Número de Constancia CA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#626567"><font size="2">Monto CA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Documentos Completos</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Pago Pedimento</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Solicitud de transporte</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Modulacion</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Modalidad</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Resultado Modulacion</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Reconocimiento</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha Liberacion</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Origen</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Sello Final</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fecha de retencion por la autoridad</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Fec. de liberacion por ret. de la aut.</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Estatus de la operación</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo Atraso</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Observaciones</font></th>
                                                     <%
                                                         if(tipoAgente.equals("4001")){        //Logix
                                                     %>    
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a NOVA</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a Globe trade SD</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Archivo M</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Archivo M</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Solicitud de Manipulacion</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de vencimiento de Manipulacion</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha confirmacion Clave de Pedimento</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Recepcion de Incrementables</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">T&E</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Vencimiento del Inbound</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a NOVA</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a Globe trade SD</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Archivo M</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Archivo M</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Solicitud de Manipulacion</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de vencimiento de Manipulacion</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha confirmacion Clave de Pedimento</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Recepcion de Incrementables</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">T&E</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Vencimiento del Inbound</font></th>
                                                     <%
                                                         }else if(tipoAgente.equals("4002")){  //Cusa
                                                     %>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">No. BULTOS</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Peso (KG)</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Transferencia (SI / NO)</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Inicio Etiquetado</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Termino Etiquetado</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Hora de termino Etiquetado</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor</font></th>
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor de Carga</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">No. BULTOS</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Peso (KG)</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Transferencia (SI / NO)</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Inicio Etiquetado</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha Termino Etiquetado</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Hora de termino Etiquetado</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Proveedor de Carga</font></th>
                                                     <%
                                                         }
                                                     %> 
-                                                        <th scope="col" class="font-titulo" style="background-color:#8BC4C4"><font size="2">FY</font></th>
+                                                        <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">FY</font></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="detalleCustom"></tbody>
@@ -272,7 +260,7 @@
         <!-- Multiselect -->
         <script src="../../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- actions js -->
-        <script src="../../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="../../lib/validationsInbound/customs/reporteCustoms.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->

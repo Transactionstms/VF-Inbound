@@ -83,7 +83,7 @@ a:focus {
   background: red;
 } /* testing links*/
 
-th:first-child {               /*Primer columna fija*/
+th:nth-child(-n + 3)  {               /*Primer columna fija*/
   position: -webkit-sticky;
   position: sticky;
   left: 0;
@@ -91,8 +91,8 @@ th:first-child {               /*Primer columna fija*/
   background: #FFFFFF;
   font-weight: normal;
 }
-thead th:first-child,
-tfoot th:first-child {
+thead th:nth-child(-n + 3) ,
+tfoot th:nth-child(-n + 3)  {
   z-index: 5;
 }
 
