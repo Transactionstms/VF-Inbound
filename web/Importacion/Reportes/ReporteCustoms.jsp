@@ -44,8 +44,6 @@
         <link href="../../lib/Multiselect/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
         <!-- jQuery/show modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <!-- sweetalert -->
-        <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <style>
             #contenedor {
               display: flex;
@@ -96,21 +94,16 @@
                 Usuario root = (Usuario) ownsession.getAttribute("login.root");
                 ConsultasQuery fac = new ConsultasQuery();
                 String tipoAgente = ""; // (4001)LOGIX       (4002)CUSA       (4006)VF
-                String nombre = "";
-                String idPlantilla = "26";
+                String idPlantilla = "";
+                String namePlantilla = "";
                 
-                
-               //Obtener el agente aduanal 
-                if (db.doDB("SELECT AGENTE_ADUANAL_ID FROM TRA_INB_USUARIO_AA_RELACION WHERE USER_NID = '" + UserId + "'")) {
+                //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
+                String sql = "SELECT DISTINCT TIAR.AGENTE_ADUANAL_ID, TIAR.TRA_PLANTILLA_ID, TP.NOMBRE FROM TRA_INB_USUARIO_AA_RELACION TIAR INNER JOIN TRA_PLANTILLA TP ON TIAR.TRA_PLANTILLA_ID = TP.ID WHERE TIAR.USER_NID = '" + UserId + "'";
+                if (db.doDB(sql)) {
                     for (String[] row : db.getResultado()) {
                         tipoAgente = row[0]; 
-                    }
-                }
-                
-                //Obtener la plantilla ligada al agente aduanal
-                if (db.doDB("select NOMBRE from TRA_PLANTILLA where id='" + view + "' ")) {
-                    for (String[] row : db.getResultado()) {
-                        nombre = row[0];
+                        idPlantilla = row[1];
+                        namePlantilla = row[2];
                     }
                 }
         %>
@@ -132,7 +125,7 @@
                                         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
                                         <div id="table-scroll" class="table-scroll"  style="height:500px;">
                                             <table id="main-table" class="main-table" style="table-layout:fixed; width:1000%;">
-                                                <thead>
+                                                <thead align="center">
                                                     <tr>
                                                         <th class="col-sm-1" class="font-titulo" style="background-color:#8BC4C4"></th>  
                                                         <th class="col-sm-3" class="font-titulo" style="text-align:left"><font size="2">Número de evento <strong style="color:red">*</strong></font></th>
@@ -202,7 +195,7 @@
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Motivo Atraso</font></th>
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#00BFBF"><font size="2">Observaciones</font></th>
                                                     <%
-                                                        if(tipoAgente.equals("4001")){        //Logix
+                                                        if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF
                                                     %>    
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a NOVA</font></th>
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Llegada a Globe trade SD</font></th>
@@ -215,7 +208,9 @@
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">T&E</font></th>
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Fecha de Vencimiento del Inbound</font></th>
                                                     <%
-                                                        }else if(tipoAgente.equals("4002")){  //Cusa
+                                                        }
+
+                                                        if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
                                                     %>
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">No. BULTOS</font></th>
                                                         <th class="col-sm-3" class="font-titulo" style="background-color:#8BC4C4"><font size="2">Peso (KG)</font></th>
@@ -261,8 +256,6 @@
         <script src="../../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- actions js -->
         <script src="../../lib/validationsInbound/customs/reporteCustoms.js" type="text/javascript"></script>
-        <!-- sweetalert -->
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
