@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
     $(document).ready(function () {
-        customForm();
+        customForm("0");
     });
-            
-    function customForm() {
+
+    function customForm(tipoFiltro) {
+
         let idAgente = document.getElementById("idAgenteAduanal").value;   
-        fetch("../ConsultarCustom?tipoAgente="+idAgente, {
+
+        fetch("../ConsultarCustom?tipoAgente="+idAgente+"&tipoFiltro="+tipoFiltro, {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {
-                    document.getElementById('detalleCustom').innerHTML = data;
+                    document.getElementById('table-scroll').innerHTML = data;
                 }).catch(error => console.log(error));
     }
-
+    
     function AddCustoms() {
 
           //Contadores
@@ -217,7 +218,7 @@
                         observaciones = document.getElementById(temp52).value;   
                         fy = document.getElementById(temp53).value;   
 
-                        if(idAgenteAduanal === "4001"){        //Logix   
+                        if(idAgenteAduanal == "4001" || idAgenteAduanal == "4006"){ //Logix ó VF
 
                                 let temp54 = "llegada_a_nova[" + i + "]";
                                 let temp55 = "llegada_a_globe_trade_sd[" + i + "]";
@@ -241,7 +242,9 @@
                                 t_e = document.getElementById(temp62).value;  
                                 fecha_vencim_inbound = document.getElementById(temp63).value; 
 
-                        }else if(idAgenteAduanal === "4002"){        //Cusa
+                        }
+                        
+                        if(idAgenteAduanal == "4002" || idAgenteAduanal == "4006"){  //Cusa ó VF
 
                                 let temp64 = "no_bultos[" + i + "]"; 
                                 let temp65 = "peso_kg[" + i + "]"; 
@@ -316,7 +319,7 @@
                                                         "&observaciones[" + i + "]=" + observaciones + 
                                                         "&fy[" + i + "]=" + fy; 
 
-                        if(idAgenteAduanal === "4001"){        //Logix   
+                        if(idAgenteAduanal == "4001" || idAgenteAduanal == "4006"){ //Logix ó VF 
 
                                  urlCustoms +=          "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
                                                         "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
@@ -329,7 +332,9 @@
                                                         "&t_e[" + i + "]=" + t_e + 
                                                         "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
 
-                        }else if(idAgenteAduanal === "4002"){        //Cusa
+                        }
+                        
+                        if(idAgenteAduanal == "4002" || idAgenteAduanal == "4006"){  //Cusa ó VF
 
                                  urlCustoms +=          "&no_bultos[" + i + "]=" + no_bultos + 
                                                         "&peso_kg[" + i + "]=" + peso_kg + 
