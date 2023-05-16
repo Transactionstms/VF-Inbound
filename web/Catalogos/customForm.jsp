@@ -126,6 +126,20 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div id="buscador"> 
+                                        <div id="primero"> 
+                                            <select class="selectpicker" id="col_test" name="col_test" multiple aria-label="Seleccione">      
+                                                      <option value="1">Opción Test 1</option>
+                                                      <option value="2">Opción Test 2</option>
+                                                      <option value="3">Opción Test 3</option>
+                                                      <option value="4">Opción Test 4</option>
+                                            </select> 
+                                        </div> 
+                                        <div id="segundo"> 
+                                            <a class="text-lg text-info" onclick="customForm('0')"><i class="fa fa-search"></i></a> 
+                                        </div> 
+                                    </div>
+                                    <br>
                                     <div class="card-body">
                                         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
                                         <div id="contenedor">

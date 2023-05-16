@@ -599,7 +599,7 @@ public class InsertarCustomsForms extends HttpServlet {
             }      
                     boolean oraOut1 = oraDB.execute(insertarCustoms);  
                     
-                    regPrioridad = " UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
+                    regPrioridad = " UPDATE TRA_INC_GTN_TEST SET ESTATUS='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
                     boolean oraOut2 = oraDB.execute(regPrioridad);
                 }
           }

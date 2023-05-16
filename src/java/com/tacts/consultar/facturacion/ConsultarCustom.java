@@ -47,6 +47,8 @@ public class ConsultarCustom extends HttpServlet {
             ServiceDAO dao = new ServiceDAO();
             
             String tipoAgente = request.getParameter("tipoAgente");
+            String tipoFiltro = request.getParameter("tipoFiltro");
+            String id = request.getParameter("id");
 
             //Objetos Multiselect:
             HashSet<String> list_evento = new HashSet<String>();
@@ -229,7 +231,7 @@ public class ConsultarCustom extends HttpServlet {
             String contador = "";
             int sal = 0;
             
-                    ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoAgente));
+                    ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoAgente,tipoFiltro,id)); 
                     while (rs.next()) {
                         
                                 list_evento.add("<option value=\""+rs.getString(1)+"\">"+rs.getString(1)+"</option>");
@@ -610,10 +612,11 @@ public class ConsultarCustom extends HttpServlet {
             */
              multiselect_evento = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
-                                + "         <select class=\"selectpicker\" id=\"col_evento\" name=\"col_evento\" multiple aria-label=\"Seleccione\"> "
-                                + "           <option value=\"0\">test 1</option>"
-                                + "           <option value=\"0\">test 1</option>"
-                                //+ list_evento
+                                + "         <select class=\"form-control\" id=\"col_evento\" name=\"col_evento\"> "
+                                //+ "         <select class=\"selectpicker\" id=\"col_evento\" name=\"col_evento\" multiple aria-label=\"Seleccione\"> "
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
+                                + list_evento
                                 + "         </select> "
                                 + "     </div> "
                                 + "     <div id=\"segundo\"> "
@@ -624,7 +627,8 @@ public class ConsultarCustom extends HttpServlet {
        multiselect_referenciaAA = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_referenciaAA\" name=\"col_referenciaAA\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_referenciaAA
                                 + "         </select> "
                                 + "     </div> "
@@ -636,7 +640,8 @@ public class ConsultarCustom extends HttpServlet {
         multiselect_responsable = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_responsable\" name=\"col_responsable\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_responsable
                                 + "         </select> "
                                 + "     </div> "
@@ -648,7 +653,8 @@ public class ConsultarCustom extends HttpServlet {
    multiselect_finalDestination = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_finalDestination\" name=\"col_finalDestination\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_finalDestination
                                 + "         </select> "
                                 + "     </div> "
@@ -660,7 +666,8 @@ public class ConsultarCustom extends HttpServlet {
       multiselect_brandDivision = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_brandDivision\" name=\"col_brandDivision\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_brandDivision
                                 + "         </select> "
                                 + "     </div> "
@@ -672,7 +679,8 @@ public class ConsultarCustom extends HttpServlet {
            multiselect_division = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_division\" name=\"col_division\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_division
                                 + "         </select> "
                                 + "     </div> "
@@ -684,7 +692,8 @@ public class ConsultarCustom extends HttpServlet {
          multiselect_shipmentId = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_shipmentId\" name=\"col_shipmentId\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_shipmentId
                                 + "         </select> "
                                 + "     </div> "
@@ -696,7 +705,8 @@ public class ConsultarCustom extends HttpServlet {
         multiselect_containerId = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_container\" name=\"col_container\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_containerId
                                 + "         </select> "
                                 + "     </div> "
@@ -708,7 +718,8 @@ public class ConsultarCustom extends HttpServlet {
            multiselect_blAwbPro = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_blAwbPro\" name=\"col_blAwbPro\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_blAwbPro
                                 + "         </select> "
                                 + "     </div> "
@@ -720,7 +731,8 @@ public class ConsultarCustom extends HttpServlet {
            multiselect_loadType = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_loadType\" name=\"col_loadType\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_loadType
                                 + "         </select> "
                                 + "     </div> "
@@ -732,7 +744,8 @@ public class ConsultarCustom extends HttpServlet {
            multiselect_quantity = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_quantity\" name=\"col_quantity\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_quantity
                                 + "         </select> "
                                 + "     </div> "
@@ -744,7 +757,8 @@ public class ConsultarCustom extends HttpServlet {
                 multiselect_pod = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_pod\" name=\"col_pod\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_pod
                                 + "         </select> "
                                 + "     </div> "
@@ -756,7 +770,8 @@ public class ConsultarCustom extends HttpServlet {
    multiselect_estDepartFromPol = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_estDepartFromPol\" name=\"col_estDepartFromPol\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_estDepartFromPol
                                 + "         </select> "
                                 + "     </div> "
@@ -768,7 +783,8 @@ public class ConsultarCustom extends HttpServlet {
 multiselect_etaRealPortOfDischarge = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_etaRealPortOfDischarge\" name=\"col_etaRealPortOfDischarge\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_etaRealPortOfDischarge
                                 + "         </select> "
                                 + "     </div> "
@@ -780,7 +796,8 @@ multiselect_etaRealPortOfDischarge = " <div id=\"buscador\"> "
            multiselect_estEtaDc = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_estEtaDc\" name=\"col_estEtaDc\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_estEtaDc
                                 + "         </select> "
                                 + "     </div> "
@@ -792,7 +809,8 @@ multiselect_etaRealPortOfDischarge = " <div id=\"buscador\"> "
 multiselect_inboundNotification = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_inboundNotification\" name=\"col_inboundNotification\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_inboundNotification
                                 + "         </select> "
                                 + "     </div> "
@@ -804,7 +822,8 @@ multiselect_inboundNotification = " <div id=\"buscador\"> "
                 multiselect_pol = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_pol\" name=\"col_pol\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_pol
                                 + "         </select> "
                                 + "     </div> "
@@ -816,7 +835,8 @@ multiselect_inboundNotification = " <div id=\"buscador\"> "
                  multiselect_aa = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_aa\" name=\"col_aa\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_aa
                                 + "         </select> "
                                 + "     </div> "
@@ -828,7 +848,8 @@ multiselect_inboundNotification = " <div id=\"buscador\"> "
       multiselect_fechaMesVenta = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_fechaMesVenta\" name=\"col_fechaMesVenta\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_fechaMesVenta
                                 + "         </select> "
                                 + "     </div> "
@@ -840,7 +861,8 @@ multiselect_inboundNotification = " <div id=\"buscador\"> "
           multiselect_prioridad = " <div id=\"buscador\"> "
                                 + "     <div id=\"primero\"> " 
                                 + "         <select class=\"form-control\" id=\"col_prioridad\" name=\"col_prioridad\"> "
-                                + "           <option value=\"0\"></option>"
+                                + "           <option value=\"\"></option>"           
+                                + "           <option value=\"0\">REMOVER FILTRO</option>"
                                 + list_prioridad
                                 + "         </select> "
                                 + "     </div> "
@@ -1244,18 +1266,394 @@ multiselect_co_pref_arancelaria = " <div id=\"buscador\"> "
                                 + "         <a class=\"text-lg text-info\" onclick=\"customForm('53')\"><i class=\"fa fa-search\"></i></a> "
                                 + "     </div> "
                                 + " </div> ";     
+ 
+ multiselect_fecha_solicitud_transporte = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_solicitud_transporte\" name=\"col_fecha_solicitud_transporte\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_solicitud_transporte
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('54')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";       
   
+ multiselect_fecha_modulacion = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_modulacion\" name=\"col_fecha_modulacion\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_modulacion
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('55')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";      
   
+ multiselect_modalidad = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_modalidad\" name=\"col_modalidad\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_modalidad
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('56')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";   
   
+ multiselect_resultado_modulacion = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_resultado_modulacion\" name=\"col_resultado_modulacion\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_resultado_modulacion
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('57')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+ 
+  multiselect_fecha_reconocimiento = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_reconocimiento\" name=\"col_fecha_reconocimiento\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_reconocimiento
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('58')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
   
-  
-  
-  
-  
-     
+  multiselect_fecha_liberacion = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_liberacion\" name=\"col_fecha_liberacion\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_liberacion
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('59')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+    multiselect_sello_origen = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_sello_origen\" name=\"col_sello_origen\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_sello_origen
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('60')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+ 
+    multiselect_sello_final = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_sello_final\" name=\"col_sello_final\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_sello_final
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('61')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+    
+multiselect_fecha_retencion_aut = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_retencion_aut\" name=\"col_fecha_retencion_aut\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_retencion_aut
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('62')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";    
+ 
+multiselect_fecha_liberacion_aut = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_liberacion_aut\" name=\"col_fecha_liberacion_aut\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_liberacion_aut
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('63')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_estatus_operacion = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_estatus_operacion\" name=\"col_festatus_operacion\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_estatus_operacion
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('64')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+    
+multiselect_motivo_atraso = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_motivo_atraso\" name=\"col_motivo_atraso\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_motivo_atraso
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('65')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_observaciones = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_observaciones\" name=\"col_observaciones\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_observaciones
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('66')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_llegada_a_nova = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_llegada_a_nova\" name=\"col_llegada_a_nova\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_llegada_a_nova
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('67')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_llegada_a_globe_trade_sd = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_llegada_a_globe_trade_sd\" name=\"col_llegada_a_globe_trade_sd\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_llegada_a_globe_trade_sd
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('68')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_archivo_m = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_archivo_m\" name=\"col_archivo_m\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_archivo_m
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('69')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_archivo_m = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_archivo_m\" name=\"col_fecha_archivo_m\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_archivo_m
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('70')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_solicit_manip = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_solicit_manip\" name=\"col_fecha_solicit_manip\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_solicit_manip
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('71')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_vencim_manip = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_vencim_manip\" name=\"col_fecha_vencim_manip\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_vencim_manip
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('72')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_confirm_clave_pedim = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_confirm_clave_pedim\" name=\"col_fecha_confirm_clave_pedim\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_confirm_clave_pedim
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('73')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_recep_increment = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_recep_increment\" name=\"col_fecha_recep_increment\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_recep_increment
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('74')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_t_e = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_t_e\" name=\"col_t_e\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_t_e
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('75')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_fecha_vencim_inbound = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_vencim_inbound\" name=\"col_fecha_vencim_inbound\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_vencim_inbound
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('76')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_no_bultos = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_no_bultos\" name=\"col_no_bultos\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_no_bultos
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('77')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_peso_kg = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_peso_kg\" name=\"col_peso_kg\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_peso_kg
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('78')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> ";  
+
+multiselect_transferencia = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_transferencia\" name=\"col_transferencia\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_transferencia
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('79')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_fecha_inicio_etiquetado = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_inicio_etiquetado\" name=\"col_fecha_inicio_etiquetado\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_inicio_etiquetado
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('80')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_fecha_termino_etiquetado = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fecha_termino_etiquetado\" name=\"col_fecha_termino_etiquetado\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fecha_termino_etiquetado
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('81')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_hora_termino_etiquetado = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_hora_termino_etiquetado\" name=\"col_hora_termino_etiquetado\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_hora_termino_etiquetado
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('82')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_proveedor = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_proveedor\" name=\"col_proveedor\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_proveedor
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('83')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_proveedor_carga = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_proveedor_carga\" name=\"col_proveedor_carga\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_proveedor_carga
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('84')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
+multiselect_fy = " <div id=\"buscador\"> "
+                                + "     <div id=\"primero\"> " 
+                                + "         <select class=\"form-control\" id=\"col_fy\" name=\"col_fy\"> "
+                                + "           <option value=\"0\"></option>"
+                                + list_fy
+                                + "         </select> "
+                                + "     </div> "
+                                + "     <div id=\"segundo\"> "
+                                + "         <a class=\"text-lg text-info\" onclick=\"customForm('85')\"><i class=\"fa fa-search\"></i></a> "
+                                + "     </div> "
+                                + " </div> "; 
+
                        contador = " <input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + sal + "\"> "; 
 
-                          tabla = " <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1000%;\"> "
+                          tabla = " <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1200%;\"> "
                                 + "     <thead align=\"center\"> "
                                 + "         <tr> "
                                 + "             <th class=\"col-sm-1\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"></th> "  
@@ -1282,7 +1680,7 @@ multiselect_co_pref_arancelaria = " <div id=\"buscador\"> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">País Origen</font>"+multiselect_pais_origen+"</th> "	
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Size Container</font>"+multiselect_size_container+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Valor USD</font>"+multiselect_valor_usd+"</th> "	
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">ETA Port Of Discharge</font>"+multiselect_etaRealPortOfDischarge+"</th> "	
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">ETA Port Of Discharge</font>"+multiselect_eta_port_discharge+"</th> "	
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Agente Aduanal</font>"+multiselect_agente_aduanal+"</th> "	
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Pedimento A1</font>"+multiselect_pedimento_a1+"</th> "	
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Pedimento R1</font>"+multiselect_pedimento_r1_1er+"</th> "	
@@ -1312,49 +1710,49 @@ multiselect_co_pref_arancelaria = " <div id=\"buscador\"> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#626567;\"><font size=\"2\">Monto CA</font>"+multiselect_monto_ca+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Documentos Completos</font>"+multiselect_fecha_doc_completos+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Pago Pedimento</font>"+multiselect_fecha_pago_pedimento+"</th> "  
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Solicitud de transporte</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Modulacion</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Modalidad</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Resultado Modulacion</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Reconocimiento</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Liberacion</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Sello Origen</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Sello Final</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha de retencion por la autoridad</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fec. de liberacion por ret. de la aut.</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Estatus de la operación</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Motivo Atraso</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Observaciones</font></th> ";
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Solicitud de transporte</font>"+multiselect_fecha_solicitud_transporte+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Modulacion</font>"+multiselect_fecha_modulacion+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Modalidad</font>"+multiselect_modalidad+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Resultado Modulacion</font>"+multiselect_resultado_modulacion+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Reconocimiento</font>"+multiselect_fecha_reconocimiento+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha Liberacion</font>"+multiselect_fecha_liberacion+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Sello Origen</font>"+multiselect_sello_origen+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Sello Final</font>"+multiselect_sello_final+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fecha de retencion por la autoridad</font>"+multiselect_fecha_retencion_aut+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Fec. de liberacion por ret. de la aut.</font>"+multiselect_fecha_liberacion_aut+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Estatus de la operación</font>"+multiselect_estatus_operacion+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Motivo Atraso</font>"+multiselect_motivo_atraso+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#00BFBF;\"><font size=\"2\">Observaciones</font>"+multiselect_observaciones+"</th> ";
 
                     if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF
 
-                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Llegada a NOVA</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Llegada a Globe trade SD</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Archivo M</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Archivo M</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Solicitud de Manipulacion</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de vencimiento de Manipulacion</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha confirmacion Clave de Pedimento</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Recepcion de Incrementables</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">T&E</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Vencimiento del Inbound</font></th> ";
+                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Llegada a NOVA</font>"+multiselect_llegada_a_nova+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Llegada a Globe trade SD</font>"+multiselect_llegada_a_globe_trade_sd+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Archivo M</font>"+multiselect_archivo_m+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Archivo M</font>"+multiselect_fecha_archivo_m+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Solicitud de Manipulacion</font>"+multiselect_fecha_solicit_manip+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de vencimiento de Manipulacion</font>"+multiselect_fecha_vencim_manip+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha confirmacion Clave de Pedimento</font>"+multiselect_fecha_confirm_clave_pedim+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Recepcion de Incrementables</font>"+multiselect_fecha_recep_increment+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">T&E</font>"+multiselect_t_e+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha de Vencimiento del Inbound</font>"+multiselect_fecha_vencim_inbound+"</th> ";
 
                     }
 
                     if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
 
-                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">No. BULTOS</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Peso (KG)</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Transferencia (SI / NO)</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Inicio Etiquetado</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Termino Etiquetado</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Hora de termino Etiquetado</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Proveedor</font></th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Proveedor de Carga</font></th> ";
+                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">No. BULTOS</font>"+multiselect_no_bultos+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Peso (KG)</font>"+multiselect_peso_kg+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Transferencia</font>"+multiselect_transferencia+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Inicio Etiquetado</font>"+multiselect_fecha_inicio_etiquetado+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Fecha Termino Etiquetado</font>"+multiselect_fecha_termino_etiquetado+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Hora de termino Etiquetado</font>"+multiselect_hora_termino_etiquetado+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Proveedor</font>"+multiselect_proveedor+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Proveedor de Carga</font>"+multiselect_proveedor_carga+"</th> ";
 
                     }
 
-                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">FY</font></th> "
+                         tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">FY</font>"+multiselect_fy+"</th> "
                                 + "         </tr> "
                                 + "     </thead> "
                                 + "     <tbody>"
@@ -1365,7 +1763,7 @@ multiselect_co_pref_arancelaria = " <div id=\"buscador\"> "
 
             dao.CerrarConexion();
             oraDB.close();
-
+            System.out.println("Esqueleto tabla:" +tabla);
             if (sal > 0) {
                 out.print(tabla);
             } else {

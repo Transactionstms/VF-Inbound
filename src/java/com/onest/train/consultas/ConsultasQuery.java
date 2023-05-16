@@ -1929,7 +1929,7 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarEventosCustoms(String tipoAgente){
+    public String consultarEventosCustoms(String tipoAgente, String tipoFiltro, String id){
            sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
                + " SELECT DISTINCT "
                + " TIE.ID_EVENTO, "
@@ -2039,9 +2039,55 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
-               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON TIE.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               //+ " WHERE TIE.ID_EVENTO IN (236037, 236038, 236039, 236040, 236041, 236042) "   
-               + " ORDER BY TIE.ID_EVENTO " ;
+               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
+               + " WHERE TIE.ESTADO = 1 "
+               + " AND TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) ";
+           
+                if(tipoFiltro.equals("0")){         //Sin filtros
+                  sql += "";
+                }else if(tipoFiltro.equals("1")){   //Evento
+                  sql += " AND TIE.ID_EVENTO IN ('" + id + "')";
+                }else if(tipoFiltro.equals("2")){   //Referncia AA
+                  sql += " AND TIC.REFERENCIA_AA IN ('" + id + "')";
+                }else if(tipoFiltro.equals("3")){   //Responsable
+                  sql += " AND BP.RESPONSABLE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("4")){   //Final Destination
+                  sql += " AND GTN.FINAL_DESTINATION IN ('" + id + "')";
+                }else if(tipoFiltro.equals("5")){   //Brand-Division
+                  sql += " AND GTN.BRAND_DIVISION IN ('" + id + "')";
+                }else if(tipoFiltro.equals("6")){   //División
+                  sql += " AND TID.DIVISION_NOMBRE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("7")){   //Shipment Id
+                  sql += " AND GTN.SHIPMENT_ID IN ('" + id + "')";
+                }else if(tipoFiltro.equals("8")){   //Container
+                  sql += " AND GTN.CONTAINER1 IN ('" + id + "')";
+                }else if(tipoFiltro.equals("9")){   //BL/AWB/PRO
+                  sql += " AND GTN.BL_AWB_PRO IN ('" + id + "')";
+                }else if(tipoFiltro.equals("10")){  //Load Type
+                  sql += " AND TGTN.LOAD_TYPE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("11")){  //Quantity
+                  sql += " AND SQ.SUMA IN ('" + id + "')";
+                }else if(tipoFiltro.equals("12")){  //Pod
+                  sql += " AND TIP1.NOMBRE_POD IN ('" + id + "')";
+                }else if(tipoFiltro.equals("13")){  //Departure Pol 
+                  sql += " AND GTN.EST_DEPARTURE_POL IN ('" + id + "')";
+                }else if(tipoFiltro.equals("14")){ //ETA REAL Port of Discharge
+                  sql += " AND GTN.ETA_PORT_DISCHARGE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("15")){ //Est. Eta DC
+                  sql += " AND GTN.MAX_FLETE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("16")){ //Inbound notification
+                  sql += "";
+                }else if(tipoFiltro.equals("17")){ //Pol
+                  sql += " AND TIP2.NOMBRE_POL IN ('" + id + "')";
+                }else if(tipoFiltro.equals("18")){ //Agente Aduanal
+                  sql += " AND TAA.AGENTE_ADUANAL_NOMBRE IN ('" + id + "')";
+                }else if(tipoFiltro.equals("19")){ //Fecha Mes de Venta
+                  sql += " AND GTN.FECHA_CAPTURA IN ('" + id + "')";
+                }else if(tipoFiltro.equals("20")){ //Prioridad
+                  sql += " AND TIE.PRIORIDAD IN ('" + id + "')";
+                }
+                  sql += " ORDER BY TIE.ID_EVENTO " ;
+            
         return sql;
     }
     
@@ -2155,9 +2201,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
-               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON TIE.SHIPMENT_ID = TIC.SHIPMENT_ID "
+               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               + " WHERE TIE.ID_EVENTO IN (236037, 236038, 236039, 236040, 236041, 236042) "   
+               + " WHERE TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) "   
                + " ORDER BY TIE.ID_EVENTO " ;
 
         System.out.println("Consulta Principal: " + sql);

@@ -9,9 +9,54 @@
 
     function customForm(tipoFiltro) {
 
-        let idAgente = document.getElementById("idAgenteAduanal").value;   
-
-        fetch("../ConsultarCustom?tipoAgente="+idAgente+"&tipoFiltro="+tipoFiltro, {
+        let idAgente = document.getElementById("idAgenteAduanal").value; 
+        var selectedValues = "";
+        
+        if(tipoFiltro==="0"){
+            selectedValues = "0";
+        }if(tipoFiltro==="1"){
+            selectedValues = $('#col_evento').val();
+        }else if(tipoFiltro==="2"){
+            selectedValues = $('#col_referenciaAA').val();
+        }else if(tipoFiltro==="3"){
+            selectedValues = $('#col_responsable').val();
+        }else if(tipoFiltro==="4"){
+            selectedValues = $('#col_finalDestination').val();
+        }else if(tipoFiltro==="5"){
+            selectedValues = $('#col_brandDivision').val();
+        }else if(tipoFiltro==="6"){
+            selectedValues = $('#col_division').val();
+        }else if(tipoFiltro==="7"){
+            selectedValues = $('#col_shipmentId').val();
+        }else if(tipoFiltro==="8"){
+            selectedValues = $('#col_container').val();
+        }else if(tipoFiltro==="9"){
+            selectedValues = $('#col_blAwbPro').val();
+        }else if(tipoFiltro==="10"){
+            selectedValues = $('#col_loadType').val();
+        }else if(tipoFiltro==="11"){
+            selectedValues = $('#col_quantity').val();
+        }else if(tipoFiltro==="12"){
+            selectedValues = $('#col_pod').val();
+        }else if(tipoFiltro==="13"){
+            selectedValues = $('#col_estDepartFromPol').val();
+        }else if(tipoFiltro==="14"){
+            selectedValues = $('#col_etaRealPortOfDischarge').val();
+        }else if(tipoFiltro==="15"){
+            selectedValues = $('#col_estEtaDc').val();
+        }else if(tipoFiltro==="16"){
+            selectedValues = $('#col_inboundNotification').val();
+        }else if(tipoFiltro==="17"){
+            selectedValues = $('#col_pol').val();
+        }else if(tipoFiltro==="18"){
+            selectedValues = $('#col_aa').val();
+        }else if(tipoFiltro==="19"){
+            selectedValues = $('#col_fechaMesVenta').val();
+        }else if(tipoFiltro==="20"){
+            selectedValues = $('#col_prioridad').val();
+        }
+        
+        fetch("../ConsultarCustom?tipoAgente="+idAgente+"&tipoFiltro="+tipoFiltro+"&id="+selectedValues, {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {
