@@ -64,7 +64,7 @@
                 }).catch(error => console.log(error));
     }
     
-    function AddCustoms() {
+    async function AddCustoms() {
 
           //Contadores
             let urlCustoms = ""; 
@@ -145,12 +145,13 @@
             let fecha_termino_etiquetado;
             let hora_termino_etiquetado;
             let proveedor;
-            let proveedor_carga;     
+            let proveedor_carga;   
+            let cont=1;
 
             let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;   
             let contadorCustoms = document.getElementById("numCustoms").value; 
 
-          for (let i=0; i < contadorCustoms; i++){
+          for (let i=1; i < contadorCustoms; i++){
 
                     //Parametros Indicadores          
                         let temp1 = "evento[" + i + "]";
@@ -263,7 +264,7 @@
                         observaciones = document.getElementById(temp52).value;   
                         fy = document.getElementById(temp53).value;   
 
-                        if(idAgenteAduanal == "4001" || idAgenteAduanal == "4006"){ //Logix ó VF
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //Logix ó VF
 
                                 let temp54 = "llegada_a_nova[" + i + "]";
                                 let temp55 = "llegada_a_globe_trade_sd[" + i + "]";
@@ -289,7 +290,7 @@
 
                         }
                         
-                        if(idAgenteAduanal == "4002" || idAgenteAduanal == "4006"){  //Cusa ó VF
+                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //Cusa ó VF
 
                                 let temp64 = "no_bultos[" + i + "]"; 
                                 let temp65 = "peso_kg[" + i + "]"; 
@@ -310,7 +311,7 @@
                                 proveedor_carga = document.getElementById(temp71).value; 
                         }                 	  
 
-                                 urlCustoms +=          "&evento[" + i + "]=" + evento +
+                                  urlCustoms +=         "&evento[" + i + "]=" + evento +
                                                         "&shipmentId[" + i + "]=" + shipmentId +
                                                         "&containerId[" + i + "]=" + containerId +
                                                         "&referenciaAA[" + i + "]=" + referenciaAA +
@@ -364,9 +365,9 @@
                                                         "&observaciones[" + i + "]=" + observaciones + 
                                                         "&fy[" + i + "]=" + fy; 
 
-                        if(idAgenteAduanal == "4001" || idAgenteAduanal == "4006"){ //Logix ó VF 
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //Logix ó VF 
 
-                                 urlCustoms +=          "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
+                                  urlCustoms +=         "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
                                                         "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
                                                         "&archivo_m[" + i + "]=" + archivo_m + 
                                                         "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m + 
@@ -376,12 +377,11 @@
                                                         "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment + 
                                                         "&t_e[" + i + "]=" + t_e + 
                                                         "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
-
                         }
                         
-                        if(idAgenteAduanal == "4002" || idAgenteAduanal == "4006"){  //Cusa ó VF
+                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //Cusa ó VF
 
-                                 urlCustoms +=          "&no_bultos[" + i + "]=" + no_bultos + 
+                                  urlCustoms +=         "&no_bultos[" + i + "]=" + no_bultos + 
                                                         "&peso_kg[" + i + "]=" + peso_kg + 
                                                         "&transferencia[" + i + "]=" + transferencia + 
                                                         "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado + 
@@ -390,26 +390,31 @@
                                                         "&proveedor[" + i + "]=" + proveedor + 
                                                         "&proveedor_carga[" + i + "]=" + proveedor_carga;
                         }
-
-          }   
-
-          fetch("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + contadorCustoms + urlCustoms, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(data => {
-
-                    if (data == "1") {
-                        swal("", "Registro exitoso", "success");
-                        alertclose();
-                        location.reload();
-                    } else {
-                        swal("", "Información no registrada", "error");
-                        alertclose();
-                        return false;
+                        
+                  try {
+                    const response = await fetch("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);   
+                    if (!response.ok) {
+                      throw new Error('Error en la solicitud');   
                     }
-
-                }).catch(error => console.log(error));
-
+                    const data = await response.text();
+                    
+                    if (data === "1") {
+                        document.getElementById('tr'+cont).bgColor='#95c799';
+                        console.log("tr"+cont);
+                    } else {
+                        document.getElementById('tr'+cont).bgColor='#e4605e';
+                        console.log("tr"+cont);
+                    }
+                    
+                    urlCustoms = "";
+                    cont++; 
+                    
+                  } catch (error) {
+                    console.error(error);
+                  }
+          } 
+          swal("", "Registro exitoso", "success");
+          alertclose();    
     }
     
     function openModalPlantilla() {

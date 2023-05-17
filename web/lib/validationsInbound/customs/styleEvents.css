@@ -61,7 +61,7 @@ html {
   /*vertical-align: top;*/
 }
 .table-scroll thead th {
-  background: #333F4F;     /*color encabezado*/
+  background: #8BC4C4;     /*color encabezado*/
   color: #fff;
   position: -webkit-sticky;
   position: sticky;

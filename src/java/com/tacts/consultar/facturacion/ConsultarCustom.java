@@ -229,284 +229,284 @@ public class ConsultarCustom extends HttpServlet {
             String tabla = "";
             String body = "";
             String contador = "";
-            int sal = 0;
+            int sal = 1;
             
                     ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoAgente,tipoFiltro,id)); 
                     while (rs.next()) {
                         
-                                list_evento.add("<option value=\""+rs.getString(1)+"\">"+rs.getString(1)+"</option>");
-                                list_referenciaAA.add("<option value=\""+rs.getString(31)+"\">"+rs.getString(31)+"</option>");
-                                list_responsable.add("<option value=\""+rs.getString(2)+"\">"+rs.getString(2)+"</option>");
-                                list_finalDestination.add("<option value=\""+rs.getString(3)+"\">"+rs.getString(3)+"</option>");
-                                list_brandDivision.add("<option value=\""+rs.getString(22)+"\">"+rs.getString(22)+"</option>");
-                                list_division.add("<option value=\""+rs.getString(5)+"\">"+rs.getString(5)+"</option>");
-                                list_shipmentId.add("<option value=\""+rs.getString(6)+"\">"+rs.getString(6)+"</option>");
-                                list_containerId.add("<option value=\""+rs.getString(7)+"\">"+rs.getString(7)+"</option>");
-                                list_blAwbPro.add("<option value=\""+rs.getString(8)+"\">"+rs.getString(8)+"</option>");
-                                list_loadType.add("<option value=\""+rs.getString(23)+"\">"+rs.getString(23)+"</option>");
-                                list_quantity.add("<option value=\""+rs.getString(10)+"\">"+rs.getString(10)+"</option>");
-                                list_pod.add("<option value=\""+rs.getString(20)+"\">"+rs.getString(20)+"</option>");
-                                list_estDepartFromPol.add("<option value=\""+rs.getString(12)+"\">"+rs.getString(12)+"</option>");
-                                list_etaRealPortOfDischarge.add("<option value=\""+rs.getString(13)+"\">"+rs.getString(13)+"</option>");
-                                list_estEtaDc.add("<option value=\""+rs.getString(24)+"\">"+rs.getString(24)+"</option>");
-                                list_inboundNotification.add("<option value=\""+rs.getString(15)+"\">"+rs.getString(15)+"</option>");
-                                list_pol.add("<option value=\""+rs.getString(21)+"\">"+rs.getString(21)+"</option>");
-                                list_aa.add("<option value=\""+rs.getString(17)+"\">"+rs.getString(17)+"</option>");
-                                list_fechaMesVenta.add("<option value=\""+rs.getString(29)+"\">"+rs.getString(29)+"</option>");
-                                list_prioridad.add("<option value=\""+rs.getString(98)+"\">"+rs.getString(98)+"</option>");
-                                list_pais_origen.add("<option value=\""+rs.getString(32)+"\">"+rs.getString(32)+"</option>");   
-                                list_size_container.add("<option value=\""+rs.getString(33)+"\">"+rs.getString(33)+"</option>");    
-                                list_valor_usd.add("<option value=\""+rs.getString(34)+"\">"+rs.getString(34)+"</option>");                 
-                                list_eta_port_discharge.add("<option value=\""+rs.getString(35)+"\">"+rs.getString(35)+"</option>");         
-                                list_agente_aduanal.add("<option value=\""+rs.getString(36)+"\">"+rs.getString(36)+"</option>");              
-                                list_pedimento_a1.add("<option value=\""+rs.getString(37)+"\">"+rs.getString(37)+"</option>");              
-                                list_pedimento_r1_1er.add("<option value=\""+rs.getString(38)+"\">"+rs.getString(38)+"</option>");          
-                                list_motivo_rectificacion_1er.add("<option value=\""+rs.getString(39)+"\">"+rs.getString(39)+"</option>");    
-                                list_pedimento_r1_2do.add("<option value=\""+rs.getString(40)+"\">"+rs.getString(40)+"</option>");         
-                                list_motivo_rectificacion_2do.add("<option value=\""+rs.getString(41)+"\">"+rs.getString(41)+"</option>");    
-                                list_fecha_recepcion_doc.add("<option value=\""+rs.getString(42)+"\">"+rs.getString(42)+"</option>");    
-                                list_recinto.add("<option value=\""+rs.getString(43)+"\">"+rs.getString(43)+"</option>");
-                                list_naviera.add("<option value=\""+rs.getString(44)+"\">"+rs.getString(44)+"</option>");
-                                list_buque.add("<option value=\""+rs.getString(45)+"\">"+rs.getString(45)+"</option>");
-                                list_fecha_revalidacion.add("<option value=\""+rs.getString(46)+"\">"+rs.getString(46)+"</option>");      
-                                list_fecha_previo_origen.add("<option value=\""+rs.getString(47)+"\">"+rs.getString(47)+"</option>");     
-                                list_fecha_previo_destino.add("<option value=\""+rs.getString(48)+"\">"+rs.getString(48)+"</option>");   
-                                list_fecha_resultado_previo.add("<option value=\""+rs.getString(49)+"\">"+rs.getString(49)+"</option>");   
-                                list_proforma_final.add("<option value=\""+rs.getString(50)+"\">"+rs.getString(50)+"</option>");        
-                                list_permiso.add("<option value=\""+rs.getString(51)+"\">"+rs.getString(51)+"</option>");               
-                                list_fecha_envio.add("<option value=\""+rs.getString(52)+"\">"+rs.getString(52)+"</option>");             
-                                list_fecha_recepcion_perm.add("<option value=\""+rs.getString(53)+"\">"+rs.getString(53)+"</option>");
-                                list_fecha_activacion_perm.add("<option value=\""+rs.getString(54)+"\">"+rs.getString(54)+"</option>");    
-                                list_fecha_permisos_aut.add("<option value=\""+rs.getString(55)+"\">"+rs.getString(55)+"</option>");     
-                                list_co_pref_arancelaria.add("<option value=\""+rs.getString(56)+"\">"+rs.getString(56)+"</option>");    
-                                list_aplic_pref_arancelaria.add("<option value=\""+rs.getString(57)+"\">"+rs.getString(57)+"</option>");  
-                                list_req_uva.add("<option value=\""+rs.getString(58)+"\">"+rs.getString(58)+"</option>");   
-                                list_req_ca.add("<option value=\""+rs.getString(59)+"\">"+rs.getString(59)+"</option>");    
-                                list_fecha_recepcion_ca.add("<option value=\""+rs.getString(60)+"\">"+rs.getString(60)+"</option>"); 
-                                list_num_constancia_ca.add("<option value=\""+rs.getString(61)+"\">"+rs.getString(61)+"</option>");   
-                                list_monto_ca.add("<option value=\""+rs.getString(62)+"\">"+rs.getString(62)+"</option>");
-                                list_fecha_doc_completos.add("<option value=\""+rs.getString(63)+"\">"+rs.getString(63)+"</option>");  
-                                list_fecha_pago_pedimento.add("<option value=\""+rs.getString(64)+"\">"+rs.getString(64)+"</option>");     
-                                list_fecha_solicitud_transporte.add("<option value=\""+rs.getString(65)+"\">"+rs.getString(65)+"</option>");
-                                list_fecha_modulacion.add("<option value=\""+rs.getString(66)+"\">"+rs.getString(66)+"</option>");   
-                                list_modalidad.add("<option value=\""+rs.getString(67)+"\">"+rs.getString(67)+"</option>");          
-                                list_resultado_modulacion.add("<option value=\""+rs.getString(68)+"\">"+rs.getString(68)+"</option>");    
-                                list_fecha_reconocimiento.add("<option value=\""+rs.getString(69)+"\">"+rs.getString(69)+"</option>");     
-                                list_fecha_liberacion.add("<option value=\""+rs.getString(70)+"\">"+rs.getString(70)+"</option>");       
-                                list_sello_origen.add("<option value=\""+rs.getString(71)+"\">"+rs.getString(71)+"</option>");            
-                                list_sello_final.add("<option value=\""+rs.getString(72)+"\">"+rs.getString(72)+"</option>");      
-                                list_fecha_retencion_aut.add("<option value=\""+rs.getString(73)+"\">"+rs.getString(73)+"</option>");     
-                                list_fecha_liberacion_aut.add("<option value=\""+rs.getString(74)+"\">"+rs.getString(74)+"</option>");   
-                                list_estatus_operacion.add("<option value=\""+rs.getString(75)+"\">"+rs.getString(75)+"</option>");      
-                                list_motivo_atraso.add("<option value=\""+rs.getString(76)+"\">"+rs.getString(76)+"</option>");          
-                                list_observaciones.add("<option value=\""+rs.getString(77)+"\">"+rs.getString(77)+"</option>"); 
+                                list_evento.add("<option value=\""+rs.getString(1).trim()+"\">"+rs.getString(1)+"</option>");
+                                list_referenciaAA.add("<option value=\""+rs.getString(31).trim()+"\">"+rs.getString(31)+"</option>");
+                                list_responsable.add("<option value=\""+rs.getString(2).trim()+"\">"+rs.getString(2)+"</option>");
+                                list_finalDestination.add("<option value=\""+rs.getString(3).trim()+"\">"+rs.getString(3)+"</option>");
+                                list_brandDivision.add("<option value=\""+rs.getString(22).trim()+"\">"+rs.getString(22)+"</option>");
+                                list_division.add("<option value=\""+rs.getString(5).trim()+"\">"+rs.getString(5)+"</option>");
+                                list_shipmentId.add("<option value=\""+rs.getString(6).trim()+"\">"+rs.getString(6)+"</option>");
+                                list_containerId.add("<option value=\""+rs.getString(7).trim()+"\">"+rs.getString(7)+"</option>");
+                                list_blAwbPro.add("<option value=\""+rs.getString(8).trim()+"\">"+rs.getString(8)+"</option>");
+                                list_loadType.add("<option value=\""+rs.getString(23).trim()+"\">"+rs.getString(23)+"</option>");
+                                list_quantity.add("<option value=\""+rs.getString(10).trim()+"\">"+rs.getString(10)+"</option>");
+                                list_pod.add("<option value=\""+rs.getString(20).trim()+"\">"+rs.getString(20)+"</option>");
+                                list_estDepartFromPol.add("<option value=\""+rs.getString(12).trim()+"\">"+rs.getString(12)+"</option>");
+                                list_etaRealPortOfDischarge.add("<option value=\""+rs.getString(13).trim()+"\">"+rs.getString(13)+"</option>");
+                                list_estEtaDc.add("<option value=\""+rs.getString(24).trim()+"\">"+rs.getString(24)+"</option>");
+                                list_inboundNotification.add("<option value=\""+rs.getString(15).trim()+"\">"+rs.getString(15)+"</option>");
+                                list_pol.add("<option value=\""+rs.getString(21).trim()+"\">"+rs.getString(21)+"</option>");
+                                list_aa.add("<option value=\""+rs.getString(17).trim()+"\">"+rs.getString(17)+"</option>");
+                                list_fechaMesVenta.add("<option value=\""+rs.getString(29).trim()+"\">"+rs.getString(29)+"</option>");
+                                list_prioridad.add("<option value=\""+rs.getString(98).trim()+"\">"+rs.getString(98)+"</option>");
+                                list_pais_origen.add("<option value=\""+rs.getString(32).trim()+"\">"+rs.getString(32)+"</option>");   
+                                list_size_container.add("<option value=\""+rs.getString(33).trim()+"\">"+rs.getString(33)+"</option>");    
+                                list_valor_usd.add("<option value=\""+rs.getString(34).trim()+"\">"+rs.getString(34)+"</option>");                 
+                                list_eta_port_discharge.add("<option value=\""+rs.getString(35).trim()+"\">"+rs.getString(35)+"</option>");         
+                                list_agente_aduanal.add("<option value=\""+rs.getString(36).trim()+"\">"+rs.getString(36)+"</option>");              
+                                list_pedimento_a1.add("<option value=\""+rs.getString(37).trim()+"\">"+rs.getString(37)+"</option>");              
+                                list_pedimento_r1_1er.add("<option value=\""+rs.getString(38).trim()+"\">"+rs.getString(38)+"</option>");          
+                                list_motivo_rectificacion_1er.add("<option value=\""+rs.getString(39).trim()+"\">"+rs.getString(39)+"</option>");    
+                                list_pedimento_r1_2do.add("<option value=\""+rs.getString(40).trim()+"\">"+rs.getString(40)+"</option>");         
+                                list_motivo_rectificacion_2do.add("<option value=\""+rs.getString(41).trim()+"\">"+rs.getString(41)+"</option>");    
+                                list_fecha_recepcion_doc.add("<option value=\""+rs.getString(42).trim()+"\">"+rs.getString(42)+"</option>");    
+                                list_recinto.add("<option value=\""+rs.getString(43).trim()+"\">"+rs.getString(43)+"</option>");
+                                list_naviera.add("<option value=\""+rs.getString(44).trim()+"\">"+rs.getString(44)+"</option>");
+                                list_buque.add("<option value=\""+rs.getString(45).trim()+"\">"+rs.getString(45)+"</option>");
+                                list_fecha_revalidacion.add("<option value=\""+rs.getString(46).trim()+"\">"+rs.getString(46)+"</option>");      
+                                list_fecha_previo_origen.add("<option value=\""+rs.getString(47).trim()+"\">"+rs.getString(47)+"</option>");     
+                                list_fecha_previo_destino.add("<option value=\""+rs.getString(48).trim()+"\">"+rs.getString(48)+"</option>");   
+                                list_fecha_resultado_previo.add("<option value=\""+rs.getString(49).trim()+"\">"+rs.getString(49)+"</option>");   
+                                list_proforma_final.add("<option value=\""+rs.getString(50).trim()+"\">"+rs.getString(50)+"</option>");        
+                                list_permiso.add("<option value=\""+rs.getString(51).trim()+"\">"+rs.getString(51)+"</option>");               
+                                list_fecha_envio.add("<option value=\""+rs.getString(52).trim()+"\">"+rs.getString(52)+"</option>");             
+                                list_fecha_recepcion_perm.add("<option value=\""+rs.getString(53).trim()+"\">"+rs.getString(53)+"</option>");
+                                list_fecha_activacion_perm.add("<option value=\""+rs.getString(54).trim()+"\">"+rs.getString(54)+"</option>");    
+                                list_fecha_permisos_aut.add("<option value=\""+rs.getString(55).trim()+"\">"+rs.getString(55)+"</option>");     
+                                list_co_pref_arancelaria.add("<option value=\""+rs.getString(56).trim()+"\">"+rs.getString(56)+"</option>");    
+                                list_aplic_pref_arancelaria.add("<option value=\""+rs.getString(57).trim()+"\">"+rs.getString(57)+"</option>");  
+                                list_req_uva.add("<option value=\""+rs.getString(58).trim()+"\">"+rs.getString(58)+"</option>");   
+                                list_req_ca.add("<option value=\""+rs.getString(59).trim()+"\">"+rs.getString(59)+"</option>");    
+                                list_fecha_recepcion_ca.add("<option value=\""+rs.getString(60).trim()+"\">"+rs.getString(60)+"</option>"); 
+                                list_num_constancia_ca.add("<option value=\""+rs.getString(61).trim()+"\">"+rs.getString(61)+"</option>");   
+                                list_monto_ca.add("<option value=\""+rs.getString(62).trim()+"\">"+rs.getString(62)+"</option>");
+                                list_fecha_doc_completos.add("<option value=\""+rs.getString(63).trim()+"\">"+rs.getString(63)+"</option>");  
+                                list_fecha_pago_pedimento.add("<option value=\""+rs.getString(64).trim()+"\">"+rs.getString(64)+"</option>");     
+                                list_fecha_solicitud_transporte.add("<option value=\""+rs.getString(65).trim()+"\">"+rs.getString(65)+"</option>");
+                                list_fecha_modulacion.add("<option value=\""+rs.getString(66).trim()+"\">"+rs.getString(66)+"</option>");   
+                                list_modalidad.add("<option value=\""+rs.getString(67).trim()+"\">"+rs.getString(67)+"</option>");          
+                                list_resultado_modulacion.add("<option value=\""+rs.getString(68).trim()+"\">"+rs.getString(68)+"</option>");    
+                                list_fecha_reconocimiento.add("<option value=\""+rs.getString(69).trim()+"\">"+rs.getString(69)+"</option>");     
+                                list_fecha_liberacion.add("<option value=\""+rs.getString(70).trim()+"\">"+rs.getString(70)+"</option>");       
+                                list_sello_origen.add("<option value=\""+rs.getString(71).trim()+"\">"+rs.getString(71)+"</option>");            
+                                list_sello_final.add("<option value=\""+rs.getString(72).trim()+"\">"+rs.getString(72)+"</option>");      
+                                list_fecha_retencion_aut.add("<option value=\""+rs.getString(73).trim()+"\">"+rs.getString(73)+"</option>");     
+                                list_fecha_liberacion_aut.add("<option value=\""+rs.getString(74).trim()+"\">"+rs.getString(74)+"</option>");   
+                                list_estatus_operacion.add("<option value=\""+rs.getString(75).trim()+"\">"+rs.getString(75)+"</option>");      
+                                list_motivo_atraso.add("<option value=\""+rs.getString(76).trim()+"\">"+rs.getString(76)+"</option>");          
+                                list_observaciones.add("<option value=\""+rs.getString(77).trim()+"\">"+rs.getString(77)+"</option>"); 
                                 
                     if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF            
-                                list_llegada_a_nova.add("<option value=\""+rs.getString(78)+"\">"+rs.getString(78)+"</option>");
-                                list_llegada_a_globe_trade_sd.add("<option value=\""+rs.getString(79)+"\">"+rs.getString(79)+"</option>");
-                                list_archivo_m.add("<option value=\""+rs.getString(80)+"\">"+rs.getString(80)+"</option>");
-                                list_fecha_archivo_m.add("<option value=\""+rs.getString(81)+"\">"+rs.getString(81)+"</option>");
-                                list_fecha_solicit_manip.add("<option value=\""+rs.getString(82)+"\">"+rs.getString(82)+"</option>");
-                                list_fecha_vencim_manip.add("<option value=\""+rs.getString(83)+"\">"+rs.getString(83)+"</option>");
-                                list_fecha_confirm_clave_pedim.add("<option value=\""+rs.getString(84)+"\">"+rs.getString(84)+"</option>");
-                                list_fecha_recep_increment.add("<option value=\""+rs.getString(85)+"\">"+rs.getString(85)+"</option>");
-                                list_t_e.add("<option value=\""+rs.getString(86)+"\">"+rs.getString(86)+"</option>");
-                                list_fecha_vencim_inbound.add("<option value=\""+rs.getString(87)+"\">"+rs.getString(87)+"</option>");
+                                list_llegada_a_nova.add("<option value=\""+rs.getString(78).trim()+"\">"+rs.getString(78)+"</option>");
+                                list_llegada_a_globe_trade_sd.add("<option value=\""+rs.getString(79).trim()+"\">"+rs.getString(79)+"</option>");
+                                list_archivo_m.add("<option value=\""+rs.getString(80).trim()+"\">"+rs.getString(80)+"</option>");
+                                list_fecha_archivo_m.add("<option value=\""+rs.getString(81).trim()+"\">"+rs.getString(81)+"</option>");
+                                list_fecha_solicit_manip.add("<option value=\""+rs.getString(82).trim()+"\">"+rs.getString(82)+"</option>");
+                                list_fecha_vencim_manip.add("<option value=\""+rs.getString(83).trim()+"\">"+rs.getString(83)+"</option>");
+                                list_fecha_confirm_clave_pedim.add("<option value=\""+rs.getString(84).trim()+"\">"+rs.getString(84)+"</option>");
+                                list_fecha_recep_increment.add("<option value=\""+rs.getString(85).trim()+"\">"+rs.getString(85)+"</option>");
+                                list_t_e.add("<option value=\""+rs.getString(86).trim()+"\">"+rs.getString(86)+"</option>");
+                                list_fecha_vencim_inbound.add("<option value=\""+rs.getString(87).trim()+"\">"+rs.getString(87)+"</option>");
                     }
                     
                     if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
-                                list_no_bultos.add("<option value=\""+rs.getString(88)+"\">"+rs.getString(88)+"</option>");
-                                list_peso_kg.add("<option value=\""+rs.getString(89)+"\">"+rs.getString(89)+"</option>");
-                                list_transferencia.add("<option value=\""+rs.getString(90)+"\">"+rs.getString(90)+"</option>");
-                                list_fecha_inicio_etiquetado.add("<option value=\""+rs.getString(91)+"\">"+rs.getString(91)+"</option>");
-                                list_fecha_termino_etiquetado.add("<option value=\""+rs.getString(92)+"\">"+rs.getString(92)+"</option>");
-                                list_hora_termino_etiquetado.add("<option value=\""+rs.getString(93)+"\">"+rs.getString(93)+"</option>");
-                                list_proveedor.add("<option value=\""+rs.getString(94)+"\">"+rs.getString(94)+"</option>");
-                                list_proveedor_carga.add("<option value=\""+rs.getString(95)+"\">"+rs.getString(95)+"</option>");
-                                list_fy.add("<option value=\""+rs.getString(96)+"\">"+rs.getString(96)+"</option>");
+                                list_no_bultos.add("<option value=\""+rs.getString(88).trim()+"\">"+rs.getString(88)+"</option>");
+                                list_peso_kg.add("<option value=\""+rs.getString(89).trim()+"\">"+rs.getString(89)+"</option>");
+                                list_transferencia.add("<option value=\""+rs.getString(90).trim()+"\">"+rs.getString(90)+"</option>");
+                                list_fecha_inicio_etiquetado.add("<option value=\""+rs.getString(91).trim()+"\">"+rs.getString(91)+"</option>");
+                                list_fecha_termino_etiquetado.add("<option value=\""+rs.getString(92).trim()+"\">"+rs.getString(92)+"</option>");
+                                list_hora_termino_etiquetado.add("<option value=\""+rs.getString(93).trim()+"\">"+rs.getString(93)+"</option>");
+                                list_proveedor.add("<option value=\""+rs.getString(94).trim()+"\">"+rs.getString(94)+"</option>");
+                                list_proveedor_carga.add("<option value=\""+rs.getString(95).trim()+"\">"+rs.getString(95)+"</option>");
+                                list_fy.add("<option value=\""+rs.getString(96).trim()+"\">"+rs.getString(96)+"</option>");
                     }            
 
                           body += " <tr id=\"tr" + sal + "\"> "
                                 + "    <th class=\"font-numero\"><center><img src=\"../img/circle-green.png\" width=\"100%\"/></center></th> "  //Semaforo
-                                + "    <th class=\"font-numero\">"+rs.getString(1)+"<input type=\"hidden\" id=\"evento[" + sal + "]\" name=\"evento[" + sal + "]\" value=\""+rs.getString(1)+"\"></th> "  // Número de Evento
+                                + "    <th class=\"font-numero\">"+rs.getString(1)+"<input type=\"hidden\" id=\"evento[" + sal + "]\" name=\"evento[" + sal + "]\" value=\""+rs.getString(1).trim()+"\"></th> "  // Número de Evento
                                 + "    <th class=\"font-numero\"> "                           // Referencia Aduanal
-                                + "        <input type=\"text\" class=\"form-control\" id=\"referenciaAA[" + sal + "]\" name=\"referenciaAA[" + sal + "]\" value=\""+rs.getString(31)+"\" autocomplete=\"off\"> "
+                                + "        <input type=\"text\" class=\"form-control\" id=\"referenciaAA[" + sal + "]\" name=\"referenciaAA[" + sal + "]\" value=\""+rs.getString(31).trim()+"\" autocomplete=\"off\"> "
                                 + "    </th>"
-                                + "    <td class=\"font-numero\">"+rs.getString(2)+"</td> "   // Responsable
-                                + "    <td class=\"font-numero\">"+rs.getString(3)+"</td> "   // Final Destination
-                                + "    <td class=\"font-numero\">"+rs.getString(22)+"</td> "  // Brand-Division
-                                + "    <td class=\"font-numero\">"+rs.getString(5)+"</td> "   // Division
-                                + "    <td class=\"font-numero\">"+rs.getString(6)+"<input type=\"hidden\" id=\"shipmentId[" + sal + "]\" name=\"shipmentId[" + sal + "]\" value=\""+rs.getString(6)+"\"></td> "  // Shipment ID
-                                + "    <td class=\"font-numero\">"+rs.getString(7)+"<input type=\"hidden\" id=\"containerId[" + sal + "]\" name=\"containerId[" + sal + "]\" value=\""+rs.getString(7)+"\"></td> "  // Container
-                                + "    <td class=\"font-numero\">"+rs.getString(8)+"</td> "   // BL/AWB/PRO
-                                + "    <td class=\"font-numero\">"+rs.getString(23)+"</td> "  // LoadType
-                                + "    <td class=\"font-numero\">"+rs.getString(10)+"</td> "  // Quantity
-                                + "    <td class=\"font-numero\">"+rs.getString(20)+"</td> "  // POD
-                                + "    <td class=\"font-numero\">"+rs.getString(12)+"</td> "  // Est. Departure from POL
-                                + "    <td class=\"font-numero\">"+rs.getString(13)+"</td> "  // ETA REAL Port of Discharge
-                                + "    <td class=\"font-numero\">"+rs.getString(24)+"</td> "  // Est. Eta DC
-                                + "    <td class=\"font-numero\">"+rs.getString(15)+"</td> "  // Inbound notification
-                                + "    <td class=\"font-numero\">"+rs.getString(21)+"</td> "  // POL
-                                + "    <td class=\"font-numero\">"+rs.getString(17)+"</td> "  // A.A.
-                                + "    <td class=\"font-numero\">"+rs.getString(29)+"</td> "  // Fecha Mes de Venta 
+                                + "    <td class=\"font-numero\">"+rs.getString(2).trim()+"</td> "   // Responsable
+                                + "    <td class=\"font-numero\">"+rs.getString(3).trim()+"</td> "   // Final Destination
+                                + "    <td class=\"font-numero\">"+rs.getString(22).trim()+"</td> "  // Brand-Division
+                                + "    <td class=\"font-numero\">"+rs.getString(5).trim()+"</td> "   // Division
+                                + "    <td class=\"font-numero\">"+rs.getString(6).trim()+"<input type=\"hidden\" id=\"shipmentId[" + sal + "]\" name=\"shipmentId[" + sal + "]\" value=\""+rs.getString(6).trim()+"\"></td> "  // Shipment ID
+                                + "    <td class=\"font-numero\">"+rs.getString(7).trim()+"<input type=\"hidden\" id=\"containerId[" + sal + "]\" name=\"containerId[" + sal + "]\" value=\""+rs.getString(7).trim()+"\"></td> "  // Container
+                                + "    <td class=\"font-numero\">"+rs.getString(8).trim()+"</td> "   // BL/AWB/PRO
+                                + "    <td class=\"font-numero\">"+rs.getString(23).trim()+"</td> "  // LoadType
+                                + "    <td class=\"font-numero\">"+rs.getString(10).trim()+"</td> "  // Quantity
+                                + "    <td class=\"font-numero\">"+rs.getString(20).trim()+"</td> "  // POD
+                                + "    <td class=\"font-numero\">"+rs.getString(12).trim()+"</td> "  // Est. Departure from POL
+                                + "    <td class=\"font-numero\">"+rs.getString(13).trim()+"</td> "  // ETA REAL Port of Discharge
+                                + "    <td class=\"font-numero\">"+rs.getString(24).trim()+"</td> "  // Est. Eta DC
+                                + "    <td class=\"font-numero\">"+rs.getString(15).trim()+"</td> "  // Inbound notification
+                                + "    <td class=\"font-numero\">"+rs.getString(21).trim()+"</td> "  // POL
+                                + "    <td class=\"font-numero\">"+rs.getString(17).trim()+"</td> "  // A.A.
+                                + "    <td class=\"font-numero\">"+rs.getString(29).trim()+"</td> "  // Fecha Mes de Venta 
                                 + "    <td class=\"font-numero\"> "                           // Prioridad Si/No
-                                + "      <select class=\"form-control\" id=\"prioridad[" + sal + "]\" name=\"prioridad[" + sal + "]\" value=\""+rs.getString(98)+"\">" 
+                                + "      <select class=\"form-control\" id=\"prioridad[" + sal + "]\" name=\"prioridad[" + sal + "]\" value=\""+rs.getString(98).trim()+"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "                                                // Campo en blanco
                                 + "    <td class=\"font-numero\"> "
-                                + "        <input class=\"form-control\" id=\"pais_origen[" + sal + "]\" name=\"pais_origen[" + sal + "]\" type=\"text\" value=\""+rs.getString(32)+"\" autocomplete=\"off\"> "
+                                + "        <input class=\"form-control\" id=\"pais_origen[" + sal + "]\" name=\"pais_origen[" + sal + "]\" type=\"text\" value=\""+rs.getString(32).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "        <input class=\"form-control\" id=\"size_container[" + sal + "]\" name=\"size_container[" + sal + "]\" type=\"text\" value=\""+rs.getString(33)+"\" autocomplete=\"off\"> "
+                                + "        <input class=\"form-control\" id=\"size_container[" + sal + "]\" name=\"size_container[" + sal + "]\" type=\"text\" value=\""+rs.getString(33).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "        <input class=\"form-control\" id=\"valor_usd[" + sal + "]\" name=\"valor_usd[" + sal + "]\" type=\"text\" value=\""+rs.getString(34)+"\" autocomplete=\"off\"> "
+                                + "        <input class=\"form-control\" id=\"valor_usd[" + sal + "]\" name=\"valor_usd[" + sal + "]\" type=\"text\" value=\""+rs.getString(34).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"eta_port_discharge[" + sal + "]\" name=\"eta_port_discharge[" + sal + "]\" type=\"date\" value=\""+rs.getString(35)+"\" onchange=\"onSemaforo()\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"eta_port_discharge[" + sal + "]\" name=\"eta_port_discharge[" + sal + "]\" type=\"date\" value=\""+rs.getString(35).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"agente_aduanal[" + sal + "]\" name=\"agente_aduanal[" + sal + "]\" type=\"text\" value=\""+rs.getString(36)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"agente_aduanal[" + sal + "]\" name=\"agente_aduanal[" + sal + "]\" type=\"text\" value=\""+rs.getString(36).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"pedimento_a1[" + sal + "]\" name=\"pedimento_a1[" + sal + "]\" type=\"text\" value=\""+rs.getString(37)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"pedimento_a1[" + sal + "]\" name=\"pedimento_a1[" + sal + "]\" type=\"text\" value=\""+rs.getString(37).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"pedimento_r1_1er[" + sal + "]\" name=\"pedimento_r1_1er[" + sal + "]\" type=\"text\" value=\""+rs.getString(38)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"pedimento_r1_1er[" + sal + "]\" name=\"pedimento_r1_1er[" + sal + "]\" type=\"text\" value=\""+rs.getString(38).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"motivo_rectificacion_1er[" + sal + "]\" name=\"motivo_rectificacion_1er[" + sal + "]\" type=\"text\" value=\""+rs.getString(39)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"motivo_rectificacion_1er[" + sal + "]\" name=\"motivo_rectificacion_1er[" + sal + "]\" type=\"text\" value=\""+rs.getString(39).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"pedimento_r1_2do[" + sal + "]\" name=\"pedimento_r1_2do[" + sal + "]\" type=\"text\" value=\""+rs.getString(40)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"pedimento_r1_2do[" + sal + "]\" name=\"pedimento_r1_2do[" + sal + "]\" type=\"text\" value=\""+rs.getString(40).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"motivo_rectificacion_2do[" + sal + "]\" name=\"motivo_rectificacion_2do[" + sal + "]\" type=\"text\" value=\""+rs.getString(41)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"motivo_rectificacion_2do[" + sal + "]\" name=\"motivo_rectificacion_2do[" + sal + "]\" type=\"text\" value=\""+rs.getString(41).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_recepcion_doc[" + sal + "]\" name=\"fecha_recepcion_doc[" + sal + "]\" type=\"date\" value=\""+rs.getString(42)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_recepcion_doc[" + sal + "]\" name=\"fecha_recepcion_doc[" + sal + "]\" type=\"date\" value=\""+rs.getString(42).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"recinto[" + sal + "]\" name=\"recinto[" + sal + "]\" type=\"text\" value=\""+rs.getString(43)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"recinto[" + sal + "]\" name=\"recinto[" + sal + "]\" type=\"text\" value=\""+rs.getString(43).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"naviera[" + sal + "]\" name=\"naviera[" + sal + "]\" type=\"text\" value=\""+rs.getString(44)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"naviera[" + sal + "]\" name=\"naviera[" + sal + "]\" type=\"text\" value=\""+rs.getString(44).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"buque[" + sal + "]\" name=\"buque[" + sal + "]\" type=\"text\" value=\""+rs.getString(45)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"buque[" + sal + "]\" name=\"buque[" + sal + "]\" type=\"text\" value=\""+rs.getString(45).trim().trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_revalidacion[" + sal + "]\" name=\"fecha_revalidacion[" + sal + "]\" type=\"date\" value=\""+rs.getString(46)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_revalidacion[" + sal + "]\" name=\"fecha_revalidacion[" + sal + "]\" type=\"date\" value=\""+rs.getString(46).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_previo_origen[" + sal + "]\" name=\"fecha_previo_origen[" + sal + "]\" type=\"date\" value=\""+rs.getString(47)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_previo_origen[" + sal + "]\" name=\"fecha_previo_origen[" + sal + "]\" type=\"date\" value=\""+rs.getString(47).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_previo_destino[" + sal + "]\" name=\"fecha_previo_destino[" + sal + "]\" type=\"date\" value=\""+rs.getString(48)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_previo_destino[" + sal + "]\" name=\"fecha_previo_destino[" + sal + "]\" type=\"date\" value=\""+rs.getString(48).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_resultado_previo[" + sal + "]\" name=\"fecha_resultado_previo[" + sal + "]\" type=\"date\" value=\""+rs.getString(49)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_resultado_previo[" + sal + "]\" name=\"fecha_resultado_previo[" + sal + "]\" type=\"date\" value=\""+rs.getString(49).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"proforma_final[" + sal + "]\" name=\"proforma_final[" + sal + "]\" type=\"date\" value=\""+rs.getString(50)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"proforma_final[" + sal + "]\" name=\"proforma_final[" + sal + "]\" type=\"date\" value=\""+rs.getString(50).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"permiso[" + sal + "]\" name=\"permiso[" + sal + "]\"  value=\""+rs.getString(51)+"\" value=\"\">" 
+                                + "      <select class=\"form-control\" id=\"permiso[" + sal + "]\" name=\"permiso[" + sal + "]\"  value=\""+rs.getString(51).trim()+"\" value=\"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_envio[" + sal + "]\" name=\"fecha_envio[" + sal + "]\" type=\"date\" value=\""+rs.getString(52)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_envio[" + sal + "]\" name=\"fecha_envio[" + sal + "]\" type=\"date\" value=\""+rs.getString(52).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_recepcion_perm[" + sal + "]\" name=\"fecha_recepcion_perm[" + sal + "]\" type=\"date\" value=\""+rs.getString(53)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_recepcion_perm[" + sal + "]\" name=\"fecha_recepcion_perm[" + sal + "]\" type=\"date\" value=\""+rs.getString(53).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_activacion_perm[" + sal + "]\" name=\"fecha_activacion_perm[" + sal + "]\" type=\"date\" value=\""+rs.getString(54)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_activacion_perm[" + sal + "]\" name=\"fecha_activacion_perm[" + sal + "]\" type=\"date\" value=\""+rs.getString(54).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_permisos_aut[" + sal + "]\" name=\"fecha_permisos_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(55)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_permisos_aut[" + sal + "]\" name=\"fecha_permisos_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(55).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"co_pref_arancelaria[" + sal + "]\" name=\"co_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(56)+"\" value=\"\">" 
+                                + "      <select class=\"form-control\" id=\"co_pref_arancelaria[" + sal + "]\" name=\"co_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(56).trim()+"\" value=\"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"aplic_pref_arancelaria[" + sal + "]\" name=\"aplic_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(57)+"\" value=\"\">" 
+                                + "      <select class=\"form-control\" id=\"aplic_pref_arancelaria[" + sal + "]\" name=\"aplic_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(57).trim()+"\" value=\"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"req_uva[" + sal + "]\" name=\"req_uva[" + sal + "]\" value=\""+rs.getString(58)+"\" value=\"\">" 
+                                + "      <select class=\"form-control\" id=\"req_uva[" + sal + "]\" name=\"req_uva[" + sal + "]\" value=\""+rs.getString(58).trim()+"\" value=\"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"req_ca[" + sal + "]\" name=\"req_ca[" + sal + "]\"  value=\""+rs.getString(59)+"\">" 
+                                + "      <select class=\"form-control\" id=\"req_ca[" + sal + "]\" name=\"req_ca[" + sal + "]\"  value=\""+rs.getString(59).trim()+"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_recepcion_ca[" + sal + "]\" name=\"fecha_recepcion_ca[" + sal + "]\" type=\"date\" value=\""+rs.getString(60)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_recepcion_ca[" + sal + "]\" name=\"fecha_recepcion_ca[" + sal + "]\" type=\"date\" value=\""+rs.getString(60).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> " 
                                 + "    <td class=\"font-numero\"> " 
-                                + "      <input class=\"form-control\" id=\"num_constancia_ca[" + sal + "]\" name=\"num_constancia_ca[" + sal + "]\" type=\"text\" value=\""+rs.getString(61)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"num_constancia_ca[" + sal + "]\" name=\"num_constancia_ca[" + sal + "]\" type=\"text\" value=\""+rs.getString(61).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> " 
                                 + "    <td class=\"font-numero\"> " 
-                                + "      <input class=\"form-control\" id=\"monto_ca[" + sal + "]\" name=\"monto_ca[" + sal + "]\" type=\"text\" value=\""+rs.getString(62)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"monto_ca[" + sal + "]\" name=\"monto_ca[" + sal + "]\" type=\"text\" value=\""+rs.getString(62).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_doc_completos[" + sal + "]\" name=\"fecha_doc_completos[" + sal + "]\" type=\"date\" value=\""+rs.getString(63)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_doc_completos[" + sal + "]\" name=\"fecha_doc_completos[" + sal + "]\" type=\"date\" value=\""+rs.getString(63).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_pago_pedimento[" + sal + "]\" name=\"fecha_pago_pedimento[" + sal + "]\" type=\"date\" value=\""+rs.getString(64)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_pago_pedimento[" + sal + "]\" name=\"fecha_pago_pedimento[" + sal + "]\" type=\"date\" value=\""+rs.getString(64).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_solicitud_transporte[" + sal + "]\" name=\"fecha_solicitud_transporte[" + sal + "]\" type=\"date\" value=\""+rs.getString(65)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_solicitud_transporte[" + sal + "]\" name=\"fecha_solicitud_transporte[" + sal + "]\" type=\"date\" value=\""+rs.getString(65).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_modulacion[" + sal + "]\" name=\"fecha_modulacion[" + sal + "]\" type=\"date\" value=\""+rs.getString(66)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_modulacion[" + sal + "]\" name=\"fecha_modulacion[" + sal + "]\" type=\"date\" value=\""+rs.getString(66).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"modalidad[" + sal + "]\" name=\"modalidad[" + sal + "]\" value=\""+rs.getString(67)+"\">" 
+                                + "      <select class=\"form-control\" id=\"modalidad[" + sal + "]\" name=\"modalidad[" + sal + "]\" value=\""+rs.getString(67).trim()+"\">" 
                                 + "         <option value=\"Camión\">Camión</option>" 
                                 + "         <option value=\"Tren\" disabled selected>Tren</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"resultado_modulacion[" + sal + "]\" name=\"resultado_modulacion[" + sal + "]\"  value=\""+rs.getString(68)+"\">" 
+                                + "      <select class=\"form-control\" id=\"resultado_modulacion[" + sal + "]\" name=\"resultado_modulacion[" + sal + "]\"  value=\""+rs.getString(68).trim()+"\">" 
                                 + "         <option value=\"Verde\">Verde</option>" 
                                 + "         <option value=\"Rojo\" disabled selected>Rojo</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_reconocimiento[" + sal + "]\" name=\"fecha_reconocimiento[" + sal + "]\" type=\"date\"  value=\""+rs.getString(69)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_reconocimiento[" + sal + "]\" name=\"fecha_reconocimiento[" + sal + "]\" type=\"date\"  value=\""+rs.getString(69).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_liberacion[" + sal + "]\" name=\"fecha_liberacion[" + sal + "]\" type=\"date\"  value=\""+rs.getString(70)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_liberacion[" + sal + "]\" name=\"fecha_liberacion[" + sal + "]\" type=\"date\"  value=\""+rs.getString(70).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"sello_origen[" + sal + "]\" name=\"sello_origen[" + sal + "]\" type=\"text\"  value=\""+rs.getString(71)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"sello_origen[" + sal + "]\" name=\"sello_origen[" + sal + "]\" type=\"text\"  value=\""+rs.getString(71).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"sello_final[" + sal + "]\" name=\"sello_final[" + sal + "]\" type=\"text\"  value=\""+rs.getString(72)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"sello_final[" + sal + "]\" name=\"sello_final[" + sal + "]\" type=\"text\"  value=\""+rs.getString(72).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_retencion_aut[" + sal + "]\" name=\"fecha_retencion_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(73)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_retencion_aut[" + sal + "]\" name=\"fecha_retencion_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(73).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"fecha_liberacion_aut[" + sal + "]\" name=\"fecha_liberacion_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(74)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"fecha_liberacion_aut[" + sal + "]\" name=\"fecha_liberacion_aut[" + sal + "]\" type=\"date\" value=\""+rs.getString(74).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"estatus_operacion[" + sal + "]\" name=\"estatus_operacion[" + sal + "]\"  value=\""+rs.getString(75)+"\"> "
+                                + "      <select class=\"form-control\" id=\"estatus_operacion[" + sal + "]\" name=\"estatus_operacion[" + sal + "]\"  value=\""+rs.getString(75).trim()+"\"> "
                                 + "          <option value=\"1\" disabled selected>EN TRANSITO</option> "
                                 + "          <option value=\"2\">EN TRANSITO - PENDIENTE REVALIDACION</option> "
                                 + "          <option value=\"3\">EN TRANSITO - REVALIDADO</option> "
@@ -528,78 +528,81 @@ public class ConsultarCustom extends HttpServlet {
                                 + "      </select> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"motivo_atraso[" + sal + "]\" name=\"motivo_atraso[" + sal + "]\" type=\"text\"  value=\""+rs.getString(76)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"motivo_atraso[" + sal + "]\" name=\"motivo_atraso[" + sal + "]\" type=\"text\"  value=\""+rs.getString(76).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
-                                + "      <input class=\"form-control\" id=\"observaciones[" + sal + "]\" name=\"observaciones[" + sal + "]\" type=\"text\" value=\""+rs.getString(77)+"\" autocomplete=\"off\"> "
+                                + "      <input class=\"form-control\" id=\"observaciones[" + sal + "]\" name=\"observaciones[" + sal + "]\" type=\"text\" value=\""+rs.getString(77).trim()+"\" autocomplete=\"off\"> "
                                 + "    </td> ";
 
                     if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF
                           body += " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"llegada_a_nova[" + sal + "]\" name=\"llegada_a_nova[" + sal + "]\" type=\"text\" value=\""+rs.getString(78)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"llegada_a_nova[" + sal + "]\" name=\"llegada_a_nova[" + sal + "]\" type=\"date\" value=\""+rs.getString(78).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"llegada_a_globe_trade_sd[" + sal + "]\" name=\"llegada_a_globe_trade_sd[" + sal + "]\" type=\"text\" value=\""+rs.getString(79)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"llegada_a_globe_trade_sd[" + sal + "]\" name=\"llegada_a_globe_trade_sd[" + sal + "]\" type=\"date\" value=\""+rs.getString(79).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"archivo_m[" + sal + "]\" name=\"archivo_m[" + sal + "]\" type=\"text\" value=\""+rs.getString(80)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"archivo_m[" + sal + "]\" name=\"archivo_m[" + sal + "]\" type=\"text\" value=\""+rs.getString(80).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_archivo_m[" + sal + "]\" name=\"fecha_archivo_m[" + sal + "]\" type=\"text\" value=\""+rs.getString(81)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_archivo_m[" + sal + "]\" name=\"fecha_archivo_m[" + sal + "]\" type=\"date\" value=\""+rs.getString(81).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_solicit_manip[" + sal + "]\" name=\"fecha_solicit_manip[" + sal + "]\" type=\"text\" value=\""+rs.getString(82)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_solicit_manip[" + sal + "]\" name=\"fecha_solicit_manip[" + sal + "]\" type=\"date\" value=\""+rs.getString(82).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_vencim_manip[" + sal + "]\" name=\"fecha_vencim_manip[" + sal + "]\" type=\"text\" value=\""+rs.getString(83)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_vencim_manip[" + sal + "]\" name=\"fecha_vencim_manip[" + sal + "]\" type=\"date\" value=\""+rs.getString(83).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_confirm_clave_pedim[" + sal + "]\" name=\"fecha_confirm_clave_pedim[" + sal + "]\" type=\"text\" value=\""+rs.getString(84)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_confirm_clave_pedim[" + sal + "]\" name=\"fecha_confirm_clave_pedim[" + sal + "]\" type=\"date\" value=\""+rs.getString(84).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_recep_increment[" + sal + "]\" name=\"fecha_recep_increment[" + sal + "]\" type=\"text\" value=\""+rs.getString(85)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_recep_increment[" + sal + "]\" name=\"fecha_recep_increment[" + sal + "]\" type=\"date\" value=\""+rs.getString(85).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"t_e[" + sal + "]\" name=\"t_e[" + sal + "]\" type=\"text\" value=\""+rs.getString(86)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"t_e[" + sal + "]\" name=\"t_e[" + sal + "]\" type=\"text\" value=\""+rs.getString(86).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_vencim_inbound[" + sal + "]\" name=\"fecha_vencim_inbound[" + sal + "]\" type=\"text\" value=\""+rs.getString(87)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_vencim_inbound[" + sal + "]\" name=\"fecha_vencim_inbound[" + sal + "]\" type=\"date\" value=\""+rs.getString(87).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> ";
 
                     }
 
                     if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
                           body += " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"no_bultos[" + sal + "]\" name=\"no_bultos[" + sal + "]\" type=\"text\" value=\""+rs.getString(88)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"no_bultos[" + sal + "]\" name=\"no_bultos[" + sal + "]\" type=\"text\" value=\""+rs.getString(88).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"peso_kg[" + sal + "]\" name=\"peso_kg[" + sal + "]\" type=\"text\" value=\""+rs.getString(89)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"peso_kg[" + sal + "]\" name=\"peso_kg[" + sal + "]\" type=\"text\" value=\""+rs.getString(89).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "      <select class=\"form-control\" id=\"transferencia[" + sal + "]\" name=\"transferencia[" + sal + "]\" value=\""+rs.getString(90)+"\">" 
+                                + "      <select class=\"form-control\" id=\"transferencia[" + sal + "]\" name=\"transferencia[" + sal + "]\" value=\""+rs.getString(90).trim()+"\">" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\" disabled selected>NO</option>" 
                                 + "      </select>" 
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_inicio_etiquetado[" + sal + "]\" name=\"fecha_inicio_etiquetado[" + sal + "]\" type=\"text\" value=\""+rs.getString(91)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_inicio_etiquetado[" + sal + "]\" name=\"fecha_inicio_etiquetado[" + sal + "]\" type=\"date\" value=\""+rs.getString(91).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fecha_termino_etiquetado[" + sal + "]\" name=\"fecha_termino_etiquetado[" + sal + "]\" type=\"text\" value=\""+rs.getString(92)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fecha_termino_etiquetado[" + sal + "]\" name=\"fecha_termino_etiquetado[" + sal + "]\" type=\"date\" value=\""+rs.getString(92).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"hora_termino_etiquetado[" + sal + "]\" name=\"hora_termino_etiquetado[" + sal + "]\" type=\"text\" value=\""+rs.getString(93)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"hora_termino_etiquetado[" + sal + "]\" name=\"hora_termino_etiquetado[" + sal + "]\" type=\"text\" value=\""+rs.getString(93).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"proveedor[" + sal + "]\" name=\"proveedor[" + sal + "]\" type=\"text\" value=\""+rs.getString(94)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"proveedor[" + sal + "]\" name=\"proveedor[" + sal + "]\" type=\"text\" value=\""+rs.getString(94).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"proveedor_carga[" + sal + "]\" name=\"proveedor_carga[" + sal + "]\" type=\"text\" value=\""+rs.getString(95)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"proveedor_carga[" + sal + "]\" name=\"proveedor_carga[" + sal + "]\" type=\"text\" value=\""+rs.getString(95).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> ";
                     }
                           body += " <td class=\"font-numero\"> "
-                                + "     <input class=\"form-control\" id=\"fy[" + sal + "]\" name=\"fy[" + sal + "]\" type=\"text\" value=\""+rs.getString(96)+"\" autocomplete=\"off\"> "
+                                + "     <input class=\"form-control\" id=\"fy[" + sal + "]\" name=\"fy[" + sal + "]\" type=\"text\" value=\""+rs.getString(96).trim()+"\" autocomplete=\"off\"> "
                                 + " </td> "
+                                + " <td class=\"font-numero\"> "
+                                + "     <center><a class=\"btn btn-primary text-uppercase\" onclick=\"AddCustoms()\"><i class=\"fa fa-save\"></i></a></center> "  
+                                + " </td> " 
                                 + "</tr>";
                         sal++;
                     }
@@ -1653,14 +1656,14 @@ multiselect_fy = " <div id=\"buscador\"> "
 
                        contador = " <input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + sal + "\"> "; 
 
-                          tabla = " <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1200%;\"> "
+                          tabla = " <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1250%;\"> "
                                 + "     <thead align=\"center\"> "
                                 + "         <tr> "
                                 + "             <th class=\"col-sm-1\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"></th> "  
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"text-align:left;\"><font size=\"1\">Número de evento <strong style=\"color:red\">*</strong></font>"+multiselect_evento+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Número de evento <strong style=\"color:red\">*</strong></font>"+multiselect_evento+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Referencia AA</font>"+multiselect_referenciaAA+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Responsable</font>"+multiselect_responsable+"</th> "
-                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"1\">Final Destination</font>"+multiselect_finalDestination+"</th> "
+                                + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Final Destination</font>"+multiselect_finalDestination+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Brand-Division</font>"+multiselect_brandDivision+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Division</font>"+multiselect_division+"</th> "
                                 + "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">Shipment ID</font>"+multiselect_shipmentId+"</th> "
@@ -1753,6 +1756,7 @@ multiselect_fy = " <div id=\"buscador\"> "
                     }
 
                          tabla += "             <th class=\"col-sm-3\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\">FY</font>"+multiselect_fy+"</th> "
+                                + "             <th class=\"col-sm-1\" class=\"font-titulo\" style=\"background-color:#8BC4C4;\"><font size=\"2\"> </font></th> "
                                 + "         </tr> "
                                 + "     </thead> "
                                 + "     <tbody>"
@@ -1763,7 +1767,7 @@ multiselect_fy = " <div id=\"buscador\"> "
 
             dao.CerrarConexion();
             oraDB.close();
-            System.out.println("Esqueleto tabla:" +tabla);
+            
             if (sal > 0) {
                 out.print(tabla);
             } else {

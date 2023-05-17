@@ -1943,20 +1943,20 @@ public class ConsultasQuery {
                + " GTN.LOAD_TYPE, "
                + " SQ.SUMA, "
                + " TIP1.NOMBRE_POD, "
-               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
-               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
+               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY') AS EST_DEPARTURE_POL, "
+               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY') AS ETA_REAL_PORT, "
                + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
                + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
                + " TIP2.NOMBRE_POL, "
                + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
                + " GTN.PLANTILLA_ID, "
-               + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+               + " TO_CHAR(GTN.FECHA_CAPTURA, 'DD/MM/YYYY') AS FECHA_CAPTURA, "
                + " TIP1.NOMBRE_POD, "
                + " TIP2.NOMBRE_POL, "
                + " TIBD.NOMBRE_BD, "
                + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YYYY'), ' ') AS ETA_DC, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YYYY'), ' ') AS ETA_DC1, "
+               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'DD/MM/YYYY'), ' ') AS ETA_DC, "
+               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'DD/MM/YYYY'), ' ') AS ETA_DC1, "
                + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
                + " TIE.ESTATUS_EVENTO, "
                + " NVL(TIE.REFERENCIA_AA,' '), "
@@ -2040,8 +2040,8 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               + " WHERE TIE.ESTADO = 1 "
-               + " AND TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) ";
+               + " WHERE TIE.ESTADO = 1 ";
+               //+ " AND TIE.ID_EVENTO IN (236563) ";
            
                 if(tipoFiltro.equals("0")){         //Sin filtros
                   sql += "";
@@ -2105,24 +2105,24 @@ public class ConsultasQuery {
                + " GTN.LOAD_TYPE, "
                + " SQ.SUMA, "
                + " TIP1.NOMBRE_POD, "
-               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
-               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
+               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY') AS EST_DEPARTURE_POL, "
+               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY') AS ETA_REAL_PORT, "
                + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
                + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
                + " TIP2.NOMBRE_POL, "
                + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
                + " GTN.PLANTILLA_ID, "
-               + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+               + " TO_CHAR(GTN.FECHA_CAPTURA, 'DD/MM/YYYY') AS FECHA_CAPTURA, "
                + " TIP1.NOMBRE_POD, "
                + " TIP2.NOMBRE_POL, "
                + " TIBD.NOMBRE_BD, "
                + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YYYY'), ' ') AS ETA_DC, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YYYY'), ' ') AS ETA_DC1, "
+               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'DD/MM/YYYY'), ' ') AS ETA_DC, "
+               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'DD/MM/YYYY'), ' ') AS ETA_DC1, "
                + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
                + " TIE.ESTATUS_EVENTO, "
                + " NVL(TIE.REFERENCIA_AA,' '), "
-               + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "    
+               + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'DD/MM/YYYY'),' '), "    
                + " NVL(TIE.PRIORIDAD,' '), "  
                + " NVL(TIC.REFERENCIA_AA,' '), " 
                + " NVL(TIC.PAIS_ORIGEN,' '), "   
@@ -2203,10 +2203,9 @@ public class ConsultasQuery {
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               + " WHERE TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) "   
+               //+ " WHERE TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) "   
                + " ORDER BY TIE.ID_EVENTO " ;
 
-        System.out.println("Consulta Principal: " + sql);
         return sql;
     }
     

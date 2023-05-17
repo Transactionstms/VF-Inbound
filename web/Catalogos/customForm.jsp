@@ -126,7 +126,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="buscador"> 
+                                    <!--<div id="buscador"> 
                                         <div id="primero"> 
                                             <select class="selectpicker" id="col_test" name="col_test" multiple aria-label="Seleccione">      
                                                       <option value="1">Opción Test 1</option>
@@ -139,7 +139,7 @@
                                             <a class="text-lg text-info" onclick="customForm('0')"><i class="fa fa-search"></i></a> 
                                         </div> 
                                     </div>
-                                    <br>
+                                    <br>-->
                                     <div class="card-body">
                                         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
                                         <div id="contenedor">
@@ -154,7 +154,7 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <div id="table-scroll" class="table-scroll"  style="height:500px;"></div>
+                                        <div id="table-scroll" class="table-scroll"  style="height:600px;"></div>
                                         <br>
                                     </div>                    
                                 </div>
