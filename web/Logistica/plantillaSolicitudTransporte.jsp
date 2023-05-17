@@ -53,23 +53,41 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
-        <link href="../lib/css/loader.css" rel="stylesheet" type="text/css"/> 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    
     </head>
         <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
         
-            String sqldb = "";
+            String where = "";
             
             String tcarga = request.getParameter("tcarga");
             String shipment = request.getParameter("shipment");
             String container = request.getParameter("container");
             String evento = request.getParameter("evento");
             
-             //sqldb = " where  gtn.CONTAINER1='"+ container +"' "; // crear validacion 
+            String tcarga1 = "";
+           
+                if(tcarga.equals("1")){
+                 tcarga1 = "FCL";
+                }else  if(tcarga.equals("2")){
+                 tcarga1 = "LCL";
+                }else if(tcarga.equals("3")){
+                 tcarga1 = "FCL/LCL";
+                }
+           
             
+         try{    if(!tcarga.equals("0"))   {
+            // where+=" and gtn.LOAD_TYPE_FINAL in("+tcarga1+")";
+         } 
+         }catch(Error e){}
+         try{    if(!shipment.equals("0")) { where+=" and gtn.shipment_id in ("+shipment+")";}  }catch(Error e){}
+         try{    if(!container.equals("0")){ where+=" and gtn.container1 in ("+container+")";}  }catch(Error e){}
+         try{    if(!evento.equals("0"))   { where+=" and tie.id_evento in ("+evento+")" ;}     }catch(Error e){}
 
         %>
 
@@ -78,52 +96,50 @@
 
 
         <!-- navbar-->
-        <header class="header">
-        </header>
+       
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
-                    <!--<div class="unwired alert alert-danger">¡Se ha perdido su conexión! TMS debe de estar conectado a Internet para su correcto funcionamiento.</div>-->
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
+                                <div class="card ">
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">ARMADO DE EMBARQUE</h2>
+                                                  <h2 class="card-heading">ARMADO DE EMBARQUE</h2>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form id="uploadFileFormData" name="uploadFileFormData">
-                                            <div class="row">
-                                                <div align="right">
-                                                    <div id="example_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Busqueda:
-                                                            <input id="searchTerm" type="text" onkeyup="doSearch()" autocomplete="off"/>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div id="table-scroll" class="table-scroll">
-                                                <table id="main-table" className="main-table">
+                                        <form id="form1" name="uploadFileFormData1">
+                                             <br>
+                                            <div id="table-scroll" class="table-scroll"  style="height: 100%;">
+                                             
+                                                <table  id="example" className="main-table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" class="font-titulo"></th>
-                                                            <th scope="col" class="font-titulo">Evento </th>
-                                                            <th scope="col" class="font-titulo">Container #</th>
-                                                            <th scope="col" class="font-titulo">BL</th>
-                                                            <th scope="col" class="font-titulo">Shipment</th>
-                                                            <th scope="col" class="font-titulo">Load Type</th>
-                                                            <th scope="col" class="font-titulo">LUM BRIO</th>
-                                                            <th scope="col" class="font-titulo">Brand</th>
-                                                            <th scope="col" class="font-titulo">Sbu Name</th>
-                                                            <th scope="col" class="font-titulo">MX Port</th>
-                                                            <th scope="col" class="font-titulo">ETA MX Port</th>
-                                                            <th scope="col" class="font-titulo">ETA DC</th>
+                                                            <th scope="col" class="font-titulo" >Agregar</th>
+                                                            <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Responsable <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Final Destination (Shipment) <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Brand-Division <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Division <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Shipment ID <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Container <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Load Type <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Quantity <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
+                                                            <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -132,37 +148,64 @@
                                                       
 
                                                         <%
-                                                            String sql = ""
-                                                                    + " SELECT  DISTINCT"
-                                                                    + "  TIE.ID_EVENTO,"
-                                                                    + "  BP.RESPONSABLE,"
-                                                                    + "  GTN.FINAL_DESTINATION,"
-                                                                    + "  GTN.BRAND_DIVISION,"
-                                                                    + "  'DIVISION',"
-                                                                    + "  GTN.SHIPMENT_ID,"
-                                                                    + "  GTN.CONTAINER1,"
-                                                                    + "  GTN.BL_AWB_PRO,"
-                                                                    + "  GTN.LOAD_TYPE,"
-                                                                    + "   (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  as suma   ,"
-                                                                    + "   GTN.POD,"
-                                                                    + "  to_char(GTN.EST_DEPARTURE_POL,'MM/DD/YYYY'),"
-                                                                    + "  to_char(GTN.ETA_PORT_DISCHARGE,'MM/DD/YYYY')   AS ETA_REAL_PORT ,"
-                                                                    + "    ("
-                                                                    + "  SELECT  max(RECOMMENDED_LT2)  FROM tra_inb_costofleteytd"
-                                                                    + "  where"
-                                                                    + "  trim(UPPER(SUBSTR(BRAND_DIVISION,0,8))) in trim(UPPER(SUBSTR(GTN.BRAND_DIVISION,0,8))) and"
-                                                                    + "  trim(UPPER(SUBSTR(POD,0,6)))            in trim(UPPER(SUBSTR(GTN.POD,0,6)))  and "
-                                                                    + "  trim(UPPER(SUBSTR(POL,0,6)))            in trim(UPPER(SUBSTR(GTN.POL,0,6))) "
-                                                                    + "  )as EST_ETA_DC,"
-                                                                    + "  'Inbound notification',"
-                                                                    + "  GTN.POL,"
-                                                                    + "  'A.A',"
-                                                                    + "  GTN.PLANTILLA_ID,"
-                                                                    + "  to_char(GTN.FECHA_CAPTURA,'MM/DD/YYYY')"
-                                                                    + "  from TRA_INB_EVENTO    TIE"
-                                                                    + "  inner JOIN TRA_DESTINO_RESPONSABLE     BP ON BP.USER_NID=TIE.USER_NID   "
-                                                                    + "  inner JOIN TRA_INC_GTN_TEST           GTN ON GTN.PLANTILLA_ID=TIE.PLANTILLA_ID"
-                                                                    + "  order by 1"; 
+                                                            
+                                                           String sql= "WITH sum_quantity AS ("
+        +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
+        +"   FROM tra_inc_gtn_test"
+        +"   GROUP BY shipment_id, container1"
+        +" )"
+        +" SELECT DISTINCT"
+        +"   tie.id_evento,"
+        +"   NVL(bp.responsable, ' ') AS responsable,"
+        +"   gtn.final_destination,"
+        +"   gtn.brand_division,"
+        +"   nvl(tid.division_nombre,' '), "
+        +"   gtn.shipment_id,"
+        +"   gtn.container1,"
+        +"   gtn.bl_awb_pro,"
+        +"   gtn.load_type,"
+        +"   sq.suma,"
+        +"   tip1.NOMBRE_POD,"
+        +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
+        +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
+        +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
+        +"   'Inbound notification' AS notification_type,"
+        +"   tip2.NOMBRE_POL,"
+        +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
+        +"   gtn.plantilla_id,"
+        +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
+        +"   tip1.nombre_pod,"
+        +"   tip2.nombre_pol,"
+        +"   tibd.nombre_bd,"
+        +"   CASE"
+        +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
+        +"     WHEN EXISTS ("
+        +"       SELECT 1"
+        +"       FROM tra_inc_gtn_test"
+        +"       WHERE container1 = gtn.container1"
+        +"       HAVING COUNT(DISTINCT brand_division) > 1"
+        +"     ) THEN 'FCL / LCL'"
+        +"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
+        +"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
+        +"     ELSE '-'"
+        +"   END AS estado,"
+        +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
+        +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
+        +"   NVL(tie.observaciones, ' ') AS observaciones,"
+        +"   gtn.LOAD_TYPE_FINAL "
+        +" FROM "
+        +"   tra_inb_evento tie"
+        +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
+        +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
+        +"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
+        +"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
+        +"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
+        +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
+        +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
+        +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
+                                                                   + " where 1=1 "+where
+        +" ORDER BY"
+        +"   tie.id_evento";
 
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
@@ -171,24 +214,35 @@
                                                                     //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
                                                         %>
 
-                                                        <tr>                                            
-                                                            <td> 
-                                                                <div class="form-check checkbox-xl">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="inputCheck" style="center">
-                                                                    <label class="form-check-label" for="flexCheckIndeterminate"></label>
+                                                     <tr>
+                                                         <td class="font-numero" > 
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="gtn.shipment_id='<%=row[5]%>'" id="flexCheckDefault<%=row[0]%>" name="valor"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
+                                                                    <label class="form-check-label" for="flexCheckDefault<%=row[0]%>">
+                                                                        Nuevo Evento
+                                                                    </label>
                                                                 </div>
                                                             </td>
-                                                            <td class="font-texto"> <%=row[0]%></td>
-                                                            <td class="font-texto"> <%=row[1]%></td>
+                                                            <th class="font-numero"><%=row[0]%></th>	
+                                                            <td class="font-numero"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[3]%></td>
+                                                            <td class="font-texto"> <%=row[21]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>
                                                             <td class="font-texto"> <%=row[5]%></td>	
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[8]%></td>		
+                                                            <td class="font-texto"> <%=row[22]%> </td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[10]%></td>
+                                                            <td class="font-texto"> <%=row[19]%></td>
+                                                            <td class="font-texto"> <%=row[11]%></td>	
+                                                            <td class="font-texto"> <%=row[12]%></td>	
+                                                            <td class="font-texto"> <%=row[13]%></td>
+                                                            <td class="font-texto"> <%= row[23]%></td>
+                                                            <td class="font-texto"> <%= row[24]%></td>
+                                                            <td class="font-texto"> <%=row[14]%></td>
+                                                            <td class="font-texto"> <%=row[20]%></td>	
+                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                           
                                                         </tr>
 
                                                         
@@ -198,77 +252,78 @@
                                                        %>
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                             </div>
                                             <br>
-
+                                            <!-- Botones controles -->
+                                           <br>
+                                            <!-- Botones controles -->
+                                            <div class="col-lg-12" style="text-align: right;">
+                                                
+                                                <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="nuevoEvento()">Guardar </a>
+                                            </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div>              
                             </div>
                         </div>   
                     </section>
                 </div>  
-
-                <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 text-center text-md-start fw-bold">
-                                <p class="mb-2 mb-md-0 fw-bold">Transactions TMS &copy; <%=part3%></p>
-                            </div>
-                            <div class="col-md-6 text-center text-md-end text-gray-400">
-                                <p class="mb-0">Version 1.1.0</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+              
             </div>
-        </div>    
-
+        </div>   
         <script>
 
-            function getData(form) {
-                var formData = new FormData(form);
+         
+           function nuevoEvento() {
+                           swal({
+                                title:  "Guardando. . .",
+                                allowEscapeKey:false
+                            });
+                        let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
 
-                // iterate through entries...
-                for (var pair of formData.entries()) {
-                    console.log(pair[0] + ": " + pair[1]);
-                }
+                        let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
+                        let valores = '';
+                        for (var x = 0; x < checkboxes.length; x++) {
+                            if (checkboxes[x].checked) {
+                                console.log(checkboxes[x].value)
+                                valores += checkboxes[x].value + ' or  ';
+                                cont = cont + 1;
+                            }
+                        }
 
-                // ...or output as an object
-                console.log(Object.fromEntries(formData));
-            }
 
-            document.getElementById("myForm").addEventListener("submit", function (e) {
-                e.preventDefault();
-                getData(e.target);
-            });
+                         valores = valores.slice(0, -4); 
+                         console.log(valores);
+                      window.location.href =  '<%=request.getContextPath()%>/Logistica/documentosSeleccionados.jsp?op='+valores;
 
-            function cambiarResponsable(id) {
-                console.log(id);
-            }
-            function editarEvento(id) {
-                console.log('editar');//
-                console.log(id);
-                window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
-
-            }
+                                   }      
         </script>                     
-        <!-- Conexión estatus red -->                    
-        <script src="../../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
+     <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->
-        <script src="../../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
         <!-- Main Theme JS File-->
-        <script src="../../lib/js/theme.js"></script>
+        <script src="../lib/js/theme.js"></script>
         <!-- Prism for syntax highlighting-->
-        <script src="../../lib/vendor/prismjs/prism.js"></script>
-        <script src="../../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <script src="../lib/vendor/prismjs/prism.js"></script>
+        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
         <!-- actions js -->
-        <script src="../../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
+        <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+
+      <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+ <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
+
+
         <script type="text/javascript">
             // Optional
             Prism.plugins.NormalizeWhitespace.setDefaults({
@@ -278,14 +333,35 @@
                 'right-trim': true,
             });
 
+          $(document).ready(function () {
+  $('#example').DataTable({
+    dom: 'lBfrtip', // Incluye el elemento de paginación
+    buttons: [
+      {
+        extend: 'copy',
+        text: 'Copiar'
+      },
+      {
+        extend: 'csv',
+        text: 'CSV'
+      },
+      {
+        extend: 'excel',
+        text: 'Excel'
+      }
+    ],
+    lengthMenu: [10, 15, 25, 50, 100], // Define las opciones de "Mostrar entradas"
+    pageLength: 10 // Establece el número predeterminado de entradas por página
+  });
+});
+
+
         </script>
-        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
    <%
         } catch (NullPointerException e) {
-            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
-            out.println("<script>window.close();</script>");
+           // out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+          //  out.println("<script>window.close();</script>");
         } catch (Exception e) {
             out.println("Excepcion revise por favor! " + e);
             e.printStackTrace();

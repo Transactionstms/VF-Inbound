@@ -102,27 +102,27 @@
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Tipo de carga</label>
-                                                    <select class="form-select" aria-label="Default select example" name="tcarga">
-                                                        <option selected>Elija una opcion</option>
-                                                        <option value="1">FLC</option>
+                                                    <select class="form-select" aria-label="Default select example" id="tcarga" name="tcarga">
+                                                        <option selected value="3">Elija una opcion</option>
+                                                        <option value="1">FCL</option>
                                                         <option value="2">LCL</option>
                                                         <option value="3">FCL/LCL</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Shipment</label>
-                                                    <input type="text" class="form-control" id="one" name="shipment">
+                                                    <input type="text" class="form-control" id="shipment" name="shipment"  >
                                                 </div>
                                                 <div class="mb-4">
                                                     <label class="form-label">Contenedor</label>
-                                                    <input type="text" class="form-control" id="two" name="container">
+                                                    <input type="text" class="form-control" id="container" name="container"  >
                                                 </div>
                                                 <div class="mb-4"> 
                                                     <label class="form-label">Evento</label>
-                                                    <input type="text" class="form-control" id="three" name="evento">
+                                                    <input type="text" class="form-control" id="evento" name="evento"  >
                                                 </div>
                                                 <!--button-->
-                                                <button class="btn btn-primary text-nowrap" type="submit"  name="">Enviar</button>
+                                                <button class="btn btn-primary text-nowrap" type="button"  onclick="enviar()">Enviar</button>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                             </div>
@@ -153,59 +153,75 @@
         </div>    
 
         <script>
-            var one = document.getElementById('one');
-            var two = document.getElementById('two');
-            var three = document.getElementById('three');
-
-            var checker = setInterval(function () {
-                if (two.value !== '' || three.value !== '') {
-                    one.disabled = true;
-                } else {
-                    one.disabled = false;
-                }
-                if (one.value !== '' || three.value !== '') {
-                    two.disabled = true;
-                } else {
-                    two.disabled = false;
-                }
-                if (one.value !== '' || two.value !== '') {
-                    three.disabled = true;
-                } else {
-                    three.disabled = false;
-                }
-            }, 30);
+            
+            function enviar(){
+          var tcarga    = document.getElementById('tcarga').value;
+          var shipment  = document.getElementById('shipment').value;
+          var container = document.getElementById('container').value;
+          var evento    = document.getElementById('evento').value;
+          
+          console.log(tcarga);
+          console.log(shipment);
+          console.log(container);
+          console.log(evento);
+          
+          if(tcarga===''    || tcarga===null){    tcarga=0;   }
+          if(shipment===''  || shipment===null){  shipment=0;  }else{
+                let opciones =shipment; 
+                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
+                shipment=opcionesEncerradas
+              
+          }
+          if(container==='' || container===null){ container=0; }
+          else{
+                let opciones =container; 
+                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
+                container=opcionesEncerradas
+              
+          }
+          if(evento===''    || evento===null){    evento=0;    }
+          
+          
+          console.log(tcarga);
+          console.log(shipment);
+          console.log(container);
+          console.log(evento);
+          
+       window.location.href =  '<%=request.getContextPath()%>/Logistica/plantillaSolicitudTransporte.jsp?tcarga='+tcarga+'&shipment='+shipment+'&container='+container+'&evento='+evento;
+ 
+          
+            }
+         //   var one = document.getElementById('one');
+         //   var two = document.getElementById('two');
+         //   var three = document.getElementById('three');
+//
+         //   var checker = setInterval(function () {
+         //       if (two.value !== '' || three.value !== '') {
+         //           one.disabled = true;
+         //       } else {
+         //           one.disabled = false;
+         //       }
+         //       if (one.value !== '' || three.value !== '') {
+         //           two.disabled = true;
+         //       } else {
+         //           two.disabled = false;
+         //       }
+         //       if (one.value !== '' || two.value !== '') {
+         //           three.disabled = true;
+         //       } else {
+         //           three.disabled = false;
+         //       }
+         //   }, 30);
         </script>
 
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
-        <!-- JavaScript files-->
-        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <!-- Main Theme JS File-->
-        <script src="../lib/js/theme.js"></script>
-        <!-- Prism for syntax highlighting-->
-        <script src="../lib/vendor/prismjs/prism.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-        <!-- actions js -->
-        <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
-        <!-- sweetalert -->
+       
+    
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.1/js/bootstrap.min.js"></script>
-
-        <script type="text/javascript">
-
-            // Optional
-            Prism.plugins.NormalizeWhitespace.setDefaults({
-                'remove-trailing': true,
-                'remove-indent': true,
-                'left-trim': true,
-                'right-trim': true,
-            });
-
-        </script>
+ 
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
     </body>
     <%
