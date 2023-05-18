@@ -62,17 +62,10 @@ public class ConsultarCustom extends HttpServlet {
                 caramelo += "'" + a + "',";
             }
             caramelo = caramelo.replaceAll(",$", "");
-            
-            HashSet<String> list_estatus = new HashSet<String>();
-            
-            if (db.doDB(fac.consultarEstatusCustoms())) {
-                for (String[] row : db.getResultado()) {
-                    list_estatus.add("<option value=\"" + row[0].trim() + "\">" + row[1] + "</option>");
-                }
-            }
+
                     ResultSet rs = dao.consulta(fac.consultarEventosCustoms(tipoAgente,tipoFiltro,caramelo)); 
                     while (rs.next()) {
-
+                          System.out.println("Impresión:"+rs.getString(75).trim());
                           body += " <tr id=\"tr" + sal + "\"> "
                                 + "    <th class=\"font-numero\"><center><img src=\"../img/circle-green.png\" width=\"100%\"/></center></th> "  //Semaforo
                                 + "    <th class=\"font-numero\"> "                           // Referencia Aduanal
@@ -98,7 +91,7 @@ public class ConsultarCustom extends HttpServlet {
                                 + "    <td class=\"font-numero\">"+rs.getString(29).trim()+"</td> "  // Fecha Mes de Venta 
                                 + "    <td class=\"font-numero\"> "                           // Prioridad Si/No
                                 + "      <select class=\"form-control\" id=\"prioridad[" + sal + "]\" name=\"prioridad[" + sal + "]\" value=\""+rs.getString(98).trim()+"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(98).trim()+"\">"+rs.getString(98).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
@@ -162,7 +155,7 @@ public class ConsultarCustom extends HttpServlet {
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"permiso[" + sal + "]\" name=\"permiso[" + sal + "]\"  value=\""+rs.getString(51).trim()+"\" value=\"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(51).trim()+"\">"+rs.getString(51).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
@@ -181,28 +174,28 @@ public class ConsultarCustom extends HttpServlet {
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"co_pref_arancelaria[" + sal + "]\" name=\"co_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(56).trim()+"\" value=\"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(56).trim()+"\">"+rs.getString(56).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"aplic_pref_arancelaria[" + sal + "]\" name=\"aplic_pref_arancelaria[" + sal + "]\" value=\""+rs.getString(57).trim()+"\" value=\"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(57).trim()+"\">"+rs.getString(57).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"req_uva[" + sal + "]\" name=\"req_uva[" + sal + "]\" value=\""+rs.getString(58).trim()+"\" value=\"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(58).trim()+"\">"+rs.getString(58).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"req_ca[" + sal + "]\" name=\"req_ca[" + sal + "]\"  value=\""+rs.getString(59).trim()+"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(59).trim()+"\">"+rs.getString(59).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
@@ -230,14 +223,14 @@ public class ConsultarCustom extends HttpServlet {
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"modalidad[" + sal + "]\" name=\"modalidad[" + sal + "]\" value=\""+rs.getString(67).trim()+"\">" 
-                                + "         <option value=\"\"></option>"   
+                                + "         <option value=\""+rs.getString(67).trim()+"\">"+rs.getString(67).trim()+"</option>"   
                                 + "         <option value=\"Camión\">Camión</option>" 
                                 + "         <option value=\"Tren\">Tren</option>" 
                                 + "      </select>" 
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"resultado_modulacion[" + sal + "]\" name=\"resultado_modulacion[" + sal + "]\"  value=\""+rs.getString(68).trim()+"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(68).trim()+"\">"+rs.getString(68).trim()+"</option>" 
                                 + "         <option value=\"Verde\">Verde</option>" 
                                 + "         <option value=\"Rojo\">Rojo</option>" 
                                 + "      </select>" 
@@ -262,8 +255,28 @@ public class ConsultarCustom extends HttpServlet {
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"estatus_operacion[" + sal + "]\" name=\"estatus_operacion[" + sal + "]\"  value=\""+rs.getString(75).trim()+"\"> "
-                                + "         <option value=\"\"></option>" 
-                                + list_estatus
+                                + "          <option value=\""+rs.getString(99).trim()+"\">"+rs.getString(75).trim()+"</option>" 
+                                + "          <option value=\"1\">EN ESPERA DE ESTATUS</option> "
+                                + "          <option value=\"2\">EN TRANSITO - PENDIENTE REVALIDACION</option> "
+                                + "          <option value=\"3\">EN TRANSITO - REVALIDADO</option> "
+                                + "          <option value=\"4\">EN PROCESO DE ARRIBO</option> "
+                                + "          <option value=\"5\">EN PROCESO DE RECOLECCION</option> "
+                                + "          <option value=\"6\">ARRIBADO</option> "
+                                + "          <option value=\"7\">ARRIBADO - PENDIENTE REVALIDACION</option> "
+                                + "          <option value=\"8\">REVALIDADO</option> "
+                                + "          <option value=\"9\">EN ESPERA DE PREVIO</option> "
+                                + "          <option value=\"10\">RETENIDO POR LA AUTORIDAD</option> "
+                                + "          <option value=\"11\">EN PREVIO</option> "
+                                + "          <option value=\"12\">EN GLOSA</option> "
+                                + "          <option value=\"13\">EN ESPERA DE DOCUMENTOS</option> "
+                                + "          <option value=\"14\">EN PROCESO DE PAGO DE PEDIMENTO</option> "
+                                + "          <option value=\"15\">PEDIMENTO PAGADO</option> "
+                                + "          <option value=\"16\">EN ESPERA DE INSTRUCCIONES PARA DESPACHO</option> "
+                                + "          <option value=\"17\">EN PROGRAMACION DE DESPACHO</option> "
+                                + "          <option value=\"18\">EN DESPACHO</option> "
+                                + "          <option value=\"19\">IMPORTADO</option> "
+                                + "          <option value=\"20\">RETENIDO POR INCIDENCIA</option> "
+                                + "          <option value=\"21\">EN TRANSITO</option> "
                                 + "      </select> "
                                 + "    </td> "
                                 + "    <td class=\"font-numero\"> "
@@ -316,7 +329,7 @@ public class ConsultarCustom extends HttpServlet {
                                 + " </td> "
                                 + " <td class=\"font-numero\"> "
                                 + "      <select class=\"form-control\" id=\"transferencia[" + sal + "]\" name=\"transferencia[" + sal + "]\" value=\""+rs.getString(90).trim()+"\">" 
-                                + "         <option value=\"\"></option>" 
+                                + "         <option value=\""+rs.getString(90).trim()+"\">"+rs.getString(90).trim()+"</option>" 
                                 + "         <option value=\"Si\">SI</option>" 
                                 + "         <option value=\"No\">NO</option>" 
                                 + "      </select>" 
@@ -382,7 +395,7 @@ public class ConsultarCustom extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultarFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarCustom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -400,7 +413,7 @@ public class ConsultarCustom extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultarFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarCustom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

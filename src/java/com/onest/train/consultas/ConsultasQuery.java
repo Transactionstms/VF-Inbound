@@ -2051,21 +2051,21 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               + " WHERE TIE.ESTADO = 1 ";
+               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+               + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
+               //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
-     if(tipoAgente.equals("4001")){               //Logix
+    if(tipoAgente.equals("4001")){               //Logix
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
     }else if(tipoAgente.equals("4002")){         //Cusa
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
     }else if(tipoAgente.equals("4006")){         //VF General
           sql += ""; 
     }        
-          sql += " AND TEC.ID_ESTADO <> 18 ";   
-               
+          sql += " AND TIE.ID_EVENTO IN (236767,236766,236764,236762) ";    
         return sql;
     }
-    
+
     public String consultarEventosCustoms(String tipoAgente, String tipoFiltro, String id){
          sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
              + " SELECT DISTINCT "
@@ -2166,7 +2166,8 @@ public class ConsultasQuery {
         /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
         /*96*/ + " NVL(TIC.FY,' '), "                                                
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
-        /*98*/ + " NVL(TIC.PRIORIDAD,' ') "                                     
+        /*98*/ + " NVL(TIC.PRIORIDAD,' '), "
+        /*99*/ + " NVL(GTN.ESTATUS,1) "                                     
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2177,8 +2178,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               + " WHERE TIE.ESTADO = 1 ";
+               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+               + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
+               //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
     if(tipoAgente.equals("4001")){               //Logix
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
@@ -2187,9 +2189,6 @@ public class ConsultasQuery {
     }else if(tipoAgente.equals("4006")){         //VF General
           sql += ""; 
     } 
-    
-          sql += " AND TEC.ID_ESTADO <> 18 "; 
-               
                 if(tipoFiltro.equals("0")){        //Sin filtros
                   sql += "";
                 }else if(tipoFiltro.equals("1")){  //Referncia AA
@@ -2363,8 +2362,9 @@ public class ConsultasQuery {
                 }else if(tipoFiltro.equals("85")){ // FY
                   sql += " AND TIC.FY IN (" + id + ") ";
                 }
-                  sql += " ORDER BY TIE.ID_EVENTO " ;
-            
+                  sql += " AND TIE.ID_EVENTO IN (236767,236766,236764,236762) "
+                       + " ORDER BY TIE.ID_EVENTO " ;
+                  
         return sql;
     }
     
@@ -2479,8 +2479,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               + " WHERE TIE.ESTADO = 1 ";
+               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+               + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
+               //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
     if(tipoAgente.equals("4001")){               //Logix
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
@@ -2489,8 +2490,6 @@ public class ConsultasQuery {
     }else if(tipoAgente.equals("4006")){         //VF General
           sql += ""; 
     }          
-          sql += " AND TEC.ID_ESTADO <> 18 ";   
-           
                 if(tipoFiltro.equals("0")){        //Sin filtros
                   sql += "";
                 }else if(tipoFiltro.equals("1")){  //Referncia AA
@@ -2664,8 +2663,9 @@ public class ConsultasQuery {
                 }else if(tipoFiltro.equals("85")){ // FY
                   sql += " AND TIC.FY IN (" + id + ") ";
                 }
-                  sql += " ORDER BY TIE.ID_EVENTO " ;
-                  
+                  sql += " AND TIE.ID_EVENTO IN (236767,236766,236764,236762) "
+                       + " ORDER BY TIE.ID_EVENTO " ;
+
         return sql;
     }
     

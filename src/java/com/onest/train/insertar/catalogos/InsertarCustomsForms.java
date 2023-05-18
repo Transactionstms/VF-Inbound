@@ -102,7 +102,7 @@ public class InsertarCustomsForms extends HttpServlet {
             SimpleDateFormat sdfSource = new SimpleDateFormat("MM/dd/yyyy"); 
             
             // create SimpleDateFormat object with desired date format:       Tratamiento 2
-            SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yy");
+            SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
               
               for (int i=numCustoms; i<=numCustoms; i++){
                   
@@ -355,254 +355,437 @@ public class InsertarCustomsForms extends HttpServlet {
             boolean oraOut = oraDB.execute(valExist);
             
             if(oraOut){
-                
-                    insertarCustoms += " UPDATE TRA_INB_CUSTOMS SET "
-                                     + " REFERENCIA_AA = '" + referenciaAA + "', "
-                                     + " PAIS_ORIGEN = '" + pais_origen + "', "   
-                                     + " SIZE_CONTAINER = '" + size_container + "', "   
-                                     + " VALOR_USD = '" + valor_usd + "', "                 
-                                     + " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YY'), "         
-                                     + " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
-                                     + " PEDIMENTO_A1 = '" + pedimento_a1 + "', "               
-                                     + " PEDIMENTO_R1 = '" + pedimento_r1_1er + "', "           
-                                     + " MOTIVO_RECTIFICACION_1 = '" + motivo_rectificacion_1er + "', "   
-                                     + " PEDIMENTO_R1_2DO = '" + pedimento_r1_2do + "', "           
-                                     + " MOTIVO_RECTIFICACION_2 = '" + motivo_rectificacion_2do + "', "   
-                                     + " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YY'), "  
-                                     + " RECINTO = '" + recinto + "', "     
-                                     + " NAVIERA_FORWARDER = '" + naviera + "', "     
-                                     + " BUQUE = '" + buque + "', "    
-                                     + " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YY'), " 
-                                     + " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YY'), " 
-                                     + " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YY'), " 
-                                     + " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YY'), "    
-                                     + " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'MM/DD/YY'), "              
-                                     + " REQUIERE_PERMISO = '" + permiso + "', "       
-                                     + " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'MM/DD/YY'), "  
-                                     + " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YY'), "  
-                                     + " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YY'), "  
-                                     + " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YY'), "  
-                                     + " CO_APLIC_PREF_ARANCELARIA = '" + co_pref_arancelaria + "', "        
-                                     + " APLIC_PREF_ARANCELARIA_CO = '" + aplic_pref_arancelaria + "', "     
-                                     + " REQUIERE_UVA = '" + req_uva + "', "     
-                                     + " REQUIERE_CA = '" + req_ca + "', "   
-                                     + " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YY'), "  
-                                     + " NÚMERO_CONSTANCIA_CA = '" + num_constancia_ca + "', "   
-                                     + " MONTO_CA = '" + monto_ca + "', "   
-                                     + " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YY'), " 
-                                     + " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YY'), " 
-                                     + " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YY'), " 
-                                     + " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'MM/DD/YY'), "                               
-                                     + " MODALIDAD_CAMION_TREN = '" + modalidad + "', "                  
-                                     + " RESULT_MODULACION_VERDE_ROJO = '" + resultado_modulacion + "', "   
-                                     + " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YY'), "    
-                                     + " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YY'), "    
-                                     + " SELLO_ORIGEN = '" + sello_origen + "', "               
-                                     + " SELLO_FINAL = '" + sello_final + "', "    
-                                     + " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YY'), "   
-                                     + " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YY'), "   
-                                     + " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
-                                     + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
-                                     + " OBSERVACIONES = '" + observaciones + "', ";   
+
+                                insertarCustoms += " UPDATE TRA_INB_CUSTOMS SET "
+                                                 + " REFERENCIA_AA = '" + referenciaAA + "', "
+                                                 + " PAIS_ORIGEN = '" + pais_origen + "', "   
+                                                 + " SIZE_CONTAINER = '" + size_container + "', "   
+                                                 + " VALOR_USD = '" + valor_usd + "', ";       
+                        if(!eta_port_discharge.trim().equals("")){
+                                insertarCustoms += " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), ";
+                        }         
+                                insertarCustoms += " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
+                                                 + " PEDIMENTO_A1 = '" + pedimento_a1 + "', "               
+                                                 + " PEDIMENTO_R1 = '" + pedimento_r1_1er + "', "           
+                                                 + " MOTIVO_RECTIFICACION_1 = '" + motivo_rectificacion_1er + "', "   
+                                                 + " PEDIMENTO_R1_2DO = '" + pedimento_r1_2do + "', "           
+                                                 + " MOTIVO_RECTIFICACION_2 = '" + motivo_rectificacion_2do + "', ";   
+                        if(!fecha_recepcion_doc.trim().equals("")){        
+                                insertarCustoms += " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YYYY'), ";
+                        }        
+                                insertarCustoms += " RECINTO = '" + recinto + "', "     
+                                                 + " NAVIERA_FORWARDER = '" + naviera + "', "     
+                                                 + " BUQUE = '" + buque + "', "; 
+                        if(!fecha_revalidacion.trim().equals("")){        
+                                insertarCustoms += " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YYYY'), "; 
+                        }  
+                        if(!fecha_previo_origen.trim().equals("")){
+                                insertarCustoms += " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YYYY'), "; 
+                        } 
+                        if(!fecha_previo_destino.trim().equals("")){
+                                insertarCustoms += " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YYYY'), ";
+                        }        
+                        if(!fecha_resultado_previo.trim().equals("")){
+                                insertarCustoms += " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YYYY'), ";    
+                        }       
+                        if(!proforma_final.trim().equals("")){
+                                insertarCustoms += " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'MM/DD/YYYY'), ";  
+                        }        
+                                insertarCustoms += " REQUIERE_PERMISO = '" + permiso + "', ";
+                        if(!fecha_envio.trim().equals("")){        
+                                insertarCustoms += " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'MM/DD/YYYY'), "; 
+                        }        
+                        if(!fecha_recepcion_perm.trim().equals("")){
+                                insertarCustoms += " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YYYY'), ";  
+                        }
+                        if(!fecha_activacion_perm.trim().equals("")){
+                                insertarCustoms += " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YYYY'), ";
+                        }    
+                        if(!fecha_permisos_aut.trim().equals("")){
+                                insertarCustoms += " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YYYY'), "; 
+                        }        
+                                insertarCustoms += " CO_APLIC_PREF_ARANCELARIA = '" + co_pref_arancelaria + "', "        
+                                                 + " APLIC_PREF_ARANCELARIA_CO = '" + aplic_pref_arancelaria + "', "     
+                                                 + " REQUIERE_UVA = '" + req_uva + "', "     
+                                                 + " REQUIERE_CA = '" + req_ca + "', ";   
+                        if(!fecha_recepcion_ca.trim().equals("")){        
+                                insertarCustoms += " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YYYY'), ";  
+                        }        
+                                insertarCustoms += " NÚMERO_CONSTANCIA_CA = '" + num_constancia_ca + "', "   
+                                                 + " MONTO_CA = '" + monto_ca + "', ";   
+                        if(!fecha_doc_completos.trim().equals("")){        
+                                insertarCustoms += " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YYYY'), "; 
+                        }  
+                        if(!fecha_pago_pedimento.trim().equals("")){
+                                insertarCustoms += " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YYYY'), "; 
+                        }
+                        if(!fecha_solicitud_transporte.trim().equals("")){
+                                insertarCustoms += " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YYYY'), "; 
+                        }
+                        if(!fecha_modulacion.trim().equals("")){
+                                insertarCustoms += " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'MM/DD/YYYY'), ";
+                        }        
+                                insertarCustoms += " MODALIDAD_CAMION_TREN = '" + modalidad + "', "                  
+                                                 + " RESULT_MODULACION_VERDE_ROJO = '" + resultado_modulacion + "', ";   
+                        if(!fecha_reconocimiento.trim().equals("")){        
+                                insertarCustoms += " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YYYY'), ";  
+                        } 
+                        if(!fecha_liberacion.trim().equals("")){
+                                insertarCustoms += " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), ";    
+                        }                
+                                insertarCustoms += " SELLO_ORIGEN = '" + sello_origen + "', "               
+                                                 + " SELLO_FINAL = '" + sello_final + "', ";    
+                        if(!fecha_retencion_aut.trim().equals("")){        
+                                insertarCustoms += " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YYYY'), ";
+                        }   
+                        if(!fecha_liberacion_aut.trim().equals("")){
+                                insertarCustoms += " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), ";   
+                        }        
+                                insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
+                                                 + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
+                                                 + " OBSERVACIONES = '" + observaciones + "', ";   
                     
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
                     
-                    insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YY'), " 
-                                     + " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YY'), "   
-                                     + " ARCHIVO_M = '" + archivo_m + "', "  
-                                     + " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YY'), "  
-                                     + " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YY'), "  
-                                     + " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YY'), "  
-                                     + " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YY'), "  
-                                     + " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YY'), "   
-                                     + " T_E = '" + t_e + "', "  
-                                     + " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YY'), ";
+                        if(!llegada_a_nova.trim().equals("")){        
+                                insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), "; 
+                        }        
+                        if(!llegada_a_globe_trade_sd.trim().equals("")){        
+                                insertarCustoms += " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YYYY'), "; 
+                        }       
+                                insertarCustoms += " ARCHIVO_M = '" + archivo_m + "', "; 
+
+                        if(!fecha_archivo_m.trim().equals("")){        
+                                insertarCustoms += " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YYYY'), ";  
+                        }        
+                        if(!fecha_solicit_manip.trim().equals("")){        
+                                insertarCustoms += " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YYYY'), ";  
+                        }        
+                        if(!fecha_vencim_manip.trim().equals("")){        
+                                insertarCustoms += " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YYYY'), ";  
+                        }        
+                        if(!fecha_confirm_clave_pedim.trim().equals("")){        
+                                insertarCustoms += " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YYYY'), ";  
+                        }        
+                        if(!fecha_recep_increment.trim().equals("")){        
+                                insertarCustoms += " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YYYY'), ";   
+                        }        
+                                insertarCustoms += " T_E = '" + t_e + "', "; 
+                        if(!fecha_vencim_inbound.trim().equals("")){        
+                                insertarCustoms += " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YYYY'), ";
+                        }        
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
                     
-                    insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
-                                     + " PESO_KG = '" + peso_kg + "', "  
-                                     + " TRANSFERENCIA = '" + transferencia + "', "  
-                                     + " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YY'), "
-                                     + " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YY'), "
-                                     + " HORA_TERMINO_ETIQUETADO = '" + hora_termino_etiquetado + "', "  
-                                     + " PROVEEDOR = '" + proveedor + "', "  
-                                     + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
+                                insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
+                                                 + " PESO_KG = '" + peso_kg + "', "  
+                                                 + " TRANSFERENCIA = '" + transferencia + "', ";  
+                        if(!fecha_inicio_etiquetado.trim().equals("")){        
+
+                                insertarCustoms += " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YYYY'), ";
+                        }        
+                        if(!fecha_termino_etiquetado.trim().equals("")){        
+                                insertarCustoms += " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YYYY'), ";
+                        }        
+                                insertarCustoms += " HORA_TERMINO_ETIQUETADO = '" + hora_termino_etiquetado + "', "  
+                                                 + " PROVEEDOR = '" + proveedor + "', "  
+                                                 + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
                 }
-                    insertarCustoms += " FY = '" + fy + "', " 
-                                     + " AGENTE_ADUANAL_ID = '" + idAgenteAduanal + "', " 
-                                     + " PRIORIDAD = '" + prioridad + "', "         
-                                     + " CBDIV_ID = '" + cve + "', " 
-                                     + " USER_NID = '" + UserId + "' "
-                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
+                                insertarCustoms += " FY = '" + fy + "', " 
+                                                 + " AGENTE_ADUANAL_ID = '" + idAgenteAduanal + "', " 
+                                                 + " PRIORIDAD = '" + prioridad + "', "         
+                                                 + " CBDIV_ID = '" + cve + "', " 
+                                                 + " USER_NID = '" + UserId + "' "
+                                                 + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
                     
             }else{    
                 
-                     insertarCustoms =  " INSERT INTO TRA_INB_CUSTOMS " 
-                                      + " (CUSTREG_ID, "  
-                                      + " NUMERO_DE_EVENTO, "  
-                                      + " SHIPMENT_ID, "  
-                                      + " CONTAINER_ID, "  
-                                      + " REFERENCIA_AA, "
-                                      + " PAIS_ORIGEN, "  
-                                      + " SIZE_CONTAINER, "  
-                                      + " VALOR_USD, "                
-                                      + " ETA_PORT_OF_DISCHARGE, "        
-                                      + " AGENTE_ADUANAL, "            
-                                      + " PEDIMENTO_A1, "              
-                                      + " PEDIMENTO_R1, "          
-                                      + " MOTIVO_RECTIFICACION_1, "  
-                                      + " PEDIMENTO_R1_2DO, "          
-                                      + " MOTIVO_RECTIFICACION_2, "  
-                                      + " FECHA_RECEPCION_DOCUMENTOS, "    
-                                      + " RECINTO, "    
-                                      + " NAVIERA_FORWARDER, "    
-                                      + " BUQUE, "   
-                                      + " FECHA_REVALID_LIBE_BL, "        
-                                      + " FECHA_PREVIO_ORIGEN, "       
-                                      + " FECHA_PREVIO_DESTINO, "      
-                                      + " FECHA_RESULTADO_PREVIO, "    
-                                      + " PROFORMA_FINAL, "            
-                                      + " REQUIERE_PERMISO, "                   
-                                      + " FECHA_ENVIO_FICHAS_NOTAS, "               
-                                      + " FEC_RECEPCION_PERMISOS_TRAMIT, "      
-                                      + " FEC_ACT_PERMISOS, "     
-                                      + " FEC_PERM_AUT, "        
-                                      + " CO_APLIC_PREF_ARANCELARIA, "       
-                                      + " APLIC_PREF_ARANCELARIA_CO, "    
-                                      + " REQUIERE_UVA, "    
-                                      + " REQUIERE_CA, "  
-                                      + " FECHA_RECEPCION_CA, "  
-                                      + " NÚMERO_CONSTANCIA_CA, "  
-                                      + " MONTO_CA, "  
-                                      + " FECHA_DOCUMENTOS_COMPLETOS, "       
-                                      + " FECHA_PAGO_PEDIMENTO, "      
-                                      + " FECHA_SOLICITUD_TRANSPORTE, "
-                                      + " FECHA_MODULACION, "          
-                                      + " MODALIDAD_CAMION_TREN, "                 
-                                      + " RESULT_MODULACION_VERDE_ROJO, "      
-                                      + " FECHA_RECONOCIMIENTO, "      
-                                      + " FECHA_LIBERACION, "         
-                                      + " SELLO_ORIGEN, "              
-                                      + " SELLO_FINAL, "               
-                                      + " FECHA_RETENCION_AUTORIDAD, "       
-                                      + " FECHA_LIB_POR_RET_AUT, "      
-                                      + " ESTATUS_OPERACION, "         
-                                      + " MOTIVO_ATRASO, "             
-                                      + " OBSERVACIONES, ";        
-                     
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
-                    insertarCustoms += " LLEGADA_A_NOVA, "
-                                     + " LLEGADA_A_GLOBE_TRADE_SD, " 
-                                     + " ARCHIVO_M, " 
-                                     + " FECHA_ARCHIVO_M, " 
-                                     + " FECHA_SOLICIT_MANIP, " 
-                                     + " FECHA_VENCIM_MANIP, " 
-                                     + " FECHA_CONFIRM_CLAVE_PEDIM, " 
-                                     + " FECHA_RECEP_INCREMENT, " 
-                                     + " T_E, " 
-                                     + " FECHA_VENCIM_INBOUND, ";
-                }
+                                 insertarCustoms =  " INSERT INTO TRA_INB_CUSTOMS " 
+                                                  + " (CUSTREG_ID, "  
+                                                  + " NUMERO_DE_EVENTO, "  
+                                                  + " SHIPMENT_ID, "  
+                                                  + " CONTAINER_ID, "  
+                                                  + " REFERENCIA_AA, "
+                                                  + " PAIS_ORIGEN, "  
+                                                  + " SIZE_CONTAINER, "  
+                                                  + " VALOR_USD, ";       
+                        if(!eta_port_discharge.trim().equals("")){         
+                                 insertarCustoms += " ETA_PORT_OF_DISCHARGE, ";
+                        }         
+                                 insertarCustoms += " AGENTE_ADUANAL, "            
+                                                  + " PEDIMENTO_A1, "              
+                                                  + " PEDIMENTO_R1, "          
+                                                  + " MOTIVO_RECTIFICACION_1, "  
+                                                  + " PEDIMENTO_R1_2DO, "          
+                                                  + " MOTIVO_RECTIFICACION_2, ";  
+                        if(!fecha_recepcion_doc.trim().equals("")){         
+                                 insertarCustoms += " FECHA_RECEPCION_DOCUMENTOS, ";   
+                        }         
+                                 insertarCustoms += " RECINTO, "    
+                                                  + " NAVIERA_FORWARDER, "    
+                                                  + " BUQUE, ";  
+                        if(!fecha_revalidacion.trim().equals("")){         
+                                 insertarCustoms += " FECHA_REVALID_LIBE_BL, ";
+                        }
+                        if(!fecha_previo_origen.trim().equals("")){
+                                 insertarCustoms += " FECHA_PREVIO_ORIGEN, "; 
+                        } 
+                        if(!fecha_previo_destino.trim().equals("")){
+                                 insertarCustoms += " FECHA_PREVIO_DESTINO, ";  
+                        }     
+                        if(!fecha_resultado_previo.trim().equals("")){
+                                 insertarCustoms += " FECHA_RESULTADO_PREVIO, "; 
+                        }
+                        if(!proforma_final.trim().equals("")){
+                                 insertarCustoms += " PROFORMA_FINAL, "; 
+                        }        
+                                 insertarCustoms += " REQUIERE_PERMISO, ";     
+                        if(!fecha_envio.trim().equals("")){         
+                                 insertarCustoms += " FECHA_ENVIO_FICHAS_NOTAS, ";   
+                        }
+                        if(!fecha_recepcion_perm.trim().equals("")){
+                                 insertarCustoms += " FEC_RECEPCION_PERMISOS_TRAMIT, ";     
+                        }         
+                        if(!fecha_activacion_perm.trim().equals("")){
+                                 insertarCustoms += " FEC_ACT_PERMISOS, ";     
+                        }     
+                        if(!fecha_permisos_aut.trim().equals("")){
+                                 insertarCustoms += " FEC_PERM_AUT, ";  
+                        }         
+                                 insertarCustoms += " CO_APLIC_PREF_ARANCELARIA, "       
+                                                  + " APLIC_PREF_ARANCELARIA_CO, "    
+                                                  + " REQUIERE_UVA, "    
+                                                  + " REQUIERE_CA, ";  
+                        if(!fecha_recepcion_ca.trim().equals("")){         
+                                 insertarCustoms += " FECHA_RECEPCION_CA, "; 
+                        }         
+                                 insertarCustoms += " NÚMERO_CONSTANCIA_CA, "  
+                                                  + " MONTO_CA, ";  
+                        if(!fecha_doc_completos.trim().equals("")){         
+                                 insertarCustoms += " FECHA_DOCUMENTOS_COMPLETOS, ";     
+                        }
+                        if(!fecha_pago_pedimento.trim().equals("")){
+                                 insertarCustoms += " FECHA_PAGO_PEDIMENTO, ";     
+                        }     
+                        if(!fecha_solicitud_transporte.trim().equals("")){
+                                 insertarCustoms += " FECHA_SOLICITUD_TRANSPORTE, ";
+                        }         
+                        if(!fecha_modulacion.trim().equals("")){
+                                 insertarCustoms += " FECHA_MODULACION, "; 
+                        }         
+                                 insertarCustoms += " MODALIDAD_CAMION_TREN, "                 
+                                                  + " RESULT_MODULACION_VERDE_ROJO, "; 
+                        if(!fecha_reconocimiento.trim().equals("")){         
+                                 insertarCustoms += " FECHA_RECONOCIMIENTO, "; 
+                        }     
+                        if(!fecha_liberacion.trim().equals("")){
+                                 insertarCustoms += " FECHA_LIBERACION, ";  
+                        }                 
+                                 insertarCustoms += " SELLO_ORIGEN, "              
+                                                  + " SELLO_FINAL, "; 
+                        if(!fecha_retencion_aut.trim().equals("")){         
+                                 insertarCustoms += " FECHA_RETENCION_AUTORIDAD, ";    
+                        }         
+                        if(!fecha_liberacion_aut.trim().equals("")){
+                                 insertarCustoms += " FECHA_LIB_POR_RET_AUT, ";  
+                        }         
+                                 insertarCustoms += " ESTATUS_OPERACION, "         
+                                                  + " MOTIVO_ATRASO, "             
+                                                  + " OBSERVACIONES, ";        
+
+                            if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
+                        if(!llegada_a_nova.trim().equals("")){        
+                                insertarCustoms += " LLEGADA_A_NOVA, ";
+                        }   
+                        if(!llegada_a_globe_trade_sd.trim().equals("")){
+                                insertarCustoms += " LLEGADA_A_GLOBE_TRADE_SD, "; 
+                        }       
+                                insertarCustoms += " ARCHIVO_M, "; 
+                        if(!fecha_archivo_m.trim().equals("")){       
+                                insertarCustoms += " FECHA_ARCHIVO_M, "; 
+                        }
+                        if(!fecha_solicit_manip.trim().equals("")){
+                                insertarCustoms += " FECHA_SOLICIT_MANIP, "; 
+                        }    
+                        if(!fecha_vencim_manip.trim().equals("")){
+                                insertarCustoms += " FECHA_VENCIM_MANIP, "; 
+                        }
+                        if(!fecha_confirm_clave_pedim.trim().equals("")){
+                                insertarCustoms += " FECHA_CONFIRM_CLAVE_PEDIM, "; 
+                        }   
+                        if(!fecha_recep_increment.trim().equals("")){
+                                insertarCustoms += " FECHA_RECEP_INCREMENT, ";
+                        }        
+                                insertarCustoms += " T_E, "; 
+                        if(!fecha_vencim_inbound.trim().equals("")){        
+                                insertarCustoms += " FECHA_VENCIM_INBOUND, ";
+                        }        
+            }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
-                    insertarCustoms += " NO_BULTOS, "
-                                     + " PESO_KG, " 
-                                     + " TRANSFERENCIA, " 
-                                     + " FECHA_INICIO_ETIQUETADO, " 
-                                     + " FECHA_TERMINO_ETIQUETADO, " 
-                                     + " HORA_TERMINO_ETIQUETADO, " 
-                                     + " PROVEEDOR, " 
-                                     + " PROVEEDOR_CARGA, ";
+                                insertarCustoms += " NO_BULTOS, "
+                                                 + " PESO_KG, " 
+                                                 + " TRANSFERENCIA, "; 
+                        if(!fecha_inicio_etiquetado.trim().equals("")){        
+                                insertarCustoms += " FECHA_INICIO_ETIQUETADO, "; 
+                        }   
+                        if(!fecha_termino_etiquetado.trim().equals("")){
+                                insertarCustoms += " FECHA_TERMINO_ETIQUETADO, "; 
+                        }        
+                                insertarCustoms += " HORA_TERMINO_ETIQUETADO, " 
+                                                 + " PROVEEDOR, " 
+                                                 + " PROVEEDOR_CARGA, ";
                 } 
-                     insertarCustoms += " FY, "
-                                      + " AGENTE_ADUANAL_ID, "
-                                      + " PRIORIDAD, "
-                                      + " FECHA_REGISTRO, "        
-                                      + " CBDIV_ID, "
-                                      + " USER_NID) "
-                                      + " VALUES " 
-                                      + " (NULL, "  
-                                      + " '" + evento + "', "  
-                                      + " '" + shipmentId + "', "  
-                                      + " '" + containerId + "', "  
-                                      + " '" + referenciaAA + "', "
-                                      + " '" + pais_origen + "', "  
-                                      + " '" + size_container + "', "  
-                                      + " '" + valor_usd + "', "                
-                                      + " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YY'), "        
-                                      + " '" + agente_aduanal + "', "            
-                                      + " '" + pedimento_a1 + "', "              
-                                      + " '" + pedimento_r1_1er + "', "          
-                                      + " '" + motivo_rectificacion_1er + "', "
-                                      + " '" + pedimento_r1_2do + "', "          
-                                      + " '" + motivo_rectificacion_2do + "', "  
-                                      + " TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YY'), "       
-                                      + " '" + recinto + "', " 
-                                      + " '" + naviera + "', " 
-                                      + " '" + buque + "', " 
-                                      + " TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YY'), "         
-                                      + " TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YY'), "           
-                                      + " TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YY'), "          
-                                      + " TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YY'), "        
-                                      + " TO_DATE('" + proforma_final + "', 'MM/DD/YY'), "                
-                                      + " '" + permiso + "', "                   
-                                      + " TO_DATE('" + fecha_envio + "', 'MM/DD/YY'), "                   
-                                      + " TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YY'), "          
-                                      + " TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YY'), "         
-                                      + " TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YY'), "            
-                                      + " '" + co_pref_arancelaria + "', "       
-                                      + " '" + aplic_pref_arancelaria + "', "    
-                                      + " '" + req_uva + "', "   
-                                      + " '" + req_ca + "', "   
-                                      + " TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YY'), "       
-                                      + " '" + num_constancia_ca + "', "   
-                                      + " '" + monto_ca + "', "  
-                                      + " TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YY'), "           
-                                      + " TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YY'), "          
-                                      + " TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_modulacion + "', 'MM/DD/YY'), "              
-                                      + " '" + modalidad + "', "                 
-                                      + " '" + resultado_modulacion + "', "      
-                                      + " TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YY'), "          
-                                      + " TO_DATE('" + fecha_liberacion + "', 'MM/DD/YY'), "             
-                                      + " '" + sello_origen + "', "              
-                                      + " '" + sello_final + "', "               
-                                      + " TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YY'), "           
-                                      + " TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YY'), "          
-                                      + " '" + estatus_operacion + "', "         
-                                      + " '" + motivo_atraso + "', "             
-                                      + " '" + observaciones + "', "; 
+                                 insertarCustoms += " FY, "
+                                                  + " AGENTE_ADUANAL_ID, "
+                                                  + " PRIORIDAD, "
+                                                  + " FECHA_REGISTRO, "        
+                                                  + " CBDIV_ID, "
+                                                  + " USER_NID) "
+                                                  + " VALUES " 
+                                                  + " (NULL, "  
+                                                  + " '" + evento + "', "  
+                                                  + " '" + shipmentId + "', "  
+                                                  + " '" + containerId + "', "  
+                                                  + " '" + referenciaAA + "', "
+                                                  + " '" + pais_origen + "', "  
+                                                  + " '" + size_container + "', "  
+                                                  + " '" + valor_usd + "', ";  
+                        if(!eta_port_discharge.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), ";     
+                        }         
+                                 insertarCustoms += " '" + agente_aduanal + "', "            
+                                                  + " '" + pedimento_a1 + "', "              
+                                                  + " '" + pedimento_r1_1er + "', "          
+                                                  + " '" + motivo_rectificacion_1er + "', "
+                                                  + " '" + pedimento_r1_2do + "', "          
+                                                  + " '" + motivo_rectificacion_2do + "', ";  
+                        if(!fecha_recepcion_doc.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YYYY'), ";     
+                        }         
+                                 insertarCustoms += " '" + recinto + "', " 
+                                                  + " '" + naviera + "', " 
+                                                  + " '" + buque + "', "; 
+                        if(!fecha_revalidacion.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YYYY'), ";    
+                        }     
+                        if(!fecha_previo_origen.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YYYY'), ";   
+                        }  
+                        if(!fecha_previo_destino.trim().equals("")){
+                                insertarCustoms += " TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YYYY'), ";    
+                        } 
+                        if(!fecha_resultado_previo.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YYYY'), ";
+                        }      
+                        if(!proforma_final.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + proforma_final + "', 'MM/DD/YYYY'), "; 
+                        }         
+                                 insertarCustoms += " '" + permiso + "', ";   
+                        if(!fecha_envio.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_envio + "', 'MM/DD/YYYY'), "; 
+                        }         
+                        if(!fecha_recepcion_perm.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YYYY'), "; 
+                        }    
+                        if(!fecha_activacion_perm.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YYYY'), ";
+                        }   
+                        if(!fecha_permisos_aut.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YYYY'), ";   
+                        }         
+                                 insertarCustoms += " '" + co_pref_arancelaria + "', "       
+                                                  + " '" + aplic_pref_arancelaria + "', "    
+                                                  + " '" + req_uva + "', "   
+                                                  + " '" + req_ca + "', ";   
+                        if(!fecha_recepcion_ca.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YYYY'), ";   
+                        }         
+                                 insertarCustoms += " '" + num_constancia_ca + "', "   
+                                                  + " '" + monto_ca + "', ";  
+                        if(!fecha_doc_completos.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YYYY'), ";    
+                        }         
+                        if(!fecha_pago_pedimento.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YYYY'), ";
+                        }         
+                        if(!fecha_solicitud_transporte.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YYYY'), ";  
+                        }
+                        if(!fecha_modulacion.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_modulacion + "', 'MM/DD/YYYY'), ";   
+                        }         
+                                 insertarCustoms += " '" + modalidad + "', "                 
+                                                  + " '" + resultado_modulacion + "', ";   
+                        if(!fecha_reconocimiento.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YYYY'), ";    
+                        }         
+                        if(!fecha_liberacion.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), "; 
+                        }         
+                                 insertarCustoms += " '" + sello_origen + "', "              
+                                                  + " '" + sello_final + "', "; 
+                        if(!fecha_retencion_aut.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YYYY'), ";  
+                        }         
+                        if(!fecha_liberacion_aut.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), "; 
+                        }                 
+                                 insertarCustoms +=  " '" + estatus_operacion + "', "         
+                                                   + " '" + motivo_atraso + "', "             
+                                                   + " '" + observaciones + "', "; 
                      
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
-                     insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YY'), "    
-                                      + " '" + archivo_m + "', "
-                                      + " TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YY'), "    
-                                      + " '" + t_e + "', "
-                                      + " TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YY'), ";     
+
+                        if(!llegada_a_nova.trim().equals("")){        
+                                 insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), ";    
+                        } 
+                        if(!llegada_a_globe_trade_sd.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YYYY'), ";  
+                        }         
+                                 insertarCustoms += " '" + archivo_m + "', ";
+                        if(!fecha_archivo_m.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YYYY'), ";   
+                        }         
+                        if(!fecha_solicit_manip.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YYYY'), ";   
+                        } 
+                        if(!fecha_vencim_manip.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YYYY'), ";    
+                        }       
+                        if(!fecha_confirm_clave_pedim.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YYYY'), ";
+                        }     
+                        if(!fecha_recep_increment.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YYYY'), "; 
+                        }         
+                                 insertarCustoms += " '" + t_e + "', ";
+                        if(!fecha_vencim_inbound.trim().equals("")){         
+                                 insertarCustoms += " TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YYYY'), ";    
+                        }         
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
-                     insertarCustoms += " '" + no_bultos + "', "
-                                      + " '" + peso_kg + "', "
-                                      + " '" + transferencia + "', "
-                                      + " TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YY'), "    
-                                      + " TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YY'), "    
-                                      + " '" + hora_termino_etiquetado + "', "
-                                      + " '" + proveedor + "', "
-                                      + " '" + proveedor_carga + "', "; 
+                                 insertarCustoms += " '" + no_bultos + "', "
+                                                  + " '" + peso_kg + "', "
+                                                  + " '" + transferencia + "', ";
+                        if(!fecha_inicio_etiquetado.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YYYY'), ";  
+                        }
+                        if(!fecha_termino_etiquetado.trim().equals("")){
+                                 insertarCustoms += " TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YYYY'), ";    
+                        }
+                                 insertarCustoms += " '" + hora_termino_etiquetado + "', "
+                                                  + " '" + proveedor + "', "
+                                                  + " '" + proveedor_carga + "', "; 
                 }        
-                    insertarCustoms  += " '" + fy + "', "
-                                      + " '" + idAgenteAduanal + "', "
-                                      + " '" + prioridad + "', "
-                                      + " TO_DATE(SYSDATE, 'MM/DD/YY'), "            
-                                      + " '" + cve + "', "
-                                      + " '" + UserId + "') ";  
+                                insertarCustoms  += " '" + fy + "', "
+                                                  + " '" + idAgenteAduanal + "', "
+                                                  + " '" + prioridad + "', "
+                                                  + " TO_DATE(SYSDATE, 'DD/MM/YYYY'), "    //INSERTAR DEFAULT        
+                                                  + " '" + cve + "', "
+                                                  + " '" + UserId + "') ";  
             }      
                     boolean oraOut1 = oraDB.execute(insertarCustoms); 
                     
