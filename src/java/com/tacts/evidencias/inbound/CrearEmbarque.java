@@ -7,8 +7,12 @@ package com.tacts.evidencias.inbound;
 
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
+import com.transactions.mailsender.jdbc.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author grecendiz
  */
 public class CrearEmbarque extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,15 +32,47 @@ public class CrearEmbarque extends HttpServlet {
             
             
               HttpSession ownsession = request.getSession();
-            DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+              DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
             
-                String sqlGtn="update  ";
+                String tran = request.getParameter("tran"); 
+                String cus  = request.getParameter("cus"); 
+                String f1   = request.getParameter("f1"); 
+                String f2   = request.getParameter("f2"); 
+                String fol  = request.getParameter("fol"); 
+                String opc  = request.getParameter("op"); 
+
+                                                  
+            String sqlGtn="update tra_inc_gtn_test set EMBARQUE_AGRUPADOR='"+fol+"' where "+opc;
+            String sqlEmb="insert into TRA_INB_EMBARQUE (EMBARQUE_AGRUPADOR,EMBARQUE_TRANSPORTISTA,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO,EMBARQUE_TCUSTODIA)"
+                    + "values"
+                    + "('"+fol+"','"+tran+"',TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),'"+cus+"') ";
          
             System.out.println(sqlGtn);
-            boolean update=db.doDB(sqlGtn);
+            boolean update1=db.doDB(sqlGtn);
+            boolean update2=db.doDB(sqlEmb);
             
             
-             if(update){ 
+            
+            
+            
+            
+             if(update1 && update2){ 
+                   Email correo = new Email();
+                  try {
+                       //correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
+                       String transportista = "";  
+                       String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
+                        if (db.doDB(sbuSQL)) {
+                             for (String[] row : db.getResultado()) {
+                                transportista =   row[0]  ;
+                          }
+                        }
+                      
+                      correo.alertaLiberacionV2(null, fol, tran, transportista);
+                      
+                  } catch (SQLException ex) {
+                      Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
+                  }
                     out.print("correcto"); 
                 }else{ 
                     out.print("error"); 
