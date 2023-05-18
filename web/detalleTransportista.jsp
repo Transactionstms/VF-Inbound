@@ -323,18 +323,16 @@
                     }
 
                     function muestraRepartos(agrupador, gde1) {
+                         window.location.href =  "<%=request.getContextPath()%>/Logistica/datosComplementarios.jsp?op="+agrupador;
 
-                        fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
-                            method: 'POST',
-                        }).then(r => r.text())
-                                .then(data => {
-
-                                    //  document.getElementById('pedidos2').innerHTML = data;
-
-                                    document.getElementById('agrupador12').innerHTML = gde1;
-                                    $("#ModalCamion").modal('show');
-                                    document.getElementById('idpantallaCom').value = agrupador;
-                                }).catch(error => console.log(error));
+                       // fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
+                       //     method: 'POST',
+                       // }).then(r => r.text())
+                       //         .then(data => {  
+                       //             document.getElementById('agrupador12').innerHTML = gde1;
+                       //             $("#ModalCamion").modal('show');
+                       //             document.getElementById('idpantallaCom').value = agrupador;
+                       //         }).catch(error => console.log(error));
 
                     }
 

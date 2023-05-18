@@ -1,3 +1,4 @@
+<%@page import="com.usuario.Usuario"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -28,19 +29,15 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
-        <!-- Google fonts - Popppins for copy-->
- 
-         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
+        <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
       
     </head>
        <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
- 
-
-
-
+    Usuario root = (Usuario) ownsession.getAttribute("login.root");
+                int usr = root.getId();
            String transportista = "";
            String sbuSQL = "select LTRANSPORTE_ID, LTRANSPORTE_NOMBRE from tra_inb_linea_transporte";
                 if (db.doDB(sbuSQL)) {
@@ -57,16 +54,26 @@
                   }
                 }
                      
-  String opciones = request.getParameter("op"); 
+            String opciones = request.getParameter("op"); 
+            String sql= " "
+                +" SELECT DISTINCT"
+                +"   tie.id_evento," 
+                +"   gtn.shipment_id,"
+                +"   gtn.container1," 
+                +"   gtn.LOAD_TYPE_FINAL "
+                +" FROM "
+                +"   tra_inb_evento tie" 
+                +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id" 
+                + " where   "+opciones
+                +" ORDER BY"
+                +"   tie.id_evento";
             
        
        %>
 
     <body>
   
-     
-        <!-- navbar-->
-        <header class="header"></header>
+      
 
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -78,7 +85,7 @@
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <h2 class="card-heading">Datos Adicionales</h2>
+                                                <h2 class="card-heading">Datos Adicionales </h2>
                                             </div>
                                         </div>
                                     </div>
@@ -131,43 +138,28 @@
                                                                  </tr>
                                                                </thead>
                                                                <tbody></tbody>
-                                                                                                                          <%
-
-                                                                                                                        String sql= " "
-                                                                     +" SELECT DISTINCT"
-                                                                     +"   tie.id_evento," 
-                                                                     +"   gtn.shipment_id,"
-                                                                     +"   gtn.container1,"
-
-                                                                     +"   gtn.LOAD_TYPE_FINAL "
-                                                                     +" FROM "
-                                                                     +"   tra_inb_evento tie" 
-                                                                     +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id" 
-                                                                                                                                + " where   "+opciones
-                                                                     +" ORDER BY"
-                                                                     +"   tie.id_evento";
-
-                                                                                                                         if (db.doDB(sql)) {
-                                                                                                                             for (String[] row : db.getResultado()) {
-                                                                                                                                 // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
-                                                                                                                                 //row[18]
-                                                                                                                                 //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
-                                                                                                                     %>
-
-
+                                                        <% String opc=" ",ship="(",cont="(";
+                                                           if (db.doDB(sql)) {
+                                                               for (String[] row : db.getResultado()) {
+                                                                   ship+="'"+row[1]+"',";
+                                                                   cont+="'"+row[2]+"',";
+                                                                   
+                                                        %>
+ 
                                                                  <tr>
                                                                    <th scope="row"><%=row[0]%></th>
                                                                    <td><%=row[1]%></td>
                                                                    <td><%=row[2]%></td> 
-                                                                 </tr>
-
-
-
-
-                                                                                                                       <% }
-
-                                                                                                                         }
-                                                                                                                    %>
+                                                                 </tr> 
+                                                                 
+                                                        <% }
+                                                                      }
+                                                            ship = ship.substring(0, ship.length() - 1);
+                                                            cont = cont.substring(0, cont.length() - 1);
+                                                               ship+=")";
+                                                               cont+=")"; 
+                                                               opc= "shipment_id in "+ship+" and container1 in"+cont;
+                                                       %>
                                                                                        </tbody>
                                                                                      </table>                              
                               
@@ -211,21 +203,37 @@
 </div>
 </div>    
 
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
 
         
 <script>
+  
     
-    function insertaEmbarque(){
-        let fecha =document.getElementById('f_enrampe').value;
-        console.log(fecha);
+    
+    async function insertaEmbarque() {
         
-    }
-    
+        let tranp =document.getElementById('tranporte').value;
+        let fecha =document.getElementById('f_enrampe').value;
+        let f_ini =document.getElementById('f_inicio').value;
+        let custo =document.getElementById('custodia').value;
+        let fool=Date.now();
+                 console.log(fool);
+        
+            try {
+              const response = await fetch("<%=request.getContextPath()%>/CrearEmbarque?tran="+tranp+"&cus="+custo+"&f1="+fecha+"&f2="+f_ini+"&fol=<%=usr%>"+fool+"&op=<%=opc%>");
+              if (!response.ok) {
+                throw new Error('Error en la solicitud');
+              }
+              const data = await response.text();
+              console.log(data);
+            } catch (error) {
+              console.error(error);
+            }
+          }
+
     
            $(document).ready(function () {
                 $('.datepicker').flatpickr({
