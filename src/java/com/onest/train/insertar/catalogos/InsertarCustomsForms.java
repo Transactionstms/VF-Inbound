@@ -99,18 +99,18 @@ public class InsertarCustomsForms extends HttpServlet {
             
             
             // create SimpleDateFormat object with source string date format: Tratamiento 1
-            SimpleDateFormat sdfSource = new SimpleDateFormat("dd-MM-yyyy"); 
+            SimpleDateFormat sdfSource = new SimpleDateFormat("MM/dd/yyyy"); 
             
             // create SimpleDateFormat object with desired date format:       Tratamiento 2
-            SimpleDateFormat sdfDestination = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yy");
               
               for (int i=numCustoms; i<=numCustoms; i++){
                   
                   //Parametros Indicadores
+                  String referenciaAA = request.getParameter("referenciaAA[" + i + "]").trim(); 
                   String evento = request.getParameter("evento[" + i + "]").trim();
                   String shipmentId = request.getParameter("shipmentId[" + i + "]").trim();
                   String containerId = request.getParameter("containerId[" + i + "]").trim();
-                  String referenciaAA = request.getParameter("referenciaAA[" + i + "]").trim(); 
                   String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
                   
                   //Parametros Generales
@@ -361,62 +361,62 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " PAIS_ORIGEN = '" + pais_origen + "', "   
                                      + " SIZE_CONTAINER = '" + size_container + "', "   
                                      + " VALOR_USD = '" + valor_usd + "', "                 
-                                     + " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'dd/mm/yyyy HH24:MI:SS'), "         
+                                     + " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YY'), "         
                                      + " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
                                      + " PEDIMENTO_A1 = '" + pedimento_a1 + "', "               
                                      + " PEDIMENTO_R1 = '" + pedimento_r1_1er + "', "           
                                      + " MOTIVO_RECTIFICACION_1 = '" + motivo_rectificacion_1er + "', "   
                                      + " PEDIMENTO_R1_2DO = '" + pedimento_r1_2do + "', "           
                                      + " MOTIVO_RECTIFICACION_2 = '" + motivo_rectificacion_2do + "', "   
-                                     + " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'dd/mm/yyyy HH24:MI:SS'), "  
+                                     + " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YY'), "  
                                      + " RECINTO = '" + recinto + "', "     
                                      + " NAVIERA_FORWARDER = '" + naviera + "', "     
                                      + " BUQUE = '" + buque + "', "    
-                                     + " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                     + " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'dd/mm/yyyy HH24:MI:SS'), "              
+                                     + " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YY'), " 
+                                     + " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YY'), " 
+                                     + " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YY'), " 
+                                     + " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YY'), "    
+                                     + " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'MM/DD/YY'), "              
                                      + " REQUIERE_PERMISO = '" + permiso + "', "       
-                                     + " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "  
+                                     + " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'MM/DD/YY'), "  
+                                     + " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YY'), "  
+                                     + " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YY'), "  
+                                     + " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YY'), "  
                                      + " CO_APLIC_PREF_ARANCELARIA = '" + co_pref_arancelaria + "', "        
                                      + " APLIC_PREF_ARANCELARIA_CO = '" + aplic_pref_arancelaria + "', "     
                                      + " REQUIERE_UVA = '" + req_uva + "', "     
                                      + " REQUIERE_CA = '" + req_ca + "', "   
-                                     + " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'dd/mm/yyyy HH24:MI:SS'), "  
+                                     + " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YY'), "  
                                      + " NÚMERO_CONSTANCIA_CA = '" + num_constancia_ca + "', "   
                                      + " MONTO_CA = '" + monto_ca + "', "   
-                                     + " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'dd/mm/yyyy HH24:MI:SS'), "                               
+                                     + " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YY'), " 
+                                     + " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YY'), " 
+                                     + " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YY'), " 
+                                     + " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'MM/DD/YY'), "                               
                                      + " MODALIDAD_CAMION_TREN = '" + modalidad + "', "                  
                                      + " RESULT_MODULACION_VERDE_ROJO = '" + resultado_modulacion + "', "   
-                                     + " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                     + " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'dd/mm/yyyy HH24:MI:SS'), "    
+                                     + " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YY'), "    
+                                     + " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YY'), "    
                                      + " SELLO_ORIGEN = '" + sello_origen + "', "               
                                      + " SELLO_FINAL = '" + sello_final + "', "    
-                                     + " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "   
-                                     + " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "   
+                                     + " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YY'), "   
+                                     + " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YY'), "   
                                      + " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
                                      + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                      + " OBSERVACIONES = '" + observaciones + "', ";   
                     
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
                     
-                    insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'dd/mm/yyyy HH24:MI:SS'), " 
-                                     + " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'dd/mm/yyyy HH24:MI:SS'), "   
+                    insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YY'), " 
+                                     + " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YY'), "   
                                      + " ARCHIVO_M = '" + archivo_m + "', "  
-                                     + " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'dd/mm/yyyy HH24:MI:SS'), "  
-                                     + " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'dd/mm/yyyy HH24:MI:SS'), "   
+                                     + " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YY'), "  
+                                     + " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YY'), "  
+                                     + " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YY'), "  
+                                     + " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YY'), "  
+                                     + " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YY'), "   
                                      + " T_E = '" + t_e + "', "  
-                                     + " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'dd/mm/yyyy HH24:MI:SS'), ";
+                                     + " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YY'), ";
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
@@ -424,8 +424,8 @@ public class InsertarCustomsForms extends HttpServlet {
                     insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
                                      + " PESO_KG = '" + peso_kg + "', "  
                                      + " TRANSFERENCIA = '" + transferencia + "', "  
-                                     + " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'dd/mm/yyyy HH24:MI:SS'), "
-                                     + " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'dd/mm/yyyy HH24:MI:SS'), "
+                                     + " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YY'), "
+                                     + " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YY'), "
                                      + " HORA_TERMINO_ETIQUETADO = '" + hora_termino_etiquetado + "', "  
                                      + " PROVEEDOR = '" + proveedor + "', "  
                                      + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
@@ -530,69 +530,69 @@ public class InsertarCustomsForms extends HttpServlet {
                                       + " '" + pais_origen + "', "  
                                       + " '" + size_container + "', "  
                                       + " '" + valor_usd + "', "                
-                                      + " TO_DATE('" + eta_port_discharge + "', 'dd/mm/yyyy HH24:MI:SS'), "        
+                                      + " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YY'), "        
                                       + " '" + agente_aduanal + "', "            
                                       + " '" + pedimento_a1 + "', "              
                                       + " '" + pedimento_r1_1er + "', "          
                                       + " '" + motivo_rectificacion_1er + "', "
                                       + " '" + pedimento_r1_2do + "', "          
                                       + " '" + motivo_rectificacion_2do + "', "  
-                                      + " TO_DATE('" + fecha_recepcion_doc + "', 'dd/mm/yyyy HH24:MI:SS'), "       
+                                      + " TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YY'), "       
                                       + " '" + recinto + "', " 
                                       + " '" + naviera + "', " 
                                       + " '" + buque + "', " 
-                                      + " TO_DATE('" + fecha_revalidacion + "', 'dd/mm/yyyy HH24:MI:SS'), "         
-                                      + " TO_DATE('" + fecha_previo_origen + "', 'dd/mm/yyyy HH24:MI:SS'), "           
-                                      + " TO_DATE('" + fecha_previo_destino + "', 'dd/mm/yyyy HH24:MI:SS'), "          
-                                      + " TO_DATE('" + fecha_resultado_previo + "', 'dd/mm/yyyy HH24:MI:SS'), "        
-                                      + " TO_DATE('" + proforma_final + "', 'dd/mm/yyyy HH24:MI:SS'), "                
+                                      + " TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YY'), "         
+                                      + " TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YY'), "           
+                                      + " TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YY'), "          
+                                      + " TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YY'), "        
+                                      + " TO_DATE('" + proforma_final + "', 'MM/DD/YY'), "                
                                       + " '" + permiso + "', "                   
-                                      + " TO_DATE('" + fecha_envio + "', 'dd/mm/yyyy HH24:MI:SS'), "                   
-                                      + " TO_DATE('" + fecha_recepcion_perm + "', 'dd/mm/yyyy HH24:MI:SS'), "          
-                                      + " TO_DATE('" + fecha_activacion_perm + "', 'dd/mm/yyyy HH24:MI:SS'), "         
-                                      + " TO_DATE('" + fecha_permisos_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "            
+                                      + " TO_DATE('" + fecha_envio + "', 'MM/DD/YY'), "                   
+                                      + " TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YY'), "          
+                                      + " TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YY'), "         
+                                      + " TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YY'), "            
                                       + " '" + co_pref_arancelaria + "', "       
                                       + " '" + aplic_pref_arancelaria + "', "    
                                       + " '" + req_uva + "', "   
                                       + " '" + req_ca + "', "   
-                                      + " TO_DATE('" + fecha_recepcion_ca + "', 'dd/mm/yyyy HH24:MI:SS'), "       
+                                      + " TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YY'), "       
                                       + " '" + num_constancia_ca + "', "   
                                       + " '" + monto_ca + "', "  
-                                      + " TO_DATE('" + fecha_doc_completos + "', 'dd/mm/yyyy HH24:MI:SS'), "           
-                                      + " TO_DATE('" + fecha_pago_pedimento + "', 'dd/mm/yyyy HH24:MI:SS'), "          
-                                      + " TO_DATE('" + fecha_solicitud_transporte + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_modulacion + "', 'dd/mm/yyyy HH24:MI:SS'), "              
+                                      + " TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YY'), "           
+                                      + " TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YY'), "          
+                                      + " TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_modulacion + "', 'MM/DD/YY'), "              
                                       + " '" + modalidad + "', "                 
                                       + " '" + resultado_modulacion + "', "      
-                                      + " TO_DATE('" + fecha_reconocimiento + "', 'dd/mm/yyyy HH24:MI:SS'), "          
-                                      + " TO_DATE('" + fecha_liberacion + "', 'dd/mm/yyyy HH24:MI:SS'), "             
+                                      + " TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YY'), "          
+                                      + " TO_DATE('" + fecha_liberacion + "', 'MM/DD/YY'), "             
                                       + " '" + sello_origen + "', "              
                                       + " '" + sello_final + "', "               
-                                      + " TO_DATE('" + fecha_retencion_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "           
-                                      + " TO_DATE('" + fecha_liberacion_aut + "', 'dd/mm/yyyy HH24:MI:SS'), "          
+                                      + " TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YY'), "           
+                                      + " TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YY'), "          
                                       + " '" + estatus_operacion + "', "         
                                       + " '" + motivo_atraso + "', "             
                                       + " '" + observaciones + "', "; 
                      
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
-                     insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + llegada_a_globe_trade_sd + "', 'dd/mm/yyyy HH24:MI:SS'), "    
+                     insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YY'), "    
                                       + " '" + archivo_m + "', "
-                                      + " TO_DATE('" + fecha_archivo_m + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_solicit_manip + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_vencim_manip + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_confirm_clave_pedim + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_recep_increment + "', 'dd/mm/yyyy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YY'), "    
                                       + " '" + t_e + "', "
-                                      + " TO_DATE('" + fecha_vencim_inbound + "', 'dd/mm/yyyy HH24:MI:SS'), ";     
+                                      + " TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YY'), ";     
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
                      insertarCustoms += " '" + no_bultos + "', "
                                       + " '" + peso_kg + "', "
                                       + " '" + transferencia + "', "
-                                      + " TO_DATE('" + fecha_inicio_etiquetado + "', 'dd/mm/yyyy HH24:MI:SS'), "    
-                                      + " TO_DATE('" + fecha_termino_etiquetado + "', 'dd/mm/yyyy HH24:MI:SS'), "    
+                                      + " TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YY'), "    
+                                      + " TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YY'), "    
                                       + " '" + hora_termino_etiquetado + "', "
                                       + " '" + proveedor + "', "
                                       + " '" + proveedor_carga + "', "; 
@@ -600,12 +600,14 @@ public class InsertarCustomsForms extends HttpServlet {
                     insertarCustoms  += " '" + fy + "', "
                                       + " '" + idAgenteAduanal + "', "
                                       + " '" + prioridad + "', "
-                                      + " TO_DATE(SYSDATE, 'dd/mm/yyyy HH24:MI:SS'), "            
+                                      + " TO_DATE(SYSDATE, 'MM/DD/YY'), "            
                                       + " '" + cve + "', "
                                       + " '" + UserId + "') ";  
             }      
                     boolean oraOut1 = oraDB.execute(insertarCustoms); 
-                                        
+                    
+                    System.out.println("Registro:" + insertarCustoms);    
+                    
                     regPrioridad = " UPDATE TRA_INC_GTN_TEST SET ESTATUS='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
                     boolean oraOut2 = oraDB.execute(regPrioridad);
                     

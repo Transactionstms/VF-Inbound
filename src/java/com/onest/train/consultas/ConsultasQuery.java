@@ -1929,269 +1929,118 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarEventosCustoms(String tipoAgente, String tipoFiltro, String id){
-           sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
-               + " SELECT DISTINCT "
-               + " TIE.ID_EVENTO, "
-               + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
-               + " GTN.FINAL_DESTINATION, "
-               + " GTN.BRAND_DIVISION, "
-               + " NVL(TID.DIVISION_NOMBRE,' '), "
-               + " GTN.SHIPMENT_ID, "
-               + " GTN.CONTAINER1, "
-               + " GTN.BL_AWB_PRO, "
-               + " GTN.LOAD_TYPE, "
-               + " SQ.SUMA, "
-               + " TIP1.NOMBRE_POD, "
-               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY') AS EST_DEPARTURE_POL, "
-               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY') AS ETA_REAL_PORT, "
-               + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
-               + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
-               + " TIP2.NOMBRE_POL, "
-               + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
-               + " GTN.PLANTILLA_ID, "
-               + " TO_CHAR(GTN.FECHA_CAPTURA, 'DD/MM/YYYY') AS FECHA_CAPTURA, "
-               + " TIP1.NOMBRE_POD, "
-               + " TIP2.NOMBRE_POL, "
-               + " TIBD.NOMBRE_BD, "
-               + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'DD/MM/YYYY'), ' ') AS ETA_DC, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'DD/MM/YYYY'), ' ') AS ETA_DC1, "
-               + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
-               + " TIE.ESTATUS_EVENTO, "
-               + " NVL(TIE.REFERENCIA_AA,' '), "
-               + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'dd/mm/yyyy'),' '), "    
-               + " NVL(TIE.PRIORIDAD,' '), "  
-               + " NVL(TIC.REFERENCIA_AA,' '), " 
-               + " NVL(TIC.PAIS_ORIGEN,' '), "   
-               + " NVL(TIC.SIZE_CONTAINER,' '), "   
-               + " NVL(TIC.VALOR_USD,' '), "               
-               + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'DD/MM/YYYY'),' '), "       
-               + " NVL(TIC.AGENTE_ADUANAL,' '), "             
-               + " NVL(TIC.PEDIMENTO_A1,' '), "               
-               + " NVL(TIC.PEDIMENTO_R1,' '), "           
-               + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "   
-               + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "           
-               + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'DD/MM/YYYY'),' '), "       
-               + " NVL(TIC.RECINTO,' '), "     
-               + " NVL(TIC.NAVIERA_FORWARDER,' '), "     
-               + " NVL(TIC.BUQUE,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'DD/MM/YYYY'),' '), "           
-               + " NVL(TIC.REQUIERE_PERMISO,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "                     
-               + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "     
-               + " NVL(TIC.REQUIERE_UVA,' '), "                                  
-               + " NVL(TIC.REQUIERE_CA,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "                         
-               + " NVL(TIC.MONTO_CA,' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_MODULACION, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "                  
-               + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "       
-               + " NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.SELLO_ORIGEN,' '), "                                         
-               + " NVL(TIC.SELLO_FINAL,' '), "                
-               + " NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.ESTATUS_OPERACION,' '), "           
-               + " NVL(TIC.MOTIVO_ATRASO,' '), "              
-               + " NVL(TIC.OBSERVACIONES,' '), "         
-               + " NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.ARCHIVO_M,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.T_E,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'DD/MM/YYYY'),' '), "                  
-               + " NVL(TIC.NO_BULTOS,' '), " 
-               + " NVL(TIC.PESO_KG,' '), "  
-               + " NVL(TIC.TRANSFERENCIA,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "  
-               + " NVL(TIC.PROVEEDOR,' '), "  
-               + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
-               + " NVL(TIC.FY,' '), "                                                
-               + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
-               + " NVL(TIC.PRIORIDAD,' ') "                                     
-               + " FROM TRA_INB_EVENTO TIE "
-               + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
-               + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
-               + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
-               + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
-               + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
-               + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
-               + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
-               + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
-               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-               + " WHERE TIE.ESTADO = 1 ";
-               //+ " AND TIE.ID_EVENTO IN (236563) ";
-           
-                if(tipoFiltro.equals("0")){         //Sin filtros
-                  sql += "";
-                }else if(tipoFiltro.equals("1")){   //Evento
-                  sql += " AND TIE.ID_EVENTO IN ('" + id + "')";
-                }else if(tipoFiltro.equals("2")){   //Referncia AA
-                  sql += " AND TIC.REFERENCIA_AA IN ('" + id + "')";
-                }else if(tipoFiltro.equals("3")){   //Responsable
-                  sql += " AND BP.RESPONSABLE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("4")){   //Final Destination
-                  sql += " AND GTN.FINAL_DESTINATION IN ('" + id + "')";
-                }else if(tipoFiltro.equals("5")){   //Brand-Division
-                  sql += " AND GTN.BRAND_DIVISION IN ('" + id + "')";
-                }else if(tipoFiltro.equals("6")){   //División
-                  sql += " AND TID.DIVISION_NOMBRE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("7")){   //Shipment Id
-                  sql += " AND GTN.SHIPMENT_ID IN ('" + id + "')";
-                }else if(tipoFiltro.equals("8")){   //Container
-                  sql += " AND GTN.CONTAINER1 IN ('" + id + "')";
-                }else if(tipoFiltro.equals("9")){   //BL/AWB/PRO
-                  sql += " AND GTN.BL_AWB_PRO IN ('" + id + "')";
-                }else if(tipoFiltro.equals("10")){  //Load Type
-                  sql += " AND TGTN.LOAD_TYPE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("11")){  //Quantity
-                  sql += " AND SQ.SUMA IN ('" + id + "')";
-                }else if(tipoFiltro.equals("12")){  //Pod
-                  sql += " AND TIP1.NOMBRE_POD IN ('" + id + "')";
-                }else if(tipoFiltro.equals("13")){  //Departure Pol 
-                  sql += " AND GTN.EST_DEPARTURE_POL IN ('" + id + "')";
-                }else if(tipoFiltro.equals("14")){ //ETA REAL Port of Discharge
-                  sql += " AND GTN.ETA_PORT_DISCHARGE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("15")){ //Est. Eta DC
-                  sql += " AND GTN.MAX_FLETE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("16")){ //Inbound notification
-                  sql += "";
-                }else if(tipoFiltro.equals("17")){ //Pol
-                  sql += " AND TIP2.NOMBRE_POL IN ('" + id + "')";
-                }else if(tipoFiltro.equals("18")){ //Agente Aduanal
-                  sql += " AND TAA.AGENTE_ADUANAL_NOMBRE IN ('" + id + "')";
-                }else if(tipoFiltro.equals("19")){ //Fecha Mes de Venta
-                  sql += " AND GTN.FECHA_CAPTURA IN ('" + id + "')";
-                }else if(tipoFiltro.equals("20")){ //Prioridad
-                  sql += " AND TIE.PRIORIDAD IN ('" + id + "')";
-                }
-                  sql += " ORDER BY TIE.ID_EVENTO " ;
-            
+    public String consultarAgenteAduanalCustoms(String UserId){
+         sql = " SELECT DISTINCT "
+             + " TIAR.AGENTE_ADUANAL_ID, "
+             + " TIAR.TRA_PLANTILLA_ID, "
+             + " TP.NOMBRE "
+             + " FROM TRA_INB_USUARIO_AA_RELACION TIAR "
+             + " INNER JOIN TRA_PLANTILLA TP ON TIAR.TRA_PLANTILLA_ID = TP.ID "
+             + " WHERE TIAR.USER_NID = '" + UserId + "'";
         return sql;
     }
     
-    public String consultarReporteCustoms(String tipoAgente){
-           sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
-               + " SELECT DISTINCT "
-               + " TIE.ID_EVENTO, "
-               + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
-               + " GTN.FINAL_DESTINATION, "
-               + " GTN.BRAND_DIVISION, "
-               + " NVL(TID.DIVISION_NOMBRE,' '), "
-               + " GTN.SHIPMENT_ID, "
-               + " GTN.CONTAINER1, "
-               + " GTN.BL_AWB_PRO, "
-               + " GTN.LOAD_TYPE, "
-               + " SQ.SUMA, "
-               + " TIP1.NOMBRE_POD, "
-               + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY') AS EST_DEPARTURE_POL, "
-               + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY') AS ETA_REAL_PORT, "
-               + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
-               + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
-               + " TIP2.NOMBRE_POL, "
-               + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
-               + " GTN.PLANTILLA_ID, "
-               + " TO_CHAR(GTN.FECHA_CAPTURA, 'DD/MM/YYYY') AS FECHA_CAPTURA, "
-               + " TIP1.NOMBRE_POD, "
-               + " TIP2.NOMBRE_POL, "
-               + " TIBD.NOMBRE_BD, "
-               + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'DD/MM/YYYY'), ' ') AS ETA_DC, "
-               + " NVL(TO_CHAR(GTN.ETA_PLUS, 'DD/MM/YYYY'), ' ') AS ETA_DC1, "
-               + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
-               + " TIE.ESTATUS_EVENTO, "
-               + " NVL(TIE.REFERENCIA_AA,' '), "
-               + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIE.PRIORIDAD,' '), "  
-               + " NVL(TIC.REFERENCIA_AA,' '), " 
-               + " NVL(TIC.PAIS_ORIGEN,' '), "   
-               + " NVL(TIC.SIZE_CONTAINER,' '), "   
-               + " NVL(TIC.VALOR_USD,' '), "               
-               + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'DD/MM/YYYY'),' '), "       
-               + " NVL(TIC.AGENTE_ADUANAL,' '), "             
-               + " NVL(TIC.PEDIMENTO_A1,' '), "               
-               + " NVL(TIC.PEDIMENTO_R1,' '), "           
-               + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "   
-               + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "           
-               + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'DD/MM/YYYY'),' '), "       
-               + " NVL(TIC.RECINTO,' '), "     
-               + " NVL(TIC.NAVIERA_FORWARDER,' '), "     
-               + " NVL(TIC.BUQUE,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'DD/MM/YYYY'),' '), "   
-               + " NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'DD/MM/YYYY'),' '), "           
-               + " NVL(TIC.REQUIERE_PERMISO,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "                     
-               + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "     
-               + " NVL(TIC.REQUIERE_UVA,' '), "                                  
-               + " NVL(TIC.REQUIERE_CA,' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "                         
-               + " NVL(TIC.MONTO_CA,' '), "   
-               + " NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_MODULACION, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "                  
-               + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "       
-               + " NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.SELLO_ORIGEN,' '), "                                         
-               + " NVL(TIC.SELLO_FINAL,' '), "                
-               + " NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TEC.DESCRIPCION_ESTADO,' '), "           
-               + " NVL(TIC.MOTIVO_ATRASO,' '), "              
-               + " NVL(TIC.OBSERVACIONES,' '), "         
-               + " NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'DD/MM/YYYY'),' '), " 
-               + " NVL(TIC.ARCHIVO_M,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.T_E,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'DD/MM/YYYY'),' '), "                  
-               + " NVL(TIC.NO_BULTOS,' '), " 
-               + " NVL(TIC.PESO_KG,' '), "  
-               + " NVL(TIC.TRANSFERENCIA,' '), "  
-               + " NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'DD/MM/YYYY'),' '), "    
-               + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "  
-               + " NVL(TIC.PROVEEDOR,' '), "  
-               + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
-               + " NVL(TIC.FY,' '), "                                                
-               + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
-               + " NVL(TIC.PRIORIDAD,' ') "                                     
+    public String consultarMultiselectCustoms(String tipoAgente){
+         sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
+             + " SELECT DISTINCT "
+        /*1*/ + " TIE.ID_EVENTO, "
+        /*2*/ + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
+        /*3*/ + " GTN.FINAL_DESTINATION, "
+        /*4*/ + " GTN.BRAND_DIVISION, "
+        /*5*/ + " NVL(TID.DIVISION_NOMBRE,' '), "
+        /*6*/ + " GTN.SHIPMENT_ID, "
+        /*7*/ + " GTN.CONTAINER1, "
+        /*8*/ + " GTN.BL_AWB_PRO, "
+        /*9*/ + " GTN.LOAD_TYPE, "
+        /*10*/ + " SQ.SUMA, "
+        /*11*/ + " TIP1.NOMBRE_POD, "
+        /*12*/ + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
+        /*13*/ + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
+        /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
+        /*15*/ + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
+        /*16*/ + " TIP2.NOMBRE_POL, "
+        /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
+        /*18*/ + " GTN.PLANTILLA_ID, "
+        /*19*/ + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+        /*20*/ + " TIP1.NOMBRE_POD, "
+        /*21*/ + " TIP2.NOMBRE_POL, "
+        /*22*/ + " TIBD.NOMBRE_BD, "
+        /*23*/ + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
+        /*24*/ + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC, "
+        /*25*/ + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YY'), ' ') AS ETA_DC1, "
+        /*26*/ + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
+        /*27*/ + " TIE.ESTATUS_EVENTO, "
+        /*28*/ + " NVL(TIE.REFERENCIA_AA,' '), "
+        /*29*/ + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'MM/DD/YY'),' '), "    
+        /*30*/ + " NVL(TIE.PRIORIDAD,' '), "  
+        /*31*/ + " NVL(TIC.REFERENCIA_AA,' '), " 
+        /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
+        /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
+        /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
+        /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
+        /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
+        /*39*/ + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "   
+        /*40*/ + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "           
+        /*41*/ + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "   
+        /*42*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'MM/DD/YY'),' '), "       
+        /*43*/ + " NVL(TIC.RECINTO,' '), "     
+        /*44*/ + " NVL(TIC.NAVIERA_FORWARDER,' '), "     
+        /*45*/ + " NVL(TIC.BUQUE,' '), "    
+        /*46*/ + " NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'MM/DD/YY'),' '), "   
+        /*47*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'MM/DD/YY'),' '), "   
+        /*48*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'MM/DD/YY'),' '), "   
+        /*49*/ + " NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'MM/DD/YY'),' '), "   
+        /*50*/ + " NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'MM/DD/YY'),' '), "           
+        /*51*/ + " NVL(TIC.REQUIERE_PERMISO,' '), "    
+        /*52*/ + " NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'MM/DD/YY'),' '), " 
+        /*53*/ + " NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'MM/DD/YY'),' '), " 
+        /*54*/ + " NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'MM/DD/YY'),' '), " 
+        /*55*/ + " NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'MM/DD/YY'),' '), " 
+        /*56*/ + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "                     
+        /*57*/ + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "     
+        /*58*/ + " NVL(TIC.REQUIERE_UVA,' '), "                                  
+        /*59*/ + " NVL(TIC.REQUIERE_CA,' '), "    
+        /*60*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'MM/DD/YY'),' '), " 
+        /*61*/ + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "                         
+        /*62*/ + " NVL(TIC.MONTO_CA,' '), "   
+        /*63*/ + " NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'MM/DD/YY'),' '), " 
+        /*64*/ + " NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'MM/DD/YY'),' '), " 
+        /*65*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'MM/DD/YY'),' '), " 
+        /*66*/ + " NVL(TO_CHAR(TIC.FECHA_MODULACION, 'MM/DD/YY'),' '), " 
+        /*67*/ + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "                  
+        /*68*/ + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "       
+        /*69*/ + " NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'MM/DD/YY'),' '), " 
+        /*70*/ + " NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'MM/DD/YY'),' '), "    
+        /*71*/ + " NVL(TIC.SELLO_ORIGEN,' '), "                                         
+        /*72*/ + " NVL(TIC.SELLO_FINAL,' '), "                
+        /*73*/ + " NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'MM/DD/YY'),' '), "    
+        /*74*/ + " NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'MM/DD/YY'),' '), "    
+        /*75*/ + " NVL(TEC.DESCRIPCION_ESTADO,' '), "           
+        /*76*/ + " NVL(TIC.MOTIVO_ATRASO,' '), "              
+        /*77*/ + " NVL(TIC.OBSERVACIONES,' '), "         
+        /*78*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'MM/DD/YY'),' '), " 
+        /*79*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'MM/DD/YY'),' '), " 
+        /*80*/ + " NVL(TIC.ARCHIVO_M,' '), "  
+        /*81*/ + " NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'MM/DD/YY'),' '), "    
+        /*82*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'MM/DD/YY'),' '), "    
+        /*83*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'MM/DD/YY'),' '), "    
+        /*84*/ + " NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'MM/DD/YY'),' '), "    
+        /*85*/ + " NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'MM/DD/YY'),' '), "    
+        /*86*/ + " NVL(TIC.T_E,' '), "  
+        /*87*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'MM/DD/YY'),' '), "                  
+        /*88*/ + " NVL(TIC.NO_BULTOS,' '), " 
+        /*89*/ + " NVL(TIC.PESO_KG,' '), "  
+        /*90*/ + " NVL(TIC.TRANSFERENCIA,' '), "  
+        /*91*/ + " NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*92*/ + " NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*93*/ + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "  
+        /*94*/ + " NVL(TIC.PROVEEDOR,' '), "  
+        /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
+        /*96*/ + " NVL(TIC.FY,' '), "                                                
+        /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
+        /*98*/ + " NVL(TIC.PRIORIDAD,' ') "                                     
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2203,9 +2052,620 @@ public class ConsultasQuery {
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
-               //+ " WHERE TIE.ID_EVENTO IN (236563,236564,236565,236566,236567,236568) "   
-               + " ORDER BY TIE.ID_EVENTO " ;
-
+               + " WHERE TIE.ESTADO = 1 ";
+         
+     if(tipoAgente.equals("4001")){               //Logix
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4002")){         //Cusa
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4006")){         //VF General
+          sql += ""; 
+    }        
+          sql += " AND TEC.ID_ESTADO <> 18 ";   
+               
+        return sql;
+    }
+    
+    public String consultarEventosCustoms(String tipoAgente, String tipoFiltro, String id){
+         sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
+             + " SELECT DISTINCT "
+        /*1*/ + " TIE.ID_EVENTO, "
+        /*2*/ + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
+        /*3*/ + " GTN.FINAL_DESTINATION, "
+        /*4*/ + " GTN.BRAND_DIVISION, "
+        /*5*/ + " NVL(TID.DIVISION_NOMBRE,' '), "
+        /*6*/ + " GTN.SHIPMENT_ID, "
+        /*7*/ + " GTN.CONTAINER1, "
+        /*8*/ + " GTN.BL_AWB_PRO, "
+        /*9*/ + " GTN.LOAD_TYPE, "
+        /*10*/ + " SQ.SUMA, "
+        /*11*/ + " TIP1.NOMBRE_POD, "
+        /*12*/ + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
+        /*13*/ + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
+        /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
+        /*15*/ + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
+        /*16*/ + " TIP2.NOMBRE_POL, "
+        /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
+        /*18*/ + " GTN.PLANTILLA_ID, "
+        /*19*/ + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+        /*20*/ + " TIP1.NOMBRE_POD, "
+        /*21*/ + " TIP2.NOMBRE_POL, "
+        /*22*/ + " TIBD.NOMBRE_BD, "
+        /*23*/ + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
+        /*24*/ + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC, "
+        /*25*/ + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YY'), ' ') AS ETA_DC1, "
+        /*26*/ + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
+        /*27*/ + " TIE.ESTATUS_EVENTO, "
+        /*28*/ + " NVL(TIE.REFERENCIA_AA,' '), "
+        /*29*/ + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'MM/DD/YY'),' '), "    
+        /*30*/ + " NVL(TIE.PRIORIDAD,' '), "  
+        /*31*/ + " NVL(TIC.REFERENCIA_AA,' '), " 
+        /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
+        /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
+        /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
+        /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
+        /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
+        /*39*/ + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "   
+        /*40*/ + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "           
+        /*41*/ + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "   
+        /*42*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'MM/DD/YY'),' '), "       
+        /*43*/ + " NVL(TIC.RECINTO,' '), "     
+        /*44*/ + " NVL(TIC.NAVIERA_FORWARDER,' '), "     
+        /*45*/ + " NVL(TIC.BUQUE,' '), "    
+        /*46*/ + " NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'MM/DD/YY'),' '), "   
+        /*47*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'MM/DD/YY'),' '), "   
+        /*48*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'MM/DD/YY'),' '), "   
+        /*49*/ + " NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'MM/DD/YY'),' '), "   
+        /*50*/ + " NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'MM/DD/YY'),' '), "           
+        /*51*/ + " NVL(TIC.REQUIERE_PERMISO,' '), "    
+        /*52*/ + " NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'MM/DD/YY'),' '), " 
+        /*53*/ + " NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'MM/DD/YY'),' '), " 
+        /*54*/ + " NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'MM/DD/YY'),' '), " 
+        /*55*/ + " NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'MM/DD/YY'),' '), " 
+        /*56*/ + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "                     
+        /*57*/ + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "     
+        /*58*/ + " NVL(TIC.REQUIERE_UVA,' '), "                                  
+        /*59*/ + " NVL(TIC.REQUIERE_CA,' '), "    
+        /*60*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'MM/DD/YY'),' '), " 
+        /*61*/ + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "                         
+        /*62*/ + " NVL(TIC.MONTO_CA,' '), "   
+        /*63*/ + " NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'MM/DD/YY'),' '), " 
+        /*64*/ + " NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'MM/DD/YY'),' '), " 
+        /*65*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'MM/DD/YY'),' '), " 
+        /*66*/ + " NVL(TO_CHAR(TIC.FECHA_MODULACION, 'MM/DD/YY'),' '), " 
+        /*67*/ + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "                  
+        /*68*/ + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "       
+        /*69*/ + " NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'MM/DD/YY'),' '), " 
+        /*70*/ + " NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'MM/DD/YY'),' '), "    
+        /*71*/ + " NVL(TIC.SELLO_ORIGEN,' '), "                                         
+        /*72*/ + " NVL(TIC.SELLO_FINAL,' '), "                
+        /*73*/ + " NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'MM/DD/YY'),' '), "    
+        /*74*/ + " NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'MM/DD/YY'),' '), "    
+        /*75*/ + " NVL(TEC.DESCRIPCION_ESTADO,' '), "           
+        /*76*/ + " NVL(TIC.MOTIVO_ATRASO,' '), "              
+        /*77*/ + " NVL(TIC.OBSERVACIONES,' '), "         
+        /*78*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'MM/DD/YY'),' '), " 
+        /*79*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'MM/DD/YY'),' '), " 
+        /*80*/ + " NVL(TIC.ARCHIVO_M,' '), "  
+        /*81*/ + " NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'MM/DD/YY'),' '), "    
+        /*82*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'MM/DD/YY'),' '), "    
+        /*83*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'MM/DD/YY'),' '), "    
+        /*84*/ + " NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'MM/DD/YY'),' '), "    
+        /*85*/ + " NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'MM/DD/YY'),' '), "    
+        /*86*/ + " NVL(TIC.T_E,' '), "  
+        /*87*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'MM/DD/YY'),' '), "                  
+        /*88*/ + " NVL(TIC.NO_BULTOS,' '), " 
+        /*89*/ + " NVL(TIC.PESO_KG,' '), "  
+        /*90*/ + " NVL(TIC.TRANSFERENCIA,' '), "  
+        /*91*/ + " NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*92*/ + " NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*93*/ + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "  
+        /*94*/ + " NVL(TIC.PROVEEDOR,' '), "  
+        /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
+        /*96*/ + " NVL(TIC.FY,' '), "                                                
+        /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
+        /*98*/ + " NVL(TIC.PRIORIDAD,' ') "                                     
+               + " FROM TRA_INB_EVENTO TIE "
+               + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
+               + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
+               + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
+               + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
+               + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
+               + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
+               + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
+               + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
+               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
+               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
+               + " WHERE TIE.ESTADO = 1 ";
+         
+    if(tipoAgente.equals("4001")){               //Logix
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4002")){         //Cusa
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4006")){         //VF General
+          sql += ""; 
+    } 
+    
+          sql += " AND TEC.ID_ESTADO <> 18 "; 
+               
+                if(tipoFiltro.equals("0")){        //Sin filtros
+                  sql += "";
+                }else if(tipoFiltro.equals("1")){  //Referncia AA
+                  sql += " AND TIC.REFERENCIA_AA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("2")){  //Evento
+                  sql += " AND TIE.ID_EVENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("3")){  //Responsable
+                  sql += " AND BP.RESPONSABLE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("4")){  //Final Destination
+                  sql += " AND GTN.FINAL_DESTINATION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("5")){  //Brand-Division
+                  sql += " AND TIBD.NOMBRE_BD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("6")){  //División
+                  sql += " AND TID.DIVISION_NOMBRE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("7")){  //Shipment Id
+                  sql += " AND GTN.SHIPMENT_ID IN (" + id + ") ";
+                }else if(tipoFiltro.equals("8")){  //Container
+                  sql += " AND GTN.CONTAINER1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("9")){  //BL/AWB/PRO
+                  sql += " AND GTN.BL_AWB_PRO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("10")){ //Load Type
+                  sql += " AND GTN.LOAD_TYPE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("11")){ //Quantity
+                  sql += " AND SQ.SUMA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("12")){ //Pod
+                  sql += " AND TIP1.NOMBRE_POD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("13")){ //Departure Pol 
+                  sql += " AND GTN.EST_DEPARTURE_POL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("14")){ //ETA REAL Port of Discharge
+                  sql += " AND GTN.ETA_PORT_DISCHARGE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("15")){ //Est. Eta DC
+                  sql += " AND GTN.ETA_PLUS2 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("16")){ //Inbound notification
+                  sql += "";
+                }else if(tipoFiltro.equals("17")){ //Pol
+                  sql += " AND TIP2.NOMBRE_POL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("18")){ //Agente Aduanal
+                  sql += " AND TAA.AGENTE_ADUANAL_NOMBRE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("19")){ //Fecha Mes de Venta
+                  sql += " AND TIE.FECHA_CAPTURA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("20")){ //Prioridad
+                  sql += " AND TIC.PRIORIDAD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("21")){ // País Origen 
+                  sql += " AND TIC.PAIS_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("22")){ // Size Container
+                  sql += " AND TIC.SIZE_CONTAINER IN (" + id + ") ";
+                }else if(tipoFiltro.equals("23")){ // Valor USD
+                  sql += " AND TIC.VALOR_USD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("24")){ // ETA Port Of Discharge
+                  sql += " AND TIC.ETA_PORT_OF_DISCHARGE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("25")){ // Agente Aduanal 
+                  sql += " AND TIC.AGENTE_ADUANAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("26")){ // Pedimento A1 
+                  sql += " AND TIC.PEDIMENTO_A1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("27")){ // Pedimento R1
+                  sql += " AND TIC.PEDIMENTO_R1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("28")){ // Motivo Rectificación 1
+                  sql += " AND TIC.MOTIVO_RECTIFICACION_1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("29")){ // Pedimento R1 (2DO)
+                  sql += " AND TIC.PEDIMENTO_R1_2DO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("30")){ // Motivo Rectificación 2
+                  sql += " AND TIC.MOTIVO_RECTIFICACION_2 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("31")){ // Fecha Recepción Documentos
+                  sql += " AND TIC.FECHA_RECEPCION_DOCUMENTOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("32")){ // Recinto
+                  sql += " AND TIC.RECINTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("33")){ // Naviera/Forwarder
+                  sql += " AND TIC.NAVIERA_FORWARDER IN (" + id + ") ";
+                }else if(tipoFiltro.equals("34")){ // Buque
+                  sql += " AND TIC.BUQUE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("35")){ // Fecha Revalidación/Liberación de BL
+                  sql += " AND TIC.FECHA_REVALID_LIBE_BL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("36")){ // Fecha Previo Origen
+                  sql += " AND TIC.FECHA_PREVIO_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("37")){ // Fecha Previo en destino
+                  sql += " AND TIC.FECHA_PREVIO_DESTINO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("38")){ // Fecha Resultado Previo
+                  sql += " AND TIC.FECHA_RESULTADO_PREVIO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("39")){ // Proforma Final 
+                  sql += " AND TIC.PROFORMA_FINAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("40")){ // Requiere permiso
+                  sql += " AND TIC.REQUIERE_PERMISO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("41")){ // Fecha envío Fichas/notas
+                  sql += " AND TIC.FECHA_ENVIO_FICHAS_NOTAS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("42")){ // Fec. Recepción de permisos tramit.
+                  sql += " AND TIC.FEC_RECEPCION_PERMISOS_TRAMIT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("43")){ // Fec. Act Permisos (Inic Vigencia)
+                  sql += " AND TIC.FEC_ACT_PERMISOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("44")){ // Fec. Perm. Aut. (Fin de Vigencia) 
+                  sql += " AND TIC.FEC_PERM_AUT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("45")){ // Cuenta con CO para aplicar preferencia Arancelaria
+                  sql += " AND TIC.CO_APLIC_PREF_ARANCELARIA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("46")){ // Aplico Preferencia Arancelaria 
+                  sql += " AND TIC.APLIC_PREF_ARANCELARIA_CO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("47")){ // Requiere UVA
+                  sql += " AND TIC.REQUIERE_UVA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("48")){ // Requiere CA
+                  sql += " AND TIC.REQUIERE_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("49")){ // Fecha Recepción CA
+                  sql += " AND TIC.FECHA_RECEPCION_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("50")){ // Número de Constancia CA 
+                  sql += " AND IC.NÚMERO_CONSTANCIA_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("51")){ // Monto CA
+                  sql += " AND TIC.MONTO_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("52")){ // Fecha Documentos Completos
+                  sql += " AND TIC.FECHA_DOCUMENTOS_COMPLETOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("53")){ // Fecha Pago Pedimento
+                  sql += " AND TIC.FECHA_PAGO_PEDIMENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("54")){ // Fecha Solicitud de transporte
+                  sql += " AND TIC.FECHA_SOLICITUD_TRANSPORTE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("55")){ // Fecha Modulacion
+                  sql += " AND TIC.FECHA_MODULACION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("56")){ // Modalidad
+                  sql += " AND TIC.MODALIDAD_CAMION_TREN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("57")){ // Resultado Modulacion
+                  sql += " AND TIC.RESULT_MODULACION_VERDE_ROJO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("58")){ // Fecha Reconocimiento
+                  sql += " AND TIC.FECHA_RECONOCIMIENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("59")){ // Fecha Liberacion
+                  sql += " AND TIC.FECHA_LIBERACION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("60")){ // Sello Origen 
+                  sql += " AND TIC.SELLO_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("61")){ // Sello Final
+                  sql += " AND TIC.SELLO_FINAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("62")){ // Fecha de retencion por la autoridad
+                  sql += " AND TIC.FECHA_RETENCION_AUTORIDAD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("63")){ // Fec. de liberacion por ret. de la aut.
+                  sql += " AND TIC.FECHA_LIB_POR_RET_AUT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("64")){ // Estatus de la operación
+                  sql += " AND TEC.DESCRIPCION_ESTADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("65")){ // Motivo Atraso
+                  sql += " AND TIC.MOTIVO_ATRASO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("66")){ // Observaciones
+                  sql += " AND TIC.OBSERVACIONES IN (" + id + ") ";
+                }else if(tipoFiltro.equals("67")){ // Llegada a NOVA
+                  sql += " AND TIC.LLEGADA_A_NOVA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("68")){ // Llegada a Globe trade SD  
+                  sql += " AND TIC.LLEGADA_A_GLOBE_TRADE_SD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("69")){ // Archivo M 
+                  sql += " AND TIC.ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("70")){ // Fecha de Archivo M 
+                  sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("71")){ // Fecha Solicitud de Manipulacion
+                  sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("72")){ // Fecha de vencimiento de Manipulacion
+                  sql += " AND TIC.FECHA_VENCIM_MANIP IN (" + id + ") ";
+                }else if(tipoFiltro.equals("73")){ // Fecha confirmacion Clave de Pedimento
+                  sql += " AND TIC.FECHA_CONFIRM_CLAVE_PEDIM IN (" + id + ") ";
+                }else if(tipoFiltro.equals("74")){ // Fecha de Recepcion de Incrementables
+                  sql += " AND TIC.FECHA_RECEP_INCREMENT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("75")){ // T&E 
+                  sql += " AND TIC.T_E IN (" + id + ") ";
+                }else if(tipoFiltro.equals("76")){ // Fecha de Vencimiento del Inbound  
+                  sql += " AND TIC.FECHA_VENCIM_INBOUND IN (" + id + ") ";
+                }else if(tipoFiltro.equals("77")){ // No. BULTOS
+                  sql += " AND TIC.NO_BULTOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("78")){ // Peso (KG)
+                  sql += " AND TIC.PESO_KG IN (" + id + ") ";
+                }else if(tipoFiltro.equals("79")){ // Transferencia 
+                  sql += " AND TIC.TRANSFERENCIA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("80")){ // Fecha Inicio Etiquetado
+                  sql += " AND TIC.FECHA_INICIO_ETIQUETADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("81")){ // Fecha Termino Etiquetado 
+                  sql += " AND TIC.FECHA_TERMINO_ETIQUETADO IN (" + id + ") "; 
+                }else if(tipoFiltro.equals("82")){ // Hora de termino Etiquetado
+                  sql += " AND TIC.HORA_TERMINO_ETIQUETADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("83")){ // Proveedor
+                  sql += " AND TIC.PROVEEDOR IN (" + id + ") ";
+                }else if(tipoFiltro.equals("84")){ // Proveedor de Carga
+                  sql += " AND TIC.PROVEEDOR_CARGA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("85")){ // FY
+                  sql += " AND TIC.FY IN (" + id + ") ";
+                }
+                  sql += " ORDER BY TIE.ID_EVENTO " ;
+            
+        return sql;
+    }
+    
+    public String consultarReporteCustoms(String tipoAgente, String tipoFiltro, String id){
+         sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
+             + " SELECT DISTINCT "
+        /*1*/ + " TIE.ID_EVENTO, "
+        /*2*/ + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
+        /*3*/ + " GTN.FINAL_DESTINATION, "
+        /*4*/ + " GTN.BRAND_DIVISION, "
+        /*5*/ + " NVL(TID.DIVISION_NOMBRE,' '), "
+        /*6*/ + " GTN.SHIPMENT_ID, "
+        /*7*/ + " GTN.CONTAINER1, "
+        /*8*/ + " GTN.BL_AWB_PRO, "
+        /*9*/ + " GTN.LOAD_TYPE, "
+        /*10*/ + " SQ.SUMA, "
+        /*11*/ + " TIP1.NOMBRE_POD, "
+        /*12*/ + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
+        /*13*/ + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
+        /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
+        /*15*/ + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
+        /*16*/ + " TIP2.NOMBRE_POL, "
+        /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
+        /*18*/ + " GTN.PLANTILLA_ID, "
+        /*19*/ + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+        /*20*/ + " TIP1.NOMBRE_POD, "
+        /*21*/ + " TIP2.NOMBRE_POL, "
+        /*22*/ + " TIBD.NOMBRE_BD, "
+        /*23*/ + " CASE WHEN GTN.LOAD_TYPE = 'LTL' THEN 'LTL' WHEN EXISTS (SELECT 1 FROM TRA_INC_GTN_TEST WHERE CONTAINER1 = GTN.CONTAINER1 HAVING COUNT(DISTINCT BRAND_DIVISION) > 1) THEN 'FCL / LCL' WHEN GTN.LOAD_TYPE = 'FCL' THEN 'FCL' WHEN GTN.LOAD_TYPE = 'LCL' THEN 'LCL' ELSE '-' END AS ESTADO, "
+        /*24*/ + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC, "
+        /*25*/ + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YY'), ' ') AS ETA_DC1, "
+        /*26*/ + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
+        /*27*/ + " TIE.ESTATUS_EVENTO, "
+        /*28*/ + " NVL(TIE.REFERENCIA_AA,' '), "
+        /*29*/ + " NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'MM/DD/YY'),' '), "    
+        /*30*/ + " NVL(TIE.PRIORIDAD,' '), "  
+        /*31*/ + " NVL(TIC.REFERENCIA_AA,' '), " 
+        /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
+        /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
+        /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
+        /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
+        /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
+        /*39*/ + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "   
+        /*40*/ + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "           
+        /*41*/ + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "   
+        /*42*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'MM/DD/YY'),' '), "       
+        /*43*/ + " NVL(TIC.RECINTO,' '), "     
+        /*44*/ + " NVL(TIC.NAVIERA_FORWARDER,' '), "     
+        /*45*/ + " NVL(TIC.BUQUE,' '), "    
+        /*46*/ + " NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'MM/DD/YY'),' '), "   
+        /*47*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'MM/DD/YY'),' '), "   
+        /*48*/ + " NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'MM/DD/YY'),' '), "   
+        /*49*/ + " NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'MM/DD/YY'),' '), "   
+        /*50*/ + " NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'MM/DD/YY'),' '), "           
+        /*51*/ + " NVL(TIC.REQUIERE_PERMISO,' '), "    
+        /*52*/ + " NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'MM/DD/YY'),' '), " 
+        /*53*/ + " NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'MM/DD/YY'),' '), " 
+        /*54*/ + " NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'MM/DD/YY'),' '), " 
+        /*55*/ + " NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'MM/DD/YY'),' '), " 
+        /*56*/ + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "                     
+        /*57*/ + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "     
+        /*58*/ + " NVL(TIC.REQUIERE_UVA,' '), "                                  
+        /*59*/ + " NVL(TIC.REQUIERE_CA,' '), "    
+        /*60*/ + " NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'MM/DD/YY'),' '), " 
+        /*61*/ + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "                         
+        /*62*/ + " NVL(TIC.MONTO_CA,' '), "   
+        /*63*/ + " NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'MM/DD/YY'),' '), " 
+        /*64*/ + " NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'MM/DD/YY'),' '), " 
+        /*65*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'MM/DD/YY'),' '), " 
+        /*66*/ + " NVL(TO_CHAR(TIC.FECHA_MODULACION, 'MM/DD/YY'),' '), " 
+        /*67*/ + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "                  
+        /*68*/ + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "       
+        /*69*/ + " NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'MM/DD/YY'),' '), " 
+        /*70*/ + " NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'MM/DD/YY'),' '), "    
+        /*71*/ + " NVL(TIC.SELLO_ORIGEN,' '), "                                         
+        /*72*/ + " NVL(TIC.SELLO_FINAL,' '), "                
+        /*73*/ + " NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'MM/DD/YY'),' '), "    
+        /*74*/ + " NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'MM/DD/YY'),' '), "    
+        /*75*/ + " NVL(TEC.DESCRIPCION_ESTADO,' '), "           
+        /*76*/ + " NVL(TIC.MOTIVO_ATRASO,' '), "              
+        /*77*/ + " NVL(TIC.OBSERVACIONES,' '), "         
+        /*78*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'MM/DD/YY'),' '), " 
+        /*79*/ + " NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'MM/DD/YY'),' '), " 
+        /*80*/ + " NVL(TIC.ARCHIVO_M,' '), "  
+        /*81*/ + " NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'MM/DD/YY'),' '), "    
+        /*82*/ + " NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'MM/DD/YY'),' '), "    
+        /*83*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'MM/DD/YY'),' '), "    
+        /*84*/ + " NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'MM/DD/YY'),' '), "    
+        /*85*/ + " NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'MM/DD/YY'),' '), "    
+        /*86*/ + " NVL(TIC.T_E,' '), "  
+        /*87*/ + " NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'MM/DD/YY'),' '), "                  
+        /*88*/ + " NVL(TIC.NO_BULTOS,' '), " 
+        /*89*/ + " NVL(TIC.PESO_KG,' '), "  
+        /*90*/ + " NVL(TIC.TRANSFERENCIA,' '), "  
+        /*91*/ + " NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*92*/ + " NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'MM/DD/YY'),' '), "    
+        /*93*/ + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "  
+        /*94*/ + " NVL(TIC.PROVEEDOR,' '), "  
+        /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
+        /*96*/ + " NVL(TIC.FY,' '), "                                                
+        /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
+        /*98*/ + " NVL(TIC.PRIORIDAD,' ') "                                     
+               + " FROM TRA_INB_EVENTO TIE "
+               + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
+               + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
+               + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
+               + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
+               + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
+               + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
+               + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
+               + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
+               + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
+               + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON TIC.ESTATUS_OPERACION = TEC.ID_ESTADO "
+               + " WHERE TIE.ESTADO = 1 ";
+         
+    if(tipoAgente.equals("4001")){               //Logix
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4002")){         //Cusa
+          sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') "; 
+    }else if(tipoAgente.equals("4006")){         //VF General
+          sql += ""; 
+    }          
+          sql += " AND TEC.ID_ESTADO <> 18 ";   
+           
+                if(tipoFiltro.equals("0")){        //Sin filtros
+                  sql += "";
+                }else if(tipoFiltro.equals("1")){  //Referncia AA
+                  sql += " AND TIC.REFERENCIA_AA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("2")){  //Evento
+                  sql += " AND TIE.ID_EVENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("3")){  //Responsable
+                  sql += " AND BP.RESPONSABLE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("4")){  //Final Destination
+                  sql += " AND GTN.FINAL_DESTINATION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("5")){  //Brand-Division
+                  sql += " AND TIBD.NOMBRE_BD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("6")){  //División
+                  sql += " AND TID.DIVISION_NOMBRE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("7")){  //Shipment Id
+                  sql += " AND GTN.SHIPMENT_ID IN (" + id + ") ";
+                }else if(tipoFiltro.equals("8")){  //Container
+                  sql += " AND GTN.CONTAINER1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("9")){  //BL/AWB/PRO
+                  sql += " AND GTN.BL_AWB_PRO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("10")){ //Load Type
+                  sql += " AND GTN.LOAD_TYPE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("11")){ //Quantity
+                  sql += " AND SQ.SUMA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("12")){ //Pod
+                  sql += " AND TIP1.NOMBRE_POD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("13")){ //Departure Pol 
+                  sql += " AND GTN.EST_DEPARTURE_POL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("14")){ //ETA REAL Port of Discharge
+                  sql += " AND GTN.ETA_PORT_DISCHARGE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("15")){ //Est. Eta DC
+                  sql += " AND GTN.ETA_PLUS2 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("16")){ //Inbound notification
+                  sql += "";
+                }else if(tipoFiltro.equals("17")){ //Pol
+                  sql += " AND TIP2.NOMBRE_POL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("18")){ //Agente Aduanal
+                  sql += " AND TAA.AGENTE_ADUANAL_NOMBRE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("19")){ //Fecha Mes de Venta
+                  sql += " AND TIE.FECHA_CAPTURA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("20")){ //Prioridad
+                  sql += " AND TIC.PRIORIDAD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("21")){ // País Origen 
+                  sql += " AND TIC.PAIS_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("22")){ // Size Container
+                  sql += " AND TIC.SIZE_CONTAINER IN (" + id + ") ";
+                }else if(tipoFiltro.equals("23")){ // Valor USD
+                  sql += " AND TIC.VALOR_USD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("24")){ // ETA Port Of Discharge
+                  sql += " AND TIC.ETA_PORT_OF_DISCHARGE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("25")){ // Agente Aduanal 
+                  sql += " AND TIC.AGENTE_ADUANAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("26")){ // Pedimento A1 
+                  sql += " AND TIC.PEDIMENTO_A1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("27")){ // Pedimento R1
+                  sql += " AND TIC.PEDIMENTO_R1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("28")){ // Motivo Rectificación 1
+                  sql += " AND TIC.MOTIVO_RECTIFICACION_1 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("29")){ // Pedimento R1 (2DO)
+                  sql += " AND TIC.PEDIMENTO_R1_2DO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("30")){ // Motivo Rectificación 2
+                  sql += " AND TIC.MOTIVO_RECTIFICACION_2 IN (" + id + ") ";
+                }else if(tipoFiltro.equals("31")){ // Fecha Recepción Documentos
+                  sql += " AND TIC.FECHA_RECEPCION_DOCUMENTOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("32")){ // Recinto
+                  sql += " AND TIC.RECINTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("33")){ // Naviera/Forwarder
+                  sql += " AND TIC.NAVIERA_FORWARDER IN (" + id + ") ";
+                }else if(tipoFiltro.equals("34")){ // Buque
+                  sql += " AND TIC.BUQUE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("35")){ // Fecha Revalidación/Liberación de BL
+                  sql += " AND TIC.FECHA_REVALID_LIBE_BL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("36")){ // Fecha Previo Origen
+                  sql += " AND TIC.FECHA_PREVIO_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("37")){ // Fecha Previo en destino
+                  sql += " AND TIC.FECHA_PREVIO_DESTINO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("38")){ // Fecha Resultado Previo
+                  sql += " AND TIC.FECHA_RESULTADO_PREVIO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("39")){ // Proforma Final 
+                  sql += " AND TIC.PROFORMA_FINAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("40")){ // Requiere permiso
+                  sql += " AND TIC.REQUIERE_PERMISO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("41")){ // Fecha envío Fichas/notas
+                  sql += " AND TIC.FECHA_ENVIO_FICHAS_NOTAS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("42")){ // Fec. Recepción de permisos tramit.
+                  sql += " AND TIC.FEC_RECEPCION_PERMISOS_TRAMIT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("43")){ // Fec. Act Permisos (Inic Vigencia)
+                  sql += " AND TIC.FEC_ACT_PERMISOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("44")){ // Fec. Perm. Aut. (Fin de Vigencia) 
+                  sql += " AND TIC.FEC_PERM_AUT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("45")){ // Cuenta con CO para aplicar preferencia Arancelaria
+                  sql += " AND TIC.CO_APLIC_PREF_ARANCELARIA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("46")){ // Aplico Preferencia Arancelaria 
+                  sql += " AND TIC.APLIC_PREF_ARANCELARIA_CO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("47")){ // Requiere UVA
+                  sql += " AND TIC.REQUIERE_UVA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("48")){ // Requiere CA
+                  sql += " AND TIC.REQUIERE_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("49")){ // Fecha Recepción CA
+                  sql += " AND TIC.FECHA_RECEPCION_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("50")){ // Número de Constancia CA 
+                  sql += " AND IC.NÚMERO_CONSTANCIA_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("51")){ // Monto CA
+                  sql += " AND TIC.MONTO_CA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("52")){ // Fecha Documentos Completos
+                  sql += " AND TIC.FECHA_DOCUMENTOS_COMPLETOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("53")){ // Fecha Pago Pedimento
+                  sql += " AND TIC.FECHA_PAGO_PEDIMENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("54")){ // Fecha Solicitud de transporte
+                  sql += " AND TIC.FECHA_SOLICITUD_TRANSPORTE IN (" + id + ") ";
+                }else if(tipoFiltro.equals("55")){ // Fecha Modulacion
+                  sql += " AND TIC.FECHA_MODULACION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("56")){ // Modalidad
+                  sql += " AND TIC.MODALIDAD_CAMION_TREN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("57")){ // Resultado Modulacion
+                  sql += " AND TIC.RESULT_MODULACION_VERDE_ROJO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("58")){ // Fecha Reconocimiento
+                  sql += " AND TIC.FECHA_RECONOCIMIENTO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("59")){ // Fecha Liberacion
+                  sql += " AND TIC.FECHA_LIBERACION IN (" + id + ") ";
+                }else if(tipoFiltro.equals("60")){ // Sello Origen 
+                  sql += " AND TIC.SELLO_ORIGEN IN (" + id + ") ";
+                }else if(tipoFiltro.equals("61")){ // Sello Final
+                  sql += " AND TIC.SELLO_FINAL IN (" + id + ") ";
+                }else if(tipoFiltro.equals("62")){ // Fecha de retencion por la autoridad
+                  sql += " AND TIC.FECHA_RETENCION_AUTORIDAD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("63")){ // Fec. de liberacion por ret. de la aut.
+                  sql += " AND TIC.FECHA_LIB_POR_RET_AUT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("64")){ // Estatus de la operación
+                  sql += " AND TEC.DESCRIPCION_ESTADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("65")){ // Motivo Atraso
+                  sql += " AND TIC.MOTIVO_ATRASO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("66")){ // Observaciones
+                  sql += " AND TIC.OBSERVACIONES IN (" + id + ") ";
+                }else if(tipoFiltro.equals("67")){ // Llegada a NOVA
+                  sql += " AND TIC.LLEGADA_A_NOVA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("68")){ // Llegada a Globe trade SD  
+                  sql += " AND TIC.LLEGADA_A_GLOBE_TRADE_SD IN (" + id + ") ";
+                }else if(tipoFiltro.equals("69")){ // Archivo M 
+                  sql += " AND TIC.ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("70")){ // Fecha de Archivo M 
+                  sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("71")){ // Fecha Solicitud de Manipulacion
+                  sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+                }else if(tipoFiltro.equals("72")){ // Fecha de vencimiento de Manipulacion
+                  sql += " AND TIC.FECHA_VENCIM_MANIP IN (" + id + ") ";
+                }else if(tipoFiltro.equals("73")){ // Fecha confirmacion Clave de Pedimento
+                  sql += " AND TIC.FECHA_CONFIRM_CLAVE_PEDIM IN (" + id + ") ";
+                }else if(tipoFiltro.equals("74")){ // Fecha de Recepcion de Incrementables
+                  sql += " AND TIC.FECHA_RECEP_INCREMENT IN (" + id + ") ";
+                }else if(tipoFiltro.equals("75")){ // T&E 
+                  sql += " AND TIC.T_E IN (" + id + ") ";
+                }else if(tipoFiltro.equals("76")){ // Fecha de Vencimiento del Inbound  
+                  sql += " AND TIC.FECHA_VENCIM_INBOUND IN (" + id + ") ";
+                }else if(tipoFiltro.equals("77")){ // No. BULTOS
+                  sql += " AND TIC.NO_BULTOS IN (" + id + ") ";
+                }else if(tipoFiltro.equals("78")){ // Peso (KG)
+                  sql += " AND TIC.PESO_KG IN (" + id + ") ";
+                }else if(tipoFiltro.equals("79")){ // Transferencia 
+                  sql += " AND TIC.TRANSFERENCIA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("80")){ // Fecha Inicio Etiquetado
+                  sql += " AND TIC.FECHA_INICIO_ETIQUETADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("81")){ // Fecha Termino Etiquetado 
+                  sql += " AND TIC.FECHA_TERMINO_ETIQUETADO IN (" + id + ") "; 
+                }else if(tipoFiltro.equals("82")){ // Hora de termino Etiquetado
+                  sql += " AND TIC.HORA_TERMINO_ETIQUETADO IN (" + id + ") ";
+                }else if(tipoFiltro.equals("83")){ // Proveedor
+                  sql += " AND TIC.PROVEEDOR IN (" + id + ") ";
+                }else if(tipoFiltro.equals("84")){ // Proveedor de Carga
+                  sql += " AND TIC.PROVEEDOR_CARGA IN (" + id + ") ";
+                }else if(tipoFiltro.equals("85")){ // FY
+                  sql += " AND TIC.FY IN (" + id + ") ";
+                }
+                  sql += " ORDER BY TIE.ID_EVENTO " ;
+                  
         return sql;
     }
     
@@ -2384,5 +2844,16 @@ public class ConsultasQuery {
         
         return sql;
     }
+    
+    public String consultarEstatusCustoms() {
+        sql = " SELECT "
+            + " ID_ESTADO, "
+            + " DESCRIPCION_ESTADO "
+            + " FROM TRA_ESTADOS_CUSTOMS "
+            + " WHERE ESTATUS = 1 "
+            + " ORDER BY ID_ESTADO ASC ";
+        return sql;
+    }
+    
 } 
  
