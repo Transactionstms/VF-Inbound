@@ -48,109 +48,122 @@ public class ConsultarReporteCustom extends HttpServlet {
             NumberFormat formatter = new DecimalFormat("#0.00");
 
             String tipoAgente = request.getParameter("tipoAgente");
+            String tipoFiltro = request.getParameter("tipoFiltro");
+            String id = request.getParameter("id");
+            
+            //Parametros Generales:
             String salida = "";
+            String caramelo = "";
             int sal = 0;
+            
+            //Generar caramelo: Opciones del multiselect
+            String[] arrOfStr = id.split(",");
+            
+            for (String a : arrOfStr) {
+                caramelo += "'" + a + "',";
+            }
+            caramelo = caramelo.replaceAll(",$", "");
              
             ServiceDAO dao = new ServiceDAO();
-            ResultSet rs = dao.consulta(fac.consultarReporteCustoms(tipoAgente));
+            ResultSet rs = dao.consulta(fac.consultarReporteCustoms(tipoAgente,tipoFiltro,caramelo));
             while (rs.next()) {
 
                 salida += " <tr id=\"tr" + sal + "\"> "
-                        + "    <th class=\"font-numero\"><center><img src=\"../../img/circle-green.png\" width=\"100%\"/></center></th> "  //Semaforo            // Semaforo
-                        + "    <th class=\"font-numero\">"+rs.getString(1)+"</th> "  // Número de Evento
-                        + "    <th class=\"font-numero\">"+rs.getString(31)+"</th> "  // Referencia Aduanal
-                        + "    <td class=\"font-numero\">"+rs.getString(2)+"</td> "   // Responsable
-                        + "    <td class=\"font-numero\">"+rs.getString(3)+"</td> "   // Final Destination
-                        + "    <td class=\"font-numero\">"+rs.getString(22)+"</td> "  // Brand-Division
-                        + "    <td class=\"font-numero\">"+rs.getString(5)+"</td> "   // Division
-                        + "    <td class=\"font-numero\">"+rs.getString(6)+"</td> "  // Shipment ID
-                        + "    <td class=\"font-numero\">"+rs.getString(7)+"</td> "  // Container
-                        + "    <td class=\"font-numero\">"+rs.getString(8)+"</td> "   // BL/AWB/PRO
-                        + "    <td class=\"font-numero\">"+rs.getString(23)+"</td> "  // LoadType
-                        + "    <td class=\"font-numero\">"+rs.getString(10)+"</td> "  // Quantity
-                        + "    <td class=\"font-numero\">"+rs.getString(20)+"</td> "  // POD
-                        + "    <td class=\"font-numero\">"+rs.getString(12)+"</td> "  // Est. Departure from POL
-                        + "    <td class=\"font-numero\">"+rs.getString(13)+"</td> "  // ETA REAL Port of Discharge
-                        + "    <td class=\"font-numero\">"+rs.getString(24)+"</td> "  // Est. Eta DC
-                        + "    <td class=\"font-numero\">"+rs.getString(15)+"</td> "  // Inbound notification
-                        + "    <td class=\"font-numero\">"+rs.getString(21)+"</td> "  // POL
-                        + "    <td class=\"font-numero\">"+rs.getString(17)+"</td> "  // A.A.
-                        + "    <td class=\"font-numero\">"+rs.getString(29)+"</td> "  // Fecha Mes de Venta 
-                        + "    <td class=\"font-numero\">"+rs.getString(98)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(32)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(33)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(34)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(35)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(36)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(37)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(38)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(39)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(40)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(41)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(42)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(43)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(44)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(45)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(46)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(47)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(48)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(49)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(50)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(51)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(52)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(53)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(54)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(55)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(56)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(57)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(58)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(59)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(60)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(61)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(62)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(63)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(64)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(65)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(66)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(67)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(68)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(69)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(70)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(71)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(72)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(73)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(74)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(75)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(76)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(77)+"</td> ";
+                        + "    <th class=\"font-numero\"><center><img src=\"../../img/circle-green.png\" width=\"100%\"/></center></th> "  //Semaforo 
+                        + "    <th class=\"font-numero\">"+rs.getString(31).trim()+"</th> "  // Referencia Aduanal
+                        + "    <th class=\"font-numero\">"+rs.getString(1).trim()+"</th> "   // Evento
+                        + "    <td class=\"font-numero\">"+rs.getString(2).trim()+"</td> "   // Responsable
+                        + "    <td class=\"font-numero\">"+rs.getString(3).trim()+"</td> "   // Final Destination
+                        + "    <td class=\"font-numero\">"+rs.getString(22).trim()+"</td> "  // Brand-Division
+                        + "    <td class=\"font-numero\">"+rs.getString(5).trim()+"</td> "   // Division
+                        + "    <td class=\"font-numero\">"+rs.getString(6).trim()+"</td> "   // Shipment ID
+                        + "    <td class=\"font-numero\">"+rs.getString(7).trim()+"</td> "   // Container
+                        + "    <td class=\"font-numero\">"+rs.getString(8).trim()+"</td> "   // BL/AWB/PRO
+                        + "    <td class=\"font-numero\">"+rs.getString(23).trim()+"</td> "  // LoadType
+                        + "    <td class=\"font-numero\">"+rs.getString(10).trim()+"</td> "  // Quantity
+                        + "    <td class=\"font-numero\">"+rs.getString(20).trim()+"</td> "  // POD
+                        + "    <td class=\"font-numero\">"+rs.getString(12).trim()+"</td> "  // Est. Departure from POL
+                        + "    <td class=\"font-numero\">"+rs.getString(13).trim()+"</td> "  // ETA REAL Port of Discharge
+                        + "    <td class=\"font-numero\">"+rs.getString(24).trim()+"</td> "  // Est. Eta DC
+                        + "    <td class=\"font-numero\">"+rs.getString(15).trim()+"</td> "  // Inbound notification
+                        + "    <td class=\"font-numero\">"+rs.getString(21).trim()+"</td> "  // POL
+                        + "    <td class=\"font-numero\">"+rs.getString(17).trim()+"</td> "  // A.A.
+                        + "    <td class=\"font-numero\">"+rs.getString(29).trim()+"</td> "  // Fecha Mes de Venta 
+                        + "    <td class=\"font-numero\">"+rs.getString(98).trim()+"</td> "  // Prioridad
+                        + "    <td class=\"font-numero\">"+rs.getString(32).trim()+"</td> "  // País Origen    
+                        + "    <td class=\"font-numero\">"+rs.getString(33).trim()+"</td> "  // Size Container 
+                        + "    <td class=\"font-numero\">"+rs.getString(34).trim()+"</td> "  // Valor USD
+                        + "    <td class=\"font-numero\">"+rs.getString(35).trim()+"</td> "  // ETA Port Of Discharge
+                        + "    <td class=\"font-numero\">"+rs.getString(36).trim()+"</td> "  // Agente Aduanal 
+                        + "    <td class=\"font-numero\">"+rs.getString(37).trim()+"</td> "  // Pedimento A1   
+                        + "    <td class=\"font-numero\">"+rs.getString(38).trim()+"</td> "  // Pedimento R1
+                        + "    <td class=\"font-numero\">"+rs.getString(39).trim()+"</td> "  // Motivo Rectificación 1
+                        + "    <td class=\"font-numero\">"+rs.getString(40).trim()+"</td> "  // Pedimento R1 (2DO)
+                        + "    <td class=\"font-numero\">"+rs.getString(41).trim()+"</td> "  // Motivo Rectificación 2
+                        + "    <td class=\"font-numero\">"+rs.getString(42).trim()+"</td> "  // Fecha Recepción Documentos
+                        + "    <td class=\"font-numero\">"+rs.getString(43).trim()+"</td> "  // Recinto
+                        + "    <td class=\"font-numero\">"+rs.getString(44).trim()+"</td> "  // Naviera/Forwarder
+                        + "    <td class=\"font-numero\">"+rs.getString(45).trim()+"</td> "  // Buque
+                        + "    <td class=\"font-numero\">"+rs.getString(46).trim()+"</td> "  // Fecha Revalidación/Liberación de BL
+                        + "    <td class=\"font-numero\">"+rs.getString(47).trim()+"</td> "  // Fecha Previo Origen
+                        + "    <td class=\"font-numero\">"+rs.getString(48).trim()+"</td> "  // Fecha Previo en destino
+                        + "    <td class=\"font-numero\">"+rs.getString(49).trim()+"</td> "  // Fecha Resultado Previo
+                        + "    <td class=\"font-numero\">"+rs.getString(50).trim()+"</td> "  // Proforma Final 
+                        + "    <td class=\"font-numero\">"+rs.getString(51).trim()+"</td> "  // Requiere permiso
+                        + "    <td class=\"font-numero\">"+rs.getString(52).trim()+"</td> "  // Fecha envío Fichas/notas
+                        + "    <td class=\"font-numero\">"+rs.getString(53).trim()+"</td> "  // Fec. Recepción de permisos tramit.
+                        + "    <td class=\"font-numero\">"+rs.getString(54).trim()+"</td> "  // Fec. Act Permisos (Inic Vigencia)
+                        + "    <td class=\"font-numero\">"+rs.getString(55).trim()+"</td> "  // Fec. Perm. Aut. (Fin de Vigencia) 
+                        + "    <td class=\"font-numero\">"+rs.getString(56).trim()+"</td> "  // Cuenta con CO para aplicar preferencia Arancelaria
+                        + "    <td class=\"font-numero\">"+rs.getString(57).trim()+"</td> "  // Aplico Preferencia Arancelaria 
+                        + "    <td class=\"font-numero\">"+rs.getString(58).trim()+"</td> "  // Requiere UVA
+                        + "    <td class=\"font-numero\">"+rs.getString(59).trim()+"</td> "  // Requiere CA
+                        + "    <td class=\"font-numero\">"+rs.getString(60).trim()+"</td> "  // Fecha Recepción CA
+                        + "    <td class=\"font-numero\">"+rs.getString(61).trim()+"</td> "  // Número de Constancia CA 
+                        + "    <td class=\"font-numero\">"+rs.getString(62).trim()+"</td> "  // Monto CA
+                        + "    <td class=\"font-numero\">"+rs.getString(63).trim()+"</td> "  // Fecha Documentos Completos
+                        + "    <td class=\"font-numero\">"+rs.getString(64).trim()+"</td> "  // Fecha Pago Pedimento
+                        + "    <td class=\"font-numero\">"+rs.getString(65).trim()+"</td> "  // Fecha Solicitud de transporte
+                        + "    <td class=\"font-numero\">"+rs.getString(66).trim()+"</td> "  // Fecha Modulacion
+                        + "    <td class=\"font-numero\">"+rs.getString(67).trim()+"</td> "  // Modalidad
+                        + "    <td class=\"font-numero\">"+rs.getString(68).trim()+"</td> "  // Resultado Modulacion
+                        + "    <td class=\"font-numero\">"+rs.getString(69).trim()+"</td> "  // Fecha Reconocimiento
+                        + "    <td class=\"font-numero\">"+rs.getString(70).trim()+"</td> "  // Fecha Liberacion 
+                        + "    <td class=\"font-numero\">"+rs.getString(71).trim()+"</td> "  // Sello Origen 
+                        + "    <td class=\"font-numero\">"+rs.getString(72).trim()+"</td> "  // Sello Final
+                        + "    <td class=\"font-numero\">"+rs.getString(73).trim()+"</td> "  // Fecha de retencion por la autoridad 
+                        + "    <td class=\"font-numero\">"+rs.getString(74).trim()+"</td> "  // Fec. de liberacion por ret. de la aut.
+                        + "    <td class=\"font-numero\">"+rs.getString(75).trim()+"</td> "  // Estatus de la operación
+                        + "    <td class=\"font-numero\">"+rs.getString(76).trim()+"</td> "  // Motivo Atraso
+                        + "    <td class=\"font-numero\">"+rs.getString(77).trim()+"</td> "; // Observaciones
                 
             if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF
                 
-                salida += "    <td class=\"font-numero\">"+rs.getString(78)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(79)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(80)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(81)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(82)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(83)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(84)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(85)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(86)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(87)+"</td> ";
+                salida += "    <td class=\"font-numero\">"+rs.getString(78).trim()+"</td> "  // Llegada a NOVA
+                        + "    <td class=\"font-numero\">"+rs.getString(79).trim()+"</td> "  // Llegada a Globe trade SD  
+                        + "    <td class=\"font-numero\">"+rs.getString(80).trim()+"</td> "  // Archivo M 
+                        + "    <td class=\"font-numero\">"+rs.getString(81).trim()+"</td> "  // Fecha de Archivo M 
+                        + "    <td class=\"font-numero\">"+rs.getString(82).trim()+"</td> "  // Fecha Solicitud de Manipulacion
+                        + "    <td class=\"font-numero\">"+rs.getString(83).trim()+"</td> "  // Fecha de vencimiento de Manipulacion
+                        + "    <td class=\"font-numero\">"+rs.getString(84).trim()+"</td> "  // Fecha confirmacion Clave de Pedimento
+                        + "    <td class=\"font-numero\">"+rs.getString(85).trim()+"</td> "  // Fecha de Recepcion de Incrementables
+                        + "    <td class=\"font-numero\">"+rs.getString(86).trim()+"</td> "  // T&E 
+                        + "    <td class=\"font-numero\">"+rs.getString(87).trim()+"</td> "; // Fecha de Vencimiento del Inbound  
                     
             }
             
             if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
                 
-                salida += "    <td class=\"font-numero\">"+rs.getString(88)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(89)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(90)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(91)+"td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(92)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(93)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(94)+"</td> "
-                        + "    <td class=\"font-numero\">"+rs.getString(95)+"</td> ";
+                salida += "    <td class=\"font-numero\">"+rs.getString(88).trim()+"</td> "  // No. BULTOS
+                        + "    <td class=\"font-numero\">"+rs.getString(89).trim()+"</td> "  // Peso (KG)
+                        + "    <td class=\"font-numero\">"+rs.getString(90).trim()+"</td> "  // Transferencia 
+                        + "    <td class=\"font-numero\">"+rs.getString(91).trim()+"</td> "  // Fecha Inicio Etiquetado
+                        + "    <td class=\"font-numero\">"+rs.getString(92).trim()+"</td> "  // Fecha Termino Etiquetado 
+                        + "    <td class=\"font-numero\">"+rs.getString(93).trim()+"</td> "  // Hora de termino Etiquetado
+                        + "    <td class=\"font-numero\">"+rs.getString(94).trim()+"</td> "  // Proveedor
+                        + "    <td class=\"font-numero\">"+rs.getString(95).trim()+"</td> "; // Proveedor de Carga 
             }
-                salida += "    <td class=\"font-numero\">"+rs.getString(96)+"</td> "
+                salida += "    <td class=\"font-numero\">"+rs.getString(96).trim()+"</td> "  // FY
                         + "</tr>";
                 sal++;
             }
