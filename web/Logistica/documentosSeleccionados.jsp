@@ -234,7 +234,7 @@
                                             <!-- Botones controles -->
                                             <div class="col-lg-12" style="text-align: right;">
                                              
-                                                <a class="btn btn-info text-nowrap" role="button"  onclick="regresar()">Regresar</a>
+                                         <!--       <a class="btn btn-info text-nowrap" role="button"  onclick="regresar()">Regresar</a>-->
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Aceptar</a>
                                             </div>
@@ -254,43 +254,12 @@
               history.back();
           }
            function save() {
-                           swal({
-                                title:  "Guardando. . .",
-                                allowEscapeKey:false
-                            });
-                        let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
+               window.location.href =  "<%=request.getContextPath()%>/Logistica/docDatosAdicionales.jsp?op=<%=opciones%>";
 
-                        let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
-                        let valores = '';
-                        for (var x = 0; x < checkboxes.length; x++) {
-                            if (checkboxes[x].checked) {
-                                console.log(checkboxes[x].value)
-                                valores += checkboxes[x].value + ',';
-                                cont = cont + 1;
-                            }
-                        }
-
-
-                         valores = valores.slice(0, -1); 
-                         console.log(valores);
-                      //window.location.href =  '<%=request.getContextPath()%>/Importacion/eventosDetalle.jsp';
-
-                                   }      
+                    
+                       }      
         </script>                     
-     <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
-        <!-- JavaScript files-->
-        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <!-- Main Theme JS File-->
-        <script src="../lib/js/theme.js"></script>
-        <!-- Prism for syntax highlighting-->
-        <script src="../lib/vendor/prismjs/prism.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-        <!-- actions js -->
-        <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
-        <!-- sweetalert -->
+    
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 
       <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
@@ -304,14 +273,7 @@
 
 
         <script type="text/javascript">
-            // Optional
-            Prism.plugins.NormalizeWhitespace.setDefaults({
-                'remove-trailing': true,
-                'remove-indent': true,
-                'left-trim': true,
-                'right-trim': true,
-            });
-
+         
           $(document).ready(function () {
   $('#example').DataTable({
     dom: 'lBfrtip', // Incluye el elemento de paginación

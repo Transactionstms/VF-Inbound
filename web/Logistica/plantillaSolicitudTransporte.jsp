@@ -219,7 +219,7 @@
                                                                 <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" value="gtn.shipment_id='<%=row[5]%>'" id="flexCheckDefault<%=row[0]%>" name="valor"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
                                                                     <label class="form-check-label" for="flexCheckDefault<%=row[0]%>">
-                                                                        Nuevo Evento
+                                                                       Agregar
                                                                     </label>
                                                                 </div>
                                                             </td>
