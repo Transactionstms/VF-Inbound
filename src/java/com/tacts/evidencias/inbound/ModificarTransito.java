@@ -30,9 +30,10 @@ public class ModificarTransito extends HttpServlet {
             DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
             
             String status=request.getParameter("status");
+             String op=request.getParameter("op");
             String shipme=request.getParameter("shipme");
             String contai=request.getParameter("contai");
-                String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE="+status+" where SHIPMENT_ID='"+shipme+"' and CONTAINER1='"+contai+"'";
+                String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE="+status+",EMBARQUE_AGRUPADOR='"+op+"' where "+shipme;
          
             System.out.println(sqlGtn);
             boolean update=db.doDB(sqlGtn);

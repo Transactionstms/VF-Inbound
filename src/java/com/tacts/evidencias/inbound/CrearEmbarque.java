@@ -38,11 +38,10 @@ public class CrearEmbarque extends HttpServlet {
                 String cus  = request.getParameter("cus"); 
                 String f1   = request.getParameter("f1"); 
                 String f2   = request.getParameter("f2"); 
-                String fol  = request.getParameter("fol"); 
-                String opc  = request.getParameter("op"); 
+                String fol  = request.getParameter("fol");  
 
                                                   
-            String sqlGtn="update tra_inc_gtn_test set EMBARQUE_AGRUPADOR='"+fol+"' where "+opc;
+            String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE=2 where EMBARQUE_AGRUPADOR='"+fol+"' ";
             String sqlEmb="insert into TRA_INB_EMBARQUE (EMBARQUE_AGRUPADOR,EMBARQUE_TRANSPORTISTA,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO,EMBARQUE_TCUSTODIA)"
                     + "values"
                     + "('"+fol+"','"+tran+"',TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),'"+cus+"') ";

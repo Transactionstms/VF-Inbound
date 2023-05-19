@@ -101,25 +101,30 @@
                                                 <table  id="example" className="main-table">
                                                     <thead>
                                                         <tr>
-                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Responsable <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Final Destination (Shipment) <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Brand-Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Shipment ID <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Container <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>	
+                                                              <th scope="col" class="font-titulo">Evento <strong style="color:red">*</strong></th>
+                                                              <th scope="col" class="font-titulo">Container <strong style="color:red">*</strong></th>
+                                                              <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>
+                                                              
+                                                            <th scope="col" class="font-titulo">Shipment ID <strong style="color:red">*</strong></th> 
                                                             <th scope="col" class="font-titulo">Load Type <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Quantity <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
+                                                            <th scope="col" class="font-titulo">LUM BRIO <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo">Brand <strong style="color:red">*</strong></th> 
+                                                            <th scope="col" class="font-titulo">Division <strong style="color:red">*</strong></th>	
+                    
+                                                            <th scope="col" class="font-titulo">MX Port </th>	 
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA MX Port</th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> ETA DC </th>	 
+                                                            	
+                                                          
+                                                           
+                                                      	
+                                                      <!--  <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>-->
                                                             
                                                         </tr>
                                                     </thead>
@@ -141,22 +146,22 @@
         +"   gtn.final_destination,"
         +"   gtn.brand_division,"
         +"   nvl(tid.division_nombre,' '), "
-        +"   gtn.shipment_id,"
+        +"   gtn.shipment_id,"//5
         +"   gtn.container1,"
         +"   gtn.bl_awb_pro,"
         +"   gtn.load_type,"
         +"   sq.suma,"
-        +"   tip1.NOMBRE_POD,"
+        +"   tip1.NOMBRE_POD,"//10
         +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
         +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
         +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
         +"   'Inbound notification' AS notification_type,"
-        +"   tip2.NOMBRE_POL,"
+        +"   tip2.NOMBRE_POL,"//15
         +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
         +"   gtn.plantilla_id,"
         +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
         +"   tip1.nombre_pod,"
-        +"   tip2.nombre_pol,"
+        +"   tip2.nombre_pol,"//20
         +"   tibd.nombre_bd,"
         +"   CASE"
         +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
@@ -172,8 +177,9 @@
         +"   END AS estado,"
         +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
         +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
-        +"   NVL(tie.observaciones, ' ') AS observaciones,"
-        +"   gtn.LOAD_TYPE_FINAL "
+        +"   NVL(tie.observaciones, ' ') AS observaciones,"//25
+        +"   gtn.LOAD_TYPE_FINAL, "
+        + "  gtn.ETA_PORT_DISCHARGE "
         +" FROM "
         +"   tra_inb_evento tie"
         +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
@@ -184,7 +190,7 @@
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-                                                                   + " where   "+opciones
+                                                                   + " where  EMBARQUE_AGRUPADOR='"+opciones+"'"
         +" ORDER BY"
         +"   tie.id_evento";
 
@@ -198,24 +204,32 @@
                                                      <tr>
                                                           
                                                             <th class="font-numero"><%=row[0]%></th>	
-                                                            <td class="font-numero"> <%=row[1]%></td>
-                                                            <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[21]%></td>
-                                                            <td class="font-texto"> <%=row[4]%></td>
-                                                            <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[22]%> </td>		
+                                                            
+                                                            <td class="font-texto"> <%=row[5]%></td>
+                                                            <td class="font-texto"> <%=row[26]%></td>
                                                             <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[19]%></td>
-                                                            <td class="font-texto"> <%=row[11]%></td>	
+                                                            
+                                                            <td class="font-texto"> <%=row[21]%></td>  
+                                                            <td class="font-texto"> <%=row[4]%></td> 
+                                                            
+                                                            <td class="font-texto"> <%=row[19]%></td> 
+                                                            <td class="font-texto"> <%=row[27]%></td>	
+                                                            <td class="font-texto"> <%=row[23]%></td>
+                                                          
+                                                            
+                                                            <!--
+                                                              <td class="font-texto"> <%=row[11]%></td>
                                                             <td class="font-texto"> <%=row[12]%></td>	
                                                             <td class="font-texto"> <%=row[13]%></td>
                                                             <td class="font-texto"> <%= row[23]%></td>
+                                                            
                                                             <td class="font-texto"> <%= row[24]%></td>
                                                             <td class="font-texto"> <%=row[14]%></td>
-                                                            <td class="font-texto"> <%=row[20]%></td>	
-                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            <td class="font-texto"> <%=row[20]%></td>
+                                                            
+                                                            <td class="font-texto"> <%=row[16]%></td>-->
                                                            
                                                         </tr>
 

@@ -103,7 +103,7 @@
                                                 <div class="mb-4">
                                                     <label class="form-label">Tipo de carga</label>
                                                     <select class="form-select" aria-label="Default select example" id="tcarga" name="tcarga">
-                                                        <option selected value="3">Elija una opcion</option>
+                                                        <option selected value="0">Elija una opcion</option>
                                                         <option value="1">FCL</option>
                                                         <option value="2">LCL</option>
                                                         <option value="3">FCL/LCL</option>

@@ -30,6 +30,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
+        
+        <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
       
     </head>
        <%
@@ -64,7 +66,7 @@
                 +" FROM "
                 +"   tra_inb_evento tie" 
                 +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id" 
-                + " where   "+opciones
+                + " where    EMBARQUE_AGRUPADOR='"+opciones+"'"
                 +" ORDER BY"
                 +"   tie.id_evento";
             
@@ -97,7 +99,7 @@
                                                     <div class="col-md-6 mb-4">
                                                         <label class="form-label" >Transportista</label>
                                                         <select class="form-select" id="tranporte" >
-                                                            <option selected>Elija una opcion</option>
+                                                            <option selected value="" >Elija una opcion</option>
                                                             <%=transportista%>
                                                         </select>
                                                     </div>
@@ -118,7 +120,7 @@
                                                     <div class="col-md-6 mb-4">
                                                         <label class="form-label" >Custodia</label>
                                                         <select class="form-select" id="custodia" >
-                                                            <option selected>Elija una opcion</option>
+                                                            <option selected value="0">Elija una opcion</option>
                                                             <%=custodia%>
                                                         </select>
                                                     </div>
@@ -214,19 +216,36 @@
     
     
     async function insertaEmbarque() {
-        
+         
+          
+         
         let tranp =document.getElementById('tranporte').value;
         let fecha =document.getElementById('f_enrampe').value;
         let f_ini =document.getElementById('f_inicio').value;
+        
+         if(tranp==='' || tranp===null){
+              swal({  title:  "Selecciona el transporte",    allowEscapeKey:false  });
+             return;
+         }
+          if(fecha==='' || fecha===null){
+              swal({  title:  "Selecciona la fecha de enrampe",    allowEscapeKey:false  });
+             return;
+         }
+          if(f_ini==='' || f_ini===null){
+              swal({  title:  "Selecciona la fecha entrega",    allowEscapeKey:false  });
+             return;
+         }
+          swal({  title:  "Guardando,Espere...",    allowEscapeKey:false  });
         let custo =document.getElementById('custodia').value;
         let fool=Date.now();
                  console.log(fool);
         
             try {
-              const response = await fetch("<%=request.getContextPath()%>/CrearEmbarque?tran="+tranp+"&cus="+custo+"&f1="+fecha+"&f2="+f_ini+"&fol=<%=usr%>"+fool+"&op=<%=opc%>");
+              const response = await fetch("<%=request.getContextPath()%>/CrearEmbarque?tran="+tranp+"&cus="+custo+"&f1="+fecha+"&f2="+f_ini+"&fol=<%=opciones%>");
               if (!response.ok) {
                 throw new Error('Error en la solicitud');
               }
+                swal({  title:  "Correo enviado",    allowEscapeKey:false  });
               const data = await response.text();
               console.log(data);
             } catch (error) {

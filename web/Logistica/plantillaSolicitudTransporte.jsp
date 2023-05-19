@@ -4,6 +4,7 @@
     Author     : grecendiz
 --%>
 
+<%@page import="com.usuario.Usuario"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -69,20 +70,22 @@
             String shipment = request.getParameter("shipment");
             String container = request.getParameter("container");
             String evento = request.getParameter("evento");
-            
-            String tcarga1 = "";
+             Usuario root = (Usuario) ownsession.getAttribute("login.root");
+                int usr = root.getId();
+            String tcarga1 = " ";
            
                 if(tcarga.equals("1")){
                  tcarga1 = "FCL";
                 }else  if(tcarga.equals("2")){
                  tcarga1 = "LCL";
                 }else if(tcarga.equals("3")){
-                 tcarga1 = "FCL/LCL";
+                 tcarga1 = "FCL / LCL";
                 }
+                
            
             
          try{    if(!tcarga.equals("0"))   {
-            // where+=" and gtn.LOAD_TYPE_FINAL in("+tcarga1+")";
+             where+=" and gtn.LOAD_TYPE_FINAL in('"+tcarga1+"')";
          } 
          }catch(Error e){}
          try{    if(!shipment.equals("0")) { where+=" and gtn.shipment_id in ("+shipment+")";}  }catch(Error e){}
@@ -119,26 +122,18 @@
                                                 <table  id="example" className="main-table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" class="font-titulo" >Agregar</th>
-                                                            <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Responsable <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Final Destination (Shipment) <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Brand-Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Division <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Shipment ID <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Container <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Load Type <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Quantity <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
-                                                            <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
-                                                            <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo">Seleccionar <strong style="color:red">*</strong></th>
+                                                            <th scope="col" class="font-titulo">Evento  </th>
+                                                            <th scope="col" class="font-titulo">Container  </th>
+                                                            <th scope="col" class="font-titulo">BL/ AWB/ PRO  </th>
+                                                            <th scope="col" class="font-titulo">Shipment ID </th> 
+                                                            <th scope="col" class="font-titulo">Load Type  </th>	
+                                                            <th scope="col" class="font-titulo">LUM BRIO  </th>
+                                                            <th scope="col" class="font-titulo">Brand </th> 
+                                                            <th scope="col" class="font-titulo">Division </th>	
+                                                            <th scope="col" class="font-titulo">MX Port </th>	 
+                                                            <th scope="col" class="font-titulo">ETA MX Port</th>
+                                                            <th scope="col" class="font-titulo"> ETA DC </th>	
                                                             
                                                         </tr>
                                                     </thead>
@@ -192,7 +187,8 @@
         +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
         +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
         +"   NVL(tie.observaciones, ' ') AS observaciones,"
-        +"   gtn.LOAD_TYPE_FINAL "
+        +"   gtn.LOAD_TYPE_FINAL,"
+        + "   NVL(TO_CHAR(gtn.ETA_PORT_DISCHARGE, 'MM/DD/YY'), ' ')  "
         +" FROM "
         +"   tra_inb_evento tie"
         +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
@@ -203,7 +199,7 @@
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-                                                                   + " where 1=1 "+where
+                                                                   + " where STATUS_EMBARQUE=0 "+where
         +" ORDER BY"
         +"   tie.id_evento";
 
@@ -217,31 +213,26 @@
                                                      <tr>
                                                          <td class="font-numero" > 
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%>" id="flexCheckDefault<%=row[0]%>" name="valor"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
+                                                                    <input class="form-check-input" type="checkbox" value=" shipment_id='<%=row[5]%>' and container1='<%=row[6]%>'" id="flexCheckDefault<%=row[0]%>" name="valor"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
                                                                     <label class="form-check-label" for="flexCheckDefault<%=row[0]%>">
                                                                        Agregar
                                                                     </label>
                                                                 </div>
                                                             </td>
                                                             <th class="font-numero"><%=row[0]%></th>	
-                                                            <td class="font-numero"> <%=row[1]%></td>
-                                                            <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[21]%></td>
-                                                            <td class="font-texto"> <%=row[4]%></td>
-                                                            <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[22]%> </td>		
+                                                            
+                                                            <td class="font-texto"> <%=row[5]%></td>
+                                                            <td class="font-texto"> <%=row[26]%></td>
                                                             <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[19]%></td>
-                                                            <td class="font-texto"> <%=row[11]%></td>	
-                                                            <td class="font-texto"> <%=row[12]%></td>	
-                                                            <td class="font-texto"> <%=row[13]%></td>
-                                                            <td class="font-texto"> <%= row[23]%></td>
-                                                            <td class="font-texto"> <%= row[24]%></td>
-                                                            <td class="font-texto"> <%=row[14]%></td>
-                                                            <td class="font-texto"> <%=row[20]%></td>	
-                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            
+                                                            <td class="font-texto"> <%=row[21]%></td>  
+                                                            <td class="font-texto"> <%=row[4]%></td> 
+                                                            
+                                                            <td class="font-texto"> <%=row[19]%></td> 
+                                                            <td class="font-texto"> <%=row[27]%></td>	
+                                                            <td class="font-texto"> <%=row[23]%></td>
                                                            
                                                         </tr>
 
@@ -273,14 +264,43 @@
         </div>   
         <script>
 
-         
-           function nuevoEvento() {
-                           swal({
-                                title:  "Guardando. . .",
-                                allowEscapeKey:false
-                            });
+         async function nuevoEvento() {
+             swal({  title:  "Guardando. . .",    allowEscapeKey:false  });
                         let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
+                        let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
+                        let valores = '';
+                        for (var x = 0; x < checkboxes.length; x++) {
+                            if (checkboxes[x].checked) {
+                                console.log(checkboxes[x].value)
+                                valores += checkboxes[x].value + ' or  ';
+                                cont = cont + 1;
+                            }
+                        }
+                        
+                         valores = valores.slice(0, -4); 
+                         console.log(valores);
+               let fool=Date.now();
+                 console.log(fool);
+                         
+                      
+  try {
+    const response = await fetch("<%=request.getContextPath()%>/ModificarTransito?status=1&op=<%=usr%>"+fool+"&shipme="+valores );
+    
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+    
+    const data = await response.text();
+    window.location.href =  '<%=request.getContextPath()%>/Logistica/documentosSeleccionados.jsp?op=<%=usr%>'+fool;
+    return data;
+  } catch (error) {
+    console.log('Error:', error.message);
+  }
+}
 
+           function nuevoEvento1() {
+                        swal({  title:  "Guardando. . .",    allowEscapeKey:false  });
+                        let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
                         let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
                         let valores = '';
                         for (var x = 0; x < checkboxes.length; x++) {
@@ -294,9 +314,18 @@
 
                          valores = valores.slice(0, -4); 
                          console.log(valores);
+                         
                       window.location.href =  '<%=request.getContextPath()%>/Logistica/documentosSeleccionados.jsp?op='+valores;
 
-                                   }      
+                                   }     
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
         </script>                     
      <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->
