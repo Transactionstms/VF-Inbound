@@ -86,7 +86,7 @@
                             </svg><span class="sidebar-link-title">Catálogos</span></a>
                         <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Productos/List.jsp" target="data">Productos y Servicios</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm.jsp" target="data">Personalizar Customs</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm.jsp?filterType=0&id=0" target="data">Personalizar Customs</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#widgetsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
@@ -113,7 +113,7 @@
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteUvas.jsp" target="data">Reporte UVAs</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReportePO.jsp" target="data">Reporte PO</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteCustoms.jsp" target="data">Reporte CUSTOMS</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteCustoms.jsp?filterType=0&id=0" target="data">Reporte CUSTOMS</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
