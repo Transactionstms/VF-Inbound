@@ -68,20 +68,22 @@
               }
             }
             
-            #buscador {
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-            }
-            
-            #primero {
-              width: 90%;
-            }
-            
-            #segundo {
-              width: 10%;
+            #WindowLoad{
+                position:fixed;
+                top:0px;
+                left:0px;
+                z-index:3200;
+                filter:alpha(opacity=65);
+               -moz-opacity:65;
+                opacity:0.65;
+                background:#fff;
             }
         </style>
+        <script>
+            /*window.onload = (event) =>{
+                jsShowWindowLoad('Cargando Información');
+            };*/
+        </script>
     </head>
     <body>
         <%
@@ -94,7 +96,17 @@
                 String idBodega = ownsession.getAttribute("cbbodegaId").toString();
                 Usuario root = (Usuario) ownsession.getAttribute("login.root");
                 ConsultasQuery fac = new ConsultasQuery();
-
+                                
+                //Parametros Generales
+                String filterType = request.getParameter("filterType");       //Inicializar con 0
+                String id = request.getParameter("id");     
+   
+                String AgentType = ""; 
+                String idPlantilla = "";
+                String namePlantilla = "";
+                String caramelo = "";
+                int cont = 0; 
+            
                 //Objetos Multiselect:
                 HashSet<String> list_evento = new HashSet<String>();
                 HashSet<String> list_referenciaAA = new HashSet<String>();
@@ -182,117 +194,121 @@
                 HashSet<String> list_proveedor_carga = new HashSet<String>();     
                 HashSet<String> list_fy = new HashSet<String>();
 
-                //Parametros Generales
-                String tipoAgente = ""; 
-                String idPlantilla = "";
-                String namePlantilla = "";
-                
                 //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
-                        tipoAgente = rowA[0]; 
+                        AgentType = rowA[0]; 
                         idPlantilla = rowA[1];
                         namePlantilla = rowA[2];
                     }
                 }
                 
-                if (db.doDB(fac.consultarMultiselectCustoms(tipoAgente))) {
+                if (db.doDB(fac.consultarMultiselectCustoms(AgentType))) {
                     for (String[] row : db.getResultado()) {
                         
-                                    list_evento.add("<option value=\""+row[0].trim()+"\">"+row[0]+"</option>");
-                                    list_referenciaAA.add("<option value=\""+row[30].trim()+"\">"+row[30]+"</option>");
-                                    list_responsable.add("<option value=\""+row[1].trim()+"\">"+row[1]+"</option>");
-                                    list_finalDestination.add("<option value=\""+row[2].trim()+"\">"+row[2]+"</option>");
-                                    list_brandDivision.add("<option value=\""+row[21].trim()+"\">"+row[21]+"</option>");
-                                    list_division.add("<option value=\""+row[4].trim()+"\">"+row[4]+"</option>");
-                                    list_shipmentId.add("<option value=\""+row[5].trim()+"\">"+row[5]+"</option>");
-                                    list_containerId.add("<option value=\""+row[6].trim()+"\">"+row[6]+"</option>");
-                                    list_blAwbPro.add("<option value=\""+row[7].trim()+"\">"+row[7]+"</option>");
-                                    list_loadType.add("<option value=\""+row[22].trim()+"\">"+row[22]+"</option>");
-                                    list_quantity.add("<option value=\""+row[9].trim()+"\">"+row[9]+"</option>");
-                                    list_pod.add("<option value=\""+row[19].trim()+"\">"+row[19]+"</option>");
-                                    list_estDepartFromPol.add("<option value=\""+row[11].trim()+"\">"+row[11]+"</option>");
-                                    list_etaRealPortOfDischarge.add("<option value=\""+row[12].trim()+"\">"+row[12]+"</option>");
-                                    list_estEtaDc.add("<option value=\""+row[23].trim()+"\">"+row[23]+"</option>");
-                                    list_inboundNotification.add("<option value=\""+row[14].trim()+"\">"+row[15]+"</option>");
-                                    list_pol.add("<option value=\""+row[20].trim()+"\">"+row[20]+"</option>");
-                                    list_aa.add("<option value=\""+row[16].trim()+"\">"+row[16]+"</option>");
-                                    list_fechaMesVenta.add("<option value=\""+row[28].trim()+"\">"+row[28]+"</option>");
-                                    list_prioridad.add("<option value=\""+row[97].trim()+"\">"+row[97]+"</option>");
-                                    list_pais_origen.add("<option value=\""+row[31].trim()+"\">"+row[31]+"</option>");   
-                                    list_size_container.add("<option value=\""+row[32].trim()+"\">"+row[32]+"</option>");    
-                                    list_valor_usd.add("<option value=\""+row[33].trim()+"\">"+row[33]+"</option>");                 
-                                    list_eta_port_discharge.add("<option value=\""+row[34].trim()+"\">"+row[34]+"</option>");         
-                                    list_agente_aduanal.add("<option value=\""+row[35].trim()+"\">"+row[35]+"</option>");              
-                                    list_pedimento_a1.add("<option value=\""+row[36].trim()+"\">"+row[36]+"</option>");              
-                                    list_pedimento_r1_1er.add("<option value=\""+row[37].trim()+"\">"+row[37]+"</option>");          
-                                    list_motivo_rectificacion_1er.add("<option value=\""+row[38].trim()+"\">"+row[38]+"</option>");    
-                                    list_pedimento_r1_2do.add("<option value=\""+row[39].trim()+"\">"+row[39]+"</option>");         
-                                    list_motivo_rectificacion_2do.add("<option value=\""+row[40].trim()+"\">"+row[40]+"</option>");    
-                                    list_fecha_recepcion_doc.add("<option value=\""+row[41].trim()+"\">"+row[41]+"</option>");    
-                                    list_recinto.add("<option value=\""+row[42].trim()+"\">"+row[42]+"</option>");
-                                    list_naviera.add("<option value=\""+row[43].trim()+"\">"+row[43]+"</option>");
-                                    list_buque.add("<option value=\""+row[44].trim()+"\">"+row[44]+"</option>");
-                                    list_fecha_revalidacion.add("<option value=\""+row[45].trim()+"\">"+row[45]+"</option>");      
-                                    list_fecha_previo_origen.add("<option value=\""+row[46].trim()+"\">"+row[46]+"</option>");     
-                                    list_fecha_previo_destino.add("<option value=\""+row[47].trim()+"\">"+row[47]+"</option>");   
-                                    list_fecha_resultado_previo.add("<option value=\""+row[48].trim()+"\">"+row[48]+"</option>");   
-                                    list_proforma_final.add("<option value=\""+row[49].trim()+"\">"+row[49]+"</option>");        
-                                    list_permiso.add("<option value=\""+row[50].trim()+"\">"+row[50]+"</option>");               
-                                    list_fecha_envio.add("<option value=\""+row[51].trim()+"\">"+row[51]+"</option>");             
-                                    list_fecha_recepcion_perm.add("<option value=\""+row[52].trim()+"\">"+row[52]+"</option>");
-                                    list_fecha_activacion_perm.add("<option value=\""+row[53].trim()+"\">"+row[53]+"</option>");    
-                                    list_fecha_permisos_aut.add("<option value=\""+row[54].trim()+"\">"+row[54]+"</option>");     
-                                    list_co_pref_arancelaria.add("<option value=\""+row[55].trim()+"\">"+row[55]+"</option>");    
-                                    list_aplic_pref_arancelaria.add("<option value=\""+row[56].trim()+"\">"+row[56]+"</option>");  
-                                    list_req_uva.add("<option value=\""+row[57].trim()+"\">"+row[57]+"</option>");   
-                                    list_req_ca.add("<option value=\""+row[58].trim()+"\">"+row[58]+"</option>");    
-                                    list_fecha_recepcion_ca.add("<option value=\""+row[59].trim()+"\">"+row[59]+"</option>"); 
-                                    list_num_constancia_ca.add("<option value=\""+row[60].trim()+"\">"+row[60]+"</option>");   
-                                    list_monto_ca.add("<option value=\""+row[61].trim()+"\">"+row[61]+"</option>");
-                                    list_fecha_doc_completos.add("<option value=\""+row[62].trim()+"\">"+row[62]+"</option>");  
-                                    list_fecha_pago_pedimento.add("<option value=\""+row[63].trim()+"\">"+row[63]+"</option>");     
-                                    list_fecha_solicitud_transporte.add("<option value=\""+row[64].trim()+"\">"+row[64]+"</option>");
-                                    list_fecha_modulacion.add("<option value=\""+row[65].trim()+"\">"+row[65]+"</option>");   
-                                    list_modalidad.add("<option value=\""+row[66].trim()+"\">"+row[66]+"</option>");          
-                                    list_resultado_modulacion.add("<option value=\""+row[67].trim()+"\">"+row[67]+"</option>");    
-                                    list_fecha_reconocimiento.add("<option value=\""+row[68].trim()+"\">"+row[68]+"</option>");     
-                                    list_fecha_liberacion.add("<option value=\""+row[69].trim()+"\">"+row[69]+"</option>");       
-                                    list_sello_origen.add("<option value=\""+row[70].trim()+"\">"+row[70]+"</option>");            
-                                    list_sello_final.add("<option value=\""+row[71].trim()+"\">"+row[71]+"</option>");      
-                                    list_fecha_retencion_aut.add("<option value=\""+row[72].trim()+"\">"+row[72]+"</option>");     
-                                    list_fecha_liberacion_aut.add("<option value=\""+row[73].trim()+"\">"+row[73]+"</option>");   
-                                    list_estatus_operacion.add("<option value=\""+row[74].trim()+"\">"+row[74]+"</option>");      
-                                    list_motivo_atraso.add("<option value=\""+row[75].trim()+"\">"+row[75]+"</option>");          
-                                    list_observaciones.add("<option value=\""+row[76].trim()+"\">"+row[76]+"</option>"); 
-
-                        if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF            
-                                    list_llegada_a_nova.add("<option value=\""+row[77].trim()+"\">"+row[77]+"</option>");
-                                    list_llegada_a_globe_trade_sd.add("<option value=\""+row[78].trim()+"\">"+row[78]+"</option>");
-                                    list_archivo_m.add("<option value=\""+row[79].trim()+"\">"+row[79]+"</option>");
-                                    list_fecha_archivo_m.add("<option value=\""+row[80].trim()+"\">"+row[80]+"</option>");
-                                    list_fecha_solicit_manip.add("<option value=\""+row[81].trim()+"\">"+row[81]+"</option>");
-                                    list_fecha_vencim_manip.add("<option value=\""+row[82].trim()+"\">"+row[82]+"</option>");
-                                    list_fecha_confirm_clave_pedim.add("<option value=\""+row[83].trim()+"\">"+row[83]+"</option>");
-                                    list_fecha_recep_increment.add("<option value=\""+row[84].trim()+"\">"+row[84]+"</option>");
-                                    list_t_e.add("<option value=\""+row[85].trim()+"\">"+row[85]+"</option>");
-                                    list_fecha_vencim_inbound.add("<option value=\""+row[86].trim()+"\">"+row[86]+"</option>");
+                        if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF 
+                                    list_evento.add("<option value=\""+row[0]+"\">"+row[0]+"</option>");
+                                    list_referenciaAA.add("<option value=\""+row[30]+"\">"+row[30]+"</option>");
+                                    list_responsable.add("<option value=\""+row[1]+"\">"+row[1]+"</option>");
+                                    list_finalDestination.add("<option value=\""+row[2]+"\">"+row[2]+"</option>");
+                                    list_brandDivision.add("<option value=\""+row[21]+"\">"+row[21]+"</option>");
+                                    list_division.add("<option value=\""+row[4]+"\">"+row[4]+"</option>");
+                                    list_shipmentId.add("<option value=\""+row[5]+"\">"+row[5]+"</option>");
+                                    list_containerId.add("<option value=\""+row[6]+"\">"+row[6]+"</option>");
+                                    list_blAwbPro.add("<option value=\""+row[7]+"\">"+row[7]+"</option>");
+                                    list_loadType.add("<option value=\""+row[8]+"\">"+row[8]+"</option>");
+                                    list_quantity.add("<option value=\""+row[9]+"\">"+row[9]+"</option>");
+                                    list_pod.add("<option value=\""+row[19]+"\">"+row[19]+"</option>");
+                                    list_estDepartFromPol.add("<option value=\""+row[11]+"\">"+row[11]+"</option>");
+                                    list_etaRealPortOfDischarge.add("<option value=\""+row[12]+"\">"+row[12]+"</option>");
+                                    list_estEtaDc.add("<option value=\""+row[22]+"\">"+row[22]+"</option>");
+                                    list_inboundNotification.add("<option value=\""+row[14]+"\">"+row[14]+"</option>"); 
+                                    list_pol.add("<option value=\""+row[20]+"\">"+row[20]+"</option>");
+                                    list_aa.add("<option value=\""+row[16]+"\">"+row[16]+"</option>");
+                                    list_fechaMesVenta.add("<option value=\""+row[28]+"\">"+row[28]+"</option>");
+                                    list_prioridad.add("<option value=\""+row[97]+"\">"+row[97]+"</option>");
+                                    list_pais_origen.add("<option value=\""+row[31]+"\">"+row[31]+"</option>");   
+                                    list_size_container.add("<option value=\""+row[32]+"\">"+row[32]+"</option>");    
+                                    list_valor_usd.add("<option value=\""+row[33]+"\">"+row[33]+"</option>");                 
+                                    list_eta_port_discharge.add("<option value=\""+row[34]+"\">"+row[34]+"</option>");         
+                                    list_agente_aduanal.add("<option value=\""+row[35]+"\">"+row[35]+"</option>");              
+                                    list_pedimento_a1.add("<option value=\""+row[36]+"\">"+row[36]+"</option>");              
+                                    list_pedimento_r1_1er.add("<option value=\""+row[37]+"\">"+row[37]+"</option>");          
+                                    list_motivo_rectificacion_1er.add("<option value=\""+row[38]+"\">"+row[38]+"</option>");    
+                                    list_pedimento_r1_2do.add("<option value=\""+row[39]+"\">"+row[39]+"</option>");         
+                                    list_motivo_rectificacion_2do.add("<option value=\""+row[40]+"\">"+row[40]+"</option>");    
+                                    list_fecha_recepcion_doc.add("<option value=\""+row[41]+"\">"+row[41]+"</option>");    
+                                    list_recinto.add("<option value=\""+row[42]+"\">"+row[42]+"</option>");
+                                    list_naviera.add("<option value=\""+row[43]+"\">"+row[43]+"</option>");
+                                    list_buque.add("<option value=\""+row[44]+"\">"+row[44]+"</option>");
+                                    list_fecha_revalidacion.add("<option value=\""+row[45]+"\">"+row[45]+"</option>");      
+                                    list_fecha_previo_origen.add("<option value=\""+row[46]+"\">"+row[46]+"</option>");     
+                                    list_fecha_previo_destino.add("<option value=\""+row[47]+"\">"+row[47]+"</option>");   
+                                    list_fecha_resultado_previo.add("<option value=\""+row[48]+"\">"+row[48]+"</option>");   
+                                    list_proforma_final.add("<option value=\""+row[49]+"\">"+row[49]+"</option>");        
+                                    list_permiso.add("<option value=\""+row[50]+"\">"+row[50]+"</option>");               
+                                    list_fecha_envio.add("<option value=\""+row[51]+"\">"+row[51]+"</option>");             
+                                    list_fecha_recepcion_perm.add("<option value=\""+row[52]+"\">"+row[52]+"</option>");
+                                    list_fecha_activacion_perm.add("<option value=\""+row[53]+"\">"+row[53]+"</option>");    
+                                    list_fecha_permisos_aut.add("<option value=\""+row[54]+"\">"+row[54]+"</option>");     
+                                    list_co_pref_arancelaria.add("<option value=\""+row[55]+"\">"+row[55]+"</option>");    
+                                    list_aplic_pref_arancelaria.add("<option value=\""+row[56]+"\">"+row[56]+"</option>");  
+                                    list_req_uva.add("<option value=\""+row[57]+"\">"+row[57]+"</option>");   
+                                    list_req_ca.add("<option value=\""+row[58]+"\">"+row[58]+"</option>");    
+                                    list_fecha_recepcion_ca.add("<option value=\""+row[59]+"\">"+row[59]+"</option>"); 
+                                    list_num_constancia_ca.add("<option value=\""+row[60]+"\">"+row[60]+"</option>");   
+                                    list_monto_ca.add("<option value=\""+row[61]+"\">"+row[61]+"</option>");
+                                    list_fecha_doc_completos.add("<option value=\""+row[62]+"\">"+row[62]+"</option>");  
+                                    list_fecha_pago_pedimento.add("<option value=\""+row[63]+"\">"+row[63]+"</option>");     
+                                    list_fecha_solicitud_transporte.add("<option value=\""+row[64]+"\">"+row[64]+"</option>");
+                                    list_fecha_modulacion.add("<option value=\""+row[65]+"\">"+row[65]+"</option>");   
+                                    list_modalidad.add("<option value=\""+row[66]+"\">"+row[66]+"</option>");          
+                                    list_resultado_modulacion.add("<option value=\""+row[67]+"\">"+row[67]+"</option>");    
+                                    list_fecha_reconocimiento.add("<option value=\""+row[68]+"\">"+row[68]+"</option>");     
+                                    list_fecha_liberacion.add("<option value=\""+row[69]+"\">"+row[69]+"</option>");       
+                                    list_sello_origen.add("<option value=\""+row[70]+"\">"+row[70]+"</option>");            
+                                    list_sello_final.add("<option value=\""+row[71]+"\">"+row[71]+"</option>");      
+                                    list_fecha_retencion_aut.add("<option value=\""+row[72]+"\">"+row[72]+"</option>");     
+                                    list_fecha_liberacion_aut.add("<option value=\""+row[73]+"\">"+row[73]+"</option>");   
+                                    list_estatus_operacion.add("<option value=\""+row[74]+"\">"+row[74]+"</option>");      
+                                    list_motivo_atraso.add("<option value=\""+row[75]+"\">"+row[75]+"</option>");          
+                                    list_observaciones.add("<option value=\""+row[76]+"\">"+row[76]+"</option>"); 
+                        }
+                        
+                        if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF            
+                                    list_llegada_a_nova.add("<option value=\""+row[77]+"\">"+row[77]+"</option>");
+                                    list_llegada_a_globe_trade_sd.add("<option value=\""+row[78]+"\">"+row[78]+"</option>");
+                                    list_archivo_m.add("<option value=\""+row[79]+"\">"+row[79]+"</option>");
+                                    list_fecha_archivo_m.add("<option value=\""+row[80]+"\">"+row[80]+"</option>");
+                                    list_fecha_solicit_manip.add("<option value=\""+row[81]+"\">"+row[81]+"</option>");
+                                    list_fecha_vencim_manip.add("<option value=\""+row[82]+"\">"+row[82]+"</option>");
+                                    list_fecha_confirm_clave_pedim.add("<option value=\""+row[83]+"\">"+row[83]+"</option>");
+                                    list_fecha_recep_increment.add("<option value=\""+row[84]+"\">"+row[84]+"</option>");
+                                    list_t_e.add("<option value=\""+row[85]+"\">"+row[85]+"</option>");
+                                    list_fecha_vencim_inbound.add("<option value=\""+row[86]+"\">"+row[86]+"</option>");
                         }
 
-                        if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
-                                    list_no_bultos.add("<option value=\""+row[87].trim()+"\">"+row[87]+"</option>");
-                                    list_peso_kg.add("<option value=\""+row[88].trim()+"\">"+row[88]+"</option>");
-                                    list_transferencia.add("<option value=\""+row[89].trim()+"\">"+row[89]+"</option>");
-                                    list_fecha_inicio_etiquetado.add("<option value=\""+row[90].trim()+"\">"+row[90]+"</option>");
-                                    list_fecha_termino_etiquetado.add("<option value=\""+row[91].trim()+"\">"+row[91]+"</option>");
-                                    list_hora_termino_etiquetado.add("<option value=\""+row[92].trim()+"\">"+row[92]+"</option>");
-                                    list_proveedor.add("<option value=\""+row[93].trim()+"\">"+row[93]+"</option>");
-                                    list_proveedor_carga.add("<option value=\""+row[94].trim()+"\">"+row[94]+"</option>");
-                                    list_fy.add("<option value=\""+row[95].trim()+"\">"+row[95]+"</option>");
+                        if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
+                                    list_no_bultos.add("<option value=\""+row[87]+"\">"+row[87]+"</option>");
+                                    list_peso_kg.add("<option value=\""+row[88]+"\">"+row[88]+"</option>");
+                                    list_transferencia.add("<option value=\""+row[89]+"\">"+row[89]+"</option>");
+                                    list_fecha_inicio_etiquetado.add("<option value=\""+row[90]+"\">"+row[90]+"</option>");
+                                    list_fecha_termino_etiquetado.add("<option value=\""+row[91]+"\">"+row[91]+"</option>");
+                                    list_hora_termino_etiquetado.add("<option value=\""+row[92]+"\">"+row[92]+"</option>");
+                                    list_proveedor.add("<option value=\""+row[93]+"\">"+row[93]+"</option>");
+                                    list_proveedor_carga.add("<option value=\""+row[94]+"\">"+row[94]+"</option>");
+                                    list_fy.add("<option value=\""+row[95]+"\">"+row[95]+"</option>");
                         }
                         
                     }
                 }
+                
+                //Generar caramelo: Opciones del multiselect
+                String[] arrOfStr = id.split(",");
+                for (String a : arrOfStr) {
+                    caramelo += "'" + a + "',";
+                }
+                caramelo = caramelo.replaceAll(",$", "");
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -317,6 +333,9 @@
                                             <table id="main-table" class="main-table" style="table-layout:fixed; width:1500%;">
                                                 <thead>
                                                     <tr>
+                                            <%            
+                                                if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF  
+                                            %>     
                                                         <th class="col-sm-1" class="font-titulo" style="background-color:#FFFFFF;"></th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#333F4F;">
                                                             <font size="1">Referencia AA</font> 
@@ -847,8 +866,10 @@
                                                                 <%=list_observaciones%>        
                                                             </select>
                                                         </th>
-                                            <%            
-                                                if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF  
+                                            <%  
+                                                }
+
+                                                if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF  
                                             %>           
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Llegada a NOVA</font>
@@ -933,7 +954,7 @@
                                             <%
                                                 }
 
-                                                if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
+                                                if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
                                             %>            
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">No. BULTOS</font>
@@ -1012,10 +1033,124 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="detalleCustom"></tbody>
+                                                <tbody id="detalleCustom">
+                                                    <%
+                                                        if (db.doDB(fac.consultarReporteCustoms(AgentType,filterType,caramelo))) {
+                                                            for (String[] row : db.getResultado()) {
+                                                               cont++;   
+                                                    %>
+                                                    <tr id="tr<%=cont%>">
+                                                    <%            
+                                                    if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
+                                                    %>     
+                                                        <th class="font-numero"><center><img src="../../img/circle-green.png" width="100%"/></center></th>  <!--Semaforo -->
+                                                        <th class="font-numero"><%=row[30]%></th>  <!-- Referencia Aduanal -->
+                                                        <th class="font-numero"><%=row[0]%></th>   <!-- Evento -->
+                                                        <td class="font-numero"><%=row[1]%></td>   <!-- Responsable -->
+                                                        <td class="font-numero"><%=row[2]%></td>   <!-- Final Destination -->
+                                                        <td class="font-numero"><%=row[21]%></td>  <!-- Brand-Division -->
+                                                        <td class="font-numero"><%=row[4]%></td>   <!-- Division -->
+                                                        <td class="font-numero"><%=row[5]%></td>   <!-- Shipment ID -->
+                                                        <td class="font-numero"><%=row[6]%></td>   <!-- Container -->
+                                                        <td class="font-numero"><%=row[7]%></td>   <!-- BL/AWB/PRO -->
+                                                        <td class="font-numero"><%=row[8]%></td>   <!-- LoadType -->
+                                                        <td class="font-numero"><%=row[9]%></td>   <!-- Quantity -->
+                                                        <td class="font-numero"><%=row[19]%></td>  <!-- POD -->
+                                                        <td class="font-numero"><%=row[11]%></td>  <!-- Est. Departure from POL -->
+                                                        <td class="font-numero"><%=row[12]%></td>  <!-- ETA REAL Port of Discharge -->
+                                                        <td class="font-numero"><%=row[22]%></td>  <!-- Est. Eta DC -->
+                                                        <td class="font-numero"><%=row[14]%></td>  <!-- Inbound notification -->
+                                                        <td class="font-numero"><%=row[20]%></td>  <!-- POL -->
+                                                        <td class="font-numero"><%=row[16]%></td>  <!-- A.A. -->
+                                                        <td class="font-numero"><%=row[28]%></td>  <!-- Fecha Mes de Venta -->
+                                                        <td class="font-numero"><%=row[97]%></td>  <!-- Prioridad -->
+                                                        <td class="font-numero"><%=row[31]%></td>  <!-- País Origen -->    
+                                                        <td class="font-numero"><%=row[32]%></td>  <!-- Size Container -->
+                                                        <td class="font-numero"><%=row[33]%></td>  <!-- Valor USD -->
+                                                        <td class="font-numero"><%=row[34]%></td>  <!-- ETA Port Of Discharge -->
+                                                        <td class="font-numero"><%=row[35]%></td>  <!-- Agente Aduanal --> 
+                                                        <td class="font-numero"><%=row[36]%></td>  <!-- Pedimento A1 -->  
+                                                        <td class="font-numero"><%=row[37]%></td>  <!-- Pedimento R1 -->
+                                                        <td class="font-numero"><%=row[38]%></td>  <!-- Motivo Rectificación 1 -->
+                                                        <td class="font-numero"><%=row[39]%></td>  <!-- Pedimento R1 (2DO) -->
+                                                        <td class="font-numero"><%=row[40]%></td>  <!-- Motivo Rectificación 2 -->
+                                                        <td class="font-numero"><%=row[41]%></td>  <!-- Fecha Recepción Documentos -->
+                                                        <td class="font-numero"><%=row[42]%></td>  <!-- Recinto -->
+                                                        <td class="font-numero"><%=row[43]%></td>  <!-- Naviera/Forwarder -->
+                                                        <td class="font-numero"><%=row[44]%></td>  <!-- Buque -->
+                                                        <td class="font-numero"><%=row[45]%></td>  <!-- Fecha Revalidación/Liberación de BL -->
+                                                        <td class="font-numero"><%=row[46]%></td>  <!-- Fecha Previo Origen -->
+                                                        <td class="font-numero"><%=row[47]%></td>  <!-- Fecha Previo en destino -->
+                                                        <td class="font-numero"><%=row[48]%></td>  <!-- Fecha Resultado Previo -->
+                                                        <td class="font-numero"><%=row[49]%></td>  <!-- Proforma Final -->
+                                                        <td class="font-numero"><%=row[50]%></td>  <!-- Requiere permiso -->
+                                                        <td class="font-numero"><%=row[51]%></td>  <!-- Fecha envío Fichas/notas -->
+                                                        <td class="font-numero"><%=row[52]%></td>  <!-- Fec. Recepción de permisos tramit. -->
+                                                        <td class="font-numero"><%=row[53]%></td>  <!-- Fec. Act Permisos (Inic Vigencia) -->
+                                                        <td class="font-numero"><%=row[54]%></td>  <!-- Fec. Perm. Aut. (Fin de Vigencia) -->
+                                                        <td class="font-numero"><%=row[55]%></td>  <!-- Cuenta con CO para aplicar preferencia Arancelaria -->
+                                                        <td class="font-numero"><%=row[56]%></td>  <!-- Aplico Preferencia Arancelaria --> 
+                                                        <td class="font-numero"><%=row[57]%></td>  <!-- Requiere UVA -->
+                                                        <td class="font-numero"><%=row[58]%></td>  <!-- Requiere CA -->
+                                                        <td class="font-numero"><%=row[59]%></td>  <!-- Fecha Recepción CA -->
+                                                        <td class="font-numero"><%=row[60]%></td>  <!-- Número de Constancia CA -->
+                                                        <td class="font-numero"><%=row[61]%></td>  <!-- Monto CA -->
+                                                        <td class="font-numero"><%=row[62]%></td>  <!-- Fecha Documentos Completos -->
+                                                        <td class="font-numero"><%=row[63]%></td>  <!-- Fecha Pago Pedimento -->
+                                                        <td class="font-numero"><%=row[64]%></td>  <!-- Fecha Solicitud de transporte -->
+                                                        <td class="font-numero"><%=row[65]%></td>  <!-- Fecha Modulacion -->
+                                                        <td class="font-numero"><%=row[66]%></td>  <!-- Modalidad -->
+                                                        <td class="font-numero"><%=row[67]%></td>  <!-- Resultado Modulacion -->
+                                                        <td class="font-numero"><%=row[68]%></td>  <!-- Fecha Reconocimiento -->
+                                                        <td class="font-numero"><%=row[69]%></td>  <!-- Fecha Liberacion --> 
+                                                        <td class="font-numero"><%=row[70]%></td>  <!-- Sello Origen --> 
+                                                        <td class="font-numero"><%=row[71]%></td>  <!-- Sello Final -->
+                                                        <td class="font-numero"><%=row[72]%></td>  <!-- Fecha de retencion por la autoridad --> 
+                                                        <td class="font-numero"><%=row[73]%></td>  <!-- Fec. de liberacion por ret. de la aut. -->
+                                                        <td class="font-numero"><%=row[74]%></td>  <!-- Estatus de la operación -->
+                                                        <td class="font-numero"><%=row[75]%></td>  <!-- Motivo Atraso -->
+                                                        <td class="font-numero"><%=row[76]%></td>  <!-- Observaciones -->
+                                                    <%
+                                                    }
+   
+                                                    if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF
+                                                    %>   
+                                                        <td class="font-numero"><%=row[77]%></td>  <!-- Llegada a NOVA -->
+                                                        <td class="font-numero"><%=row[78]%></td>  <!-- Llegada a Globe trade SD -->  
+                                                        <td class="font-numero"><%=row[79]%></td>  <!-- Archivo M --> 
+                                                        <td class="font-numero"><%=row[80]%></td>  <!-- Fecha de Archivo M --> 
+                                                        <td class="font-numero"><%=row[81]%></td>  <!-- Fecha Solicitud de Manipulacion -->
+                                                        <td class="font-numero"><%=row[82]%></td>  <!-- Fecha de vencimiento de Manipulacion -->
+                                                        <td class="font-numero"><%=row[83]%></td>  <!-- Fecha confirmacion Clave de Pedimento -->
+                                                        <td class="font-numero"><%=row[84]%></td>  <!-- Fecha de Recepcion de Incrementables -->
+                                                        <td class="font-numero"><%=row[85]%></td>  <!-- T&E --> 
+                                                        <td class="font-numero"><%=row[86]%></td>  <!-- Fecha de Vencimiento del Inbound --> 
+                                                    <%       
+                                                    }
+
+                                                    if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
+                                                    %>    
+                                                        <td class="font-numero"><%=row[87]%></td>  <!-- No. BULTOS -->
+                                                        <td class="font-numero"><%=row[88]%></td>  <!-- Peso (KG) -->
+                                                        <td class="font-numero"><%=row[89]%></td>  <!-- Transferencia --> 
+                                                        <td class="font-numero"><%=row[90]%></td>  <!-- Fecha Inicio Etiquetado -->
+                                                        <td class="font-numero"><%=row[91]%></td>  <!-- Fecha Termino Etiquetado --> 
+                                                        <td class="font-numero"><%=row[92]%></td>  <!-- Hora de termino Etiquetado -->
+                                                        <td class="font-numero"><%=row[93]%></td>  <!-- Proveedor -->
+                                                        <td class="font-numero"><%=row[94]%></td>  <!-- Proveedor de Carga --> 
+                                                    <%	
+                                                    }
+                                                    %>
+                                                        <td class="font-numero"><%=row[95]%></td>  <!-- FY -->
+                                                    </tr>
+                                                    <%         
+                                                          }
+                                                        }
+                                                    %>   
+                                                </tbody>
                                             </table>
                                         </div>
-                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">                    
+                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">                    
                                         <br>
                                     </div>                    
                                 </div>
@@ -1036,7 +1171,60 @@
                     </div>
                 </footer>
             </div>
-        </div> 
+        </div>
+        <script> 
+            function jsRemoveWindowLoad() {
+                // eliminamos el div que bloquea pantalla
+                $("#WindowLoad").remove();
+            }
+
+            function jsShowWindowLoad(mensaje) {
+                //eliminamos si existe un div ya bloqueando
+                jsRemoveWindowLoad();
+
+                //si no enviamos mensaje se pondra este por defecto
+                if (mensaje === undefined) mensaje = "Procesando la información&amp;lt;br&amp;gt;Espere por favor";
+
+                //centrar imagen gif
+                height = 20;//El div del titulo, para que se vea mas arriba (H)
+                var ancho = 0;
+                var alto = 0;
+
+                //obtenemos el ancho y alto de la ventana de nuestro navegador, compatible con todos los navegadores
+                if (window.innerWidth == undefined) ancho = window.screen.width;
+                else ancho = window.innerWidth;
+                if (window.innerHeight == undefined) alto = window.screen.height;
+                else alto = window.innerHeight;
+
+                //operación necesaria para centrar el div que muestra el mensaje
+                var heightdivsito = alto/2 - parseInt(height)/2;//Se utiliza en el margen superior, para centrar
+
+               //imagen que aparece mientras nuestro div es mostrado y da apariencia de cargando
+                imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#000;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='../../img/LoaderCustoms.gif' width='10%'></div>";
+
+                    //creamos el div que bloquea grande------------------------------------------
+                    div = document.createElement("div");
+                    div.id = "WindowLoad"
+                    div.style.width = ancho + "px";
+                    div.style.height = alto + "px";
+                    $("body").append(div);
+
+                    //creamos un input text para que el foco se plasme en este y el usuario no pueda escribir en nada de atras
+                    input = document.createElement("input");
+                    input.id = "focusInput";
+                    input.type = "text"
+
+                    //asignamos el div que bloquea
+                    $("#WindowLoad").append(input);
+
+                    //asignamos el foco y ocultamos el input text
+                    $("#focusInput").focus();
+                    $("#focusInput").hide();
+
+                    //centramos el div del texto
+                    $("#WindowLoad").html(imgCentro);
+            }
+        </script>
         <!-- JavaScript files-->
         <script src="../../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Multiselect -->
