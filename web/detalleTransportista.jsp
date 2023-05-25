@@ -322,8 +322,8 @@
                         $("#ModalCamion2").modal('show');
                     }
 
-                    function muestraRepartos(agrupador, gde1) {
-                         window.location.href =  "<%=request.getContextPath()%>/Logistica/datosComplementarios.jsp?op="+agrupador;
+                    function muestraRepartos(agrupador, idT,nomTra,fec1,fec2) {
+                         window.location.href =  "<%=request.getContextPath()%>/Logistica/datosComplementarios.jsp?op="+agrupador+"&id="+idT+"&nom="+nomTra+"&fec1="+fec1+"&fec2="+fec2;
 
                        // fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
                        //     method: 'POST',

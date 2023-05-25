@@ -180,7 +180,12 @@
               
           }
           if(evento===''    || evento===null){    evento=0;    }
-          
+           else{
+                let opciones =evento; 
+                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
+                evento=opcionesEncerradas
+              
+          }
           
           console.log(tcarga);
           console.log(shipment);

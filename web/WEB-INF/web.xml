@@ -866,6 +866,10 @@
         <servlet-name>CrearEmbarque</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.CrearEmbarque</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarRepartoTransportistaEdit</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarRepartoTransportistaEdit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1726,6 +1730,10 @@
     <servlet-mapping>
         <servlet-name>CrearEmbarque</servlet-name>
         <url-pattern>/CrearEmbarque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarRepartoTransportistaEdit</servlet-name>
+        <url-pattern>/ConsultarRepartoTransportistaEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -35,7 +35,7 @@ public class ConsultarRepartoTransportista extends HttpServlet {
          GenericJdbc generico = new GenericJdbc();
          generico.openConection();
          Statement statement = generico.getConnection().createStatement();
- Statement statement2 = generico.getConnection().createStatement();
+         Statement statement2 = generico.getConnection().createStatement();
                    
          String sqlold = "WITH sum_quantity AS ("
         +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
@@ -97,7 +97,8 @@ public class ConsultarRepartoTransportista extends HttpServlet {
         +"   tie.id_evento";
          
          String sql = " "
-                 + "select DISTINCT EMBARQUE_ID,EMBARQUE_AGRUPADOR,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO from TRA_INB_EMBARQUE where EMBARQUE_TRANSPORTISTA="+transportista
+                 + "select DISTINCT EMBARQUE_ID,EMBARQUE_AGRUPADOR,TO_CHAR(EMBARQUE_FEC_ENRAMPE, 'MM/DD/YY'),TO_CHAR(EMBARQUE_FEC_INICIO, 'MM/DD/YY')"
+                 + " from TRA_INB_EMBARQUE where EMBARQUE_ESTADO_ID is null and EMBARQUE_TRANSPORTISTA="+transportista
                  + "";
           System.out.println(sql); 
     
@@ -184,8 +185,8 @@ public class ConsultarRepartoTransportista extends HttpServlet {
                           "     <td class=\"\"><b>"+rs.getString(1)+"</b></td> \n" +
                           "     <td class=\"\"><b>"+rs.getString(3)+"</b></td> \n" +
                           "     <td class=\"\"><b>"+rs.getString(4)+"</b></td>\n" +
-                       "     <td class=\"\"> <button type=\"button\" class=\"btn btn-primary\" onclick=\"muestraRepartos('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"')\">Modificar</button> </td>\n" +
-                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"')\"/></b></td>\n" +
+                       "     <td class=\"\"> <button type=\"button\" class=\"btn btn-primary\" onclick=\"muestraRepartos('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\">Modificar</button> </td>\n" +
+                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\"/></b></td>\n" +
                           "      " +
                           " </tr>"
                         + ""; 

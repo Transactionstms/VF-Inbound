@@ -202,6 +202,7 @@
                                                                    + " where STATUS_EMBARQUE=0 "+where
         +" ORDER BY"
         +"   tie.id_evento";
+                                                           System.out.println("sql"+sql);
 
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
