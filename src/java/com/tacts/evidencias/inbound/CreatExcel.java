@@ -40,7 +40,7 @@ public class CreatExcel {
             ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
             while(rs.next()){
                 personas.add(new Persona(
-                        rs.getInt(1),       // numEvento
+                        rs.getString(1),    // numEvento
                         rs.getString(2),    // Responsable
                         rs.getString(3),    // FinalDestination
                         rs.getString(22),   // BrandDivision
@@ -159,9 +159,9 @@ public class CreatExcel {
 }
 
 class Persona {
-
-    private int numEvento;
+    
     private String 
+            numEvento,
             responsable, 
             finalDestination, 
             brandDivision, 
@@ -182,7 +182,7 @@ class Persona {
             aa, 
             observaciones;
     
-    public Persona(int numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String lt2, String etaDc, String indc2DaysPutAway, String inboundNotif, String pol, String aa, String observaciones) {
+    public Persona(String numEvento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String container, String blAwbPro, String loadType, String quantity, String pod, String departurePol, String realPort, String lt2, String etaDc, String indc2DaysPutAway, String inboundNotif, String pol, String aa, String observaciones) {
         this.numEvento = numEvento;
         this.responsable = responsable;
         this.finalDestination = finalDestination;
@@ -205,11 +205,11 @@ class Persona {
         this.observaciones = observaciones;
     }
 
-    public int getnumEvento() {
+    public String getnumEvento() {
         return numEvento;
     }
 
-    public void setnumEvento(int numEvento) {
+    public void setnumEvento(String numEvento) {
         this.numEvento = numEvento;
     }
     
@@ -365,11 +365,11 @@ class Persona {
         this.observaciones = observaciones;
     }
     
-    public int getNumEvento() {
+    public String getNumEvento() {
         return numEvento;
     }
 
-    public void setNumEvento(int numEvento) {
+    public void setNumEvento(String numEvento) {
         this.numEvento = numEvento;
     }
 }
