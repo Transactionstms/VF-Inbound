@@ -3,213 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-    $(document).ready(function () {
-        customForm("0");
-    });
 
-    function customForm(tipoFiltro) {
-
-        let idAgente = document.getElementById("idAgenteAduanal").value; 
-        let selectedValues = "0";
-        var selected = "";
-        
-        if(tipoFiltro==="0"){
-            selectedValues = "0";
-        }else if(tipoFiltro==="1"){
-            selectedValues = document.getElementById('col_referenciaAA');
-        }else if(tipoFiltro==="2"){
-            selectedValues = document.getElementById('col_evento');
-        }else if(tipoFiltro==="3"){
-            selectedValues = document.getElementById('col_responsable');
-        }else if(tipoFiltro==="4"){
-            selectedValues = document.getElementById('col_finalDestination');
-        }else if(tipoFiltro==="5"){
-            selectedValues = document.getElementById('col_brandDivision');
-        }else if(tipoFiltro==="6"){
-            selectedValues = document.getElementById('col_division');
-        }else if(tipoFiltro==="7"){
-            selectedValues = document.getElementById('col_shipmentId');
-        }else if(tipoFiltro==="8"){
-            selectedValues = document.getElementById('col_container');
-        }else if(tipoFiltro==="9"){
-            selectedValues = document.getElementById('col_blAwbPro');
-        }else if(tipoFiltro==="10"){
-            selectedValues = document.getElementById('col_loadType');
-        }else if(tipoFiltro==="11"){
-            selectedValues = document.getElementById('col_quantity');
-        }else if(tipoFiltro==="12"){
-            selectedValues = document.getElementById('col_pod');
-        }else if(tipoFiltro==="13"){
-            selectedValues = document.getElementById('col_estDepartFromPol');
-        }else if(tipoFiltro==="14"){
-            selectedValues = document.getElementById('col_etaRealPortOfDischarge');
-        }else if(tipoFiltro==="15"){
-            selectedValues = document.getElementById('col_estEtaDc');
-        }else if(tipoFiltro==="16"){
-            selectedValues = document.getElementById('col_inboundNotification');
-        }else if(tipoFiltro==="17"){
-            selectedValues = document.getElementById('col_pol');
-        }else if(tipoFiltro==="18"){
-            selectedValues = document.getElementById('col_aa');
-        }else if(tipoFiltro==="19"){
-            selectedValues = document.getElementById('col_fechaMesVenta');
-        }else if(tipoFiltro==="20"){
-            selectedValues = document.getElementById('col_prioridad');       
-        }else if(tipoFiltro==="21"){
-            selectedValues = document.getElementById('col_pais_origen');
-        }else if(tipoFiltro==="22"){
-            selectedValues = document.getElementById('col_size_container');
-        }else if(tipoFiltro==="23"){
-            selectedValues = document.getElementById('col_valor_usd');
-        }else if(tipoFiltro==="24"){
-            selectedValues = document.getElementById('col_eta_port_discharge');
-        }else if(tipoFiltro==="25"){
-            selectedValues = document.getElementById('col_agente_aduanal');
-        }else if(tipoFiltro==="26"){
-            selectedValues = document.getElementById('col_pedimento_a1');
-        }else if(tipoFiltro==="27"){
-            selectedValues = document.getElementById('col_pedimento_r1_1er');
-        }else if(tipoFiltro==="28"){
-            selectedValues = document.getElementById('col_motivo_rectificacion_1er');
-        }else if(tipoFiltro==="29"){
-            selectedValues = document.getElementById('col_pedimento_r1_2do');
-        }else if(tipoFiltro==="30"){
-            selectedValues = document.getElementById('col_motivo_rectificacion_2do');
-        }else if(tipoFiltro==="31"){
-            selectedValues = document.getElementById('col_fecha_recepcion_doc');
-        }else if(tipoFiltro==="32"){
-            selectedValues = document.getElementById('col_recinto');
-        }else if(tipoFiltro==="33"){
-            selectedValues = document.getElementById('col_naviera');
-        }else if(tipoFiltro==="34"){
-            selectedValues = document.getElementById('col_buque');
-        }else if(tipoFiltro==="35"){
-            selectedValues = document.getElementById('col_fecha_revalidacion');
-        }else if(tipoFiltro==="36"){
-            selectedValues = document.getElementById('col_fecha_previo_origen');
-        }else if(tipoFiltro==="37"){
-            selectedValues = document.getElementById('col_fecha_previo_destino');
-        }else if(tipoFiltro==="38"){
-            selectedValues = document.getElementById('col_fecha_resultado_previo');
-        }else if(tipoFiltro==="39"){
-            selectedValues = document.getElementById('col_proforma_final');
-        }else if(tipoFiltro==="40"){
-            selectedValues = document.getElementById('col_permiso');
-        }else if(tipoFiltro==="41"){
-            selectedValues = document.getElementById('col_fecha_envio');
-        }else if(tipoFiltro==="42"){
-            selectedValues = document.getElementById('col_fecha_recepcion_perm');
-        }else if(tipoFiltro==="43"){
-            selectedValues = document.getElementById('col_fecha_activacion_perm');
-        }else if(tipoFiltro==="44"){
-            selectedValues = document.getElementById('col_fecha_permisos_aut');
-        }else if(tipoFiltro==="45"){
-            selectedValues = document.getElementById('col_co_pref_arancelaria');
-        }else if(tipoFiltro==="46"){
-            selectedValues = document.getElementById('col_aplic_pref_arancelaria');
-        }else if(tipoFiltro==="47"){
-            selectedValues = document.getElementById('col_req_uva');
-        }else if(tipoFiltro==="48"){
-            selectedValues = document.getElementById('col_req_ca');
-        }else if(tipoFiltro==="49"){
-            selectedValues = document.getElementById('col_fecha_recepcion_ca');
-        }else if(tipoFiltro==="50"){
-            selectedValues = document.getElementById('col_num_constancia_ca');
-        }else if(tipoFiltro==="51"){
-            selectedValues = document.getElementById('col_monto_ca');
-        }else if(tipoFiltro==="52"){
-            selectedValues = document.getElementById('col_fecha_doc_completos');
-        }else if(tipoFiltro==="53"){
-            selectedValues = document.getElementById('col_fecha_pago_pedimento');
-        }else if(tipoFiltro==="54"){
-            selectedValues = document.getElementById('col_fecha_solicitud_transporte');
-        }else if(tipoFiltro==="55"){
-            selectedValues = document.getElementById('col_fecha_modulacion');
-        }else if(tipoFiltro==="56"){
-            selectedValues = document.getElementById('col_modalidad');
-        }else if(tipoFiltro==="57"){
-            selectedValues = document.getElementById('col_modalidad');
-        }else if(tipoFiltro==="58"){
-            selectedValues = document.getElementById('col_fecha_reconocimiento');
-        }else if(tipoFiltro==="59"){
-            selectedValues = document.getElementById('col_fecha_liberacion');
-        }else if(tipoFiltro==="60"){
-            selectedValues = document.getElementById('col_sello_origen');
-        }else if(tipoFiltro==="61"){
-            selectedValues = document.getElementById('col_sello_final');
-        }else if(tipoFiltro==="62"){
-            selectedValues = document.getElementById('col_fecha_retencion_aut');
-        }else if(tipoFiltro==="63"){
-            selectedValues = document.getElementById('col_fecha_liberacion_aut');
-        }else if(tipoFiltro==="64"){
-            selectedValues = document.getElementById('col_estatus_operacion');
-        }else if(tipoFiltro==="65"){
-            selectedValues = document.getElementById('col_motivo_atraso');
-        }else if(tipoFiltro==="66"){
-            selectedValues = document.getElementById('col_observaciones');
-        }else if(tipoFiltro==="67"){
-            selectedValues = document.getElementById('col_llegada_a_nova');
-        }else if(tipoFiltro==="68"){
-            selectedValues = document.getElementById('col_llegada_a_globe_trade_sd');
-        }else if(tipoFiltro==="69"){
-            selectedValues = document.getElementById('col_archivo_m');
-        }else if(tipoFiltro==="70"){
-            selectedValues = document.getElementById('col_fecha_archivo_m');
-        }else if(tipoFiltro==="71"){
-            selectedValues = document.getElementById('col_fecha_solicit_manip');
-        }else if(tipoFiltro==="72"){
-            selectedValues = document.getElementById('col_fecha_vencim_manip');
-        }else if(tipoFiltro==="73"){
-            selectedValues = document.getElementById('col_fecha_confirm_clave_pedim');
-        }else if(tipoFiltro==="74"){
-            selectedValues = document.getElementById('col_fecha_recep_increment');
-        }else if(tipoFiltro==="75"){
-            selectedValues = document.getElementById('col_t_e');
-        }else if(tipoFiltro==="76"){
-            selectedValues = document.getElementById('col_fecha_vencim_inbound');
-        }else if(tipoFiltro==="77"){
-            selectedValues = document.getElementById('col_no_bultos');
-        }else if(tipoFiltro==="78"){
-            selectedValues = document.getElementById('col_peso_kg');
-        }else if(tipoFiltro==="79"){
-            selectedValues = document.getElementById('col_transferencia');
-        }else if(tipoFiltro==="80"){
-            selectedValues = document.getElementById('col_fecha_inicio_etiquetado');
-        }else if(tipoFiltro==="81"){
-            selectedValues = document.getElementById('col_fecha_termino_etiquetado');
-        }else if(tipoFiltro==="82"){
-            selectedValues = document.getElementById('col_hora_termino_etiquetado');
-        }else if(tipoFiltro==="83"){
-            selectedValues = document.getElementById('col_proveedor');
-        }else if(tipoFiltro==="84"){
-            selectedValues = document.getElementById('col_proveedor_carga');
-        }else if(tipoFiltro==="85"){
-            selectedValues = document.getElementById('col_fy');
-        }
-        
-        if(tipoFiltro==="0"){
-           selected = "0"; 
-        }else{
-           selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
-        }
-        
-        fetch("../ConsultarCustom?tipoAgente="+idAgente+"&tipoFiltro="+tipoFiltro+"&id="+selected, {
-            method: 'POST',
-        }).then(r => r.text())
-                .then(data => {
-                    document.getElementById('detalleCustom').innerHTML = data;
-            
-                    //Cargar función para formato de fechas 
-                    $('.datepicker').flatpickr({
-                        dateFormat: 'm/d/Y',
-                        onClose: function (selectedDates, dateStr, instance) {
-                            instance.setDate(dateStr, true, 'm/d/Y');
-                        }
-                    });
-        
-                }).catch(error => console.log(error));
-    }
-    
     async function AddCustoms() {
 
           //Contadores
@@ -314,104 +108,107 @@
                         prioridad = document.getElementById(temp5).value;
 
 
-                    //Parametros Generales          
-                        let temp7 = "pais_origen[" + i + "]";
-                        let temp8 = "size_container[" + i + "]";
-                        let temp9 = "valor_usd[" + i + "]";
-                        let temp10 = "eta_port_discharge[" + i + "]";
-                        let temp11 = "agente_aduanal[" + i + "]";
-                        let temp12 = "pedimento_a1[" + i + "]";
-                        let temp13 = "pedimento_r1_1er[" + i + "]";
-                        let temp14 = "motivo_rectificacion_1er[" + i + "]";
-                        let temp15 = "pedimento_r1_2do[" + i + "]";
-                        let temp16 = "motivo_rectificacion_2do[" + i + "]";
-                        let temp17 = "fecha_recepcion_doc[" + i + "]";
-                        let temp18 = "recinto[" + i + "]";
-                        let temp19 = "naviera[" + i + "]";
-                        let temp20 = "buque[" + i + "]";
-                        let temp21 = "fecha_revalidacion[" + i + "]";
-                        let temp22 = "fecha_previo_origen[" + i + "]";
-                        let temp23 = "fecha_previo_destino[" + i + "]";
-                        let temp24 = "fecha_resultado_previo[" + i + "]";
-                        let temp25 = "proforma_final[" + i + "]";
-                        let temp26 = "permiso[" + i + "]";
-                        let temp27 = "fecha_envio[" + i + "]";
-                        let temp28 = "fecha_recepcion_perm[" + i + "]";
-                        let temp29 = "fecha_activacion_perm[" + i + "]";
-                        let temp30 = "fecha_permisos_aut[" + i + "]";
-                        let temp31 = "co_pref_arancelaria[" + i + "]";
-                        let temp32 = "aplic_pref_arancelaria[" + i + "]";
-                        let temp33 = "req_uva[" + i + "]";
-                        let temp34 = "req_ca[" + i + "]";
-                        let temp35 = "fecha_recepcion_ca[" + i + "]";
-                        let temp36 = "num_constancia_ca[" + i + "]";
-                        let temp37 = "monto_ca[" + i + "]";
-                        let temp38 = "fecha_doc_completos[" + i + "]";
-                        let temp39 = "fecha_pago_pedimento[" + i + "]";
-                        let temp40 = "fecha_solicitud_transporte[" + i + "]";
-                        let temp41 = "fecha_modulacion[" + i + "]";
-                        let temp42 = "modalidad[" + i + "]";
-                        let temp43 = "resultado_modulacion[" + i + "]";
-                        let temp44 = "fecha_reconocimiento[" + i + "]";
-                        let temp45 = "fecha_liberacion[" + i + "]";
-                        let temp46 = "sello_origen[" + i + "]";
-                        let temp47 = "sello_final[" + i + "]";
-                        let temp48 = "fecha_retencion_aut[" + i + "]";
-                        let temp49 = "fecha_liberacion_aut[" + i + "]";
-                        let temp50 = "estatus_operacion[" + i + "]";
-                        let temp51 = "motivo_atraso[" + i + "]";
-                        let temp52 = "observaciones[" + i + "]";
-                        let temp53 = "fy[" + i + "]";
+                        //Parametros Generales  
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006"){ //RADAR, SESMA, RECHY Y VF  
+                            
+                                let temp7 = "pais_origen[" + i + "]";
+                                let temp8 = "size_container[" + i + "]";
+                                let temp9 = "valor_usd[" + i + "]";
+                                let temp10 = "eta_port_discharge[" + i + "]";
+                                let temp11 = "agente_aduanal[" + i + "]";
+                                let temp12 = "pedimento_a1[" + i + "]";
+                                let temp13 = "pedimento_r1_1er[" + i + "]";
+                                let temp14 = "motivo_rectificacion_1er[" + i + "]";
+                                let temp15 = "pedimento_r1_2do[" + i + "]";
+                                let temp16 = "motivo_rectificacion_2do[" + i + "]";
+                                let temp17 = "fecha_recepcion_doc[" + i + "]";
+                                let temp18 = "recinto[" + i + "]";
+                                let temp19 = "naviera[" + i + "]";
+                                let temp20 = "buque[" + i + "]";
+                                let temp21 = "fecha_revalidacion[" + i + "]";
+                                let temp22 = "fecha_previo_origen[" + i + "]";
+                                let temp23 = "fecha_previo_destino[" + i + "]";
+                                let temp24 = "fecha_resultado_previo[" + i + "]";
+                                let temp25 = "proforma_final[" + i + "]";
+                                let temp26 = "permiso[" + i + "]";
+                                let temp27 = "fecha_envio[" + i + "]";
+                                let temp28 = "fecha_recepcion_perm[" + i + "]";
+                                let temp29 = "fecha_activacion_perm[" + i + "]";
+                                let temp30 = "fecha_permisos_aut[" + i + "]";
+                                let temp31 = "co_pref_arancelaria[" + i + "]";
+                                let temp32 = "aplic_pref_arancelaria[" + i + "]";
+                                let temp33 = "req_uva[" + i + "]";
+                                let temp34 = "req_ca[" + i + "]";
+                                let temp35 = "fecha_recepcion_ca[" + i + "]";
+                                let temp36 = "num_constancia_ca[" + i + "]";
+                                let temp37 = "monto_ca[" + i + "]";
+                                let temp38 = "fecha_doc_completos[" + i + "]";
+                                let temp39 = "fecha_pago_pedimento[" + i + "]";
+                                let temp40 = "fecha_solicitud_transporte[" + i + "]";
+                                let temp41 = "fecha_modulacion[" + i + "]";
+                                let temp42 = "modalidad[" + i + "]";
+                                let temp43 = "resultado_modulacion[" + i + "]";
+                                let temp44 = "fecha_reconocimiento[" + i + "]";
+                                let temp45 = "fecha_liberacion[" + i + "]";
+                                let temp46 = "sello_origen[" + i + "]";
+                                let temp47 = "sello_final[" + i + "]";
+                                let temp48 = "fecha_retencion_aut[" + i + "]";
+                                let temp49 = "fecha_liberacion_aut[" + i + "]";
+                                let temp50 = "estatus_operacion[" + i + "]";
+                                let temp51 = "motivo_atraso[" + i + "]";
+                                let temp52 = "observaciones[" + i + "]";
+                                let temp53 = "fy[" + i + "]";
 
-                        pais_origen = document.getElementById(temp7).value;
-                        size_container = document.getElementById(temp8).value;
-                        valor_usd = document.getElementById(temp9).value;               
-                        eta_port_discharge = document.getElementById(temp10).value;       
-                        agente_aduanal = document.getElementById(temp11).value;           
-                        pedimento_a1 = document.getElementById(temp12).value;            
-                        pedimento_r1_1er = document.getElementById(temp13).value;         
-                        motivo_rectificacion_1er = document.getElementById(temp14).value; 
-                        pedimento_r1_2do = document.getElementById(temp15).value;         
-                        motivo_rectificacion_2do = document.getElementById(temp16).value; 
-                        fecha_recepcion_doc = document.getElementById(temp17).value;      
-                        recinto = document.getElementById(temp18).value;
-                        naviera = document.getElementById(temp19).value;
-                        buque = document.getElementById(temp20).value;
-                        fecha_revalidacion = document.getElementById(temp21).value;       
-                        fecha_previo_origen = document.getElementById(temp22).value;      
-                        fecha_previo_destino = document.getElementById(temp23).value;     
-                        fecha_resultado_previo = document.getElementById(temp24).value;   
-                        proforma_final = document.getElementById(temp25).value;           
-                        permiso = document.getElementById(temp26).value;                  
-                        fecha_envio = document.getElementById(temp27).value;              
-                        fecha_recepcion_perm = document.getElementById(temp28).value;   
-                        fecha_activacion_perm = document.getElementById(temp29).value;    
-                        fecha_permisos_aut = document.getElementById(temp30).value;       
-                        co_pref_arancelaria = document.getElementById(temp31).value;      
-                        aplic_pref_arancelaria = document.getElementById(temp32).value;   
-                        req_uva = document.getElementById(temp33).value;    
-                        req_ca = document.getElementById(temp34).value;     
-                        fecha_recepcion_ca = document.getElementById(temp35).value;     
-                        num_constancia_ca = document.getElementById(temp36).value;     
-                        monto_ca = document.getElementById(temp37).value;    
-                        fecha_doc_completos = document.getElementById(temp38).value;      
-                        fecha_pago_pedimento = document.getElementById(temp39).value;     
-                        fecha_solicitud_transporte = document.getElementById(temp40).value;
-                        fecha_modulacion = document.getElementById(temp41).value;         
-                        modalidad = document.getElementById(temp42).value;                
-                        resultado_modulacion = document.getElementById(temp43).value;     
-                        fecha_reconocimiento = document.getElementById(temp44).value;     
-                        fecha_liberacion = document.getElementById(temp45).value;        
-                        sello_origen = document.getElementById(temp46).value;             
-                        sello_final = document.getElementById(temp47).value;              
-                        fecha_retencion_aut = document.getElementById(temp48).value;      
-                        fecha_liberacion_aut = document.getElementById(temp49).value;    
-                        estatus_operacion = document.getElementById(temp50).value;        
-                        motivo_atraso = document.getElementById(temp51).value;            
-                        observaciones = document.getElementById(temp52).value;   
-                        fy = document.getElementById(temp53).value;   
-
-                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //Logix ó VF
+                                pais_origen = document.getElementById(temp7).value;
+                                size_container = document.getElementById(temp8).value;
+                                valor_usd = document.getElementById(temp9).value;               
+                                eta_port_discharge = document.getElementById(temp10).value;       
+                                agente_aduanal = document.getElementById(temp11).value;           
+                                pedimento_a1 = document.getElementById(temp12).value;            
+                                pedimento_r1_1er = document.getElementById(temp13).value;         
+                                motivo_rectificacion_1er = document.getElementById(temp14).value; 
+                                pedimento_r1_2do = document.getElementById(temp15).value;         
+                                motivo_rectificacion_2do = document.getElementById(temp16).value; 
+                                fecha_recepcion_doc = document.getElementById(temp17).value;      
+                                recinto = document.getElementById(temp18).value;
+                                naviera = document.getElementById(temp19).value;
+                                buque = document.getElementById(temp20).value;
+                                fecha_revalidacion = document.getElementById(temp21).value;       
+                                fecha_previo_origen = document.getElementById(temp22).value;      
+                                fecha_previo_destino = document.getElementById(temp23).value;     
+                                fecha_resultado_previo = document.getElementById(temp24).value;   
+                                proforma_final = document.getElementById(temp25).value;           
+                                permiso = document.getElementById(temp26).value;                  
+                                fecha_envio = document.getElementById(temp27).value;              
+                                fecha_recepcion_perm = document.getElementById(temp28).value;   
+                                fecha_activacion_perm = document.getElementById(temp29).value;    
+                                fecha_permisos_aut = document.getElementById(temp30).value;       
+                                co_pref_arancelaria = document.getElementById(temp31).value;      
+                                aplic_pref_arancelaria = document.getElementById(temp32).value;   
+                                req_uva = document.getElementById(temp33).value;    
+                                req_ca = document.getElementById(temp34).value;     
+                                fecha_recepcion_ca = document.getElementById(temp35).value;     
+                                num_constancia_ca = document.getElementById(temp36).value;     
+                                monto_ca = document.getElementById(temp37).value;    
+                                fecha_doc_completos = document.getElementById(temp38).value;      
+                                fecha_pago_pedimento = document.getElementById(temp39).value;     
+                                fecha_solicitud_transporte = document.getElementById(temp40).value;
+                                fecha_modulacion = document.getElementById(temp41).value;         
+                                modalidad = document.getElementById(temp42).value;                
+                                resultado_modulacion = document.getElementById(temp43).value;     
+                                fecha_reconocimiento = document.getElementById(temp44).value;     
+                                fecha_liberacion = document.getElementById(temp45).value;        
+                                sello_origen = document.getElementById(temp46).value;             
+                                sello_final = document.getElementById(temp47).value;              
+                                fecha_retencion_aut = document.getElementById(temp48).value;      
+                                fecha_liberacion_aut = document.getElementById(temp49).value;    
+                                estatus_operacion = document.getElementById(temp50).value;        
+                                motivo_atraso = document.getElementById(temp51).value;            
+                                observaciones = document.getElementById(temp52).value;   
+                                fy = document.getElementById(temp53).value;   
+                        }
+                        
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //LOGIX Y VF
 
                                 let temp54 = "llegada_a_nova[" + i + "]";
                                 let temp55 = "llegada_a_globe_trade_sd[" + i + "]";
@@ -437,7 +234,7 @@
 
                         }
                         
-                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //Cusa ó VF
+                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //CUSA Y VF
 
                                 let temp64 = "no_bultos[" + i + "]"; 
                                 let temp65 = "peso_kg[" + i + "]"; 
@@ -462,9 +259,11 @@
                                                         "&shipmentId[" + i + "]=" + shipmentId +
                                                         "&containerId[" + i + "]=" + containerId +
                                                         "&referenciaAA[" + i + "]=" + referenciaAA +
-                                                        "&prioridad[" + i + "]=" + prioridad +
-
-                                                        "&pais_origen[" + i + "]=" + pais_origen +
+                                                        "&prioridad[" + i + "]=" + prioridad;
+                                                
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006"){ //RADAR, SESMA, RECHY Y VF 
+                                 
+                                  urlCustoms +=         "&pais_origen[" + i + "]=" + pais_origen +
                                                         "&size_container[" + i + "]=" + size_container +
                                                         "&valor_usd[" + i + "]=" + valor_usd +              
                                                         "&eta_port_discharge[" + i + "]=" + eta_port_discharge +     
@@ -511,8 +310,9 @@
                                                         "&motivo_atraso[" + i + "]=" + motivo_atraso +          
                                                         "&observaciones[" + i + "]=" + observaciones + 
                                                         "&fy[" + i + "]=" + fy; 
-
-                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //Logix ó VF 
+                        }
+                        
+                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //LOGIX Y VF
 
                                   urlCustoms +=         "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
                                                         "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
@@ -526,7 +326,7 @@
                                                         "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
                         }
                         
-                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //Cusa ó VF
+                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //CUSA Y VF
 
                                   urlCustoms +=         "&no_bultos[" + i + "]=" + no_bultos + 
                                                         "&peso_kg[" + i + "]=" + peso_kg + 
@@ -580,15 +380,6 @@
             swal.close();
         }, 1000);
     }
-    
-    $(document).ready(function () {
-        $('.datepicker').flatpickr({
-            dateFormat: 'm/d/Y',
-            onClose: function (selectedDates, dateStr, instance) {
-                instance.setDate(dateStr, true, 'm/d/Y');
-            }
-        });
-    });
     
     function doSearch() {
         var tableReg = document.getElementById('main-table');

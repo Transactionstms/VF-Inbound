@@ -50,6 +50,8 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- jQuery/show modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Loader -->
+        <link href="../lib/loader/css/styleLoad.css" rel="stylesheet" type="text/css"/>
         <style>
             #contenedor {
               display: flex;
@@ -72,21 +74,22 @@
                 float:none;
               }
             }
-            
-            #buscador {
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-            }
-            
-            #primero {
-              width: 90%;
-            }
-            
-            #segundo {
-              width: 10%;
+            #WindowLoad{
+                position:fixed;
+                top:0px;
+                left:0px;
+                z-index:3200;
+                filter:alpha(opacity=65);
+               -moz-opacity:65;
+                opacity:0.65;
+                background:#fff;
             }
         </style>
+        <script>
+            /*window.onload = (event) =>{
+                jsShowWindowLoad('Cargando Información');
+            };*/
+        </script>
     </head>
     <body>
         <%
@@ -100,7 +103,18 @@
                 String idDivision = ownsession.getAttribute("cbdivcuenta").toString();
                 String idBodega = ownsession.getAttribute("cbbodegaId").toString();
                 ConsultasQuery fac = new ConsultasQuery();
-
+                
+                //Parametros Generales
+                String filterType = request.getParameter("filterType");       //Inicializar con 0
+                String id = request.getParameter("id");                  //Inicializar con 0
+                
+                String AgentType = ""; 
+                String idPlantilla = "";
+                String namePlantilla = "";
+                String caramelo = "";
+                int contLoad = 0;
+                int cont = 1; 
+   
                 //Objetos Multiselect:
                 HashSet<String> list_evento = new HashSet<String>();
                 HashSet<String> list_referenciaAA = new HashSet<String>();
@@ -187,121 +201,125 @@
                 HashSet<String> list_proveedor = new HashSet<String>();
                 HashSet<String> list_proveedor_carga = new HashSet<String>();     
                 HashSet<String> list_fy = new HashSet<String>();
-
-                //Parametros Generales
-                String tipoAgente = ""; 
-                String idPlantilla = "";
-                String namePlantilla = "";
-                String test = ""; 
-                
+              
                 //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
-                        tipoAgente = rowA[0]; 
+                        AgentType = rowA[0]; 
                         idPlantilla = rowA[1];
                         namePlantilla = rowA[2];
                     }
                 }
                 
-                if (db.doDB(fac.consultarMultiselectCustoms(tipoAgente))) {
+                //Obtener el listado de opciones, mediante la consulta principal
+                if (db.doDB(fac.consultarMultiselectCustoms(AgentType))) {
                     for (String[] row : db.getResultado()) {
                         
-                                    list_evento.add("<option value=\""+row[0].trim()+"\">"+row[0]+"</option>");
-                                    list_referenciaAA.add("<option value=\""+row[30].trim()+"\">"+row[30]+"</option>");
-                                    list_responsable.add("<option value=\""+row[1].trim()+"\">"+row[1]+"</option>");
-                                    list_finalDestination.add("<option value=\""+row[2].trim()+"\">"+row[2]+"</option>");
-                                    list_brandDivision.add("<option value=\""+row[21].trim()+"\">"+row[21]+"</option>");
-                                    list_division.add("<option value=\""+row[4].trim()+"\">"+row[4]+"</option>");
-                                    list_shipmentId.add("<option value=\""+row[5].trim()+"\">"+row[5]+"</option>");
-                                    list_containerId.add("<option value=\""+row[6].trim()+"\">"+row[6]+"</option>");
-                                    list_blAwbPro.add("<option value=\""+row[7].trim()+"\">"+row[7]+"</option>");
-                                    list_loadType.add("<option value=\""+row[22].trim()+"\">"+row[22]+"</option>");
-                                    list_quantity.add("<option value=\""+row[9].trim()+"\">"+row[9]+"</option>");
-                                    list_pod.add("<option value=\""+row[19].trim()+"\">"+row[19]+"</option>");
-                                    list_estDepartFromPol.add("<option value=\""+row[11].trim()+"\">"+row[11]+"</option>");
-                                    list_etaRealPortOfDischarge.add("<option value=\""+row[12].trim()+"\">"+row[12]+"</option>");
-                                    list_estEtaDc.add("<option value=\""+row[23].trim()+"\">"+row[23]+"</option>");
-                                    list_inboundNotification.add("<option value=\""+row[14].trim()+"\">"+row[15]+"</option>");
-                                    list_pol.add("<option value=\""+row[20].trim()+"\">"+row[20]+"</option>");
-                                    list_aa.add("<option value=\""+row[16].trim()+"\">"+row[16]+"</option>");
-                                    list_fechaMesVenta.add("<option value=\""+row[28].trim()+"\">"+row[28]+"</option>");
-                                    list_prioridad.add("<option value=\""+row[97].trim()+"\">"+row[97]+"</option>");
-                                    list_pais_origen.add("<option value=\""+row[31].trim()+"\">"+row[31]+"</option>");   
-                                    list_size_container.add("<option value=\""+row[32].trim()+"\">"+row[32]+"</option>");    
-                                    list_valor_usd.add("<option value=\""+row[33].trim()+"\">"+row[33]+"</option>");                 
-                                    list_eta_port_discharge.add("<option value=\""+row[34].trim()+"\">"+row[34]+"</option>");         
-                                    list_agente_aduanal.add("<option value=\""+row[35].trim()+"\">"+row[35]+"</option>");              
-                                    list_pedimento_a1.add("<option value=\""+row[36].trim()+"\">"+row[36]+"</option>");              
-                                    list_pedimento_r1_1er.add("<option value=\""+row[37].trim()+"\">"+row[37]+"</option>");          
-                                    list_motivo_rectificacion_1er.add("<option value=\""+row[38].trim()+"\">"+row[38]+"</option>");    
-                                    list_pedimento_r1_2do.add("<option value=\""+row[39].trim()+"\">"+row[39]+"</option>");         
-                                    list_motivo_rectificacion_2do.add("<option value=\""+row[40].trim()+"\">"+row[40]+"</option>");    
-                                    list_fecha_recepcion_doc.add("<option value=\""+row[41].trim()+"\">"+row[41]+"</option>");    
-                                    list_recinto.add("<option value=\""+row[42].trim()+"\">"+row[42]+"</option>");
-                                    list_naviera.add("<option value=\""+row[43].trim()+"\">"+row[43]+"</option>");
-                                    list_buque.add("<option value=\""+row[44].trim()+"\">"+row[44]+"</option>");
-                                    list_fecha_revalidacion.add("<option value=\""+row[45].trim()+"\">"+row[45]+"</option>");      
-                                    list_fecha_previo_origen.add("<option value=\""+row[46].trim()+"\">"+row[46]+"</option>");     
-                                    list_fecha_previo_destino.add("<option value=\""+row[47].trim()+"\">"+row[47]+"</option>");   
-                                    list_fecha_resultado_previo.add("<option value=\""+row[48].trim()+"\">"+row[48]+"</option>");   
-                                    list_proforma_final.add("<option value=\""+row[49].trim()+"\">"+row[49]+"</option>");        
-                                    list_permiso.add("<option value=\""+row[50].trim()+"\">"+row[50]+"</option>");               
-                                    list_fecha_envio.add("<option value=\""+row[51].trim()+"\">"+row[51]+"</option>");             
-                                    list_fecha_recepcion_perm.add("<option value=\""+row[52].trim()+"\">"+row[52]+"</option>");
-                                    list_fecha_activacion_perm.add("<option value=\""+row[53].trim()+"\">"+row[53]+"</option>");    
-                                    list_fecha_permisos_aut.add("<option value=\""+row[54].trim()+"\">"+row[54]+"</option>");     
-                                    list_co_pref_arancelaria.add("<option value=\""+row[55].trim()+"\">"+row[55]+"</option>");    
-                                    list_aplic_pref_arancelaria.add("<option value=\""+row[56].trim()+"\">"+row[56]+"</option>");  
-                                    list_req_uva.add("<option value=\""+row[57].trim()+"\">"+row[57]+"</option>");   
-                                    list_req_ca.add("<option value=\""+row[58].trim()+"\">"+row[58]+"</option>");    
-                                    list_fecha_recepcion_ca.add("<option value=\""+row[59].trim()+"\">"+row[59]+"</option>"); 
-                                    list_num_constancia_ca.add("<option value=\""+row[60].trim()+"\">"+row[60]+"</option>");   
-                                    list_monto_ca.add("<option value=\""+row[61].trim()+"\">"+row[61]+"</option>");
-                                    list_fecha_doc_completos.add("<option value=\""+row[62].trim()+"\">"+row[62]+"</option>");  
-                                    list_fecha_pago_pedimento.add("<option value=\""+row[63].trim()+"\">"+row[63]+"</option>");     
-                                    list_fecha_solicitud_transporte.add("<option value=\""+row[64].trim()+"\">"+row[64]+"</option>");
-                                    list_fecha_modulacion.add("<option value=\""+row[65].trim()+"\">"+row[65]+"</option>");   
-                                    list_modalidad.add("<option value=\""+row[66].trim()+"\">"+row[66]+"</option>");          
-                                    list_resultado_modulacion.add("<option value=\""+row[67].trim()+"\">"+row[67]+"</option>");    
-                                    list_fecha_reconocimiento.add("<option value=\""+row[68].trim()+"\">"+row[68]+"</option>");     
-                                    list_fecha_liberacion.add("<option value=\""+row[69].trim()+"\">"+row[69]+"</option>");       
-                                    list_sello_origen.add("<option value=\""+row[70].trim()+"\">"+row[70]+"</option>");            
-                                    list_sello_final.add("<option value=\""+row[71].trim()+"\">"+row[71]+"</option>");      
-                                    list_fecha_retencion_aut.add("<option value=\""+row[72].trim()+"\">"+row[72]+"</option>");     
-                                    list_fecha_liberacion_aut.add("<option value=\""+row[73].trim()+"\">"+row[73]+"</option>");   
-                                    list_estatus_operacion.add("<option value=\""+row[74].trim()+"\">"+row[74]+"</option>");      
-                                    list_motivo_atraso.add("<option value=\""+row[75].trim()+"\">"+row[75]+"</option>");          
-                                    list_observaciones.add("<option value=\""+row[76].trim()+"\">"+row[76]+"</option>"); 
+                        contLoad++;
 
-                        if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF            
-                                    list_llegada_a_nova.add("<option value=\""+row[77].trim()+"\">"+row[77]+"</option>");
-                                    list_llegada_a_globe_trade_sd.add("<option value=\""+row[78].trim()+"\">"+row[78]+"</option>");
-                                    list_archivo_m.add("<option value=\""+row[79].trim()+"\">"+row[79]+"</option>");
-                                    list_fecha_archivo_m.add("<option value=\""+row[80].trim()+"\">"+row[80]+"</option>");
-                                    list_fecha_solicit_manip.add("<option value=\""+row[81].trim()+"\">"+row[81]+"</option>");
-                                    list_fecha_vencim_manip.add("<option value=\""+row[82].trim()+"\">"+row[82]+"</option>");
-                                    list_fecha_confirm_clave_pedim.add("<option value=\""+row[83].trim()+"\">"+row[83]+"</option>");
-                                    list_fecha_recep_increment.add("<option value=\""+row[84].trim()+"\">"+row[84]+"</option>");
-                                    list_t_e.add("<option value=\""+row[85].trim()+"\">"+row[85]+"</option>");
-                                    list_fecha_vencim_inbound.add("<option value=\""+row[86].trim()+"\">"+row[86]+"</option>");
+                        if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                          
+                                    list_evento.add("<option value=\""+row[0]+"\">"+row[0]+"</option>");
+                                    list_referenciaAA.add("<option value=\""+row[30]+"\">"+row[30]+"</option>");
+                                    list_responsable.add("<option value=\""+row[1]+"\">"+row[1]+"</option>");
+                                    list_finalDestination.add("<option value=\""+row[2]+"\">"+row[2]+"</option>");
+                                    list_brandDivision.add("<option value=\""+row[21]+"\">"+row[21]+"</option>");
+                                    list_division.add("<option value=\""+row[4]+"\">"+row[4]+"</option>");
+                                    list_shipmentId.add("<option value=\""+row[5]+"\">"+row[5]+"</option>");
+                                    list_containerId.add("<option value=\""+row[6]+"\">"+row[6]+"</option>");
+                                    list_blAwbPro.add("<option value=\""+row[7]+"\">"+row[7]+"</option>");
+                                    list_loadType.add("<option value=\""+row[8]+"\">"+row[8]+"</option>");
+                                    list_quantity.add("<option value=\""+row[9]+"\">"+row[9]+"</option>");
+                                    list_pod.add("<option value=\""+row[19]+"\">"+row[19]+"</option>");
+                                    list_estDepartFromPol.add("<option value=\""+row[11]+"\">"+row[11]+"</option>");
+                                    list_etaRealPortOfDischarge.add("<option value=\""+row[12]+"\">"+row[12]+"</option>");
+                                    list_estEtaDc.add("<option value=\""+row[22]+"\">"+row[22]+"</option>");
+                                    list_inboundNotification.add("<option value=\""+row[14]+"\">"+row[14]+"</option>"); 
+                                    list_pol.add("<option value=\""+row[20]+"\">"+row[20]+"</option>");
+                                    list_aa.add("<option value=\""+row[16]+"\">"+row[16]+"</option>");
+                                    list_fechaMesVenta.add("<option value=\""+row[28]+"\">"+row[28]+"</option>");
+                                    list_prioridad.add("<option value=\""+row[97]+"\">"+row[97]+"</option>");
+                                    list_pais_origen.add("<option value=\""+row[31]+"\">"+row[31]+"</option>");   
+                                    list_size_container.add("<option value=\""+row[32]+"\">"+row[32]+"</option>");    
+                                    list_valor_usd.add("<option value=\""+row[33]+"\">"+row[33]+"</option>");                 
+                                    list_eta_port_discharge.add("<option value=\""+row[34]+"\">"+row[34]+"</option>");         
+                                    list_agente_aduanal.add("<option value=\""+row[35]+"\">"+row[35]+"</option>");              
+                                    list_pedimento_a1.add("<option value=\""+row[36]+"\">"+row[36]+"</option>");              
+                                    list_pedimento_r1_1er.add("<option value=\""+row[37]+"\">"+row[37]+"</option>");          
+                                    list_motivo_rectificacion_1er.add("<option value=\""+row[38]+"\">"+row[38]+"</option>");    
+                                    list_pedimento_r1_2do.add("<option value=\""+row[39]+"\">"+row[39]+"</option>");         
+                                    list_motivo_rectificacion_2do.add("<option value=\""+row[40]+"\">"+row[40]+"</option>");    
+                                    list_fecha_recepcion_doc.add("<option value=\""+row[41]+"\">"+row[41]+"</option>");    
+                                    list_recinto.add("<option value=\""+row[42]+"\">"+row[42]+"</option>");
+                                    list_naviera.add("<option value=\""+row[43]+"\">"+row[43]+"</option>");
+                                    list_buque.add("<option value=\""+row[44]+"\">"+row[44]+"</option>");
+                                    list_fecha_revalidacion.add("<option value=\""+row[45]+"\">"+row[45]+"</option>");      
+                                    list_fecha_previo_origen.add("<option value=\""+row[46]+"\">"+row[46]+"</option>");     
+                                    list_fecha_previo_destino.add("<option value=\""+row[47]+"\">"+row[47]+"</option>");   
+                                    list_fecha_resultado_previo.add("<option value=\""+row[48]+"\">"+row[48]+"</option>");   
+                                    list_proforma_final.add("<option value=\""+row[49]+"\">"+row[49]+"</option>");        
+                                    list_permiso.add("<option value=\""+row[50]+"\">"+row[50]+"</option>");               
+                                    list_fecha_envio.add("<option value=\""+row[51]+"\">"+row[51]+"</option>");             
+                                    list_fecha_recepcion_perm.add("<option value=\""+row[52]+"\">"+row[52]+"</option>");
+                                    list_fecha_activacion_perm.add("<option value=\""+row[53]+"\">"+row[53]+"</option>");    
+                                    list_fecha_permisos_aut.add("<option value=\""+row[54]+"\">"+row[54]+"</option>");     
+                                    list_co_pref_arancelaria.add("<option value=\""+row[55]+"\">"+row[55]+"</option>");    
+                                    list_aplic_pref_arancelaria.add("<option value=\""+row[56]+"\">"+row[56]+"</option>");  
+                                    list_req_uva.add("<option value=\""+row[57]+"\">"+row[57]+"</option>");   
+                                    list_req_ca.add("<option value=\""+row[58]+"\">"+row[58]+"</option>");    
+                                    list_fecha_recepcion_ca.add("<option value=\""+row[59]+"\">"+row[59]+"</option>"); 
+                                    list_num_constancia_ca.add("<option value=\""+row[60]+"\">"+row[60]+"</option>");   
+                                    list_monto_ca.add("<option value=\""+row[61]+"\">"+row[61]+"</option>");
+                                    list_fecha_doc_completos.add("<option value=\""+row[62]+"\">"+row[62]+"</option>");  
+                                    list_fecha_pago_pedimento.add("<option value=\""+row[63]+"\">"+row[63]+"</option>");     
+                                    list_fecha_solicitud_transporte.add("<option value=\""+row[64]+"\">"+row[64]+"</option>");
+                                    list_fecha_modulacion.add("<option value=\""+row[65]+"\">"+row[65]+"</option>");   
+                                    list_modalidad.add("<option value=\""+row[66]+"\">"+row[66]+"</option>");          
+                                    list_resultado_modulacion.add("<option value=\""+row[67]+"\">"+row[67]+"</option>");    
+                                    list_fecha_reconocimiento.add("<option value=\""+row[68]+"\">"+row[68]+"</option>");     
+                                    list_fecha_liberacion.add("<option value=\""+row[69]+"\">"+row[69]+"</option>");       
+                                    list_sello_origen.add("<option value=\""+row[70]+"\">"+row[70]+"</option>");            
+                                    list_sello_final.add("<option value=\""+row[71]+"\">"+row[71]+"</option>");      
+                                    list_fecha_retencion_aut.add("<option value=\""+row[72]+"\">"+row[72]+"</option>");     
+                                    list_fecha_liberacion_aut.add("<option value=\""+row[73]+"\">"+row[73]+"</option>");   
+                                    list_estatus_operacion.add("<option value=\""+row[74]+"\">"+row[74]+"</option>");      
+                                    list_motivo_atraso.add("<option value=\""+row[75]+"\">"+row[75]+"</option>");          
+                                    list_observaciones.add("<option value=\""+row[76]+"\">"+row[76]+"</option>"); 
+                        }
+                        
+                        if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF            
+                                    list_llegada_a_nova.add("<option value=\""+row[77]+"\">"+row[77]+"</option>");
+                                    list_llegada_a_globe_trade_sd.add("<option value=\""+row[78]+"\">"+row[78]+"</option>");
+                                    list_archivo_m.add("<option value=\""+row[79]+"\">"+row[79]+"</option>");
+                                    list_fecha_archivo_m.add("<option value=\""+row[80]+"\">"+row[80]+"</option>");
+                                    list_fecha_solicit_manip.add("<option value=\""+row[81]+"\">"+row[81]+"</option>");
+                                    list_fecha_vencim_manip.add("<option value=\""+row[82]+"\">"+row[82]+"</option>");
+                                    list_fecha_confirm_clave_pedim.add("<option value=\""+row[83]+"\">"+row[83]+"</option>");
+                                    list_fecha_recep_increment.add("<option value=\""+row[84]+"\">"+row[84]+"</option>");
+                                    list_t_e.add("<option value=\""+row[85]+"\">"+row[85]+"</option>");
+                                    list_fecha_vencim_inbound.add("<option value=\""+row[86]+"\">"+row[86]+"</option>");
                         }
 
-                        if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
-                                    list_no_bultos.add("<option value=\""+row[87].trim()+"\">"+row[87]+"</option>");
-                                    list_peso_kg.add("<option value=\""+row[88].trim()+"\">"+row[88]+"</option>");
-                                    list_transferencia.add("<option value=\""+row[89].trim()+"\">"+row[89]+"</option>");
-                                    list_fecha_inicio_etiquetado.add("<option value=\""+row[90].trim()+"\">"+row[90]+"</option>");
-                                    list_fecha_termino_etiquetado.add("<option value=\""+row[91].trim()+"\">"+row[91]+"</option>");
-                                    list_hora_termino_etiquetado.add("<option value=\""+row[92].trim()+"\">"+row[92]+"</option>");
-                                    list_proveedor.add("<option value=\""+row[93].trim()+"\">"+row[93]+"</option>");
-                                    list_proveedor_carga.add("<option value=\""+row[94].trim()+"\">"+row[94]+"</option>");
-                                    list_fy.add("<option value=\""+row[95].trim()+"\">"+row[95]+"</option>");
+                        if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
+                                    list_no_bultos.add("<option value=\""+row[87]+"\">"+row[87]+"</option>");
+                                    list_peso_kg.add("<option value=\""+row[88]+"\">"+row[88]+"</option>");
+                                    list_transferencia.add("<option value=\""+row[89]+"\">"+row[89]+"</option>");
+                                    list_fecha_inicio_etiquetado.add("<option value=\""+row[90]+"\">"+row[90]+"</option>");
+                                    list_fecha_termino_etiquetado.add("<option value=\""+row[91]+"\">"+row[91]+"</option>");
+                                    list_hora_termino_etiquetado.add("<option value=\""+row[92]+"\">"+row[92]+"</option>");
+                                    list_proveedor.add("<option value=\""+row[93]+"\">"+row[93]+"</option>");
+                                    list_proveedor_carga.add("<option value=\""+row[94]+"\">"+row[94]+"</option>");
+                                    list_fy.add("<option value=\""+row[95]+"\">"+row[95]+"</option>");
                         }
                         
                     }
-                    
-                    
                 }
+                
+                //Generar caramelo: Opciones del multiselect
+                String[] arrOfStr = id.split(",");
+                for (String a : arrOfStr) {
+                    caramelo += "'" + a + "',";
+                }
+                caramelo = caramelo.replaceAll(",$", "");
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -318,7 +336,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=tipoAgente%>">
+                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
                                         <div id="contenedor">
                                             <div class="row">
                                                 <div class="columna">
@@ -336,10 +354,13 @@
                                             <table id="main-table" class="main-table" style="table-layout:fixed; width:1500%;">
                                                 <thead>
                                                     <tr>
+                                            <%            
+                                                if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
+                                            %>                 
                                                         <th class="col-sm-1" class="font-titulo" style="background-color:#FFFFFF;"></th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#333F4F;">
                                                             <font size="1">Referencia AA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('1')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('1')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_referenciaAA" name="col_referenciaAA">
                                                                 <%=list_referenciaAA%>         
@@ -347,7 +368,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Evento <strong style="color:red">*</strong></font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('2')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('2')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_evento" name="col_evento">
                                                                 <%=list_evento%>
@@ -355,7 +376,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Responsable</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('3')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('3')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_responsable" name="col_responsable">
                                                                 <%=list_responsable%>      
@@ -363,7 +384,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Final Destination</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('4')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('4')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_finalDestination" name="col_finalDestination">
                                                                 <%=list_finalDestination%>        
@@ -371,7 +392,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Brand-Division</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('5')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('5')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_brandDivision" name="col_brandDivision">
                                                                 <%=list_brandDivision%>       
@@ -379,7 +400,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Division</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('6')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('6')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_division" name="col_division">
                                                                 <%=list_division%>         
@@ -387,7 +408,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Shipment ID</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('7')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('7')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_shipmentId" name="col_shipmentId">
                                                                 <%=list_shipmentId%>        
@@ -395,7 +416,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Container</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('8')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('8')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_container" name="col_container">
                                                                 <%=list_containerId%>        
@@ -403,7 +424,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">BL/AWB/PRO</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('9')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('9')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_blAwbPro" name="col_blAwbPro">
                                                                 <%=list_blAwbPro%>        
@@ -411,7 +432,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">LoadType</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('10')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('10')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_loadType" name="col_loadType">
                                                                 <%=list_loadType%>     
@@ -419,7 +440,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Quantity</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('11')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('11')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_quantity" name="col_quantity">
                                                                 <%=list_quantity%>       
@@ -427,7 +448,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">POD</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('12')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('12')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pod" name="col_pod">
                                                                 <%=list_pod%>        
@@ -435,7 +456,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Est. Departure from POL</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('13')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('13')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estDepartFromPol" name="col_estDepartFromPol">
                                                                 <%=list_estDepartFromPol%>        
@@ -443,7 +464,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">ETA REAL Port of Discharge</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('14')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('14')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_etaRealPortOfDischarge" name="col_etaRealPortOfDischarge">
                                                                 <%=list_etaRealPortOfDischarge%>      
@@ -451,7 +472,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Est. Eta DC</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('15')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('15')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estEtaDc" name="col_estEtaDc">
                                                                 <%=list_estEtaDc%>        
@@ -459,7 +480,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Inbound notification</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('16')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('16')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_inboundNotification" name="col_inboundNotification">
                                                                 <%=list_inboundNotification%>        
@@ -467,7 +488,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">POL</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('17')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('17')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pol" name="col_pol">
                                                                 <%=list_pol%>        
@@ -475,7 +496,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">A.A.</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('18')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('18')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_aa" name="col_aa">
                                                                 <%=list_aa%>       
@@ -483,7 +504,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha Mes de Venta</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('19')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('19')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fechaMesVenta" name="col_fechaMesVenta">
                                                                 <%=list_fechaMesVenta%>         
@@ -491,7 +512,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Prioridad Si/No</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('20')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('20')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_prioridad" name="col_prioridad">
                                                                 <%=list_prioridad%>        
@@ -499,7 +520,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">País Origen</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('21')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('21')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pais_origen" name="col_pais_origen">
                                                                 <%=list_pais_origen%>        
@@ -507,7 +528,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Size Container</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('22')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('22')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_size_container" name="col_size_container">
                                                                 <%=list_size_container%>         
@@ -515,7 +536,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Valor USD</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('23')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('23')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_valor_usd" name="col_valor_usd">
                                                                 <%=list_valor_usd%>         
@@ -523,7 +544,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">ETA Port Of Discharge</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('24')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('24')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_eta_port_discharge" name="col_eta_port_discharge">
                                                                 <%=list_eta_port_discharge%>        
@@ -531,7 +552,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Agente Aduanal</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('25')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('25')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_agente_aduanal" name="col_agente_aduanal">
                                                                 <%=list_agente_aduanal%>        
@@ -539,7 +560,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Pedimento A1</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('26')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('26')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_a1" name="col_pedimento_a1">
                                                                 <%=list_pedimento_a1%>        
@@ -547,7 +568,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Pedimento R1</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('27')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('27')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_r1_1er" name="col_pedimento_r1_1er">
                                                                 <%=list_pedimento_r1_1er%>       
@@ -555,7 +576,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Motivo rectificación 1</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('28')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('28')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_rectificacion_1er" name="col_motivo_rectificacion_1er">
                                                                 <%=list_motivo_rectificacion_1er%>        
@@ -563,7 +584,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Pedimento R1 (2do)</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('29')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('29')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_r1_2do" name="col_pedimento_r1_2do">
                                                                 <%=list_pedimento_r1_2do%>        
@@ -571,7 +592,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Motivo rectificación 2</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('30')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('30')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_rectificacion_2do" name="col_motivo_rectificacion_2do">
                                                                 <%=list_motivo_rectificacion_2do%>       
@@ -579,7 +600,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Recepción Documentos</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('31')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('31')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_doc" name="col_fecha_recepcion_doc">
                                                                 <%=list_fecha_recepcion_doc%>        
@@ -587,7 +608,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
                                                             <font size="1">Recinto</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('32')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('32')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_recinto" name="col_recinto">
                                                                 <%=list_recinto%>        
@@ -595,7 +616,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
                                                             <font size="1">Naviera / Forwarder</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('33')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('33')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_naviera" name="col_naviera">
                                                                 <%=list_naviera%>        
@@ -603,7 +624,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
                                                             <font size="1">Buque</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('34')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('34')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_buque" name="col_buque">
                                                                 <%=list_buque%>        
@@ -611,7 +632,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Revalidación/Liberación de BL</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('35')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('35')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_revalidacion" name="col_fecha_revalidacion">
                                                                 <%=list_fecha_revalidacion%>         
@@ -619,7 +640,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Previo Origen</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('36')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('36')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_previo_origen" name="col_fecha_previo_origen">
                                                                 <%=list_fecha_previo_origen%>        
@@ -627,7 +648,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Previo en destino</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('37')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('37')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_previo_destino" name="col_fecha_previo_destino">
                                                                 <%=list_fecha_previo_destino%>        
@@ -635,7 +656,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Resultado Previo</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('38')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('38')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_resultado_previo" name="col_fecha_resultado_previo">
                                                                 <%=list_fecha_resultado_previo%>        
@@ -643,7 +664,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Proforma Final</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('39')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('39')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proforma_final" name="col_proforma_final">
                                                                 <%=list_proforma_final%>        
@@ -651,7 +672,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Requiere permiso</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('40')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('40')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_permiso" name="col_permiso">
                                                                 <%=list_permiso%>        
@@ -659,7 +680,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha envío Fichas/notas</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('41')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('41')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_envio" name="col_fecha_envio">
                                                                 <%=list_fecha_envio%>        
@@ -667,7 +688,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fec. Recepción de permisos tramit.</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('42')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('42')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_perm" name="col_fecha_recepcion_perm">
                                                                 <%=list_fecha_recepcion_perm%>        
@@ -676,7 +697,7 @@
 
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fec. Act Permisos (Inic Vigencia)</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('43')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('43')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_activacion_perm" name="col_fecha_activacion_perm">
                                                                 <%=list_fecha_activacion_perm%>        
@@ -684,7 +705,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fec. Perm. Aut. (Fin de Vigencia)</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('44')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('44')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_permisos_aut" name="col_fecha_permisos_aut">
                                                                 <%=list_fecha_permisos_aut%>        
@@ -692,7 +713,7 @@
                                                         </th>
                                                         <th class="col-sm-6" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Cuenta con CO para aplicar preferencia Arancelaria</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('45')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('45')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_co_pref_arancelaria" name="col_co_pref_arancelaria">
                                                                 <%=list_co_pref_arancelaria%>         
@@ -700,7 +721,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Aplico Preferencia Arancelaria</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('46')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('46')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_aplic_pref_arancelaria" name="col_aplic_pref_arancelaria">
                                                                 <%=list_aplic_pref_arancelaria%>         
@@ -708,7 +729,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Requiere UVA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('47')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('47')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_req_uva" name="col_req_uva">
                                                                 <%=list_req_uva%>        
@@ -716,7 +737,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
                                                             <font size="1">Requiere CA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('48')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('48')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_req_ca" name="col_req_ca">
                                                                 <%=list_req_ca%>        
@@ -724,7 +745,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
                                                             <font size="1">Fecha Recepción CA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('49')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('49')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_ca" name="col_fecha_recepcion_ca">
                                                                 <%=list_fecha_recepcion_ca%>         
@@ -732,7 +753,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
                                                             <font size="1">Número de Constancia CA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('50')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('50')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_num_constancia_ca" name="col_num_constancia_ca">
                                                                 <%=list_num_constancia_ca%>       
@@ -740,7 +761,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
                                                             <font size="1">Monto CA</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('51')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('51')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_monto_ca" name="col_monto_ca">
                                                                 <%=list_monto_ca%>        
@@ -748,7 +769,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Documentos Completos</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('52')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('52')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_doc_completos" name="col_fecha_doc_completos">
                                                                 <%=list_fecha_doc_completos%>        
@@ -756,7 +777,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Pago Pedimento</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('53')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('53')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_pago_pedimento" name="col_fecha_pago_pedimento">
                                                                 <%=list_fecha_pago_pedimento%>        
@@ -764,7 +785,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Solicitud de transporte</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('54')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('54')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_solicitud_transporte" name="col_fecha_solicitud_transporte">
                                                                 <%=list_fecha_solicitud_transporte%>         
@@ -772,7 +793,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Modulacion</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('55')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('55')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_modulacion" name="col_fecha_modulacion">
                                                                 <%=list_fecha_modulacion%>         
@@ -780,7 +801,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Modalidad</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('56')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('56')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_modalidad" name="col_modalidad">
                                                                 <%=list_modalidad%>       
@@ -788,7 +809,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Resultado Modulacion</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('57')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('57')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_resultado_modulacion" name="col_resultado_modulacion">
                                                                 <%=list_resultado_modulacion%>       
@@ -796,7 +817,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Reconocimiento</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('58')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('58')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_reconocimiento" name="col_fecha_reconocimiento">
                                                                 <%=list_fecha_reconocimiento%>        
@@ -804,7 +825,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha Liberacion</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('59')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('59')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_liberacion" name="col_fecha_liberacion">
                                                                 <%=list_fecha_liberacion%>         
@@ -812,7 +833,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Sello Origen</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('60')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('60')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_sello_origen" name="col_sello_origen">
                                                                 <%=list_sello_origen%>       
@@ -820,7 +841,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Sello Final</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('61')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('61')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_sello_final" name="col_sello_final">
                                                                 <%=list_sello_final%>         
@@ -828,7 +849,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fecha de retencion por la autoridad</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('62')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('62')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_retencion_aut" name="col_fecha_retencion_aut">
                                                                 <%=list_fecha_retencion_aut%>       
@@ -836,7 +857,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Fec. de liberacion por ret. de la aut.</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('63')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('63')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_liberacion_aut" name="col_fecha_liberacion_aut">
                                                                 <%=list_fecha_liberacion_aut%>        
@@ -844,7 +865,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Estatus de la operación</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('64')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('64')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estatus_operacion" name="col_festatus_operacion">
                                                                 <%=list_estatus_operacion%>        
@@ -852,7 +873,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Motivo Atraso</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('65')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('65')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_atraso" name="col_motivo_atraso">
                                                                 <%=list_motivo_atraso%>        
@@ -860,18 +881,20 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
                                                             <font size="1">Observaciones</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('66')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('66')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_observaciones" name="col_observaciones">
                                                                 <%=list_observaciones%>        
                                                             </select>
                                                         </th>
-                                            <%            
-                                                if(tipoAgente.equals("4001")||tipoAgente.equals("4006")){ //Logix ó VF  
+                                            <% 
+                                                }
+
+                                                if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF 
                                             %>           
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Llegada a NOVA</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('67')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('67')"><i class="fa fa-search"></i></a> 
                                                             
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_llegada_a_nova" name="col_llegada_a_nova">
                                                                 <%=list_llegada_a_nova%>       
@@ -879,7 +902,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Llegada a Globe trade SD</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('68')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('68')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd">
                                                                 <%=list_llegada_a_globe_trade_sd%>        
@@ -887,7 +910,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Archivo M</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('69')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('69')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_archivo_m" name="col_archivo_m">
                                                                 <%=list_archivo_m%>      
@@ -895,7 +918,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha de Archivo M</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('70')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('70')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_archivo_m" name="col_fecha_archivo_m">
                                                                 <%=list_fecha_archivo_m%>       
@@ -903,7 +926,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha Solicitud de Manipulacion</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('71')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('71')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_solicit_manip" name="col_fecha_solicit_manip">
                                                                 <%=list_fecha_solicit_manip%>        
@@ -911,7 +934,7 @@
                                                         </th>
                                                         <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha de vencimiento de Manipulacion</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('72')"><i class="fa fa-search"></i></a>   
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('72')"><i class="fa fa-search"></i></a>   
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_vencim_manip" name="col_fecha_vencim_manip">
                                                                 <%=list_fecha_vencim_manip%>         
@@ -919,7 +942,7 @@
                                                         </th>
                                                         <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha confirmacion Clave de Pedimento</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('73')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('73')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_confirm_clave_pedim" name="col_fecha_confirm_clave_pedim">
                                                                 <%=list_fecha_confirm_clave_pedim%>        
@@ -927,7 +950,7 @@
                                                         </th>
                                                         <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha de Recepcion de Incrementables</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('74')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('74')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recep_increment" name="col_fecha_recep_increment">
                                                                 <%=list_fecha_recep_increment%>        
@@ -935,7 +958,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">T&E</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('75')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('75')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_t_e" name="col_t_e">
                                                                 <%=list_t_e%>         
@@ -943,7 +966,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha de Vencimiento del Inbound</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('76')"><i class="fa fa-search"></i></a>     
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('76')"><i class="fa fa-search"></i></a>     
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound">
                                                                 <%=list_fecha_vencim_inbound%>         
@@ -952,11 +975,11 @@
                                             <%
                                                 }
 
-                                                if(tipoAgente.equals("4002")||tipoAgente.equals("4006")){  //Cusa ó VF
+                                                if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
                                             %>            
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">No. BULTOS</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('77')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('77')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_no_bultos" name="col_no_bultos">
                                                                 <%=list_no_bultos%>        
@@ -964,7 +987,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Peso (KG)</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('78')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('78')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_peso_kg" name="col_peso_kg">
                                                                 <%=list_peso_kg%>        
@@ -972,7 +995,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Transferencia</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('79')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('79')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_transferencia" name="col_transferencia">
                                                                 <%=list_transferencia%>       
@@ -980,7 +1003,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha Inicio Etiquetado</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('80')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('80')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_inicio_etiquetado" name="col_fecha_inicio_etiquetado">
                                                                 <%=list_fecha_inicio_etiquetado%>        
@@ -988,7 +1011,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Fecha Termino Etiquetado</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('81')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('81')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_termino_etiquetado" name="col_fecha_termino_etiquetado">
                                                                 <%=list_fecha_termino_etiquetado%>       
@@ -996,7 +1019,7 @@
                                                         </th>
                                                         <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Hora de termino Etiquetado</font>
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('82')"><i class="fa fa-search"></i></a> 
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('82')"><i class="fa fa-search"></i></a> 
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado">
                                                                 <%=list_hora_termino_etiquetado%>        
@@ -1004,7 +1027,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Proveedor</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('83')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('83')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proveedor" name="col_proveedor">
                                                                 <%=list_proveedor%>        
@@ -1012,7 +1035,7 @@
                                                         </th>
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">Proveedor de Carga</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('84')"><i class="fa fa-search"></i></a>  
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('84')"><i class="fa fa-search"></i></a>  
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proveedor_carga" name="col_proveedor_carga">
                                                                 <%=list_proveedor_carga%>        
@@ -1023,7 +1046,7 @@
                                             %>            
                                                         <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
                                                             <font size="1">FY</font> 
-                                                            &nbsp;<a class="text-lg text-white" onclick="customForm('85')"><i class="fa fa-search"></i></a>
+                                                            &nbsp;<a class="text-lg text-white" onclick="FiltrerData('85')"><i class="fa fa-search"></i></a>
                                                             &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
                                                             <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fy" name="col_fy">
                                                                 <%=list_fy%>        
@@ -1032,9 +1055,362 @@
                                                         <th class="col-sm-1" class="font-titulo" style="background-color:#FFFFFF;"></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="detalleCustom"></tbody>
+                                                <tbody id="detalleCustom">
+                                                   <%
+                                                     if (db.doDB(fac.consultarEventosCustoms(AgentType,filterType,caramelo))) {
+                                                        for (String[] row : db.getResultado()) {
+                                                          cont++;  
+                                                    %>
+                                                     <tr id="tr<%=cont%>">
+                                                    <%
+                                                        if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                                                    
+                                                    %>   
+                                                        <th class="font-numero">                    <!--Semaforo -->
+                                                                <center><img src="../img/circle-green.png" width="100%"/></center>
+                                                        </th>
+                                                        <th class="font-numero">                    <!-- Referencia Aduanal -->
+                                                            <input type="text" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30]%>" autocomplete="off">
+                                                        </th>
+                                                        <th class="font-numero">                    <!-- Número de Evento -->
+                                                                <%=row[0]%><input type="hidden" id="evento[<%=cont%>]" name="evento[<%=cont%>]" value="<%=row[0]%>">
+                                                        </th>
+                                                        <td class="font-numero">                    <!-- Responsable -->
+                                                                <%=row[1]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Final Destination -->
+                                                                <%=row[2]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Brand-Division -->
+                                                                <%=row[21]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Division -->
+                                                                <%=row[4]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Shipment ID -->
+                                                                <%=row[5]%><input type="hidden" id="shipmentId[<%=cont%>]" name="shipmentId[<%=cont%>]" value="<%=row[5]%>">
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Container -->
+                                                                <%=row[6]%><input type="hidden" id="containerId[<%=cont%>]" name="containerId[<%=cont%>]" value="<%=row[6]%>">
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- BL/AWB/PRO -->
+                                                                <%=row[7]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- LoadType -->
+                                                                <%=row[8]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Quantity -->
+                                                                <%=row[9]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- POD -->
+                                                                <%=row[19]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Est. Departure from POL -->
+                                                                <%=row[11]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- ETA REAL Port of Discharge -->
+                                                                <%=row[12]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Est. Eta DC -->
+                                                                <%=row[22]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Inbound notification -->
+                                                                <%=row[14]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- POL -->
+                                                                <%=row[20]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- A.A. -->
+                                                                <%=row[16]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Fecha Mes de Venta -->
+                                                                <%=row[28]%>
+                                                        </td>
+                                                        <td class="font-numero">                    <!-- Prioridad Si/No -->
+                                                          <select class="form-control" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>"> 
+                                                             <option value="<%=row[97]%>"><%=row[97]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>                                                 
+                                                        <td class="font-numero">
+                                                            <input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" value="<%=row[31]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control" id="size_container[<%=cont%>]" name="size_container[<%=cont%>]" type="text" value="<%=row[32]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" value="<%=row[33]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="agente_aduanal[<%=cont%>]" name="agente_aduanal[<%=cont%>]" type="text" value="<%=row[35]%>" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" value="<%=row[36]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" value="<%=row[37]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" value="<%=row[38]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" value="<%=row[39]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="motivo_rectificacion_2do[<%=cont%>]" name="motivo_rectificacion_2do[<%=cont%>]" type="text" value="<%=row[40]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_recepcion_doc[<%=cont%>]" name="fecha_recepcion_doc[<%=cont%>]" type="text" value="<%=row[41]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="recinto[<%=cont%>]" name="recinto[<%=cont%>]" type="text" value="<%=row[42]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="naviera[<%=cont%>]" name="naviera[<%=cont%>]" type="text" value="<%=row[43]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="buque[<%=cont%>]" name="buque[<%=cont%>]" type="text" value="<%=row[44]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_revalidacion[<%=cont%>]" name="fecha_revalidacion[<%=cont%>]" type="text" value="<%=row[45]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_previo_origen[<%=cont%>]" name="fecha_previo_origen[<%=cont%>]" type="text" value="<%=row[46]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_previo_destino[<%=cont%>]" name="fecha_previo_destino[<%=cont%>]" type="text" value="<%=row[47]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_resultado_previo[<%=cont%>]" name="fecha_resultado_previo[<%=cont%>]" type="text" value="<%=row[48]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" value="<%=row[49]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]"  value="<%=row[50]%>" value=""> 
+                                                             <option value="<%=row[50]%>"><%=row[50]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_envio[<%=cont%>]" name="fecha_envio[<%=cont%>]" type="text" value="<%=row[51]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_recepcion_perm[<%=cont%>]" name="fecha_recepcion_perm[<%=cont%>]" type="text" value="<%=row[52]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_activacion_perm[<%=cont%>]" name="fecha_activacion_perm[<%=cont%>]" type="text" value="<%=row[53]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" value="<%=row[54]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>" value=""> 
+                                                             <option value="<%=row[56]%>"><%=row[56]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>" value=""> 
+                                                             <option value="<%=row[57]%>"><%=row[57]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>" value=""> 
+                                                             <option value="<%=row[58]%>"><%=row[58]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"  value="<%=row[58]%>"> 
+                                                             <option value="<%=row[59]%>"><%=row[59]%></option> 
+                                                             <option value="Si">SI</option> 
+                                                             <option value="No">NO</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_recepcion_ca[<%=cont%>]" name="fecha_recepcion_ca[<%=cont%>]" type="text" value="<%=row[59]%>" autocomplete="off">
+                                                        </td> 
+                                                        <td class="font-numero"> 
+                                                          <input class="form-control" id="num_constancia_ca[<%=cont%>]" name="num_constancia_ca[<%=cont%>]" type="text" value="<%=row[60]%>" autocomplete="off">
+                                                        </td> 
+                                                        <td class="font-numero"> 
+                                                          <input class="form-control" id="monto_ca[<%=cont%>]" name="monto_ca[<%=cont%>]" type="text" value="<%=row[61]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" type="text" value="<%=row[62]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" value="<%=row[64]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_modulacion[<%=cont%>]" name="fecha_modulacion[<%=cont%>]" type="text" value="<%=row[65]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="modalidad[<%=cont%>]" name="modalidad[<%=cont%>]" value="<%=row[66]%>"> 
+                                                             <option value="<%=row[66]%>"><%=row[66]%></option>   
+                                                             <option value="Camión">Camión</option> 
+                                                             <option value="Tren">Tren</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>"> 
+                                                             <option value="<%=row[67]%>"><%=row[67]%></option> 
+                                                             <option value="Verde">Verde</option> 
+                                                             <option value="Rojo">Rojo</option> 
+                                                          </select> 
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_reconocimiento[<%=cont%>]" name="fecha_reconocimiento[<%=cont%>]" type="text"  value="<%=row[68]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_liberacion[<%=cont%>]" name="fecha_liberacion[<%=cont%>]" type="text"  value="<%=row[69]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="sello_origen[<%=cont%>]" name="sello_origen[<%=cont%>]" type="text"  value="<%=row[70]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="sello_final[<%=cont%>]" name="sello_final[<%=cont%>]" type="text"  value="<%=row[71]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_retencion_aut[<%=cont%>]" name="fecha_retencion_aut[<%=cont%>]" type="text" value="<%=row[72]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" value="<%=row[73]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"  value="<%=row[74]%>">
+                                                              <option value="<%=row[74]%>"><%=row[74]%></option> 
+                                                              <option value="1">EN ESPERA DE ESTATUS</option>
+                                                              <option value="2">EN TRANSITO - PENDIENTE REVALIDACION</option>
+                                                              <option value="3">EN TRANSITO - REVALIDADO</option>
+                                                              <option value="4">EN PROCESO DE ARRIBO</option>
+                                                              <option value="5">EN PROCESO DE RECOLECCION</option>
+                                                              <option value="6">ARRIBADO</option>
+                                                              <option value="7">ARRIBADO - PENDIENTE REVALIDACION</option>
+                                                              <option value="8">REVALIDADO</option>
+                                                              <option value="9">EN ESPERA DE PREVIO</option>
+                                                              <option value="10">RETENIDO POR LA AUTORIDAD</option>
+                                                              <option value="11">EN PREVIO</option>
+                                                              <option value="12">EN GLOSA</option>
+                                                              <option value="13">EN ESPERA DE DOCUMENTOS</option>
+                                                              <option value="14">EN PROCESO DE PAGO DE PEDIMENTO</option>
+                                                              <option value="15">PEDIMENTO PAGADO</option>
+                                                              <option value="16">EN ESPERA DE INSTRUCCIONES PARA DESPACHO</option>
+                                                              <option value="17">EN PROGRAMACION DE DESPACHO</option>
+                                                              <option value="18">EN DESPACHO</option>
+                                                              <option value="19">IMPORTADO</option>
+                                                              <option value="20">RETENIDO POR INCIDENCIA</option>
+                                                              <option value="21">EN TRANSITO</option>
+                                                          </select>
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="motivo_atraso[<%=cont%>]" name="motivo_atraso[<%=cont%>]" type="text"  value="<%=row[75]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                          <input class="form-control" id="observaciones[<%=cont%>]" name="observaciones[<%=cont%>]" type="text" value="<%=row[76]%>" autocomplete="off">
+                                                        </td>
+                                                    <%
+                                                        }
+
+                                                        if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF
+                                                    %>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="llegada_a_nova[<%=cont%>]" name="llegada_a_nova[<%=cont%>]" type="text" value="<%=row[77]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="llegada_a_globe_trade_sd[<%=cont%>]" name="llegada_a_globe_trade_sd[<%=cont%>]" type="text" value="<%=row[78]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control" id="archivo_m[<%=cont%>]" name="archivo_m[<%=cont%>]" type="text" value="<%=row[79]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_archivo_m[<%=cont%>]" name="fecha_archivo_m[<%=cont%>]" type="text" value="<%=row[80]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_solicit_manip[<%=cont%>]" name="fecha_solicit_manip[<%=cont%>]" type="text" value="<%=row[81]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_vencim_manip[<%=cont%>]" name="fecha_vencim_manip[<%=cont%>]" type="text" value="<%=row[82]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_confirm_clave_pedim[<%=cont%>]" name="fecha_confirm_clave_pedim[<%=cont%>]" type="text" value="<%=row[83]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_recep_increment[<%=cont%>]" name="fecha_recep_increment[<%=cont%>]" type="text" value="<%=row[84]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control" id="t_e[<%=cont%>]" name="t_e[<%=cont%>]" type="text" value="<%=row[85]%>" autocomplete="off">
+                                                        </td>
+                                                        <td class="font-numero">
+                                                            <input class="form-control datepicker" id="fecha_vencim_inbound[<%=cont%>]" name="fecha_vencim_inbound[<%=cont%>]" type="text" value="<%=row[86]%>" autocomplete="off">
+                                                        </td>
+                                                    <%
+                                                        }
+
+                                                        if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
+                                                    %>
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="no_bultos[<%=cont%>]" name="no_bultos[<%=cont%>]" type="text" value="<%=row[87]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="peso_kg[<%=cont%>]" name="peso_kg[<%=cont%>]" type="text" value="<%=row[88]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                              <select class="form-control" id="transferencia[<%=cont%>]" name="transferencia[<%=cont%>]" value="<%=row[89]%>"> 
+                                                                 <option value="<%=row[89]%>"><%=row[89]%></option> 
+                                                                 <option value="Si">SI</option> 
+                                                                 <option value="No">NO</option> 
+                                                              </select> 
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" text value="<%=row[90]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" value="<%=row[91]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="hora_termino_etiquetado[<%=cont%>]" name="hora_termino_etiquetado[<%=cont%>]" type="time" value="<%=row[92]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="proveedor[<%=cont%>]" name="proveedor[<%=cont%>]" type="text" value="<%=row[93]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="proveedor_carga[<%=cont%>]" name="proveedor_carga[<%=cont%>]" type="text" value="<%=row[94]%>" autocomplete="off">
+                                                         </td>
+                                                    <%	 
+                                                        }
+                                                    %>					
+                                                         <td class="font-numero">
+                                                             <input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" value="<%=row[95]%>" autocomplete="off">
+                                                         </td>
+                                                         <td class="font-numero">
+                                                             <center><a class="btn btn-primary text-uppercase" onclick="AddCustoms()"><i class="fa fa-save"></i></a></center>  
+                                                         </td> 
+                                                      </tr>
+                                                <%         
+                                                    cont++;
+                                                      }
+                                                %>
+                                                    <script>$(document).ready(function () { jsRemoveWindowLoad(); });</script>
+                                                <%
+                                                    }
+                                                %>      
+                                                </tbody>
                                             </table>
                                         </div>
+                                         <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
                                         <br>
                                     </div>                    
                                 </div>
@@ -1119,13 +1495,281 @@
                     </div>
                 </div>
             </div>
-        </div>                                        
+        </div>     
+        <script>
+            function customForm(tipoFiltro) {
+
+                let selectedValues = "0";
+                var selected = "";
+
+                if(tipoFiltro==="0"){
+                    selectedValues = "0";
+                }else if(tipoFiltro==="1"){
+                    selectedValues = document.getElementById('col_referenciaAA');
+                }else if(tipoFiltro==="2"){
+                    selectedValues = document.getElementById('col_evento');
+                }else if(tipoFiltro==="3"){
+                    selectedValues = document.getElementById('col_responsable');
+                }else if(tipoFiltro==="4"){
+                    selectedValues = document.getElementById('col_finalDestination');
+                }else if(tipoFiltro==="5"){
+                    selectedValues = document.getElementById('col_brandDivision');
+                }else if(tipoFiltro==="6"){
+                    selectedValues = document.getElementById('col_division');
+                }else if(tipoFiltro==="7"){
+                    selectedValues = document.getElementById('col_shipmentId');
+                }else if(tipoFiltro==="8"){
+                    selectedValues = document.getElementById('col_container');
+                }else if(tipoFiltro==="9"){
+                    selectedValues = document.getElementById('col_blAwbPro');
+                }else if(tipoFiltro==="10"){
+                    selectedValues = document.getElementById('col_loadType');
+                }else if(tipoFiltro==="11"){
+                    selectedValues = document.getElementById('col_quantity');
+                }else if(tipoFiltro==="12"){
+                    selectedValues = document.getElementById('col_pod');
+                }else if(tipoFiltro==="13"){
+                    selectedValues = document.getElementById('col_estDepartFromPol');
+                }else if(tipoFiltro==="14"){
+                    selectedValues = document.getElementById('col_etaRealPortOfDischarge');
+                }else if(tipoFiltro==="15"){
+                    selectedValues = document.getElementById('col_estEtaDc');
+                }else if(tipoFiltro==="16"){
+                    selectedValues = document.getElementById('col_inboundNotification');
+                }else if(tipoFiltro==="17"){
+                    selectedValues = document.getElementById('col_pol');
+                }else if(tipoFiltro==="18"){
+                    selectedValues = document.getElementById('col_aa');
+                }else if(tipoFiltro==="19"){
+                    selectedValues = document.getElementById('col_fechaMesVenta');
+                }else if(tipoFiltro==="20"){
+                    selectedValues = document.getElementById('col_prioridad');       
+                }else if(tipoFiltro==="21"){
+                    selectedValues = document.getElementById('col_pais_origen');
+                }else if(tipoFiltro==="22"){
+                    selectedValues = document.getElementById('col_size_container');
+                }else if(tipoFiltro==="23"){
+                    selectedValues = document.getElementById('col_valor_usd');
+                }else if(tipoFiltro==="24"){
+                    selectedValues = document.getElementById('col_eta_port_discharge');
+                }else if(tipoFiltro==="25"){
+                    selectedValues = document.getElementById('col_agente_aduanal');
+                }else if(tipoFiltro==="26"){
+                    selectedValues = document.getElementById('col_pedimento_a1');
+                }else if(tipoFiltro==="27"){
+                    selectedValues = document.getElementById('col_pedimento_r1_1er');
+                }else if(tipoFiltro==="28"){
+                    selectedValues = document.getElementById('col_motivo_rectificacion_1er');
+                }else if(tipoFiltro==="29"){
+                    selectedValues = document.getElementById('col_pedimento_r1_2do');
+                }else if(tipoFiltro==="30"){
+                    selectedValues = document.getElementById('col_motivo_rectificacion_2do');
+                }else if(tipoFiltro==="31"){
+                    selectedValues = document.getElementById('col_fecha_recepcion_doc');
+                }else if(tipoFiltro==="32"){
+                    selectedValues = document.getElementById('col_recinto');
+                }else if(tipoFiltro==="33"){
+                    selectedValues = document.getElementById('col_naviera');
+                }else if(tipoFiltro==="34"){
+                    selectedValues = document.getElementById('col_buque');
+                }else if(tipoFiltro==="35"){
+                    selectedValues = document.getElementById('col_fecha_revalidacion');
+                }else if(tipoFiltro==="36"){
+                    selectedValues = document.getElementById('col_fecha_previo_origen');
+                }else if(tipoFiltro==="37"){
+                    selectedValues = document.getElementById('col_fecha_previo_destino');
+                }else if(tipoFiltro==="38"){
+                    selectedValues = document.getElementById('col_fecha_resultado_previo');
+                }else if(tipoFiltro==="39"){
+                    selectedValues = document.getElementById('col_proforma_final');
+                }else if(tipoFiltro==="40"){
+                    selectedValues = document.getElementById('col_permiso');
+                }else if(tipoFiltro==="41"){
+                    selectedValues = document.getElementById('col_fecha_envio');
+                }else if(tipoFiltro==="42"){
+                    selectedValues = document.getElementById('col_fecha_recepcion_perm');
+                }else if(tipoFiltro==="43"){
+                    selectedValues = document.getElementById('col_fecha_activacion_perm');
+                }else if(tipoFiltro==="44"){
+                    selectedValues = document.getElementById('col_fecha_permisos_aut');
+                }else if(tipoFiltro==="45"){
+                    selectedValues = document.getElementById('col_co_pref_arancelaria');
+                }else if(tipoFiltro==="46"){
+                    selectedValues = document.getElementById('col_aplic_pref_arancelaria');
+                }else if(tipoFiltro==="47"){
+                    selectedValues = document.getElementById('col_req_uva');
+                }else if(tipoFiltro==="48"){
+                    selectedValues = document.getElementById('col_req_ca');
+                }else if(tipoFiltro==="49"){
+                    selectedValues = document.getElementById('col_fecha_recepcion_ca');
+                }else if(tipoFiltro==="50"){
+                    selectedValues = document.getElementById('col_num_constancia_ca');
+                }else if(tipoFiltro==="51"){
+                    selectedValues = document.getElementById('col_monto_ca');
+                }else if(tipoFiltro==="52"){
+                    selectedValues = document.getElementById('col_fecha_doc_completos');
+                }else if(tipoFiltro==="53"){
+                    selectedValues = document.getElementById('col_fecha_pago_pedimento');
+                }else if(tipoFiltro==="54"){
+                    selectedValues = document.getElementById('col_fecha_solicitud_transporte');
+                }else if(tipoFiltro==="55"){
+                    selectedValues = document.getElementById('col_fecha_modulacion');
+                }else if(tipoFiltro==="56"){
+                    selectedValues = document.getElementById('col_modalidad');
+                }else if(tipoFiltro==="57"){
+                    selectedValues = document.getElementById('col_modalidad');
+                }else if(tipoFiltro==="58"){
+                    selectedValues = document.getElementById('col_fecha_reconocimiento');
+                }else if(tipoFiltro==="59"){
+                    selectedValues = document.getElementById('col_fecha_liberacion');
+                }else if(tipoFiltro==="60"){
+                    selectedValues = document.getElementById('col_sello_origen');
+                }else if(tipoFiltro==="61"){
+                    selectedValues = document.getElementById('col_sello_final');
+                }else if(tipoFiltro==="62"){
+                    selectedValues = document.getElementById('col_fecha_retencion_aut');
+                }else if(tipoFiltro==="63"){
+                    selectedValues = document.getElementById('col_fecha_liberacion_aut');
+                }else if(tipoFiltro==="64"){
+                    selectedValues = document.getElementById('col_estatus_operacion');
+                }else if(tipoFiltro==="65"){
+                    selectedValues = document.getElementById('col_motivo_atraso');
+                }else if(tipoFiltro==="66"){
+                    selectedValues = document.getElementById('col_observaciones');
+                }else if(tipoFiltro==="67"){
+                    selectedValues = document.getElementById('col_llegada_a_nova');
+                }else if(tipoFiltro==="68"){
+                    selectedValues = document.getElementById('col_llegada_a_globe_trade_sd');
+                }else if(tipoFiltro==="69"){
+                    selectedValues = document.getElementById('col_archivo_m');
+                }else if(tipoFiltro==="70"){
+                    selectedValues = document.getElementById('col_fecha_archivo_m');
+                }else if(tipoFiltro==="71"){
+                    selectedValues = document.getElementById('col_fecha_solicit_manip');
+                }else if(tipoFiltro==="72"){
+                    selectedValues = document.getElementById('col_fecha_vencim_manip');
+                }else if(tipoFiltro==="73"){
+                    selectedValues = document.getElementById('col_fecha_confirm_clave_pedim');
+                }else if(tipoFiltro==="74"){
+                    selectedValues = document.getElementById('col_fecha_recep_increment');
+                }else if(tipoFiltro==="75"){
+                    selectedValues = document.getElementById('col_t_e');
+                }else if(tipoFiltro==="76"){
+                    selectedValues = document.getElementById('col_fecha_vencim_inbound');
+                }else if(tipoFiltro==="77"){
+                    selectedValues = document.getElementById('col_no_bultos');
+                }else if(tipoFiltro==="78"){
+                    selectedValues = document.getElementById('col_peso_kg');
+                }else if(tipoFiltro==="79"){
+                    selectedValues = document.getElementById('col_transferencia');
+                }else if(tipoFiltro==="80"){
+                    selectedValues = document.getElementById('col_fecha_inicio_etiquetado');
+                }else if(tipoFiltro==="81"){
+                    selectedValues = document.getElementById('col_fecha_termino_etiquetado');
+                }else if(tipoFiltro==="82"){
+                    selectedValues = document.getElementById('col_hora_termino_etiquetado');
+                }else if(tipoFiltro==="83"){
+                    selectedValues = document.getElementById('col_proveedor');
+                }else if(tipoFiltro==="84"){
+                    selectedValues = document.getElementById('col_proveedor_carga');
+                }else if(tipoFiltro==="85"){
+                    selectedValues = document.getElementById('col_fy');
+                }
+
+                if(tipoFiltro==="0"){
+                   selected = "0"; 
+                }else{
+                   selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
+                }
+                
+                location.href = "<%=request.getContextPath()%>/Catalogos/customForm.jsp?filterType="+tipoFiltro+"&id="+selected;
+                
+            }
+            
+            //Cargar función para formato de fechas 
+            $('.datepicker').flatpickr({
+                dateFormat: 'm/d/Y',
+                onClose: function (selectedDates, dateStr, instance) {
+                    instance.setDate(dateStr, true, 'm/d/Y');
+                }
+            });
+        </script>
+        <script> 
+            /*const log = document.querySelector(".event-log-contents");
+
+            window.addEventListener("load", (event) => {
+              log.textContent += "load\n";
+              jsRemoveWindowLoad();
+            });
+
+            document.addEventListener("readystatechange", (event) => {
+              log.textContent += `readystate: ${document.readyState}\n`;
+              jsRemoveWindowLoad();
+            });
+
+            document.addEventListener("DOMContentLoaded", (event) => {
+              log.textContent += "DOMContentLoaded\n";
+              jsRemoveWindowLoad();
+            });*/
+            
+            function jsRemoveWindowLoad() {
+                // eliminamos el div que bloquea pantalla
+                $("#WindowLoad").remove();
+            }
+
+            function jsShowWindowLoad(mensaje) {
+                //eliminamos si existe un div ya bloqueando
+                jsRemoveWindowLoad();
+
+                //si no enviamos mensaje se pondra este por defecto
+                if (mensaje === undefined) mensaje = "Procesando la información&amp;lt;br&amp;gt;Espere por favor";
+
+                //centrar imagen gif
+                height = 20;//El div del titulo, para que se vea mas arriba (H)
+                var ancho = 0;
+                var alto = 0;
+
+                //obtenemos el ancho y alto de la ventana de nuestro navegador, compatible con todos los navegadores
+                if (window.innerWidth == undefined) ancho = window.screen.width;
+                else ancho = window.innerWidth;
+                if (window.innerHeight == undefined) alto = window.screen.height;
+                else alto = window.innerHeight;
+
+                //operación necesaria para centrar el div que muestra el mensaje
+                var heightdivsito = alto/2 - parseInt(height)/2;//Se utiliza en el margen superior, para centrar
+
+               //imagen que aparece mientras nuestro div es mostrado y da apariencia de cargando
+                imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#000;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='../../img/LoaderCustoms.gif' width='10%'></div>";
+
+                    //creamos el div que bloquea grande------------------------------------------
+                    div = document.createElement("div");
+                    div.id = "WindowLoad"
+                    div.style.width = ancho + "px";
+                    div.style.height = alto + "px";
+                    $("body").append(div);
+
+                    //creamos un input text para que el foco se plasme en este y el usuario no pueda escribir en nada de atras
+                    input = document.createElement("input");
+                    input.id = "focusInput";
+                    input.type = "text"
+
+                    //asignamos el div que bloquea
+                    $("#WindowLoad").append(input);
+
+                    //asignamos el foco y ocultamos el input text
+                    $("#focusInput").focus();
+                    $("#focusInput").hide();
+
+                    //centramos el div del texto
+                    $("#WindowLoad").html(imgCentro);
+            }
+        </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Multiselect -->
         <script src="../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- Plantilla js -->
-        <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
+        <!---<script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>-->
         <!-- Sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- calendarios -->
@@ -1133,14 +1777,16 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
         <!-- Actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
-       
+        <!-- Loader -->
+        <script src="../lib/loader/js/functionLoad.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
     <%
         } catch (NullPointerException e) {
-            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
-            out.println("<script>window.close();</script>");
+            System.out.println("Error:" +e);
+            /*out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+            out.println("<script>window.close();</script>");*/
         } catch (Exception e) {
             out.println("Excepcion revise por favor! " + e);
             e.printStackTrace();

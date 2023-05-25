@@ -71,6 +71,36 @@ public class InsertarCustomsForms extends HttpServlet {
             String fecha_retencion_aut = "";
             String fecha_liberacion_aut = "";
             
+          //Parametros VF Y OTROS 
+            String pais_origen = "";
+            String size_container = "";
+            String valor_usd = "";
+            String agente_aduanal = "";
+            String pedimento_a1 = "";
+            String pedimento_r1_1er = "";
+            String motivo_rectificacion_1er = "";
+            String pedimento_r1_2do = "";
+            String motivo_rectificacion_2do = "";
+            String recinto = "";
+            String naviera = "";
+            String buque = "";
+            String permiso = "";
+            String co_pref_arancelaria = "";
+            String aplic_pref_arancelaria = "";
+            String req_uva = "";
+            String req_ca = "";
+            String num_constancia_ca = "";
+            String monto_ca = "";
+            String modalidad = "";
+            String resultado_modulacion = "";
+            String sello_origen = "";
+            String sello_final = "";
+            String estatus_operacion = "";
+            String motivo_atraso = "";
+            String observaciones = "";
+            String fy = "";
+          
+          
           //Parametros Logix
             String llegada_a_nova = "";
             String llegada_a_globe_trade_sd = "";
@@ -113,10 +143,11 @@ public class InsertarCustomsForms extends HttpServlet {
                   String containerId = request.getParameter("containerId[" + i + "]").trim();
                   String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
                   
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF 
                   //Parametros Generales
-                  String pais_origen = request.getParameter("pais_origen[" + i + "]").trim(); 
-                  String size_container = request.getParameter("size_container[" + i + "]").trim(); 
-                  String valor_usd = request.getParameter("valor_usd[" + i + "]").trim();                
+                  pais_origen = request.getParameter("pais_origen[" + i + "]").trim(); 
+                  size_container = request.getParameter("size_container[" + i + "]").trim(); 
+                  valor_usd = request.getParameter("valor_usd[" + i + "]").trim();                
                  
                   eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]");                                     //fecha   
                   if(!eta_port_discharge.trim().equals("")){
@@ -124,12 +155,12 @@ public class InsertarCustomsForms extends HttpServlet {
                       eta_port_discharge = sdfDestination.format(date1);                                                          //parse the date into another format
                   } 
                   
-                  String agente_aduanal = request.getParameter("agente_aduanal[" + i + "]").trim();            
-                  String pedimento_a1 = request.getParameter("pedimento_a1[" + i + "]").trim();             
-                  String pedimento_r1_1er = request.getParameter("pedimento_r1_1er[" + i + "]").trim();          
-                  String motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er[" + i + "]").trim();  
-                  String pedimento_r1_2do = request.getParameter("pedimento_r1_2do[" + i + "]").trim();          
-                  String motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]").trim();  
+                  agente_aduanal = request.getParameter("agente_aduanal[" + i + "]").trim();            
+                  pedimento_a1 = request.getParameter("pedimento_a1[" + i + "]").trim();             
+                  pedimento_r1_1er = request.getParameter("pedimento_r1_1er[" + i + "]").trim();          
+                  motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er[" + i + "]").trim();  
+                  pedimento_r1_2do = request.getParameter("pedimento_r1_2do[" + i + "]").trim();          
+                  motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]").trim();  
                   
                   fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]");               //fecha  
                   if(!fecha_recepcion_doc.trim().equals("")){
@@ -137,9 +168,9 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_recepcion_doc = sdfDestination.format(date2);                                                          //parse the date into another format
                   }
                   
-                  String recinto = request.getParameter("recinto[" + i + "]").trim();
-                  String naviera = request.getParameter("naviera[" + i + "]").trim();
-                  String buque = request.getParameter("buque[" + i + "]").trim();
+                  recinto = request.getParameter("recinto[" + i + "]").trim();
+                  naviera = request.getParameter("naviera[" + i + "]").trim();
+                  buque = request.getParameter("buque[" + i + "]").trim();
                   
                   fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]");                 //fecha 
                   if(!fecha_revalidacion.trim().equals("")){
@@ -171,7 +202,7 @@ public class InsertarCustomsForms extends HttpServlet {
                       proforma_final = sdfDestination.format(date20);                                                              //parse the date into another format
                   }
                   
-                  String permiso = request.getParameter("permiso[" + i + "]").trim();                   
+                  permiso = request.getParameter("permiso[" + i + "]").trim();                   
                   
                   fecha_envio = request.getParameter("fecha_envio[" + i + "]");                               //fecha  
                   if(!fecha_envio.trim().equals("")){
@@ -197,10 +228,10 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_permisos_aut = sdfDestination.format(date10);                                                          //parse the date into another format
                   }
                   
-                  String co_pref_arancelaria = request.getParameter("co_pref_arancelaria[" + i + "]").trim();       
-                  String aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria[" + i + "]").trim();    
-                  String req_uva = request.getParameter("req_uva[" + i + "]").trim();   
-                  String req_ca = request.getParameter("req_ca[" + i + "]").trim();   
+                  co_pref_arancelaria = request.getParameter("co_pref_arancelaria[" + i + "]").trim();       
+                  aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria[" + i + "]").trim();    
+                  req_uva = request.getParameter("req_uva[" + i + "]").trim();   
+                  req_ca = request.getParameter("req_ca[" + i + "]").trim();   
                   
                   fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]");                  //fecha 
                   if(!fecha_recepcion_ca.trim().equals("")){
@@ -208,8 +239,8 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_recepcion_ca = sdfDestination.format(date11);                                                           //parse the date into another format
                   }
                   
-                  String num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]").trim();   
-                  String monto_ca = request.getParameter("monto_ca[" + i + "]").trim();   
+                  num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]").trim();   
+                  monto_ca = request.getParameter("monto_ca[" + i + "]").trim();   
                   
                   fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]");                 //fecha 
                   if(!fecha_doc_completos.trim().equals("")){
@@ -235,8 +266,8 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_modulacion = sdfDestination.format(date15);                                                              //parse the date into another format
                   }
                   
-                  String modalidad = request.getParameter("modalidad[" + i + "]").trim();                 
-                  String resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]").trim();      
+                  modalidad = request.getParameter("modalidad[" + i + "]").trim();                 
+                  resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]").trim();      
                   
                   fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]");               //fecha 
                   if(!fecha_reconocimiento.trim().equals("")){
@@ -250,8 +281,8 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_liberacion = sdfDestination.format(date17);                                                              //parse the date into another format
                   }
                   
-                  String sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
-                  String sello_final = request.getParameter("sello_final[" + i + "]").trim();               
+                  sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
+                  sello_final = request.getParameter("sello_final[" + i + "]").trim();               
                   
                   fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]");                 //fecha 
                   if(!fecha_retencion_aut.trim().equals("")){
@@ -265,12 +296,13 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_liberacion_aut = sdfDestination.format(date19);                                                          //parse the date into another format
                   }
                   
-                  String estatus_operacion = request.getParameter("estatus_operacion[" + i + "]").trim();         
-                  String motivo_atraso = request.getParameter("motivo_atraso[" + i + "]").trim();             
-                  String observaciones = request.getParameter("observaciones[" + i + "]").trim(); 
-                  String fy = request.getParameter("fy[" + i + "]").trim();
- 
-            if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
+                  estatus_operacion = request.getParameter("estatus_operacion[" + i + "]").trim();         
+                  motivo_atraso = request.getParameter("motivo_atraso[" + i + "]").trim();             
+                  observaciones = request.getParameter("observaciones[" + i + "]").trim(); 
+                  fy = request.getParameter("fy[" + i + "]").trim();
+            }
+              
+            if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                
                 llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]");                                 //fecha 
                 if(!llegada_a_nova.trim().equals("")){                  
@@ -326,7 +358,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                 
             }
             
-            if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){ //Cusa ó VF
+            if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){ //CUSA Y VF
                  
                 no_bultos = request.getParameter("no_bultos[" + i + "]").trim(); 
                 peso_kg = request.getParameter("peso_kg[" + i + "]").trim(); 
@@ -356,9 +388,11 @@ public class InsertarCustomsForms extends HttpServlet {
             
             if(oraOut){
 
-                                insertarCustoms += " UPDATE TRA_INB_CUSTOMS SET "
-                                                 + " REFERENCIA_AA = '" + referenciaAA + "', "
-                                                 + " PAIS_ORIGEN = '" + pais_origen + "', "   
+                                 insertarCustoms = " UPDATE TRA_INB_CUSTOMS SET "                              
+                                                 + " REFERENCIA_AA = '" + referenciaAA + "', ";
+                                
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                       
+                                insertarCustoms += " PAIS_ORIGEN = '" + pais_origen + "', "   
                                                  + " SIZE_CONTAINER = '" + size_container + "', "   
                                                  + " VALOR_USD = '" + valor_usd + "', ";       
                         if(!eta_port_discharge.trim().equals("")){
@@ -444,8 +478,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                 insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
                                                  + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                                  + " OBSERVACIONES = '" + observaciones + "', ";   
-                    
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
+                }
+            
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                     
                         if(!llegada_a_nova.trim().equals("")){        
                                 insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), "; 
@@ -476,7 +511,7 @@ public class InsertarCustomsForms extends HttpServlet {
                         }        
                 }
                 
-                if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
+                if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //CUSA Y VF
                     
                                 insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
                                                  + " PESO_KG = '" + peso_kg + "', "  
@@ -501,13 +536,15 @@ public class InsertarCustomsForms extends HttpServlet {
                     
             }else{    
                 
-                                 insertarCustoms =  " INSERT INTO TRA_INB_CUSTOMS " 
-                                                  + " (CUSTREG_ID, "  
+                                  insertarCustoms = " INSERT INTO TRA_INB_CUSTOMS "
+                                                  + " (CUSTREG_ID, "
                                                   + " NUMERO_DE_EVENTO, "  
                                                   + " SHIPMENT_ID, "  
                                                   + " CONTAINER_ID, "  
-                                                  + " REFERENCIA_AA, "
-                                                  + " PAIS_ORIGEN, "  
+                                                  + " REFERENCIA_AA, ";
+                                
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF             
+                                 insertarCustoms += " PAIS_ORIGEN, "  
                                                   + " SIZE_CONTAINER, "  
                                                   + " VALOR_USD, ";       
                         if(!eta_port_discharge.trim().equals("")){         
@@ -593,8 +630,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms += " ESTATUS_OPERACION, "         
                                                   + " MOTIVO_ATRASO, "             
                                                   + " OBSERVACIONES, ";        
-
-                            if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
+               }
+            
+               if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                         if(!llegada_a_nova.trim().equals("")){        
                                 insertarCustoms += " LLEGADA_A_NOVA, ";
                         }   
@@ -621,9 +659,9 @@ public class InsertarCustomsForms extends HttpServlet {
                         if(!fecha_vencim_inbound.trim().equals("")){        
                                 insertarCustoms += " FECHA_VENCIM_INBOUND, ";
                         }        
-            }
+                }
                 
-                if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
+                if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //CUSA Y VF
                                 insertarCustoms += " NO_BULTOS, "
                                                  + " PESO_KG, " 
                                                  + " TRANSFERENCIA, "; 
@@ -644,12 +682,15 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " CBDIV_ID, "
                                                   + " USER_NID) "
                                                   + " VALUES " 
-                                                  + " (NULL, "  
+                                                  + " (NULL, "
                                                   + " '" + evento + "', "  
                                                   + " '" + shipmentId + "', "  
                                                   + " '" + containerId + "', "  
-                                                  + " '" + referenciaAA + "', "
-                                                  + " '" + pais_origen + "', "  
+                                                  + " '" + referenciaAA + "', ";
+                                 
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                            
+                                                 
+                                 insertarCustoms += " '" + pais_origen + "', "  
                                                   + " '" + size_container + "', "  
                                                   + " '" + valor_usd + "', ";  
                         if(!eta_port_discharge.trim().equals("")){         
@@ -735,8 +776,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms +=  " '" + estatus_operacion + "', "         
                                                    + " '" + motivo_atraso + "', "             
                                                    + " '" + observaciones + "', "; 
-                     
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //Logix ó VF
+                }  
+                
+                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
 
                         if(!llegada_a_nova.trim().equals("")){        
                                  insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), ";    
