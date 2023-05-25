@@ -870,6 +870,14 @@
         <servlet-name>ConsultarRepartoTransportistaEdit</servlet-name>
         <servlet-class>com.onest.train.consultas.ConsultarRepartoTransportistaEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarRepartoCustodias</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarRepartoCustodias</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConsultarRepartoCustodiasEdit</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarRepartoCustodiasEdit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1734,6 +1742,14 @@
     <servlet-mapping>
         <servlet-name>ConsultarRepartoTransportistaEdit</servlet-name>
         <url-pattern>/ConsultarRepartoTransportistaEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarRepartoCustodias</servlet-name>
+        <url-pattern>/ConsultarRepartoCustodias</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarRepartoCustodiasEdit</servlet-name>
+        <url-pattern>/ConsultarRepartoCustodiasEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
