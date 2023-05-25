@@ -112,7 +112,7 @@
                         + "   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
                         + "   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
                         + "   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-                        + " where tie.id_evento=" + evento + " and gtn.shipment_id='" + ship + "' and  gtn.container1='" + con + "'"
+                        + " where tie.id_evento='"+evento+"' and gtn.shipment_id='" + ship + "' and  gtn.container1='" + con + "'"
                         + " ORDER BY"
                         + "   tie.id_evento";
         %>

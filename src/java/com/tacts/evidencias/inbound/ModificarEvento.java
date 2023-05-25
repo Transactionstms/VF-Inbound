@@ -60,11 +60,11 @@ public class ModificarEvento extends HttpServlet {
         
          String bl       = request.getParameter("bl");
          
-         String sqlEve=" update tra_inb_evento\n" +
+         String sqlEve =" update tra_inb_evento\n" +
                         " set \n" +
                         " USER_NID ="+responsable+",\n" +
                         " observaciones='"+observaciones+"'\n" +
-                        " where ID_EVENTO="+evento;
+                        " where ID_EVENTO='"+evento+"' ";
          String sqlGtn="update tra_inc_gtn_test\n" +
 " set \n" +
 " final_destination = '"+finaldes+"',\n" +
