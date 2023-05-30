@@ -1,6 +1,6 @@
 <%-- 
-    Document   : detalleTransportista
-    Created on : 17-may-2023, 16:25:24
+    Document   : detalleCustodia
+    Created on : 25-may-2023, 14:15:37
     Author     : grecendiz
 --%>
 
@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <p class="h3">Planeación</p>
+                    <p class="h3">Planeación Custodia</p>
 
 
 
@@ -292,7 +292,7 @@
 
             function ConsultarRepartoTransportista() {
 
-                fetch('<%=request.getContextPath()%>/ConsultarRepartoTransportista?transporte=<%=transportista%>', {
+                fetch('<%=request.getContextPath()%>/ConsultarRepartoCustodias?transporte=<%=transportista%>', {
                             method: 'POST',
                         }).then(r => r.text())
                                 .then(data => {
@@ -322,8 +322,8 @@
                         $("#ModalCamion2").modal('show');
                     }
 
-                    function muestraRepartos(agrupador, idT,nomTra,fec1,fec2) {
-                         window.location.href =  "<%=request.getContextPath()%>/Logistica/datosComplementarios.jsp?op="+agrupador+"&id="+idT+"&nom="+nomTra+"&fec1="+fec1+"&fec2="+fec2+"&transporte=<%=transportista%>";
+                    function muestraRepartos(agrupador, idT,custodia) {
+                         window.location.href =  "<%=request.getContextPath()%>/Logistica/custodio.jsp?op="+agrupador+"&id="+idT+"&custodia="+custodia+"&transporte=<%=transportista%>";
 
                        // fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
                        //     method: 'POST',

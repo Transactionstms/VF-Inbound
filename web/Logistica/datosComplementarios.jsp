@@ -57,6 +57,7 @@
         
   String fec1 = request.getParameter("fec1");
   String fec2 = request.getParameter("fec2");
+   String transportista = request.getParameter("transporte");
   
     %>
     <body>
@@ -177,11 +178,16 @@
 
 
 
+                                                     <div class="row" >
+                                                            <div class="col-md-1">
+                                                                <button class="btn btn-secondary text-nowrap" type="button"  onclick="back()">Regresar</button>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <button class="btn btn-primary text-nowrap" type="button"  onclick="save()">Grabar embarque</button>
+                                                            </div>
+                                                        </div>
 
-
-                                            <div class="text-center mt-5">
-                                                <button class="btn btn-primary mb-5 col-3" type="button"id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Grabar embarque</button>
-                                            </div>
+                                          
 
                                         </form>
                                     </div>
@@ -228,7 +234,7 @@
 
 <script type="text/javascript">
 
-                                                    async function save() {
+                                                async function save() {
                                                         // Obtener el valor de cada campo y asignarlo a una variable
                                                         let camionesValue      = document.getElementById('camiones').value;
                                                         let tipoUnidadValue    = document.getElementById('tipoUnidad').value;
@@ -260,7 +266,11 @@
                                                         try {
                                                             const data = await fetchData('<%=request.getContextPath()%>/ConsultarRepartoTransportistaEdit?camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue + '&evento=<%=ag%>');
                                                             console.log(data);
-                                                            swal("Modificado");
+                                                             if(data===''){
+                                                                 swal("Error");
+                                                            }else{
+                                                            swal(data);
+                                                             }
                                                         } catch (error) {
                                                             swal("Error");
                                                             console.error(error);
@@ -272,9 +282,8 @@
                                                   const data = await response.text();
                                                   return data;
                                                 }
-
-
-                                                    $(document).ready(function () {
+ 
+                                                $(document).ready(function () {
                                                         $('.datepicker').flatpickr({
                                                             dateFormat: 'm/d/Y',
                                                             onClose: function (selectedDates, dateStr, instance) {
@@ -282,6 +291,10 @@
                                                             }
                                                         });
                                                     });
+                                                    
+                                                function back() {
+                                                         window.location.href = '<%=request.getContextPath()%>/detalleTransportista.jsp?transporte=<%=transportista%>';
+                                                                }
 
 </script>
 <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
