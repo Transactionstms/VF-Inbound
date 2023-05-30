@@ -938,36 +938,34 @@ public String documentoREBR(String v_documento, String cveCuenta, String estado)
     }
 
     public String cabeceroPdf(String agrupador) {
-        sql = "SELECT "
-                + " e.embarque_id, "
-                + " to_char(e.embarque_fec_captura,"
-                + "' dd/mm/yyyy hh:mi'),"
-                + " e.embarque_agrupador, "
-                + " e.camion_id, "
-                + " cam.camion_placas, "
-                + " cam.camion_modelo, "
-                + " cam.color_id, "
-                + " col.color_desc,"
-                + " cam.utransporte_id, "
-                + " ut.utransporte_desc, "
-                + " cam.ltransporte_id, "
-                + " lt.ltransporte_nombre, "
-                + " cam.tipo_caja_id, "
-                + " tc.tipo_caja_desc, "
-                + " e.chofer_id,"
-                + " chof.chofer_nombre, "
-                + " e.embarque_costo_real,"
-                + " NVL(e.embarque_auditor,' '), "
-                + " lt.ltransporte_direccion"
-                + " FROM ontms_embarque e "
-                + " LEFT JOIN ontms_camion cam ON cam.camion_id=e.camion_id"
-                + " LEFT JOIN ontms_color col ON col.color_id=cam.color_id"
-                + " LEFT JOIN ontms_unidad_transporte ut ON ut.utransporte_id=cam.utransporte_id"
-                + " LEFT JOIN ontms_linea_transporte lt ON lt.ltransporte_id=cam.ltransporte_id"
-                + " LEFT JOIN ontms_chofer chof ON chof.chofer_id=e.chofer_id"
-                + " LEFT JOIN ontms_tipo_caja tc ON tc.tipo_caja_id=cam.tipo_caja_id"
-                + " WHERE e.embarque_agrupador='" + agrupador + "'";
+        sql =  ""
+                + " SELECT"
+                + " e.embarque_id, \n" +
+" to_char(e.embarque_fec_captura,' dd/mm/yyyy hh:mi'),\n" +
+" e.embarque_agrupador, \n" +
+" nvl(e.camion_id,'n/a'), \n" +
+"  nvl(e.camion_id,'n/a'), \n" +
+" 'cam.camion_modelo', \n" +
+" 'cam.color_id', \n" +
+" 'col.color_desc',\n" +
+" 'cam.utransporte_id', \n" +
+"  nvl(ut.utransporte_desc,'n/a'), \n" +
+" ' cam.ltransporte_id', \n" +
+" nvl(lt.ltransporte_nombre,'n/a'), " +
+" 'cam.tipo_caja_id', \n" +
+" 'tc.tipo_caja_desc', \n" +
+" nvl(e.chofer_id,'n/a'),\n" +
+" ' ', \n" +
+" e.embarque_costo_real,\n" +
+" NVL(e.embarque_auditor,'n/a'), \n" +
+" nvl(lt.ltransporte_direccion,'n/a')\n" +
+" FROM tra_inb_embarque e  \n" +
+" LEFT JOIN ontms_unidad_transporte ut ON ut.utransporte_id=e.utransporte_id\n" +
+" LEFT JOIN tra_inb_linea_transporte lt ON lt.ltransporte_id=e.EMBARQUE_TRANSPORTISTA\n" +
+" WHERE e.embarque_agrupador='"+agrupador+"'" ;
+        System.out.println("sql"+sql);
         return sql;
+    
     }
 
     public String cabeceroPdfPa(String agrupador) {
@@ -980,85 +978,36 @@ public String documentoREBR(String v_documento, String cveCuenta, String estado)
 
     public String detallePdf(String agrupador, String ti) {
 
-        sql = " SELECT ods.docto_referencia, "
-                + " OCD.destino_nombre, "
-                + " OCD.DESTINO_CIUDAD, "
-                + " OCD.DESTINO_ESTADO, "
-                + " NVL(ods.docto_volumen,0), "
-                + " NVL(ods.docto_peso,0), "
-                + " NVL(TO_CHAR(ods.docto_fec_captura,'dd/mm/yyyy'),' '), "
-                + " NVL(TO_CHAR(ods.docto_fec_programacion,'dd/mm/yyyy'),' '), "
-                + " NVL(ods.docto_piezas,0), "
-                + " NVL(ods.docto_cajas,0), "
-                + " NVL(ods.docto_pallets,0), "
-                + " NVL(ods.docto_colgados,0), "
-                + " NVL(ods.docto_contenedor,0), "
-                + " NVL(ods.docto_atados,0), "
-                + " NVL(ods.docto_bulks,0), "
-                + " oc.cuenta_nombre "
-                + " FROM ontms_docto_sal ods "
-                + " INNER JOIN ontms_cta_bod_div ocbd "
-                + " ON ods.cbdiv_id = ocbd.cbdiv_id "
-                + " INNER JOIN ontms_bodega ob "
-                + " ON ob.bodega_id = ocbd.bodega_id "
-                + " INNER JOIN ontms_cuenta oc "
-                + " ON oc.cuenta_id = ocbd.cuenta_id "
-                + " INNER JOIN ontms_division odv "
-                + " ON odv.division_id = ocbd.division_id "
-                + " INNER JOIN dilog_destinos_hilti ocd "
-                + " ON ocd.DESTINO_SHIP_TO =ods.destino_id "
-                + " and ocd.division_id = ods.CBDIV_ID "
-                + " LEFT JOIN ontms_bodega ob1 "
-                + " ON ob1.bodega_id=ods.bodega_id "
-                + " WHERE 1                      =1 "
-                + " AND ods.docto_sal_agrupador IN ('" + agrupador + "') "
-                + " GROUP BY oc.cuenta_nombre, "
-                + "   ods.docto_referencia, "
-                + "   OCD.destino_nombre, "
-                + "   OCD.DESTINO_CIUDAD, "
-                + "   OCD.DESTINO_ESTADO, "
-                + "   ods.docto_volumen, "
-                + "  ods.docto_peso, "
-                + "  ods.docto_fec_captura, "
-                + "  ods.docto_fec_programacion, "
-                + "  ods.docto_piezas, "
-                + "  ods.docto_cajas, "
-                + "  ods.docto_pallets, "
-                + "  ods.docto_colgados, "
-                + "  ods.docto_contenedor, "
-                + "  ods.docto_atados, "
-                + "  ods.docto_bulks "
-                + " ORDER BY ods.docto_referencia ";
+              sql = "    SELECT \n" +
+                    "    tie.id_evento, \n" +
+                    "    gtn.container1,\n" +
+                    "    gtn.bl_awb_pro,\n" +
+                    "    gtn.shipment_id,\n" +
+                    "    gtn.load_type_final,\n" +
+                    "    gtn.QUANTITY,\n" +
+                    "    tibd.nombre_bd,\n" +
+                    "    nvl(tid.division_nombre, ' '), \n" +
+                    "    tip1.nombre_pod,  \n" +
+                    "    to_char(gtn.est_departure_pol, 'MM/DD/YY')   AS est_departure_pol, \n" +
+                    "    nvl(to_char(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc\n" +
+                    "   ,'1','2','3','4','5','6','7','8','9' " +
+                    " FROM\n" +
+                    " tra_inc_gtn_test gtn\n" +
+                    "              \n" +
+                    "    left JOIN tra_inb_evento        tie  ON gtn.plantilla_id = tie.plantilla_id\n" +
+                    "    LEFT JOIN tra_inb_pod             tip1 ON tip1.id_pod = gtn.pod\n" +
+                    "    LEFT JOIN tra_inb_pol             tip2 ON tip2.id_pol = gtn.pol\n" +
+                    "    LEFT JOIN tra_inb_brand_division  tibd ON tibd.id_bd = gtn.brand_division\n" +
+                    "    LEFT JOIN tra_inb_agente_aduanal  taa  ON taa.agente_aduanal_id = tip1.agente_aduanal_id\n" +
+                    "    LEFT JOIN tra_inb_division        tid  ON tid.id_division = gtn.sbu_name\n" +
+                    " \n" +
+                    " WHERE\n" +
+                    "       EMBARQUE_AGRUPADOR='"+agrupador+"'\n" +
+                    " ORDER BY\n" +
+                    "    tie.id_evento"
+                  + "  ";
 
-        /*
-         sql = "SELECT ods.docto_referencia,ode.destino_nombre,"
-         + " oci.ciudad_nombre,oe.estado_nombre,"
-         + " NVL(ods.docto_volumen,0), NVL(ods.docto_peso,0), NVL(to_char(ods.docto_fec_captura,'dd/mm/yyyy'),' '),"
-         + " NVL(to_char(ods.docto_fec_programacion,'dd/mm/yyyy'),' '),"
-         + " NVL(ods.docto_piezas,0),NVL(ods.docto_cajas,0),NVL(ods.docto_pallets,0),"
-         + " NVL(ods.docto_colgados,0),NVL(ods.docto_contenedor,0),NVL(ods.docto_atados,0),"
-         + " NVL(ods.docto_bulks,0),oc.cuenta_nombre"
-         + " FROM ontms_docto_sal ods"
-         + " INNER JOIN ontms_cta_bod_div ocbd ON ods.cbdiv_id = ocbd.cbdiv_id"
-         + " INNER JOIN ontms_bodega ob ON ob.bodega_id = ocbd.bodega_id"
-         + " INNER JOIN ontms_cuenta oc ON oc.cuenta_id = ocbd.cuenta_id"
-         + " INNER JOIN ontms_division odv ON odv.division_id = ocbd.division_id"
-         + " INNER JOIN ontms_conversion_destino ocd ON ocd.sucliente_id=ods.destino_id AND ocd.division_id = odv.division_id"
-         + " INNER JOIN ontms_cliente oc ON ods.cliente_id=oc.cliente_id"
-         + " INNER JOIN ontms_destino ode ON ode.destino_id = ocd.destino_id"
-         + " INNER JOIN ontms_origen_destino ood ON ood.id_origen=ob.zona_id AND ood.id_destino=ode.ciudad_id"
-         + " LEFT JOIN ontms_bodega ob1 ON ob1.bodega_id=ods.bodega_id"
-         + " INNER JOIN ontms_colonia onc ON ode.colonia_id=onc.colonia_id"
-         + " INNER JOIN ontms_ciudad oci ON onc.ciudad_id=oci.ciudad_id"
-         + " INNER JOIN ontms_estado oe ON oci.estado_id=oe.estado_id"
-         + " WHERE 1=1 AND ods.docto_sal_agrupador in ('" + agrupador + "')"
-         + " GROUP BY oc.cuenta_nombre,ods.docto_referencia,ode.destino_nombre,"
-         + " oci.ciudad_nombre,oe.estado_nombre,"
-         + " ods.docto_volumen, ods.docto_peso,ods.docto_fec_captura,"
-         + " ods.docto_fec_programacion,ods.docto_piezas,ods.docto_cajas,ods.docto_pallets,"
-         + " ods.docto_colgados,ods.docto_contenedor,ods.docto_atados,ods.docto_bulks"
-         + " ORDER BY ods.docto_referencia";
-         */
+        System.out.println("sql   "+sql);
         return sql;
     }
 //***
@@ -1482,12 +1431,7 @@ public String documentoREBR(String v_documento, String cveCuenta, String estado)
     }
 
     public String obserEmbarque(String a) {
-        sql = "SELECT oh.embarque_observaciones "
-                + "FROM ontms_hist_embarque oh "
-                + "INNER JOIN ontms_embarque oe "
-                + "ON  oh.embarque_agrupador=oe.embarque_agrupador "
-                + "AND oh.embarque_agrupador='" + a + "'  "
-                + "AND TRUNC(oh.fecha)=TRUNC(oe.embarque_fec_captura)  ORDER BY oh.fecha";
+        sql = " SELECT nvl(EMBARQUE_OBSERVACIONES,' ') FROM tra_inb_embarque  where  embarque_agrupador='"+a+"'  " ;
         return sql;
     }
 
@@ -2199,5 +2143,19 @@ public String documentoREBR(String v_documento, String cveCuenta, String estado)
                 + " INNER JOIN ontms_estado oes ON oes.estado_id=oc.estado_id"
                 + " WHERE " + id[1] + "='" + id[0] + "' and ods.docto_estado_id=2";
         return sql;
+    }
+    
+    
+    
+    
+    
+        public String CustodiaTipo(String agrupador){
+        sql=" SELECT OE.EMBARQUE_TCUSTODIA,TTC.TC_DESCRIPCION, OE.NOMBRE_CUSTODIO, OE.NOMBRE_CUSTODIO2 FROM"
+                + " tra_inb_embarque OE" 
+                + " LEFT JOIN tra_inb_tipo_custodia TTC ON TTC.ID_TC = OE.EMBARQUE_TCUSTODIA" 
+                + " WHERE OE.EMBARQUE_AGRUPADOR ='"+agrupador+"'";
+        
+        return sql;
+        
     }
 }

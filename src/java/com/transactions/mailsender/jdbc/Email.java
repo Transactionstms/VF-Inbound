@@ -246,7 +246,7 @@ public class Email {
 
     }
     
-      public boolean enviarCorreoAlerta(String mensaje, String correotransporte,String subtitulo ) {
+    public boolean enviarCorreoAlerta(String mensaje, String correotransporte,String subtitulo ) {
 
 
   
@@ -292,7 +292,7 @@ public class Email {
 
     }
       
-           public boolean enviacorreoCapturaDocumento(String mensaje, String correo,String subtitulo ) {
+    public boolean enviacorreoCapturaDocumento(String mensaje, String correo,String subtitulo ) {
 
 
   
@@ -338,7 +338,7 @@ public class Email {
 
     }
            
-          public boolean enviocorreoEditarGastos(String mensaje, String correo,String subtitulo ) {
+    public boolean enviocorreoEditarGastos(String mensaje, String correo,String subtitulo ) {
 
 
   
@@ -570,7 +570,6 @@ public class Email {
 
     }  
     
-    
     public boolean alertaCFDI(String idLTransporte, String nameLTransporte, String tipoT, String agrupador) {
         
         ServiceDAO dao = new ServiceDAO();
@@ -671,8 +670,7 @@ public class Email {
         return enviado;
 
     }
-    
-    
+ 
     public boolean alertaAuthorisedShipments(byte[] data, String embarque_id, String idLTransporte, String nameLTransporte) throws SQLException {
         
         String emailenvio = "";

@@ -9,9 +9,7 @@ import com.conexion.GenericJdbc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,9 +21,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author grecendiz
  */
-public class ConsultarRepartoTransportistaEdit extends HttpServlet {
+public class ConsultarRepartoCustodiasEdit extends HttpServlet {
 
-   
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -33,56 +31,41 @@ public class ConsultarRepartoTransportistaEdit extends HttpServlet {
             
              String evento=request.getParameter("evento");
             
-             String camionesValue        = request.getParameter("camionesValue");
-             String tipoUnidadValue      = request.getParameter("tipoUnidadValue");
-             String choferValue          = request.getParameter("choferValue");
-             String dispositivosValue    = request.getParameter("dispositivosValue");
-             String fechaRevisionValue   = request.getParameter("fechaRevisionValue");
-             String selloCajaValue       = request.getParameter("selloCajaValue");
-             String relacionEntregaValue = request.getParameter("relacionEntregaValue");
-             String fechaFinEntregaValue = request.getParameter("fechaFinEntregaValue");
-             String packingListValue     = request.getParameter("packingListValue");
-             String autorValue           = request.getParameter("autorValue");
-             String observacionesValue   = request.getParameter("observacionesValue");
+             String ncustodio        = request.getParameter("ncustodio");
+             String ncustodio2      = request.getParameter("ncustodio2");
+             String placa          = request.getParameter("placa");
+             String celcustodio    = request.getParameter("celcustodio");
+             String EMBARQUE   = request.getParameter("EMBARQUE"); 
              
-                
+         
              GenericJdbc generico = new GenericJdbc();
          generico.openConection();
                     
 
          String sql=" update tra_inb_embarque set"
-                + " CAMION_ID='"+camionesValue+"', "
-                + " UTRANSPORTE_ID="+tipoUnidadValue+","
-                + " CHOFER_ID='"+choferValue+"',"
-                + " DSPMOV_ID="+dispositivosValue+", "
-                +"  EMBARQUE_FEC_REVISION =to_date('"+fechaRevisionValue+"','MM/DD/YY'), " 
-                +"  EMBARQUE_FEC_FIN =to_date('"+fechaFinEntregaValue+"','MM/DD/YY'), "
-                + " EMBARQUE_SELLO_CAJA='"+selloCajaValue+"',"
-                + " EMBARQUE_RELACION_ENT='"+relacionEntregaValue+"',"
-                + " EMBARQUE_PACKING_LIST='"+packingListValue+"',"
-                + " EMBARQUE_AUDITOR='"+autorValue+"',"
-                + " EMBARQUE_OBSERVACIONES='"+observacionesValue+"',"
-                + " EMBARQUE_ESTADO_ID=1 " 
-                + " where EMBARQUE_AGRUPADOR='"+evento+"'";
+                + " NOMBRE_CUSTODIO  ='"+ncustodio+"', "
+                + " NOMBRE_CUSTODIO2 ='"+ncustodio2+"',"
+                + " PLACAS_CUSTODIA='"+placa+"',"
+                + " DSP_MOV_CUSTODIA="+celcustodio+", "
+                +"  STATUS_CUSTODIA =1 " 
+                + " where EMBARQUE_ID='"+EMBARQUE+"'";
             System.out.println("sql"+sql);
             
-            String sql2=" update tra_inc_gtn_test set STATUS_EMBARQUE=3 where EMBARQUE_AGRUPADOR='"+evento+"'";
-  PreparedStatement statement = generico.getConnection().prepareStatement(sql);
-  PreparedStatement statement2 = generico.getConnection().prepareStatement(sql2);
-              // Ejecutar la consulta
+   PreparedStatement statement = generico.getConnection().prepareStatement(sql);
+               // Ejecutar la consulta
             int rowsUpdated = statement.executeUpdate();
-             int rowsUpdated2 = statement2.executeUpdate();
-            // Verificar el número de filas actualizadas
+             // Verificar el número de filas actualizadas
             System.out.println("Filas actualizadas: " + rowsUpdated);
-              System.out.println("Filas actualizadas: " + rowsUpdated2);
-            
-            if(rowsUpdated>0 && rowsUpdated2>0){
+             
+            if(rowsUpdated>0  ){
                 
                 //enviar correo con pdf
-            out.print("Datos guardados");
+            out.print("Datos guardados ");
             }else{
-            out.print("Error todos los datos son obligatorios");
+            out.print("Error porfavor verifica tus datos");
             }
+            
+            
              statement.close(); 
            generico.closeConnection();
          
