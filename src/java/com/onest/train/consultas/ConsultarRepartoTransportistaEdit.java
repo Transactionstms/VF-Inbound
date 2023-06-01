@@ -6,6 +6,7 @@
 package com.onest.train.consultas;
 
 import com.conexion.GenericJdbc;
+import com.tacts.evidencias.facturacion.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -79,6 +80,9 @@ public class ConsultarRepartoTransportistaEdit extends HttpServlet {
             if(rowsUpdated>0 && rowsUpdated2>0){
                 
                 //enviar correo con pdf
+                    Email correot = new Email(); 
+                  correot.alertaConfirmacionTransporte(evento,evento);
+   
             out.print("Datos guardados");
             }else{
             out.print("Error todos los datos son obligatorios");
