@@ -270,6 +270,7 @@
                                                                  swal("Error");
                                                             }else{
                                                             swal(data);
+                                                            back();
                                                              }
                                                         } catch (error) {
                                                             swal("Error");
