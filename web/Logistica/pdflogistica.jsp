@@ -216,12 +216,15 @@
                         writer.setViewerPreferences(PdfWriter.PageLayoutTwoColumnLeft);
                         DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                        
-                        //String ruta = "http://173.203.182.4:"+request.getServerPort()+"/"+request.getContextPath()+"/img/Dilogin.png";
-                        String ruta = "http://localhost:"+request.getServerPort()+"/"+request.getContextPath()+"/img/VFMX.png";
+                       //String ruta = "http://localhost:"+request.getServerPort()+"/"+request.getContextPath()+"/img/VFMX.png";
+
+                                                
+                        String ruta = "C:\\Format\\VFMX.png"; 
+                        System.out.println("ruta"+ruta);
                         Image onest = Image.getInstance(ruta); 
                         float[] widths = {3f, 17f};
                         float[] widths1 = {1f, 1f,1f,1f, 1f, 1f, .5f, .5f, .5f, .5f, .5f, .5f};
-                               // , .5f, .5f, .5f, .7f, .7f, 1f
+                               // , .5f, .5f, .5f, .7f, .7f, 1f INBOUND7
                         String obs = "";
                         PdfPTable encabezado = new PdfPTable(widths);
                         encabezado.setSpacingBefore(25f);
@@ -809,13 +812,39 @@
                             dataOutput.writeByte(bytes[i]);
                         }
                         
-                        // Email correo = new Email();
-                          //String email = request.getParameter("email");
-                         if(true){  
-                             System.out.println("ok");
-                          // correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
-                        }
                         
+                        
+                        
+                        
+                        
+                        
+        
+                           Email correot = new Email();
+                           
+                            String email = request.getParameter("email");
+                            String EMBARQUE_AGRUPADOR = request.getParameter("EMBARQUE_AGRUPADOR");
+                            String LTRANSPORTE_ID = request.getParameter("LTRANSPORTE_ID");
+                            String nameLTransporte = request.getParameter("nameLTransporte");
+                            boolean correoPdf=true;
+                            
+                         
+                            
+                         if(email.equals("t")){   
+                           correoPdf=correot.alertaLiberacionV2(bytes, agrupador, LTRANSPORTE_ID, nameLTransporte,request.getContextPath());
+                         }
+                          String bc = request.getParameter("bc");
+                         if(bc.equals("1")){  
+                            String LTRANSPORTE_IDC = request.getParameter("idc");
+                            String nameLTransporteC = request.getParameter("nomc");
+                           correoPdf=correot.alertaLiberacionV2Cus(bytes, agrupador, LTRANSPORTE_IDC, nameLTransporteC,request.getContextPath());
+                         
+                           
+                        }
+                         
+                         
+                         
+                         
+                         
                     } catch (DocumentException e) {
                         e.printStackTrace();
                     }
