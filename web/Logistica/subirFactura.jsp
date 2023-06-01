@@ -27,12 +27,7 @@
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
-                String idPlantilla = request.getParameter("idPlantilla");
-                String idDivision = ownsession.getAttribute("cbdivcuenta").toString();
-                String idBodega = ownsession.getAttribute("cbbodegaId").toString();
-                Usuario root = (Usuario) ownsession.getAttribute("login.root");
-                int usr = root.getId();
-
+             
                 String op = request.getParameter("op");
 
 
