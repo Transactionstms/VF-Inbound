@@ -56,22 +56,22 @@ public class CrearEmbarque extends HttpServlet {
             
             
              if(update1 && update2){ 
-                   Email correo = new Email();
-                  try {
+                  // Email correo = new Email();
+                  //try {
                        //correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
-                       String transportista = "";  
-                       String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
-                        if (db.doDB(sbuSQL)) {
-                             for (String[] row : db.getResultado()) {
-                                transportista =   row[0]  ;
-                          }
-                        }
+                       //String transportista = "";  
+                       //String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
+                       // if (db.doDB(sbuSQL)) {
+                       //      for (String[] row : db.getResultado()) {
+                       //         transportista =   row[0]  ;
+                       //   }
+                       // }
                       
-                      correo.alertaLiberacionV2(null, fol, tran, transportista);
+                    //  correo.alertaLiberacionV2(null, fol, tran, transportista);
                       
-                  } catch (SQLException ex) {
-                      Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
-                  }
+                //  } catch (SQLException ex) {
+                //      Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
+                //  }
                     out.print("correcto"); 
                 }else{ 
                     out.print("error"); 
