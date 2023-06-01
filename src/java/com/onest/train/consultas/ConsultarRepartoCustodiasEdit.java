@@ -6,6 +6,7 @@
 package com.onest.train.consultas;
 
 import com.conexion.GenericJdbc;
+import com.tacts.evidencias.facturacion.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -61,6 +62,8 @@ public class ConsultarRepartoCustodiasEdit extends HttpServlet {
                 
                 //enviar correo con pdf
             out.print("Datos guardados ");
+              Email correot = new Email(); 
+                  correot.alertaConfirmacionCustodia(EMBARQUE,EMBARQUE);
             }else{
             out.print("Error porfavor verifica tus datos");
             }
