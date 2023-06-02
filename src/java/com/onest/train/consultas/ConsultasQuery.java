@@ -2848,5 +2848,10 @@ public class ConsultasQuery {
         return sql;
     }
     
+    public String consultarFechaSemaforo(String shipmentId) {
+        sql = " SELECT DISTINCT FECHA_ACTIVACION, FECHA_TERMINO FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "' ";
+        return sql;
+    }
+    
 } 
  
