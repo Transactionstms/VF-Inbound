@@ -39,28 +39,32 @@ public class AlertaInbound extends HttpServlet {
         HttpSession ownsession = request.getSession();
         DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
         DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
-        String UserId = (String) ownsession.getAttribute("login.user_id_number");
-        String cve = (String) ownsession.getAttribute("cbdivcuenta");
-        
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
-        
-        String agenteAduanal = request.getParameter("agenteAduanal");
-        String emails = "";
-        String rutaFichero = "";
         
         Email correo = new Email();
         ConsultasQuery fac = new ConsultasQuery();
         
-        if (db.doDB(fac.consultarEventosDetalle())) {
-            for (String[] rowE : db.getResultado()) {
-                
-                String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '"+ rowE[8] +"' WHERE PLANTILLA_ID = '" + rowE[17] + "'";
-                boolean oraOut1 = oraDB.execute(LoadTypeFinal);
-                
-                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + rowE[17] + "'";
-                boolean oraOut2 = oraDB.execute(estatusInicial);
-            }
+        String UserId = (String) ownsession.getAttribute("login.user_id_number");
+        String cve = (String) ownsession.getAttribute("cbdivcuenta");
+        
+        String agenteAduanal = request.getParameter("agenteAduanal");
+        String numEventos = request.getParameter("numEventos");
+        int contEventos = Integer.parseInt(numEventos);
+        
+        String rutaFichero = "";
+        String emails = "";
+        
+        for (int i = 0; i < contEventos; i++) {
+            
+            String loadType = request.getParameter("loadType" + i);
+            String plantillaId = request.getParameter("plantillaId" + i);
+            
+            String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '"+ loadType +"' WHERE PLANTILLA_ID = '" + plantillaId + "'";
+            boolean oraOut1 = oraDB.execute(LoadTypeFinal);
+            
+            String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + plantillaId + "'";
+            boolean oraOut2 = oraDB.execute(estatusInicial);
         }
                 
         String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";

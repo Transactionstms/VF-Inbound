@@ -65,6 +65,7 @@
                 String agenteAduanal = "";
                 String coma = ",";
                 String aa = "";
+                int cont =0; 
 
                 if (db.doDB(fac.consultarAAEventosDetalle())) {
                     for (String[] rowA : db.getResultado()) {
@@ -130,8 +131,6 @@ String sql2= "WITH sum_quantity AS ("
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
         +" ORDER BY"
         +"   tie.id_evento";
-
-        int cont =0; 
         %>
         <!-- navbar-->
         <header class="header">
@@ -152,7 +151,6 @@ String sql2= "WITH sum_quantity AS ("
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData1" name="uploadFileFormData1">
-                                            <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 100%;">
                                                 <table id="example" class="display" style="width:300%">
@@ -186,7 +184,6 @@ String sql2= "WITH sum_quantity AS ("
                                                         <%
                                                             if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
-                                                                    cont++;
                                                         %>
                                                         <tr>
                                                             <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
@@ -197,7 +194,7 @@ String sql2= "WITH sum_quantity AS ("
                                                             <td class="font-texto"> <%=row[5]%></td>	
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto"> <%=row[22]%> </td>		
+                                                            <td class="font-texto"> <%=row[22]%></td>	
                                                             <td class="font-texto"> <%=row[9]%></td>	
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
@@ -210,10 +207,13 @@ String sql2= "WITH sum_quantity AS ("
                                                             <td class="font-texto"> <%=row[16]%></td>
                                                             <td class="font-texto" contenteditable='true'>  
                                                                 <input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off">
+                                                                <input type="hidden" id="loadType<%=cont%>" name="loadType<%=cont%>" value="<%=row[22]%>">
+                                                                <input type="hidden" id="plantillaId<%=cont%>" name="plantillaId<%=cont%>" value="<%=row[17]%>">
                                                             </td>
                                                             <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>',<%=cont%>)">Actualizar</button></center></td>
                                                         </tr>
-                                                        <%
+                                                        <%   
+                                                             cont++;
                                                                 }
                                                             }
                                                         %>
@@ -221,6 +221,8 @@ String sql2= "WITH sum_quantity AS ("
                                                 </table>
                                             </div>
                                             <br>
+                                            <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
+                                            <input type="hidden" id="numEventos" name="numEventos" value="<%=cont%>">
                                             <!-- Botones controles -->
                                             <div class="col-lg-12" style="text-align: right;">
                                                 <a class="btn btn-default text-nowrap" role="button" href="Importacion/eventos.jsp">Regresar</a>

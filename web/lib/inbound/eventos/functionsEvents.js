@@ -6,8 +6,24 @@
     function save(){
         
         let agenteId = document.getElementById("agenteId").value;
+        let contadorEventos = document.getElementById("numEventos").value; 
+        let urlEventos = ""; 
+        let loadType;
+        let plantillaId;
         
-        fetch("../AlertaInbound?agenteAduanal="+agenteId, {
+        for (let i=0; i < contadorEventos; i++){
+            
+            let temp1 = "loadType"+i;
+            let temp2 = "plantillaId"+i;
+            
+            loadType = document.getElementById(temp1).value;
+            plantillaId = document.getElementById(temp2).value;
+            
+            urlEventos +=  "&loadType"+i+"="+loadType+
+                           "&plantillaId"+i+"="+plantillaId;
+        }
+        
+        fetch("../AlertaInbound?agenteAduanal="+agenteId + "&numEventos=" + contadorEventos + urlEventos, {
             method: 'POST',
         }).then(r => r.text())
                 .then(data => {
