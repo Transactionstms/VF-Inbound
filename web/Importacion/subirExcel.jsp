@@ -88,10 +88,10 @@
         //out.println("{'status':\"ERROR\", \"message\":\"No file uploaded\"}");
     }
 
-    String sql1 =request.getParameter("idp");
+    String sql1 = request.getParameter("idp");
 
     //ExcelToOracle excelToOracle = new ExcelToOracle();
-    String url1 =   nombreFile;
+    String url1 = nombreFile;
 
     // String mensaje=excelToOracle.ExcelToOracle( sql1,url1 );
 // try{}catch(Exception e){}
@@ -107,44 +107,44 @@
 
 
         <title>TACTS</title>
-        
+
         <style>
-            
-        .loader {
-        width: 948px;
-        height: 948px;
-        border-radius: 50%;
-        position: relative;
-        animation: rotate 1s linear infinite
-      }
-      .loader::before , .loader::after {
-        content: "";
-        box-sizing: border-box;
-        position: absolute;
-        inset: 0px;
-        border-radius: 50%;
-        border: 50px solid #FFF;
-        animation: prixClipFix 2s linear infinite ;
-      }
-      .loader::after{
-        border-color: #FF3D00;
-        animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
-        inset: 60px;
-      }
 
-      @keyframes rotate {
-        0%   {transform: rotate(0deg)}
-        100%   {transform: rotate(360deg)}
-      }
+            .loader {
+                width: 948px;
+                height: 948px;
+                border-radius: 50%;
+                position: relative;
+                animation: rotate 1s linear infinite
+            }
+            .loader::before , .loader::after {
+                content: "";
+                box-sizing: border-box;
+                position: absolute;
+                inset: 0px;
+                border-radius: 50%;
+                border: 50px solid #FFF;
+                animation: prixClipFix 2s linear infinite ;
+            }
+            .loader::after{
+                border-color: #FF3D00;
+                animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
+                inset: 60px;
+            }
 
-      @keyframes prixClipFix {
-          0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-          25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-          50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-          75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
-          100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
-      }
-    
+            @keyframes rotate {
+                0%   {transform: rotate(0deg)}
+                100%   {transform: rotate(360deg)}
+            }
+
+            @keyframes prixClipFix {
+                0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+                25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+                50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+                75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+                100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+            }
+
         </style>
     </head>
     <body>
@@ -153,23 +153,23 @@
             <div class="card border-success mb-3 hijo_dos" style="max-width: 18rem;">
                 <div class="card-header ml-3"> </div>
                 <div class="card-body text-success">
-                    
+
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="text-center"  id="espere">
-                          <!-- Contenido a centrar -->
-                          <h1 class="card-title">  Espere....   </h1>
-                          <p>Espere estamos procsando.</p>
+                            <!-- Contenido a centrar -->
+                            <h1 class="card-title">  Espere....   </h1>
+                            <p>Espere estamos procsando.</p>
                         </div>
-                          <span class="loader" id="loader" ></span>
-                         
-                         <div class="overflow-scroll" style="height: 300px;overflow: auto;"  id="respuesta">   </div> 
-                        
-                      </div> 
+                        <span class="loader" id="loader" ></span>
+
+                        <div class="overflow-scroll" style="height: 300px;overflow: auto;"  id="respuesta">   </div> 
+
+                    </div> 
                 </div>
             </div>
         </a> 
-       
-        
+
+
         <style>
 
 
@@ -196,21 +196,16 @@
 
         </style>
         <script>
-              window.onload = fetchData();
-            //  function red1() {
-            //      console.log('1');
-            //       document.getElementById("btnid").click();
-            //       console.log('2');
-            //   }
-
+            window.onload = fetchData();
+          
 
             async function fetchData() {
                 console.log('aqui');
-                 let fecha=Date.now();
-     console.log(fecha);
+                let fecha = Date.now();
+                console.log(fecha);
                 try {
-                    let urlF='https://www.rtms.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
-                   // let urlF='http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                      let urlF='https://www.rtms.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                   // let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
 
@@ -219,29 +214,36 @@
                     }
 
                     const data = await response.text(); // Espera a que los datos de respuesta se conviertan en formato JSON
-document.getElementById('espere').innerHTML='<h1>Correcto</h1>';
-document.getElementById('loader').style.display='none';
+                    document.getElementById('espere').innerHTML = '<h1>Correcto</h1>';
+                    document.getElementById('loader').style.display = 'none';
 
-// Obtén el elemento de la caja
-  const caja = document.getElementById('respuesta');
+                    // Obtén el elemento de la caja
+                    const caja = document.getElementById('respuesta');
 
-  // Agrega contenido dinámicamente utilizando innerHTML
-  respuesta.innerHTML = data;
+                    // Agrega contenido dinámicamente utilizando innerHTML
+                    respuesta.innerHTML = data;
 
-  // Aplica las clases de desplazamiento después de agregar contenido
-  caja.classList.add('overflow-auto');
-  
- 
+                    // Aplica las clases de desplazamiento después de agregar contenido
+                    caja.classList.add('overflow-auto');
+                          if(<%=sql1%>===20){
+                         window.location.href = '<%=request.getContextPath()%>/Importacion/logGntbatch.jsp?folio=' + fecha;
+
+                    }else if(<%=sql1%>===21){
+                         window.location.href = '<%=request.getContextPath()%>/Importacion/logDsnBatch.jsp?folio=' + fecha;
+
+                    }else{
+                        
+                    }
+
                     console.log(data); // Utiliza los datos recibidos  
                 } catch (error) {
-                    document.getElementById('espere').innerHTML='Error por favor intente nuevamente';
-                    document.getElementById('loader').style.display='none';
+                    document.getElementById('espere').innerHTML = 'Error por favor intente nuevamente';
+                    document.getElementById('loader').style.display = 'none';
                     console.error('Error en la solicitud:', error);
                 }
             }
 
-            ;
-
+          
         </script>
 
     </body>

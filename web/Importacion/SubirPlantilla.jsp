@@ -23,13 +23,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
-        <title>TACTS</title>
-        <!-- Bootstrap Core CSS
-         <link rel="stylesheet" href="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.css">
-    <link rel="stylesheet" href="../lib/vendor/prismjs/themes/prism-okaidia.css">
-        -->
-
-
+        <title>TACTS</title> 
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <link rel="stylesheet" href="../lib/css/custom.css">
         <script src="lib/JSplantilla.js" type="text/javascript"></script>
@@ -92,38 +86,38 @@
 
 
 
-                                                      
-                                                  <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=nombre%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
+
+                                                        <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=nombre%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
 
 
-                                                        <div class="card-body pt-3"> 
-                                                            <div class="mb-3">
-                                                                <label for="input-id" class="form-label">Selecciona </label>
-                                                                <input class="form-control" type="file" id="input-id" name="input-id"
-                                                                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                            <div class="card-body pt-3"> 
+                                                                <div class="mb-3">
+                                                                    <label for="input-id" class="form-label">Selecciona </label>
+                                                                    <input class="form-control" type="file" id="input-id" name="input-id"
+                                                                           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                                </div>
+
+
+                                                                <div class="row position-relative" style="top: 10px;">
+                                                                    <div class="col-6 text-center">
+
+                                                                        <button class="btn float-start btn-primary" id="created_file" type="button" >Descargar</button>
+                                                                    </div>
+                                                                    <div class="col-6 text-center">
+                                                                        <button class="btn float-end btn-success"  type="submit"  >Subir</button><!--id="upload_file"-->
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
+                                                        </form>
 
-                                                            <div class="row position-relative" style="top: 10px;">
-                                                                <div class="col-6 text-center">
-
-                                                                    <button class="btn float-start btn-primary" id="created_file" type="button" >Descargar</button>
-                                                                </div>
-                                                                <div class="col-6 text-center">
-                                                                    <button class="btn float-end btn-success"  type="submit"  >Subir</button><!--id="upload_file"-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                         </form>
-                                                        
                                                     </div>
                                                 </div>
- 
+
                                                 <div align="center" class="col-md-8">
                                                     <div align="center" id="divResultado" name="divResultado"></div>
                                                 </div>
-<!--<%=usr%>-->
+                                                <!--<%=usr%>-->
 
                                                 <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
                                                 <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
@@ -132,7 +126,7 @@
                                                 <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
                                                 <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
                                                 <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
- 
+
                                             </div> 
                                         </div>
                                     </div>
@@ -144,21 +138,21 @@
             </div>
         </div> 
     </div>
- 
+
 
     <!--
     <script src="<%=request.getContextPath()%>/plantillas/lib/fileinput.min.js" type="text/javascript"></script>
     <script src="<%=request.getContextPath()%>/plantillas/lib/fileinput/locales/es.js" type="text/javascript"></script>-->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
 
- </body>
+</body>
 
- <script>
-     
-    
-     
- </script>
+<script>
+
+
+
+</script>
 
 <%                } catch (NullPointerException e) {
         out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
