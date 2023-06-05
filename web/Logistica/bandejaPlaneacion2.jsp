@@ -19,13 +19,13 @@
         <meta name="robots" content="all,follow">
 
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
-       
-    
+
+
         <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
- 
+
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
     </head>
@@ -48,12 +48,12 @@
                     + " inner join tra_inc_gtn_test gtn on gtn.EMBARQUE_AGRUPADOR=te.EMBARQUE_AGRUPADOR"
                     + " WHERE  gtn.STATUS_EMBARQUE<>3 and TRUNC(te.EMBARQUE_FEC_CAPTURA) "
                     + " BETWEEN  TO_DATE('" + f1 + "', 'MM/DD/YYYY') AND TO_DATE('" + f2 + "', 'MM/DD/YYYY') ";
-            
-System.out.println("sql2"+sql2);
+
+            System.out.println("sql2" + sql2);
 
     %>
     <body>
- 
+
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
@@ -68,8 +68,7 @@ System.out.println("sql2"+sql2);
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <form id="uploadFileFormData1" name="uploadFileFormData1"> 
+                                    <div class="card-body"> 
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 60%;">
                                                 <table id="example" class="display" style="width:100%">
@@ -81,23 +80,22 @@ System.out.println("sql2"+sql2);
                                                             <th scope="col" class="font-titulo">Transportista  </th>
                                                             <th scope="col" class="font-titulo">CFDI  </th>
                                                             <th scope="col" class="font-titulo">Planeacion  </th>
-                                                             <th scope="col" class="font-titulo">Confirmacion  </th>
+                                                            <th scope="col" class="font-titulo">Confirmacion  </th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        <%
-                                                            if (db.doDB(sql2)) {
+                                                    <tbody id="cuerpo">
+                                                        <%      if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
 
                                                         %>
-                                                        <tr>
+                                                        <tr id="<%=row[5]%>">
                                                             <th class="font-numero"><%=row[0]%></th>	
                                                             <td class="font-numero"><%=row[3]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <a  href="<%=request.getContextPath()%>/MostrarPDF_CFDI?agrupador=<%=row[5]%>" target="_blank" class="btn btn-primary">PDF CFDI</a></td>
                                                             <td class="font-texto"> <a  href="<%=request.getContextPath()%>/Logistica/pdflogistica.jsp?a=<%=row[5]%>&email=0&bc=0" class="btn btn-primary" target="_blank" >PDF Planeacion</a></td> 
-                                                            <td class="font-texto"> <button class="btn btn-primary" onclick="confirmar('<%=row[5]%>')">Confirmar</button></td> 
+                                                            <td class="font-texto"> <button class="btn btn-primary" type="button" onclick="confirmar('<%=row[5]%>')">Confirmar</button></td> 
 
                                                         </tr>
                                                         <%
@@ -110,7 +108,7 @@ System.out.println("sql2"+sql2);
                                             <br>
                                             <!-- Botones controles -->
 
-                                        </form>
+                                     
                                     </div>
                                 </div>              
                             </div>
@@ -133,33 +131,40 @@ System.out.println("sql2"+sql2);
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 
 
-  <script>
+        <script>
 
-                    function confirmar(id) {
-                        swal({
-                            title: "Guardando. . .",
-                            allowEscapeKey: false
-                        });
-                     
+                                                                function confirmar(id) {
+                                                                    swal({
+                                                                        title: "Guardando. . .",
+                                                                        allowEscapeKey: false
+                                                                    });
 
  
-                        fetch("<%=request.getContextPath()%>/confirmarEmbarque?evento=" + id , {
-                            method: 'POST',
-                        }).then(r => r.text())
-                                .then(data => {
-                                    console.log(data)
-                                    swal("", data, "success");
-                                
-                                  window.location.reload();
+                                                                    fetch("<%=request.getContextPath()%>/confirmarEmbarque?evento=" + id, {
+                                                                        method: 'POST',
+                                                                    }).then(r => r.text())
+                                                                            .then(data => {
+                                                                                console.log(data)
+                                                                                swal("", data, "success"); 
+                                                                                eliminaTr('cuerpo', id)
+                                                                            }).catch(error => console.log(error));
+                                                                }
 
-                                }).catch(error => console.log(error));
+
+                                                                function eliminaTr(tablaId, filaId) {
+                                                                    var tabla = document.getElementById(tablaId);
+                                                                    var filaEliminar = document.getElementById(filaId);
+
+                                                                    if (tabla && filaEliminar) {
+                                                                        tabla.removeChild(filaEliminar);
+                                                                    }
+                                                                }
 
 
-                    }
-                </script>
+        </script>
         <script type="text/javascript">
 
-     
+
 
 
             $(document).ready(function () {
