@@ -67,7 +67,7 @@ public class ConsultarRepartoTransportistaEdit extends HttpServlet {
                 + " where EMBARQUE_AGRUPADOR='"+evento+"'";
             System.out.println("sql"+sql);
             
-            String sql2=" update tra_inc_gtn_test set STATUS_EMBARQUE=3 where EMBARQUE_AGRUPADOR='"+evento+"'";
+            String sql2=" update tra_inc_gtn_test set STATUS_EMBARQUE=2 where EMBARQUE_AGRUPADOR='"+evento+"'";
   PreparedStatement statement = generico.getConnection().prepareStatement(sql);
   PreparedStatement statement2 = generico.getConnection().prepareStatement(sql2);
               // Ejecutar la consulta
