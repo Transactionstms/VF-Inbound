@@ -329,6 +329,102 @@ public class Email {
         return mensaje;
     }
 
+    private String getSemaforoCustoms(String agenteId) {
+
+        ServiceDAO dao = new ServiceDAO();
+        String mensaje = "";
+        ConsultasQuery fac = new ConsultasQuery();
+
+        try {
+
+            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+            ResultSet rsc = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+
+            /*mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+                        + "    <div style=\"max-width:600px;margin:0 auto\">\n"
+                        //+ "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">\n"
+                        + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
+                        + "                <p style=\"margin:0;color:#333333\">\n"
+                        + "                <div align=\"center\">\n"
+                        + "                 <h2>Modificación de Eventos Pruebas</h2>\n"
+                        + "                 <h2>Favor de hacer caso omiso a este correo.</h2>\n"
+                        + "                </div>\n"
+                        + "            </div>\n"
+                        //+ "            <div style=\"padding:20px 30px\">\n"
+                        + "                 <br>"
+                        + "<table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:200%;\">\n"
+                        + "    <thead>\n"
+                        + "        <tr>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Número de evento <strong style=\"color:red\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Responsable <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Final Destination (Shipment) <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Brand-Division <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Division <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Shipment ID <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Container <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">BL/ AWB/ PRO <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Load Type <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Quantity <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">POD /&nbsp; <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">Est. Departure from POL <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">ETA REAL PORT <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">Est. Eta DC <strong style=\"color:white\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">ETA DC  </th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\" style=\"background-color:#C65911\">DC </th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Inbound notification <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">POL <strong style=\"color:red\">*</strong></th>\n"	
+                        + "            <th scope=\"col\" class=\"font-titulo\">A.A. <strong style=\"color:red\">*</strong></th>\n"
+                        + "            <th scope=\"col\" class=\"font-titulo\">Observaciones </th>\n"
+                        + "        </tr>\n"
+                        + "    </thead>\n"
+                        + "    <tbody>\n";*/
+            while (rsc.next()) {
+
+                /*mensaje += "        <tr>\n"
+                        + "            <th class=\"font-numero\" style=\"cursor: pointer\" onclick=\"editarEvento('2023028')\">" + rsc.getInt(1) + "</th>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(2) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(3) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(4) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(5) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(6) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(7) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(8) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(9) + "</td>\n"		
+                        + "            <td class=\"font-texto\">" + rsc.getString(10) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(11) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(12) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(13) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(14) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(15) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(16) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(17) + "</td>\n"
+                        + "            <td class=\"font-texto\">" + rsc.getString(18) + "</td>\n"	
+                        + "            <td class=\"font-texto\">" + rsc.getString(19) + "</td>\n"
+                        + "        </tr>\n";*/
+            }
+
+            rsc.close();
+
+            /*mensaje += "    </tbody>\n"
+                        + "</table>\n"
+                        + "    </div>\n"
+                        + "<div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
+                        + "        <p style=\"font-size:11px;color:#686f7a\">\n"
+                        + "        <center>\n"
+                        + "            Este es un mensaje informativo, favor de no contestar a este correo.\n"
+                        + "        </center>\n"
+                        + "        </p>\n"
+                        + "    </div>\n"
+                        + "</div>\n"
+                        + "</body>";*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return mensaje;
+    }
+    
     public Email() {
 
         properties = System.getProperties();
@@ -660,6 +756,64 @@ public class Email {
 
     }
 
+    public boolean alertaSemaforoCustoms(String correosInternos, String fichero, String agenteId, String estatusSemaforo) throws SQLException {
+
+        boolean enviado = false;
+        String[] vect;
+        vect = correosInternos.split("/");
+
+        try {
+            Session session = Session.getDefaultInstance(properties,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                }
+            });
+            // Session sesion = Session.getDefaultInstance(properties, null);
+            MimeMessage message = new MimeMessage(session);
+
+            for (int i = 0; i < vect.length; i++) {
+
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+
+            }
+
+            message.setFrom(new InternetAddress(REMITENTE));
+            message.setHeader("X-Priority", "1");
+            message.setSubject("Detalle Semaforo Customs " + estatusSemaforo + "");
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            // Now set the actual message
+            messageBodyPart.setContent(getSemaforoCustoms(agenteId), "text/html");
+
+            Multipart multipart = new MimeMultipart();
+
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+
+            //Part two is attachment
+            messageBodyPart = new MimeBodyPart();
+
+            messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
+            messageBodyPart.setFileName("Detalle Semaforo Customs " + estatusSemaforo + ".xls");
+
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect(HOST, REMITENTE, CLAVE);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+            System.out.println("Se envío correo");
+            enviado = true;
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return enviado;
+
+    }
+   
     private String getPlaneacion(String idLTransporte, String nameLTransporte, String urlT) {
         String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
                 + "    <div style=\"max-width:600px;margin:0 auto\">\n"
