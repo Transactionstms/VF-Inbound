@@ -15,18 +15,6 @@
 <%@page import="com.onest.misc.*" %>
 <%@page import="com.usuario.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    Date date = new Date();
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    String fecha = formato.format(date);
-    String[] par = fecha.split("/");
-    String part3 = par[2];
-
-    //Extracción de Hora   
-    Date hr = new Date();
-    DateFormat hours = new SimpleDateFormat("HH:mm:ss");
-    String hora = hours.format(hr);
-%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,6 +34,8 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- jQuery/show modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Window load -->
+        <link href="../../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
             #contenedor {
               display: flex;
@@ -1130,11 +1120,14 @@
         <script src="../../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- actions js -->
         <script src="../../lib/validationsInbound/customs/reporteCustoms.js" type="text/javascript"></script>
+        <!-- Window load -->
+        <script src="../../lib/Loader/js/windowLoadReport.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
     <%
         } catch (NullPointerException e) {
+            System.out.println("Error:" +e);
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");
         } catch (Exception e) {

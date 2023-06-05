@@ -56,8 +56,19 @@
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                 DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String filterType = request.getParameter("filterType");
                 String id = request.getParameter("id");
+                String AgentType = "";
+                
+                ConsultasQuery fac = new ConsultasQuery();
+                
+                //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
+                if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
+                    for (String[] rowA : db.getResultado()) {
+                        AgentType = rowA[0]; 
+                    }
+                }
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -76,6 +87,7 @@
                                     <p align="center"><iframe id="frameTableCustoms" height="950" width="1250" title="Data Table Customs"></iframe></p>
                                     <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
                                     <input type="hidden" id="id" name="id" value="<%=id%>">
+                                    <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
                                 </div>
                             </div>
                         </div>   
@@ -100,10 +112,11 @@
                 
                 let filterType = document.getElementById("filterType").value;   
                 let id = document.getElementById("id").value;   
+                let agenteId = document.getElementById("idAgenteAduanal").value;
                 
                 document.getElementById('frameTableCustoms').src = "iframeDataCustom.jsp?filterType="+filterType+"&id="+id;
                 
-                fetch("<%=request.getContextPath()%>/ActualizarSemaforoCustoms?filterType="+filterType+"&id="+id, {
+                fetch("<%=request.getContextPath()%>/ActualizarSemaforoCustoms?agenteAduanal="+agenteId, {
                     method: 'POST',
                 }).then(r => r.text())
                     .then(data => {
@@ -126,8 +139,8 @@
     <%
         } catch (NullPointerException e) {
             System.out.println("Error:" +e);
-            /*out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
-            out.println("<script>window.close();</script>");*/
+            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+            out.println("<script>window.close();</script>");
         } catch (Exception e) {
             out.println("Excepcion revise por favor! " + e);
             e.printStackTrace();
