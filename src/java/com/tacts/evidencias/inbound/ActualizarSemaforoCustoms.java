@@ -8,7 +8,7 @@ package com.tacts.evidencias.inbound;
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
 import com.onest.oracle.OracleDB;
-import com.onest.train.consultas.ConsultasQuery;
+import com.tacts.evidencias.facturacion.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -39,31 +39,43 @@ public class ActualizarSemaforoCustoms extends HttpServlet {
         
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
-        ConsultasQuery fac = new ConsultasQuery();
+        Email correo = new Email();
 
-        String filterType = request.getParameter("filterType");  
-        String caramelo = request.getParameter("id"); 
-        String traffic = request.getParameter("traffic"); 
-        String AgentType = "";
-        String evento = "";
+        String agenteAduanal = request.getParameter("agenteAduanal");
+        String rutaFicheroRojos = "";
+        String rutaFicheroAmarillos = "";
+        String agentes = "";
+        String emails = "";
         String salida = "";
          
-        //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
-        if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
-            for (String[] rowA : db.getResultado()) {
-                AgentType = rowA[0]; 
-            }
-        }
-
-        if (db.doDB(fac.consultarEventosCustoms(AgentType, filterType, caramelo))) {
-            for (String[] row : db.getResultado()) {
-                evento = row[0]; 
+        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
+        if (db.doDB(consulta)) {
+            for (String[] rowE : db.getResultado()) {
+                agentes = rowE[0];
+                emails = rowE[1];
             }
         }
         
-        /*String insertarClie = "UPDATE TRA_INB_EVENTO SET OBSERVACIONES = '"+ observaciones +"' WHERE ID_EVENTO = '" + evento + "'";
-        boolean oraOut = oraDB.execute(insertarClie);*/
-           
+        emails = emails.replaceFirst(" ", "/");
+        
+        String semaforoRojo = "SELECT DISTINCT ESTATUS_SEMAFORO FROM TRA_INB_SEMAFORO WHERE ESTATUS_SEMAFORO = 'Rojo'";
+        if (db.doDB(semaforoRojo)) {
+            for (String[] rowR : db.getResultado()) {
+                rutaFicheroRojos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, rowR[0]);
+                correo.alertaSemaforoCustoms(emails, rutaFicheroRojos.trim(), agentes, rowR[0]);
+                System.out.println("Estatus Correo Rojos: "+correo);
+            }
+        }
+        
+        String semaforoAmarillo = "SELECT DISTINCT ESTATUS_SEMAFORO FROM TRA_INB_SEMAFORO WHERE ESTATUS_SEMAFORO = 'Amarillo'";
+        if (db.doDB(semaforoAmarillo)) {
+            for (String[] rowA : db.getResultado()) {
+                rutaFicheroAmarillos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, rowA[0]);
+                correo.alertaSemaforoCustoms(emails, rutaFicheroAmarillos.trim(), agentes, rowA[0]);
+                System.out.println("Estatus Correo Amarillos: "+correo);
+            }
+        }    
+        
          salida = "true";
      
          out.print(salida);
