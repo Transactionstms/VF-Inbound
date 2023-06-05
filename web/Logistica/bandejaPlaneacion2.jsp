@@ -36,17 +36,20 @@
             String f1 = request.getParameter("f1");
             String f2 = request.getParameter("f2");
 
-            String sql2 = "   select "
-                    + "te.EMBARQUE_ID,"
+            String sql2 = "   select DISTINCT"
+                    + " te.EMBARQUE_ID,"
                     + " te.EMBARQUE_FEC_CAPTURA,"
                     + " tt.LTRANSPORTE_NOMBRE,"
                     + " TO_CHAR(te.EMBARQUE_FEC_ENRAMPE, 'MM/DD/YY'),"
                     + " TO_CHAR(te.EMBARQUE_FEC_INICIO, 'MM/DD/YY'),"
                     + " te.EMBARQUE_AGRUPADOR "
                     + " from tra_inb_embarque te"
-                    + " left join tra_inb_linea_transporte tt on tt.LTRANSPORTE_ID=te.EMBARQUE_TRANSPORTISTA "
-                    + " WHERE   TRUNC(te.EMBARQUE_FEC_CAPTURA) "
+                    + " left join tra_inb_linea_transporte tt on tt.LTRANSPORTE_ID=te.EMBARQUE_TRANSPORTISTA"
+                    + " inner join tra_inc_gtn_test gtn on gtn.EMBARQUE_AGRUPADOR=te.EMBARQUE_AGRUPADOR"
+                    + " WHERE  gtn.STATUS_EMBARQUE<>3 and TRUNC(te.EMBARQUE_FEC_CAPTURA) "
                     + " BETWEEN  TO_DATE('" + f1 + "', 'MM/DD/YYYY') AND TO_DATE('" + f2 + "', 'MM/DD/YYYY') ";
+            
+System.out.println("sql2"+sql2);
 
     %>
     <body>
@@ -78,6 +81,7 @@
                                                             <th scope="col" class="font-titulo">Transportista  </th>
                                                             <th scope="col" class="font-titulo">CFDI  </th>
                                                             <th scope="col" class="font-titulo">Planeacion  </th>
+                                                             <th scope="col" class="font-titulo">Confirmacion  </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -93,6 +97,8 @@
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <a  href="<%=request.getContextPath()%>/MostrarPDF_CFDI?agrupador=<%=row[5]%>" target="_blank" class="btn btn-primary">PDF CFDI</a></td>
                                                             <td class="font-texto"> <a  href="<%=request.getContextPath()%>/Logistica/pdflogistica.jsp?a=<%=row[5]%>&email=0&bc=0" class="btn btn-primary" target="_blank" >PDF Planeacion</a></td> 
+                                                            <td class="font-texto"> <button class="btn btn-primary" onclick="confirmar('<%=row[5]%>')">Confirmar</button></td> 
+
                                                         </tr>
                                                         <%
                                                                 }
@@ -124,10 +130,37 @@
         <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
         <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
 
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 
 
+  <script>
 
+                    function confirmar(id) {
+                        swal({
+                            title: "Guardando. . .",
+                            allowEscapeKey: false
+                        });
+                     
+
+ 
+                        fetch("<%=request.getContextPath()%>/confirmarEmbarque?evento=" + id , {
+                            method: 'POST',
+                        }).then(r => r.text())
+                                .then(data => {
+                                    console.log(data)
+                                    swal("", data, "success");
+                                
+                                  window.location.reload();
+
+                                }).catch(error => console.log(error));
+
+
+                    }
+                </script>
         <script type="text/javascript">
+
+     
+
 
             $(document).ready(function () {
                 $('#example').DataTable({

@@ -210,7 +210,8 @@
                 window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
 
             }
-        </script>                     
+        </script>    
+        
         <!-- Conexión estatus red -->                    
         <script src="../../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->

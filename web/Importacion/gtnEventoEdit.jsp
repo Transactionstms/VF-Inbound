@@ -168,26 +168,27 @@
                                                                     + " gtn.CBDIV_ID                      , "
                                                                     + " gtn.PLANTILLA_ID                  , "
                                                                     + " nvl((select count(distinct  BRAND_DIVISION) from tra_inc_gtn_test where CONTAINER1=GTN.CONTAINER1),0) "
-
                                                                     + " from TRA_INC_GTN_TEST gtn"
-                                                                      + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
-                                                                      + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
-                                                                      + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
+                                                                    + " left join tra_inb_POD tip1 on tip1.ID_POD=GTN.POD"
+                                                                    + " left join tra_inb_POL tip2 on tip2.ID_POL=GTN.POL"
+                                                                    + " left join tra_inb_BRAND_DIVISION tibd on tibd.ID_BD=GTN.BRAND_DIVISION"
                                                                     + " where gtn.PLANTILLA_ID in "
                                                                     + " (select PLANTILLA_ID from TRA_INB_EVENTO where ID_EVENTO=" + id + " )"
                                                                     + " order by gtn.ID_GTN";
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
-                                                                    
-                                                                   int lcdN=0;
-                                                try{
-                                                lcdN=Integer.parseInt(row[34]);
-                                                }catch(NumberFormatException e){
-                                                lcdN=0;
-                                                }
-                                                 String lcd="FCL";
-                                                
-                                                if(lcdN>1){lcd="FCL / LCL";}
+
+                                                                    int lcdN = 0;
+                                                                    try {
+                                                                        lcdN = Integer.parseInt(row[34]);
+                                                                    } catch (NumberFormatException e) {
+                                                                        lcdN = 0;
+                                                                    }
+                                                                    String lcd = "FCL";
+
+                                                                    if (lcdN > 1) {
+                                                                        lcd = "FCL / LCL";
+                                                                    }
                                                         %>
                                                         <tr>
                                                             <td class="font-numero" > 
@@ -257,10 +258,10 @@
                 <script>
 
                     function nuevoEvento() {
-                  swal({
-                    title:  "Guardando. . .",
-                  allowEscapeKey:false
-              });
+                        swal({
+                            title: "Guardando. . .",
+                            allowEscapeKey: false
+                        });
                         let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
 
                         let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
@@ -275,8 +276,8 @@
 
 
                         valores = valores.slice(0, -1);
- 
-                        fetch("../EventoNuevo?gtnId="+valores+"&id=<%=id%>", {
+
+                        fetch("../EventoNuevo?gtnId=" + valores + "&id=<%=id%>", {
                             method: 'POST',
                         }).then(r => r.text())
                                 .then(data => {
@@ -284,7 +285,7 @@
                                     alertclose();
                                     console.log(data)
                                     //location.reload();eventosDetalle
-                             window.location.href =  '<%=request.getContextPath()%>/Importacion/eventosDetalle.jsp';
+                                    window.location.href = '<%=request.getContextPath()%>/Importacion/eventosDetalle.jsp';
 
                                 }).catch(error => console.log(error));
 
