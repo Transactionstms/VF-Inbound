@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
     function FiltrerData(tipoFiltro) {
         
         jsShowWindowLoad('Cargando Información');
@@ -192,7 +191,7 @@
            selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
         }       
         
-        window.location.replace("../Catalogos/iframeDetailsCustoms.jsp?filterType="+tipoFiltro+"&id="+selected);
+        window.location.replace("../Importacion/Reportes/iframeDetailsCustoms.jsp?filterType="+tipoFiltro+"&id="+selected);
         
         $('#frameTableReporteCustoms').on("load", function() {
             $("#WindowLoad").remove();

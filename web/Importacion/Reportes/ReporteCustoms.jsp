@@ -40,18 +40,8 @@
         <link rel="stylesheet" href="../../lib/css/style.default.css" id="theme-stylesheet">
         <!-- jQuery 3.6.0 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <style>
-            #WindowLoad{
-                position:fixed;
-                top:0px;
-                left:0px;
-                z-index:3200;
-                filter:alpha(opacity=65);
-               -moz-opacity:65;
-                opacity:0.65;
-                background:#fff;
-            }
-        </style>
+        <!-- Window load -->
+        <link href="../../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <script>
             window.onload = (event) =>{
                 jsShowWindowLoad('Cargando Información');
@@ -119,6 +109,8 @@
 
             }
         </script>
+        <!-- Window load -->
+        <script src="../../lib/Loader/js/windowLoadReport.js" type="text/javascript"></script>
         <!-- JavaScript files-->
         <script src="../../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
@@ -127,8 +119,8 @@
     <%
         } catch (NullPointerException e) {
             System.out.println("Error:" +e);
-            /*out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
-            out.println("<script>window.close();</script>");*/
+            out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
+            out.println("<script>window.close();</script>");
         } catch (Exception e) {
             out.println("Excepcion revise por favor! " + e);
             e.printStackTrace();
