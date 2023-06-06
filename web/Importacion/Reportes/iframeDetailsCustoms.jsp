@@ -76,7 +76,7 @@
                 //Parametros Generales
                 String filterType = request.getParameter("filterType");       //Inicializar con 0
                 String id = request.getParameter("id");     
-   
+                String colorSemaforo = "";
                 String AgentType = ""; 
                 String caramelo = "";
                 int cont = 0; 
@@ -1003,8 +1003,19 @@
                         <tr id="tr<%=cont%>">
                         <%            
                         if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
+                        
+                             if(row[98].equals("VERDE")){
+                                 colorSemaforo = "../../img/circle-green.png";
+                             }else if(row[98].equals("AMARILLO")){
+                                 colorSemaforo = "../../img/circle-yellow.png";
+                             }else if(row[98].equals("ROJO")){
+                                 colorSemaforo = "../../img/circle-red.png";
+                             }else{
+                                 colorSemaforo = "../../img/circle-green.png";
+                             }
+                        
                         %>     
-                            <th class="font-numero"><center><img src="../../img/circle-green.png" width="100%"/></center></th>  <!--Semaforo -->
+                            <th class="font-numero"><center><img src="<%=colorSemaforo%>" width="100%"/></center></th>  <!--Semaforo -->
                             <th class="font-numero"><%=row[30]%></th>  <!-- Referencia Aduanal -->
                             <th class="font-numero"><%=row[0]%></th>   <!-- Evento -->
                             <td class="font-numero"><%=row[1]%></td>   <!-- Responsable -->

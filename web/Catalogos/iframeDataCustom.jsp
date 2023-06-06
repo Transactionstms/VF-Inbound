@@ -81,7 +81,8 @@
                 String idPlantilla = "";
                 String namePlantilla = "";
                 String caramelo = "";
-                int contLoad = 0;
+                String colorSemaforo = "";
+                String sizeSemaforo = "";
                 int cont = 1; 
    
                 //Objetos Multiselect:
@@ -183,8 +184,6 @@
                 //Obtener el listado de opciones, mediante la consulta principal
                 if (db.doDB(fac.consultarMultiselectCustoms(AgentType))) {
                     for (String[] row : db.getResultado()) {
-                        
-                        contLoad++;
 
                         if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                          
                                     list_evento.add("<option value=\""+row[0]+"\">"+row[0]+"</option>");
@@ -1018,9 +1017,23 @@
                          <tr id="tr<%=cont%>">
                         <%
                             if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                                                    
+                             
+                             if(row[99].equals("VERDE")){
+                                 colorSemaforo = "../img/circle-green.png";
+                                 sizeSemaforo = "100%";
+                             }else if(row[99].equals("AMARILLO")){
+                                 colorSemaforo = "../img/circle-yellow.png";
+                                 sizeSemaforo = "80%";
+                             }else if(row[99].equals("ROJO")){
+                                 colorSemaforo = "../img/circle-red.png";
+                                 sizeSemaforo = "60%";
+                             }else{
+                                 colorSemaforo = "../img/circle-green.png";
+                                 sizeSemaforo = "100%";
+                             }
                         %>   
                             <th class="font-numero">                    <!--Semaforo -->
-                                    <center><img src="../img/circle-green.png" width="100%"/></center>
+                                    <center><img src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
                             </th>
                             <th class="font-numero">                    <!-- Referencia Aduanal -->
                                 <input type="text" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30]%>" autocomplete="off">

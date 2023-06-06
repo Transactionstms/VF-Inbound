@@ -2164,7 +2164,8 @@ public class ConsultasQuery {
         /*96*/ + " NVL(TIC.FY,' '), "                                                
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
         /*98*/ + " NVL(TIC.PRIORIDAD,' '), "
-        /*99*/ + " NVL(GTN.ESTATUS,1) "                                     
+        /*99*/ + " NVL(GTN.ESTATUS,1), "
+       /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'VERDE') "                                     
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2176,6 +2177,7 @@ public class ConsultasQuery {
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+               //+ " LEFT JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "  
                + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
                //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
@@ -2463,7 +2465,8 @@ public class ConsultasQuery {
         /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), " 						 
         /*96*/ + " NVL(TIC.FY,' '), "                                                
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
-        /*98*/ + " NVL(TIC.PRIORIDAD,' ') "                                     
+        /*98*/ + " NVL(TIC.PRIORIDAD,' '), "
+        /*99*/ + " NVL(TIC.ESTATUS_SEMAFORO,'VERDE') "           
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2475,6 +2478,7 @@ public class ConsultasQuery {
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+               //+ " LEFT JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "   
                + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
                //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
