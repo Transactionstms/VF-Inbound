@@ -34,6 +34,9 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- jQuery/show modal -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- calendarios -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
         <!-- Window load -->
         <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -1159,7 +1162,7 @@
                               <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" value="<%=row[49]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]"  value="<%=row[50]%>" value=""> 
+                              <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]"  value="<%=row[50]%>"> 
                                  <option value="<%=row[50]%>"><%=row[50]%></option> 
                                  <option value="Si">SI</option> 
                                  <option value="No">NO</option> 
@@ -1178,21 +1181,21 @@
                               <input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" value="<%=row[54]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>" value=""> 
+                              <select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>"> 
                                  <option value="<%=row[56]%>"><%=row[56]%></option> 
                                  <option value="Si">SI</option> 
                                  <option value="No">NO</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>" value=""> 
+                              <select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>"> 
                                  <option value="<%=row[57]%>"><%=row[57]%></option> 
                                  <option value="Si">SI</option> 
                                  <option value="No">NO</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>" value=""> 
+                              <select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>"> 
                                  <option value="<%=row[58]%>"><%=row[58]%></option> 
                                  <option value="Si">SI</option> 
                                  <option value="No">NO</option> 
@@ -1462,9 +1465,6 @@
         <script src="../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- Sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
-        <!-- calendarios -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
         <!-- Actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Window load -->
