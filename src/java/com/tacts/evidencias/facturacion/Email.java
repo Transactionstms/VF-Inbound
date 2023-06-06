@@ -756,7 +756,7 @@ public class Email {
 
     }
 
-    public boolean alertaSemaforoCustoms(String correosInternos, String fichero, String agenteId, String estatusSemaforo) throws SQLException {
+    public boolean alertaSemaforoCustoms(String correosInternos, String fichero, String agenteId, String tipoCorreo) throws SQLException {
 
         boolean enviado = false;
         String[] vect;
@@ -780,7 +780,7 @@ public class Email {
 
             message.setFrom(new InternetAddress(REMITENTE));
             message.setHeader("X-Priority", "1");
-            message.setSubject("Detalle Semaforo Customs " + estatusSemaforo + "");
+            message.setSubject("Detalle Eventos" + tipoCorreo + "");
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
@@ -795,7 +795,7 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
 
             messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
-            messageBodyPart.setFileName("Detalle Semaforo Customs " + estatusSemaforo + ".xls");
+            messageBodyPart.setFileName("Detalle Eventos " + tipoCorreo + ".xls");
 
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);

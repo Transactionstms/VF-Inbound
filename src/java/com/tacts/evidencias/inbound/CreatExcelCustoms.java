@@ -25,7 +25,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  */
 public class CreatExcelCustoms {
 
-    public static String crearAPartirDeArrayListCustoms(String agenteId, String estatusSemaforo) {
+    public static String crearAPartirDeArrayListCustoms(String agenteId, String estatusSemaforo, String tipoCorreo) {
 
         ArrayList<ModelCustom> personas = new ArrayList<>();
         ServiceDAO dao = new ServiceDAO();
@@ -69,8 +69,8 @@ public class CreatExcelCustoms {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFCellStyle style = workbook.createCellStyle();
         
-        final String nombreArchivo = "SemaforoCustoms"+agenteId+"-"+estatusSemaforo+".xls";
-        Sheet hoja = workbook.createSheet("Detalle Semaforo Customs " + estatusSemaforo);
+        final String nombreArchivo = "SemaforoCustoms"+agenteId+"-"+tipoCorreo+".xls";
+        Sheet hoja = workbook.createSheet("Detalle Semaforo Customs " + tipoCorreo);
         
         String[] encabezados = {
              "Número de evento", 
