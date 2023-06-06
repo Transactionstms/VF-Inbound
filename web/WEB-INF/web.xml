@@ -890,6 +890,14 @@
         <servlet-name>confirmarEmbarque</servlet-name>
         <servlet-class>com.onest.train.consultas.confirmarEmbarque</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateSemaforoCustoms</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpdateSemaforoCustoms</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AlertaCustoms</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.AlertaCustoms</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1774,6 +1782,14 @@
     <servlet-mapping>
         <servlet-name>confirmarEmbarque</servlet-name>
         <url-pattern>/confirmarEmbarque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSemaforoCustoms</servlet-name>
+        <url-pattern>/UpdateSemaforoCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlertaCustoms</servlet-name>
+        <url-pattern>/AlertaCustoms</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

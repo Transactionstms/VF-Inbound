@@ -2165,7 +2165,7 @@ public class ConsultasQuery {
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
         /*98*/ + " NVL(TIC.PRIORIDAD,' '), "
         /*99*/ + " NVL(GTN.ESTATUS,1), "
-       /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'VERDE') "                                     
+       /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'3') "                                     
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2360,7 +2360,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-          sql += " ORDER BY TIE.ID_EVENTO " ;
+          sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
                   
         return sql;
     }
@@ -2466,7 +2466,7 @@ public class ConsultasQuery {
         /*96*/ + " NVL(TIC.FY,' '), "                                                
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "                                   
         /*98*/ + " NVL(TIC.PRIORIDAD,' '), "
-        /*99*/ + " NVL(TIC.ESTATUS_SEMAFORO,'VERDE') "           
+        /*99*/ + " NVL(TIC.ESTATUS_SEMAFORO,'3') "           
                + " FROM TRA_INB_EVENTO TIE "
                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -2661,7 +2661,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-          sql += " ORDER BY TIE.ID_EVENTO " ;
+          sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
 
         return sql;
     }
@@ -2897,11 +2897,12 @@ public class ConsultasQuery {
             +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
             +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1 "
             +"   INNER JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-            + "  INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID ";
+            //+ "  INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID ";
+            +"   WHERE TIC.ESTATUS_SEMAFORO IN ('" + estatusSemaforo + "') ";     
         
         if(!agenteAduanalId.equals("4006")){ //VF
-          sql += " WHERE tip1.AGENTE_ADUANAL_ID IN ("+ agenteAduanalId +") "
-               + " AND TIS.ESTATUS_SEMAFORO = '" + estatusSemaforo + "' ";       
+          sql += " AND tip1.AGENTE_ADUANAL_ID IN ("+ agenteAduanalId +") ";
+               
         }
           sql += " ORDER BY tie.id_evento ";
         

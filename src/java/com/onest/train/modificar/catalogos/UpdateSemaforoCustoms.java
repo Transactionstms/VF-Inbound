@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tacts.evidencias.inbound;
+package com.onest.train.modificar.catalogos;
 
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
 import com.onest.oracle.OracleDB;
 import com.tacts.evidencias.facturacion.Email;
+import com.tacts.evidencias.inbound.CreatExcelCustoms;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author luis_
  */
-public class ActualizarSemaforoCustoms extends HttpServlet {
+public class UpdateSemaforoCustoms extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -47,35 +48,7 @@ public class ActualizarSemaforoCustoms extends HttpServlet {
         String agentes = "";
         String emails = "";
         String salida = "";
-         
-        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
-        if (db.doDB(consulta)) {
-            for (String[] rowE : db.getResultado()) {
-                agentes = rowE[0];
-                emails = rowE[1];
-            }
-        }
-        
-        emails = emails.replaceFirst(" ", "/");
-        
-        String semaforoRojo = "SELECT DISTINCT ESTATUS_SEMAFORO FROM TRA_INB_SEMAFORO WHERE ESTATUS_SEMAFORO = 'Rojo'";
-        if (db.doDB(semaforoRojo)) {
-            for (String[] rowR : db.getResultado()) {
-                rutaFicheroRojos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, rowR[0]);
-                correo.alertaSemaforoCustoms(emails, rutaFicheroRojos.trim(), agentes, rowR[0]);
-                System.out.println("Estatus Correo Rojos: "+correo);
-            }
-        }
-        
-        String semaforoAmarillo = "SELECT DISTINCT ESTATUS_SEMAFORO FROM TRA_INB_SEMAFORO WHERE ESTATUS_SEMAFORO = 'Amarillo'";
-        if (db.doDB(semaforoAmarillo)) {
-            for (String[] rowA : db.getResultado()) {
-                rutaFicheroAmarillos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, rowA[0]);
-                correo.alertaSemaforoCustoms(emails, rutaFicheroAmarillos.trim(), agentes, rowA[0]);
-                System.out.println("Estatus Correo Amarillos: "+correo);
-            }
-        }    
-        
+
          salida = "true";
      
          out.print(salida);
@@ -99,7 +72,7 @@ public class ActualizarSemaforoCustoms extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ActualizarSemaforoCustoms.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateSemaforoCustoms.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -117,7 +90,7 @@ public class ActualizarSemaforoCustoms extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ActualizarSemaforoCustoms.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateSemaforoCustoms.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

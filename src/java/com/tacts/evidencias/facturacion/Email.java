@@ -780,7 +780,7 @@ public class Email {
 
             message.setFrom(new InternetAddress(REMITENTE));
             message.setHeader("X-Priority", "1");
-            message.setSubject("Detalle Eventos" + tipoCorreo + "");
+            message.setSubject("Detalle Eventos " + tipoCorreo + "");
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message

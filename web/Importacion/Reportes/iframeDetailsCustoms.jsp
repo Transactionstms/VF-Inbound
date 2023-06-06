@@ -77,6 +77,7 @@
                 String filterType = request.getParameter("filterType");       //Inicializar con 0
                 String id = request.getParameter("id");     
                 String colorSemaforo = "";
+                String sizeSemaforo = "";
                 String AgentType = ""; 
                 String caramelo = "";
                 int cont = 0; 
@@ -1004,18 +1005,22 @@
                         <%            
                         if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
                         
-                             if(row[98].equals("VERDE")){
+                             if(row[98].equals("3")){
                                  colorSemaforo = "../../img/circle-green.png";
-                             }else if(row[98].equals("AMARILLO")){
+                                 sizeSemaforo = "100%";
+                             }else if(row[98].equals("2")){
                                  colorSemaforo = "../../img/circle-yellow.png";
-                             }else if(row[98].equals("ROJO")){
+                                 sizeSemaforo = "80%";
+                             }else if(row[98].equals("1")){
                                  colorSemaforo = "../../img/circle-red.png";
+                                 sizeSemaforo = "60%";
                              }else{
                                  colorSemaforo = "../../img/circle-green.png";
+                                 sizeSemaforo = "100%";
                              }
                         
                         %>     
-                            <th class="font-numero"><center><img src="<%=colorSemaforo%>" width="100%"/></center></th>  <!--Semaforo -->
+                            <th class="font-numero"><center><img src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center></th>  <!--Semaforo -->
                             <th class="font-numero"><%=row[30]%></th>  <!-- Referencia Aduanal -->
                             <th class="font-numero"><%=row[0]%></th>   <!-- Evento -->
                             <td class="font-numero"><%=row[1]%></td>   <!-- Responsable -->
