@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <p align="center"><iframe id="frameTableCustoms" height="950" width="1250" title="Data Table Customs"></iframe></p>
+                                    <p align="center"><iframe id="frameTableCustoms" height="950" width="1175" title="Data Table Customs"></iframe></p>
                                     <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
                                     <input type="hidden" id="id" name="id" value="<%=id%>">
                                     <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
