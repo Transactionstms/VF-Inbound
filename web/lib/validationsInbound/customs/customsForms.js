@@ -538,28 +538,119 @@
                                                         "&proveedor[" + i + "]=" + proveedor + 
                                                         "&proveedor_carga[" + i + "]=" + proveedor_carga;
                         }
-                        
-                  try {
-                    const response = await fetch("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);   
-                    if (!response.ok) {
-                      throw new Error('Error en la solicitud');   
-                    }
-                    const data = await response.text();
-                    
-                    if (data === "1") {
-                        document.getElementById('tr'+cont).bgColor='#95c799';
-                        console.log("tr"+cont);
-                    } else {
-                        document.getElementById('tr'+cont).bgColor='#e4605e';
-                        console.log("tr"+cont);
-                    }
-                    
-                    urlCustoms = "";
-                    cont++; 
-                    
-                  } catch (error) {
-                    console.error(error);
-                  }
+            
+            
+                        /* # REGLA 1: */
+                        if(permiso === "SI"){
+
+                            if (fecha_envio === "") {
+                                swal("Ingrese Fecha Envío", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                            if (fecha_recepcion_perm === "") {
+                                swal("Ingrese Fecha Recepción Permiso", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                            if (fecha_activacion_perm === "") {
+                                swal("Ingrese Fecha Activación Permiso", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                            if (fecha_permisos_aut === "") {
+                                swal("Ingrese Fecha Permisos Autorizados", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                        }
+
+
+                        /* # REGLA 2: */
+                        if (req_ca === "SI") {
+
+                            if (fecha_recepcion_ca === "") {
+                                swal("Ingrese Fecha Recepción CA", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                            if (num_constancia_ca === "") {
+                                swal("Ingrese Número de Constancia CA", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                            if (monto_ca === "") {
+                                swal("Ingrese Monto CA", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                        }
+
+
+                        /* # REGLA 3: */
+                        if (resultado_modulacion === "ROJO") {
+
+                            if (sello_origen === "") {
+                                swal("Ingrese Sello Origen", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                        }
+
+
+                        /* # REGLA 4: */
+                        if(pedimento_r1_1er === ""){
+
+                            if (motivo_rectificacion_1er === "") {
+                                swal("Ingrese Motivo Rectificación 1", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                        }
+
+
+                        /* # REGLA 5: */
+                        if(pedimento_r1_2do === ""){
+
+                            if (motivo_rectificacion_2do === "") {
+                                swal("Ingrese Motivo Rectificación 2", "info");
+                                alertclose();
+                                return false;
+                            }
+
+                        }
+            
+              try {
+                const response = await fetch("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);   
+                if (!response.ok) {
+                  throw new Error('Error en la solicitud');   
+                }
+                const data = await response.text();
+
+                if (data === "1") {
+                    document.getElementById('tr'+cont).bgColor='#95c799';
+                    console.log("tr"+cont);
+                } else {
+                    document.getElementById('tr'+cont).bgColor='#e4605e';
+                    console.log("tr"+cont);
+                }
+
+                urlCustoms = "";
+                cont++; 
+
+              } catch (error) {
+                console.error(error);
+              }
+              
           } 
           swal("", "Registro exitoso", "success");
           alertclose();    
