@@ -898,6 +898,14 @@
         <servlet-name>AlertaCustoms</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.AlertaCustoms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarHistoricoSemaforo</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarHistoricoSemaforo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertarEvidencia</servlet-name>
+        <servlet-class>com.onest.train.insertar.catalogos.InsertarEvidencia</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1790,6 +1798,14 @@
     <servlet-mapping>
         <servlet-name>AlertaCustoms</servlet-name>
         <url-pattern>/AlertaCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarHistoricoSemaforo</servlet-name>
+        <url-pattern>/ConsultarHistoricoSemaforo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertarEvidencia</servlet-name>
+        <url-pattern>/InsertarEvidencia</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
