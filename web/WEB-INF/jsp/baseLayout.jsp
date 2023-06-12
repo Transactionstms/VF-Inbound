@@ -132,6 +132,14 @@
                            <!-- <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/subirFactura.jsp" target="data">Subir Factura</a></li>-->
                         </ul>
                     </li>
+                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
+                            <svg class="svg-icon svg-icon-md me-3">
+                            <use xlink:href="lib/icons/orion-svg-sprite.svg#page-1"> </use>
+                            </svg><span class="sidebar-link-title">Control Documental</span></a>
+                        <ul class="sidebar-menu list-unstyled collapse " id="templetesDropdown">
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/guiaEmbarque.jsp" target="data">Evidenciar Embarque</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#tablesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
                             <svg class="svg-icon svg-icon-md me-3">
                             <use xlink:href="lib/icons/orion-svg-sprite.svg#grid-1"> </use>
