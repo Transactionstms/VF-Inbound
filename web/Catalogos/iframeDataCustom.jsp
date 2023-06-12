@@ -1015,7 +1015,6 @@
                        <%
                          if (db.doDB(fac.consultarEventosCustoms(AgentType,filterType,caramelo))) {
                             for (String[] row : db.getResultado()) {
-                              cont++;  
                         %>
                          <tr id="tr<%=cont%>">
                         <%
@@ -1114,7 +1113,8 @@
                                 <input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" value="<%=row[33]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34]%>" autocomplete="off">
+                                <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34]%>" autocomplete="off">
+                                <a class="text-lg text-blue" onclick="historicoSemaforo('<%=row[5]%>')"><i class="fa fa-folder-open"></i></a>
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="agente_aduanal[<%=cont%>]" name="agente_aduanal[<%=cont%>]" type="text" value="<%=row[35]%>" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
@@ -1263,28 +1263,14 @@
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"  value="<%=row[74]%>">
-                                  <option value="<%=row[74]%>"><%=row[74]%></option> 
-                                  <option value="1">EN ESPERA DE ESTATUS</option>
-                                  <option value="2">EN TRANSITO - PENDIENTE REVALIDACION</option>
-                                  <option value="3">EN TRANSITO - REVALIDADO</option>
-                                  <option value="4">EN PROCESO DE ARRIBO</option>
-                                  <option value="5">EN PROCESO DE RECOLECCION</option>
-                                  <option value="6">ARRIBADO</option>
-                                  <option value="7">ARRIBADO - PENDIENTE REVALIDACION</option>
-                                  <option value="8">REVALIDADO</option>
-                                  <option value="9">EN ESPERA DE PREVIO</option>
-                                  <option value="10">RETENIDO POR LA AUTORIDAD</option>
-                                  <option value="11">EN PREVIO</option>
-                                  <option value="12">EN GLOSA</option>
-                                  <option value="13">EN ESPERA DE DOCUMENTOS</option>
-                                  <option value="14">EN PROCESO DE PAGO DE PEDIMENTO</option>
-                                  <option value="15">PEDIMENTO PAGADO</option>
-                                  <option value="16">EN ESPERA DE INSTRUCCIONES PARA DESPACHO</option>
-                                  <option value="17">EN PROGRAMACION DE DESPACHO</option>
-                                  <option value="18">EN DESPACHO</option>
-                                  <option value="19">IMPORTADO</option>
-                                  <option value="20">RETENIDO POR INCIDENCIA</option>
-                                  <option value="21">EN TRANSITO</option>
+                                  <option value="<%=row[98]%>"><%=row[74]%></option> 
+                                    <%
+                                        if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
+                                            for (String[] rowO : db.getResultado()) {
+                                                out.println("<option value=\"" + rowO[0] + "\" >" + rowO[1] + "</option>");
+                                            }
+                                        }
+                                    %>
                               </select>
                             </td>
                             <td class="font-numero">
@@ -1449,7 +1435,39 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>    
+        <!-- modal - Discharge Semaforo -->
+        <div class="modal fade text-start" id="modalSemaforo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-0 bg-gray-100">
+                        <h3 class="h6 modal-title" id="exampleModalLabel">
+                            <div class="card-heading"><img src="../img/Semaforo.png" width="3%"/>&nbsp;ETA Port Of Discharge Historic</div>
+                        </h3>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <center><div id="idSemaforo"></div></center>
+                            </div>
+                            <div class="card-body text-muted">
+                                <table class="table" id="mytable" name="mytable" width="50%">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>FECHA</strong></th>
+                                            <th><strong>PRIORIDAD</strong></th>
+                                            <th><strong>LOAD TYPE</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="AddTableSemaforo"></tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div> 
         <script>
             //Cargar función para formato de fechas 
             $('.datepicker').flatpickr({

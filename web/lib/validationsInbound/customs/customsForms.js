@@ -619,3 +619,14 @@
         $('.selectpicker').selectpicker('deselectAll');
         FiltrerData("0");
     }
+    
+    function historicoSemaforo(idShipment){
+        fetch("../ConsultarHistoricoSemaforo?idShipment=" + idShipment, {
+        method: 'POST',
+        }).then(r => r.text())
+                .then(data => {
+                       document.getElementById('AddTableSemaforo').innerHTML = data;
+                       document.getElementById("idSemaforo").innerHTML = " SHIPMENT ID:  " + idShipment;
+                       $("#modalSemaforo").modal("show");
+                }).catch(error => console.log(error));          
+    }

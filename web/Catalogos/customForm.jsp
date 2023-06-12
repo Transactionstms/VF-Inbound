@@ -129,7 +129,7 @@
                         }
                     }).catch(error => console.log(error)); 
                     
-                email(agenteId);    
+                //email(agenteId);    
             }
             
             function email(agenteId){
@@ -142,9 +142,9 @@
         </script>
         <!-- Window load -->
         <script src="../lib/Loader/js/windowLoad.js" type="text/javascript"></script>
-        <!-- JavaScript files-->
+        <!-- JavaScript files -->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
     <%
