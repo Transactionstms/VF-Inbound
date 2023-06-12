@@ -2667,7 +2667,7 @@ public class ConsultasQuery {
     }
     
     public String consultarEstatusOperacionCustoms(){
-         sql = "SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1";
+         sql = "SELECT DISTINCT ID_ESTADO, DESCRIPCION_ESTADO FROM TRA_ESTADOS_CUSTOMS WHERE ESTATUS = 1 ORDER BY ID_ESTADO ASC";
         return sql;
     }
     

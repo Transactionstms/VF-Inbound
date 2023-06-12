@@ -869,17 +869,16 @@ public class InsertarCustomsForms extends HttpServlet {
                 /*fecha ya registrada en sistema vs fecha recibida del front-ed*/
                 if(!eta_port_discharge_old.equals(eta_port_discharge)){ 
                     
-                    String fecha = formato.format(eta_port_discharge);
-                    String[] par = fecha.split("/");
-                    int day = Integer.parseInt(par[0]);
-                    int month = Integer.parseInt(par[1]);
+                    String[] par = eta_port_discharge.split("/");
+                    int month = Integer.parseInt(par[0]);
+                    int day = Integer.parseInt(par[1]);
                     int year = Integer.parseInt(par[2]);    
 
                     /* CONSULTAR (FECHA DISCHARGE/LOAD TYPE/DÍA CONTADOR) */
                     String data = obj.dataSemaforo(month, day, year, loadTypeFinal, diasTranscurridos);
 
                     /* SPLIT VARIABLE DATA */
-                    String[] parts = data.split("/");
+                    String[] parts = data.split("-");
                     String dia_contador = parts[0];   
                     String color_semaforo = parts[1];  
                     String fecha_inicial = parts[2];  
@@ -898,17 +897,16 @@ public class InsertarCustomsForms extends HttpServlet {
 
             }else{
                 
-                    String fecha = formato.format(eta_port_discharge);
-                    String[] par = fecha.split("/");
-                    int day = Integer.parseInt(par[0]);
-                    int month = Integer.parseInt(par[1]);
+                    String[] par = eta_port_discharge.split("/");
+                    int month = Integer.parseInt(par[0]);
+                    int day = Integer.parseInt(par[1]);
                     int year = Integer.parseInt(par[2]);
 
                     /* CONSULTAR (FECHA DISCHARGE/LOAD TYPE/DÍA CONTADOR) */
                     String data = obj.dataSemaforo(month, day, year, loadTypeFinal, 1);
-
+                                                 //3/Verde/6/10/2023/6/21/2023/11
                     /* SPLIT VARIABLE DATA */
-                    String[] parts = data.split("/");
+                    String[] parts = data.split("-");
                     String dia_contador = parts[0];   
                     String color_semaforo = parts[1];  
                     String fecha_inicial = parts[2];  
@@ -944,7 +942,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " '" + dias_total_despacho + "')";
             }
-                        boolean oraOut4 = oraDB.execute(semaforo);
+                        boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
         }                             
                 if(oraOut1&&oraOut2){
                     salida = "1";

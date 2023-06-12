@@ -30,7 +30,7 @@ public class CrearSemaforoCustoms {
         
         String estatusSemaforo = colorSemaforo(loadType, diasCalculadosCont);                                      /* Estatus del Semaforo */
 
-        res = diasCalculadosCont+"/"+estatusSemaforo+"/"+fechaInicialConfirmada+"/"+fechaFinalConfirmada+"/"+diasLoadType;
+        res = diasCalculadosCont+"-"+estatusSemaforo+"-"+fechaInicialConfirmada+"-"+fechaFinalConfirmada+"-"+diasLoadType;
         
         return res;
     }
