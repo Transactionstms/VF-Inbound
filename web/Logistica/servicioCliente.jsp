@@ -52,14 +52,9 @@
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String cveCuenta = (String) ownsession.getAttribute("cbdivcuenta");
-                String documento = request.getParameter("documento").trim().toUpperCase();
-                String pagina = request.getParameter("pagina");
+                String documento = request.getParameter("documento");
                 String li = request.getParameter("li");
                 ConsultasQuery fac = new ConsultasQuery();
-                Validacion validacion = new Validacion();
-                Util util = new Util();
-                Cuenta[] cuenta = (Cuenta[]) ownsession.getAttribute("login.user_cuenta");
-                String embarqueAgrupa = "";  
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -71,26 +66,40 @@
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Personalizar Customs</h2>
+                                                <h2 class="card-heading">Evidencia por guía de Embarque</h2>
                                             </div>
                                         </div>
                                     </div>                                    
                                     <div class="card-body">
                                         <form action="">
                                             <table border="0" align="center" width="60%">
-                                                <%
-                                                    //if(db.doDB(cd.servicioClienteLista(documento, cveCuenta))) {
-                                                    if (db.doDB(validacion.validacionservicioClienteLista(documento, cveCuenta))) {
-                                                %>
-                                                <tr><td class="repHdr">No. embarque</td><td class="repHdr">Fecha</td><td class="repHdr">Chofer</td><td class="repHdr">Transportista</td></tr>
-                                                <%
-                                                        for (String[] row : db.getResultado()) { 
-                                                            embarqueAgrupa = row[4];
-                                                            out.println("<tr><td class=\"repDatNon\"><a href='" + request.getContextPath() + "/" + pagina + "?a=" + row[4] + "&li=" + li + "'><font color='black'>" + row[0] + "</font></a></td><td class=\"repDatNon\"><a href='" + request.getContextPath() + "/" + pagina + "?a=" + row[4] + "&li=" + li + "'><font color='black'>" + row[1] + "</font></a></td><td class=\"repDatNon\"><a href='" + request.getContextPath() + "/" + pagina + "?a=" + row[4] + "&li=" + li + "'><font color='black'>" + row[2] + "</font></a></td><td class=\"repDatNon\"><a href='" + request.getContextPath() + "/" + pagina + "?a=" + row[4] + "&li=" + li + "'><font color='black'>" + row[3] + "</font></a></td></tr>");
+                                                <thead>
+                                                    <tr>
+                                                        <th class="repHdr">NO. EMBARQUE</th>
+                                                        <th class="repHdr">FECHA</th>
+                                                        <th class="repHdr">CHOFER</th>
+                                                        <th class="repHdr">TRANSPORTISTA</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        if (db.doDB(fac.consultarInfoEmbarqueEvidencia(documento,cveCuenta))) {
+                                                          for (String[] row : db.getResultado()) {
+                                                    %>              
+                                                    <tr>
+                                                        <td class="repDatNon"><a href="detalle_guia_embarque.jsp?a=<%=row[0]%>&li=<%=li%>"><font color='black'><u><%=row[0]%></u></font></a></td>
+                                                        <td class="repDatNon"><font color='black'><%=row[1]%></font></td>
+                                                        <td class="repDatNon"><font color='black'><%=row[2]%></font></td> 
+                                                        <td class="repDatNon"><font color='black'><%=row[3]%></font></td> 
+                                                    </tr>
+                                                    <%
+                                                                
+                                                          }
+                                                        } else {
+                                                            out.println("<p class='errorHdr'>No existe el embarque</p>");
                                                         }
-                                                    } else {
-                                                        out.println("<p class='errorHdr'>No existe el embarque</p>");
-                                                    }%>
+                                                    %>
+                                                </tbody>
                                             </table>
                                             <br>
                                         </form> 

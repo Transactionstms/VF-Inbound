@@ -73,7 +73,6 @@
                                           </center>
                                           <br>
                                           <input type="hidden" name="li" value="0"/>
-                                          <input type="hidden" name="pagina" value="Logistica/detalle_guia_embarque.jsp"/>
                                           <input type="hidden" name="t" value="Evidencia por embarque"/>
                                           <center>
                                               <input type="submit" class="entrar"  value="Ingresar"/>

@@ -2924,5 +2924,51 @@ public class ConsultasQuery {
         return sql;
     }
     
+    public String consultarInfoEmbarqueEvidencia(String embarqueId, String cbdiv_id) {
+        sql = " SELECT DISTINCT "
+            + " TIE.EMBARQUE_ID, " 
+            + " TIE.EMBARQUE_FEC_CAPTURA, " 
+            + " UPPER(TIE.CHOFER_ID), "
+            + " UPPER(TILT.LTRANSPORTE_NOMBRE) "
+            + " FROM TRA_INB_EMBARQUE  TIE "
+            + " INNER JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID "
+            + " WHERE TIE.EMBARQUE_ID IN ('"+ embarqueId +"') ";
+        return sql;
+    }
+    
+    public String consultarEvidenciaEvento(String documeto, String cbdiv_id){
+        sql = " SELECT DISTINCT "  
+            + " TIE.EMBARQUE_ID, "  
+            + " TO_CHAR(TIE.EMBARQUE_FEC_CAPTURA, 'DD/MM/YYYY hh:mi'), "
+            + " UPPER(TILT.LTRANSPORTE_NOMBRE), "
+            + " UPPER(OUT.UTRANSPORTE_DESC), "
+            + " UPPER(TIE.CHOFER_ID) "
+            + " FROM TRA_INB_EMBARQUE  TIE "  
+            + " INNER JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID  " 
+            + " INNER JOIN ONTMS_UNIDAD_TRANSPORTE OUT ON TIE.UTRANSPORTE_ID = OUT.UTRANSPORTE_ID "
+            + " WHERE TIE.EMBARQUE_ID IN ('" + documeto + "') "
+            + " AND TIE.EMBARQUE_ESTADO_ID IN (1) ";
+      return sql; 
+    }
+    
+    public String consultarDetalleEvento(String documeto, String cbdiv_id){
+       sql = " SELECT DISTINCT "
+           + " TIEV.ID_EVENTO, " 
+           + " NVL(TIGT.SHIPMENT_ID,' '), "
+           + " NVL(TIGT.CONTAINER1,' '), "
+           + " NVL(TIGT.QUANTITY,0), "
+           + " NVL(TIP.NOMBRE_POD,' '), "
+           + " NVL(TIBD.NOMBRE_BD,' ') "
+           + " FROM TRA_INB_EMBARQUE  TIE "   
+           + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR " 
+           + " INNER JOIN TRA_INB_EVENTO TIEV ON  TIGT.PLANTILLA_ID = TIEV.PLANTILLA_ID " 
+           + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD " 
+           + " LEFT JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
+           + " WHERE TIE.EMBARQUE_ID IN ('" + documeto + "') "
+           + " AND TIE.EMBARQUE_ESTADO_ID IN (1) "
+           + " ORDER BY TIEV.ID_EVENTO ASC ";
+      return sql; 
+    }
+    
 } 
  

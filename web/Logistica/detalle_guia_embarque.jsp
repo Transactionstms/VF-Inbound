@@ -40,6 +40,15 @@
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- jQuery 3.6.0 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style>
+            .input-container {
+              text-align: center;
+            }
+
+            .input-container input[type="text"] {
+              display: inline-block;
+            }
+        </style>
     </head>
     <body>
         <%
@@ -49,81 +58,15 @@
                 DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
-                String a = request.getParameter("a");
+                String cveCuenta = (String) ownsession.getAttribute("cbdivcuenta");
+                String embarque = request.getParameter("a");
+                ConsultasQuery fac = new ConsultasQuery();
                 String cant = "";
                 String agrupador = "";
                 String id_embarque = "";
                 int contador = 0;       
                 int bandera = 0;
-                
-                String test = " SELECT embarque_id, "
-                            + "  to_char(embarque_fec_captura,'dd/mm/yyyy hh:mi'), "
-                            + " oltr.ltransporte_nombre, "
-                            + " outr.utransporte_desc, "
-                            + " oc.chofer_nombre "
-                            + " FROM ontms_embarque oe "
-                            + " INNER JOIN ontms_chofer oc ON oc.chofer_id=oe.chofer_id "
-                            + " INNER JOIN ontms_camion oca ON oca.camion_id=oe.camion_id "
-                            + " INNER JOIN ontms_linea_transporte oltr ON oltr.ltransporte_id=oca.ltransporte_id "
-                            + " INNER JOIN ontms_unidad_transporte outr ON outr.utransporte_id=oca.utransporte_id "
-                            + " INNER JOIN ontms_docto_sal ods ON ods.docto_sal_agrupador=oe.embarque_agrupador "
-                            + " WHERE oe.EMBARQUE_AGRUPADOR='" + a + "' "
-                            + " AND OLTR.ESTATUS=1"
-                            + " GROUP BY embarque_id, embarque_fec_captura, oltr.ltransporte_nombre,outr.utransporte_desc,oc.chofer_nombre";
-                
-                String subquery = " SELECT ods.docto_referencia, "
-                                + "   NVL(ods.docto_piezas,0), "
-                                + "   oddh.DESTINO_CIUDAD, "
-                                + "   oddh.DESTINO_NOMBRE, "
-                                + "   oddh.DESTINO_ESTADO, "
-                                + "   ods.docto_sal_id, "
-                                + "   oe.embarque_agrupador, "
-                                + "   oe.embarque_id, "
-                                + "   oddh.DIVISION_ID, "
-                                + "   ods.CBDIV_ID, "
-                                + "   SUM(NVL(odsk.cantidad_rechazada,0)), "
-                                + "   NVL(ods.docto_sal_cantidad,0),  "
-                                + "   ods.docto_estado_id "
-                                + " FROM ontms_docto_sal ods "
-                                + " INNER JOIN ontms_embarque oe "
-                                + " ON ods.docto_sal_agrupador=oe.embarque_agrupador "
-                                + " INNER JOIN ontms_cta_bod_div ocbd "
-                                + " ON ods.cbdiv_id = ocbd.cbdiv_id "
-                                + " INNER JOIN ontms_bodega ob "
-                                + " ON ob.bodega_id = ocbd.bodega_id "
-                                + " INNER JOIN ontms_cuenta oc "
-                                + " ON oc.cuenta_id = ocbd.cuenta_id "
-                                + " INNER JOIN ontms_division odv "
-                                + " ON odv.division_id = ocbd.division_id "
-                                + " INNER JOIN dilog_destinos_hilti oddh "
-                                + " ON oddh.DESTINO_SHIP_TO = ods.destino_id "
-                                +"  and oddh.division_id = ods.cbdiv_id   "
-                                + " LEFT JOIN ontms_bodega ob1 "
-                                + " ON ob1.bodega_id=ods.bodega_id "
-                                + " LEFT JOIN ontms_docto_sku odsk "
-                                + " ON odsk.docto_sal_id         =ods.docto_sal_id "
-                                + " WHERE  "
-                                + " oe.embarque_agrupador IN ('"+a+"')  "
-                                + " AND ods.docto_estado_id     IN (3,10) "
-                                + " AND oe.embarque_estado_id   <>4 "
-                                + " GROUP BY ods.docto_referencia, "
-                                + "   NVL(ods.docto_piezas,0), "
-                                + "   oddh.DESTINO_CIUDAD, "
-                                + "   oddh.DESTINO_NOMBRE, "
-                                + "   oddh.DESTINO_ESTADO, "
-                                + "   ods.docto_sal_id, "
-                                + "   oe.embarque_agrupador, "
-                                + "   oe.embarque_id, "
-                                + "   oddh.DIVISION_ID, "
-                                + "   ods.CBDIV_ID, "
-                                + "   NVL(ods.docto_sal_cantidad,0),ods.docto_estado_id "
-                                + " ORDER BY ods.docto_referencia ";
-                
-        if (db.doDB(test)) {//validacion.servicioCliente(a,idCuentaBroker)
-            bandera = 1;        
-                
-            if (db.doDB(subquery)) {//validacion.detalleEvidenciaGuiaEmbarque(a, idCuentaBroker)
-                bandera = 1;
+ 
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -135,69 +78,93 @@
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Personalizar Customs</h2>
+                                                <h2 class="card-heading">Evidencia por guía de Embarque</h2>
                                             </div>
                                         </div>
                                     </div>                                    
                                     <div class="card-body">
-                                        <h3 align="center">Evidencia por embarque</h3>
                                         <table align="center" width="75%" border="0">
-                                            <%
-                                                for (String[] row : db.getResultado()) {
-
-                                                    out.println("<tr><td class=\"repHdrC\" width='10%'>Viaje</td><td  class='texto' width='25%'>" + row[0] + "</td><td class=\"repHdrC\" width='15%'>Fecha</td><td  class='texto' width='35%'>" + row[1] + "</td></tr>");
-                                                    out.println("<tr><td class=\"repHdrC\" width='12%'>Transportista</td><td  class='texto'>" + row[2] + "</td><td class=\"repHdrC\">Tipo</td><td  class='texto'>" + row[3] + "</td></tr>");
-                                                    out.println("<tr><td class=\"repHdrC\">Chofer</td><td  class='texto' colspan='3'>" + row[4] + "</td></tr>");
-                                                }
-                                            %>
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <%
+                                                    if (db.doDB(fac.consultarEvidenciaEvento(embarque, cveCuenta))) {
+                                                        bandera = 1;
+                                                        for (String[] row : db.getResultado()) {
+                                                %>    
+                                                    <tr>
+                                                        <td class="repHdrC" width='10%'><strong>Viaje: </strong></td>
+                                                        <td  class='texto' width='25%'><%=row[0]%></td>
+                                                        <td class="repHdrC" width='15%'><strong>Fecha: </strong></td>
+                                                        <td  class='texto' width='35%'><%=row[1]%></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="repHdrC" width='12%'><strong>Transportista: </strong></td>
+                                                        <td  class='texto'><%=row[2]%></td>
+                                                        <td class="repHdrC"><strong>Tipo: </strong></td>
+                                                        <td  class='texto'><%=row[3]%></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="repHdrC"><strong>Chofer: </strong></td>
+                                                        <td  class='texto' colspan='3'><%=row[4]%></td>
+                                                        <td  class='texto' colspan='3'></td>
+                                                        <td  class='texto' colspan='3'></td>
+                                                    </tr>
+                                                <%
+                                                       }
+                                                   }
+                                                %>    
+                                            </tbody>
                                         </table>
-                                        <form  action="<%=request.getContextPath()%>/InsertarEvidencia"  method="post" onSubmit="return validarGuia(this);">
-                                            <table align="center" width="60%">
-                                                <tr><td class="repHdrC" width="3%" >Fecha</td>
-                                                    <td class="repHdrC" width="13%">Folio de tienda</td>
-                                                    <td class="repHdrC" width="3%">Observaciones</td>
-                                                <tr>
-                                                    <td class="texto" width="13%"><input type="text" name="fecha" id="fecha" size="10" readonly><input type="reset" class="btn"  value=" ... " onclick="return showCalendar('fecha', '%d/%m/%Y');"></td>
-                                                    <td class="texto" ><input type="text" name="folio" id="folio" size="15"></td>
-                                                    <td class="texto" width="10%"><textarea name="observaciones" cols="45" rows="1"></textarea></td>
-                                                </tr>
-                                            </table>
+                                        <form  action="<%=request.getContextPath()%>/InsertarEvidencia" method="POST" enctype="multipart/form-data">
                                             <hr size='4' color='#DDDDDD'>
-                                            <table align="center" width="90%">
+                                            <table align="center" width="100%">
                                                 <tr>
-                                                    <td class="repHdr" ></td>
-                                                    <td class="repHdr" width="8%">No. de factura</td>
-                                                    <td class="repHdr">Destino</td>
-                                                    <td class="repHdr">Ciudad</td>
-                                                    <td class="repHdr" >Estado</td>
-                                                    <td class="repHdr" width="8%">Piezas</td>
-                                                    <td class="repHdr" width="8%">Rechazo</td>
-                                                    <td class="repHdr"  width="8%">Entregadas</td>
+                                                    <td class="repHdr"><strong>EVENTO</strong></td>
+                                                    <td class="repHdr"><strong>SHIPMENT</strong></td>
+                                                    <td class="repHdr"><strong>CONTAINER</strong></td>
+                                                    <td class="repHdr"><strong>QUANTITY</strong></td>
+                                                    <td class="repHdr"><strong>POD</strong></td>
+                                                    <td class="repHdr"><strong>BRAND DIVISION</strong></td>
+                                                    <td class="repHdr"><strong>EVIDENCIA</strong></td>
+                                                    <td class="repHdr"><strong></strong></td>
+                                                 
                                                 </tr>
                                                 <%
-                                                    for (String[] row : db.getResultado()) {
-                                                        contador++;
-                                                        if (row[10].equals("0")) { 
-                                                            cant = row[10];
-                                                        }
-                                                        out.println("<tr><td  class=\"repDatNon\">" + contador + "</td><td  class=\"repDatNon\">" + row[0] + "</td>");
-                                                        out.println("<td  class=\"repDatNon\">" + row[2] + "</td><td  class=\"repDatNon\">" + row[3] + "</td>");
-                                                        out.println("<td  class=\"repDatNon\">" + row[4] + "</td><td  class=\"repDatNon\">" + row[1] + "</td><td  class=\"repDatNon\">" + cant + "</td>");
-                                                        out.println("<td  class=\"repDatNon\"><input type='text' name='e" + contador + "' value='' size='5'/> </td>"); 
-                                                %>
-                                                <input type='hidden' name='p<%=contador%>' value='<%=row[1]%>' size='5'/>
-                                                <input type='hidden' name='r<%=contador%>' value='<%=row[10]%>' size='5'/>
+                                                    if (db.doDB(fac.consultarDetalleEvento(embarque, cveCuenta))) {
+                                                        for (String[] row : db.getResultado()) {
+                                                            contador++;
+                                                %>            
+                                                <tr>
+                                                    <td class="repDatNon"><%=row[0]%></td>
+                                                    <td class="repDatNon"><%=row[1]%></td>
+                                                    <td class="repDatNon"><%=row[2]%></td>
+                                                    <td class="repDatNon"><%=row[3]%></td>
+                                                    <td class="repDatNon"><%=row[4]%></td>
+                                                    <td class="repDatNon"><%=row[5]%></td>
+                                                    <td class="repDatNon">
+                                                        <input type="hidden" id="embarque<%=contador%>" name="embarque<%=contador%>" value="<%=embarque%>">
+                                                        <input type="hidden" id="shipmentId<%=contador%>" name="shipmentId<%=contador%>" value="<%=row[1]%>">
+                                                        <input type="file" id="file<%=contador%>" name="file<%=contador%>" accept=".pdf, .jpg">
+                                                    </td>
+                                                    <td><input type="button" onclick="clearFileInput('<%=contador%>')" value="Limpiar"></td>
+                                                </tr>
                                                 <%
-                                                        agrupador = row[6];
-                                                        id_embarque = row[7];
+                                                        }
                                                     }
                                                 %>
-                                                <tr><td align="center"><input type="hidden" name="tipo" value="1"/></td></tr>
-                                                <tr><td align="center"><input type="hidden" name="contador" value="<%=contador%>"/></td></tr>
-                                                <tr><td align="center"><input type="hidden" name="agrupador" value="<%=a%>"/></td></tr>
-                                                <tr><td align="center"><input type="hidden" name="pag" value="Logistica/guiaEmbarque.jsp"/></td></tr>
-                                                <tr><td colspan="7" align="center"><input type="submit" class="btn"  value="Grabar"/></td></tr>
                                             </table>
+                                            <br>
+                                            <div class="input-container">
+                                                <input type="submit" id="send" name="send" value="Guardar">
+                                            </div> 
+                                            <input type="hidden" id="numFiles" name="numFiles" value="<%=contador%>">
                                         </form>
                                     </div>
                                 </div>
@@ -219,17 +186,18 @@
                 </footer>
             </div>
         </div> 
+        <script>
+            function clearFileInput(contador) {
+              var fileInput = document.getElementById("file"+contador);
+              fileInput.value = ""; // Restablecer el valor del elemento a una cadena vacía
+            }
+        </script>                    
         <!-- JavaScript files -->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
     <%
-          }
-              } else {
-                  out.println("<p class='errorHdr'>El embarque no se encuentra</p>");
-              }
-
           } catch (NullPointerException e) {
               System.out.println("Error:" + e);
               out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
