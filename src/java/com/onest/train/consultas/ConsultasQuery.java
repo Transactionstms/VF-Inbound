@@ -2100,7 +2100,7 @@ public class ConsultasQuery {
         /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
         /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
         /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
-        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*35*/ + " NVL(TO_CHAR(TISE.FECHA_ACTIVACION, 'MM/DD/YY'),' '), "       
         /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
         /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
         /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
@@ -2177,7 +2177,7 @@ public class ConsultasQuery {
                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
-               //+ " LEFT JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "  
+               + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "  
                + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
                //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
@@ -2920,7 +2920,12 @@ public class ConsultasQuery {
     }
     
     public String consultarFechaSemaforo(String shipmentId) {
-        sql = " SELECT DISTINCT FECHA_ACTIVACION, DIAS_TRANSCURRIDOS FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "' ";
+        sql = " SELECT DISTINCT "
+            + " TO_CHAR(FECHA_ACTIVACION,'MM/DD/YY'), "
+            + " DIAS_TRANSCURRIDOS, "
+            + " LOAD_TYPE_FINAL "
+            + " FROM TRA_INB_SEMAFORO "
+            + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
         return sql;
     }
     

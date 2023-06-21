@@ -398,6 +398,8 @@ public class InsertarCustomsForms extends HttpServlet {
             boolean oraOut = oraDB.execute(valExist);
             
             if(oraOut){
+                
+                oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
 
                                  insertarCustoms = " UPDATE TRA_INB_CUSTOMS SET "                              
                                                  + " REFERENCIA_AA = '" + referenciaAA + "', ";
@@ -545,7 +547,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                                  + " USER_NID = '" + UserId + "' "
                                                  + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
                     
-            }else{    
+            }else{   
+                
+                oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
                 
                                   insertarCustoms = " INSERT INTO TRA_INB_CUSTOMS "
                                                   + " (CUSTREG_ID, "
@@ -889,10 +893,10 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " DIAS_TRANSCURRIDOS = '" + dia_contador + "', "
                                      + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
                                      + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "    
-                                     + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                     //+ " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " ESTATUS_SEMAFORO = '" + color_semaforo + "' " 
                                      + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                     + " AND AGENTE_ID = '" + agente_aduanal + "' ";
+                                     + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
                 }
 
             }else{
@@ -926,7 +930,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " DIAS_TRANSCURRIDOS, "
                                      + " ESTATUS_SEMAFORO, "
                                      + " FECHA_ACTIVACION, "
-                                     + " FECHA_TERMINO, "
+                                     //+ " FECHA_TERMINO, "
                                      + " DIAS_CALCULADOS) "
                                      + " VALUES "
                                      + "(NULL, "
@@ -934,17 +938,18 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " '" + shipmentId + "', "
                                      + " '" + containerId + "', "
                                      + " '" + plantillaId +  "', "
-                                     + " '" + agente_aduanal + "', "
+                                     + " '" + idAgenteAduanal + "', "
                                      + " '" + loadTypeFinal + "', "
                                      + " '" + dia_contador + "', "
                                      + " '" + color_semaforo + "', "
                                      + " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "
-                                     + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                     //+ " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " '" + dias_total_despacho + "')";
-            }
-                        boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
-        }                             
-                if(oraOut1&&oraOut2){
+            }             
+        }            
+               boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
+               
+                if(oraOut1&&oraOut2&&oraOut4){
                     salida = "1";
                 }else{
                     salida = "2";

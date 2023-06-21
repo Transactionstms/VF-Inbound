@@ -8,8 +8,7 @@ package com.onest.train.modificar.catalogos;
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
 import com.onest.oracle.OracleDB;
-import com.tacts.evidencias.facturacion.Email;
-import com.tacts.evidencias.inbound.CreatExcelCustoms;
+import com.onest.train.consultas.ConsultasQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.tacts.evidencias.inbound.CrearSemaforoCustoms;
 
 /**
  *
@@ -40,14 +40,63 @@ public class UpdateSemaforoCustoms extends HttpServlet {
         
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
-        Email correo = new Email();
+        ConsultasQuery fac = new ConsultasQuery();
+        CrearSemaforoCustoms obj = new CrearSemaforoCustoms();
 
-        String agenteAduanal = request.getParameter("agenteAduanal");
-        String rutaFicheroRojos = "";
-        String rutaFicheroAmarillos = "";
-        String agentes = "";
-        String emails = "";
+        //Parametros Generales
+        String AgentType = request.getParameter("agenteAduanal");
+        String eta_port_discharge = "";
+        String semaforo = "";
+        String loadTypeFinal = "";
+        String shipmentId = "";
+        int diasTranscurridos = 0;
         String salida = "";
+        
+        if(db.doDB(fac.consultarEventosCustoms(AgentType, "0", "0"))) {
+            for (String[] row : db.getResultado()) {
+                shipmentId = row[5];
+                
+                
+                /*Extrar las fechas del semaforo*/
+                if (db.doDB(fac.consultarFechaSemaforo(shipmentId))) {
+                    for (String[] rowF : db.getResultado()) {
+                        eta_port_discharge = rowF[0];                /*fecha ya registrada en sistema*/
+                        diasTranscurridos = Integer.parseInt(rowF[1]);   /*dias transcurridos ya en sistema*/
+                    }
+                }
+                
+                /*fecha ya registrada en sistema vs fecha recibida del front-ed*/
+                if(!eta_port_discharge.trim().equals("")){ 
+
+                    String[] par = eta_port_discharge.split("/");
+                    int month = Integer.parseInt(par[0]);
+                    int day = Integer.parseInt(par[1]);
+                    int year = Integer.parseInt(par[2]);    
+
+                    /* CONSULTAR (FECHA DISCHARGE/LOAD TYPE/DÍA CONTADOR) */
+                    String data = obj.dataSemaforo(month, day, year, loadTypeFinal, diasTranscurridos);
+
+                    /* SPLIT VARIABLE DATA */
+                    String[] parts = data.split("-");
+                    String dia_contador = parts[0];   
+                    String color_semaforo = parts[1];  
+                    String fecha_inicial = parts[2];  
+                    String fecha_final = parts[3];
+                    String dias_total_despacho = parts[4];      
+
+                            semaforo = " UPDATE TRA_INB_SEMAFORO SET "
+                                     + " DIAS_TRANSCURRIDOS = '" + dia_contador + "', "
+                                     + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
+                                     + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "    
+                                     //+ " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                     + " ESTATUS_SEMAFORO = '" + color_semaforo + "' " 
+                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                                     + " AND AGENTE_ID = '" + AgentType + "' "; //idAgenteAduanal
+                            boolean oraOut4 = oraDB.execute(semaforo);
+                }
+                
+            }
+        }        
 
          salida = "true";
      
