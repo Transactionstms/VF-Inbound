@@ -116,19 +116,23 @@
                 
                 document.getElementById('frameTableCustoms').src = "iframeDataCustom.jsp?filterType="+filterType+"&id="+id;
                 
-                fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
+                /*fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
                     method: 'POST',
                 }).then(r => r.text())
                     .then(data => {
                         if(data === "true"){
                            $('#frameTableCustoms').on("load", function() {
                              $("#WindowLoad").remove();
-                           }); 
+                           });
                         }else{
                            alert("Error al cargar información, consulte a su Administrador!")
                         }
-                    }).catch(error => console.log(error)); 
-                    
+                    }).catch(error => console.log(error)); */
+    
+                $('#frameTableCustoms').on("load", function() {
+                  $("#WindowLoad").remove();
+                });  
+               
                 //email(agenteId);    
             }
             
@@ -139,6 +143,25 @@
                     .then(data => {
                     }).catch(error => console.log(error)); 
             }
+            
+            function recibirParametroIFrame(event) {
+                
+              // Obtener el parámetro enviado desde el iframe
+              var parametro = event.data;
+
+              // Realizar las acciones necesarias con el parámetro
+              let value = parametro.split("@");
+              
+              document.getElementById("filterType").value = value[0];
+              document.getElementById("id").value = value[1];
+              
+              jsShowWindowLoad('Cargando Información');
+              onloadIframe();
+              
+            }
+
+            // Agregar un listener para escuchar los mensajes enviados desde el iframe
+            window.addEventListener('message', recibirParametroIFrame, false);
         </script>
         <!-- Window load -->
         <script src="../lib/Loader/js/windowLoad.js" type="text/javascript"></script>

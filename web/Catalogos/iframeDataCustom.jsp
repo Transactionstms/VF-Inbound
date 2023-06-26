@@ -29,16 +29,15 @@
         <!-- Table css -->
         <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- Multiselect -->
-        <link href="../lib/Multiselect/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="../lib/Multiselect/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
-        <!-- jQuery/show modal -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
-        <!-- Window load -->
-        <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
             #contenedor {
               display: flex;
@@ -60,6 +59,10 @@
                 width:auto;
                 float:none;
               }
+            }
+            
+            .custom-select {
+              width: 200px; /* Adjust the width value as needed */
             }
         </style>
     </head>
@@ -285,6 +288,9 @@
                     }
                 }
                 
+                /*HashSet<String> list_evento = new HashSet<>(list_evento1);
+                list_evento.remove(null);*/
+                
                 //Generar caramelo: Opciones del multiselect
                 String[] arrOfStr = id.split(",");
                 for (String a : arrOfStr) {
@@ -318,7 +324,7 @@
                                 <font size="1">Referencia AA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('1')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_referenciaAA" name="col_referenciaAA">
+                                <select multiple class="custom-select" id="col_referenciaAA" name="col_referenciaAA">
                                     <%=list_referenciaAA%>         
                                 </select>
                             </th>
@@ -326,7 +332,7 @@
                                 <font size="1">Evento <strong style="color:red">*</strong></font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('2')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_evento" name="col_evento">
+                                <select multiple class="custom-select" id="col_evento" name="col_evento">
                                     <%=list_evento%>
                                 </select>
                             </th>
@@ -334,7 +340,7 @@
                                 <font size="1">Responsable</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('3')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_responsable" name="col_responsable">
+                                <select multiple class="custom-select" id="col_responsable" name="col_responsable">
                                     <%=list_responsable%>      
                                 </select>
                             </th>
@@ -342,7 +348,7 @@
                                 <font size="1">Final Destination</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('4')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_finalDestination" name="col_finalDestination">
+                                <select multiple class="custom-select" id="col_finalDestination" name="col_finalDestination">
                                     <%=list_finalDestination%>        
                                 </select>
                             </th>
@@ -350,7 +356,7 @@
                                 <font size="1">Brand-Division</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('5')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_brandDivision" name="col_brandDivision">
+                                <select multiple class="custom-select" id="col_brandDivision" name="col_brandDivision">
                                     <%=list_brandDivision%>       
                                 </select>
                             </th>
@@ -358,7 +364,7 @@
                                 <font size="1">Division</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('6')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_division" name="col_division">
+                                <select multiple class="custom-select" id="col_division" name="col_division">
                                     <%=list_division%>         
                                 </select>
                             </th>
@@ -366,7 +372,7 @@
                                 <font size="1">Shipment ID</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('7')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_shipmentId" name="col_shipmentId">
+                                <select multiple class="custom-select" id="col_shipmentId" name="col_shipmentId">
                                     <%=list_shipmentId%>        
                                 </select>
                             </th>
@@ -374,7 +380,7 @@
                                 <font size="1">Container</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('8')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_container" name="col_container">
+                                <select multiple class="custom-select" id="col_container" name="col_container">
                                     <%=list_containerId%>        
                                 </select>
                             </th>
@@ -382,7 +388,7 @@
                                 <font size="1">BL/AWB/PRO</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('9')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_blAwbPro" name="col_blAwbPro">
+                                <select multiple class="custom-select" id="col_blAwbPro" name="col_blAwbPro">
                                     <%=list_blAwbPro%>        
                                 </select>
                             </th>
@@ -390,7 +396,7 @@
                                 <font size="1">LoadType</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('10')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_loadType" name="col_loadType">
+                                <select multiple class="custom-select" id="col_loadType" name="col_loadType">
                                     <%=list_loadType%>     
                                 </select>
                             </th>
@@ -398,7 +404,7 @@
                                 <font size="1">Quantity</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('11')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_quantity" name="col_quantity">
+                                <select multiple class="custom-select" id="col_quantity" name="col_quantity">
                                     <%=list_quantity%>       
                                 </select>
                             </th>
@@ -406,7 +412,7 @@
                                 <font size="1">POD</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('12')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pod" name="col_pod">
+                                <select multiple class="custom-select" id="col_pod" name="col_pod">
                                     <%=list_pod%>        
                                 </select>
                             </th>
@@ -414,7 +420,7 @@
                                 <font size="1">Est. Departure from POL</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('13')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estDepartFromPol" name="col_estDepartFromPol">
+                                <select multiple class="custom-select" id="col_estDepartFromPol" name="col_estDepartFromPol">
                                     <%=list_estDepartFromPol%>        
                                 </select> 
                             </th>
@@ -422,7 +428,7 @@
                                 <font size="1">ETA REAL Port of Discharge</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('14')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_etaRealPortOfDischarge" name="col_etaRealPortOfDischarge">
+                                <select multiple class="custom-select" id="col_etaRealPortOfDischarge" name="col_etaRealPortOfDischarge">
                                     <%=list_etaRealPortOfDischarge%>      
                                 </select>
                             </th>
@@ -430,7 +436,7 @@
                                 <font size="1">Est. Eta DC</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('15')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estEtaDc" name="col_estEtaDc">
+                                <select multiple class="custom-select" id="col_estEtaDc" name="col_estEtaDc">
                                     <%=list_estEtaDc%>        
                                 </select> 
                             </th>
@@ -438,7 +444,7 @@
                                 <font size="1">Inbound notification</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('16')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_inboundNotification" name="col_inboundNotification">
+                                <select multiple class="custom-select" id="col_inboundNotification" name="col_inboundNotification">
                                     <%=list_inboundNotification%>        
                                 </select> 
                             </th>
@@ -446,7 +452,7 @@
                                 <font size="1">POL</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('17')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pol" name="col_pol">
+                                <select multiple class="custom-select" id="col_pol" name="col_pol">
                                     <%=list_pol%>        
                                 </select>
                             </th>
@@ -454,7 +460,7 @@
                                 <font size="1">A.A.</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('18')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_aa" name="col_aa">
+                                <select multiple class="custom-select" id="col_aa" name="col_aa">
                                     <%=list_aa%>       
                                 </select>
                             </th>
@@ -462,7 +468,7 @@
                                 <font size="1">Fecha Mes de Venta</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('19')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fechaMesVenta" name="col_fechaMesVenta">
+                                <select multiple class="custom-select" id="col_fechaMesVenta" name="col_fechaMesVenta">
                                     <%=list_fechaMesVenta%>         
                                 </select>
                             </th>
@@ -470,7 +476,7 @@
                                 <font size="1">Prioridad Si/No</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('20')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_prioridad" name="col_prioridad">
+                                <select multiple class="custom-select" id="col_prioridad" name="col_prioridad">
                                     <%=list_prioridad%>        
                                 </select>
                             </th>
@@ -478,7 +484,7 @@
                                 <font size="1">País Origen</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('21')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pais_origen" name="col_pais_origen">
+                                <select multiple class="custom-select" id="col_pais_origen" name="col_pais_origen">
                                     <%=list_pais_origen%>        
                                 </select>
                             </th>
@@ -486,7 +492,7 @@
                                 <font size="1">Size Container</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('22')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_size_container" name="col_size_container">
+                                <select multiple class="custom-select" id="col_size_container" name="col_size_container">
                                     <%=list_size_container%>         
                                 </select>
                             </th>
@@ -494,7 +500,7 @@
                                 <font size="1">Valor USD</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('23')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_valor_usd" name="col_valor_usd">
+                                <select multiple class="custom-select" id="col_valor_usd" name="col_valor_usd">
                                     <%=list_valor_usd%>         
                                 </select>
                             </th>
@@ -502,7 +508,7 @@
                                 <font size="1">ETA Port Of Discharge</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('24')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_eta_port_discharge" name="col_eta_port_discharge">
+                                <select multiple class="custom-select" id="col_eta_port_discharge" name="col_eta_port_discharge">
                                     <%=list_eta_port_discharge%>        
                                 </select>
                             </th>
@@ -510,7 +516,7 @@
                                 <font size="1">Agente Aduanal</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('25')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_agente_aduanal" name="col_agente_aduanal">
+                                <select multiple class="custom-select" id="col_agente_aduanal" name="col_agente_aduanal">
                                     <%=list_agente_aduanal%>        
                                 </select>
                             </th>
@@ -518,7 +524,7 @@
                                 <font size="1">Pedimento A1</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('26')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_a1" name="col_pedimento_a1">
+                                <select multiple class="custom-select" id="col_pedimento_a1" name="col_pedimento_a1">
                                     <%=list_pedimento_a1%>        
                                 </select>
                             </th>
@@ -526,7 +532,7 @@
                                 <font size="1">Pedimento R1</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('27')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_r1_1er" name="col_pedimento_r1_1er">
+                                <select multiple class="custom-select" id="col_pedimento_r1_1er" name="col_pedimento_r1_1er">
                                     <%=list_pedimento_r1_1er%>       
                                 </select>
                             </th>
@@ -534,7 +540,7 @@
                                 <font size="1">Motivo rectificación 1</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('28')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_rectificacion_1er" name="col_motivo_rectificacion_1er">
+                                <select multiple class="custom-select" id="col_motivo_rectificacion_1er" name="col_motivo_rectificacion_1er">
                                     <%=list_motivo_rectificacion_1er%>        
                                 </select>
                             </th>
@@ -542,7 +548,7 @@
                                 <font size="1">Pedimento R1 (2do)</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('29')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_pedimento_r1_2do" name="col_pedimento_r1_2do">
+                                <select multiple class="custom-select" id="col_pedimento_r1_2do" name="col_pedimento_r1_2do">
                                     <%=list_pedimento_r1_2do%>        
                                 </select>
                             </th>
@@ -550,7 +556,7 @@
                                 <font size="1">Motivo rectificación 2</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('30')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_rectificacion_2do" name="col_motivo_rectificacion_2do">
+                                <select multiple class="custom-select" id="col_motivo_rectificacion_2do" name="col_motivo_rectificacion_2do">
                                     <%=list_motivo_rectificacion_2do%>       
                                 </select>
                             </th>
@@ -558,7 +564,7 @@
                                 <font size="1">Fecha Recepción Documentos</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('31')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_doc" name="col_fecha_recepcion_doc">
+                                <select multiple class="custom-select" id="col_fecha_recepcion_doc" name="col_fecha_recepcion_doc">
                                     <%=list_fecha_recepcion_doc%>        
                                 </select>
                             </th>
@@ -566,7 +572,7 @@
                                 <font size="1">Recinto</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('32')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_recinto" name="col_recinto">
+                                <select multiple class="custom-select" id="col_recinto" name="col_recinto">
                                     <%=list_recinto%>        
                                 </select>
                             </th>
@@ -574,7 +580,7 @@
                                 <font size="1">Naviera / Forwarder</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('33')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_naviera" name="col_naviera">
+                                <select multiple class="custom-select" id="col_naviera" name="col_naviera">
                                     <%=list_naviera%>        
                                 </select>
                             </th>
@@ -582,7 +588,7 @@
                                 <font size="1">Buque</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('34')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_buque" name="col_buque">
+                                <select multiple class="custom-select" id="col_buque" name="col_buque">
                                     <%=list_buque%>        
                                 </select>
                             </th>
@@ -590,7 +596,7 @@
                                 <font size="1">Fecha Revalidación/Liberación de BL</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('35')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_revalidacion" name="col_fecha_revalidacion">
+                                <select multiple class="custom-select" id="col_fecha_revalidacion" name="col_fecha_revalidacion">
                                     <%=list_fecha_revalidacion%>         
                                 </select>
                             </th>
@@ -598,7 +604,7 @@
                                 <font size="1">Fecha Previo Origen</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('36')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_previo_origen" name="col_fecha_previo_origen">
+                                <select multiple class="custom-select" id="col_fecha_previo_origen" name="col_fecha_previo_origen">
                                     <%=list_fecha_previo_origen%>        
                                 </select>
                             </th>
@@ -606,7 +612,7 @@
                                 <font size="1">Fecha Previo en destino</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('37')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_previo_destino" name="col_fecha_previo_destino">
+                                <select multiple class="custom-select" id="col_fecha_previo_destino" name="col_fecha_previo_destino">
                                     <%=list_fecha_previo_destino%>        
                                 </select>
                             </th>
@@ -614,7 +620,7 @@
                                 <font size="1">Fecha Resultado Previo</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('38')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_resultado_previo" name="col_fecha_resultado_previo">
+                                <select multiple class="custom-select" id="col_fecha_resultado_previo" name="col_fecha_resultado_previo">
                                     <%=list_fecha_resultado_previo%>        
                                 </select>
                             </th>
@@ -622,7 +628,7 @@
                                 <font size="1">Proforma Final</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('39')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proforma_final" name="col_proforma_final">
+                                <select multiple class="custom-select" id="col_proforma_final" name="col_proforma_final">
                                     <%=list_proforma_final%>        
                                 </select>
                             </th>
@@ -630,7 +636,7 @@
                                 <font size="1">Requiere permiso</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('40')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_permiso" name="col_permiso">
+                                <select multiple class="custom-select" id="col_permiso" name="col_permiso">
                                     <%=list_permiso%>        
                                 </select>
                             </th>
@@ -638,7 +644,7 @@
                                 <font size="1">Fecha envío Fichas/notas</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('41')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_envio" name="col_fecha_envio">
+                                <select multiple class="custom-select" id="col_fecha_envio" name="col_fecha_envio">
                                     <%=list_fecha_envio%>        
                                 </select>
                             </th>
@@ -646,7 +652,7 @@
                                 <font size="1">Fec. Recepción de permisos tramit.</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('42')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_perm" name="col_fecha_recepcion_perm">
+                                <select multiple class="custom-select" id="col_fecha_recepcion_perm" name="col_fecha_recepcion_perm">
                                     <%=list_fecha_recepcion_perm%>        
                                 </select>
                             </th>
@@ -655,7 +661,7 @@
                                 <font size="1">Fec. Act Permisos (Inic Vigencia)</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('43')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_activacion_perm" name="col_fecha_activacion_perm">
+                                <select multiple class="custom-select" id="col_fecha_activacion_perm" name="col_fecha_activacion_perm">
                                     <%=list_fecha_activacion_perm%>        
                                 </select>
                             </th>
@@ -663,7 +669,7 @@
                                 <font size="1">Fec. Perm. Aut. (Fin de Vigencia)</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('44')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_permisos_aut" name="col_fecha_permisos_aut">
+                                <select multiple class="custom-select" id="col_fecha_permisos_aut" name="col_fecha_permisos_aut">
                                     <%=list_fecha_permisos_aut%>        
                                 </select>
                             </th>
@@ -671,7 +677,7 @@
                                 <font size="1">Cuenta con CO para aplicar preferencia Arancelaria</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('45')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_co_pref_arancelaria" name="col_co_pref_arancelaria">
+                                <select multiple class="custom-select" id="col_co_pref_arancelaria" name="col_co_pref_arancelaria">
                                     <%=list_co_pref_arancelaria%>         
                                 </select>
                             </th>
@@ -679,7 +685,7 @@
                                 <font size="1">Aplico Preferencia Arancelaria</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('46')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_aplic_pref_arancelaria" name="col_aplic_pref_arancelaria">
+                                <select multiple class="custom-select" id="col_aplic_pref_arancelaria" name="col_aplic_pref_arancelaria">
                                     <%=list_aplic_pref_arancelaria%>         
                                 </select>
                             </th>
@@ -687,7 +693,7 @@
                                 <font size="1">Requiere UVA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('47')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_req_uva" name="col_req_uva">
+                                <select multiple class="custom-select" id="col_req_uva" name="col_req_uva">
                                     <%=list_req_uva%>        
                                 </select>
                             </th>
@@ -695,7 +701,7 @@
                                 <font size="1">Requiere CA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('48')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_req_ca" name="col_req_ca">
+                                <select multiple class="custom-select" id="col_req_ca" name="col_req_ca">
                                     <%=list_req_ca%>        
                                 </select>
                             </th>
@@ -703,7 +709,7 @@
                                 <font size="1">Fecha Recepción CA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('49')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recepcion_ca" name="col_fecha_recepcion_ca">
+                                <select multiple class="custom-select" id="col_fecha_recepcion_ca" name="col_fecha_recepcion_ca">
                                     <%=list_fecha_recepcion_ca%>         
                                 </select>
                             </th>
@@ -711,7 +717,7 @@
                                 <font size="1">Número de Constancia CA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('50')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_num_constancia_ca" name="col_num_constancia_ca">
+                                <select multiple class="custom-select" id="col_num_constancia_ca" name="col_num_constancia_ca">
                                     <%=list_num_constancia_ca%>       
                                 </select>
                             </th>
@@ -719,7 +725,7 @@
                                 <font size="1">Monto CA</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('51')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_monto_ca" name="col_monto_ca">
+                                <select multiple class="custom-select" id="col_monto_ca" name="col_monto_ca">
                                     <%=list_monto_ca%>        
                                 </select>
                             </th>
@@ -727,7 +733,7 @@
                                 <font size="1">Fecha Documentos Completos</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('52')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_doc_completos" name="col_fecha_doc_completos">
+                                <select multiple class="custom-select" id="col_fecha_doc_completos" name="col_fecha_doc_completos">
                                     <%=list_fecha_doc_completos%>        
                                 </select>
                             </th>
@@ -735,7 +741,7 @@
                                 <font size="1">Fecha Pago Pedimento</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('53')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_pago_pedimento" name="col_fecha_pago_pedimento">
+                                <select multiple class="custom-select" id="col_fecha_pago_pedimento" name="col_fecha_pago_pedimento">
                                     <%=list_fecha_pago_pedimento%>        
                                 </select>
                             </th>
@@ -743,7 +749,7 @@
                                 <font size="1">Fecha Solicitud de transporte</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('54')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_solicitud_transporte" name="col_fecha_solicitud_transporte">
+                                <select multiple class="custom-select" id="col_fecha_solicitud_transporte" name="col_fecha_solicitud_transporte">
                                     <%=list_fecha_solicitud_transporte%>         
                                 </select>
                             </th>
@@ -751,7 +757,7 @@
                                 <font size="1">Fecha Modulacion</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('55')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_modulacion" name="col_fecha_modulacion">
+                                <select multiple class="custom-select" id="col_fecha_modulacion" name="col_fecha_modulacion">
                                     <%=list_fecha_modulacion%>         
                                 </select>
                             </th>
@@ -759,7 +765,7 @@
                                 <font size="1">Modalidad</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('56')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_modalidad" name="col_modalidad">
+                                <select multiple class="custom-select" id="col_modalidad" name="col_modalidad">
                                     <%=list_modalidad%>       
                                 </select>
                             </th>
@@ -767,7 +773,7 @@
                                 <font size="1">Resultado Modulacion</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('57')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_resultado_modulacion" name="col_resultado_modulacion">
+                                <select multiple class="custom-select" id="col_resultado_modulacion" name="col_resultado_modulacion">
                                     <%=list_resultado_modulacion%>       
                                 </select>
                             </th>
@@ -775,7 +781,7 @@
                                 <font size="1">Fecha Reconocimiento</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('58')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_reconocimiento" name="col_fecha_reconocimiento">
+                                <select multiple class="custom-select" id="col_fecha_reconocimiento" name="col_fecha_reconocimiento">
                                     <%=list_fecha_reconocimiento%>        
                                 </select>
                             </th>
@@ -783,7 +789,7 @@
                                 <font size="1">Fecha Liberacion</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('59')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_liberacion" name="col_fecha_liberacion">
+                                <select multiple class="custom-select" id="col_fecha_liberacion" name="col_fecha_liberacion">
                                     <%=list_fecha_liberacion%>         
                                 </select>
                             </th>
@@ -791,7 +797,7 @@
                                 <font size="1">Sello Origen</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('60')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_sello_origen" name="col_sello_origen">
+                                <select multiple class="custom-select" id="col_sello_origen" name="col_sello_origen">
                                     <%=list_sello_origen%>       
                                 </select>
                             </th>
@@ -799,7 +805,7 @@
                                 <font size="1">Sello Final</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('61')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_sello_final" name="col_sello_final">
+                                <select multiple class="custom-select" id="col_sello_final" name="col_sello_final">
                                     <%=list_sello_final%>         
                                 </select>
                             </th>
@@ -807,7 +813,7 @@
                                 <font size="1">Fecha de retencion por la autoridad</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('62')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_retencion_aut" name="col_fecha_retencion_aut">
+                                <select multiple class="custom-select" id="col_fecha_retencion_aut" name="col_fecha_retencion_aut">
                                     <%=list_fecha_retencion_aut%>       
                                 </select>
                             </th>
@@ -815,7 +821,7 @@
                                 <font size="1">Fec. de liberacion por ret. de la aut.</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('63')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_liberacion_aut" name="col_fecha_liberacion_aut">
+                                <select multiple class="custom-select" id="col_fecha_liberacion_aut" name="col_fecha_liberacion_aut">
                                     <%=list_fecha_liberacion_aut%>        
                                 </select>
                             </th>
@@ -823,7 +829,7 @@
                                 <font size="1">Estatus de la operación</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('64')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_estatus_operacion" name="col_festatus_operacion">
+                                <select multiple class="custom-select" id="col_estatus_operacion" name="col_festatus_operacion">
                                     <%=list_estatus_operacion%>        
                                 </select> 
                             </th>
@@ -831,7 +837,7 @@
                                 <font size="1">Motivo Atraso</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('65')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_motivo_atraso" name="col_motivo_atraso">
+                                <select multiple class="custom-select" id="col_motivo_atraso" name="col_motivo_atraso">
                                     <%=list_motivo_atraso%>        
                                 </select>
                             </th>
@@ -839,7 +845,7 @@
                                 <font size="1">Observaciones</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('66')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_observaciones" name="col_observaciones">
+                                <select multiple class="custom-select" id="col_observaciones" name="col_observaciones">
                                     <%=list_observaciones%>        
                                 </select>
                             </th>
@@ -852,7 +858,7 @@
                                 <font size="1">Llegada a NOVA</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('67')"><i class="fa fa-search"></i></a> 
 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_llegada_a_nova" name="col_llegada_a_nova">
+                                <select multiple class="custom-select" id="col_llegada_a_nova" name="col_llegada_a_nova">
                                     <%=list_llegada_a_nova%>       
                                 </select>
                             </th>
@@ -860,7 +866,7 @@
                                 <font size="1">Llegada a Globe trade SD</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('68')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd">
+                                <select multiple class="custom-select" id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd">
                                     <%=list_llegada_a_globe_trade_sd%>        
                                 </select>
                             </th>
@@ -868,7 +874,7 @@
                                 <font size="1">Archivo M</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('69')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_archivo_m" name="col_archivo_m">
+                                <select multiple class="custom-select" id="col_archivo_m" name="col_archivo_m">
                                     <%=list_archivo_m%>      
                                 </select>
                             </th>
@@ -876,7 +882,7 @@
                                 <font size="1">Fecha de Archivo M</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('70')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_archivo_m" name="col_fecha_archivo_m">
+                                <select multiple class="custom-select" id="col_fecha_archivo_m" name="col_fecha_archivo_m">
                                     <%=list_fecha_archivo_m%>       
                                 </select>
                             </th>
@@ -884,7 +890,7 @@
                                 <font size="1">Fecha Solicitud de Manipulacion</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('71')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_solicit_manip" name="col_fecha_solicit_manip">
+                                <select multiple class="custom-select" id="col_fecha_solicit_manip" name="col_fecha_solicit_manip">
                                     <%=list_fecha_solicit_manip%>        
                                 </select>
                             </th>
@@ -892,7 +898,7 @@
                                 <font size="1">Fecha de vencimiento de Manipulacion</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('72')"><i class="fa fa-search"></i></a>   
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_vencim_manip" name="col_fecha_vencim_manip">
+                                <select multiple class="custom-select" id="col_fecha_vencim_manip" name="col_fecha_vencim_manip">
                                     <%=list_fecha_vencim_manip%>         
                                 </select>
                             </th>
@@ -900,7 +906,7 @@
                                 <font size="1">Fecha confirmacion Clave de Pedimento</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('73')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_confirm_clave_pedim" name="col_fecha_confirm_clave_pedim">
+                                <select multiple class="custom-select" id="col_fecha_confirm_clave_pedim" name="col_fecha_confirm_clave_pedim">
                                     <%=list_fecha_confirm_clave_pedim%>        
                                 </select>
                             </th>
@@ -908,7 +914,7 @@
                                 <font size="1">Fecha de Recepcion de Incrementables</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('74')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_recep_increment" name="col_fecha_recep_increment">
+                                <select multiple class="custom-select" id="col_fecha_recep_increment" name="col_fecha_recep_increment">
                                     <%=list_fecha_recep_increment%>        
                                 </select>
                             </th>
@@ -916,7 +922,7 @@
                                 <font size="1">T&E</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('75')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_t_e" name="col_t_e">
+                                <select multiple class="custom-select" id="col_t_e" name="col_t_e">
                                     <%=list_t_e%>         
                                 </select>
                             </th>
@@ -924,7 +930,7 @@
                                 <font size="1">Fecha de Vencimiento del Inbound</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('76')"><i class="fa fa-search"></i></a>     
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound">
+                                <select multiple class="custom-select" id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound">
                                     <%=list_fecha_vencim_inbound%>         
                                 </select>
                             </th>
@@ -937,7 +943,7 @@
                                 <font size="1">No. BULTOS</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('77')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_no_bultos" name="col_no_bultos">
+                                <select multiple class="custom-select" id="col_no_bultos" name="col_no_bultos">
                                     <%=list_no_bultos%>        
                                 </select>
                             </th>
@@ -945,7 +951,7 @@
                                 <font size="1">Peso (KG)</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('78')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_peso_kg" name="col_peso_kg">
+                                <select multiple class="custom-select" id="col_peso_kg" name="col_peso_kg">
                                     <%=list_peso_kg%>        
                                 </select>
                             </th>
@@ -953,7 +959,7 @@
                                 <font size="1">Transferencia</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('79')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_transferencia" name="col_transferencia">
+                                <select multiple class="custom-select" id="col_transferencia" name="col_transferencia">
                                     <%=list_transferencia%>       
                                 </select>
                             </th>
@@ -961,7 +967,7 @@
                                 <font size="1">Fecha Inicio Etiquetado</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('80')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_inicio_etiquetado" name="col_fecha_inicio_etiquetado">
+                                <select multiple class="custom-select" id="col_fecha_inicio_etiquetado" name="col_fecha_inicio_etiquetado">
                                     <%=list_fecha_inicio_etiquetado%>        
                                 </select>
                             </th>
@@ -969,7 +975,7 @@
                                 <font size="1">Fecha Termino Etiquetado</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('81')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fecha_termino_etiquetado" name="col_fecha_termino_etiquetado">
+                                <select multiple class="custom-select" id="col_fecha_termino_etiquetado" name="col_fecha_termino_etiquetado">
                                     <%=list_fecha_termino_etiquetado%>       
                                 </select>
                             </th>
@@ -977,7 +983,7 @@
                                 <font size="1">Hora de termino Etiquetado</font>
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('82')"><i class="fa fa-search"></i></a> 
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado">
+                                <select multiple class="custom-select" id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado">
                                     <%=list_hora_termino_etiquetado%>        
                                 </select>
                             </th>
@@ -985,7 +991,7 @@
                                 <font size="1">Proveedor</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('83')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proveedor" name="col_proveedor">
+                                <select multiple class="custom-select" id="col_proveedor" name="col_proveedor">
                                     <%=list_proveedor%>        
                                 </select>
                             </th>
@@ -993,7 +999,7 @@
                                 <font size="1">Proveedor de Carga</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('84')"><i class="fa fa-search"></i></a>  
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_proveedor_carga" name="col_proveedor_carga">
+                                <select multiple class="custom-select" id="col_proveedor_carga" name="col_proveedor_carga">
                                     <%=list_proveedor_carga%>        
                                 </select>
                             </th>
@@ -1004,7 +1010,7 @@
                                 <font size="1">FY</font> 
                                 &nbsp;<a class="text-lg text-white" onclick="FiltrerData('85')"><i class="fa fa-search"></i></a>
                                 &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select class="selectpicker" multiple aria-label="Seleccione"  id="col_fy" name="col_fy">
+                                <select multiple class="custom-select" id="col_fy" name="col_fy">
                                     <%=list_fy%>        
                                 </select>
                             </th>
@@ -1333,7 +1339,7 @@
                                   </select> 
                              </td>
                              <td class="font-numero">
-                                 <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" text value="<%=row[90]%>" autocomplete="off">
+                                 <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" type="text" value="<%=row[90]%>" autocomplete="off">
                              </td>
                              <td class="font-numero">
                                  <input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" value="<%=row[91]%>" autocomplete="off">
@@ -1479,14 +1485,12 @@
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Multiselect -->
-        <script src="../lib/Multiselect/js/bootstrap-select.min.js" type="text/javascript"></script>
         <!-- Sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- Actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
-        <!-- Window load -->
-        <script src="../lib/Loader/js/windowLoad.js" type="text/javascript"></script>
+        <!-- fruitsSelect value -->
+        <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

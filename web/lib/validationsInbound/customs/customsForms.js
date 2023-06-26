@@ -5,9 +5,8 @@
  */
 
     function FiltrerData(tipoFiltro) {
-        
-        jsShowWindowLoad('Cargando Información');
-        
+       
+        let valueJsp = "";
         let selectedValues = "0";
         var selected = "";
 
@@ -126,7 +125,7 @@
         }else if(tipoFiltro==="56"){
             selectedValues = document.getElementById('col_modalidad');
         }else if(tipoFiltro==="57"){
-            selectedValues = document.getElementById('col_modalidad');
+            selectedValues = document.getElementById('col_resultado_modulacion');
         }else if(tipoFiltro==="58"){
             selectedValues = document.getElementById('col_fecha_reconocimiento');
         }else if(tipoFiltro==="59"){
@@ -190,12 +189,15 @@
         }else{
            selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
         }
-
-        window.location.replace("../Catalogos/iframeDataCustom.jsp?filterType="+tipoFiltro+"&id="+selected);
         
-        $('#frameTableCustoms').on("load", function() {
-            $("#WindowLoad").remove();
-        });
+        valueJsp = tipoFiltro+"@"+selected;
+        
+        // Obtener una referencia al objeto window de la página principal
+        var ventanaPrincipal = window.parent;
+
+        // Enviar el parámetro al objeto window de la página principal
+        ventanaPrincipal.postMessage(valueJsp, "*");
+        
 }
    
     async function AddCustoms() {
@@ -707,7 +709,7 @@
     }
     
     function cleanMultiselects (){
-        $('.selectpicker').selectpicker('deselectAll');
+        //$('.selectpicker').selectpicker('deselectAll');
         FiltrerData("0");
     }
     
