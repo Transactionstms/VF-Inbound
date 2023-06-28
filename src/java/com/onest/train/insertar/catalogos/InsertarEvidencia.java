@@ -9,6 +9,7 @@ import com.onest.misc.Cuenta;
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
 import com.onest.oracle.OracleDB;
+import com.onest.train.consultas.ConsultasQuery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -44,18 +45,21 @@ public class InsertarEvidencia extends HttpServlet {
         DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
+        ConsultasQuery fac = new ConsultasQuery();
         
         String UserId = (String) ownsession.getAttribute("login.user_id_number");
-        String cve = (String) ownsession.getAttribute("cbdivcuenta");
+        String cbdiv_id = (String) ownsession.getAttribute("cbdivcuenta");
         
+        String embarque_id = request.getParameter("embarque_id");
         String a = request.getParameter("numFiles");
         int numFiles =Integer.parseInt(a); 
+        int numShipmentId = 0;
+        int numPod = 0;
         String ruta = "";
         String salida = "";
         
-        for (int i = 1; i <numFiles; i++) {
+        for (int i = 1; i <=numFiles; i++) {
             
-            String embarque = request.getParameter("embarque"+i);
             String shipmentId = request.getParameter("shipmentId"+i);
 
                 // Obtiene los Part de cada archivo cargado desde la solicitud
@@ -71,17 +75,33 @@ public class InsertarEvidencia extends HttpServlet {
                 saveFile(filePart1, fileName1);
                 
                 // Guardar la ruta del archivo en la base de datos
-                ruta = "D:/Servicios/VFINBOUND/EVIDENCIAS_EMBARQUE/"+fileName1;
+                ruta = "D:\\Servicios\\VFINBOUND\\EVIDENCIAS_EMBARQUE\\"+fileName1;
 
                 String inb_gtn = " UPDATE TRA_INC_GTN_TEST SET URL_POD = '"+ ruta +"', STATUS_EMBARQUE = 7 WHERE SHIPMENT_ID = '" + shipmentId + "' ";
                 boolean oraOut1 = oraDB.execute(inb_gtn);
                 
-                String inb_embarque = " UPDATE TRA_INB_EMBARQUE SET EMBARQUE_ESTADO_ID = 4 WHERE EMBARQUE_ID = '" + embarque + "' "; 
-                boolean oraOut2 = oraDB.execute(inb_embarque);
-
             }
             
         } 
+        
+        /*Consultar numero de evidencias por embarque*/
+        if (db.doDB(fac.consultarEvidenciaPODEmbarqueInbound(embarque_id, cbdiv_id))) {
+            for (String[] rowP : db.getResultado()) {
+                
+                numShipmentId++; /*contar cuantos shipment_id tiene el número de embarque*/
+                
+                if(!rowP[1].trim().equals("")){
+                    numPod++;  /*contar cuantas evidencias se han subido por shipmentId al número de embarque*/
+                }
+                
+            }
+        }
+        
+        /*Actualizar estatus del embarque al completarse, todas las evidencias POD*/
+        if(numShipmentId == numPod){
+            String inb_embarque = " UPDATE TRA_INB_EMBARQUE SET EMBARQUE_ESTADO_ID = 4 WHERE EMBARQUE_ID = '" + embarque_id + "' "; 
+            boolean oraOut2 = oraDB.execute(inb_embarque);
+        }
         
           out.println("<td><br><br><font face=\"arial\"  size=5 color=\"black\">Información Actualizada</font></td>"
                     + "<td><img src='img/bien.png' width='50px' height='50px'></img>"
@@ -102,7 +122,7 @@ public class InsertarEvidencia extends HttpServlet {
 
     private void saveFile(Part filePart, String fileName) throws IOException {
         InputStream fileContent = filePart.getInputStream();
-        String filePath = "D:/Servicios/VFINBOUND/EVIDENCIAS_EMBARQUE/"+fileName;
+        String filePath = "D:\\Servicios\\VFINBOUND\\EVIDENCIAS_EMBARQUE\\"+fileName;
         try (OutputStream outputStream = new FileOutputStream(filePath)) {
             int bytesRead;
             byte[] buffer = new byte[4096];

@@ -1977,7 +1977,7 @@ public class ConsultasQuery {
         /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
         /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
         /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
-        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YYYY'),' '), "       
         /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
         /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
         /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
@@ -2058,8 +2058,10 @@ public class ConsultasQuery {
     if(!tipoAgente.equals("4006")){ //VF GENERAL
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') ";  
     }else{                         //OTROS
-          sql += "";
+          sql += " ";
     }
+          sql += " ORDER BY TIE.ID_EVENTO ASC ";
+          
         return sql;
     }
 
@@ -2100,7 +2102,7 @@ public class ConsultasQuery {
         /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
         /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
         /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
-        /*35*/ + " NVL(TO_CHAR(TISE.FECHA_ACTIVACION, 'MM/DD/YY'),' '), "       
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YYYY'),' '), "       
         /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
         /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
         /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
@@ -2216,7 +2218,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("13")){ //Departure Pol 
           sql += " AND GTN.EST_DEPARTURE_POL IN (" + id + ") ";
         }else if(tipoFiltro.equals("14")){ //ETA REAL Port of Discharge
-          sql += " AND GTN.ETA_PORT_DISCHARGE IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(GTN.ETA_PORT_DISCHARGE),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("15")){ //Est. Eta DC
           sql += " AND GTN.ETA_PLUS2 IN (" + id + ") ";
         }else if(tipoFiltro.equals("16")){ //Inbound notification
@@ -2226,7 +2228,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("18")){ //Agente Aduanal
           sql += " AND TAA.AGENTE_ADUANAL_NOMBRE IN (" + id + ") ";
         }else if(tipoFiltro.equals("19")){ //Fecha Mes de Venta
-          sql += " AND TIE.FECHA_CAPTURA IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIE.FECHA_CAPTURA),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("20")){ //Prioridad
           sql += " AND TIC.PRIORIDAD IN (" + id + ") ";
         }else if(tipoFiltro.equals("21")){ // País Origen 
@@ -2236,7 +2238,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("23")){ // Valor USD
           sql += " AND TIC.VALOR_USD IN (" + id + ") ";
         }else if(tipoFiltro.equals("24")){ // ETA Port Of Discharge
-          sql += " AND TIC.ETA_PORT_OF_DISCHARGE IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.ETA_PORT_OF_DISCHARGE),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("25")){ // Agente Aduanal 
           sql += " AND TIC.AGENTE_ADUANAL IN (" + id + ") ";
         }else if(tipoFiltro.equals("26")){ // Pedimento A1 
@@ -2250,7 +2252,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("30")){ // Motivo Rectificación 2
           sql += " AND TIC.MOTIVO_RECTIFICACION_2 IN (" + id + ") ";
         }else if(tipoFiltro.equals("31")){ // Fecha Recepción Documentos
-          sql += " AND TIC.FECHA_RECEPCION_DOCUMENTOS IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RECEPCION_DOCUMENTOS),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("32")){ // Recinto
           sql += " AND TIC.RECINTO IN (" + id + ") ";
         }else if(tipoFiltro.equals("33")){ // Naviera/Forwarder
@@ -2258,25 +2260,25 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("34")){ // Buque
           sql += " AND TIC.BUQUE IN (" + id + ") ";
         }else if(tipoFiltro.equals("35")){ // Fecha Revalidación/Liberación de BL
-          sql += " AND TIC.FECHA_REVALID_LIBE_BL IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_REVALID_LIBE_BL),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("36")){ // Fecha Previo Origen
-          sql += " AND TIC.FECHA_PREVIO_ORIGEN IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_PREVIO_ORIGEN),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("37")){ // Fecha Previo en destino
-          sql += " AND TIC.FECHA_PREVIO_DESTINO IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_PREVIO_DESTINO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("38")){ // Fecha Resultado Previo
-          sql += " AND TIC.FECHA_RESULTADO_PREVIO IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RESULTADO_PREVIO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("39")){ // Proforma Final 
           sql += " AND TIC.PROFORMA_FINAL IN (" + id + ") ";
         }else if(tipoFiltro.equals("40")){ // Requiere permiso
           sql += " AND TIC.REQUIERE_PERMISO IN (" + id + ") ";
         }else if(tipoFiltro.equals("41")){ // Fecha envío Fichas/notas
-          sql += " AND TIC.FECHA_ENVIO_FICHAS_NOTAS IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_ENVIO_FICHAS_NOTAS),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("42")){ // Fec. Recepción de permisos tramit.
-          sql += " AND TIC.FEC_RECEPCION_PERMISOS_TRAMIT IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FEC_RECEPCION_PERMISOS_TRAMIT),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("43")){ // Fec. Act Permisos (Inic Vigencia)
-          sql += " AND TIC.FEC_ACT_PERMISOS IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FEC_ACT_PERMISOS),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("44")){ // Fec. Perm. Aut. (Fin de Vigencia) 
-          sql += " AND TIC.FEC_PERM_AUT IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FEC_PERM_AUT),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("45")){ // Cuenta con CO para aplicar preferencia Arancelaria
           sql += " AND TIC.CO_APLIC_PREF_ARANCELARIA IN (" + id + ") ";
         }else if(tipoFiltro.equals("46")){ // Aplico Preferencia Arancelaria 
@@ -2286,35 +2288,35 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("48")){ // Requiere CA
           sql += " AND TIC.REQUIERE_CA IN (" + id + ") ";
         }else if(tipoFiltro.equals("49")){ // Fecha Recepción CA
-          sql += " AND TIC.FECHA_RECEPCION_CA IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RECEPCION_CA),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("50")){ // Número de Constancia CA 
           sql += " AND IC.NÚMERO_CONSTANCIA_CA IN (" + id + ") ";
         }else if(tipoFiltro.equals("51")){ // Monto CA
           sql += " AND TIC.MONTO_CA IN (" + id + ") ";
         }else if(tipoFiltro.equals("52")){ // Fecha Documentos Completos
-          sql += " AND TIC.FECHA_DOCUMENTOS_COMPLETOS IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_DOCUMENTOS_COMPLETOS),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("53")){ // Fecha Pago Pedimento
-          sql += " AND TIC.FECHA_PAGO_PEDIMENTO IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_PAGO_PEDIMENTO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("54")){ // Fecha Solicitud de transporte
-          sql += " AND TIC.FECHA_SOLICITUD_TRANSPORTE IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_SOLICITUD_TRANSPORTE),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("55")){ // Fecha Modulacion
-          sql += " AND TIC.FECHA_MODULACION IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_MODULACION),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("56")){ // Modalidad
           sql += " AND TIC.MODALIDAD_CAMION_TREN IN (" + id + ") ";
         }else if(tipoFiltro.equals("57")){ // Resultado Modulacion
           sql += " AND TIC.RESULT_MODULACION_VERDE_ROJO IN (" + id + ") ";
         }else if(tipoFiltro.equals("58")){ // Fecha Reconocimiento
-          sql += " AND TIC.FECHA_RECONOCIMIENTO IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RECONOCIMIENTO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("59")){ // Fecha Liberacion
-          sql += " AND TIC.FECHA_LIBERACION IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_LIBERACION),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("60")){ // Sello Origen 
           sql += " AND TIC.SELLO_ORIGEN IN (" + id + ") ";
         }else if(tipoFiltro.equals("61")){ // Sello Final
           sql += " AND TIC.SELLO_FINAL IN (" + id + ") ";
         }else if(tipoFiltro.equals("62")){ // Fecha de retencion por la autoridad
-          sql += " AND TIC.FECHA_RETENCION_AUTORIDAD IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RETENCION_AUTORIDAD),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("63")){ // Fec. de liberacion por ret. de la aut.
-          sql += " AND TIC.FECHA_LIB_POR_RET_AUT IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_LIB_POR_RET_AUT),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("64")){ // Estatus de la operación
           sql += " AND TEC.DESCRIPCION_ESTADO IN (" + id + ") ";
         }else if(tipoFiltro.equals("65")){ // Motivo Atraso
@@ -2328,19 +2330,19 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("69")){ // Archivo M 
           sql += " AND TIC.ARCHIVO_M IN (" + id + ") ";
         }else if(tipoFiltro.equals("70")){ // Fecha de Archivo M 
-          sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_ARCHIVO_M),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("71")){ // Fecha Solicitud de Manipulacion
-          sql += " AND TIC.FECHA_ARCHIVO_M IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_ARCHIVO_M),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("72")){ // Fecha de vencimiento de Manipulacion
-          sql += " AND TIC.FECHA_VENCIM_MANIP IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_VENCIM_MANIP),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("73")){ // Fecha confirmacion Clave de Pedimento
-          sql += " AND TIC.FECHA_CONFIRM_CLAVE_PEDIM IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_CONFIRM_CLAVE_PEDIM),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("74")){ // Fecha de Recepcion de Incrementables
-          sql += " AND TIC.FECHA_RECEP_INCREMENT IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_RECEP_INCREMENT),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("75")){ // T&E 
           sql += " AND TIC.T_E IN (" + id + ") ";
         }else if(tipoFiltro.equals("76")){ // Fecha de Vencimiento del Inbound  
-          sql += " AND TIC.FECHA_VENCIM_INBOUND IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_VENCIM_INBOUND),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("77")){ // No. BULTOS
           sql += " AND TIC.NO_BULTOS IN (" + id + ") ";
         }else if(tipoFiltro.equals("78")){ // Peso (KG)
@@ -2348,9 +2350,9 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("79")){ // Transferencia 
           sql += " AND TIC.TRANSFERENCIA IN (" + id + ") ";
         }else if(tipoFiltro.equals("80")){ // Fecha Inicio Etiquetado
-          sql += " AND TIC.FECHA_INICIO_ETIQUETADO IN (" + id + ") ";
+          sql += " AND TO_DATE(trunc(TIC.FECHA_INICIO_ETIQUETADO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("81")){ // Fecha Termino Etiquetado 
-          sql += " AND TIC.FECHA_TERMINO_ETIQUETADO IN (" + id + ") "; 
+          sql += " AND TO_DATE(trunc(TIC.FECHA_TERMINO_ETIQUETADO),'DD/MM/YY') = TO_DATE(" + id + ",'MM/DD/YY') ";
         }else if(tipoFiltro.equals("82")){ // Hora de termino Etiquetado
           sql += " AND TIC.HORA_TERMINO_ETIQUETADO IN (" + id + ") ";
         }else if(tipoFiltro.equals("83")){ // Proveedor
@@ -2402,7 +2404,7 @@ public class ConsultasQuery {
         /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "   
         /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "   
         /*34*/ + " NVL(TIC.VALOR_USD,' '), "               
-        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YY'),' '), "       
+        /*35*/ + " NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YYYY'),' '), "       
         /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "             
         /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "               
         /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "           
@@ -2537,7 +2539,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("23")){ // Valor USD
           sql += " AND TIC.VALOR_USD IN (" + id + ") ";
         }else if(tipoFiltro.equals("24")){ // ETA Port Of Discharge
-          sql += " AND TIC.ETA_PORT_OF_DISCHARGE IN (" + id + ") ";
+          sql += " AND TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE,'MM/DD/YYYY') = TO_DATE('" + id + "','MM/DD/YYYY') ";
         }else if(tipoFiltro.equals("25")){ // Agente Aduanal 
           sql += " AND TIC.AGENTE_ADUANAL IN (" + id + ") ";
         }else if(tipoFiltro.equals("26")){ // Pedimento A1 
@@ -2929,19 +2931,21 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarInfoEmbarqueEvidencia(String embarqueId, String cbdiv_id) {
+    public String consultarInfoGralEmbarqueInbound(String embarque_id, String cbdiv_id) {
         sql = " SELECT DISTINCT "
             + " TIE.EMBARQUE_ID, " 
-            + " TIE.EMBARQUE_FEC_CAPTURA, " 
+            + " TO_CHAR(TIE.EMBARQUE_FEC_CAPTURA,'DD/MM/YYYY hh:mi'), "
             + " UPPER(TIE.CHOFER_ID), "
-            + " UPPER(TILT.LTRANSPORTE_NOMBRE) "
+            + " UPPER(TILT.LTRANSPORTE_NOMBRE), "
+            + " TIE.EMBARQUE_ESTADO_ID "
             + " FROM TRA_INB_EMBARQUE  TIE "
-            + " INNER JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID "
-            + " WHERE TIE.EMBARQUE_ID IN ('"+ embarqueId +"') ";
+            + " LEFT JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID "
+            + " WHERE TIE.EMBARQUE_ID IN ('"+ embarque_id +"') "
+            + " AND TIE.EMBARQUE_ESTADO_ID IN (1,4) ";
         return sql;
     }
     
-    public String consultarEvidenciaEvento(String documeto, String cbdiv_id){
+    public String consultarInfoDetalleEmbarqueInbound(String embarque_id, String cbdiv_id){
         sql = " SELECT DISTINCT "  
             + " TIE.EMBARQUE_ID, "  
             + " TO_CHAR(TIE.EMBARQUE_FEC_CAPTURA, 'DD/MM/YYYY hh:mi'), "
@@ -2951,27 +2955,40 @@ public class ConsultasQuery {
             + " FROM TRA_INB_EMBARQUE  TIE "  
             + " INNER JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID  " 
             + " INNER JOIN ONTMS_UNIDAD_TRANSPORTE OUT ON TIE.UTRANSPORTE_ID = OUT.UTRANSPORTE_ID "
-            + " WHERE TIE.EMBARQUE_ID IN ('" + documeto + "') "
+            + " WHERE TIE.EMBARQUE_ID IN ('" + embarque_id + "') "
             + " AND TIE.EMBARQUE_ESTADO_ID IN (1) ";
       return sql; 
     }
     
-    public String consultarDetalleEvento(String documeto, String cbdiv_id){
+    public String consultarDetalleShipmentIdInbound(String embarque_id, String cbdiv_id){
        sql = " SELECT DISTINCT "
            + " TIEV.ID_EVENTO, " 
            + " NVL(TIGT.SHIPMENT_ID,' '), "
            + " NVL(TIGT.CONTAINER1,' '), "
            + " NVL(TIGT.QUANTITY,0), "
            + " NVL(TIP.NOMBRE_POD,' '), "
-           + " NVL(TIBD.NOMBRE_BD,' ') "
+           + " NVL(TIBD.NOMBRE_BD,' '), "
+           + " TIGT.STATUS_EMBARQUE "
            + " FROM TRA_INB_EMBARQUE  TIE "   
            + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR " 
            + " INNER JOIN TRA_INB_EVENTO TIEV ON  TIGT.PLANTILLA_ID = TIEV.PLANTILLA_ID " 
            + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIGT.BRAND_DIVISION = TIBD.ID_BD " 
            + " LEFT JOIN TRA_INB_POD TIP ON TIGT.POD = TIP.ID_POD "
-           + " WHERE TIE.EMBARQUE_ID IN ('" + documeto + "') "
+           + " WHERE TIE.EMBARQUE_ID IN ('" + embarque_id + "') "
            + " AND TIE.EMBARQUE_ESTADO_ID IN (1) "
-           + " ORDER BY TIEV.ID_EVENTO ASC ";
+           + " ORDER BY TIGT.STATUS_EMBARQUE ASC ";
+      return sql; 
+    }
+    
+    public String consultarEvidenciaPODEmbarqueInbound(String embarque_id, String cbdiv_id){
+       sql = " SELECT "
+           + " TIGT.SHIPMENT_ID, "
+           + " NVL(TIGT.URL_POD,' ') "
+           + " FROM TRA_INB_EMBARQUE  TIE "    
+           + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR "  
+           + " INNER JOIN TRA_INB_EVENTO TIEV ON  TIGT.PLANTILLA_ID = TIEV.PLANTILLA_ID "  
+           + " WHERE TIE.EMBARQUE_ID IN ('" + embarque_id + "') " 
+           + " AND TIE.EMBARQUE_ESTADO_ID IN (1) ";
       return sql; 
     }
     
@@ -2984,6 +3001,7 @@ public class ConsultasQuery {
             + " UPPER(TIE.CHOFER_ID), "
             + " TIE.EMBARQUE_AGRUPADOR, "
             + " NVL(TIGT.URL_POD,'0'), "
+            + " NVL(TIE.URL_CFDI,'0'), "
             + " TIGT.SHIPMENT_ID "
             + " FROM TRA_INB_EMBARQUE  TIE "   
             + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR "

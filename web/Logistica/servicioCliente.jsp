@@ -52,8 +52,10 @@
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String cveCuenta = (String) ownsession.getAttribute("cbdivcuenta");
-                String documento = request.getParameter("documento");
+                String embarque_id = request.getParameter("embarque_id");
                 String li = request.getParameter("li");
+                String href = "";
+                String msj = "";
                 ConsultasQuery fac = new ConsultasQuery();
         %>
         <div class="d-flex align-items-stretch">
@@ -83,25 +85,35 @@
                                                 </thead>
                                                 <tbody>
                                                     <%
-                                                        if (db.doDB(fac.consultarInfoEmbarqueEvidencia(documento,cveCuenta))) {
-                                                          for (String[] row : db.getResultado()) {
+                                                        if (db.doDB(fac.consultarInfoGralEmbarqueInbound(embarque_id,cveCuenta))) {
+                                                           for (String[] row : db.getResultado()) {
+                                                               
+                                                               if (row[4].equals("1")) {
+                                                                   href = "detalle_guia_embarque.jsp?embarque_id="+row[0];
+                                                                   msj = "";
+                                                               } else {
+                                                                   href = "#";
+                                                                   msj = "<center><label><strong>Embarque:</strong> " + embarque_id +" &nbsp;&nbsp;  Evidenciado <img src=\"../lib/img/check.png\" width=\"25\" height=\"25\"/></label></center>";
+                                                               }
                                                     %>              
-                                                    <tr>
-                                                        <td class="repDatNon"><a href="detalle_guia_embarque.jsp?a=<%=row[0]%>&li=<%=li%>"><font color='black'><u><%=row[0]%></u></font></a></td>
+                                                    <tr> 
+                                                        <td class="repDatNon"><a href="<%=href%>"><font color='black'><u><%=row[0]%></u></font></a></td>
                                                         <td class="repDatNon"><font color='black'><%=row[1]%></font></td>
                                                         <td class="repDatNon"><font color='black'><%=row[2]%></font></td> 
                                                         <td class="repDatNon"><font color='black'><%=row[3]%></font></td> 
                                                     </tr>
-                                                    <%
-                                                                
-                                                          }
+                                                    <%      
+                                                           }
                                                         } else {
-                                                            out.println("<p class='errorHdr'>No existe el embarque</p>");
+                                                    %>
+                                                        <center><label>Embarque: <%=embarque_id%> no registrado en sistema.</label></center>
+                                                    <%
                                                         }
                                                     %>
                                                 </tbody>
                                             </table>
                                             <br>
+                                            <%=msj%>
                                         </form> 
                                     </div>
                                 </div>

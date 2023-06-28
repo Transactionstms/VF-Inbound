@@ -59,14 +59,9 @@
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String cveCuenta = (String) ownsession.getAttribute("cbdivcuenta");
-                String embarque = request.getParameter("a");
+                String embarque_id = request.getParameter("embarque_id");
                 ConsultasQuery fac = new ConsultasQuery();
-                String cant = "";
-                String agrupador = "";
-                String id_embarque = "";
                 int contador = 0;       
-                int bandera = 0;
- 
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -94,12 +89,11 @@
                                             </thead>
                                             <tbody>
                                                 <%
-                                                    if (db.doDB(fac.consultarEvidenciaEvento(embarque, cveCuenta))) {
-                                                        bandera = 1;
+                                                    if (db.doDB(fac.consultarInfoDetalleEmbarqueInbound(embarque_id, cveCuenta))) {
                                                         for (String[] row : db.getResultado()) {
                                                 %>    
                                                     <tr>
-                                                        <td class="repHdrC" width='10%'><strong>Viaje: </strong></td>
+                                                        <td class="repHdrC" width='10%'><strong>Embarque: </strong></td>
                                                         <td  class='texto' width='25%'><%=row[0]%></td>
                                                         <td class="repHdrC" width='15%'><strong>Fecha: </strong></td>
                                                         <td  class='texto' width='35%'><%=row[1]%></td>
@@ -125,21 +119,22 @@
                                         <form  action="<%=request.getContextPath()%>/InsertarEvidencia" method="POST" enctype="multipart/form-data">
                                             <hr size='4' color='#DDDDDD'>
                                             <table align="center" width="100%">
-                                                <tr>
-                                                    <td class="repHdr"><strong>EVENTO</strong></td>
-                                                    <td class="repHdr"><strong>SHIPMENT</strong></td>
-                                                    <td class="repHdr"><strong>CONTAINER</strong></td>
-                                                    <td class="repHdr"><strong>QUANTITY</strong></td>
-                                                    <td class="repHdr"><strong>POD</strong></td>
-                                                    <td class="repHdr"><strong>BRAND DIVISION</strong></td>
-                                                    <td class="repHdr"><strong>EVIDENCIA</strong></td>
-                                                    <td class="repHdr"><strong></strong></td>
-                                                 
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="repHdr"><strong>EVENTO</strong></th>
+                                                        <th class="repHdr"><strong>SHIPMENT</strong></th>
+                                                        <th class="repHdr"><strong>CONTAINER</strong></th>
+                                                        <th class="repHdr"><strong>QUANTITY</strong></th>
+                                                        <th class="repHdr"><strong>POD</strong></th>
+                                                        <th class="repHdr"><strong>BRAND DIVISION</strong></th>
+                                                        <th class="repHdr"><strong>EVIDENCIA</strong></th>
+                                                        <th class="repHdr"><strong></strong></th>                                                
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                 <%
-                                                    if (db.doDB(fac.consultarDetalleEvento(embarque, cveCuenta))) {
+                                                    if (db.doDB(fac.consultarDetalleShipmentIdInbound(embarque_id, cveCuenta))) {
                                                         for (String[] row : db.getResultado()) {
-                                                            contador++;
                                                 %>            
                                                 <tr>
                                                     <td class="repDatNon"><%=row[0]%></td>
@@ -148,22 +143,41 @@
                                                     <td class="repDatNon"><%=row[3]%></td>
                                                     <td class="repDatNon"><%=row[4]%></td>
                                                     <td class="repDatNon"><%=row[5]%></td>
+                                                <%
+                                                    if(!row[6].equals("7")){
+                                                        contador++;
+                                                %>
                                                     <td class="repDatNon">
-                                                        <input type="hidden" id="embarque<%=contador%>" name="embarque<%=contador%>" value="<%=embarque%>">
                                                         <input type="hidden" id="shipmentId<%=contador%>" name="shipmentId<%=contador%>" value="<%=row[1]%>">
                                                         <input type="file" id="file<%=contador%>" name="file<%=contador%>" accept=".pdf, .jpg">
                                                     </td>
+                                                <%
+                                                    }else{
+                                                %>
+                                                    <td class="repDatNon">
+                                                        <img src="../lib/img/check.png" width="25" height="25"/>
+                                                    </td>
+                                                <%
+                                                    }
+
+                                                    if(!row[6].equals("7")){
+                                                %>  
                                                     <td><input type="button" onclick="clearFileInput('<%=contador%>')" value="Limpiar"></td>
+                                                <%
+                                                    }
+                                                %>    
                                                 </tr>
                                                 <%
                                                         }
                                                     }
                                                 %>
+                                                </tbody>
                                             </table>
                                             <br>
                                             <div class="input-container">
                                                 <input type="submit" id="send" name="send" value="Guardar">
                                             </div> 
+                                            <input type="hidden" id="embarque_id" name="embarque_id" value="<%=embarque_id%>">
                                             <input type="hidden" id="numFiles" name="numFiles" value="<%=contador%>">
                                         </form>
                                     </div>

@@ -40,6 +40,12 @@
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- jQuery 3.6.0 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <style>
+            input[type="text"] {
+              width: 250px;
+              height: 50px;
+            }
+        </style>
     </head>
     <body>
         <%
@@ -69,7 +75,7 @@
                                     <div class="card-body">
                                       <form action="servicioCliente.jsp"  method="post" onSubmit="return validarServicio(this);">
                                           <center>
-                                              <input class="form-control" type="text" id="documento" name="documento" size="24" autocomplete="off"> 
+                                              <input class="form-control" type="text" id="embarque_id" name="embarque_id" autocomplete="off"> 
                                           </center>
                                           <br>
                                           <input type="hidden" name="li" value="0"/>
