@@ -103,6 +103,7 @@
                                                             <th scope="col" class="font-titulo">TRANSPORTISTA</th>
                                                             <th scope="col" class="font-titulo">CAMIÓN</th>
                                                             <th scope="col" class="font-titulo">CHOFER</th>
+                                                            <th scope="col" class="font-titulo">URL POD</th>
                                                             <th scope="col" class="font-titulo">URL CFDI</th>
                                                         </tr>
                                                     </thead>
@@ -112,13 +113,18 @@
                                                             for (String[] row : db.getResultado()) {       
                                                     %>
                                                         <tr> 
-                                                            <th class="centrar"> <%=row[0]%></th>
-                                                            <td class="centrar"> <%=row[7]%></td>
-                                                            <td class="centrar"> <%=row[1]%></td>
-                                                            <td class="font-texto"> <%=row[2]%></td>
-                                                            <td class="font-texto"> <%=row[3]%></td>
-                                                            <td class="font-texto"> <%=row[4]%></td>
-                                                            <td class="centrar"><% if (!row[6].equals("0")) {%><b><img src="../../img/pdfflat.png" width="15%" style="cursor: pointer"  onclick="viewEvidenciaEmbarque('<%=row[7]%>')"/></b><% } %></td>
+                                                            <th class="centrar"> <%=row[0]%></th>    <!-- EMBARQUE -->
+                                                            <td class="centrar"> <%=row[8]%></td>    <!-- SHIPMENT ID -->
+                                                            <td class="centrar"> <%=row[1]%></td>    <!-- FECHA CAPTURA -->
+                                                            <td class="font-texto"> <%=row[2]%></td> <!-- TRANSPORTISTA -->
+                                                            <td class="font-texto"> <%=row[3]%></td> <!-- CAMIÓN -->
+                                                            <td class="font-texto"> <%=row[4]%></td> <!-- CHOFER -->
+                                                            <td class="centrar">                     <!-- URL POD -->
+                                                                <% if (!row[6].equals("0")) {%><b><img src="../../img/pdfflat.png" width="15%" style="cursor: pointer"  onclick="viewEvidenciaPOD('<%=row[8]%>')"/></b><% } %>
+                                                            </td>
+                                                            <td class="centrar">                     <!-- URL CFDI -->
+                                                                <% if (!row[7].equals("0")) {%><b><img src="../../img/pdfflat.png" width="15%" style="cursor: pointer"  onclick="viewEvidenciaCFDI('<%=row[5]%>')"/></b><% } %>
+                                                            </td>
                                                         </tr>
                                                         <%
                                                                 }
@@ -149,8 +155,45 @@
             </div>
         </div>    
         <script>
-            function viewEvidenciaEmbarque(shipmentId) {
-                window.open("<%=request.getContextPath()%>/MostrarPDF_EvidenciarEmbarque?shipmentId="+shipmentId, "Visor Evidenciar Embarque", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=50,width=700,height=500");
+            function viewEvidenciaPOD(shipmentId) {
+                window.open("<%=request.getContextPath()%>/MostrarPDF_EvidenciarEmbarque?shipmentId="+shipmentId, "Visor Evidencia POD", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=50,width=700,height=500");
+            }
+            
+            function viewEvidenciaCFDI(embarqueAgrupador) {
+                window.open("<%=request.getContextPath()%>/MostrarPDF_EvidenciaCFDI?embarqueAgrupador="+embarqueAgrupador, "Visor Evidencia CFDI", "toolbar=yes,scrollbars=yes,resizable=yes,top=50,left=50,width=700,height=500");
+            }
+            
+            function doSearch() {
+                var tableReg = document.getElementById('main-table');
+                var searchText = document.getElementById('searchTerm').value.toLowerCase();
+                var cellsOfRow = "";
+                var found = false;
+                var compareWith = "";
+
+                // Recorremos todas las filas con contenido de la tabla
+                for (var i = 1; i < tableReg.rows.length; i++)
+                {
+                    cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+                    found = false;
+                    // Recorremos todas las celdas
+                    for (var j = 0; j < cellsOfRow.length && !found; j++)
+                    {
+                        compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                        // Buscamos el texto en el contenido de la celda
+                        if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+                        {
+                            found = true;
+                        }
+                    }
+                    if (found)
+                    {
+                        tableReg.rows[i].style.display = '';
+                    } else {
+                        // si no ha encontrado ninguna coincidencia, esconde la
+                        // fila de la tabla
+                        tableReg.rows[i].style.display = 'none';
+                    }
+                }
             }
         </script>
         <!-- JavaScript files-->
