@@ -55,33 +55,55 @@ public class InsertarEvidencia extends HttpServlet {
         int numFiles =Integer.parseInt(a); 
         int numShipmentId = 0;
         int numPod = 0;
-        String ruta = "";
+        String typeFormat = "";
         String salida = "";
         
         for (int i = 1; i <=numFiles; i++) {
             
-            String shipmentId = request.getParameter("shipmentId"+i);
+                //Se obtiene el shipment_id por cada input del html
+                String shipmentId = request.getParameter("shipmentId"+i);
 
                 // Obtiene los Part de cada archivo cargado desde la solicitud
                 Part filePart1 = request.getPart("file"+i);
                 
             // Verifica si el Part está vacío
-            if (filePart1.getSize() != 0) {    
-
-                // Procesa cada archivo por separado
-                String fileName1 = shipmentId+"-"+filePart1.getSubmittedFileName();
-
-                // Guardar los archivos en el servidor
-                saveFile(filePart1, fileName1);
+            if (filePart1.getSize() != 0) {
                 
-                // Guardar la ruta del archivo en la base de datos
-                ruta = "D:\\Servicios\\VFINBOUND\\EVIDENCIAS_EMBARQUE\\"+fileName1;
-
-                String inb_gtn = " UPDATE TRA_INC_GTN_TEST SET URL_POD = '"+ ruta +"', STATUS_EMBARQUE = 7 WHERE SHIPMENT_ID = '" + shipmentId + "' ";
-                boolean oraOut1 = oraDB.execute(inb_gtn);
+                // Obtén el nombre de archivo original del objeto Part
+                String nombreArchivoOriginal = filePart1.getSubmittedFileName();
+                System.out.println("Nombre Principal del Archivo: " + nombreArchivoOriginal);
                 
-            }
-            
+                // Verifica el tipo de contenido del archivo    
+                String contentType = filePart1.getContentType();
+                if (contentType.equals("application/pdf")) {
+                    typeFormat = "pdf";
+                }else{
+                    typeFormat = "png";
+                }
+                
+                // Genera un nuevo nombre para el archivo
+                String nuevoNombreArchivo = shipmentId+"-"+i+"."+typeFormat;
+
+                // Obtiene la ruta donde deseas guardar el archivo con el nuevo nombre
+                String rutaDestino = "D:\\Servicios\\VFINBOUND\\EVIDENCIAS_EMBARQUE\\";
+
+                try {
+                    
+                    // Crea un nuevo objeto File con la ruta de destino y el nuevo nombre
+                    File archivoRenombrado = new File(rutaDestino, nuevoNombreArchivo);
+
+                    // Guarda el archivo en el nuevo destino con el nuevo nombre
+                    filePart1.write(archivoRenombrado.getAbsolutePath());
+                    
+                    // Guardar la ruta del archivo en la base de datos
+                    String inb_gtn = " UPDATE TRA_INC_GTN_TEST SET URL_POD = '"+ archivoRenombrado +"', STATUS_EMBARQUE = 7 WHERE SHIPMENT_ID = '" + shipmentId + "' ";
+                    boolean oraOut1 = oraDB.execute(inb_gtn);
+
+                } catch (IOException e) {
+                    System.out.println("No se pudo renombrar el archivo: " + e.getMessage());
+                }
+ 
+            }  
         } 
         
         /*Consultar numero de evidencias por embarque*/
@@ -89,7 +111,7 @@ public class InsertarEvidencia extends HttpServlet {
             for (String[] rowP : db.getResultado()) {
                 
                 numShipmentId++; /*contar cuantos shipment_id tiene el número de embarque*/
-                
+               
                 if(!rowP[1].trim().equals("")){
                     numPod++;  /*contar cuantas evidencias se han subido por shipmentId al número de embarque*/
                 }
@@ -113,22 +135,10 @@ public class InsertarEvidencia extends HttpServlet {
                     + "</td>"
                     + "<td>"
                     + "</td></tr>");
-        
+
           out.print(salida);
           oraDB.close(); //cerrar conexión
             
-        }
-    }
-
-    private void saveFile(Part filePart, String fileName) throws IOException {
-        InputStream fileContent = filePart.getInputStream();
-        String filePath = "D:\\Servicios\\VFINBOUND\\EVIDENCIAS_EMBARQUE\\"+fileName;
-        try (OutputStream outputStream = new FileOutputStream(filePath)) {
-            int bytesRead;
-            byte[] buffer = new byte[4096];
-            while ((bytesRead = fileContent.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
         }
     }
         
