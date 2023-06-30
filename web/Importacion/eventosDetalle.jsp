@@ -52,85 +52,33 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
-
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-
+        <!-- Window load -->
+        <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
+                String cve = (String) ownsession.getAttribute("cbdivcuenta");
+        
                 ConsultasQuery fac = new ConsultasQuery();
                 String agenteAduanal = "";
-                String coma = ",";
-                String aa = "";
-                int cont =0; 
+                int cont = 0; 
 
-                if (db.doDB(fac.consultarAAEventosDetalle())) {
+                if (db.doDB(fac.consultarAAEventosDetalle(UserId))) { 
                     for (String[] rowA : db.getResultado()) {
-                        aa = rowA[0];
-                        aa = aa + coma;
-                        agenteAduanal = agenteAduanal + aa;
+                        
+                        if(rowA[0].equals("4006")){ /*Agente Aduanal Administrador*/
+                            agenteAduanal = "4001,4002,4003,4004,4005,4006";
+                        }else{
+                            agenteAduanal = rowA[0];
+                        }
+                        
                     }
-                    agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
                 }
-                
-String sql2= "WITH sum_quantity AS ("
-        +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
-        +"   FROM tra_inc_gtn_test"
-        +"   GROUP BY shipment_id, container1"
-        +" )"
-        +" SELECT DISTINCT"
-        +"   tie.id_evento,"
-        +"   NVL(bp.responsable, ' ') AS responsable,"
-        +"   gtn.final_destination,"
-        +"   gtn.brand_division,"
-        +"   nvl(tid.division_nombre,' '), "
-        +"   gtn.shipment_id,"
-        +"   gtn.container1,"
-        +"   gtn.bl_awb_pro,"
-        +"   gtn.load_type,"
-        +"   sq.suma,"
-        +"   tip1.NOMBRE_POD,"
-        +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
-        +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
-        +"   NVL(gtn.max_flete, 0) AS est_eta_dc,"
-        +"   'Inbound notification' AS notification_type,"
-        +"   tip2.NOMBRE_POL,"
-        +"   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
-        +"   gtn.plantilla_id,"
-        +"   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
-        +"   tip1.nombre_pod,"
-        +"   tip2.nombre_pol,"
-        +"   tibd.nombre_bd,"
-        +"   CASE"
-        +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
-        +"     WHEN EXISTS ("
-        +"       SELECT 1"
-        +"       FROM tra_inc_gtn_test"
-        +"       WHERE container1 = gtn.container1"
-        +"       HAVING COUNT(DISTINCT brand_division) > 1"
-        +"     ) THEN 'FCL / LCL'"
-        +"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
-        +"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
-        +"     ELSE '-'"
-        +"   END AS estado,"
-        +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
-        +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
-        +"   NVL(tie.observaciones, ' ') AS observaciones"
-        +" FROM"
-        +"   tra_inb_evento tie"
-        +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
-        +"   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
-        +"   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
-        +"   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
-        +"   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
-        +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
-        +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
-        +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-        +" ORDER BY"
-        +"   tie.id_evento";
         %>
         <!-- navbar-->
         <header class="header">
@@ -177,16 +125,16 @@ String sql2= "WITH sum_quantity AS ("
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
                                                             <th scope="col" class="font-titulo">Observaciones </th>
                                                             <th scope="col" class="font-titulo"></th>
-                                                            <!--<th scope="col" class="font-titulo">Eliminar</th>-->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            if (db.doDB(sql2)) {
+                                                            //if (db.doDB(sql2)) {
+                                                            if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
                                                                 for (String[] row : db.getResultado()) {
                                                         %>
-                                                        <tr>
-                                                            <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></th>	
+                                                        <tr id="tr<%=cont%>">
+                                                            <td class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></td>	
                                                             <td class="font-numero"><%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[21]%></td>
@@ -200,21 +148,21 @@ String sql2= "WITH sum_quantity AS ("
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	
                                                             <td class="font-texto"> <%=row[13]%></td>
-                                                            <td class="font-texto">  <%= row[23]%></td>
-                                                            <td class="font-texto">  <%= row[24]%></td>
+                                                            <td class="font-texto"> <%=row[23]%></td>
+                                                            <td class="font-texto"> <%=row[24]%></td>
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
-                                                            <td class="font-texto" contenteditable='true'>  
-                                                                <input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off">
-                                                                <input type="hidden" id="loadType<%=cont%>" name="loadType<%=cont%>" value="<%=row[22]%>">
-                                                                <input type="hidden" id="plantillaId<%=cont%>" name="plantillaId<%=cont%>" value="<%=row[17]%>">
-                                                            </td>
+                                                            <td class="font-texto"><input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off"></td>
                                                             <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>',<%=cont%>)">Actualizar</button></center></td>
                                                         </tr>
                                                         <%   
-                                                             cont++;
+                                                            cont++;
                                                                 }
+                                                            }else{
+                                                        %>
+                                                            <center><label>Sin Información en Sistema.</label></center>
+                                                        <%
                                                             }
                                                         %>
                                                     </tbody>
@@ -254,11 +202,11 @@ String sql2= "WITH sum_quantity AS ("
             function cambiarResponsable(id) {
                 console.log(id);
             }
+            
             function editarEvento(id) {
                 console.log('editar');//
                 console.log(id);
                 window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
-
             }
            
            function saveObservaciones(evento,position){
@@ -277,7 +225,7 @@ String sql2= "WITH sum_quantity AS ("
                               }
                         }).catch(error => console.log(error));
            }
-        </script>                     
+        </script>        
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->

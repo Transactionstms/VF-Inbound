@@ -49,34 +49,31 @@ public class AlertaInbound extends HttpServlet {
         String cve = (String) ownsession.getAttribute("cbdivcuenta");
         
         String agenteAduanal = request.getParameter("agenteAduanal");
-        String numEventos = request.getParameter("numEventos");
-        int contEventos = Integer.parseInt(numEventos);
-        
         String rutaFichero = "";
         String emails = "";
-        
-        for (int i = 0; i < contEventos; i++) {
-            
-            String loadType = request.getParameter("loadType" + i);
-            String plantillaId = request.getParameter("plantillaId" + i);
-            
-            String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '"+ loadType +"' WHERE PLANTILLA_ID = '" + plantillaId + "'";
-            boolean oraOut1 = oraDB.execute(LoadTypeFinal);
-            
-            String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + plantillaId + "'";
-            boolean oraOut2 = oraDB.execute(estatusInicial);
-        }
-                
+ 
+        if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
+            for (String[] row : db.getResultado()) {
+
+                String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '" + row[22] + "' WHERE PLANTILLA_ID = '" + row[17] + "'";
+                boolean oraOut1 = oraDB.execute(LoadTypeFinal);
+
+                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + row[17] + "'";
+                boolean oraOut2 = oraDB.execute(estatusInicial);
+
+            }
+        } 
+
         String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
         if (db.doDB(consulta)) {
             for (String[] rowE : db.getResultado()) {
                 rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
                 emails = rowE[1].replaceFirst(" ", "/");  
-                
+
                 correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); 
             }
         }
-        
+
          oraDB.close(); //cerrar conexión
             
         }
