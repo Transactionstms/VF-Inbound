@@ -3065,6 +3065,26 @@ public class ConsultasQuery {
             + " ORDER BY tie.id_evento desc ";     
       return sql; 
     }
+    
+    public String consultarEstatusSemaforo(String agenteAduanal) {
+        sql = " SELECT DISTINCT "
+            + " TIC.NUMERO_DE_EVENTO, "
+            + " TIS.SHIPMENT_ID, "
+            + " NVL(TIC.PRIORIDAD,'No'), "
+            + " TIS.LOAD_TYPE_FINAL, "
+            + " NVL(TIS.DIAS_TRANSCURRIDOS,0), "
+            + " TIS.ESTATUS_SEMAFORO, "
+            + " NVL(TO_CHAR(TIS.FECHA_ACTIVACION, 'MM/DD/YY'),' '), "
+            + " NVL(TO_CHAR(TIS.FECHA_TERMINO, 'MM/DD/YY'),' '), "
+            + " NVL(TIS.DIAS_CALCULADOS,0) "
+            + " FROM TRA_INB_CUSTOMS TIC "
+            + " INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "
+            + " WHERE TIC.AGENTE_ADUANAL_ID IN ("+agenteAduanal+") "
+            + " AND TIC.ESTADO_ID IN (1) "
+            + " AND NVL(TO_CHAR(TIS.FECHA_ACTIVACION, 'MM/DD/YY'),' ') IS NOT NULL "    
+            + " ORDER BY TIS.ESTATUS_SEMAFORO DESC ";
+        return sql;
+    }
 
 } 
  

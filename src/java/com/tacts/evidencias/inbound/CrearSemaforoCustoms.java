@@ -5,7 +5,13 @@
  */
 package com.tacts.evidencias.inbound;
 
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -14,30 +20,34 @@ import java.util.Locale;
  */
 public class CrearSemaforoCustoms {
     
-    public static String dataSemaforo(int mes, int dias, int anio, String loadType, int diaContadorActual) {
-        
-        String fechaInicialConfirmada = Integer.toString(mes)+"/"+Integer.toString(dias)+"/"+Integer.toString(anio);
+    public static String dataSemaforo(int month, int dias, int anio, String loadType, String Prioridad) {
+
+        String estatusSemaforo = "";
         String res = "";
-        int diasCalculadosCont = 0;
 
-        String diasLoadType = diasTotalDespachoLoadType(loadType);                                                 /* Días Despacho Load Type */
- 
-        String fechaFinalConfirmada = fechaFinalEstimada(mes, dias, anio, diasLoadType);                           /* Fecha Final Estimada */  
-
-        String diaContadorHabil = actualizarContadordiashabilesRangoFechas(mes, dias, anio, fechaFinalConfirmada, diaContadorActual); /* Actualizar el contador de los días transcurridos */
-
-        diasCalculadosCont = diaContadorActual + Integer.parseInt(diaContadorHabil);                               /* Contador del día ya actualizado */
+        /* Identificar cuantos días hábiles tiene cada LoadType */ 
+        String diasLoadType = diasTotalDespachoLoadType(loadType);
         
-        String estatusSemaforo = colorSemaforo(loadType, diasCalculadosCont);                                      /* Estatus del Semaforo */
+        /* Obtener rango de fechas con días hábiles considereando el Load Type */
+        String rangoFechasDiasHabiles = calcularRangoFechasDiasHabiles(month, dias, anio, diasLoadType);
+        String[] par = rangoFechasDiasHabiles.split("*");
+        String fechaInicial = par[0];
+        String fechaFinal = par[1];                                 /* Estatus del Semaforo */
 
-        res = diasCalculadosCont+"-"+estatusSemaforo+"-"+fechaInicialConfirmada+"-"+fechaFinalConfirmada+"-"+diasLoadType;
+        /* Identificar si el shipmentId tiene prioridad */
+        if(Prioridad.equals("No")){
+            estatusSemaforo = "1";
+        }else{
+            estatusSemaforo = "3";
+        }
+        
+        res = fechaInicial+"*"+fechaFinal+"*"+diasLoadType+"*"+estatusSemaforo;
         
         return res;
     }
     
     public static String diasTotalDespachoLoadType(String LoadType) {
-        /* Identificar cuantos días habiles tiene cada LoadType */ 
-
+        
         String díasH = ""; 
 
         if (LoadType.equals("FCL")) {
@@ -55,121 +65,41 @@ public class CrearSemaforoCustoms {
         return díasH;
     }
     
-    public static String fechaFinalEstimada(int mes, int dias, int anio, String diasLoadType) {
-        /* Obtener una fecha final estimada */
+    public static String calcularRangoFechasDiasHabiles(int month, int dias, int anio, String diasHabilesLoadType) {
         
-        String fechaFinal= "";
-        int díaCalculado = 0;
+        int diasHabilesAgregar = Integer.parseInt(diasHabilesLoadType);
+        
+        LocalDate fechaInicial = LocalDate.of(anio, month, dias);
+        LocalDate fechaFinal = aumentarDiasHabiles(fechaInicial, diasHabilesAgregar);
 
-        if(dias==31){
-            díaCalculado = 1 + Integer.parseInt(diasLoadType);
-        }else{
-            díaCalculado = dias + Integer.parseInt(diasLoadType);
-        }
+        String daysOn = fechaInicial+"*"+fechaFinal;
         
-        fechaFinal = Integer.toString(mes)+"/"+Integer.toString(díaCalculado)+"/"+Integer.toString(anio);
-        
-        return fechaFinal;
+        return daysOn;
     }
     
-    public static String actualizarContadordiashabilesRangoFechas(int mes, int dias, int anio, String fechaFinalEstimada, int diaContadorActual) {
-        /* Actualizar el contador de días para compararlas con los indicadores de load type */
-        
-        String resultado = "";
-        int contador = 0;
-        int diaH = 0;
-        int numD;
-        
-        Calendar c = Calendar.getInstance(Locale.US);
-        c.set(anio, mes - 1, dias);
-        numD = c.get(Calendar.DAY_OF_WEEK);
-        
-        String fechaInicial = String.valueOf(mes)+"/"+String.valueOf(dias)+"/"+String.valueOf(anio);
-        
-        if(!fechaInicial.equals(fechaFinalEstimada)){
-            
-            if (numD == Calendar.SUNDAY) {
-                diaH = 0;
-            } else if (numD == Calendar.MONDAY) {
-                diaH = 1;
-            } else if (numD == Calendar.TUESDAY) {
-                diaH = 1;
-            } else if (numD == Calendar.WEDNESDAY) {
-                diaH = 1;
-            } else if (numD == Calendar.THURSDAY) {
-                diaH = 1;
-            } else if (numD == Calendar.FRIDAY) {
-                diaH = 1;
-            } else if (numD == Calendar.SATURDAY) {
-                diaH = 1;
+    public static LocalDate aumentarDiasHabiles(LocalDate fechaInicial, int diasHabilesAgregar) {
+        LocalDate fechaActual = fechaInicial;
+        int diasAgregados = 0;
+
+        while (diasAgregados < diasHabilesAgregar) {
+            fechaActual = fechaActual.plusDays(1);
+
+            if (esDiaHabil(fechaActual)) {
+                diasAgregados++;
             }
-            
-            contador = diaH + diaContadorActual;
-            
-            resultado = String.valueOf(contador);
         }
-        
-        return resultado;
+
+        return fechaActual;
     }
-    
-    public static String colorSemaforo(String LoadType, int diaContador) {
-        /* Identificar el color del Semaforo, mediante el día/contador actual */
-        
-        String semaforo = "";
 
-        if (LoadType.equals("FCL")) {
-
-            if (diaContador >= 1 && diaContador <= 5) {
-                semaforo = "Verde";
-            } else if (diaContador >= 6 && diaContador <= 7) {
-                semaforo = "Amarillo";
-            } else if (diaContador == 8) {
-                semaforo = "Rojo";
-            }
-
-        } else if (LoadType.equals("FCL/LCL")) {
-
-            if (diaContador >= 1 && diaContador <= 7) {
-                semaforo = "Verde";
-            } else if (diaContador >= 8 && diaContador <= 9) {
-                semaforo = "Amarillo";
-            } else if (diaContador == 10) {
-                semaforo = "Rojo";
-            }
-
-        } else if (LoadType.equals("LCL")) {
-
-            if (diaContador >= 1 && diaContador <= 7) {
-                semaforo = "Verde";
-            } else if (diaContador >= 8 && diaContador <= 9) {
-                semaforo = "Amarillo";
-            } else if (diaContador == 10) {
-                semaforo = "Rojo";
-            }
-
-        } else if (LoadType.equals("AIR")) {
-
-            if (diaContador >= 1 && diaContador <= 3) {
-                semaforo = "Verde";
-            } else if (diaContador >= 4 && diaContador <= 5) {
-                semaforo = "Amarillo";
-            } else if (diaContador == 6) {
-                semaforo = "Rojo";
-            }
-
-        } else if (LoadType.equals("LTL")) {
-
-            if (diaContador >= 1 && diaContador <= 8) {
-                semaforo = "Verde";
-            } else if (diaContador >= 9 && diaContador <= 10) {
-                semaforo = "Amarillo";
-            } else if (diaContador == 11) {
-                semaforo = "Rojo";
-            }
-
+    public static boolean esDiaHabil(LocalDate fecha) {
+        // Verificar si es fin de semana (sábado o domingo)
+        if (fecha.getDayOfWeek() == DayOfWeek.SATURDAY || fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            return false;
         }
-        
-        return semaforo;
+
+        // Aquí puedes agregar más condiciones para verificar si la fecha es un día inhábil
+        return true;
     }
-      
+ 
 }

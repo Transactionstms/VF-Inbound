@@ -855,105 +855,89 @@ public class InsertarCustomsForms extends HttpServlet {
         /************************************* Proceso para activar semaforo /*************************************/
        
         if(!eta_port_discharge.trim().equals("")){ 
+            
+            String[] par = eta_port_discharge.split("/");
+            int month = Integer.parseInt(par[0]);
+            int day = Integer.parseInt(par[1]);
+            int year = Integer.parseInt(par[2]);
+            String eta_port_dischargeSystem = "";
+
+            /* CONSULTAR (FECHA INICIAL/FECHA FINAL/LOAD TYPE/ESTATUS SEMAFORO) */
+            String data = obj.dataSemaforo(month, day, year, loadTypeFinal, prioridad);
+
+            /* SPLIT VARIABLE DATA */
+            String[] parts = data.split("*");
+
+            String fecha_inicial = parts[0];  
+            String fecha_final = parts[1];
+            String dias_total_despacho = parts[2]; 
+            String estatus_semaforo = parts[3]; 
+            
 
             /*Consultar si existe el SHIPMENT_ID en la tabla de tra_inb_semaforo*/
             String valShipmentSemaforo = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "'";
             boolean oraOut3 = oraDB.execute(valShipmentSemaforo); 
 
             if(oraOut3){
-
-                /*Extrar las fechas del semaforo*/
+                
                 if (db.doDB(fac.consultarFechaSemaforo(shipmentId))) {
                     for (String[] rowF : db.getResultado()) {
-                        eta_port_discharge_old = rowF[0];                /*fecha ya registrada en sistema*/
-                        diasTranscurridos = Integer.parseInt(rowF[1]);   /*dias transcurridos ya en sistema*/
+                       eta_port_dischargeSystem =  rowF[0];
                     }
                 }
-
-                /*fecha ya registrada en sistema vs fecha recibida del front-ed*/
-                if(!eta_port_discharge_old.equals(eta_port_discharge)){ 
+                
+                if (!eta_port_discharge.equals(eta_port_dischargeSystem)) {
                     
-                    String[] par = eta_port_discharge.split("/");
-                    int month = Integer.parseInt(par[0]);
-                    int day = Integer.parseInt(par[1]);
-                    int year = Integer.parseInt(par[2]);    
-
-                    /* CONSULTAR (FECHA DISCHARGE/LOAD TYPE/DÍA CONTADOR) */
-                    String data = obj.dataSemaforo(month, day, year, loadTypeFinal, diasTranscurridos);
-
-                    /* SPLIT VARIABLE DATA */
-                    String[] parts = data.split("-");
-                    String dia_contador = parts[0];   
-                    String color_semaforo = parts[1];  
-                    String fecha_inicial = parts[2];  
-                    String fecha_final = parts[3];
-                    String dias_total_despacho = parts[4];      
-
-                            semaforo = " UPDATE TRA_INB_SEMAFORO SET "
-                                     + " DIAS_TRANSCURRIDOS = '" + dia_contador + "', "
-                                     + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
-                                     + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "    
-                                     //+ " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                     + " ESTATUS_SEMAFORO = '" + color_semaforo + "' " 
-                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                     + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
+                    semaforo = " UPDATE TRA_INB_SEMAFORO SET "
+                             + " DIAS_TRANSCURRIDOS = 1, "
+                             + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
+                             + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "' " 
+                             + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
+                             + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                             + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
+                             + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                             + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
                 }
-
+                
             }else{
                 
-                    String[] par = eta_port_discharge.split("/");
-                    int month = Integer.parseInt(par[0]);
-                    int day = Integer.parseInt(par[1]);
-                    int year = Integer.parseInt(par[2]);
-
-                    /* CONSULTAR (FECHA DISCHARGE/LOAD TYPE/DÍA CONTADOR) */
-                    String data = obj.dataSemaforo(month, day, year, loadTypeFinal, 1);
-                                                 //3/Verde/6/10/2023/6/21/2023/11
-                    /* SPLIT VARIABLE DATA */
-                    String[] parts = data.split("-");
-                    String dia_contador = parts[0];   
-                    String color_semaforo = parts[1];  
-                    String fecha_inicial = parts[2];  
-                    String fecha_final = parts[3];
-                    String dias_total_despacho = parts[4];  
-
-
-                           /*Registro por 1era. vez */
-                            semaforo = " INSERT INTO TRA_INB_SEMAFORO "
-                                     + " (REG_ID, "
-                                     + " EVENTO_ID, "
-                                     + " SHIPMENT_ID, "
-                                     + " CONTAINER_ID, "
-                                     + " PLANTILLA_ID, "
-                                     + " AGENTE_ID, "
-                                     + " LOAD_TYPE_FINAL, "
-                                     + " DIAS_TRANSCURRIDOS, "
-                                     + " ESTATUS_SEMAFORO, "
-                                     + " FECHA_ACTIVACION, "
-                                     //+ " FECHA_TERMINO, "
-                                     + " DIAS_CALCULADOS) "
-                                     + " VALUES "
-                                     + "(NULL, "
-                                     + " '" + evento + "', "
-                                     + " '" + shipmentId + "', "
-                                     + " '" + containerId + "', "
-                                     + " '" + plantillaId +  "', "
-                                     + " '" + idAgenteAduanal + "', "
-                                     + " '" + loadTypeFinal + "', "
-                                     + " '" + dia_contador + "', "
-                                     + " '" + color_semaforo + "', "
-                                     + " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "
-                                     //+ " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                     + " '" + dias_total_despacho + "')";
-            }             
+                    semaforo = " INSERT INTO TRA_INB_SEMAFORO "
+                             + " (REG_ID, "
+                             + " EVENTO_ID, "
+                             + " SHIPMENT_ID, "
+                             + " CONTAINER_ID, "
+                             + " PLANTILLA_ID, "
+                             + " AGENTE_ID, "
+                             + " LOAD_TYPE_FINAL, "
+                             + " ESTATUS_SEMAFORO, "
+                             + " FECHA_ACTIVACION, "
+                             + " FECHA_TERMINO, "
+                             + " DIAS_CALCULADOS, "
+                             + " DIAS_TRANSCURRIDOS) "
+                             + " VALUES "
+                             + "(NULL, "
+                             + " '" + evento + "', "
+                             + " '" + shipmentId + "', "
+                             + " '" + containerId + "', "
+                             + " '" + plantillaId +  "', "
+                             + " '" + idAgenteAduanal + "', "
+                             + " '" + loadTypeFinal + "', "
+                             + " '" + estatus_semaforo + "', "
+                             + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
+                             + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                             + " '" + dias_total_despacho + "', "
+                             + " 1) ";
+            }
+            
+            boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
         }            
-               boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
                
-                if(oraOut1&&oraOut2&&oraOut4){
-                    salida = "1";
-                }else{
-                    salida = "2";
-                }
+            if(oraOut1&&oraOut2){
+                salida = "1";
+            }else{
+                salida = "2";
+            }
+            
         }
             
          out.print(salida);
