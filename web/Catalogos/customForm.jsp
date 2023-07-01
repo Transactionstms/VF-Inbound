@@ -116,32 +116,22 @@
                 
                 document.getElementById('frameTableCustoms').src = "iframeDataCustom.jsp?filterType="+filterType+"&id="+id;
                 
-                /*fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
+                fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
                     method: 'POST',
                 }).then(r => r.text())
                     .then(data => {
                         if(data === "true"){
-                           $('#frameTableCustoms').on("load", function() {
-                             $("#WindowLoad").remove();
-                           });
+                            console.log(data);
                         }else{
-                           alert("Error al cargar información, consulte a su Administrador!")
+                           console.log(data);
                         }
-                    }).catch(error => console.log(error)); */
+                    }).catch(error => console.log(error));
     
                 $('#frameTableCustoms').on("load", function() {
                   $("#WindowLoad").remove();
                 });  
                
-                //email(agenteId);    
-            }
-            
-            function email(agenteId){
-                fetch("<%=request.getContextPath()%>/AlertaCustoms?agenteAduanal="+agenteId, {
-                    method: 'POST',
-                }).then(r => r.text())
-                    .then(data => {
-                    }).catch(error => console.log(error)); 
+                email(agenteId);    
             }
             
             function recibirParametroIFrame(event) {
