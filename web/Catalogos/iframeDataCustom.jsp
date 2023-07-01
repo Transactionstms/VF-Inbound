@@ -38,6 +38,8 @@
         <!-- calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+        <!-- Window load -->
+        <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
             #contenedor {
               display: flex;
