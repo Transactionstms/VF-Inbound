@@ -49,12 +49,13 @@
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 ConsultasQuery fac = new ConsultasQuery();
                 String agenteAduanal = "";
                 String coma = ",";
                 String aa = "";
 
-                if (db.doDB(fac.consultarAAEventosDetalle())) {
+                if (db.doDB(fac.consultarAAEventosDetalle(UserId))) {
                     for (String[] rowA : db.getResultado()) {
                         aa = rowA[0];
                         aa = aa + coma;
