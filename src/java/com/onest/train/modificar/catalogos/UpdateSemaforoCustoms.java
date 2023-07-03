@@ -76,73 +76,78 @@ public class UpdateSemaforoCustoms extends HttpServlet {
         if (db.doDB(fac.consultarEstatusSemaforo(AgentType))) {
             for (String[] row : db.getResultado()) {
                 
-                numEvento = row[0];
-                shipmentId = row[1];
-                prioridad = row[2];
-                loadType = row[3];
-                diasTranscurridos = Integer.parseInt(row[4]);
-                estatusSemaforo = row[5];
-                fechaActivacion = row[6];
-                fechaTermino = row[7];
-                diasCalculados = Integer.parseInt(row[8]);
+                if(!fechaActivacion.equals("")){  /* fecha eta port discharge */
                 
-                /* Obtener color del semaforo conforme al día transcurrido */
-                colorSemaforo = colorSemaforo(loadType, diasTranscurridos);
-                
-                /* Castear la fecha eta_port_discharge (Activación Semaforo) */
-                String[] par = fechaActual.split("/");
-                int month = Integer.parseInt(par[0]);
-                int day = Integer.parseInt(par[1]);
-                int year = Integer.parseInt(par[2]);
-            
-                /* Obtener el tipo de día (habil/inhabil) */
-                LocalDate fecha = LocalDate.of(year, month, day);
+                    numEvento = row[0];
+                    shipmentId = row[1];
+                    prioridad = row[2];
+                    loadType = row[3];
+                    diasTranscurridos = Integer.parseInt(row[4]);
+                    estatusSemaforo = row[5];
+                    fechaActivacion = row[6];
+                    fechaTermino = row[7];
+                    diasCalculados = Integer.parseInt(row[8]);
 
-                boolean esDiaHabil = esDiaHabil(fecha);
+                    /* Obtener color del semaforo conforme al día transcurrido */
+                    colorSemaforo = colorSemaforo(loadType, diasTranscurridos);
 
-                if (esDiaHabil) {
-                    
-                    if(!fechaTermino.equals(fecha)){
-                        
-                        diasTranscurridos++; //Aumentar 1 por día. 
-                        
-                        if(diasTranscurridos==diasCalculados){
-                            priority = "Si";
-                        }else{
-                            priority = prioridad;
+                    /* Castear la fecha eta_port_discharge (Activación Semaforo) */
+                    String[] par = fechaActual.split("/");
+                    int month = Integer.parseInt(par[0]);
+                    int day = Integer.parseInt(par[1]);
+                    int year = Integer.parseInt(par[2]);
+
+                    /* Obtener el tipo de día (habil/inhabil) */
+                    LocalDate fecha = LocalDate.of(year, month, day);
+
+                    boolean esDiaHabil = esDiaHabil(fecha);
+
+                    if (esDiaHabil) {
+
+                        if(!fechaTermino.equals(fecha)){
+
+                            diasTranscurridos++; //Aumentar 1 por día. 
+
+                            if(diasTranscurridos==diasCalculados){
+                                priority = "Si";
+                            }else{
+                                priority = prioridad;
+                            }
+
+                            semaforo = " UPDATE TRA_INB_SEMAFORO SET "
+                                     + " DIAS_TRANSCURRIDOS = '" + diasTranscurridos + "', "
+                                     + " ESTATUS_SEMAFORO = '" + colorSemaforo + "' "
+                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                                     + " AND AGENTE_ID IN (" + AgentType + ") ";  
+                            boolean oraOut1 = oraDB.execute(semaforo);
+
+                            customs = " UPDATE TRA_INB_CUSTOMS SET "
+                                    + " PRIORIDAD = '" + priority + "', "
+                                    + " ESTATUS_SEMAFORO = '" + colorSemaforo + "' "
+                                    + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                                    + " AND AGENTE_ADUANAL_ID IN (" + AgentType + ") ";  
+                            boolean oraOut2 = oraDB.execute(customs);
                         }
-                        
-                        semaforo = " UPDATE TRA_INB_SEMAFORO SET "
-                                 + " DIAS_TRANSCURRIDOS = '" + diasTranscurridos + "', "
-                                 + " ESTATUS_SEMAFORO = '" + colorSemaforo + "' "
-                                 + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                 + " AND AGENTE_ID IN (" + AgentType + ") ";  
-                        boolean oraOut1 = oraDB.execute(semaforo);
-                        
-                        customs = " UPDATE TRA_INB_CUSTOMS SET "
-                                + " PRIORIDAD = '" + priority + "', "
-                                + " ESTATUS_SEMAFORO = '" + colorSemaforo + "' "
-                                + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                + " AND AGENTE_ADUANAL_ID IN (" + AgentType + ") ";  
-                        boolean oraOut2 = oraDB.execute(customs);
+
                     }
                     
                 }
                 
             }
-        }
 
-        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + AgentType + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
-        if (db.doDB(consulta)) {
-            for (String[] rowE : db.getResultado()) {
-                rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
-                emails = rowE[1].replaceFirst(" ", "/");  
+            String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + AgentType + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
+            if (db.doDB(consulta)) {
+                for (String[] rowE : db.getResultado()) {
+                    rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
+                    emails = rowE[1].replaceFirst(" ", "/");  
 
-                correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); //Quitar esta instrucción
-                //Considerar archivo 'AlertaCustoms.java' con emisión de excel
+                    correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); //Quitar esta instrucción
+                    //Considerar archivo 'AlertaCustoms.java' con emisión de excel
+                }
             }
-        }      
-
+            
+        }
+        
          oraDB.close(); //cerrar conexión
             
         }

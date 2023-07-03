@@ -30,7 +30,7 @@ public class CrearSemaforoCustoms {
         
         /* Obtener rango de fechas con días hábiles considereando el Load Type */
         String rangoFechasDiasHabiles = calcularRangoFechasDiasHabiles(month, dias, anio, diasLoadType);
-        String[] par = rangoFechasDiasHabiles.split("*");
+        String[] par = rangoFechasDiasHabiles.split("@");
         String fechaInicial = par[0];
         String fechaFinal = par[1];                                 /* Estatus del Semaforo */
 
@@ -41,7 +41,7 @@ public class CrearSemaforoCustoms {
             estatusSemaforo = "3";
         }
         
-        res = fechaInicial+"*"+fechaFinal+"*"+diasLoadType+"*"+estatusSemaforo;
+        res = fechaInicial+"@"+fechaFinal+"@"+diasLoadType+"@"+estatusSemaforo;
         
         return res;
     }
@@ -72,7 +72,7 @@ public class CrearSemaforoCustoms {
         LocalDate fechaInicial = LocalDate.of(anio, month, dias);
         LocalDate fechaFinal = aumentarDiasHabiles(fechaInicial, diasHabilesAgregar);
 
-        String daysOn = fechaInicial+"*"+fechaFinal;
+        String daysOn = fechaInicial+"@"+fechaFinal;
         
         return daysOn;
     }
