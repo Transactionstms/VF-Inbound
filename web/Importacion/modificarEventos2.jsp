@@ -42,7 +42,6 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body>
         <%
@@ -55,66 +54,6 @@
                 String evento = request.getParameter("id");
                 String ship = request.getParameter("ship");
                 String con = request.getParameter("con");
-
-                String sql2 = "WITH sum_quantity AS ("
-                        + "   SELECT shipment_id, container1, SUM(quantity) AS suma"
-                        + "   FROM tra_inc_gtn_test"
-                        + "   GROUP BY shipment_id, container1"
-                        + " )"
-                        + " SELECT DISTINCT"
-                        + "   tie.id_evento,"
-                        + "   NVL(bp.responsable, ' ') AS responsable,"
-                        + "   gtn.final_destination,"
-                        + "   gtn.brand_division,"
-                        + "   nvl(tid.division_nombre,' '), "
-                        + "   gtn.shipment_id,"
-                        + "   gtn.container1,"
-                        + "   gtn.bl_awb_pro,"
-                        + "   gtn.load_type,"
-                        + "   sq.suma,"
-                        + "   gtn.pod," //10
-                        + "   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
-                        + "   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
-                        + "   NVL(gtn.max_flete, 0) AS est_eta_dc,"
-                        + "   'Inbound notification' AS notification_type,"
-                        + "   tip2.NOMBRE_POL,"
-                        + "   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
-                        + "   gtn.plantilla_id,"
-                        + "   TO_CHAR(gtn.fecha_captura, 'MM/DD/YY') AS fecha_captura,"
-                        + "   tip1.nombre_pod,"
-                        + "   tip2.nombre_pol,"//20
-                        + "   tibd.nombre_bd,"
-                        + "   CASE"
-                        + "     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
-                        + "     WHEN EXISTS ("
-                        + "       SELECT 1"
-                        + "       FROM tra_inc_gtn_test"
-                        + "       WHERE container1 = gtn.container1"
-                        + "       HAVING COUNT(DISTINCT brand_division) > 1"
-                        + "     ) THEN 'FCL / LCL'"
-                        + "     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
-                        + "     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
-                        + "     ELSE '-'"
-                        + "   END AS estado,"
-                        + "   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
-                        + "   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
-                        + "   NVL(tie.observaciones, ' ') AS observaciones,"
-                        + "  tie.user_nid,"
-                        + " gtn.sbu_name,"
-                        + " gtn.pol "
-                        + " FROM"
-                        + "   tra_inb_evento tie"
-                        + "   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
-                        + "   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
-                        + "   LEFT JOIN tra_inb_pod tip1 ON tip1.id_pod = gtn.pod"
-                        + "   LEFT JOIN tra_inb_pol tip2 ON tip2.id_pol = gtn.pol"
-                        + "   LEFT JOIN tra_inb_brand_division tibd ON tibd.id_bd = gtn.brand_division"
-                        + "   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
-                        + "   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
-                        + "   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-                        + " where tie.id_evento='"+evento+"' and gtn.shipment_id='" + ship + "' and  gtn.container1='" + con + "'"
-                        + " ORDER BY"
-                        + "   tie.id_evento";
         %>
  
         <div class="d-flex align-items-stretch">
@@ -171,7 +110,7 @@
                                             }
                                         }
 
-                                        if (db.doDB(sql2)) {
+                                        if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                                             for (String[] row : db.getResultado()) {
 
                                     %>
@@ -182,7 +121,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong> Número de evento  </strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[0]%>" readonly>
+                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[0]%>">
                                                 </div>
                                             </div>  
                                               <div class="col-md-4 "> 
@@ -217,7 +156,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Brand-Division</strong></label>
                                                     <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand">                     
-                                                        <option value="<%=row[27]%>"><%=row[21]%></option>
+                                                        <option value="<%=row[3]%>"><%=row[21]%></option> 
                                                         <%=bd%>
                                                     </select>
                                                 </div>
@@ -229,7 +168,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Division</strong></label>
                                                     <select class="form-control chosen" data-placeholder="..." name="sbu_name" id="sbu_name">                     
-                                                        <option value="<%=row[22]%>"><%=row[4]%></option>
+                                                        <option value="<%=row[27]%>"><%=row[4]%></option>
                                                         <%=sbu%>
                                                     </select>
                                                 </div>
@@ -323,7 +262,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Observaciones</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[25]%>" name="observaciones" id="observaciones">
+                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[25]%>" name="observaciones" id="observaciones" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
                                                 </div>
                                             </div> 
 

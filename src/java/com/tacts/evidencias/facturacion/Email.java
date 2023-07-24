@@ -328,7 +328,51 @@ public class Email {
 
         return mensaje;
     }
+    
+    private String getModificarEventosFormulario(String evento, String con, String ship, String caramelo) {
 
+        String delimiter = "/";
+        String mensaje = "";
+        
+        // Split the string into an array of substrings using the delimiter
+        String[] substrings = caramelo.split(delimiter);
+        
+               mensaje  = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">\n"
+                        + "    <div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "            <div style=\"border-bottom:1px solid #adc9ff;padding:20px 30px\">\n"
+                        + "                <p style=\"margin:0;color:#333333\">\n"
+                        + "                <div align=\"center\">\n"
+                        + "                 <h2>MODIFICACIÓN DE EVENTO</h2>\n"
+                        + "                </div>\n"
+                        + "            </div>\n"
+                        + "              <br>"
+                        + "              <h4>Número de Evento: " + evento + "</h4>"
+                        + "              <h4>Container: " + con + "</h4>"
+                        + "              <h4>Shipment Id: " + ship + "</h4>"
+                        + "              <br>"
+                        + "              <br>" 
+                        + "              <div align=\"center\">\n"
+                        + "                <h2>Detalle - Información Actualizada:</h2>"
+                        + "              </div>\n";
+                    for (String substring : substrings) { // Display the substrings
+                        mensaje += substring + "\n";
+                    }          
+
+               mensaje += "    </div>\n"
+                        + "<div style=\"max-width:600px;margin:0 auto\">\n"
+                        + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
+                        + "        <p style=\"font-size:11px;color:#686f7a\">\n"
+                        + "        <center>\n"
+                        + "            Este es un mensaje informativo, favor de no contestar a este correo.\n"
+                        + "        </center>\n"
+                        + "        </p>\n"
+                        + "    </div>\n"
+                        + "</div>\n"
+                        + "</body>";
+
+        return mensaje; 
+    }
+    
     private String getSemaforoCustoms(String agenteId) {
 
         ServiceDAO dao = new ServiceDAO();
@@ -1263,6 +1307,64 @@ public class Email {
             }
             return enviado;
         }
+    }
+    
+    public boolean alertaModificarEventosFormulario(String correosInternos, String evento, String con, String ship, String caramelo){
+
+        boolean enviado = false;
+        String[] vect;
+        vect = correosInternos.split("/");
+
+        try {
+            Session session = Session.getDefaultInstance(properties,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                }
+            });
+            // Session sesion = Session.getDefaultInstance(properties, null);
+            MimeMessage message = new MimeMessage(session);
+
+            for (int i = 0; i < vect.length; i++) {
+
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(vect[i]));
+
+            }
+
+            message.setFrom(new InternetAddress(REMITENTE));
+            message.setHeader("X-Priority", "1");
+            message.setSubject("Informe - Modificación de Eventos FORMULARIO PRUEBAS");
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            // Now set the actual message
+            messageBodyPart.setContent(getModificarEventosFormulario(evento, con, ship, caramelo), "text/html");
+
+            Multipart multipart = new MimeMultipart();
+
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+
+            //Part two is attachment
+            messageBodyPart = new MimeBodyPart();
+
+            /*messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
+            messageBodyPart.setFileName("ModifaciónDeEventos" + agenteId + ".xls");*/
+
+            //multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect(HOST, REMITENTE, CLAVE);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+            System.out.println("Se envío correo");
+            enviado = true;
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return enviado;
+
     }
 
 }

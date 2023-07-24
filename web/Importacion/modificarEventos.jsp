@@ -42,7 +42,6 @@
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
 
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body>
         <%
@@ -54,6 +53,7 @@
                 String agenteAduanal = "";
                 String coma = ",";
                 String aa = "";
+                String colors = "";
 
                 if (db.doDB(fac.consultarAAEventosDetalle(UserId))) {
                     for (String[] rowA : db.getResultado()) {
@@ -71,9 +71,9 @@ String sql2= "WITH sum_quantity AS ("
         +" )"
         +" SELECT DISTINCT"
         +"   tie.id_evento,"
-        +"   NVL(bp.responsable, ' ') AS responsable,"
+        +"   NVL(bp.responsable, 'Sin Responsable') AS responsable,"
         +"   gtn.final_destination,"
-        +"   gtn.brand_division,"
+        +"   nvl(gtn.brand_division,' '), "
         +"   nvl(tid.division_nombre,' '), "
         +"   gtn.shipment_id,"
         +"   gtn.container1,"
@@ -117,14 +117,12 @@ String sql2= "WITH sum_quantity AS ("
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
+        +"   WHERE gtn.final_destination <> 'MARKETING MEXICO' "
         +" ORDER BY"
         +"   tie.id_evento";
 
         int cont =0; 
         %>
-        <!-- <%=sql2%>-->
-        
-        
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
@@ -175,11 +173,17 @@ String sql2= "WITH sum_quantity AS ("
                                                         <%
                                                             if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
-                                                                    cont++;
+                                                                   cont++;
+                                                                   
+                                                                   if(row[4].equals("No/DSN")){
+                                                                     colors = "color: #ff0000;";
+                                                                   }else{
+                                                                     colors = "color: #000000;";  
+                                                                   }
                                                         %>
-                                                        <tr>
+                                                        <tr style="<%=colors%>">
                                                             <th class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>','<%=row[5]%>','<%=row[6]%>')"><%=row[0]%></th>	
-                                                            <td class="font-numero"> <%=row[1]%></td>
+                                                            <td class="font-texto"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[21]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>

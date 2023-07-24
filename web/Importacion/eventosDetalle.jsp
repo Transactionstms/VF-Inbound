@@ -153,7 +153,7 @@
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[20]%></td>	
                                                             <td class="font-texto"> <%=row[16]%></td>
-                                                            <td class="font-texto"><input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off"></td>
+                                                            <td class="font-texto"><input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"></td>
                                                             <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>',<%=cont%>)">Actualizar</button></center></td>
                                                         </tr>
                                                         <%   
