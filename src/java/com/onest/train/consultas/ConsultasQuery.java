@@ -2836,7 +2836,7 @@ public class ConsultasQuery {
         return sql;
     }
     
-    public String consultarCustomsSemaforo(String agenteAduanalId, String estatusSemaforo) {
+    public String consultarCustomsSemaforo(String agenteAduanalId, String pullShipmentId) {
         sql= "WITH sum_quantity AS ("
             +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
             +"   FROM tra_inc_gtn_test"
@@ -2891,8 +2891,8 @@ public class ConsultasQuery {
             +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
             +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1 "
             +"   INNER JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-            //+ "  INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID ";
-            +"   WHERE TIC.ESTATUS_SEMAFORO IN ('" + estatusSemaforo + "') ";     
+            + "  INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "
+            +"   WHERE TIS.SHIPMENT_ID IN ('" + pullShipmentId + "') ";     
         
         if(!agenteAduanalId.equals("4006")){ //VF
           sql += " AND tip1.AGENTE_ADUANAL_ID IN ("+ agenteAduanalId +") ";
@@ -3076,7 +3076,10 @@ public class ConsultasQuery {
             + " TIS.ESTATUS_SEMAFORO, "
             + " NVL(TO_CHAR(TIS.FECHA_ACTIVACION, 'MM/DD/YY'),' '), "
             + " NVL(TO_CHAR(TIS.FECHA_TERMINO, 'MM/DD/YY'),' '), "
-            + " NVL(TIS.DIAS_CALCULADOS,0) "
+            + " NVL(TIS.DIAS_CALCULADOS,0), "
+            + " NVL(TIS.DAY_LIMIT_GREEN,0), "
+            + " NVL(TIS.DAY_LIMIT_YELLOW,0), "
+            + " NVL(TIS.DAY_LIMIT_RED,0) "  
             + " FROM TRA_INB_CUSTOMS TIC "
             + " INNER JOIN TRA_INB_SEMAFORO TIS ON TIC.SHIPMENT_ID = TIS.SHIPMENT_ID "
             + " WHERE TIC.AGENTE_ADUANAL_ID IN ("+agenteAduanal+") "

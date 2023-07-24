@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.tacts.evidencias.inbound.CrearSemaforoCustoms;
 import com.tacts.evidencias.inbound.CreatExcel;
+import com.tacts.evidencias.inbound.CreatExcelCustoms;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -65,11 +66,18 @@ public class UpdateSemaforoCustoms extends HttpServlet {
         String fechaActivacion = "";
         String fechaTermino = "";
         int diasCalculados = 0;
+        int diasLimitePrioridadBaja = 0;
+        int diasLimitePrioridadMedia = 0;
+        int diasLimitePrioridadAlta = 0;
         String colorSemaforo = "";
         String semaforo = "";
         String customs = "";
-        String rutaFichero = "";
+        String rutaFicheroRojos = "";
+        String rutaFicheroAmarillos = "";
+        String shipmentIdPrioridadMedia = "";
+        String shipmentIdPrioridadAlta = "";
         String emails = "";
+        String agentes = "";
         String priority = "";
         
         /* Obtener la data/registros con activación del semaforo */
@@ -87,6 +95,9 @@ public class UpdateSemaforoCustoms extends HttpServlet {
                     fechaActivacion = row[6];
                     fechaTermino = row[7];
                     diasCalculados = Integer.parseInt(row[8]);
+                    diasLimitePrioridadBaja = Integer.parseInt(row[9]);
+                    diasLimitePrioridadMedia = Integer.parseInt(row[10]);
+                    diasLimitePrioridadAlta = Integer.parseInt(row[11]);
 
                     /* Obtener color del semaforo conforme al día transcurrido */
                     colorSemaforo = colorSemaforo(loadType, diasTranscurridos);
@@ -127,25 +138,50 @@ public class UpdateSemaforoCustoms extends HttpServlet {
                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
                                     + " AND AGENTE_ADUANAL_ID IN (" + AgentType + ") ";  
                             boolean oraOut2 = oraDB.execute(customs);
+                            
                         }
 
                     }
                     
+                    /*Listar shipmentId - Prioridad Alta */
+                    if(diasTranscurridos >= diasLimitePrioridadAlta && diasTranscurridos <= diasLimitePrioridadAlta){
+                        shipmentIdPrioridadAlta = shipmentId+",";
+                    }
+                    
+                    /*Listar shipmentId - Prioridad Media */
+                    if(diasTranscurridos >= diasLimitePrioridadMedia && diasTranscurridos <= diasLimitePrioridadMedia){
+                        shipmentIdPrioridadMedia = shipmentId+",";
+                    }
+                    
+                  
                 }
                 
             }
-
-            String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + AgentType + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
-            if (db.doDB(consulta)) {
-                for (String[] rowE : db.getResultado()) {
-                    rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
-                    emails = rowE[1].replaceFirst(" ", "/");  
-
-                    correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); //Quitar esta instrucción
-                    //Considerar archivo 'AlertaCustoms.java' con emisión de excel
-                }
-            }
             
+            shipmentIdPrioridadAlta = shipmentIdPrioridadAlta.substring(0, shipmentIdPrioridadAlta.length() - 1);
+            shipmentIdPrioridadMedia = shipmentIdPrioridadMedia.substring(0, shipmentIdPrioridadMedia.length() - 1);
+            
+            
+        /******************************* Proceso Emisión de ALERTAS POR COLOR DE SEMAFORO *******************************/    
+            
+        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + AgentType + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
+        if (db.doDB(consulta)) {
+            for (String[] rowE : db.getResultado()) {
+                agentes = rowE[0];
+                emails = rowE[1];
+            }
+        }
+        
+        emails = emails.replaceFirst(" ", "/");
+
+            rutaFicheroRojos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, shipmentIdPrioridadAlta, "PRIORIDAD ALTA");
+            correo.alertaSemaforoCustoms(emails, rutaFicheroRojos.trim(), agentes, "PRIORIDAD ALTA");
+            System.out.println("Estatus Correo Rojos: "+correo);
+
+            rutaFicheroAmarillos = CreatExcelCustoms.crearAPartirDeArrayListCustoms(agentes, shipmentIdPrioridadMedia, "PRIORIDAD MEDIA");
+            correo.alertaSemaforoCustoms(emails, rutaFicheroAmarillos.trim(), agentes, "PRIORIDAD MEDIA");
+            System.out.println("Estatus Correo Amarillos: "+correo);
+
         }
         
          oraDB.close(); //cerrar conexión

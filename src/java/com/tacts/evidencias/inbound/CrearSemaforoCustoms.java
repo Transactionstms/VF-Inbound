@@ -8,6 +8,7 @@ package com.tacts.evidencias.inbound;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,42 +28,79 @@ public class CrearSemaforoCustoms {
 
         /* Identificar cuantos días hábiles tiene cada LoadType */ 
         String diasLoadType = diasTotalDespachoLoadType(loadType);
+        String[] par = diasLoadType.split("*");
+        String diasHabilesLoadType = par[0];         /*Días Hábiles*/
+        String diasLimitePrioridadBaja = par[1];     /*Días Limite Semaforo (Verde)*/    
+        String diasLimitePrioridadMedia = par[2];    /*Días Limite Semaforo (Amarillo)*/  
+        String diasLimitePrioridadAlta = par[3];     /*Días Limite Semaforo (Rojo)*/  
         
         /* Obtener rango de fechas con días hábiles considereando el Load Type */
         String rangoFechasDiasHabiles = calcularRangoFechasDiasHabiles(month, dias, anio, diasLoadType);
-        String[] par = rangoFechasDiasHabiles.split("@");
-        String fechaInicial = par[0];
-        String fechaFinal = par[1];                                 /* Estatus del Semaforo */
-
-        /* Identificar si el shipmentId tiene prioridad */
-        if(Prioridad.equals("No")){
-            estatusSemaforo = "1";
-        }else{
+        String[] par1 = rangoFechasDiasHabiles.split("@");
+        String fechaInicial = par1[0]; 
+        String fechaFinal = par1[1];                 /* Estatus del Semaforo */
+        
+        /*Identificar si el fecha a validar es <,>, = a la fecha actual */
+        String typeTime = CalcularFechaAnteriorActual(fechaInicial);
+        
+        if(typeTime.equals("<")){
+            
             estatusSemaforo = "3";
+            
+        }else if(typeTime.equals("=")||typeTime.equals(">")){
+            
+            /* Identificar si el shipmentId tiene prioridad */
+            if(Prioridad.equals("No")){
+                estatusSemaforo = "1";
+            }else{
+                estatusSemaforo = "3";
+            }
+            
         }
         
-        res = fechaInicial+"@"+fechaFinal+"@"+diasLoadType+"@"+estatusSemaforo;
+        res = fechaInicial+"@"+fechaFinal+"@"+diasHabilesLoadType+"@"+estatusSemaforo+"@"+diasLimitePrioridadBaja+"@"+diasLimitePrioridadMedia+"@"+diasLimitePrioridadAlta;
         
         return res;
     }
     
     public static String diasTotalDespachoLoadType(String LoadType) {
         
-        String díasH = ""; 
+        String days = "";
+        String daysHabilits = ""; 
+        String dayLimitGreen = "";
+        String dayLimitYellow = "";
+        String dayLimitRed = "";
 
         if (LoadType.equals("FCL")) {
-            díasH = "8";
+            daysHabilits = "8";
+            dayLimitGreen = "5";
+            dayLimitYellow = "7";
+            dayLimitRed = "8";
         } else if (LoadType.equals("FCL/LCL")) {
-            díasH = "10";
+            daysHabilits = "10";
+            dayLimitGreen = "7";
+            dayLimitYellow = "9";
+            dayLimitRed = "10";
         } else if (LoadType.equals("LCL")) {
-            díasH = "10";
+            daysHabilits = "10";
+            dayLimitGreen = "7";
+            dayLimitYellow = "9";
+            dayLimitRed = "10";
         } else if (LoadType.equals("AIR")) {
-            díasH = "6";
+            daysHabilits = "6";
+            dayLimitGreen = "3";
+            dayLimitYellow = "5";
+            dayLimitRed = "6";
         } else if (LoadType.equals("LTL")) {
-            díasH = "11";
+            daysHabilits = "11";
+            dayLimitGreen = "8";
+            dayLimitYellow = "10";
+            dayLimitRed = "11";
         }
         
-        return díasH;
+        days = daysHabilits+"*"+dayLimitGreen+"*"+dayLimitYellow+"*"+dayLimitRed;
+        
+        return days;
     }
     
     public static String calcularRangoFechasDiasHabiles(int month, int dias, int anio, String diasHabilesLoadType) {
@@ -101,5 +139,34 @@ public class CrearSemaforoCustoms {
         // Aquí puedes agregar más condiciones para verificar si la fecha es un día inhábil
         return true;
     }
+
+    public static String CalcularFechaAnteriorActual(String dateValidate) {
+        
+        String dateTime = "";
+        
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+
+        // Convertir la fecha a un formato específico
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        // Convertir la fecha de texto a LocalDate
+        LocalDate fechaVerificar = LocalDate.parse(dateValidate, formato);
+
+        // Comparar las fechas
+        if (fechaVerificar.isBefore(fechaActual)) {
+            dateTime = "<";
+        }else if (fechaVerificar.equals(fechaActual)) {
+            dateTime = "=";
+        }else {
+            dateTime = ">";
+        }
+ 
+        return dateTime;
+        
+    }
+    
+    
+
  
 }

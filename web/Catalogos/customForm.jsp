@@ -116,7 +116,7 @@
                 
                 document.getElementById('frameTableCustoms').src = "iframeDataCustom.jsp?filterType="+filterType+"&id="+id;
                 
-                fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
+                /*fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
                     method: 'POST',
                 }).then(r => r.text())
                     .then(data => {
@@ -125,7 +125,7 @@
                         }else{
                            console.log(data);
                         }
-                    }).catch(error => console.log(error));
+                    }).catch(error => console.log(error));*/
     
                 $('#frameTableCustoms').on("load", function() {
                   $("#WindowLoad").remove();

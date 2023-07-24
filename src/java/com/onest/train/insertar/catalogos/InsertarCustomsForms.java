@@ -855,6 +855,12 @@ public class InsertarCustomsForms extends HttpServlet {
         /************************************* Proceso para activar semaforo /*************************************/
        
                 if(!eta_port_discharge.trim().equals("")){ 
+                    
+                    // create SimpleDateFormat object with source string date format: Tratamiento 1
+                    SimpleDateFormat sdfSource2 = new SimpleDateFormat("yyyy-MM-dd"); 
+            
+                    // create SimpleDateFormat object with desired date format:       Tratamiento 2
+                    SimpleDateFormat sdfDestination2 = new SimpleDateFormat("MM/dd/yyyy");
 
                     String[] par = eta_port_discharge.split("/");
                     int month = Integer.parseInt(par[0]);
@@ -872,9 +878,15 @@ public class InsertarCustomsForms extends HttpServlet {
                     String f2 = parts[1];
                     String dias_total_despacho = parts[2]; 
                     String estatus_semaforo = parts[3]; 
-
-                    String fecha_inicial = sdfDestination.format(f1);
-                    String fecha_final = sdfDestination.format(f2);
+                    String diasLimitePrioridadBaja = par[4];     /*Días Limite Semaforo (Verde)*/    
+                    String diasLimitePrioridadMedia = par[5];    /*Días Limite Semaforo (Amarillo)*/  
+                    String diasLimitePrioridadAlta = par[6];     /*Días Limite Semaforo (Rojo)*/  
+                 
+                    Date dateFec1 = sdfSource2.parse(f1);                                                           //parse the string into Date object
+                    String fecha_inicial = sdfDestination2.format(dateFec1); 
+                    
+                    Date dateFec2 = sdfSource2.parse(f2);                                                           //parse the string into Date object
+                    String fecha_final = sdfDestination2.format(dateFec2); 
 
                     /*Consultar si existe el SHIPMENT_ID en la tabla de tra_inb_semaforo*/
                     String valShipmentSemaforo = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "'";
@@ -897,6 +909,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
                                      + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
+                                     + " DAY_LIMIT_GREEN = '" + diasLimitePrioridadBaja + "', "
+                                     + " DAY_LIMIT_YELLOW = '" + diasLimitePrioridadMedia + "', "
+                                     + " DAY_LIMIT_RED = '" + diasLimitePrioridadAlta + "' "
                                      + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
                                      + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
                         }
@@ -915,6 +930,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " FECHA_ACTIVACION, "
                                      + " FECHA_TERMINO, "
                                      + " DIAS_CALCULADOS, "
+                                     + " DAY_LIMIT_GREEN, "
+                                     + " DAY_LIMIT_YELLOW, "
+                                     + " DAY_LIMIT_RED, "
                                      + " DIAS_TRANSCURRIDOS) "
                                      + " VALUES "
                                      + "(NULL, "
@@ -928,6 +946,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
                                      + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " '" + dias_total_despacho + "', "
+                                     + " '" + diasLimitePrioridadBaja + "', "
+                                     + " '" + diasLimitePrioridadMedia + "', "
+                                     + " '" + diasLimitePrioridadAlta + "', "
                                      + " 1) ";
                     }
 
