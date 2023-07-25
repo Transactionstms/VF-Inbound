@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.onest.train.modificar.catalogos.UpGtnShipmentId;
 
 /**
  *
@@ -43,6 +44,9 @@ public class ModificarEvento extends HttpServlet {
         ConsultasQuery fac = new ConsultasQuery();
         
          try{
+             
+                // create object whit store procedure 
+                UpGtnShipmentId obj = new UpGtnShipmentId();
              
                 // create SimpleDateFormat object with source string date format: Tratamiento 1
                 SimpleDateFormat sdfSource = new SimpleDateFormat("MM/dd/yy"); 
@@ -257,7 +261,10 @@ public class ModificarEvento extends HttpServlet {
                                 " bl_awb_pro='"+bl+"' " +
                                 " where container1='"+con+"' and shipment_id='"+ship+"'";
                 boolean insert=db.doDB(sqlGtn);
-
+                
+                /*Instrucción Store Procedure - UpdateLtdGtnConShipmentId*/
+                String storeProcedure = obj.updateGtnShipmentId(Shipment);
+                System.out.println("Respuesta Store Procedure: " + storeProcedure);
         
            } catch (Exception e) {
                 out.println("Error " + e.toString());
