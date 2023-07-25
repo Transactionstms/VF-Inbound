@@ -120,6 +120,7 @@
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
+                                                                
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>
