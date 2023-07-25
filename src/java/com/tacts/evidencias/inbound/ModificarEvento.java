@@ -211,7 +211,7 @@ public class ModificarEvento extends HttpServlet {
                         if(contador>0){
 
                             /* Emisión de Alerta - Actualización de Campos: */
-                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4005 AND ESTATUS IN (1)";
+                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4006 AND ESTATUS IN (1)";
                             if (db.doDB(consulta)) {
                                 for (String[] rowE : db.getResultado()) {
                                     emails = rowE[0].replaceFirst(" ", "/");  
