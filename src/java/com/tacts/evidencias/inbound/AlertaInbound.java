@@ -54,12 +54,16 @@ public class AlertaInbound extends HttpServlet {
  
         if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
             for (String[] row : db.getResultado()) {
+                
+                if(!row[4].equals("No/DSN")){
+                    
+                    String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '" + row[22] + "' WHERE PLANTILLA_ID = '" + row[17] + "'";
+                    boolean oraOut1 = oraDB.execute(LoadTypeFinal);
 
-                String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '" + row[22] + "' WHERE PLANTILLA_ID = '" + row[17] + "'";
-                boolean oraOut1 = oraDB.execute(LoadTypeFinal);
-
-                String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + row[17] + "'";
-                boolean oraOut2 = oraDB.execute(estatusInicial);
+                    String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + row[17] + "'";
+                    boolean oraOut2 = oraDB.execute(estatusInicial);
+                       
+                }
 
             }
         } 
