@@ -66,6 +66,7 @@
         
                 ConsultasQuery fac = new ConsultasQuery();
                 String agenteAduanal = "";
+                String colors = "";
                 int cont = 0; 
 
                 if (db.doDB(fac.consultarAAEventosDetalle(UserId))) { 
@@ -130,11 +131,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <%
-                                                            //if (db.doDB(sql2)) {
                                                             if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
                                                                 for (String[] row : db.getResultado()) {
+                                                                    
+                                                                   if(row[4].equals("No/DSN")){
+                                                                     colors = "color: #ff0000;";
+                                                                   }else{
+                                                                     colors = "color: #000000;";  
+                                                                   }
                                                         %>
-                                                        <tr id="tr<%=cont%>">
+                                                        <tr id="tr<%=cont%>" style="<%=colors%>">
                                                             <td class="font-numero" style="cursor: pointer" onclick="editarEvento('<%=row[0]%>')"><%=row[0]%></td>	
                                                             <td class="font-numero"><%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
