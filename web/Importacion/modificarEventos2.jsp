@@ -109,6 +109,14 @@
                                                 sbu += "<option value='" + row[0] + "' >" + row[1] + "</option>";
                                             }
                                         }
+                                        
+                                        String loadT = "";
+                                        String loadType = "SELECT LOAD_TYPE FROM TRA_INB_LOAD_TYPE ORDER BY ID_REG ASC";
+                                        if (db.doDB(loadType)) {
+                                            for (String[] row : db.getResultado()) {
+                                                loadT += "<option value='" + row[0] + "' >" + row[0] + "</option>";
+                                            }
+                                        }
 
                                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                                             for (String[] row : db.getResultado()) {
@@ -182,7 +190,10 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Load Type</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[22]%>" name="Load1" id="Load1">
+                                                    <select class="form-control chosen" data-placeholder="..." name="Load1" id="Load1">                     
+                                                        <option value="<%=row[22]%>"><%=row[22]%></option>
+                                                        <%=loadT%>
+                                                    </select>
                                                 </div>
                                             </div>  
 
@@ -256,19 +267,24 @@
 
                                                 </div>
                                             </div>  
-
-
-
+                                                    
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Observaciones</strong></label>
                                                     <input class="form-control" type="text" placeholder="..." value="<%=row[25]%>" name="observaciones" id="observaciones" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
                                                 </div>
                                             </div> 
+                                                
+<!--*******************************************************-->
+
+                                            <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>ACTUAL CRD</strong></label>
+                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[29]%>" name="actual_crd" id="actual_crd">
+                                                </div>
+                                            </div> 
 
                                         </div>
-
-
 
                                         <div class="mb-3">       
                                             <button class="btn btn-primary" type="button" onclick="getData()">Modificar</button>
@@ -315,10 +331,12 @@ async function getData() {
         const eta_plus          = document.getElementById('eta_plus').value;
         const pol               = document.getElementById('pol').value;
         const observaciones     = document.getElementById('observaciones').value;
+        const actual_crd     = document.getElementById('actual_crd').value;
+        
         swal("Espere...!");
 
         try {
-          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&evento=<%=evento%>&ship=<%=ship%>&con=<%=con%>' );
+          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&evento=<%=evento%>&ship=<%=ship%>&con=<%=con%>&actual_crd='+actual_crd);
           console.log(data);
           swal("Modificado");
         } catch (error) {

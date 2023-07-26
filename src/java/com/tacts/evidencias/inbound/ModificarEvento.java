@@ -74,6 +74,8 @@ public class ModificarEvento extends HttpServlet {
                 String eta_plus         = request.getParameter("eta_plus").trim();
                 String pol              = request.getParameter("pol").trim();
                 String observaciones    = request.getParameter("observaciones").trim();
+                
+                String actual_crd       = request.getParameter("actual_crd").trim();
 
                 String evento    = request.getParameter("evento").trim();
                 String ship      = request.getParameter("ship").trim();
@@ -86,6 +88,7 @@ public class ModificarEvento extends HttpServlet {
                 String fecha2_eta_port_discharge = "";
                 String fecha3_eta_plus2 = "";
                 String fecha4_eta_plus = "";
+                String fecha5_actual_crd = "";
 
                 String caramelo = "";
                 String emails = "";
@@ -204,6 +207,16 @@ public class ModificarEvento extends HttpServlet {
                                    caramelo += " Observaciones: " + row[25] + "/";
                                    contador++;
                                 }
+                                
+                                if(!row[29].trim().equals("")){
+                                    Date date5 = sdfSource.parse(row[29]); 
+                                    fecha5_actual_crd = sdfDestination.format(date5);
+                                
+                                    if(!fecha5_actual_crd.equals(actual_crd)){
+                                       caramelo += " Actual CRD: " + row[29] + "/";
+                                       contador++;
+                                    }
+                                }
 
                             }
                         }
@@ -238,28 +251,33 @@ public class ModificarEvento extends HttpServlet {
                                 " load_type='"+Load1+"', " +
                                 " LOAD_TYPE_FINAL='"+Load1+"', " +
                                 " quantity='"+quantity+"', " +
-                                " pod='"+pod+"', ";
+                                " pod='"+pod+"', " +
+                                " max_flete='"+max_flete+"', ";
                  
                             if(!est_departure_pol.trim().equals("")){ 
                        sqlGtn+= " est_departure_pol =to_date('"+est_departure_pol+"','MM/DD/YY'), ";
                             }  
                             
-                            if(!est_departure_pol.trim().equals("")){ 
+                            if(!eta_port_discharge.trim().equals("")){ 
                        sqlGtn+= " eta_port_discharge=to_date('"+eta_port_discharge+"','MM/DD/YY'), ";
                             } 
-                            
-                       sqlGtn+= " max_flete='"+max_flete+"', ";
                        
-                            if(!est_departure_pol.trim().equals("")){ 
+                            if(!eta_plus2.trim().equals("")){ 
                        sqlGtn+= " eta_plus2=to_date('"+eta_plus2+"', 'MM/DD/YY'), ";
                             } 
                             
-                            if(!est_departure_pol.trim().equals("")){ 
+                            if(!eta_plus.trim().equals("")){ 
                        sqlGtn+= " eta_plus=to_date('"+eta_plus+"','MM/DD/YY'), " ;
                             } 
-                       sqlGtn+= " pol='"+pol+"',"+
+                       
+                            if(!actual_crd.trim().equals("")){ 
+                       sqlGtn+= " ACTUAL_CRD =to_date('"+actual_crd+"','MM/DD/YY'), ";
+                            }    
+                            
+                       sqlGtn+= " pol='"+pol+"', " +     
                                 " bl_awb_pro='"+bl+"' " +
-                                " where container1='"+con+"' and shipment_id='"+ship+"'";
+                                " where container1='"+con+"' " +
+                                " and shipment_id='"+ship+"'";
                 boolean insert=db.doDB(sqlGtn);
                 
                 /*Instrucción Store Procedure - UpdateLtdGtnConShipmentId*/
