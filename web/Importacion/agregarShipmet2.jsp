@@ -64,7 +64,7 @@
                         <div class="col-lg-12 mb-5">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-heading">MODIFICAR EVENTO</h4>
+                                    <h4 class="card-heading">Agregar Shipment</h4>
                                 </div>
                                 <div class="card-body">
                                     <!--  <p>Lorem ipsum dolor sit amet consectetur.</p>-->
@@ -271,7 +271,7 @@
 
 
                                         <div class="mb-3">       
-                                            <button class="btn btn-primary" type="button" onclick="getData()">Modificar</button>
+                                            <button class="btn btn-primary" type="button" onclick="getData()">Agregar</button>
                                         </div>
                                     </form>
                                     <%
