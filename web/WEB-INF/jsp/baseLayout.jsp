@@ -103,6 +103,7 @@
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Asignar Eventos Nuevos</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/modificarEventos.jsp" target="data">Modificar Eventos </a></li>
+                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/agregarShipmet.jsp" target="data">Agregar Shipment </a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
