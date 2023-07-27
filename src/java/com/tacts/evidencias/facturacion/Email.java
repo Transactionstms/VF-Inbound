@@ -766,7 +766,7 @@ public class Email {
 
             message.setFrom(new InternetAddress(REMITENTE));
             message.setHeader("X-Priority", "1");
-            message.setSubject("Informe - Modificación de Eventos Nuevos PRUEBAS");
+            message.setSubject("Informe - Asignación de Eventos");
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
@@ -1333,7 +1333,7 @@ public class Email {
 
             message.setFrom(new InternetAddress(REMITENTE));
             message.setHeader("X-Priority", "1");
-            message.setSubject("Informe - Modificación de Eventos FORMULARIO PRUEBAS");
+            message.setSubject("Informe - Modificación de Eventos");
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message

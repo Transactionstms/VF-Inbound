@@ -52,9 +52,8 @@ public class ModificarEvento extends HttpServlet {
                 SimpleDateFormat sdfSource = new SimpleDateFormat("MM/dd/yy"); 
 
                 // create SimpleDateFormat object with desired date format:       Tratamiento 2
-                SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yy");
 
-                
                 String responsable = request.getParameter("responsable").trim();
                 String finaldes    = request.getParameter("finaldes").trim();
                 String Brand       = request.getParameter("Brand").trim();
@@ -77,11 +76,14 @@ public class ModificarEvento extends HttpServlet {
                 
                 String actual_crd       = request.getParameter("actual_crd").trim();
 
-                String evento    = request.getParameter("evento").trim();
                 String ship      = request.getParameter("ship").trim();
                 String con       = request.getParameter("con").trim();
 
                 String bl       = request.getParameter("bl").trim();
+                
+                String numEventoActual = request.getParameter("numEventoActual").trim();
+                String numEventoDB = request.getParameter("numEventoDB").trim();
+                String updateEvento = request.getParameter("updateEvento").trim();
 
                 /*Parametros - Comparación de información (formulario/dba)*/
                 String fecha1_est_departure_pol = "";
@@ -90,66 +92,78 @@ public class ModificarEvento extends HttpServlet {
                 String fecha4_eta_plus = "";
                 String fecha5_actual_crd = "";
 
+                String evento    = "";
                 String caramelo = "";
                 String emails = "";
                 int contador = 0;
+                
+                if(updateEvento.equals("1")){ /*Número de Evento Acualizado*/
+                    //update evento evtn
+                    String inbEvento = "UPDATE TRA_INB_EVENTO SET ID_EVENTO = '"+numEventoActual+"' WHERE ID_EVENTO = '"+numEventoDB+"' ";
+                    boolean oraout1=db.doDB(inbEvento);
+                    
+                    if(oraout1){evento = numEventoActual;}
+                    
+                }else{
+                    evento = numEventoDB;
+                }
 
                         /* Comparación de información(formulario) vs información(base de datos) */
                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                             for (String[] row : db.getResultado()) {
                                 
-                                if(!row[0].trim().equals(evento)){
-                                   caramelo += " Número de evento: " + row[0] + "/";
+                                if(updateEvento.equals("1")){
+                                   caramelo += " Número de evento: " + evento + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[6].trim().equals(con)){
-                                   caramelo += " Container: " + row[6] + "/";
+                                   caramelo += " Container: " + con + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[7].trim().equals(bl)){
-                                   caramelo += " BL/ AWB/ PRO: " + row[7] + "/";
+                                   caramelo += " BL/ AWB/ PRO: " + bl + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[26].trim().equals(responsable)){
-                                   caramelo += " Responsable: " + row[1] + "/";
+                                   caramelo += " Responsable: " + responsable + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[2].trim().equals(finaldes)){
-                                   caramelo += " Final Destination (Shipment): " + row[2] + "/";
+                                   caramelo += " Final Destination (Shipment): " + finaldes + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[3].trim().equals(Brand)){
-                                   caramelo += " Brand-Division: " + row[21] + "/";
+                                   caramelo += " Brand-Division: " + Brand + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[27].trim().equals(sbu_name)){
-                                   caramelo += " Division: " + row[4] + "/";
+                                   caramelo += " Division: " + sbu_name + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[5].trim().equals(Shipment)){
-                                   caramelo += " Shipment ID: " + row[5] + "/";
+                                   caramelo += " Shipment ID: " + Shipment + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[22].trim().equals(Load1)){
-                                   caramelo += " Load Type: " + row[22] + "/";
+                                   caramelo += " Load Type: " + Load1 + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[9].trim().equals(quantity)){  //revisar
-                                   caramelo += " Quantity: " + row[9] + "/";
+                                   caramelo += " Quantity: " + quantity + "/";
                                    contador++;
                                 }
                                 
                                 if(!row[10].trim().equals(pod)){
-                                   caramelo += " POD: " + row[19] + "/";
+                                   caramelo += " POD: " + pod + "/";
                                    contador++;
                                 }
                                 
@@ -158,7 +172,7 @@ public class ModificarEvento extends HttpServlet {
                                     fecha1_est_departure_pol = sdfDestination.format(date1);
                                
                                     if(!fecha1_est_departure_pol.equals(est_departure_pol)){
-                                       caramelo += " Est. Departure from POL: " + row[11] + "/";
+                                       caramelo += " Est. Departure from POL: " + est_departure_pol + "/";
                                        contador++;
                                     }
                                 }
@@ -168,13 +182,13 @@ public class ModificarEvento extends HttpServlet {
                                     fecha2_eta_port_discharge = sdfDestination.format(date2);
                                 
                                     if(!fecha2_eta_port_discharge.equals(eta_port_discharge)){
-                                       caramelo += " ETA REAL PORT: " + row[12] + "/";
+                                       caramelo += " ETA REAL PORT: " + eta_port_discharge + "/";
                                        contador++;
                                     }
                                 }
                                 
                                 if(!row[13].trim().equals(max_flete)){
-                                   caramelo += " LT2: " + row[13] + "/";
+                                   caramelo += " LT2: " + max_flete + "/";
                                    contador++;
                                 }
                                 
@@ -183,7 +197,7 @@ public class ModificarEvento extends HttpServlet {
                                     fecha3_eta_plus2 = sdfDestination.format(date3);
 
                                     if(!fecha3_eta_plus2.equals(eta_plus2)){                         
-                                       caramelo += " ETA DC: " + row[23] + "/";
+                                       caramelo += " ETA DC: " + eta_plus2 + "/";
                                        contador++;
                                     }
                                 }    
@@ -193,18 +207,18 @@ public class ModificarEvento extends HttpServlet {
                                     fecha4_eta_plus = sdfDestination.format(date4);
                                 
                                     if(!fecha4_eta_plus.equals(eta_plus)){
-                                       caramelo += " INDC +2 Days Put Away: " + row[24] + "/";    
+                                       caramelo += " INDC +2 Days Put Away: " + eta_plus + "/";    
                                        contador++;
                                     }
                                 } 
                             
                                 if(!row[28].trim().equals(pol)){
-                                   caramelo += " POL: " + row[20] + "/";
+                                   caramelo += " POL: " + pol + "/";
                                    contador++;
                                 } 
                                 
                                 if(!row[25].trim().equals(observaciones)){
-                                   caramelo += " Observaciones: " + row[25] + "/";
+                                   caramelo += " Observaciones: " + observaciones + "/";
                                    contador++;
                                 }
                                 
@@ -213,7 +227,7 @@ public class ModificarEvento extends HttpServlet {
                                     fecha5_actual_crd = sdfDestination.format(date5);
                                 
                                     if(!fecha5_actual_crd.equals(actual_crd)){
-                                       caramelo += " Actual CRD: " + row[29] + "/";
+                                       caramelo += " Actual CRD: " + actual_crd + "/";
                                        contador++;
                                     }
                                 }
@@ -224,7 +238,7 @@ public class ModificarEvento extends HttpServlet {
                         if(contador>0){
 
                             /* Emisión de Alerta - Actualización de Campos: */
-                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4006 AND ESTATUS IN (1)";
+                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4005 AND ESTATUS IN (1)";
                             if (db.doDB(consulta)) {
                                 for (String[] rowE : db.getResultado()) {
                                     emails = rowE[0].replaceFirst(" ", "/");  
@@ -235,12 +249,6 @@ public class ModificarEvento extends HttpServlet {
 
                         }
                         
-                 String sqlEve =" update tra_inb_evento " +
-                                " set  " +
-                                " USER_NID ="+responsable+", " +
-                                " observaciones='"+observaciones+"' " +
-                                " where ID_EVENTO='"+evento+"' ";
-                 boolean update=db.doDB(sqlEve);
 
                  String sqlGtn= " update tra_inc_gtn_test " +
                                 " set  " +
@@ -279,6 +287,13 @@ public class ModificarEvento extends HttpServlet {
                                 " where container1='"+con+"' " +
                                 " and shipment_id='"+ship+"'";
                 boolean insert=db.doDB(sqlGtn);
+                
+                 String sqlEve =" update tra_inb_evento " +
+                                " set  " +
+                                " USER_NID ="+responsable+", " +
+                                " observaciones='"+observaciones+"' " +
+                                " where ID_EVENTO='"+evento+"' ";
+                 boolean update=db.doDB(sqlEve);
                 
                 /*Instrucción Store Procedure - UpdateLtdGtnConShipmentId*/
                 String storeProcedure = obj.updateGtnShipmentId(Shipment);

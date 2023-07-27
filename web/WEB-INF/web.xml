@@ -910,6 +910,10 @@
         <servlet-name>AgregarShipmet</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.AgregarShipmet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarNumEvento</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarNumEvento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1814,6 +1818,10 @@
     <servlet-mapping>
         <servlet-name>AgregarShipmet</servlet-name>
         <url-pattern>/AgregarShipmet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarNumEvento</servlet-name>
+        <url-pattern>/ConsultarNumEvento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

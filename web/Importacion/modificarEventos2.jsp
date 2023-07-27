@@ -40,8 +40,6 @@
         <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
-        <!-- Connection Status Red -->
-        <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%
@@ -128,8 +126,10 @@
                                         <div class="row">
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
-                                                    <label class="form-label text-uppercase"><strong> Número de evento  </strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[0]%>">
+                                                    <label class="form-label text-uppercase"><strong>Número de evento</strong></label>
+                                                    <input class="form-control" id="numEventoActual" name="numEventoActual" type="text" value="<%=row[0]%>" onchange="validarNumEvento(this.value);">
+                                                    <input type="hidden" id="numEventoDB" name="numEventoDB" value="<%=row[0]%>">
+                                                    <input type="hidden" id="updateEvento" name="updateEvento" value="0">
                                                 </div>
                                             </div>  
                                               <div class="col-md-4 "> 
@@ -190,7 +190,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Load Type</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="Load1" id="Load1">                     
+                                                    <select class="form-control chosen" data-placeholder="..." name="Load1" id="Load1" onchange="diasLoadType(this.value)">                     
                                                         <option value="<%=row[22]%>"><%=row[22]%></option>
                                                         <%=loadT%>
                                                     </select>
@@ -303,53 +303,57 @@
 
             </div>
         </div>    
-
-
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
-
+        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"  >
         <script type="text/javascript">
            
-async function getData() { 
-        const bl                = document.getElementById('bl').value;
-        const responsable       = document.getElementById('responsable').value;
-        const finalDestination  = document.getElementById('finaldes').value;
-        const brandDivision     = document.getElementById('Brand').value;
-        const division          = document.getElementById('sbu_name').value;
-        const shipmentId        = document.getElementById('Shipment').value;
-        const loadType          = document.getElementById('Load1').value;
-        const quantity          = document.getElementById('quantity').value;
-        const pod               = document.getElementById('pod').value;
-        const estDeparturePol   = document.getElementById('est_departure_pol').value;
-        const etaRealPort       = document.getElementById('eta_port_discharge').value;
-        const max_flete         = document.getElementById('max_flete').value;
-        const eta_plus2         = document.getElementById('eta_plus2').value;
-        const eta_plus          = document.getElementById('eta_plus').value;
-        const pol               = document.getElementById('pol').value;
-        const observaciones     = document.getElementById('observaciones').value;
-        const actual_crd     = document.getElementById('actual_crd').value;
-        
-        swal("Espere...!");
+            async function getData() { 
+                    
+                        const numEventoActual   = document.getElementById('numEventoActual').value;
+                        const numEventoDB       = document.getElementById('numEventoDB').value;
+                        const updateEvento     = document.getElementById('updateEvento').value;
 
-        try {
-          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&evento=<%=evento%>&ship=<%=ship%>&con=<%=con%>&actual_crd='+actual_crd);
-          console.log(data);
-          swal("Modificado");
-        } catch (error) {
-          swal("Error"); 
-          console.error(error);
-        }
-      }
+                        const bl                = document.getElementById('bl').value;
+                        const responsable       = document.getElementById('responsable').value;
+                        const finalDestination  = document.getElementById('finaldes').value;
+                        const brandDivision     = document.getElementById('Brand').value;
+                        const division          = document.getElementById('sbu_name').value;
+                        const shipmentId        = document.getElementById('Shipment').value;
+                        const loadType          = document.getElementById('Load1').value;
+                        const quantity          = document.getElementById('quantity').value;
+                        const pod               = document.getElementById('pod').value;
+                        const estDeparturePol   = document.getElementById('est_departure_pol').value;
+                        const etaRealPort       = document.getElementById('eta_port_discharge').value;
+                        const max_flete         = document.getElementById('max_flete').value;
+                        const eta_plus2         = document.getElementById('eta_plus2').value;
+                        const eta_plus          = document.getElementById('eta_plus').value;
+                        const pol               = document.getElementById('pol').value;
+                        const observaciones     = document.getElementById('observaciones').value;
+                        const actual_crd     = document.getElementById('actual_crd').value;
+                        
+                        swal("Espere...!");
 
-async function fetchData(url) {
-  const response = await fetch(url);
-  const data = await response.text();
-  return data;
-}
+                        try {
+                          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&ship=<%=ship%>&con=<%=con%>&actual_crd='+actual_crd+'&numEventoActual='+numEventoActual+'&numEventoDB='+numEventoDB+'&updateEvento='+updateEvento);
+                          console.log(data);
+                          swal("Modificado");
+                        } catch (error) {
+                          swal("Error"); 
+                          console.error(error);
+                        }
+            }
+
+            async function fetchData(url) {
+              const response = await fetch(url);
+              const data = await response.text();
+              return data;
+            }
 
             $('.chosen').chosen();
 
@@ -361,15 +365,41 @@ async function fetchData(url) {
                     }
                 });
             });
-
         </script>
-        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"  >
-
-
-
-
-
+        <script>
+            function validarNumEvento(numEventoActual){
+                
+                let numEventoDB = document.getElementById('numEventoDB').value;
+                
+                fetch("<%=request.getContextPath()%>/ConsultarNumEvento?numEventoActual="+numEventoActual+"&numEventoDB="+numEventoDB, {
+                    method: 'POST',
+                }).then(r => r.text())
+                        .then(data => {
+                              if(data === "true"){
+                                  swal("", "Número de Evento Existente", "info");
+                                  alertclose();
+                              }else{
+                                  document.getElementById("updateEvento").value = "1";
+                              }
+                        }).catch(error => console.log(error));
+            }
+            
+            function diasLoadType(loadType){
+                
+                if(loadType==="LTL"){
+                    document.getElementById("max_flete").value = "27";
+                }else if(loadType==="AIR"){
+                    document.getElementById("max_flete").value = "20";
+                }
+             
+            }
+            
+            function alertclose() {
+                setTimeout(function () {
+                    swal.close();
+                }, 2000);
+            }
+        </script>
     </body>
     <%
         } catch (NullPointerException e) {
