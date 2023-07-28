@@ -914,6 +914,14 @@
         <servlet-name>ConsultarNumEvento</servlet-name>
         <servlet-class>com.onest.train.consultas.ConsultarNumEvento</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateLt2_EtaDcAndPutAway</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpdateLt2_EtaDcAndPutAway</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpLt2_EtaDcAndPutAway</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpLt2_EtaDcAndPutAway</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1822,6 +1830,14 @@
     <servlet-mapping>
         <servlet-name>ConsultarNumEvento</servlet-name>
         <url-pattern>/ConsultarNumEvento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLt2_EtaDcAndPutAway</servlet-name>
+        <url-pattern>/UpdateLt2_EtaDcAndPutAway</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpLt2_EtaDcAndPutAway</servlet-name>
+        <url-pattern>/UpLt2_EtaDcAndPutAway</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

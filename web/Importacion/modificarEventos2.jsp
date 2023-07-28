@@ -190,7 +190,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Load Type</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="Load1" id="Load1" onchange="diasLoadType(this.value)">                     
+                                                    <select class="form-control chosen" name="Load1" id="Load1" onchange="diasLoadType(this.value);">                     
                                                         <option value="<%=row[22]%>"><%=row[22]%></option>
                                                         <%=loadT%>
                                                     </select>
@@ -385,12 +385,30 @@
             }
             
             function diasLoadType(loadType){
+                //Load1
+                let actual_crd = document.getElementById('actual_crd').value;
+                let max_flete = "0";
                 
                 if(loadType==="LTL"){
-                    document.getElementById("max_flete").value = "27";
+                    max_flete = "27";
                 }else if(loadType==="AIR"){
-                    document.getElementById("max_flete").value = "20";
+                    max_flete = "20";
                 }
+                
+                fetch("<%=request.getContextPath()%>/UpLt2_EtaDcAndPutAway?actual_crd="+actual_crd+"&lt2="+max_flete, {
+                    method: 'POST',
+                }).then(r => r.text())
+                .then(data => {
+                     
+                      var inputs = data.split("@");
+                      var date_etaDc = inputs[0];
+                      var date_putAway = inputs[1];
+                      
+                      document.getElementById("eta_plus2").value = date_etaDc;
+                      document.getElementById("eta_plus").value = date_putAway;
+                      document.getElementById("max_flete").value = max_flete;
+                      
+                }).catch(error => console.log(error));
              
             }
             
