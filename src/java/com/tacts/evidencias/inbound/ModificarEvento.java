@@ -91,6 +91,7 @@ public class ModificarEvento extends HttpServlet {
                 String fecha3_eta_plus2 = "";
                 String fecha4_eta_plus = "";
                 String fecha5_actual_crd = "";
+                String inboundNotification = "";
 
                 String evento    = "";
                 String caramelo = "";
@@ -231,6 +232,8 @@ public class ModificarEvento extends HttpServlet {
                                        contador++;
                                     }
                                 }
+                                
+                                inboundNotification = row[14];
 
                             }
                         }
@@ -245,7 +248,7 @@ public class ModificarEvento extends HttpServlet {
                                 }
                             }
 
-                            correo.alertaModificarEventosFormulario(emails, evento, con, ship, caramelo); 
+                            correo.alertaModificarEventosFormulario(emails, evento, con, ship, inboundNotification, caramelo); 
 
                         }
                         

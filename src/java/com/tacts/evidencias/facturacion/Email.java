@@ -329,7 +329,7 @@ public class Email {
         return mensaje;
     }
     
-    private String getModificarEventosFormulario(String evento, String con, String ship, String caramelo) {
+    private String getModificarEventosFormulario(String evento, String con, String ship, String inboundNotification, String caramelo) {
 
         String delimiter = "/";
         String mensaje = "";
@@ -349,6 +349,7 @@ public class Email {
                         + "              <h4>Número de Evento: " + evento + "</h4>"
                         + "              <h4>Container: " + con + "</h4>"
                         + "              <h4>Shipment Id: " + ship + "</h4>"
+                        + "              <h4>Inbound Notification: " + inboundNotification + "</h4>"
                         + "              <br>"
                         + "              <br>" 
                         + "              <div align=\"center\">\n"
@@ -1309,7 +1310,7 @@ public class Email {
         }
     }
     
-    public boolean alertaModificarEventosFormulario(String correosInternos, String evento, String con, String ship, String caramelo){
+    public boolean alertaModificarEventosFormulario(String correosInternos, String evento, String con, String ship, String inboundNotification, String caramelo){
 
         boolean enviado = false;
         String[] vect;
@@ -1337,7 +1338,7 @@ public class Email {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
-            messageBodyPart.setContent(getModificarEventosFormulario(evento, con, ship, caramelo), "text/html");
+            messageBodyPart.setContent(getModificarEventosFormulario(evento, con, ship, inboundNotification, caramelo), "text/html");
 
             Multipart multipart = new MimeMultipart();
 
