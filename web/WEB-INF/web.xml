@@ -922,6 +922,22 @@
         <servlet-name>UpLt2_EtaDcAndPutAway</servlet-name>
         <servlet-class>com.onest.train.modificar.catalogos.UpLt2_EtaDcAndPutAway</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpLt2_LoadTypeNot</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpLt2_LoadTypeNot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpEtaDc_LoadTypeNot</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpEtaDc_LoadTypeNot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpActualCrd_LoadTypeNot</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpActualCrd_LoadTypeNot</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpBrandDivision_LoadTypeNot</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpBrandDivision_LoadTypeNot</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1838,6 +1854,22 @@
     <servlet-mapping>
         <servlet-name>UpLt2_EtaDcAndPutAway</servlet-name>
         <url-pattern>/UpLt2_EtaDcAndPutAway</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpLt2_LoadTypeNot</servlet-name>
+        <url-pattern>/UpLt2_LoadTypeNot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpEtaDc_LoadTypeNot</servlet-name>
+        <url-pattern>/UpEtaDc_LoadTypeNot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpActualCrd_LoadTypeNot</servlet-name>
+        <url-pattern>/UpActualCrd_LoadTypeNot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpBrandDivision_LoadTypeNot</servlet-name>
+        <url-pattern>/UpBrandDivision_LoadTypeNot</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

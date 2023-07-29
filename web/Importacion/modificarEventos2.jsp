@@ -40,6 +40,11 @@
         <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
+        <script>
+            $(document).ready(function () {
+                 diasBrandDivision(1);
+            });
+        </script>
     </head>
     <body>
         <%
@@ -52,6 +57,7 @@
                 String evento = request.getParameter("id");
                 String ship = request.getParameter("ship");
                 String con = request.getParameter("con");
+                String idBrandivision = "";
         %>
  
         <div class="d-flex align-items-stretch">
@@ -118,6 +124,8 @@
 
                                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                                             for (String[] row : db.getResultado()) {
+                                                
+                                                idBrandivision = row[3]; 
 
                                     %>
 
@@ -135,7 +143,7 @@
                                               <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Container</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[6]%>" readonly>
+                                                    <input class="form-control" type="text" id="con" name="con" value="<%=row[6]%>">
                                                 </div>
                                             </div>  
                                             <div class="col-md-4 "> 
@@ -154,22 +162,23 @@
                                                     </select>
                                                 </div>
                                             </div>  
+                                                    
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Final Destination (Shipment)</strong></label>
                                                     <input class="form-control" type="text" placeholder="..." value="<%=row[2]%>" name="finaldes" id="finaldes">
                                                 </div>
-                                            </div>   
+                                            </div> 
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Brand-Division</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand">                     
+                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand" onchange="diasBrandDivision(2);">                     
                                                         <option value="<%=row[3]%>"><%=row[21]%></option> 
                                                         <%=bd%>
                                                     </select>
-                                                </div>
+                                            </div>     
                                             </div> 
-                                                    
+                                                
                                                     
                                                     
                                             <div class="col-md-4 "> 
@@ -237,13 +246,13 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>LT2</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[13]%>" name="max_flete" id="max_flete">
+                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[13]%>" name="max_flete" id="max_flete" onchange="diasLt2(this.value);">
                                                 </div>
                                             </div>  
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>ETA DC</strong></label>
-                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[23]%>" name="eta_plus2" id="eta_plus2">
+                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[23]%>" name="eta_plus2" id="eta_plus2" onchange="diasEtaDc(this.value);">
                                                 </div>
                                             </div>  
 
@@ -280,7 +289,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>ACTUAL CRD</strong></label>
-                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[29]%>" name="actual_crd" id="actual_crd">
+                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[29]%>" name="actual_crd" id="actual_crd" onchange="diasActualCrd(this.value);">
                                                 </div>
                                             </div> 
 
@@ -302,7 +311,7 @@
                 </div>  
 
             </div>
-        </div>    
+        </div>                       
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
@@ -319,6 +328,7 @@
                         const numEventoDB       = document.getElementById('numEventoDB').value;
                         const updateEvento     = document.getElementById('updateEvento').value;
 
+                        const con                = document.getElementById('con').value;
                         const bl                = document.getElementById('bl').value;
                         const responsable       = document.getElementById('responsable').value;
                         const finalDestination  = document.getElementById('finaldes').value;
@@ -340,7 +350,7 @@
                         swal("Espere...!");
 
                         try {
-                          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&ship=<%=ship%>&con=<%=con%>&actual_crd='+actual_crd+'&numEventoActual='+numEventoActual+'&numEventoDB='+numEventoDB+'&updateEvento='+updateEvento);
+                          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&ship=<%=ship%>&con='+con+'&actual_crd='+actual_crd+'&numEventoActual='+numEventoActual+'&numEventoDB='+numEventoDB+'&updateEvento='+updateEvento);
                           console.log(data);
                           swal("Modificado");
                         } catch (error) {
@@ -348,23 +358,6 @@
                           console.error(error);
                         }
             }
-
-            async function fetchData(url) {
-              const response = await fetch(url);
-              const data = await response.text();
-              return data;
-            }
-
-            $('.chosen').chosen();
-
-            $(document).ready(function () {
-                $('.datepicker').flatpickr({
-                    dateFormat: 'm/d/Y',
-                    onClose: function (selectedDates, dateStr, instance) {
-                        instance.setDate(dateStr, true, 'm/d/Y');
-                    }
-                });
-            });
         </script>
         <script>
             function validarNumEvento(numEventoActual){
@@ -385,7 +378,7 @@
             }
             
             function diasLoadType(loadType){
-                //Load1
+                 
                 let actual_crd = document.getElementById('actual_crd').value;
                 let max_flete = "0";
                 
@@ -411,6 +404,111 @@
                 }).catch(error => console.log(error));
              
             }
+            
+            function diasLt2(max_flete){
+
+                let actual_crd = document.getElementById('actual_crd').value;
+
+                fetch("<%=request.getContextPath()%>/UpLt2_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
+                    method: 'POST',
+                }).then(r => r.text())
+                .then(data => {
+                     
+                      var inputs = data.split("@");
+                      var date_etaDc = inputs[0];
+                      var date_putAway = inputs[1];
+                      
+                      document.getElementById("eta_plus2").value = date_etaDc;
+                      document.getElementById("eta_plus").value = date_putAway;
+                      
+                }).catch(error => console.log(error));
+             
+            }
+            
+            function diasEtaDc(actual_crd){
+
+                let max_flete = document.getElementById('max_flete').value;
+
+                fetch("<%=request.getContextPath()%>/UpEtaDc_LoadTypeNot?eta_plus2="+actual_crd+"&lt2="+max_flete, {
+                    method: 'POST',
+                }).then(r => r.text())
+                .then(data => {
+                    
+                      document.getElementById("eta_plus").value = data;
+                      
+                }).catch(error => console.log(error));
+             
+            }
+            
+            function diasActualCrd(actual_crd){
+
+                let max_flete = document.getElementById('max_flete').value;
+
+                fetch("<%=request.getContextPath()%>/UpActualCrd_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
+                    method: 'POST',
+                }).then(r => r.text())
+                .then(data => {
+                     
+                      var inputs = data.split("@");
+                      var date_etaDc = inputs[0];
+                      var date_putAway = inputs[1];
+                      
+                      document.getElementById("eta_plus2").value = date_etaDc;
+                      document.getElementById("eta_plus").value = date_putAway;
+                      
+                }).catch(error => console.log(error));
+             
+            }
+            
+            function diasBrandDivision(tipoConsulta){
+                
+                let sbu_name = document.getElementById('sbu_name').value;
+                let id_brandDivision = "";
+                
+                if(tipoConsulta==="1"){
+                    id_brandDivision = '<%=idBrandivision%>';
+                }else{
+                    id_brandDivision = document.getElementById('Brand').value;
+                }
+                
+                if(id_brandDivision==="3003"){  //NORHT THE FACE
+                    
+                    if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
+                     
+                        let actual_crd = document.getElementById('actual_crd').value;
+                        let max_flete = document.getElementById('max_flete').value;
+
+                        fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
+                            method: 'POST',
+                        }).then(r => r.text())
+                        .then(data => {
+
+                              document.getElementById("eta_plus").value = data;
+
+                        }).catch(error => console.log(error));
+                        
+                    }
+                }
+                
+            }  
+        </script>
+        <script>
+            async function fetchData(url) {
+              const response = await fetch(url);
+              const data = await response.text();
+              return data;
+            }
+
+            $('.chosen').chosen();
+
+            $(document).ready(function () {
+                $('.datepicker').flatpickr({
+                    dateFormat: 'm/d/Y',
+                    onClose: function (selectedDates, dateStr, instance) {
+                        instance.setDate(dateStr, true, 'm/d/Y');
+                    }
+                });
+            });
             
             function alertclose() {
                 setTimeout(function () {

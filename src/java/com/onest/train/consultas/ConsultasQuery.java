@@ -3157,6 +3157,15 @@ public class ConsultasQuery {
         
         return sql;
     }
-
+    
+    public String consultarDivisionFormulario(String division) {
+        sql = " SELECT  "
+            + " DIVISION_NOMBRE "
+            + " FROM TRA_INB_DIVISION "
+            + " WHERE ID_DIVISION = '"+division+"' "
+            + " AND STATUS = 1";
+        
+        return sql;
+    }
 } 
  
