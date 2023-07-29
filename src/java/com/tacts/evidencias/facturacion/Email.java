@@ -354,12 +354,18 @@ public class Email {
                         + "              <br>" 
                         + "              <div align=\"center\">\n"
                         + "                <h2>Detalle - Información Actualizada:</h2>"
-                        + "              </div>\n";
+                        + "              </div>"
+                        + "              <table border=\"0\">" 
+                        + "                  <thead><tr><th>DETALLE:</th></tr></thead>"
+                        + "                  <tbody>";
+                     
                     for (String substring : substrings) { // Display the substrings
-                        mensaje += substring + "\n";
-                    }          
-
-               mensaje += "    </div>\n"
+               mensaje += "                     <tr><td>"+substring+"</td></tr>";
+                    } 
+                    
+               mensaje += "                  </tbody>"
+                        + "              </table> "
+                        + "    </div>"
                         + "<div style=\"max-width:600px;margin:0 auto\">\n"
                         + "    <div style=\"font:11px sans-serif;color:#686f7a\">\n"
                         + "        <p style=\"font-size:11px;color:#686f7a\">\n"

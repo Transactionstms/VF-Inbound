@@ -119,7 +119,13 @@ public class ModificarEvento extends HttpServlet {
                                 }
                                 
                                 if(!row[6].trim().equals(con)){
-                                   caramelo += " Container: " + con + "/";
+                                   
+                                    if (db.doDB(fac.consultarDivisionFormulario(con))) {
+                                        for (String[] rowc : db.getResultado()) {
+                                          caramelo += " Container*: " + rowc[0] + "/";
+                                        }
+                                    }
+                                    
                                    contador++;
                                 }
                                 
@@ -298,10 +304,6 @@ public class ModificarEvento extends HttpServlet {
                                 " where ID_EVENTO='"+evento+"' ";
                  boolean update=db.doDB(sqlEve);
                 
-                /*Instrucción Store Procedure - UpdateLtdGtnConShipmentId*/
-                String storeProcedure = obj.updateGtnShipmentId(Shipment);
-                System.out.println("Respuesta Store Procedure: " + storeProcedure);
-        
            } catch (Exception e) {
                 out.println("Error " + e.toString());
             } finally {
