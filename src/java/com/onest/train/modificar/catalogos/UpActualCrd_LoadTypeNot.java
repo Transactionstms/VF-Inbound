@@ -67,6 +67,8 @@ public class UpActualCrd_LoadTypeNot extends HttpServlet {
                 String date_putAway = "";
                 String fecha1_etaDc = "";
                 String fecha2_putAway = "";
+                String dateProvitional_1 = "";
+                String dateProvitional_2 = "";
                 String salida = "";
 
                 Date date0 = sdfSource2.parse(fecha_actual_crd);  
@@ -76,16 +78,31 @@ public class UpActualCrd_LoadTypeNot extends HttpServlet {
                 int maxFlete_etaDc  = Integer.parseInt(lt2)-2; 
                 int maxFlete_putAway = Integer.parseInt(lt2); 
 
-                date_etaDc = obj.updateLt2LoadTypeNot("(select TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_etaDc+" from dual)");
-
-                date_putAway = obj.updateLt2LoadTypeNot("(select TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_putAway+" from dual)");
+                //Calcular fechas + lt2
+                if (db.doDB("select TO_CHAR(TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_etaDc+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional_1 = row[0];
+                    }
+                }
                 
+                if (db.doDB("select TO_CHAR(TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional_2 = row[0];
+                    }
+                }
+                
+                //Consultar Fechas - Store Procedure 
+                date_etaDc = obj.updateLt2LoadTypeNot(dateProvitional_1);
+                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional_2);
+                
+                //Formatear Fechas Finales 
                 Date date1 = sdfSource1.parse(date_etaDc);  
                 fecha1_etaDc = sdfDestination1.format(date1);
                 
                 Date date2 = sdfSource1.parse(date_putAway);  
                 fecha2_putAway = sdfDestination1.format(date2);
 
+                //Cadena Final
                 salida = fecha1_etaDc+"@"+fecha2_putAway;
 
                 out.print(salida); 

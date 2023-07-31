@@ -65,6 +65,7 @@ public class UpEtaDc_LoadTypeNot extends HttpServlet {
                 String fecha_eta_plus2 = "";
                 String date_putAway = "";
                 String fecha2_putAway = "";
+                String dateProvitional = "";
                 String salida = "";
 
                 Date date0 = sdfSource2.parse(eta_plus2);  
@@ -72,13 +73,23 @@ public class UpEtaDc_LoadTypeNot extends HttpServlet {
                 
                 //Obtener días LoadType
                 int maxFlete_putAway = Integer.parseInt(lt2); 
-
-                date_putAway = obj.updateLt2LoadTypeNot("(select TO_DATE('"+fecha_eta_plus2+"','DD/MM/YYYY')+"+maxFlete_putAway+" from dual)");
                 
+                //Calcular fecha + lt2
+                if (db.doDB("select TO_CHAR(TO_DATE('"+fecha_eta_plus2+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional = row[0];
+                    }
+                }
+                
+                //Consultar Fecha - Store Procedure 
+                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional);
+                
+                //Formatear Fechas Finales
                 Date date2 = sdfSource1.parse(date_putAway);  
                 fecha2_putAway = sdfDestination1.format(date2);
 
-                salida = fecha2_putAway;
+                //Cadena Final
+                salida = fecha2_putAway; 
 
                 out.print(salida); 
                 oraDB.close(); //cerrar conexión

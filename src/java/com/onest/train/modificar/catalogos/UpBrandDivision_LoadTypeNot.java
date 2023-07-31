@@ -58,24 +58,35 @@ public class UpBrandDivision_LoadTypeNot extends HttpServlet {
             
             try{
             
-                String actual_crd = request.getParameter("actual_crd");
+                String eta_plus = request.getParameter("eta_plus");
                 String lt2 = request.getParameter("lt2");
                 String fecha_actual_crd = "";
                 String date_putAway = "";
                 String fecha_putAway = "";
+                String dateProvitional = "";
                 String salida = "";
 
-                Date date0 = sdfSource2.parse(actual_crd);  
+                Date date0 = sdfSource2.parse(eta_plus);  
                 fecha_actual_crd = sdfDestination2.format(date0);
                 
                 //Obtener días LoadType
-                int maxFlete_putAway = Integer.parseInt(lt2)+1; 
+                int maxFlete_putAway = Integer.parseInt(lt2); 
 
-                date_putAway = obj.updateLt2LoadTypeNot("(select TO_DATE('"+fecha_actual_crd+"','DD/MM/YYYY')+"+maxFlete_putAway+" from dual)");
+                //Calcular fecha + lt2
+                if (db.doDB("select TO_CHAR(TO_DATE('"+fecha_actual_crd+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional = row[0];
+                    }
+                }
                 
+                //Consultar Fecha - Store Procedure 
+                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional);
+                
+                //Formatear Fechas Finales 
                 Date date2 = sdfSource1.parse(date_putAway);  
                 fecha_putAway = sdfDestination1.format(date2);
 
+                //Cadena Final
                 salida = fecha_putAway;
 
                 out.print(salida); 

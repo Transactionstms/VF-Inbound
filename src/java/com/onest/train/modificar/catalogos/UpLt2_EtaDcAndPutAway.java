@@ -68,16 +68,18 @@ public class UpLt2_EtaDcAndPutAway extends HttpServlet {
                 int maxFlete_etaDc  = Integer.parseInt(lt2)-2; 
                 int maxFlete_putAway = Integer.parseInt(lt2); 
 
+                //Consultar Fechas por Método
                 date_etaDc = calcularRangoFechasDiasHabiles(month, dias, anio, maxFlete_etaDc);
-
                 date_putAway = calcularRangoFechasDiasHabiles(month, dias, anio, maxFlete_putAway);
                 
+                //Formatear Fechas Finales 
                 Date date1 = sdfSource.parse(date_etaDc);  
                 fecha1_etaDc = sdfDestination.format(date1);
                 
                 Date date2 = sdfSource.parse(date_putAway);  
                 fecha2_putAway = sdfDestination.format(date2);
 
+                //Cadena Final
                 salida = fecha1_etaDc+"@"+fecha2_putAway;
 
                 out.print(salida); 

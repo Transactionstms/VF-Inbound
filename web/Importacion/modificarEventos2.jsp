@@ -42,7 +42,7 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <script>
             $(document).ready(function () {
-                 diasBrandDivision(1);
+                 diasEtaDc(1);
             });
         </script>
     </head>
@@ -172,7 +172,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Brand-Division</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand" onchange="diasBrandDivision(2);">                     
+                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand" onchange="diasBrandDivision(this.value);">                     
                                                         <option value="<%=row[3]%>"><%=row[21]%></option> 
                                                         <%=bd%>
                                                     </select>
@@ -252,7 +252,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>ETA DC</strong></label>
-                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[23]%>" name="eta_plus2" id="eta_plus2" onchange="diasEtaDc(this.value);">
+                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[23]%>" name="eta_plus2" id="eta_plus2" onchange="diasEtaDc(2);">
                                                 </div>
                                             </div>  
 
@@ -377,7 +377,7 @@
                         }).catch(error => console.log(error));
             }
             
-            function diasLoadType(loadType){
+            function diasLoadType(loadType){  //RULE #1
                  
                 let actual_crd = document.getElementById('actual_crd').value;
                 let max_flete = "0";
@@ -399,13 +399,12 @@
                       
                       document.getElementById("eta_plus2").value = date_etaDc;
                       document.getElementById("eta_plus").value = date_putAway;
-                      document.getElementById("max_flete").value = max_flete;
                       
                 }).catch(error => console.log(error));
              
             }
             
-            function diasLt2(max_flete){
+            function diasLt2(max_flete){  //RULE #2  
 
                 let actual_crd = document.getElementById('actual_crd').value;
 
@@ -425,22 +424,39 @@
              
             }
             
-            function diasEtaDc(actual_crd){
+            function diasEtaDc(tipoConsulta){  //RULE #3
+                
+                let eta_plus2 = document.getElementById('eta_plus2').value;
+                let sbu_name = document.getElementById('sbu_name').value;
+                let id_brandDivision = "";
+                let lt2 = "";
+                
+                if(tipoConsulta==="1"){
+                    id_brandDivision = '<%=idBrandivision%>';
+                }else{
+                    id_brandDivision = document.getElementById('Brand').value;
+                }
 
-                let max_flete = document.getElementById('max_flete').value;
-
-                fetch("<%=request.getContextPath()%>/UpEtaDc_LoadTypeNot?eta_plus2="+actual_crd+"&lt2="+max_flete, {
+                if(id_brandDivision==="3003"){  //NORHT THE FACE
+                    if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
+                      lt2= "2";
+                    }
+                }else{
+                   lt2= "3";
+                }
+                
+                fetch("<%=request.getContextPath()%>/UpEtaDc_LoadTypeNot?eta_plus2="+eta_plus2+"&lt2="+lt2, {
                     method: 'POST',
                 }).then(r => r.text())
-                .then(data => {
-                    
-                      document.getElementById("eta_plus").value = data;
-                      
+                .then(date_putAway => {
+
+                      document.getElementById("eta_plus").value = date_putAway;
+
                 }).catch(error => console.log(error));
              
             }
             
-            function diasActualCrd(actual_crd){
+            function diasActualCrd(actual_crd){  //RULE #4
 
                 let max_flete = document.getElementById('max_flete').value;
 
@@ -460,36 +476,29 @@
              
             }
             
-            function diasBrandDivision(tipoConsulta){
+            function diasBrandDivision(id_brandDivision){  //RULE #5
                 
+                let eta_plus = document.getElementById('eta_plus').value;
                 let sbu_name = document.getElementById('sbu_name').value;
-                let id_brandDivision = "";
-                
-                if(tipoConsulta==="1"){
-                    id_brandDivision = '<%=idBrandivision%>';
-                }else{
-                    id_brandDivision = document.getElementById('Brand').value;
-                }
+                let lt2 = "";
                 
                 if(id_brandDivision==="3003"){  //NORHT THE FACE
-                    
                     if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
-                     
-                        let actual_crd = document.getElementById('actual_crd').value;
-                        let max_flete = document.getElementById('max_flete').value;
-
-                        fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
-                            method: 'POST',
-                        }).then(r => r.text())
-                        .then(data => {
-
-                              document.getElementById("eta_plus").value = data;
-
-                        }).catch(error => console.log(error));
-                        
+                        lt2 = "1";
                     }
+                }else{
+                    lt2 = "2";
                 }
                 
+                fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?eta_plus="+eta_plus+"&lt2="+lt2, {
+                    method: 'POST',
+                }).then(r => r.text())
+                .then(date_putAway => {
+
+                      document.getElementById("eta_plus").value = date_putAway;
+
+                }).catch(error => console.log(error));
+
             }  
         </script>
         <script>
