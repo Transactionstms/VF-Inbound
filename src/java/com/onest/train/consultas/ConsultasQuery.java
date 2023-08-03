@@ -2830,8 +2830,9 @@ public class ConsultasQuery {
         if(!agenteAduanalId.equals("4006")){ //VF
           sql += " WHERE taa.AGENTE_ADUANAL_ID IN ("+agenteAduanalId+") ";       
         }
-          sql += " AND tie.ESTATUS_EVENTO in (1) ";
-          sql += " ORDER BY tie.id_evento desc";
+          sql += " AND TID.DIVISION_NOMBRE <> 'No/DSN' "
+               + " AND TIE.ESTATUS_EVENTO IN (1) "
+               + " ORDER BY tie.id_evento desc ";
         
         return sql;
     }
