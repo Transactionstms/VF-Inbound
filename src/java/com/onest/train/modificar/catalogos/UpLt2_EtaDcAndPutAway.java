@@ -43,45 +43,75 @@ public class UpLt2_EtaDcAndPutAway extends HttpServlet {
             oraDB.connect(dbData.getUser(), dbData.getPassword());
             
             // create SimpleDateFormat object with source string date format: Tratamiento 1
-            SimpleDateFormat sdfSource = new SimpleDateFormat("yyyy-MM-dd"); 
+            SimpleDateFormat sdfSource1 = new SimpleDateFormat("yyyy-MM-dd"); 
 
             // create SimpleDateFormat object with desired date format:       Tratamiento 2
-            SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat sdfDestination1 = new SimpleDateFormat("MM/dd/yyyy");
+            
+            
+            // create SimpleDateFormat object with source string date format: Tratamiento 2
+            SimpleDateFormat sdfSource2 = new SimpleDateFormat("MM/dd/yyyy"); 
+
+            // create SimpleDateFormat object with desired date format:       Tratamiento 3
+            SimpleDateFormat sdfDestination2 = new SimpleDateFormat("dd/MM/yyyy");
+            
+            //creat objcet with Lt2 Load Type Not
+            Rule2_UpGtnLt2 obj = new Rule2_UpGtnLt2();
             
             try{
             
-                String actual_crd = request.getParameter("actual_crd");
+                String fecha_actual_crd = request.getParameter("actual_crd");
                 String lt2 = request.getParameter("lt2");
+                String actual_crd = "";
                 String date_etaDc = "";
                 String date_putAway = "";
                 String fecha1_etaDc = "";
                 String fecha2_putAway = "";
+                String dateProvitional_1 = "";
+                String dateProvitional_2 = "";
+                String fecha_actual_crd2 = "";
                 String salida = "";
 
-                //Obtener fecha Actual CRD
-                String[] fec1 = actual_crd.split("/");
-                int month = Integer.parseInt(fec1[0]);          
-                int dias = Integer.parseInt(fec1[1]);              
-                int anio = Integer.parseInt(fec1[2]);  
-
+                Date date0 = sdfSource2.parse(fecha_actual_crd);  
+                actual_crd = sdfDestination2.format(date0);
+                
                 //Obtener días LoadType
-                int maxFlete_etaDc  = Integer.parseInt(lt2)-2; 
-                int maxFlete_putAway = Integer.parseInt(lt2); 
-
-                //Consultar Fechas por Método
-                date_etaDc = calcularRangoFechasDiasHabiles(month, dias, anio, maxFlete_etaDc);
-                date_putAway = calcularRangoFechasDiasHabiles(month, dias, anio, maxFlete_putAway);
+                int maxFlete_etaDc  = Integer.parseInt(lt2); 
+                int maxFlete_putAway = 2; 
                 
-                //Formatear Fechas Finales 
-                Date date1 = sdfSource.parse(date_etaDc);  
-                fecha1_etaDc = sdfDestination.format(date1);
+                /****************************** Calcular 1er Fecha ******************************/
+                if (db.doDB("select TO_CHAR(TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_etaDc+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional_1 = row[0];
+                    }
+                }
                 
-                Date date2 = sdfSource.parse(date_putAway);  
-                fecha2_putAway = sdfDestination.format(date2);
+                date_etaDc = obj.updateLt2LoadTypeNot(dateProvitional_1); //Consultar Fechas - Store Procedure 
+                
+                Date date1 = sdfSource1.parse(date_etaDc);  
+                fecha1_etaDc = sdfDestination1.format(date1);             //Formatear Fechas Finales 
+                
+                
+                /****************************** Calcular 2da Fecha ******************************/
+                Date date2 = sdfSource2.parse(fecha1_etaDc);  
+                fecha_actual_crd2 = sdfDestination2.format(date2);
+                
+                if (db.doDB("select TO_CHAR(TO_DATE('"+fecha_actual_crd2+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
+                    for (String[] row : db.getResultado()) {
+                        dateProvitional_2 = row[0];
+                    }
+                }
+                
+                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional_2); //Consultar Fechas - Store Procedure 
+                
+                Date date3 = sdfSource1.parse(date_putAway);  
+                fecha2_putAway = sdfDestination1.format(date3);             //Formatear Fechas Finales 
 
-                //Cadena Final
+                
+                /****************************** Cadena Final ******************************/
                 salida = fecha1_etaDc+"@"+fecha2_putAway;
 
+                
                 out.print(salida); 
                 oraDB.close(); //cerrar conexión
             
@@ -90,43 +120,6 @@ public class UpLt2_EtaDcAndPutAway extends HttpServlet {
             }
             
         }
-    }
-    
-    public static String calcularRangoFechasDiasHabiles(int month, int dias, int anio, int diasHabilesLoadType) {
-        
-        int diasHabilesAgregar = diasHabilesLoadType;
-        
-        LocalDate fechaInicial = LocalDate.of(anio, month, dias);
-        LocalDate fechaFinal = aumentarDiasHabiles(fechaInicial, diasHabilesAgregar);
-
-        String daysOn = ""+fechaFinal;
-        
-        return daysOn;
-    }
-    
-    public static LocalDate aumentarDiasHabiles(LocalDate fechaInicial, int diasHabilesAgregar) {
-        LocalDate fechaActual = fechaInicial;
-        int diasAgregados = 0;
-
-        while (diasAgregados < diasHabilesAgregar) {
-            fechaActual = fechaActual.plusDays(1);
-
-            if (esDiaHabil(fechaActual)) {
-                diasAgregados++;
-            }
-        }
-
-        return fechaActual;
-    }
-
-    public static boolean esDiaHabil(LocalDate fecha) {
-        // Verificar si es fin de semana (sábado o domingo)
-        if (fecha.getDayOfWeek() == DayOfWeek.SATURDAY || fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            return false;
-        }
-
-        // Aquí puedes agregar más condiciones para verificar si la fecha es un día inhábil
-        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

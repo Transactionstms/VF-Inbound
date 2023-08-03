@@ -69,40 +69,45 @@ public class UpActualCrd_LoadTypeNot extends HttpServlet {
                 String fecha2_putAway = "";
                 String dateProvitional_1 = "";
                 String dateProvitional_2 = "";
+                String fecha_actual_crd2 = "";
                 String salida = "";
 
                 Date date0 = sdfSource2.parse(fecha_actual_crd);  
                 actual_crd = sdfDestination2.format(date0);
                 
                 //Obtener días LoadType
-                int maxFlete_etaDc  = Integer.parseInt(lt2)-2; 
-                int maxFlete_putAway = Integer.parseInt(lt2); 
+                int maxFlete_etaDc  = Integer.parseInt(lt2); 
+                int maxFlete_putAway = 2; 
 
-                //Calcular fechas + lt2
+                /****************************** Calcular 1er Fecha ******************************/
                 if (db.doDB("select TO_CHAR(TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_etaDc+",'DD/MM/YYYY') from dual")) {
                     for (String[] row : db.getResultado()) {
                         dateProvitional_1 = row[0];
                     }
                 }
                 
-                if (db.doDB("select TO_CHAR(TO_DATE('"+actual_crd+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
+                date_etaDc = obj.updateLt2LoadTypeNot(dateProvitional_1); //Consultar Fechas - Store Procedure 
+                
+                Date date1 = sdfSource1.parse(date_etaDc);  
+                fecha1_etaDc = sdfDestination1.format(date1); //Formatear Fechas Finales 
+                
+                
+                /****************************** Calcular 2da Fecha ******************************/
+                Date date2 = sdfSource2.parse(fecha1_etaDc);  
+                fecha_actual_crd2 = sdfDestination2.format(date2);
+                
+                if (db.doDB("select TO_CHAR(TO_DATE('"+fecha_actual_crd2+"','DD/MM/YYYY')+"+maxFlete_putAway+",'DD/MM/YYYY') from dual")) {
                     for (String[] row : db.getResultado()) {
                         dateProvitional_2 = row[0];
                     }
                 }
                 
-                //Consultar Fechas - Store Procedure 
-                date_etaDc = obj.updateLt2LoadTypeNot(dateProvitional_1);
-                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional_2);
+                date_putAway = obj.updateLt2LoadTypeNot(dateProvitional_2); //Consultar Fechas - Store Procedure 
                 
-                //Formatear Fechas Finales 
-                Date date1 = sdfSource1.parse(date_etaDc);  
-                fecha1_etaDc = sdfDestination1.format(date1);
-                
-                Date date2 = sdfSource1.parse(date_putAway);  
-                fecha2_putAway = sdfDestination1.format(date2);
+                Date date3 = sdfSource1.parse(date_putAway);  
+                fecha2_putAway = sdfDestination1.format(date3); //Formatear Fechas Finales 
 
-                //Cadena Final
+                /****************************** Cadena Final ******************************/
                 salida = fecha1_etaDc+"@"+fecha2_putAway;
 
                 out.print(salida); 

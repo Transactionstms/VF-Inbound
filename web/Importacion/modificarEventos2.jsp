@@ -172,7 +172,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Brand-Division</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand" onchange="diasBrandDivision(this.value);">                     
+                                                    <select class="form-control chosen" data-placeholder="..." name="Brand" id="Brand" onchange="diasBrandDivision();">                     
                                                         <option value="<%=row[3]%>"><%=row[21]%></option> 
                                                         <%=bd%>
                                                     </select>
@@ -184,7 +184,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Division</strong></label>
-                                                    <select class="form-control chosen" data-placeholder="..." name="sbu_name" id="sbu_name">                     
+                                                    <select class="form-control chosen" data-placeholder="..." name="sbu_name" id="sbu_name" onchange="diasBrandDivision();">                     
                                                         <option value="<%=row[27]%>"><%=row[4]%></option>
                                                         <%=sbu%>
                                                     </select>
@@ -382,26 +382,31 @@
                 let actual_crd = document.getElementById('actual_crd').value;
                 let max_flete = "0";
                 
-                if(loadType==="LTL"){
-                    max_flete = "27";
-                }else if(loadType==="AIR"){
-                    max_flete = "20";
+                if(loadType==="LTL"||loadType==="AIR"){
+                    
+                    if(loadType==="LTL"){
+                        max_flete = "27";
+                    }else if(loadType==="AIR"){
+                        max_flete = "20";
+                    }
+                    
+                    fetch("<%=request.getContextPath()%>/UpLt2_EtaDcAndPutAway?actual_crd="+actual_crd+"&lt2="+max_flete, {
+                        method: 'POST',
+                    }).then(r => r.text())
+                    .then(data => {
+
+                          var inputs = data.split("@");
+                          var date_etaDc = inputs[0];
+                          var date_putAway = inputs[1];
+
+                          document.getElementById("eta_plus2").value = date_etaDc;
+                          document.getElementById("eta_plus").value = date_putAway;
+                          document.getElementById("max_flete").value = max_flete;
+
+                    }).catch(error => console.log(error));
+                    
                 }
                 
-                fetch("<%=request.getContextPath()%>/UpLt2_EtaDcAndPutAway?actual_crd="+actual_crd+"&lt2="+max_flete, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(data => {
-                     
-                      var inputs = data.split("@");
-                      var date_etaDc = inputs[0];
-                      var date_putAway = inputs[1];
-                      
-                      document.getElementById("eta_plus2").value = date_etaDc;
-                      document.getElementById("eta_plus").value = date_putAway;
-                      
-                }).catch(error => console.log(error));
-             
             }
             
             function diasLt2(max_flete){  //RULE #2  
@@ -438,11 +443,9 @@
                 }
 
                 if(id_brandDivision==="3003"){  //NORHT THE FACE
-                    if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
-                      lt2= "2";
-                    }
+                    if(sbu_name==="5002"||sbu_name==="5001"){ lt2= "3"; } //APPAREL/ACCESSORIES
                 }else{
-                   lt2= "3";
+                   lt2= "2";
                 }
                 
                 fetch("<%=request.getContextPath()%>/UpEtaDc_LoadTypeNot?eta_plus2="+eta_plus2+"&lt2="+lt2, {
@@ -476,28 +479,26 @@
              
             }
             
-            function diasBrandDivision(id_brandDivision){  //RULE #5
+            function diasBrandDivision(){  //RULE #5
                 
-                let eta_plus = document.getElementById('eta_plus').value;
+                let Brand = document.getElementById('Brand').value;
                 let sbu_name = document.getElementById('sbu_name').value;
-                let lt2 = "";
+                let eta_plus = document.getElementById('eta_plus').value;
                 
-                if(id_brandDivision==="3003"){  //NORHT THE FACE
+                if(Brand==="3003"){  //NORHT THE FACE
                     if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
-                        lt2 = "1";
-                    }
-                }else{
-                    lt2 = "2";
-                }
                 
-                fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?eta_plus="+eta_plus+"&lt2="+lt2, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(date_putAway => {
+                        fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?eta_plus="+eta_plus+"&lt2=1", {
+                            method: 'POST',
+                        }).then(r => r.text())
+                        .then(date_putAway => {
 
-                      document.getElementById("eta_plus").value = date_putAway;
+                              document.getElementById("eta_plus").value = date_putAway;
 
-                }).catch(error => console.log(error));
+                        }).catch(error => console.log(error));
+                    
+                    }
+                }    
 
             }  
         </script>
