@@ -2793,7 +2793,7 @@ public class ConsultasQuery {
             + "   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
             + "   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
             + "   NVL(gtn.max_flete, 0) AS est_eta_dc,"
-            + "   'Inbound notification' AS notification_type,"
+            + "   TO_CHAR(tie.FECHA_CAPTURA, 'MM/DD/YY') AS fecha_captura,"
             + "   tip2.NOMBRE_POL,"
             + "   NVL(taa.agente_aduanal_nombre, ' ') AS agente_aduanal,"
             + "   NVL(gtn.plantilla_id,0), "
