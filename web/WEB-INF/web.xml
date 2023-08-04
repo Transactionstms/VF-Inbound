@@ -938,6 +938,10 @@
         <servlet-name>UpBrandDivision_LoadTypeNot</servlet-name>
         <servlet-class>com.onest.train.modificar.catalogos.UpBrandDivision_LoadTypeNot</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarDataOrigenEvento</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarDataOrigenEvento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1870,6 +1874,10 @@
     <servlet-mapping>
         <servlet-name>UpBrandDivision_LoadTypeNot</servlet-name>
         <url-pattern>/UpBrandDivision_LoadTypeNot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarDataOrigenEvento</servlet-name>
+        <url-pattern>/ConsultarDataOrigenEvento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
