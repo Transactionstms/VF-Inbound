@@ -150,7 +150,7 @@
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
                                                             <td class="font-texto"> <%=row[22]%></td>	
-                                                            <td class="font-texto"> <%=row[9]%></td>	
+                                                            <td class="font-texto"> <%=row[26]%></td>	
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	

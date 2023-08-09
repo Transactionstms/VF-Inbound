@@ -107,6 +107,7 @@ String sql2= "WITH sum_quantity AS ("
         +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
         +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
         +"   NVL(tie.observaciones, ' ') AS observaciones"
+          + " ,nvl(gtn.CANTIDAD_FINAL,0)"
         +" FROM"
         +"   tra_inb_evento tie"
         +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
@@ -191,7 +192,7 @@ String sql2= "WITH sum_quantity AS ("
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
                                                             <td class="font-texto"> <%=row[22]%> </td>		
-                                                            <td class="font-texto"> <%=row[9]%></td>	
+                                                            <td class="font-texto"> <%=row[26]%></td>	
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	
