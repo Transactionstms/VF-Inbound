@@ -204,8 +204,8 @@
                 let fecha = Date.now();
                 console.log(fecha);
                 try {
-                    //  let urlF='https://www.rtms.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
-                    let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
+                      let urlF='https://www.rtms.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                    //let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
 
