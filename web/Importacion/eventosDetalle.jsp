@@ -115,6 +115,12 @@
                                                             <th scope="col" class="font-titulo">BL/ AWB/ PRO <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Load Type <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Quantity <strong style="color:red">*</strong></th>	
+                                                           <!--posiblemente se borre
+                                                                                                                        <th scope="col" class="font-titulo">Quantity GTN <strong style="color:red">*</strong></th>
+
+                                                           --> 
+                                                            <!-- --> 
+                                                             
                                                             <th scope="col" class="font-titulo">POD /  <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Est. Departure from POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
@@ -150,7 +156,11 @@
                                                             <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
                                                             <td class="font-texto"> <%=row[22]%></td>	
-                                                            <td class="font-texto"> <%=row[26]%></td>	
+                                                            <td class="font-texto"> <%=row[26]%></td>
+                                                            
+                                                            <!--este cantidad gtn   <td class="font-texto"> <%=row[9]%></td>-->
+                                                           
+                                                            
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	
