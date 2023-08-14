@@ -3046,10 +3046,11 @@ public class ConsultasQuery {
             + "          and COUNT(DISTINCT gtn.sbu_name)   > 1 "//
             + "     ) THEN 'FCL / LCL'"
             + "  WHEN EXISTS (  SELECT 1  FROM   tra_inc_gtn_test   WHERE  container1 = gtn.container1  HAVING COUNT(DISTINCT sbu_name) > 1   ) THEN 'FCL / LCL'"
-            + "  WHEN  gtn.pod='2003' and gtn.MODE1='Truck'  THEN 'LTL'"
+            + "  WHEN  gtn.pod IN ('2003','2012','2010') and gtn.MODE1='Truck'  THEN 'LTL'"
             + "  WHEN SUBSTR(gtn.container1, 1, 3) = 'TMW' THEN 'LTL' "
-            + "  WHEN gtn.load_type = 'FCL' THEN 'FCL'"
+            + "     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
             + "     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
+            + "     WHEN gtn.load_type = 'AIR' THEN 'AIR' "
             + "     ELSE '-'"
             + "   END AS estado,"
             + "   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
