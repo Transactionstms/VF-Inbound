@@ -67,6 +67,8 @@
                 ConsultasQuery fac = new ConsultasQuery();
                 String agenteAduanal = "";
                 String colors = "";
+                String nomeclatura = ""; 
+                String soporteAA = "";
                 int cont = 0; 
 
                 if (db.doDB(fac.consultarAAEventosDetalle(UserId))) { 
@@ -140,10 +142,21 @@
                                                             if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
                                                                 for (String[] row : db.getResultado()) {
                                                                     
+                                                                   //#RULE 1 
                                                                    if(row[4].equals("No/DSN")){
                                                                      colors = "color: #ff0000;";
                                                                    }else{
                                                                      colors = "color: #000000;";  
+                                                                   }
+                                                                   
+                                                                   //#RULE 2
+                                                                   char container = row[6].charAt(0); 
+                                                                   nomeclatura = String.valueOf(container);
+                                                                           
+                                                                   if(nomeclatura.equals("T") && row[8].equals("LTL")){
+                                                                       soporteAA = "RECHY";
+                                                                   }else{
+                                                                       soporteAA = row[16];
                                                                    }
                                                         %>
                                                         <tr id="tr<%=cont%>" style="<%=colors%>">
@@ -153,14 +166,10 @@
                                                             <td class="font-texto"> <%=row[21]%></td>
                                                             <td class="font-texto"> <%=row[4]%></td>
                                                             <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[6]%></td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>  <!-- CONTENEDOR -->
                                                             <td class="font-texto"> <%=row[7]%></td>
                                                             <td class="font-texto"> <%=row[22]%></td>	
                                                             <td class="font-texto"> <%=row[26]%></td>
-                                                            
-                                                            <!--este cantidad gtn   <td class="font-texto"> <%=row[9]%></td>-->
-                                                           
-                                                            
                                                             <td class="font-texto"> <%=row[19]%></td>
                                                             <td class="font-texto"> <%=row[11]%></td>	
                                                             <td class="font-texto"> <%=row[12]%></td>	
@@ -169,7 +178,7 @@
                                                             <td class="font-texto"> <%=row[24]%></td>
                                                             <td class="font-texto"> <%=row[14]%></td>
                                                             <td class="font-texto"> <%=row[20]%></td>	
-                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            <td class="font-texto"> <%=soporteAA%></td>  <!-- AGENTE ADUANAL -->
                                                             <td class="font-texto"><input type="text" style="border: none;" id="observaciones<%=cont%>" name="observaciones<%=cont%>" value="<%=row[25]%>" autocomplete="off" onkeyup="this.value = this.value.toUpperCase()"></td>
                                                             <td><center><button type="button" class="btn btn-primary" onclick="saveObservaciones('<%=row[0]%>',<%=cont%>)">Actualizar</button></center></td>
                                                         </tr>
