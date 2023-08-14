@@ -3068,9 +3068,10 @@ public class ConsultasQuery {
             + "   INNER JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
             + " WHERE taa.AGENTE_ADUANAL_ID IN ("+agenteAduanal+") "
             + " AND tie.ESTATUS_EVENTO in (0) "
-            + " ORDER BY tie.id_evento desc ";     
+            + " ORDER BY tie.id_evento desc ";    
+        System.out.println("Asignación de Eventos: "+sql);
       return sql; 
-    }
+    } 
     
     public String consultarEstatusSemaforo(String agenteAduanal) {
         sql = " SELECT DISTINCT "
@@ -3142,7 +3143,9 @@ public class ConsultasQuery {
             + "   tie.user_nid,"
             + "   gtn.sbu_name,"
             + "   gtn.pol, "
-            + "   NVL(TO_CHAR(gtn.ACTUAL_CRD, 'MM/DD/YY'), ' ') AS actual_crd "
+            + "   NVL(TO_CHAR(gtn.ACTUAL_CRD, 'MM/DD/YY'), ' ') AS actual_crd, " 
+            + "   nvl(gtn.CANTIDAD_FINAL,0),  "    
+            + "   upper(taa.agente_aduanal_nombre) "
             + " FROM"
             + "   tra_inb_evento tie"
             + "   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
@@ -3158,7 +3161,6 @@ public class ConsultasQuery {
             + " and  gtn.container1='" + container + "'"
             + " ORDER BY"
             + " tie.id_evento";
-        
         return sql;
     }
     
