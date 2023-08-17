@@ -3171,8 +3171,38 @@ public class ConsultasQuery {
             + " FROM TRA_INB_DIVISION "
             + " WHERE ID_DIVISION = '"+division+"' "
             + " AND STATUS = 1";
-        
         return sql;
     }
+    
+    public String consultarResponsable_me(){
+        sql = "select DISTINCT USER_NID,RESPONSABLE from tra_destino_responsable where estatus=1";
+        return sql;
+    }
+    
+    public String consultarPol_me(){
+        sql = "select ID_POL, NOMBRE_POL from tra_inb_pol";
+        return sql;
+    }
+    
+    public String consultarPod_me(){
+        sql = "select ID_POD, NOMBRE_POD from tra_inb_pod";
+        return sql;
+    }
+    
+    public String consultarBrandDivision_me(){
+        sql = "select ID_BD, NOMBRE_BD from tra_inb_brand_division";
+        return sql;
+    }
+    
+    public String consultarDivision_me(){
+        sql = "select ID_DIVISION, DIVISION_NOMBRE from tra_inb_division";
+        return sql;
+    }
+                
+    public String consultarLoadType_me(){
+        sql = "SELECT LOAD_TYPE FROM TRA_INB_LOAD_TYPE ORDER BY ID_REG ASC";
+        return sql;
+    }
+    
 } 
  

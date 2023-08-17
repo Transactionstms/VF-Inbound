@@ -59,33 +59,27 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                 String shipmentId = request.getParameter("shipmentId").trim();
                 String container = request.getParameter("container").trim();
                 
-                //Parametros Historico
-                String responsable = request.getParameter("responsable").trim();
-                String finaldes    = request.getParameter("finaldes").trim();
-                String Brand       = request.getParameter("Brand").trim();
-
-                String sbu_name = request.getParameter("sbu_name").trim();
-                String Shipment = request.getParameter("Shipment").trim();
-                String Load1    = request.getParameter("Load1").trim();
-
-                String quantity          = request.getParameter("quantity").trim();
-                String pod               = request.getParameter("pod").trim();
-                String est_departure_pol = request.getParameter("est_departure_pol").trim();
-
-                String eta_port_discharge = request.getParameter("eta_port_discharge").trim();
-                String max_flete          = request.getParameter("max_flete").trim();
-                String eta_plus2          = request.getParameter("eta_plus2").trim();
-
-                String eta_plus         = request.getParameter("eta_plus").trim();
-                String pol              = request.getParameter("pol").trim();
-                String observaciones    = request.getParameter("observaciones").trim();
-               
-                String actual_crd       = request.getParameter("actual_crd").trim();
-                String ship      = request.getParameter("ship").trim();
-                String con       = request.getParameter("con").trim();
-                String bl       = request.getParameter("bl").trim();
+                //Parametros Comparación
+                String responsable = "";
+                String finaldes    = "";
+                String Brand       = "";
+                String sbu_name = "";
+                String Shipment = "";
+                String Load1    = "";
+                String quantity          = "";
+                String pod               = "";
+                String est_departure_pol = "";
+                String eta_port_discharge = "";
+                String max_flete          = "";
+                String eta_plus2          = "";
+                String eta_plus         = "";
+                String pol              = "";
+                String observaciones    = "";
+                String actual_crd       = "";
+                String ship      = "";
+                String con       = "";
+                String bl       = "";
                 
-
                 /*Parametros - Comparación de información (formulario/dba)*/
                 String fecha1_est_departure_pol = "";
                 String fecha2_eta_port_discharge = "";
@@ -104,64 +98,53 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                             for (String[] row : db.getResultado()) {
                                 
-                                /*if(updateEvento.equals("1")){
-                                   caramelo += " Número de evento: " + evento + "/";
-                                   contador++;
-                                }*/
-                                
                                 if(!row[6].trim().equals(con)){
-                                   
-                                    if (db.doDB(fac.consultarDivisionFormulario(con))) {
-                                        for (String[] rowc : db.getResultado()) {
-                                          caramelo += " Container*: " + rowc[0] + "/";
-                                        }
-                                    }
-                                    
+                                   caramelo += row[6]; 
                                    contador++;
                                 }
                                 
                                 if(!row[7].trim().equals(bl)){
-                                   caramelo += " BL/ AWB/ PRO: " + bl + "/";
+                                   caramelo += row[7];
                                    contador++;
                                 }
                                 
                                 if(!row[26].trim().equals(responsable)){
-                                   caramelo += " Responsable: " + responsable + "/";
+                                   caramelo += row[26];
                                    contador++;
                                 }
                                 
                                 if(!row[2].trim().equals(finaldes)){
-                                   caramelo += " Final Destination (Shipment): " + finaldes + "/";
+                                   caramelo += row[2];
                                    contador++;
                                 }
                                 
                                 if(!row[3].trim().equals(Brand)){
-                                   caramelo += " Brand-Division: " + Brand + "/";
+                                   caramelo += row[3];
                                    contador++;
                                 }
                                 
                                 if(!row[27].trim().equals(sbu_name)){
-                                   caramelo += " Division: " + sbu_name + "/";
+                                   caramelo += row[27];
                                    contador++;
                                 }
                                 
                                 if(!row[5].trim().equals(Shipment)){
-                                   caramelo += " Shipment ID: " + Shipment + "/";
+                                   caramelo += row[5];
                                    contador++;
                                 }
                                 
                                 if(!row[22].trim().equals(Load1)){
-                                   caramelo += " Load Type: " + Load1 + "/";
+                                   caramelo += row[22];
                                    contador++;
                                 }
                                 
                                 if(!row[9].trim().equals(quantity)){  //revisar
-                                   caramelo += " Quantity: " + quantity + "/";
+                                   caramelo += row[9];
                                    contador++;
                                 }
                                 
                                 if(!row[10].trim().equals(pod)){
-                                   caramelo += " POD: " + pod + "/";
+                                   caramelo += row[10];
                                    contador++;
                                 }
                                 
@@ -170,7 +153,7 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                                     fecha1_est_departure_pol = sdfDestination.format(date1);
                                
                                     if(!fecha1_est_departure_pol.equals(est_departure_pol)){
-                                       caramelo += " Est. Departure from POL: " + est_departure_pol + "/";
+                                       caramelo += row[11];
                                        contador++;
                                     }
                                 }
@@ -180,13 +163,13 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                                     fecha2_eta_port_discharge = sdfDestination.format(date2);
                                 
                                     if(!fecha2_eta_port_discharge.equals(eta_port_discharge)){
-                                       caramelo += " ETA REAL PORT: " + eta_port_discharge + "/";
+                                       caramelo += row[12];
                                        contador++;
                                     }
                                 }
                                 
                                 if(!row[13].trim().equals(max_flete)){
-                                   caramelo += " LT2: " + max_flete + "/";
+                                   caramelo += row[13];
                                    contador++;
                                 }
                                 
@@ -195,7 +178,7 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                                     fecha3_eta_plus2 = sdfDestination.format(date3);
 
                                     if(!fecha3_eta_plus2.equals(eta_plus2)){                         
-                                       caramelo += " ETA DC: " + eta_plus2 + "/";
+                                       caramelo += row[23];
                                        contador++;
                                     }
                                 }    
@@ -205,18 +188,18 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                                     fecha4_eta_plus = sdfDestination.format(date4);
                                 
                                     if(!fecha4_eta_plus.equals(eta_plus)){
-                                       caramelo += " INDC +2 Days Put Away: " + eta_plus + "/";    
+                                       caramelo += row[24];    
                                        contador++;
                                     }
                                 } 
                             
                                 if(!row[28].trim().equals(pol)){
-                                   caramelo += " POL: " + pol + "/";
+                                   caramelo += row[28];
                                    contador++;
                                 } 
                                 
                                 if(!row[25].trim().equals(observaciones)){
-                                   caramelo += " Observaciones: " + observaciones + "/";
+                                   caramelo += row[25];
                                    contador++;
                                 }
                                 
@@ -225,7 +208,7 @@ public class ConsultarHistoricoUpEventos extends HttpServlet {
                                     fecha5_actual_crd = sdfDestination.format(date5);
                                 
                                     if(!fecha5_actual_crd.equals(actual_crd)){
-                                       caramelo += " Actual CRD: " + actual_crd + "/";
+                                       caramelo += row[29];
                                        contador++;
                                     }
                                 }

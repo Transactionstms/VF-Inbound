@@ -52,12 +52,81 @@
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                 ConsultasQuery fac = new ConsultasQuery();
-                String agenteAduanal = "";
 
+                //Parametros Filtros Principales
                 String evento = request.getParameter("id");
                 String ship = request.getParameter("ship");
                 String con = request.getParameter("con");
+                
+                //Variables Select´s
+                String responsableOptions = "";
+                String pol = "";
+                String pod = "";
+                String bd = "";
+                String sbu = "";
+                String loadT = "";
+                
+                //Variables Historico
+                String responsable = "";
+                String finaldes    = "";
+                String Brand       = "";
+                int sbu_name = 0;
+                String Shipment = "";
+                String Load1    = "";
+                String quantity          = "";
+                String infoPod           = "";
+                String est_departure_pol = "";
+                String eta_port_discharge = "";
+                String max_flete          = "";
+                String eta_plus2          = "";
+                String eta_plus         = "";
+                String infoPol         = "";
+                String observaciones    = "";
+                String actual_crd       = "";
+                String cantidadFinal    = ""; 
+                String agenteAduanal = "";
+                
+                //Variables Generales
+                String bl       = "";
                 String idBrandivision = "";
+                int valorFinalQuantity = 0;
+                
+                //Consultas - Combos/selects
+                if (db.doDB(fac.consultarResponsable_me())) {
+                    for (String[] row : db.getResultado()) {
+                        responsableOptions += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                }
+
+                if (db.doDB(fac.consultarPol_me())) {
+                    for (String[] row : db.getResultado()) {
+                        pol += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                }
+
+                if (db.doDB(fac.consultarPod_me())) {
+                    for (String[] row : db.getResultado()) {
+                        pod += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                }
+
+                if (db.doDB(fac.consultarBrandDivision_me())) {
+                    for (String[] row : db.getResultado()) {
+                        bd += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                }
+
+                if (db.doDB(fac.consultarDivision_me())) {
+                    for (String[] row : db.getResultado()) {
+                        sbu += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                }
+
+                if (db.doDB(fac.consultarLoadType_me())) {
+                    for (String[] row : db.getResultado()) {
+                        loadT += "<option value='" + row[0] + "' >" + row[0] + "</option>";
+                    }
+                }
         %>
  
         <div class="d-flex align-items-stretch">
@@ -74,58 +143,34 @@
                                     <!--  <p>Lorem ipsum dolor sit amet consectetur.</p>-->
 
                                     <%
-                                        String responsableOptions = "";
-                                        String responsableOptionsSQL = "select DISTINCT USER_NID,RESPONSABLE from tra_destino_responsable where estatus=1";
-                                        if (db.doDB(responsableOptionsSQL)) {
-                                            for (String[] row : db.getResultado()) {
-                                                responsableOptions += "<option value='" + row[0] + "' >" + row[1] + "</option>";
-                                            }
-                                        }
-
-                                        String pol = "";
-                                        String polSQL = "select ID_POL, NOMBRE_POL from tra_inb_pol";
-                                        if (db.doDB(polSQL)) {
-                                            for (String[] row : db.getResultado()) {
-                                                pol += "<option value='" + row[0] + "' >" + row[1] + "</option>";
-                                            }
-                                        }
-
-                                        String pod = "";
-                                        String podSQL = "select ID_POD, NOMBRE_POD from tra_inb_pod";
-                                        if (db.doDB(podSQL)) {
-                                            for (String[] row : db.getResultado()) {
-                                                pod += "<option value='" + row[0] + "' >" + row[1] + "</option>";
-                                            }
-                                        }
-
-                                        String bd = "";
-                                        String bdSQL = "select ID_BD, NOMBRE_BD from tra_inb_brand_division";
-                                        if (db.doDB(bdSQL)) {
-                                            for (String[] row : db.getResultado()) {
-                                                bd += "<option value='" + row[0] + "' >" + row[1] + "</option>";
-                                            }
-                                        }
-
-                                        String sbu = "";
-                                        String sbuSQL = "select ID_DIVISION, DIVISION_NOMBRE from tra_inb_division";
-                                        if (db.doDB(sbuSQL)) {
-                                            for (String[] row : db.getResultado()) {
-                                                sbu += "<option value='" + row[0] + "' >" + row[1] + "</option>";
-                                            }
-                                        }
-                                        
-                                        String loadT = "";
-                                        String loadType = "SELECT LOAD_TYPE FROM TRA_INB_LOAD_TYPE ORDER BY ID_REG ASC";
-                                        if (db.doDB(loadType)) {
-                                            for (String[] row : db.getResultado()) {
-                                                loadT += "<option value='" + row[0] + "' >" + row[0] + "</option>";
-                                            }
-                                        }
-
                                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                                             for (String[] row : db.getResultado()) {
                                                 
                                                 idBrandivision = row[3]; 
+                                                
+                                                con = row[6];
+                                                bl = row[7];
+                                                responsable = row[26];
+                                                finaldes = row[2];
+                                                Brand = row[3];
+                                                sbu_name = Integer.valueOf(row[27]);
+                                                Shipment = row[5];
+                                                Load1 = row[22];
+                                                quantity = row[9];
+                                                infoPod = row[10];
+                                                est_departure_pol = row[11];
+                                                eta_port_discharge = row[12];
+                                                max_flete = row[13];
+                                                eta_plus2 = row[23];
+                                                eta_plus = row[24];
+                                                infoPol= row[28];
+                                                observaciones = row[25];
+                                                actual_crd = row[29];
+                                                cantidadFinal = row[30]; 
+                                                agenteAduanal = row[31]; 
+                                                
+                                                //Valor Final - Campo Quantity
+                                                if(sbu_name==0){ valorFinalQuantity = Integer.valueOf(row[9]); }else{ valorFinalQuantity = Integer.valueOf(row[30]); }
 
                                     %>
 
@@ -212,7 +257,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Quantity</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[9]%>" name="quantity" id="quantity">
+                                                    <input class="form-control" type="text" placeholder="..." value="<%=valorFinalQuantity%>" name="quantity" id="quantity">
                                                 </div>
                                             </div>  
                                             <div class="col-md-4 "> 
@@ -311,221 +356,50 @@
                 </div>  
 
             </div>
-        </div>                       
+        </div>      
+                                
+        <script type="text/javascript">
+            //Variables Historico
+            let campo0 = '<%=evento%>';  //Evento*
+            let campo1 = '<%=con%>';     //Contenedor*
+            let campo2 = '<%=bl%>';       
+            let campo3 = '<%=responsable%>';
+            let campo4 = '<%=finaldes%>';
+            let campo5 = '<%=Brand%>';
+            let campo6 = '<%=sbu_name%>';
+            let campo7 = '<%=Shipment%>';  //ShipmentId*
+            let campo8 = '<%=Load1%>';
+            let campo9 = '<%=quantity%>';
+            let campo10 = '<%=infoPod%>';
+            let campo11 = '<%=est_departure_pol%>';
+            let campo12 = '<%=eta_port_discharge%>';
+            let campo13 = '<%=max_flete%>';
+            let campo14 = '<%=eta_plus2%>';
+            let campo15 = '<%=eta_plus%>';
+            let campo16 = '<%=infoPol%>';
+            let campo17 = '<%=observaciones%>';
+            let campo18 = '<%=actual_crd%>';          
+        </script>
+        <!-- utileria gral -->
+        <script src="../lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
+        <!-- consultar núm de evento -->
+        <script src="../lib/js/ModificacionEventos/consultarNumEventoActual.js" type="text/javascript"></script>
+        <!-- calcular días finales/estimados -->
+        <script src="../lib/js/ModificacionEventos/calcularDiasFinales.js" type="text/javascript"></script>
+        <!-- registrar información -->
+        <script src="../lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
+        <!-- sweetAlert 1.3 --->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+        <!--  jquery 2.1 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--  choosen-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+        <!-- dataPiker/Calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"  >
-        <script type="text/javascript">
-           
-            async function getData() { 
-                    
-                        const numEventoActual   = document.getElementById('numEventoActual').value;
-                        const numEventoDB       = document.getElementById('numEventoDB').value;
-                        const updateEvento     = document.getElementById('updateEvento').value;
-
-                        const con                = document.getElementById('con').value;
-                        const bl                = document.getElementById('bl').value;
-                        const responsable       = document.getElementById('responsable').value;
-                        const finalDestination  = document.getElementById('finaldes').value;
-                        const brandDivision     = document.getElementById('Brand').value;
-                        const division          = document.getElementById('sbu_name').value;
-                        const shipmentId        = document.getElementById('Shipment').value;
-                        const loadType          = document.getElementById('Load1').value;
-                        const quantity          = document.getElementById('quantity').value;
-                        const pod               = document.getElementById('pod').value;
-                        const estDeparturePol   = document.getElementById('est_departure_pol').value;
-                        const etaRealPort       = document.getElementById('eta_port_discharge').value;
-                        const max_flete         = document.getElementById('max_flete').value;
-                        const eta_plus2         = document.getElementById('eta_plus2').value;
-                        const eta_plus          = document.getElementById('eta_plus').value;
-                        const pol               = document.getElementById('pol').value;
-                        const observaciones     = document.getElementById('observaciones').value;
-                        const actual_crd     = document.getElementById('actual_crd').value;
-                        
-                        swal("Espere...!");
-
-                        try {
-                          const data = await fetchData('<%=request.getContextPath()%>/ModificarEvento?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&ship=<%=ship%>&con='+con+'&actual_crd='+actual_crd+'&numEventoActual='+numEventoActual+'&numEventoDB='+numEventoDB+'&updateEvento='+updateEvento);
-                          console.log(data);
-                          swal("Modificado");
-                        } catch (error) {
-                          swal("Error"); 
-                          console.error(error);
-                        }
-            }
-        </script>
-        <script>
-            function validarNumEvento(numEventoActual){
-                
-                let numEventoDB = document.getElementById('numEventoDB').value;
-                
-                fetch("<%=request.getContextPath()%>/ConsultarNumEvento?numEventoActual="+numEventoActual+"&numEventoDB="+numEventoDB, {
-                    method: 'POST',
-                }).then(r => r.text())
-                        .then(data => {
-                              if(data === "true"){
-                                  swal("", "Número de Evento Existente", "info");
-                                  alertclose();
-                              }else{
-                                  document.getElementById("updateEvento").value = "1";
-                              }
-                        }).catch(error => console.log(error));
-            }
-            
-            function diasLoadType(loadType){  //RULE #1
-                 
-                let actual_crd = document.getElementById('actual_crd').value;
-                let max_flete = "0";
-                
-                if(loadType==="LTL"||loadType==="AIR"){
-                    
-                    if(loadType==="LTL"){
-                        max_flete = "27";
-                    }else if(loadType==="AIR"){
-                        max_flete = "20";
-                    }
-                    
-                    fetch("<%=request.getContextPath()%>/UpLt2_EtaDcAndPutAway?actual_crd="+actual_crd+"&lt2="+max_flete, {
-                        method: 'POST',
-                    }).then(r => r.text())
-                    .then(data => {
-
-                          var inputs = data.split("@");
-                          var date_etaDc = inputs[0];
-                          var date_putAway = inputs[1];
-
-                          document.getElementById("eta_plus2").value = date_etaDc;
-                          document.getElementById("eta_plus").value = date_putAway;
-                          document.getElementById("max_flete").value = max_flete;
-
-                    }).catch(error => console.log(error));
-                    
-                }
-                
-            }
-            
-            function diasLt2(max_flete){  //RULE #2  
-
-                let actual_crd = document.getElementById('actual_crd').value;
-
-                fetch("<%=request.getContextPath()%>/UpLt2_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(data => {
-                     
-                      var inputs = data.split("@");
-                      var date_etaDc = inputs[0];
-                      var date_putAway = inputs[1];
-                      
-                      document.getElementById("eta_plus2").value = date_etaDc;
-                      document.getElementById("eta_plus").value = date_putAway;
-                      
-                }).catch(error => console.log(error));
-             
-            }
-            
-            function diasEtaDc(tipoConsulta){  //RULE #3
-                
-                let eta_plus2 = document.getElementById('eta_plus2').value;
-                let sbu_name = document.getElementById('sbu_name').value;
-                let id_brandDivision = "";
-                let lt2 = "";
-                
-                if(tipoConsulta==="1"){
-                    id_brandDivision = '<%=idBrandivision%>';
-                }else{
-                    id_brandDivision = document.getElementById('Brand').value;
-                }
-
-                if(id_brandDivision==="3003"){  //NORHT THE FACE
-                    if(sbu_name==="5002"||sbu_name==="5001"){ lt2= "3"; } //APPAREL/ACCESSORIES
-                }else{
-                   lt2= "2";
-                }
-                
-                fetch("<%=request.getContextPath()%>/UpEtaDc_LoadTypeNot?eta_plus2="+eta_plus2+"&lt2="+lt2, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(date_putAway => {
-
-                      document.getElementById("eta_plus").value = date_putAway;
-
-                }).catch(error => console.log(error));
-             
-            }
-            
-            function diasActualCrd(actual_crd){  //RULE #4
-
-                let max_flete = document.getElementById('max_flete').value;
-
-                fetch("<%=request.getContextPath()%>/UpActualCrd_LoadTypeNot?actual_crd="+actual_crd+"&lt2="+max_flete, {
-                    method: 'POST',
-                }).then(r => r.text())
-                .then(data => {
-                     
-                      var inputs = data.split("@");
-                      var date_etaDc = inputs[0];
-                      var date_putAway = inputs[1];
-                      
-                      document.getElementById("eta_plus2").value = date_etaDc;
-                      document.getElementById("eta_plus").value = date_putAway;
-                      
-                }).catch(error => console.log(error));
-             
-            }
-            
-            function diasBrandDivision(){  //RULE #5
-                
-                let Brand = document.getElementById('Brand').value;
-                let sbu_name = document.getElementById('sbu_name').value;
-                let eta_plus = document.getElementById('eta_plus').value;
-                
-                if(Brand==="3003"){  //NORHT THE FACE
-                    if(sbu_name==="5002"||sbu_name==="5001"){ //APPAREL/ACCESSORIES
-                
-                        fetch("<%=request.getContextPath()%>/UpBrandDivision_LoadTypeNot?eta_plus="+eta_plus+"&lt2=1", {
-                            method: 'POST',
-                        }).then(r => r.text())
-                        .then(date_putAway => {
-
-                              document.getElementById("eta_plus").value = date_putAway;
-
-                        }).catch(error => console.log(error));
-                    
-                    }
-                }    
-
-            }  
-        </script>
-        <script>
-            async function fetchData(url) {
-              const response = await fetch(url);
-              const data = await response.text();
-              return data;
-            }
-
-            $('.chosen').chosen();
-
-            $(document).ready(function () {
-                $('.datepicker').flatpickr({
-                    dateFormat: 'm/d/Y',
-                    onClose: function (selectedDates, dateStr, instance) {
-                        instance.setDate(dateStr, true, 'm/d/Y');
-                    }
-                });
-            });
-            
-            function alertclose() {
-                setTimeout(function () {
-                    swal.close();
-                }, 2000);
-            }
-        </script>
     </body>
     <%
         } catch (NullPointerException e) {
