@@ -18,8 +18,8 @@ public class Configuracion {
     private String puerto;
     
     private void leerArchivo() {
-        this.servidor = "74.208.184.39";
-        this.sid = "trans39";
+        this.servidor = "74.208.140.125";
+        this.sid = "tacts125";
         this.usuario = "VANS39TEST";
         this.password = "UKidn49N875RBH54Cq2";
         this.puerto = "1521";

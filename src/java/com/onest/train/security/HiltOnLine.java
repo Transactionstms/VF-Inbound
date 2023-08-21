@@ -66,7 +66,7 @@ public class HiltOnLine extends HttpServlet {
         //Obtiene par��metros de Login
         String user = "ConsultasHilti";
         String password = "consultas";
-        System.out.println("Autenticacion");
+        System.out.println("Autenticacion8");
 
         //oc.verifyLoginN(user, password);
         if (!auth.verifyLogin(user, password)) {

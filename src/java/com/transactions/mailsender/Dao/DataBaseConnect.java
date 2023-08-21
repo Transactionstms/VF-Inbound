@@ -18,7 +18,7 @@ import java.sql.Statement;
 public class DataBaseConnect {
 
     Connection conn = null;
-    String url = "jdbc:oracle:thin:@74.208.184.39:1521:trans39";
+    String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
     String user = "VANS39TEST";
     String pass = "UKidn49N875RBH54Cq2";
 
