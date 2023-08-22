@@ -42,6 +42,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Window load -->
         <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
+        <!-- scroll iFrame -->
+        <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <script>
             window.onload = (event) =>{
                 jsShowWindowLoad('Cargando Información');
@@ -84,7 +86,7 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <p align="center"><iframe id="frameTableCustoms" height="950" width="1175" title="Data Table Customs"></iframe></p>
+                                    <p align="center"><iframe id="frameTableCustoms" class="iFrame" title="Data Table Customs"></iframe></p>
                                     <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
                                     <input type="hidden" id="id" name="id" value="<%=id%>">
                                     <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
@@ -131,7 +133,7 @@
                   $("#WindowLoad").remove();
                 });  
                
-                email(agenteId);    
+                //email(agenteId);    
             }
             
             function recibirParametroIFrame(event) {

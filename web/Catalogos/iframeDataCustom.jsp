@@ -62,10 +62,6 @@
                 float:none;
               }
             }
-            
-            .custom-select {
-              width: 200px; /* Adjust the width value as needed */
-            }
         </style>
     </head>
     <body>
@@ -313,8 +309,8 @@
                     </div> 
                 </div>
             </div>
-            <br>
-            <div id="table-scroll" class="table-scroll"  style="height:800px;">
+            <br><label class="txtColor">Resolución de Pantalla</label>
+            <div id="table-scroll" class="table-scroll">
                 <table id="main-table" class="main-table" style="table-layout:fixed; width:1500%;">
                     <thead>
                         <tr>
