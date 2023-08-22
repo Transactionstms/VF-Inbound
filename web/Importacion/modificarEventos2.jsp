@@ -40,6 +40,11 @@
         <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
+        <!--  jquery 2.1 -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--  choosen-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
         <script>
             $(document).ready(function () {
                  diasEtaDc(1);
@@ -378,7 +383,7 @@
             let campo15 = '<%=eta_plus%>';
             let campo16 = '<%=infoPol%>';
             let campo17 = '<%=observaciones%>';
-            let campo18 = '<%=actual_crd%>';          
+            let campo18 = '<%=actual_crd%>';   
         </script>
         <!-- utileria gral -->
         <script src="../lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
@@ -390,11 +395,6 @@
         <script src="../lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
         <!-- sweetAlert 1.3 --->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
-        <!--  jquery 2.1 -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <!--  choosen-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
         <!-- dataPiker/Calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
