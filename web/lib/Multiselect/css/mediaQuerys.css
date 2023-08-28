@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21/08/2023, 03:12:41 PM
+    Author     : Desarrollo Tacts
+*/
+
+            /* Small devices (portrait tablets and large phones, 600px and up) */
+            @media only screen and (min-width: 600px) {
+                .custom-select{
+                   width: 170px;  
+                   margin-left: auto;
+                   margin-right: auto;
+                }
+            }
+
+            /* Medium devices (landscape tablets, 768px and up) */
+            @media only screen and (min-width: 768px) {
+                .custom-select{
+                    width: 180px;  
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+
+            /* Large devices (laptops/desktops, 992px and up) */
+            @media only screen and (min-width: 992px) {
+                .custom-select{
+                    width: 190px;  
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+
+            /* Extra large devices (large laptops and desktops, 1200px and up) */
+            @media only screen and (min-width: 1200px) {
+                .custom-select{
+                    width: 200px; 
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }

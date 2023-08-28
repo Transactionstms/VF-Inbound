@@ -1,0 +1,61 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21/08/2023, 04:06:05 PM
+    Author     : Desarrollo Tacts
+*/
+
+/* Dispositivos extra pequeños (phones, 600px and down) */
+@media only screen and (max-width: 450px) {
+  .iFrame { width: 800px; }
+  .custom-select{
+        width: 120px;  
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Dispositivos pequeños (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .iFrame { width:900px; }
+    .custom-select{
+        width: 130px;  
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Dispositivos medianos (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .iFrame { width:1000px; }
+  .custom-select{
+        width: 140px;  
+        margin-left: auto;
+        margin-right: auto;
+    }
+} 
+
+/* Dispositivos grandes (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .iFrame { height:950px; width:600px; }
+  .custom-select{
+        width: 150px;  
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .txtColor {background-color: #ff9800;}
+} 
+
+/* Dispositivos extra grandes (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+      .iFrame { width:1200px; }
+      .custom-select{
+            width: 160px;  
+            margin-left: auto;
+            margin-right: auto;
+        }
+}

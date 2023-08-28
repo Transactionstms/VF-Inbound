@@ -7,10 +7,6 @@
 async function getData() {
 
     const numEventoActual = document.getElementById('numEventoActual').value;
-    const numEventoDB = document.getElementById('numEventoDB').value;
-    const updateEvento = document.getElementById('updateEvento').value;
-
-    const con = document.getElementById('con').value;
     const bl = document.getElementById('bl').value;
     const responsable = document.getElementById('responsable').value;
     const finalDestination = document.getElementById('finaldes').value;
@@ -32,11 +28,13 @@ async function getData() {
     swal("Espere...!");
 
     try {
-        const data = await fetchData('../ModificarEvento?responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Shipment=' + shipmentId + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&ship=<%=ship%>&con=' + con + '&actual_crd=' + actual_crd + '&numEventoActual=' + numEventoActual + '&numEventoDB=' + numEventoDB + '&updateEvento=' + updateEvento);
-        console.log(data);
-        swal("Modificado");
+        const data = await fetchData('../ModificarEvento?responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Shipment=' + shipmentId + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&ship=' + campo7 + '&con=' + campo1 + '&actual_crd=' + actual_crd + '&numEventoActual=' + numEventoActual + '&numEventoDB=' + campo0 + '&updateEvento=0');
+          if(data==="true"){
+             swal("Modificado");
+          }else{
+            swal("Contacte a Soporte","Error");
+          }
+          alertclose();
     } catch (error) {
-        swal("Error");
-        console.error(error);
     }
 }
