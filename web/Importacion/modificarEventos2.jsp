@@ -185,9 +185,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Número de evento</strong></label>
-                                                    <input class="form-control" id="numEventoActual" name="numEventoActual" type="text" value="<%=row[0]%>" onchange="validarNumEvento(this.value);">
-                                                    <input type="hidden" id="numEventoDB" name="numEventoDB" value="<%=row[0]%>">
-                                                    <input type="hidden" id="updateEvento" name="updateEvento" value="0">
+                                                    <input class="form-control" id="numEventoActual" name="numEventoActual" type="text" value="<%=row[0]%>" onchange="validarNumEvento(this.value);">                                                    
                                                 </div>
                                             </div>  
                                               <div class="col-md-4 "> 

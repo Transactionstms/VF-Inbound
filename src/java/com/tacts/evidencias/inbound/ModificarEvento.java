@@ -76,13 +76,13 @@ public class ModificarEvento extends HttpServlet {
                 
                 String actual_crd       = request.getParameter("actual_crd").trim();
 
+                String numEventoDB = request.getParameter("numEventoDB").trim();
                 String ship      = request.getParameter("ship").trim();
                 String con       = request.getParameter("con").trim();
 
                 String bl       = request.getParameter("bl").trim();
                 
                 String numEventoActual = request.getParameter("numEventoActual").trim();
-                String numEventoDB = request.getParameter("numEventoDB").trim();
                 String updateEvento = request.getParameter("updateEvento").trim();
 
                 /*Parametros - Comparación de información (formulario/dba)*/
@@ -96,6 +96,13 @@ public class ModificarEvento extends HttpServlet {
                 String evento    = "";
                 String caramelo = "";
                 String emails = "";
+                String sqlEve = "";
+                String sqlGtn = "";
+                
+                boolean salida = false;
+                boolean updateGtn = false;
+                boolean updateObservaciones = false;
+                
                 int contador = 0;
                 
                 if(updateEvento.equals("1")){ /*Número de Evento Acualizado*/
@@ -259,7 +266,7 @@ public class ModificarEvento extends HttpServlet {
                         }
                         
 
-                 String sqlGtn= " update tra_inc_gtn_test " +
+                        sqlGtn= " update tra_inc_gtn_test " +
                                 " set  " +
                                 " final_destination = '"+finaldes+"', " +
                                 " brand_division='"+Brand+"', " +
@@ -295,15 +302,21 @@ public class ModificarEvento extends HttpServlet {
                                 " bl_awb_pro='"+bl+"' " +
                                 " where container1='"+con+"' " +
                                 " and shipment_id='"+ship+"'";
-                boolean insert=db.doDB(sqlGtn);
+                updateGtn =db.doDB(sqlGtn);
                 
-                 String sqlEve =" update tra_inb_evento " +
+                        sqlEve =" update tra_inb_evento " +
                                 " set  " +
                                 " USER_NID ="+responsable+", " +
                                 " observaciones='"+observaciones+"' " +
                                 " where ID_EVENTO='"+evento+"' ";
-                 boolean update=db.doDB(sqlEve);
+                 updateObservaciones=db.doDB(sqlEve);
+                 
+                 if(updateGtn&&updateObservaciones){
+                     salida = true;
+                 }
                 
+                 out.print(salida);
+                 
            } catch (Exception e) {
                 out.println("Error " + e.toString());
             } finally {
