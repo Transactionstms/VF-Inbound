@@ -6,8 +6,16 @@
 
 //Reglas de Negocios <Fechas Estimadas/Controladores>
 
-let blocked = false; //Identificador - Campo División
- 
+let blocked = false;                     //Identificador - Campo División
+let blocked_diasBrandDivision = false;   //Identificador - Campo Brand División | División (RULE #5-HISTORICO)
+
+/*(Brand División = NORHT THE FACE y División = APPAREL/ACCESSORIES) --> No aplicar la función (diasBrandDivision) */
+if(campo5 === "3003" && campo6 === "5002" || campo6 === "5001"){
+    blocked_diasBrandDivision = true; 
+}
+console.log("Brand División = NORHT THE FACE y División = APPAREL/ACCESSORIES:" +blocked_diasBrandDivision);
+
+
 function diasLoadType(loadType) {  //RULE #1
 
     let actual_crd = document.getElementById('actual_crd').value;
@@ -117,26 +125,40 @@ function diasBrandDivision() {  //RULE #5
     let Brand = document.getElementById('Brand').value;
     let sbu_name = document.getElementById('sbu_name').value;
     let eta_plus = document.getElementById('eta_plus').value;
-
-    if (Brand === "3003") {  //NORHT THE FACE
-        if (sbu_name === "5002" || sbu_name === "5001") { //APPAREL/ACCESSORIES
-            if(!blocked){ //Evitar iteración ++
-                fetch("../UpBrandDivision_LoadTypeNot?eta_plus=" + eta_plus + "&lt2=1", {
-                    method: 'POST',
-                }).then(r => r.text())
-                        .then(date_putAway => {
-                            document.getElementById("eta_plus").value = date_putAway;
-                            blocked = true;
-                        }).catch(error => console.log(error));
-            }
-        }else{
-            document.getElementById("eta_plus").value = campo15; //Asignar valor Inicial
-            blocked = false;
-        }
-    }else{
-        document.getElementById("eta_plus").value = campo15; //Asignar valor Inicial
-        blocked = false;
+    let diasLt2 = 0;
+    
+    if(sbu_name === "5003"){ //FOOTWARE
+        blocked_diasBrandDivision = false;  //(2)días
     }
 
+    if(blocked_diasBrandDivision === false){  /*Validación Historico */
+        
+        if (Brand === "3003") {  //NORHT THE FACE
+            
+            if(sbu_name === "5002" || sbu_name === "5001" || sbu_name === "5003"){ //APPAREL/ACCESSORIES/FOOTWARE
+            
+                if (sbu_name === "5002" || sbu_name === "5001") { //APPAREL/ACCESSORIES
+                    diasLt2 = 1;  //(3) días 
+                }else if(sbu_name === "5003"){ //FOOTWARE
+                    diasLt2 = 0;  //(2) días 
+                }
+
+                if(!blocked){ //EVITAR ITERACIÓN DE DÍAS SI YA SE REALIZO MAS DE 1 VEZ
+                    fetch("../UpBrandDivision_LoadTypeNot?eta_plus=" + eta_plus + "&lt2="+diasLt2, {
+                        method: 'POST',
+                    }).then(r => r.text())
+                            .then(date_putAway => {
+                                document.getElementById("eta_plus").value = date_putAway;
+                                blocked = true;
+                            }).catch(error => console.log(error));
+                }
+               
+            }else{    //REGRESAR FECHA AL VALOR DEL HISTORICO
+                document.getElementById("eta_plus").value = campo15; 
+                blocked = false;
+            }
+        }
+        
+    }
 }
 

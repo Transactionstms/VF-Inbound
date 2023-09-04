@@ -331,7 +331,7 @@ public class Email {
     
     private String getModificarEventosFormulario(String evento, String con, String ship, String inboundNotification, String caramelo) {
 
-        String delimiter = "/";
+        String delimiter = "@";  //caracter ---> viene del archivo ModificarEvento.java (formulario DATA old vs DATA new)
         String mensaje = "";
         
         // Split the string into an array of substrings using the delimiter
@@ -1320,7 +1320,7 @@ public class Email {
 
         boolean enviado = false;
         String[] vect;
-        vect = correosInternos.split("/");
+        vect = correosInternos.split("@"); //Caracter viene del archivo ModificarEvento.java (correos)
 
         try {
             Session session = Session.getDefaultInstance(properties,

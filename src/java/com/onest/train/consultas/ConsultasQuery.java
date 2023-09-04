@@ -3142,7 +3142,7 @@ public class ConsultasQuery {
             + "   nvl(to_char(to_date(trim(gtn.eta_plus),'dd/mm/yy'),'mm/dd/YYyy'),' ') AS eta_dc1, "      
             + "   NVL(tie.observaciones, ' ') AS observaciones,"
             + "   tie.user_nid,"
-            + "   gtn.sbu_name,"
+            + "   gtn.sbu_name," //27
             + "   gtn.pol, "
             + "   nvl(to_char(to_date(trim(gtn.ACTUAL_CRD),'dd/mm/yy'),'mm/dd/YYyy'),' ') AS actual_crd, "   
             + "   nvl(gtn.CANTIDAD_FINAL,0),  "    
