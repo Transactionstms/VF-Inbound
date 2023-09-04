@@ -5,14 +5,16 @@
  */
 
 async function getData() {
-
+    
     const numEventoActual = document.getElementById('numEventoActual').value;
+    const shipmentIdActual = document.getElementById('shipmentIdActual').value;
+    const containerActual = document.getElementById('containerActual').value;
+    /**************************************************************************/
     const bl = document.getElementById('bl').value;
     const responsable = document.getElementById('responsable').value;
     const finalDestination = document.getElementById('finaldes').value;
     const brandDivision = document.getElementById('Brand').value;
     const division = document.getElementById('sbu_name').value;
-    const shipmentId = document.getElementById('Shipment').value;
     const loadType = document.getElementById('Load1').value;
     const quantity = document.getElementById('quantity').value;
     const pod = document.getElementById('pod').value;
@@ -28,7 +30,7 @@ async function getData() {
     swal("Espere...!");
 
     try {
-        const data = await fetchData('../ModificarEvento?responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Shipment=' + shipmentId + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&ship=' + campo7 + '&con=' + campo1 + '&actual_crd=' + actual_crd + '&numEventoActual=' + numEventoActual + '&numEventoDB=' + campo0 + '&updateEvento=0');
+        const data = await fetchData('../ModificarEvento?numEventoActual=' + numEventoActual + '&ShipmentActual=' + shipmentIdActual + '&containerActual=' + containerActual + '&responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&actual_crd=' + actual_crd + '&numEventoOld=' + campo0 + '&shipmenIdOld='+campo7+'&containerOld='+campo1);
           if(data==="true"){
              swal("Modificado");
           }else{

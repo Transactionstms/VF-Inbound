@@ -174,9 +174,9 @@
                                                 cantidadFinal = row[30]; 
                                                 agenteAduanal = row[31]; 
                                                 
-                                                //Valor Final - Campo Quantity
+                                                //(campo:subname)                         (campo: suma)                                      (campo: cantidad final)
                                                 if(sbu_name==0){ valorFinalQuantity = Integer.valueOf(row[9]); }else{ valorFinalQuantity = Integer.valueOf(row[30]); }
-
+                                                //(#rule 3)  resultado para campo Quantity = (valorFinalQuantity)
                                     %>
 
                                     <form>
@@ -191,7 +191,7 @@
                                               <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Container</strong></label>
-                                                    <input class="form-control" type="text" id="con" name="con" value="<%=row[6]%>">
+                                                    <input class="form-control" type="text" id="containerActual" name="containerActual" value="<%=row[6]%>">
                                                 </div>
                                             </div>  
                                             <div class="col-md-4 "> 
@@ -241,7 +241,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Shipment ID</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[5]%>" name="Shipment" id="Shipment">
+                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[5]%>" name="shipmentIdActual" id="shipmentIdActual">
                                                 </div>
                                             </div>   
                                             <div class="col-md-4 "> 
@@ -362,15 +362,15 @@
         </div>      
                                 
         <script type="text/javascript">
-            //Variables Historico
-            let campo0 = '<%=evento%>';  //Evento*
-            let campo1 = '<%=con%>';     //Contenedor*
+            //Variables -  Historico Base de Datos
+            let campo0 = '<%=evento%>';     /*Parametro Principal (1)*/
+            let campo1 = '<%=con%>';        /*Parametro Principal (3)*/
             let campo2 = '<%=bl%>';       
             let campo3 = '<%=responsable%>';
             let campo4 = '<%=finaldes%>';
             let campo5 = '<%=Brand%>';
             let campo6 = '<%=sbu_name%>';
-            let campo7 = '<%=Shipment%>';  //ShipmentId*
+            let campo7 = '<%=Shipment%>';   /*Parametro Principal (2)*/
             let campo8 = '<%=Load1%>';
             let campo9 = '<%=quantity%>';
             let campo10 = '<%=infoPod%>';
@@ -381,7 +381,7 @@
             let campo15 = '<%=eta_plus%>';
             let campo16 = '<%=infoPol%>';
             let campo17 = '<%=observaciones%>';
-            let campo18 = '<%=actual_crd%>';   
+            let campo18 = '<%=actual_crd%>'; 
         </script>
         <!-- utileria gral -->
         <script src="../lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
