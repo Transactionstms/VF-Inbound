@@ -267,7 +267,7 @@ public class ModificarEvento extends HttpServlet {
                                 }
                             }
 
-                            correo.alertaModificarEventosFormulario(emails, evento, con, ship, inboundNotification, caramelo); 
+                            correo.alertaModificarEventosFormulario(emails, evento, containerActual, ShipmentActual, inboundNotification, caramelo); 
 
                         }
                         
