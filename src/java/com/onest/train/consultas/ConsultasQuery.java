@@ -3043,7 +3043,7 @@ public class ConsultasQuery {
            + "       FROM tra_inc_gtn_test"
             + "       WHERE container1 = gtn.container1"
             + "       HAVING COUNT(DISTINCT brand_division) > 1"
-            + "          and COUNT(DISTINCT gtn.sbu_name)   > 1 "//
+            + "          "// and COUNT(DISTINCT gtn.sbu_name)   > 1
             + "     ) THEN 'FCL / LCL'"
             + "  WHEN EXISTS (  SELECT 1  FROM   tra_inc_gtn_test   WHERE  container1 = gtn.container1  HAVING COUNT(DISTINCT sbu_name) > 1   ) THEN 'FCL / LCL'"
             + "  WHEN  gtn.pod IN ('2003','2012','2010') and gtn.MODE1='Truck'  THEN 'LTL'"
