@@ -45,11 +45,6 @@
         <!--  choosen-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                 diasEtaDc(1);
-            });
-        </script>
     </head>
     <body>
         <%
@@ -167,7 +162,7 @@
                                                 eta_port_discharge = row[12];
                                                 max_flete = row[13];
                                                 eta_plus2 = row[23];
-                                                eta_plus = row[24];
+                                                eta_plus = row[24];  System.out.println("Valor Fecha put Away: " +eta_plus);
                                                 infoPol= row[28];
                                                 observaciones = row[25];
                                                 actual_crd = row[29];
@@ -310,7 +305,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>INDC +2 Days Put Away</strong></label>
-                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[24]%>" name="eta_plus" id="eta_plus">
+                                                    <input class="form-control datepicker" type="text" placeholder="..." value="<%=eta_plus%>" name="eta_plus" id="eta_plus">
                                                 </div>
                                             </div>  
                                             
@@ -381,16 +376,16 @@
             let campo15 = '<%=eta_plus%>';
             let campo16 = '<%=infoPol%>';
             let campo17 = '<%=observaciones%>';
-            let campo18 = '<%=actual_crd%>'; 
+            let campo18 = '<%=actual_crd%>';  
         </script>
         <!-- utileria gral -->
-        <script src="../lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
-        <!-- consultar núm de evento -->
-        <script src="../lib/js/ModificacionEventos/consultarNumEventoActual.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
         <!-- calcular días finales/estimados -->
-        <script src="../lib/js/ModificacionEventos/calcularDiasFinales.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/calcularDiasFinales.js" type="text/javascript"></script>
+        <!-- consultar núm de evento -->
+        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/consultarNumEventoActual.js" type="text/javascript"></script>
         <!-- registrar información -->
-        <script src="../lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
         <!-- sweetAlert 1.3 --->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- dataPiker/Calendarios -->

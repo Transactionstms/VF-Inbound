@@ -5,7 +5,6 @@
  */
 
 //Reglas de Negocios <Fechas Estimadas/Controladores>
-
 let blocked = false;                     //Identificador - Campo División
 let blocked_diasBrandDivision = false;   //Identificador - Campo Brand División | División (RULE #5-HISTORICO)
 
@@ -13,7 +12,7 @@ let blocked_diasBrandDivision = false;   //Identificador - Campo Brand División
 if(campo5 === "3003" && campo6 === "5002" || campo6 === "5001"){
     blocked_diasBrandDivision = true; 
 }
-console.log("Brand División = NORHT THE FACE y División = APPAREL/ACCESSORIES:" +blocked_diasBrandDivision);
+//console.log("Brand División = NORHT THE FACE y División = APPAREL/ACCESSORIES:" +blocked_diasBrandDivision);
 
 
 function diasLoadType(loadType) {  //RULE #1
@@ -73,20 +72,18 @@ function diasEtaDc(tipoConsulta) {  //RULE #3
     let eta_plus2 = document.getElementById('eta_plus2').value;
     let sbu_name = document.getElementById('sbu_name').value;
     let id_brandDivision = "";
-    let lt2 = "";
+    let lt2 = "2";
 
     if (tipoConsulta === "1") {
-        id_brandDivision = '<%=idBrandivision%>';
+        id_brandDivision = campo5;
     } else {
         id_brandDivision = document.getElementById('Brand').value;
     }
 
     if (id_brandDivision === "3003") {  //NORHT THE FACE
-        if (sbu_name === "5002" || sbu_name === "5001") {
+        if (sbu_name === "5002" || sbu_name === "5001") {  //APPAREL/ACCESSORIES
             lt2 = "3";
-        } //APPAREL/ACCESSORIES
-    } else {
-        lt2 = "2";
+        } 
     }
 
     fetch("../UpEtaDc_LoadTypeNot?eta_plus2=" + eta_plus2 + "&lt2=" + lt2, {
