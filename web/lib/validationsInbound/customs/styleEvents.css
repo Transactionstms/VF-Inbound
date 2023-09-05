@@ -26,6 +26,9 @@ html {
        margin-left: auto;
        margin-right: auto;
     }
+        .txtColor{
+       background-color: #33FF39;
+    } 
 }
 
 /* Dispositivos pequeños (portrait tablets and large phones, 600px and up) */
@@ -36,6 +39,9 @@ html {
        margin-left: auto;
        margin-right: auto;
     }
+        .txtColor{
+       background-color: #33FFAF;
+    } 
 }
 
 /* Dispositivos medianos (landscape tablets, 768px and up) */
@@ -48,19 +54,25 @@ html {
         margin-left: auto;
         margin-right: auto;
     }
+        .txtColor{
+       background-color: #33FFF6;
+    } 
 } 
 
 /* Dispositivos grandes (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .iFrame { height:1000px; width:1100px; }
   .custom-select{
-        width: 190px;  
+        width: 150px;  
         margin-left: auto;
         margin-right: auto;
     }
   .main-table{
        height: 800px;  
-    }   
+    } 
+        .txtColor{   
+       background-color: #33DDFF;                           /*Resolución Principal*/
+    } 
 } 
 
 /* Dispositivos extra grandes (large laptops and desktops, 1200px and up) */
@@ -74,6 +86,9 @@ html {
     }
    .main-table{
        height: 400px;  
+    } 
+    .txtColor{
+       background-color: #3349FF;
     } 
 }
 
