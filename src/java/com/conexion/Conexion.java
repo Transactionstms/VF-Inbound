@@ -19,6 +19,7 @@ public class Conexion {
 
         try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+             
             conn = DriverManager.getConnection(PropertiesUtil.getDbConexionProperties(PropertiesUtil.ORACLE_KEY_URL),
                     PropertiesUtil.getDbConexionProperties(PropertiesUtil.ORACLE_KEY_USER), PropertiesUtil.getDbConexionProperties(PropertiesUtil.ORACLE_KEY_PASSWORD));
         } catch (Exception exc) {

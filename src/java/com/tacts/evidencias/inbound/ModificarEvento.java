@@ -115,6 +115,11 @@ public class ModificarEvento extends HttpServlet {
                 }else{
                     evento = numEventoOld;
                 }
+                
+                
+                
+                
+                
 
                         /* Comparación de información(formulario) vs información(base de datos) */
                         if (db.doDB(fac.consultarEventoFormulario(evento, shipmenIdOld, containerOld))) {
@@ -139,7 +144,16 @@ public class ModificarEvento extends HttpServlet {
                                 }
                                 
                                 if(!row[26].trim().equals(responsable)){
-                                   caramelo += " Responsable: " + responsable + "@";
+                                    String REs="";
+                                     if (db.doDB("select DISTINCT RESPONSABLE from tra_destino_responsable where USER_NID="+responsable)) {
+                                        for (String[] rowRes : db.getResultado()) {
+                                                REs=rowRes[0];
+                                        }}
+                                    
+                                    
+                                    
+                                    
+                                   caramelo += " Responsable: " + REs + "@";
                                    contador++;
                                 }
                                 
@@ -149,12 +163,23 @@ public class ModificarEvento extends HttpServlet {
                                 }
                                 
                                 if(!row[3].trim().equals(Brand)){
-                                   caramelo += " Brand-Division: " + Brand + "@";
+                                     String REs="";
+                                     if (db.doDB(" select  NOMBRE_BD from tra_inb_brand_division where ID_BD="+Brand)) {
+                                        for (String[] rowRes : db.getResultado()) {
+                                                REs=rowRes[0];
+                                        }}
+                                   caramelo += " Brand-Division: " + REs + "@";
                                    contador++;
                                 }
                                 
                                 if(!row[27].trim().equals(sbu_name)){
-                                   caramelo += " Division: " + sbu_name + "@";
+                                    
+                                    String REs="";
+                                     if (db.doDB(" select  DIVISION_NOMBRE from tra_inb_division where ID_DIVISION="+sbu_name)) {
+                                        for (String[] rowRes : db.getResultado()) {
+                                                REs=rowRes[0];
+                                        }}
+                                   caramelo += " Division: " + REs + "@";
                                    contador++;
                                 }
     /*RULE #3*/                             
@@ -182,7 +207,15 @@ public class ModificarEvento extends HttpServlet {
                                 /***************************************************************************************************/
                                 
                                 if(!row[10].trim().equals(pod)){
-                                   caramelo += " POD: " + pod + "@";
+                                    
+                                    
+                                     String REs="";
+                                     if (db.doDB(" select  NOMBRE_POD from tra_inb_pod where ID_POD="+pod)) {
+                                        for (String[] rowRes : db.getResultado()) {
+                                                REs=rowRes[0];
+                                        }}
+                                     
+                                   caramelo += " POD: " + REs + "@";
                                    contador++;
                                 }
                                 
@@ -232,7 +265,14 @@ public class ModificarEvento extends HttpServlet {
                                 } 
                             
                                 if(!row[28].trim().equals(pol)){
-                                   caramelo += " POL: " + pol + "@";
+                                    
+                                       String REs="";
+                                     if (db.doDB("select  NOMBRE_POL from tra_inb_pol where ID_POL="+pol)) {
+                                        for (String[] rowRes : db.getResultado()) {
+                                                REs=rowRes[0];
+                                        }}
+                                     
+                                   caramelo += " POL: " + REs + "@";
                                    contador++;
                                 } 
                                 
@@ -260,7 +300,8 @@ public class ModificarEvento extends HttpServlet {
                         if(contador>0){  //Valores modificados en lista
 
                             /* Emisión de Alerta - Actualización de Campos: */
-                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4005 AND ESTATUS IN (1)";
+                            String consulta = "SELECT DISTINCT CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID = 4006 AND ESTATUS IN (1)";
+                             //  String consulta = "select 'oamorales@tacts.mx/grecendiz@tacts.mx' from dual";
                             if (db.doDB(consulta)) {
                                 for (String[] rowE : db.getResultado()) {
                                     emails = rowE[0].replaceFirst(" ", "@");  

@@ -135,7 +135,7 @@ public class ConsultarFacturas extends HttpServlet {
                 emails = email_1.replaceAll(",","") + email_2.replaceAll(",","") + email_3.replaceAll(",","");
                 
                 System.out.println("Consulta: " + listarP);
-                System.out.println("https://www.rtms.mx/consultar/consultarSat.jsp?re=" + rfc_emisor + "&rr=" + rfc_receptor + "&tt=" + formatter.format(totalGloblal) + "&id=" + uuid + "&fe=" + folio_fiscal);
+                System.out.println("https://www.tacts.mx/consultar/consultarSat.jsp?re=" + rfc_emisor + "&rr=" + rfc_receptor + "&tt=" + formatter.format(totalGloblal) + "&id=" + uuid + "&fe=" + folio_fiscal);
 
                 salida += " <tr> "
                         + "    <td>" + serie + "</td> "

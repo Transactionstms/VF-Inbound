@@ -52,7 +52,28 @@ public class AlertaInbound extends HttpServlet {
         String rutaFichero = "";
         String emails = "";
  
-        if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
+      
+String idAA="";
+String nomAA="";
+        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO,AGENTE_ADUANAL_NOMBRE FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
+        if (db.doDB(consulta)) {
+            for (String[] rowE : db.getResultado()) {
+                rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
+                emails = rowE[1];  
+                idAA=rowE[0];
+                nomAA=rowE[2];
+                
+                 correo.alertaModificarEventos(emails,rutaFichero.trim(),idAA,nomAA);
+                
+            }
+        }
+        
+       // emails+="jlmateos@tacts.mx";
+         
+       
+       
+       
+         if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
             for (String[] row : db.getResultado()) {
                 
                 if(!row[4].equals("No/DSN")){
@@ -67,17 +88,9 @@ public class AlertaInbound extends HttpServlet {
 
             }
         } 
-
-        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
-        if (db.doDB(consulta)) {
-            for (String[] rowE : db.getResultado()) {
-                rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
-                emails = rowE[1].replaceFirst(" ", "/");  
-
-                correo.alertaModificarEventos(emails,rutaFichero.trim(),rowE[0]); 
-            }
-        }
-
+         
+         
+         
          oraDB.close(); //cerrar conexión
             
         }

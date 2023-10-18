@@ -19,7 +19,7 @@ public  class GenericJdbc {
     public void openConection(){
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-               connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.140.125:1521:tacts125","VANS39TEST","UKidn49N875RBH54Cq2");
+               connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.140.125:1521:tacts125","VANS39TEST","XUKidn49N875RBH54Cq2");
          } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }	

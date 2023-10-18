@@ -7,10 +7,12 @@ import java.sql.SQLException;
 public  class GenericJdbc {
     protected static Connection connection;
 
-    public void openConection(){
+   public void openConection(){
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.184.39:1521:trans39","VANS39","U9xbQa530fdFjaV7");
+           // connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.89.176:1521:orcldb18c","VANS39TEST","UKidn49N875RBH54Cq2");
+         connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.140.125:1521:tacts125","VANS39TEST","XUKidn49N875RBH54Cq2");
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }	

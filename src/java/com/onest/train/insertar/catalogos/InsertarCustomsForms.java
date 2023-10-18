@@ -38,9 +38,9 @@ public class InsertarCustomsForms extends HttpServlet {
         DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
         DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
         String UserId = (String) ownsession.getAttribute("login.user_id_number");
-        String cve = (String) ownsession.getAttribute("cbdivcuenta");
+        String cve ="20" ;//(String) ownsession.getAttribute("cbdivcuenta");
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
-        oraDB.connect(dbData.getUser(), dbData.getPassword());
+       // oraDB.connect(dbData.getUser(), dbData.getPassword());
         ConsultasQuery fac = new ConsultasQuery();                     //Objeto para consultas 
         SimpleDateFormat formato = new SimpleDateFormat("mm/dd/yyyy"); //Objeto para calcular días de despacho (SEMAFORO)
         CrearSemaforoCustoms obj = new CrearSemaforoCustoms();
@@ -146,222 +146,222 @@ public class InsertarCustomsForms extends HttpServlet {
               for (int i=numCustoms; i<=numCustoms; i++){
                   
                   //Parametros Indicadores
-                  String referenciaAA = request.getParameter("referenciaAA[" + i + "]").trim(); 
-                  String evento = request.getParameter("evento[" + i + "]").trim();
-                  String shipmentId = request.getParameter("shipmentId[" + i + "]").trim();
-                  String containerId = request.getParameter("containerId[" + i + "]").trim();
-                  String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
-                  String loadTypeFinal = request.getParameter("loadTypeFinal[" + i + "]").trim(); 
-                  String plantillaId = request.getParameter("plantillaId[" + i + "]").trim(); 
+                  String referenciaAA = request.getParameter("referenciaAA"+i+"").trim(); 
+                  String evento = request.getParameter("evento"+i+"").trim();
+                  String shipmentId = request.getParameter("shipmentId"+i+"").trim();
+                  String containerId = request.getParameter("containerId"+i+"").trim();
+                  String prioridad = request.getParameter("prioridad"+i+"").trim(); 
+                  String loadTypeFinal = request.getParameter("loadTypeFinal"+i+"").trim(); 
+                  String plantillaId = request.getParameter("plantillaId"+i+"").trim(); 
                   
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF 
                   //Parametros Generales
-                  pais_origen = request.getParameter("pais_origen[" + i + "]").trim(); 
-                  size_container = request.getParameter("size_container[" + i + "]").trim(); 
-                  valor_usd = request.getParameter("valor_usd[" + i + "]").trim();                
+                  pais_origen = request.getParameter("pais_origen"+i+"").trim(); 
+                  size_container = request.getParameter("size_container"+i+"").trim(); 
+                  valor_usd = request.getParameter("valor_usd"+i+"").trim();                
                  
-                  eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]");                                     //fecha   
+                  eta_port_discharge = request.getParameter("eta_port_discharge"+i+"");                                     //fecha   
                   if(!eta_port_discharge.trim().equals("")){
                       Date date1 = sdfSource.parse(eta_port_discharge);                                                           //parse the string into Date object
                       eta_port_discharge = sdfDestination.format(date1);                                                          //parse the date into another format
                   } 
                   
-                  agente_aduanal = request.getParameter("agente_aduanal[" + i + "]").trim();            
-                  pedimento_a1 = request.getParameter("pedimento_a1[" + i + "]").trim();             
-                  pedimento_r1_1er = request.getParameter("pedimento_r1_1er[" + i + "]").trim();          
-                  motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er[" + i + "]").trim();  
-                  pedimento_r1_2do = request.getParameter("pedimento_r1_2do[" + i + "]").trim();          
-                  motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]").trim();  
+                  agente_aduanal = request.getParameter("agente_aduanal"+i+"").trim();            
+                  pedimento_a1 = request.getParameter("pedimento_a1"+i+"").trim();             
+                  pedimento_r1_1er = request.getParameter("pedimento_r1_1er"+i+"").trim();          
+                  motivo_rectificacion_1er = request.getParameter("motivo_rectificacion_1er"+i+"").trim();  
+                  pedimento_r1_2do = request.getParameter("pedimento_r1_2do"+i+"").trim();          
+                  motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do"+i+"").trim();  
                   
-                  fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]");               //fecha  
+                  fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc"+i+"");               //fecha  
                   if(!fecha_recepcion_doc.trim().equals("")){
                       Date date2 = sdfSource.parse(fecha_recepcion_doc);                                                           //parse the string into Date object
                       fecha_recepcion_doc = sdfDestination.format(date2);                                                          //parse the date into another format
                   }
                   
-                  recinto = request.getParameter("recinto[" + i + "]").trim();
-                  naviera = request.getParameter("naviera[" + i + "]").trim();
-                  buque = request.getParameter("buque[" + i + "]").trim();
+                  recinto = request.getParameter("recinto"+i+"").trim();
+                  naviera = request.getParameter("naviera"+i+"").trim();
+                  buque = request.getParameter("buque"+i+"").trim();
                   
-                  fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]");                 //fecha 
+                  fecha_revalidacion = request.getParameter("fecha_revalidacion"+i+"");                 //fecha 
                   if(!fecha_revalidacion.trim().equals("")){
                       Date date3 = sdfSource.parse(fecha_revalidacion);                                                            //parse the string into Date object
                       fecha_revalidacion = sdfDestination.format(date3);                                                           //parse the date into another format
                   }
                   
-                  fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]");               //fecha 
+                  fecha_previo_origen = request.getParameter("fecha_previo_origen"+i+"");               //fecha 
                   if(!fecha_previo_origen.trim().equals("")){
                       Date date4 = sdfSource.parse(fecha_previo_origen);                                                           //parse the string into Date object
                       fecha_previo_origen = sdfDestination.format(date4);                                                          //parse the date into another format
                   }
                   
-                  fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]");             //fecha 
+                  fecha_previo_destino = request.getParameter("fecha_previo_destino"+i+"");             //fecha 
                   if(!fecha_previo_destino.trim().equals("")){
                       Date date5 = sdfSource.parse(fecha_previo_destino);                                                          //parse the string into Date object
                       fecha_previo_destino = sdfDestination.format(date5);                                                         //parse the date into another format
                   }
                   
-                  fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]");         //fecha 
+                  fecha_resultado_previo = request.getParameter("fecha_resultado_previo"+i+"");         //fecha 
                   if(!fecha_resultado_previo.trim().equals("")){
                       Date date6 = sdfSource.parse(fecha_resultado_previo);                                                        //parse the string into Date object
                       fecha_resultado_previo = sdfDestination.format(date6);                                                       //parse the date into another format
                   }
                   
-                  proforma_final = request.getParameter("proforma_final[" + i + "]");                  //fecha  
+                  proforma_final = request.getParameter("proforma_final"+i+"");                  //fecha  
                   if(!proforma_final.trim().equals("")){
                       Date date20 = sdfSource.parse(proforma_final);                                                               //parse the string into Date object
                       proforma_final = sdfDestination.format(date20);                                                              //parse the date into another format
                   }
                   
-                  permiso = request.getParameter("permiso[" + i + "]").trim();                   
+                  permiso = request.getParameter("permiso"+i+"").trim();                   
                   
-                  fecha_envio = request.getParameter("fecha_envio[" + i + "]");                               //fecha  
+                  fecha_envio = request.getParameter("fecha_envio"+i+"");                               //fecha  
                   if(!fecha_envio.trim().equals("")){
                       Date date7 = sdfSource.parse(fecha_envio);                                                                   //parse the string into Date object
                       fecha_envio = sdfDestination.format(date7);                                                                  //parse the date into another format
                   }
                   
-                  fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]");             //fecha 
+                  fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm"+i+"");             //fecha 
                   if(!fecha_recepcion_perm.trim().equals("")){
                       Date date8 = sdfSource.parse(fecha_recepcion_perm);                                                          //parse the string into Date object
                       fecha_recepcion_perm = sdfDestination.format(date8);                                                         //parse the date into another format
                   }
                   
-                  fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]");           //fecha 
+                  fecha_activacion_perm = request.getParameter("fecha_activacion_perm"+i+"");           //fecha 
                   if(!fecha_activacion_perm.trim().equals("")){
                       Date date9 = sdfSource.parse(fecha_activacion_perm);                                                         //parse the string into Date object
                       fecha_activacion_perm = sdfDestination.format(date9);                                                        //parse the date into another format
                   }
                   
-                  fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]");                 //fecha 
+                  fecha_permisos_aut = request.getParameter("fecha_permisos_aut"+i+"");                 //fecha 
                   if(!fecha_permisos_aut.trim().equals("")){
                       Date date10 = sdfSource.parse(fecha_permisos_aut);                                                           //parse the string into Date object
                       fecha_permisos_aut = sdfDestination.format(date10);                                                          //parse the date into another format
                   }
                   
-                  co_pref_arancelaria = request.getParameter("co_pref_arancelaria[" + i + "]").trim();       
-                  aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria[" + i + "]").trim();    
-                  req_uva = request.getParameter("req_uva[" + i + "]").trim();   
-                  req_ca = request.getParameter("req_ca[" + i + "]").trim();   
+                  co_pref_arancelaria = request.getParameter("co_pref_arancelaria"+i+"").trim();       
+                  aplic_pref_arancelaria = request.getParameter("aplic_pref_arancelaria"+i+"").trim();    
+                  req_uva = request.getParameter("req_uva"+i+"").trim();   
+                  req_ca = request.getParameter("req_ca"+i+"").trim();   
                   
-                  fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]");                  //fecha 
+                  fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca"+i+"");                  //fecha 
                   if(!fecha_recepcion_ca.trim().equals("")){
                       Date date11 = sdfSource.parse(fecha_recepcion_ca);                                                            //parse the string into Date object
                       fecha_recepcion_ca = sdfDestination.format(date11);                                                           //parse the date into another format
                   }
                   
-                  num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]").trim();   
-                  monto_ca = request.getParameter("monto_ca[" + i + "]").trim();   
+                  num_constancia_ca = request.getParameter("num_constancia_ca"+i+"").trim();   
+                  monto_ca = request.getParameter("monto_ca"+i+"").trim();   
                   
-                  fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]");                 //fecha 
+                  fecha_doc_completos = request.getParameter("fecha_doc_completos"+i+"");                 //fecha 
                   if(!fecha_doc_completos.trim().equals("")){
                       Date date12 = sdfSource.parse(fecha_doc_completos);                                                            //parse the string into Date object
                       fecha_doc_completos = sdfDestination.format(date12);                                                           //parse the date into another format
                   }
                   
-                  fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]");               //fecha 
+                  fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento"+i+"");               //fecha 
                   if(!fecha_pago_pedimento.trim().equals("")){
                       Date date13 = sdfSource.parse(fecha_pago_pedimento);                                                           //parse the string into Date object
                       fecha_pago_pedimento = sdfDestination.format(date13);                                                          //parse the date into another format
                   }
                   
-                  fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]");   //fecha 
+                  fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte"+i+"");   //fecha 
                   if(!fecha_solicitud_transporte.trim().equals("")){
                       Date date14 = sdfSource.parse(fecha_solicitud_transporte);                                                     //parse the string into Date object
                       fecha_solicitud_transporte = sdfDestination.format(date14);                                                    //parse the date into another format
                   }
                   
-                  fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]");                       //fecha 
+                  fecha_modulacion = request.getParameter("fecha_modulacion"+i+"");                       //fecha 
                   if(!fecha_modulacion.trim().equals("")){
                       Date date15 = sdfSource.parse(fecha_modulacion);                                                               //parse the string into Date object
                       fecha_modulacion = sdfDestination.format(date15);                                                              //parse the date into another format
                   }
                   
-                  modalidad = request.getParameter("modalidad[" + i + "]").trim();                 
-                  resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]").trim();      
+                  modalidad = request.getParameter("modalidad"+i+"").trim();                 
+                  resultado_modulacion = request.getParameter("resultado_modulacion"+i+"").trim();      
                   
-                  fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]");               //fecha 
+                  fecha_reconocimiento = request.getParameter("fecha_reconocimiento"+i+"");               //fecha 
                   if(!fecha_reconocimiento.trim().equals("")){
                       Date date16 = sdfSource.parse(fecha_reconocimiento);                                                           //parse the string into Date object
                       fecha_reconocimiento = sdfDestination.format(date16);                                                          //parse the date into another format
                   }
                   
-                  fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]");                       //fecha 
+                  fecha_liberacion = request.getParameter("fecha_liberacion"+i+"");                       //fecha 
                   if(!fecha_liberacion.trim().equals("")){                  
                       Date date17 = sdfSource.parse(fecha_liberacion);                                                               //parse the string into Date object
                       fecha_liberacion = sdfDestination.format(date17);                                                              //parse the date into another format
                   }
                   
-                  sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
-                  sello_final = request.getParameter("sello_final[" + i + "]").trim();               
+                  sello_origen = request.getParameter("sello_origen"+i+"").trim();              
+                  sello_final = request.getParameter("sello_final"+i+"").trim();               
                   
-                  fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]");                 //fecha 
+                  fecha_retencion_aut = request.getParameter("fecha_retencion_aut"+i+"");                 //fecha 
                   if(!fecha_retencion_aut.trim().equals("")){
                       Date date18 = sdfSource.parse(fecha_retencion_aut);                                                            //parse the string into Date object
                       fecha_retencion_aut = sdfDestination.format(date18);                                                           //parse the date into another format
                   }
                   
-                  fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]");               //fecha 
+                  fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut"+i+"");               //fecha 
                   if(!fecha_liberacion_aut.trim().equals("")){                  
                       Date date19 = sdfSource.parse(fecha_liberacion_aut);                                                           //parse the string into Date object
                       fecha_liberacion_aut = sdfDestination.format(date19);                                                          //parse the date into another format
                   }
                   
-                  estatus_operacion = request.getParameter("estatus_operacion[" + i + "]").trim();         
-                  motivo_atraso = request.getParameter("motivo_atraso[" + i + "]").trim();             
-                  observaciones = request.getParameter("observaciones[" + i + "]").trim(); 
-                  fy = request.getParameter("fy[" + i + "]").trim();
+                  estatus_operacion = request.getParameter("estatus_operacion"+i+"").trim();         
+                  motivo_atraso = request.getParameter("motivo_atraso"+i+"").trim();             
+                  observaciones = request.getParameter("observaciones"+i+"").trim(); 
+                  fy = request.getParameter("fy"+i+"").trim();
             }
               
             if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                
-                llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]");                                 //fecha 
+                llegada_a_nova = request.getParameter("llegada_a_nova"+i+"");                                 //fecha 
                 if(!llegada_a_nova.trim().equals("")){                  
                   Date date21 = sdfSource.parse(llegada_a_nova);                                                           //parse the string into Date object
                   llegada_a_nova = sdfDestination.format(date21);                                                          //parse the date into another format
                 }
                 
-                llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]");             //fecha 
+                llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd"+i+"");             //fecha 
                 if(!llegada_a_globe_trade_sd.trim().equals("")){                  
                   Date date22 = sdfSource.parse(llegada_a_globe_trade_sd);                                                           //parse the string into Date object
                   llegada_a_globe_trade_sd = sdfDestination.format(date22);                                                          //parse the date into another format
                 }
                                 
-                archivo_m = request.getParameter("archivo_m[" + i + "]").trim(); 
+                archivo_m = request.getParameter("archivo_m"+i+"").trim(); 
                 
-                fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]");                               //fecha  
+                fecha_archivo_m = request.getParameter("fecha_archivo_m"+i+"");                               //fecha  
                 if(!fecha_archivo_m.trim().equals("")){                  
                   Date date23 = sdfSource.parse(fecha_archivo_m);                                                           //parse the string into Date object
                   fecha_archivo_m = sdfDestination.format(date23);                                                          //parse the date into another format
                 }
                                 
-                fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]");                       //fecha 
+                fecha_solicit_manip = request.getParameter("fecha_solicit_manip"+i+"");                       //fecha 
                 if(!fecha_solicit_manip.trim().equals("")){                  
                   Date date24 = sdfSource.parse(fecha_solicit_manip);                                                           //parse the string into Date object
                   fecha_solicit_manip = sdfDestination.format(date24);                                                          //parse the date into another format
                 }
                                 
-                fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]");                         //fecha 
+                fecha_vencim_manip = request.getParameter("fecha_vencim_manip"+i+"");                         //fecha 
                 if(!fecha_vencim_manip.trim().equals("")){                  
                   Date date25 = sdfSource.parse(fecha_vencim_manip);                                                           //parse the string into Date object
                   fecha_vencim_manip = sdfDestination.format(date25);                                                          //parse the date into another format
                 }
                                 
-                fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]");           //fecha 
+                fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim"+i+"");           //fecha 
                 if(!fecha_confirm_clave_pedim.trim().equals("")){                  
                   Date date26 = sdfSource.parse(fecha_confirm_clave_pedim);                                                           //parse the string into Date object
                   fecha_confirm_clave_pedim = sdfDestination.format(date26);                                                          //parse the date into another format
                 }
                                 
-                fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]");                   //fecha 
+                fecha_recep_increment = request.getParameter("fecha_recep_increment"+i+"");                   //fecha 
                 if(!fecha_recep_increment.trim().equals("")){                  
                   Date date27 = sdfSource.parse(fecha_recep_increment);                                                           //parse the string into Date object
                   fecha_recep_increment = sdfDestination.format(date27);                                                          //parse the date into another format
                 }
                                 
-                t_e = request.getParameter("t_e[" + i + "]").trim(); 
+                t_e = request.getParameter("t_e"+i+"").trim(); 
                 
-                fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]");                     //fecha 
+                fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound"+i+"");                     //fecha 
                 if(!fecha_vencim_inbound.trim().equals("")){                  
                   Date date28 = sdfSource.parse(fecha_vencim_inbound);                                                           //parse the string into Date object
                   fecha_vencim_inbound = sdfDestination.format(date28);                                                          //parse the date into another format
@@ -371,35 +371,35 @@ public class InsertarCustomsForms extends HttpServlet {
             
             if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){ //CUSA Y VF
                  
-                no_bultos = request.getParameter("no_bultos[" + i + "]").trim(); 
-                peso_kg = request.getParameter("peso_kg[" + i + "]").trim(); 
-                transferencia = request.getParameter("transferencia[" + i + "]").trim();
+                no_bultos = request.getParameter("no_bultos"+i+"").trim(); 
+                peso_kg = request.getParameter("peso_kg"+i+"").trim(); 
+                transferencia = request.getParameter("transferencia"+i+"").trim();
                 
-                fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado[" + i + "]");                //fecha 
+                fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado"+i+"");                //fecha 
                 if(!fecha_inicio_etiquetado.trim().equals("")){                  
                   Date date29 = sdfSource.parse(fecha_inicio_etiquetado);                                                           //parse the string into Date object
                   fecha_inicio_etiquetado = sdfDestination.format(date29);                                                          //parse the date into another format
                 }
                                 
-                fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]");             //fecha 
+                fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado"+i+"");             //fecha 
                 if(!fecha_termino_etiquetado.trim().equals("")){                  
                   Date date30 = sdfSource.parse(fecha_termino_etiquetado);                                                           //parse the string into Date object
                   fecha_termino_etiquetado = sdfDestination.format(date30);                                                          //parse the date into another format
                 }
                                 
-                hora_termino_etiquetado = request.getParameter("hora_termino_etiquetado[" + i + "]").trim(); 
-                proveedor = request.getParameter("proveedor[" + i + "]").trim(); 
-                proveedor_carga = request.getParameter("proveedor_carga[" + i + "]").trim(); 
+                hora_termino_etiquetado = request.getParameter("hora_termino_etiquetado"+i+"").trim(); 
+                proveedor = request.getParameter("proveedor"+i+"").trim(); 
+                proveedor_carga = request.getParameter("proveedor_carga"+i+"").trim(); 
             
             }
             
             //Consultar existencia de Shipmentd para el tipo de registro:
             String valExist = "SELECT DISTINCT CUSTREG_ID FROM TRA_INB_CUSTOMS WHERE SHIPMENT_ID = '" + shipmentId + "' AND CBDIV_ID = '" + cve + "'";
-            boolean oraOut = oraDB.execute(valExist);
+            boolean oraOut = db.doDB(valExist);
             
             if(oraOut){
                 
-                oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
+               // oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
 
                                  insertarCustoms = " UPDATE TRA_INB_CUSTOMS SET "                              
                                                  + " REFERENCIA_AA = '" + referenciaAA + "', ";
@@ -549,7 +549,7 @@ public class InsertarCustomsForms extends HttpServlet {
                     
             }else{   
                 
-                oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
+                //oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
                 
                                   insertarCustoms = " INSERT INTO TRA_INB_CUSTOMS "
                                                   + " (CUSTREG_ID, "
@@ -844,12 +844,12 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + cve + "', "
                                                   + " '" + UserId + "') ";  
             }      
-                    boolean oraOut1 = oraDB.execute(insertarCustoms); 
+                    boolean oraOut1 = db.doDB(insertarCustoms); 
                     
                     System.out.println("Registro:" + insertarCustoms);    
                     
                     regPrioridad = " UPDATE TRA_INC_GTN_TEST SET ESTATUS='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
-                    boolean oraOut2 = oraDB.execute(regPrioridad);
+                    boolean oraOut2 =db.doDB(regPrioridad);
                 
                     
         /************************************* Proceso para activar semaforo /*************************************/
@@ -890,7 +890,7 @@ public class InsertarCustomsForms extends HttpServlet {
 
                     /*Consultar si existe el SHIPMENT_ID en la tabla de tra_inb_semaforo*/
                     String valShipmentSemaforo = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "'";
-                    boolean oraOut3 = oraDB.execute(valShipmentSemaforo); 
+                    boolean oraOut3 = db.doDB(valShipmentSemaforo); 
 
                     if(oraOut3){
 
@@ -952,7 +952,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " 1) ";
                     }
 
-                    boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
+                    boolean oraOut4 = db.doDB(semaforo); System.out.println("semaforo:"+semaforo);
 
                 }      
             }     

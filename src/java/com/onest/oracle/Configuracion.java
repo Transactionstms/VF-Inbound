@@ -18,10 +18,14 @@ public class Configuracion {
     private String puerto;
     
     private void leerArchivo() {
+        //this.servidor = "74.208.89.176";
+        //this.sid = "orcldb18c";
+        
         this.servidor = "74.208.140.125";
         this.sid = "tacts125";
         this.usuario = "VANS39TEST";
-        this.password = "UKidn49N875RBH54Cq2";
+       // this.password = "UKidn49N875RBH54Cq2";
+       this.password = "XUKidn49N875RBH54Cq2";
         this.puerto = "1521";
     }
 

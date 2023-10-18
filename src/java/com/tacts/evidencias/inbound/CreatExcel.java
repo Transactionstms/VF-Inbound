@@ -36,8 +36,8 @@ public class CreatExcel {
         
         try {
 
-            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanal(agenteId));
-            ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanal(agenteId));
+            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosDetalleAgenteAduanalExcel(agenteId));
+            ResultSet rs = stmt.executeQuery(fac.consultarEventosDetalleAgenteAduanalExcel(agenteId));
             while(rs.next()){
                 personas.add(new Persona(
                         rs.getString(1),    // numEvento

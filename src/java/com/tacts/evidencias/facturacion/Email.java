@@ -485,6 +485,7 @@ public class Email {
         properties.put("mail.smtp.password", CLAVE);
         properties.put("mail.smtp.port", 587);
         properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
     }
 
     public boolean alertaFactura(String fileName, String correos, String ruta, String nameEmail) throws SQLException {
@@ -749,7 +750,7 @@ public class Email {
 
     }
 
-    public boolean alertaModificarEventos(String correosInternos, String fichero, String agenteId) throws SQLException {
+    public boolean alertaModificarEventos(String correosInternos, String fichero, String agenteId, String nombreaa) throws SQLException {
 
         boolean enviado = false;
         String[] vect;
@@ -788,7 +789,7 @@ public class Email {
             messageBodyPart = new MimeBodyPart();
 
             messageBodyPart.setDataHandler(new DataHandler(new FileDataSource(fichero)));
-            messageBodyPart.setFileName("ModifaciónDeEventos" + agenteId + ".xls");
+            messageBodyPart.setFileName("AsignacionDeEventos"+agenteId +".xls");
 
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
@@ -1320,7 +1321,7 @@ public class Email {
 
         boolean enviado = false;
         String[] vect;
-        vect = correosInternos.split("@"); //Caracter viene del archivo ModificarEvento.java (correos)
+        vect = correosInternos.split("/"); //Caracter viene del archivo ModificarEvento.java (correos)
 
         try {
             Session session = Session.getDefaultInstance(properties,
