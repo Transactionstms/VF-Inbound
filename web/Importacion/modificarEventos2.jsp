@@ -379,13 +379,13 @@
             let campo18 = '<%=actual_crd%>';  
         </script>
         <!-- utileria gral -->
-        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
+        <script src="../lib/js/ModificacionEventos/utileriaGral.js" type="text/javascript"></script>
         <!-- calcular días finales/estimados -->
         <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/calcularDiasFinales.js" type="text/javascript"></script>
         <!-- consultar núm de evento -->
         <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/consultarNumEventoActual.js" type="text/javascript"></script>
         <!-- registrar información -->
-        <script src="<%=request.getContextPath()%>/lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
+        <script src="../lib/js/ModificacionEventos/actualizarEvento.js" type="text/javascript"></script>
         <!-- sweetAlert 1.3 --->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- dataPiker/Calendarios -->

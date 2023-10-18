@@ -37,14 +37,8 @@
     int maxMemSize = 50000 * 10240;
     // Aqu hay que cambiar el path dependiendo a donde se quiera subir en el server
 
-    String filePath = "D:/";
-    // String filePath = "C:/SERVIDORES/tomcat7test/webapps/imgPlebes/";
-    //C:\Program Files\Apache Software Foundation\Tomcat 8.5_ApacheTomcat8\webapps\imgPlebes
-    // String filePath = "C:/Program Files/Apache Software Foundation/Tomcat 8.5_ApacheTomcat8/webapps/imgPlebes/";
-    //  String filePath = "C:/Program Files/Apache Software Foundation/apache-tomcat-9.0.43/webapps/imgPlebes/";
-////C:\Program Files\Apache Software Foundation\apache-tomcat-9.0.43\webapps\imgPlebes
-
-    //String filePath = "/Users/gerardorecendiz/Desktop/plantillas/";
+    String filePath = "D:\\Servicios\\wspod\\INBOUND\\";
+     
     String respuesta = "";
     String contentType = request.getContentType();
     if ((contentType.indexOf("multipart/form-data") >= 0)) {
@@ -72,6 +66,7 @@
                     respuesta += "{\"filename\":\"" + filePath + fileName + "\"} ";
                 }
             }
+            
             respuesta += "], \"message\": \"OK\"}";
 
             ////oraDB.connect(dbData.getUser(), dbData.getPassword());
@@ -172,6 +167,8 @@
 
         <style>
 
+            
+            
 
             .padre {
                 border: 1px solid #ccc;
@@ -196,6 +193,9 @@
 
         </style>
         <script>
+            
+            
+            
             window.onload = fetchData();
           
 
@@ -204,8 +204,10 @@
                 let fecha = Date.now();
                 console.log(fecha);
                 try {
-                      let urlF='https://www.ta2.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
-                    //let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
+                      //let urlF='https://www.ta2.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                      // let urlF='http://74.208.140.125:8080/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                       // let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
+                      let urlF='https://www.tacts.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
 
@@ -233,6 +235,9 @@
 
                     }else if (<%=sql1%> === 30) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logActBatch.jsp?folio=' + fecha;
+
+                    }else if (<%=sql1%> === 31) {
+                        window.location.href = '<%=request.getContextPath()%>/Importacion/logRDIBatch.jsp?folio=' + fecha;
 
                     }else{
                         

@@ -66,7 +66,7 @@
                     <li class="nav-item dropdown"> </li>
                     <li class="nav-item dropdown ms-auto"><a class="nav-link pe-0" id="userInfo" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar p-1" src="lib/img/logo-tacts.png" alt="Tacts"></a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
-                            <div class="dropdown-divider"></div><a class="dropdown-item"    href="<%=request.getContextPath()%>/index.jsp">Salir</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item"    href="<%=request.getContextPath()%>/Logout">Salir</a>
                         </div>
                     </li>
                 </ul>
@@ -86,7 +86,7 @@
                             </svg><span class="sidebar-link-title">Catálogos</span></a>
                         <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Productos/List.jsp" target="data">Productos y Servicios</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm.jsp?filterType=0&id=0" target="data">Personalizar Customs</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm_1.jsp?filterType=0&id=0" target="data">Personalizar Customs</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#widgetsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
@@ -98,6 +98,7 @@
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=23" target="data">Plantilla Previos</a></li>
 
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=20" target="data">Plantilla GTN</a></li>
+   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=31" target="data">Plantilla RDI</a></li>                         
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=27" target="data">Agregar Evento Nuevo</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=21" target="data">Plantilla DSN</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
@@ -116,6 +117,8 @@
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReportePO.jsp" target="data">Reporte PO</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteCustoms.jsp?filterType=0&id=0" target="data">Reporte CUSTOMS</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/Reporte_EvidenciarEmbarque.jsp" target="data">Reporte EVIDENCIAS</a></li>
+                           <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/Reporte_RDI.jsp" target="data">Reporte RDI</a></li>
+
                         </ul>
                     </li>
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 

@@ -1,5 +1,5 @@
 <%-- 
-    Document   : customForm
+    Document   : customForm_1
     Created on : 27/02/2023, 11:55:23 AM
     Author     : Desarrollo Tacts
 --%>
@@ -45,7 +45,7 @@
         <!-- scroll iFrame -->
         <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <script>
-            window.onload = (event) =>{
+            window.onload = (event) => {
                 jsShowWindowLoad('Cargando Información');
                 onloadIframe();
             };
@@ -62,13 +62,13 @@
                 String filterType = request.getParameter("filterType");
                 String id = request.getParameter("id");
                 String AgentType = "";
-                
+
                 ConsultasQuery fac = new ConsultasQuery();
-                
+   
                 //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
-                        AgentType = rowA[0]; 
+                        AgentType = rowA[0];
                     }
                 }
         %>
@@ -78,20 +78,26 @@
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
+                                <div class="card ">
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h2 class="card-heading">Personalizar Customs</h2>
                                             </div>
                                         </div>
-                                    </div>                                    
-                                    <p align="center">
-                                        <iframe id="frameTableCustoms" class="iFrame" title="Data Table Customs" style=" width:100%;"></iframe>
-                                    </p>
-                                    <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
-                                    <input type="hidden" id="id" name="id" value="<%=id%>">
-                                    <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
+                                    </div>   
+
+                                    <div class="card-body">
+                                        <p align="center">
+                                            <iframe id="frameTableCustoms" class="iFrame" title="Data Table Customs" style=" width:100%; height: 4000px"></iframe>
+                                        </p>
+                                        <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
+                                        <input type="hidden" id="id" name="id" value="<%=id%>">
+                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
+                                    </div>
+
+                                    
+                               
                                 </div>
                             </div>
                         </div>   
@@ -100,46 +106,46 @@
             </div>
         </div> 
         <script>
-            function onloadIframe(){
-                
-                let filterType = document.getElementById("filterType").value;   
-                let id = document.getElementById("id").value;   
+            function onloadIframe() {
+
+                let filterType = document.getElementById("filterType").value;
+                let id = document.getElementById("id").value;
                 let agenteId = document.getElementById("idAgenteAduanal").value;
-                
-                document.getElementById('frameTableCustoms').src = "iframeDataCustom.jsp?filterType="+filterType+"&id="+id;
-                
+
+                document.getElementById('frameTableCustoms').src = "iframeDataCustom_1.jsp?filterType=" + filterType + "&id=" + id;
+
                 /*fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
-                    method: 'POST',
-                }).then(r => r.text())
-                    .then(data => {
-                        if(data === "true"){
-                            console.log(data);
-                        }else{
-                           console.log(data);
-                        }
-                    }).catch(error => console.log(error));*/
-    
-                $('#frameTableCustoms').on("load", function() {
-                  $("#WindowLoad").remove();
-                });  
-               
+                 method: 'POST',
+                 }).then(r => r.text())
+                 .then(data => {
+                 if(data === "true"){
+                 console.log(data);
+                 }else{
+                 console.log(data);
+                 }
+                 }).catch(error => console.log(error));*/
+
+                $('#frameTableCustoms').on("load", function () {
+                    $("#WindowLoad").remove();
+                });
+
                 //email(agenteId);    
             }
-            
-            function recibirParametroIFrame(event) {
-                
-              // Obtener el parámetro enviado desde el iframe
-              var parametro = event.data;
 
-              // Realizar las acciones necesarias con el parámetro
-              let value = parametro.split("@");
-              
-              document.getElementById("filterType").value = value[0];
-              document.getElementById("id").value = value[1];
-              
-              jsShowWindowLoad('Cargando Información');
-              onloadIframe();
-              
+            function recibirParametroIFrame(event) {
+
+                // Obtener el parámetro enviado desde el iframe
+                var parametro = event.data;
+
+                // Realizar las acciones necesarias con el parámetro
+                let value = parametro.split("@");
+
+                document.getElementById("filterType").value = value[0];
+                document.getElementById("id").value = value[1];
+
+                jsShowWindowLoad('Cargando Información');
+                onloadIframe();
+
             }
 
             // Agregar un listener para escuchar los mensajes enviados desde el iframe
@@ -154,7 +160,7 @@
     </body>
     <%
         } catch (NullPointerException e) {
-            System.out.println("Error:" +e);
+            System.out.println("Error:" + e);
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");
         } catch (Exception e) {

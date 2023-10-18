@@ -29,9 +29,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+           <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar Eventos Nuevos</title>
+        <title>REPORTE IBR </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
@@ -53,6 +53,8 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
+
+        <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <%
@@ -115,6 +117,40 @@
                         + ""
                         + "";
 
+
+
+String sql2 = ""
+         + "SELECT DISTINCT "
++ "  TIE.ID_EVENTO, "
++ "  GTN.CONTAINER1,"
++ "  GTN.BL_AWB_PRO,"
++ "  GTN.SHIPMENT_ID,"
++ "  NVL(GTN.LOAD_TYPE_FINAL,' '),"
++ "  NVL(GTN.CANTIDAD_FINAL,0),"
++ "  TIBD.NOMBRE_BD,"
++ "  NVL(TID.DIVISION_NOMBRE,' '), "
++ "  TIP2.NOMBRE_POL,"
++ "  TO_CHAR(GTN.ACTUAL_CRD, 'MM/DD/YY'),"
++ "  TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL,"
++ "  TIP1.NOMBRE_POD,"
++ "  TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT,"
++ "  NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC,"
++ "  NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YY'), ' ') AS ETA_DC1,"
+        + " ' ' ,"
++ "  NVL(TIE.OBSERVACIONES,' ') "
++ " FROM "
++ "   TRA_INB_EVENTO TIE"
+ // -- INNER JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid
++ "   left JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID"
++ "   left JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD"
++ "   left JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL"
++ "   left JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION"
+//  --INNER JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id
++ "   left JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
++ " ORDER BY TIE.ID_EVENTO DESC   ";   
+
+
+
         %>
         <!-- navbar-->
         <header class="header">
@@ -137,19 +173,10 @@
                                     </div>
                                     <div class="card-body">
                                         <form id="uploadFileFormData" name="uploadFileFormData">
-                                            <div class="row">
-                                                <div align="right">
-                                                    <div id="example_filter" class="dataTables_filter">
-                                                        <label>
-                                                            Busqueda:
-                                                            <input id="searchTerm" type="text" onkeyup="doSearch()" autocomplete="off"/>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 650px;">
-                                                <table id="main-table" class="main-table" style="table-layout:fixed; width:200%;">
+                                                <table id="example" class="display" style="width:300%">
                                                     <thead>
                                                         <tr>
 
@@ -163,9 +190,7 @@
                                                             <th scope="col" class="font-titulo">Sbu Name </th>
                                                             <th scope="col" class="font-titulo">POL </th>
                                                             <th scope="col" class="font-titulo">Actual CRD </th>
-                                                            <th scope="col" class="font-titulo">Departure Date </th>
-                                                            <!--  <th scope="col" class="font-titulo">123 </th>
-                                                              <th scope="col" class="font-titulo">456 </th>-->
+                                                            <th scope="col" class="font-titulo">Departure Date </th> 
                                                             <th scope="col" class="font-titulo">MX Port </th>
                                                             <th scope="col" class="font-titulo">ETA MX Port </th>
                                                             <th scope="col" class="font-titulo">ETA DC </th>
@@ -179,20 +204,12 @@
                                                     </thead>
                                                     <tbody>
 
-                                                        <%       if (db.doDB(sql)) {
+                                                        <%       if (db.doDB(sql2)) {
                                                                 for (String[] row : db.getResultado()) {
                                                                     
-                                             int lcdN=0;
-                                                try{
-                                                      lcdN=Integer.parseInt(row[23]);
-                                                    }catch(NumberFormatException e){
-                                                      lcdN=0;
-                                                    }
-                                                
-                                                String lcd="FCL"; 
-                                                if(lcdN>1){
-                                                    lcd="FCL / LCL";
-                                                }
+                                             
+                                         
+                                               
 
                                                         %>
 
@@ -202,26 +219,19 @@
                                                             <td class="font-texto"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[3]%></td>
-                                                            <td class="font-texto"> <%=lcd%> 
-                                                               <!-- <%=row[20]%>pod-->      
-                                                                    
-                                                            </td>
+                                                            <td class="font-texto"> <%=row[4]%></td>
                                                             <td class="font-texto"> <%=row[5]%></td>	
-                                                            <td class="font-texto"> <%=row[22]%>   </td>	
+                                                            <td class="font-texto"> <%=row[6]%></td>	
                                                             <td class="font-texto"> <%=row[7]%></td>
-                                                            <td class="font-texto">  <%=row[21]%></td>		
+                                                            <td class="font-texto"> <%=row[8]%></td>		
                                                             <td class="font-texto"> <%=row[9]%></td>	
-                                                            <td class="font-texto"> <%=row[10]%></td>
-
-<!-- <td class="font-texto"> <%=row[11]%></td>	
-<td class="font-texto"> <%=row[12]%></td>-->
-
-                                                            <td class="font-texto"> <%=row[13]%></td> 
+                                                            <td class="font-texto"> <%=row[10]%></td> 
+                                                            <td class="font-texto"> <%=row[11]%></td> 
+                                                            <td class="font-texto"> <%=row[12]%></td>
+                                                            <td class="font-texto"> <%=row[13]%></td>	
                                                             <td class="font-texto"> <%=row[14]%></td>
-                                                            <td class="font-texto"> <%=row[15]%></td>	
+                                                            <td class="font-texto"> <%=row[15]%></td>
                                                             <td class="font-texto"> <%=row[16]%></td>
-                                                            <td class="font-texto"> <%=row[17]%></td>
-                                                            <td class="font-texto"> <%=row[18]%></td>
                                                         </tr>
 
 
@@ -260,16 +270,23 @@
             </div>
         </div>    
 
-        <script>
-            function cambiarResponsable(id) {
-                console.log(id);
-            }
-            function editarEvento(id) {
+    
+                            
+                            
+    <script>
+           
+           
+            function editarEvento(id,ship,conteiner) {
                 console.log('editar');//
-                console.log(id);
-                window.location.href = '<%=request.getContextPath()%>/Importacion/gtnEventoEdit.jsp?id=' + id;
+                  console.log(id);
+                  console.log(ship);
+                  console.log(conteiner);
+                window.location.href = '<%=request.getContextPath()%>/Importacion/modificarEventos2.jsp?id=' + id+"&ship="+ship+"&con="+conteiner;
 
             }
+            
+           
+          
         </script>                     
         <!-- Conexión estatus red -->                    
         <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
@@ -287,6 +304,18 @@
         <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+
+      
+         <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
+ <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
+ <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
+
+
         <script type="text/javascript">
             // Optional
             Prism.plugins.NormalizeWhitespace.setDefaults({
@@ -295,6 +324,29 @@
                 'left-trim': true,
                 'right-trim': true,
             });
+
+          $(document).ready(function () {
+  $('#example').DataTable({
+    dom: 'lBfrtip', // Incluye el elemento de paginación
+    buttons: [
+      {
+        extend: 'copy',
+        text: 'Copiar'
+      },
+      {
+        extend: 'csv',
+        text: 'CSV'
+      },
+      {
+        extend: 'excel',
+        text: 'Excel'
+      }
+    ],
+    lengthMenu: [10, 15, 25, 50, 100], // Define las opciones de "Mostrar entradas"
+    pageLength: 10 // Establece el número predeterminado de entradas por página
+  });
+});
+
 
         </script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
@@ -310,3 +362,8 @@
         }
     %>
 </html>
+
+
+ 
+
+                            

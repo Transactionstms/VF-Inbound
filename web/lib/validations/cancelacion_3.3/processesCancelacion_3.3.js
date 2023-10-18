@@ -55,7 +55,7 @@ function consultarEstatusSATCFDI(id_factura, fact_serie, fact_folio, rfc_emisor,
 
     //Servicio SAT: Consultar Estatus del CFDI
     const Http = new XMLHttpRequest();
-    const urlSAT = 'https://www.rtms.mx/consultar/consultarSat.jsp?re=' + rfc_emisor + '&rr=' + rfc_receptor + '&tt=' + total_globlal + '&id=' + uuid + '&fe=' + folio_fiscal;
+    const urlSAT = 'https://www.tacts.mx/consultar/consultarSat.jsp?re=' + rfc_emisor + '&rr=' + rfc_receptor + '&tt=' + total_globlal + '&id=' + uuid + '&fe=' + folio_fiscal;
 
     Http.open("GET", urlSAT);
     Http.send();
@@ -184,7 +184,7 @@ function AddCancelacion() {
         } else {
             uuidObtenido = "";
         }
-        urlProvicional = "https://www.rtms.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfc=" + rfcEmisor + "&uuids=" + uuidPrincipal + "&banSat=" + motivo + "&fs=" + uuidObtenido;
+        urlProvicional = "https://www.tacts.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfc=" + rfcEmisor + "&uuids=" + uuidPrincipal + "&banSat=" + motivo + "&fs=" + uuidObtenido;
 
     } else if (id_servicio == "2") {
         if (motivo == "01") {
@@ -192,10 +192,10 @@ function AddCancelacion() {
         } else {
             uuidObtenido = "";
         }
-        urlProvicional = "https://www.rtms.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfc=" + rfcEmisor + "&uuids=" + uuidPrincipal + "&banSat=" + motivo + "&fs=" + uuidObtenido;
+        urlProvicional = "https://www.tacts.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfc=" + rfcEmisor + "&uuids=" + uuidPrincipal + "&banSat=" + motivo + "&fs=" + uuidObtenido;
 
     } else if (id_servicio == "3") {
-        urlProvicional = "https://www.rtms.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfcEmisor=" + rfcEmisor + "&rfcReceptor=" + rfcReceptor + "&uuids=" + uuidObtenido;
+        urlProvicional = "https://www.tacts.mx/cancelacion/getCancelar.jsp?ban=" + id_servicio + "&cve=" + cbdiv_id + "&rfcEmisor=" + rfcEmisor + "&rfcReceptor=" + rfcReceptor + "&uuids=" + uuidObtenido;
     }
 
     const urlSifei = urlProvicional;

@@ -20,7 +20,7 @@ html {
 
 /* Dispositivos extra pequeños (phones, 600px and down) */
 @media only screen and (max-width: 450px) {
-  .table-scroll { height: 200px;   /*altura de la tabla*/ }
+  .table-scroll { height: 800px;   /*altura de la tabla*/ }
   .custom-select{
        width: 160px;  
        margin-left: auto;
@@ -33,7 +33,7 @@ html {
 
 /* Dispositivos pequeños (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-  .table-scroll { height: 250px;   /*altura de la tabla*/ }
+  .table-scroll { height: 650px;   /*altura de la tabla*/ }
   .custom-select{
        width: 170px;  
        margin-left: auto;
@@ -78,7 +78,7 @@ html {
 /* Dispositivos extra grandes (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .iFrame { height:600px;}
-  .table-scroll { height: 400px;   /*altura de la tabla*/ }
+  .table-scroll { height: 800px;   /*altura de la tabla*/ }
   .custom-select{
         width: 200px; 
         margin-left: auto;

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : modificarEventos
-    Created on : 10/03/2023, 11:28:29 AM
-    Author     : Desarrollo Tacts
+    Document   : customAct_1
+    Created on : 21-sep-2023, 15:24:03
+    Author     : grecendiz
 --%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -12,39 +12,34 @@
 <%@page import="com.onest.oracle.*" %>
 <%@page import="com.onest.misc.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
- 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Eventos </title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="all,follow">
-        <!-- Google fonts - Popppins for copy-->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-        <!-- Prism Syntax Highlighting-->
-        <link rel="stylesheet" href="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.css">
-        <link rel="stylesheet" href="../lib/vendor/prismjs/themes/prism-okaidia.css">
-        <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
-        <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
-        <!-- Custom stylesheet - for your changes-->
-        <link rel="stylesheet" href="../lib/css/custom.css">
-        <!-- Favicon-->
-        <link rel="shortcut icon" href="../lib/img/favicon.png">
-        <!-- Table css -->
-        <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
-        <!-- sweetalert -->
-        <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
-        <!-- Connection Status Red -->
-        <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
 
-        <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
-        <%
+<!DOCTYPE html>
+<html lang="esp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!--  Datatables  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>  
+    
+    <!-- searchPanes -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.0.1/css/searchPanes.dataTables.min.css">
+    <!-- select -->
+    <link href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <style>
+	table thead{
+	background: linear-gradient(to right, #4A00E0, #8E2DE2); 
+	color:white;
+	}
+    </style>
+</head>
+<body>
+    
+      <%
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
@@ -129,27 +124,13 @@ String sql2= "WITH sum_quantity AS ("
 
         int cont =0; 
         %>
-        <div class="d-flex align-items-stretch">
-            <div class="page-holder bg-gray-100">
-                <div class="container-fluid px-lg-4 px-xl-5">
-                    <section>
-                        <div class="row">
-                            <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card ">
-                                    <div class="col-md-12 card-header justify-content-between">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h2 class="card-heading"> Modificar Evento   </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <form id="uploadFileFormData1" name="uploadFileFormData1">
-                                            <input type="hidden" id="agenteId" name="agenteId" value="<%=agenteAduanal%>">
-                                            <br>
-                                            <div id="table-scroll" class="table-scroll"  style="height: 100%;">
-                                                <table id="example" class="display" style="width:300%">
-                                                    <thead>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            <table id="example" class="table table-bordered  display nowrap" cellspacing="0" width="100%">
+                
+                    <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Número de evento <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">Responsable <strong style="color:red">*</strong></th>	
@@ -217,101 +198,50 @@ String sql2= "WITH sum_quantity AS ("
                                                             }
                                                         %>
                                                     </tbody>
-                                                </table>
-                                            </div>
-                                            <br>
-                                            <!-- Botones controles -->
-                                         
-                                        </form>
-                                    </div>
-                                </div>              
-                            </div>
-                        </div>   
-                    </section>
-                </div>  
-              
+                                                    
+            </table>           
             </div>
-        </div>    
-        <script>
-           
-           
-            function editarEvento(id,ship,conteiner) {
-                console.log('editar');//
-                  console.log(id);
-                  console.log(ship);
-                  console.log(conteiner);
-                window.location.href = '<%=request.getContextPath()%>/Importacion/modificarEventos2.jsp?id=' + id+"&ship="+ship+"&con="+conteiner;
+        </div>
+    </div>
 
-            }
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
             
-           
-          
-        </script>                     
-        <!-- Conexión estatus red -->                    
-        <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
-        <!-- JavaScript files-->
-        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-        <!-- Main Theme JS File-->
-        <script src="../lib/js/theme.js"></script>
-        <!-- Prism for syntax highlighting-->
-        <script src="../lib/vendor/prismjs/prism.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-        <!-- actions js -->
-        <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
-        <!-- sweetalert -->
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+    <!--   Datatables-->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>  
 
-      
-         <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
- <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
- <script src='https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js'></script>
- <script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
- <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js'></script>
- <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
- <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js'></script>
- <script src='https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js'></script>
+    <!-- searchPanes   -->
+    <script src="https://cdn.datatables.net/searchpanes/1.0.1/js/dataTables.searchPanes.min.js"></script>
+    <!-- select -->
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>  
+    
+    <script>
+    $(document).ready(function(){
+        $('#example').DataTable({
+                searchPanes:{
+                    cascadePanes:true,
+                    dtOpts:{
+                        dom:'tp',
+                        paging:'true',
+                        pagingType:'simple',
+                        searching:false
+                    }
+                },
+                dom:'Pfrtip',
+                columnDefs:[{
+                    searchPanes:{
+                        show:false
+                    },
+                    targets:[5]
+                }
+                ]
+        });
 
-
-        <script type="text/javascript">
-            // Optional
-            Prism.plugins.NormalizeWhitespace.setDefaults({
-                'remove-trailing': true,
-                'remove-indent': true,
-                'left-trim': true,
-                'right-trim': true,
-            });
-
-          $(document).ready(function () {
-  $('#example').DataTable({
-    dom: 'lBfrtip', // Incluye el elemento de paginación
-    buttons: [
-      {
-        extend: 'copy',
-        text: 'Copiar'
-      },
-      {
-        extend: 'csv',
-        text: 'CSV'
-      },
-      {
-        extend: 'excel',
-        text: 'Excel'
-      }
-    ],
-    lengthMenu: [10, 15, 25, 50, 100], // Define las opciones de "Mostrar entradas"
-    pageLength: 10 // Establece el número predeterminado de entradas por página
-  });
-});
-
-
-        </script>
-        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    </body>
-    <%
+    });
+    </script>
+<%
         } catch (NullPointerException e) {
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");
@@ -320,9 +250,8 @@ String sql2= "WITH sum_quantity AS ("
             e.printStackTrace();
         }
     %>
+</body>
 </html>
-
-
  
 
    

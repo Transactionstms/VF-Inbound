@@ -711,7 +711,7 @@
                 validarTicket = document.getElementById('ticketOK');
 
                 const Http = new XMLHttpRequest();
-                const url = 'https://www.rtms.mx/wsFacturacionTicket/getTicket.jsp?numTicket=' + numTicket;
+                const url = 'https://www.tacts.mx/wsFacturacionTicket/getTicket.jsp?numTicket=' + numTicket;
                 Http.open("GET", url);
                 Http.send();
 
@@ -1011,10 +1011,10 @@
             function Api_Facturacion(id) {
                 const Http = new XMLHttpRequest();
                 
-                /*const url = 'https://www.rtms.mx/Facturacion3.3QA/getXML.jsp'*/
-                /*const url = 'https://www.rtms.mx/Facturacion3.3PRO/getXML.jsp'*/
+                /*const url = 'https://www.tacts.mx/Facturacion3.3QA/getXML.jsp'*/
+                /*const url = 'https://www.tacts.mx/Facturacion3.3PRO/getXML.jsp'*/
                 
-                const url = 'https://www.rtms.mx/Facturacion3.3QA/getXML.jsp?idf=' + id + '&cve=' + <%=cve%> + '&tipo=1';
+                const url = 'https://www.tacts.mx/Facturacion3.3QA/getXML.jsp?idf=' + id + '&cve=' + <%=cve%> + '&tipo=1';
                 Http.open("GET", url);
                 Http.send();
 

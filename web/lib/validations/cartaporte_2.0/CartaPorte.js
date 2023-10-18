@@ -916,8 +916,8 @@ function cleanFormularioConceptoCartaPorte() {
 function Api_CartaPorte(id, tipoGeneracion, timbrado) {
     const Http = new XMLHttpRequest();
     
-    //const url = 'https://www.rtms.mx/ClienteSifei3.3/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=2';
-    const url = 'https://www.rtms.mx/ClienteSifeiTEST3.3/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=2';
+    //const url = 'https://www.tacts.mx/ClienteSifei3.3/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=2';
+    const url = 'https://www.tacts.mx/ClienteSifeiTEST3.3/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=2';
     
     Http.open("GET", url);
     Http.send();

@@ -1265,19 +1265,23 @@ $(document).ready(function () {
     $('#col_llegada_a_nova').select2({
         closeOnSelect: false
     });
+    
+     $('#arrayList_referenciaAA').select2({
+        closeOnSelect: false
+    });
 
     // Event listener for fruit selection
-    $('#col_llegada_a_nova').on('select2:select', function (e) {
-        const fruitValue = e.params.data.id;
-        const fruitText = e.params.data.text;
-        addFruit(fruitValue, fruitText);
-    });
-
-    // Event listener for fruit deselection
-    $('#col_llegada_a_nova').on('select2:unselect', function (e) {
-        const fruitValue = e.params.data.id;
-        removeFruit(fruitValue);
-    });
+  //  $('#col_llegada_a_nova').on('select2:select', function (e) {
+  //      const fruitValue = e.params.data.id;
+  //      const fruitText = e.params.data.text;
+  //      addFruit(fruitValue, fruitText);
+  //  });
+//
+  //  // Event listener for fruit deselection
+  //  $('#col_llegada_a_nova').on('select2:unselect', function (e) {
+  //      const fruitValue = e.params.data.id;
+  //      removeFruit(fruitValue);
+  //  });
     
     /**********************************************************/  
              

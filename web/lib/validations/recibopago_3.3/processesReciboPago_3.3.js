@@ -386,8 +386,8 @@ function openModalComplemento() {
 function Api_ComplementoPago(id, tipoGeneracion, timbrado) {
     const Http = new XMLHttpRequest();
     
-    const url = 'https://www.rtms.mx/Facturacion3.3QA/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=1';
-    //const url = 'https://www.rtms.mx/Facturacion3.3PRO/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=1';
+    const url = 'https://www.tacts.mx/Facturacion3.3QA/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=1';
+    //const url = 'https://www.tacts.mx/Facturacion3.3PRO/getXML.jsp?idf=' + id + '&cve=' + cbdiv_id + '&tipo=1';
     
     Http.open("GET", url);
     Http.send();

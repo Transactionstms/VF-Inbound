@@ -200,7 +200,7 @@
         
 }
    
-    async function AddCustoms() {
+     async function AddCustoms() {
         
         jsShowWindowLoad('Cargando Información');
 
@@ -456,213 +456,218 @@
                                 hora_termino_etiquetado = document.getElementById(temp69).value; 
                                 proveedor = document.getElementById(temp70).value; 
                                 proveedor_carga = document.getElementById(temp71).value; 
-                        }                 	  
+                        }  
 
-                                  urlCustoms +=         "&evento[" + i + "]=" + evento +
-                                                        "&shipmentId[" + i + "]=" + shipmentId +
-                                                        "&containerId[" + i + "]=" + containerId +
-                                                        "&referenciaAA[" + i + "]=" + referenciaAA +
-                                                        "&prioridad[" + i + "]=" + prioridad +
-                                                        "&loadTypeFinal[" + i + "]=" + loadTypeFinal + 
-                                                        "&plantillaId[" + i + "]=" + plantillaId;
-                                                
-                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006"){ //RADAR, SESMA, RECHY Y VF 
-                                 
-                                  urlCustoms +=         "&pais_origen[" + i + "]=" + pais_origen +
-                                                        "&size_container[" + i + "]=" + size_container +
-                                                        "&valor_usd[" + i + "]=" + valor_usd +              
-                                                        "&eta_port_discharge[" + i + "]=" + eta_port_discharge +     
-                                                        "&agente_aduanal[" + i + "]=" + agente_aduanal +         
-                                                        "&pedimento_a1[" + i + "]=" + pedimento_a1 +           
-                                                        "&pedimento_r1_1er[" + i + "]=" + pedimento_r1_1er +        
-                                                        "&motivo_rectificacion_1er[" + i + "]=" + motivo_rectificacion_1er +
-                                                        "&pedimento_r1_2do[" + i + "]=" + pedimento_r1_2do +   
-                                                        "&motivo_rectificacion_2do[" + i + "]=" + motivo_rectificacion_2do + 
-                                                        "&fecha_recepcion_doc[" + i + "]=" + fecha_recepcion_doc +    
-                                                        "&recinto[" + i + "]=" + recinto +
-                                                        "&naviera[" + i + "]=" + naviera +
-                                                        "&buque[" + i + "]=" + buque +
-                                                        "&fecha_revalidacion[" + i + "]=" + fecha_revalidacion +      
-                                                        "&fecha_previo_origen[" + i + "]=" + fecha_previo_origen +     
-                                                        "&fecha_previo_destino[" + i + "]=" + fecha_previo_destino +   
-                                                        "&fecha_resultado_previo[" + i + "]=" + fecha_resultado_previo +   
-                                                        "&proforma_final[" + i + "]=" + proforma_final +        
-                                                        "&permiso[" + i + "]=" + permiso +               
-                                                        "&fecha_envio[" + i + "]=" + fecha_envio +             
-                                                        "&fecha_recepcion_perm[" + i + "]=" + fecha_recepcion_perm +
-                                                        "&fecha_activacion_perm[" + i + "]=" + fecha_activacion_perm +    
-                                                        "&fecha_permisos_aut[" + i + "]=" + fecha_permisos_aut +     
-                                                        "&co_pref_arancelaria[" + i + "]=" + co_pref_arancelaria +    
-                                                        "&aplic_pref_arancelaria[" + i + "]=" + aplic_pref_arancelaria +  
-                                                        "&req_uva[" + i + "]=" + req_uva +   
-                                                        "&req_ca[" + i + "]=" + req_ca +    
-                                                        "&fecha_recepcion_ca[" + i + "]=" + fecha_recepcion_ca + 
-                                                        "&num_constancia_ca[" + i + "]=" + num_constancia_ca +   
-                                                        "&monto_ca[" + i + "]=" + monto_ca +
-                                                        "&fecha_doc_completos[" + i + "]=" + fecha_doc_completos +  
-                                                        "&fecha_pago_pedimento[" + i + "]=" + fecha_pago_pedimento +     
-                                                        "&fecha_solicitud_transporte[" + i + "]=" + fecha_solicitud_transporte +
-                                                        "&fecha_modulacion[" + i + "]=" + fecha_modulacion +   
-                                                        "&modalidad[" + i + "]=" + modalidad +          
-                                                        "&resultado_modulacion[" + i + "]=" + resultado_modulacion +    
-                                                        "&fecha_reconocimiento[" + i + "]=" + fecha_reconocimiento +     
-                                                        "&fecha_liberacion[" + i + "]=" + fecha_liberacion +       
-                                                        "&sello_origen[" + i + "]=" + sello_origen +            
-                                                        "&sello_final[" + i + "]=" + sello_final +      
-                                                        "&fecha_retencion_aut[" + i + "]=" + fecha_retencion_aut +     
-                                                        "&fecha_liberacion_aut[" + i + "]=" + fecha_liberacion_aut +   
-                                                        "&estatus_operacion[" + i + "]=" + estatus_operacion +      
-                                                        "&motivo_atraso[" + i + "]=" + motivo_atraso +          
-                                                        "&observaciones[" + i + "]=" + observaciones + 
-                                                        "&fy[" + i + "]=" + fy; 
-                        }
+
                         
-                        if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //LOGIX Y VF
+                        urlCustoms +=         "&evento"+i+"=" + evento +
+                        "&shipmentId"+i+"=" + shipmentId +
+                        "&containerId"+i+"=" + containerId +
+                        "&referenciaAA"+i+"=" + referenciaAA +
+                        "&prioridad"+i+"=" + prioridad +
+                        "&loadTypeFinal"+i+"=" + loadTypeFinal + 
+                        "&plantillaId"+i+"=" + plantillaId;
+                
+if(idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006"){ //RADAR, SESMA, RECHY Y VF 
+ 
+  urlCustoms +=         "&pais_origen"+i+"=" + pais_origen +
+                        "&size_container"+i+"=" + size_container +
+                        "&valor_usd"+i+"=" + valor_usd +              
+                        "&eta_port_discharge"+i+"=" + eta_port_discharge +     
+                        "&agente_aduanal"+i+"=" + agente_aduanal +         
+                        "&pedimento_a1"+i+"=" + pedimento_a1 +           
+                        "&pedimento_r1_1er"+i+"=" + pedimento_r1_1er +        
+                        "&motivo_rectificacion_1er"+i+"=" + motivo_rectificacion_1er +
+                        "&pedimento_r1_2do"+i+"=" + pedimento_r1_2do +   
+                        "&motivo_rectificacion_2do"+i+"=" + motivo_rectificacion_2do + 
+                        "&fecha_recepcion_doc"+i+"=" + fecha_recepcion_doc +    
+                        "&recinto"+i+"=" + recinto +
+                        "&naviera"+i+"=" + naviera +
+                        "&buque"+i+"=" + buque +
+                        "&fecha_revalidacion"+i+"=" + fecha_revalidacion +      
+                        "&fecha_previo_origen"+i+"=" + fecha_previo_origen +     
+                        "&fecha_previo_destino"+i+"=" + fecha_previo_destino +   
+                        "&fecha_resultado_previo"+i+"=" + fecha_resultado_previo +   
+                        "&proforma_final"+i+"=" + proforma_final +        
+                        "&permiso"+i+"=" + permiso +               
+                        "&fecha_envio"+i+"=" + fecha_envio +             
+                        "&fecha_recepcion_perm"+i+"=" + fecha_recepcion_perm +
+                        "&fecha_activacion_perm"+i+"=" + fecha_activacion_perm +    
+                        "&fecha_permisos_aut"+i+"=" + fecha_permisos_aut +     
+                        "&co_pref_arancelaria"+i+"=" + co_pref_arancelaria +    
+                        "&aplic_pref_arancelaria"+i+"=" + aplic_pref_arancelaria +  
+                        "&req_uva"+i+"=" + req_uva +   
+                        "&req_ca"+i+"=" + req_ca +    
+                        "&fecha_recepcion_ca"+i+"=" + fecha_recepcion_ca + 
+                        "&num_constancia_ca"+i+"=" + num_constancia_ca +   
+                        "&monto_ca"+i+"=" + monto_ca +
+                        "&fecha_doc_completos"+i+"=" + fecha_doc_completos +  
+                        "&fecha_pago_pedimento"+i+"=" + fecha_pago_pedimento +     
+                        "&fecha_solicitud_transporte"+i+"=" + fecha_solicitud_transporte +
+                        "&fecha_modulacion"+i+"=" + fecha_modulacion +   
+                        "&modalidad"+i+"=" + modalidad +          
+                        "&resultado_modulacion"+i+"=" + resultado_modulacion +    
+                        "&fecha_reconocimiento"+i+"=" + fecha_reconocimiento +     
+                        "&fecha_liberacion"+i+"=" + fecha_liberacion +       
+                        "&sello_origen"+i+"=" + sello_origen +            
+                        "&sello_final"+i+"=" + sello_final +      
+                        "&fecha_retencion_aut"+i+"=" + fecha_retencion_aut +     
+                        "&fecha_liberacion_aut"+i+"=" + fecha_liberacion_aut +   
+                        "&estatus_operacion"+i+"=" + estatus_operacion +      
+                        "&motivo_atraso"+i+"=" + motivo_atraso +          
+                        "&observaciones"+i+"=" + observaciones + 
+                        "&fy"+i+"=" + fy; 
+}
 
-                                  urlCustoms +=         "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
-                                                        "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
-                                                        "&archivo_m[" + i + "]=" + archivo_m + 
-                                                        "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m + 
-                                                        "&fecha_solicit_manip[" + i + "]=" + fecha_solicit_manip + 
-                                                        "&fecha_vencim_manip[" + i + "]=" + fecha_vencim_manip + 
-                                                        "&fecha_confirm_clave_pedim[" + i + "]=" + fecha_confirm_clave_pedim + 
-                                                        "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment + 
-                                                        "&t_e[" + i + "]=" + t_e + 
-                                                        "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
-                        }
-                        
-                        if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //CUSA Y VF
+if(idAgenteAduanal === "4001" || idAgenteAduanal === "4006"){ //LOGIX Y VF
 
-                                  urlCustoms +=         "&no_bultos[" + i + "]=" + no_bultos + 
-                                                        "&peso_kg[" + i + "]=" + peso_kg + 
-                                                        "&transferencia[" + i + "]=" + transferencia + 
-                                                        "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado + 
-                                                        "&fecha_termino_etiquetado[" + i + "]=" + fecha_termino_etiquetado + 
-                                                        "&hora_termino_etiquetado[" + i + "]=" + hora_termino_etiquetado + 
-                                                        "&proveedor[" + i + "]=" + proveedor + 
-                                                        "&proveedor_carga[" + i + "]=" + proveedor_carga;
-                        }
-            
-            
-                        /* # REGLA 1: */
-                        if(permiso === "SI"){
+  urlCustoms +=         "&llegada_a_nova"+i+"=" + llegada_a_nova +
+                        "&llegada_a_globe_trade_sd"+i+"=" + llegada_a_globe_trade_sd +
+                        "&archivo_m"+i+"=" + archivo_m + 
+                        "&fecha_archivo_m"+i+"=" + fecha_archivo_m + 
+                        "&fecha_solicit_manip"+i+"=" + fecha_solicit_manip + 
+                        "&fecha_vencim_manip"+i+"=" + fecha_vencim_manip + 
+                        "&fecha_confirm_clave_pedim"+i+"=" + fecha_confirm_clave_pedim + 
+                        "&fecha_recep_increment"+i+"=" + fecha_recep_increment + 
+                        "&t_e"+i+"=" + t_e + 
+                        "&fecha_vencim_inbound"+i+"=" + fecha_vencim_inbound;
+}
 
-                            if (fecha_envio === "") {
-                                swal("Ingrese Fecha Envío", "info");
-                                alertclose();
-                                return false;
-                            }
+if(idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){  //CUSA Y VF
 
-                            if (fecha_recepcion_perm === "") {
-                                swal("Ingrese Fecha Recepción Permiso", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                            if (fecha_activacion_perm === "") {
-                                swal("Ingrese Fecha Activación Permiso", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                            if (fecha_permisos_aut === "") {
-                                swal("Ingrese Fecha Permisos Autorizados", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                        }
-
-
-                        /* # REGLA 2: */
-                        if (req_ca === "SI") {
-
-                            if (fecha_recepcion_ca === "") {
-                                swal("Ingrese Fecha Recepción CA", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                            if (num_constancia_ca === "") {
-                                swal("Ingrese Número de Constancia CA", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                            if (monto_ca === "") {
-                                swal("Ingrese Monto CA", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                        }
-
-
-                        /* # REGLA 3: */
-                        if (resultado_modulacion === "ROJO") {
-
-                            if (sello_origen === "") {
-                                swal("Ingrese Sello Origen", "info");
-                                alertclose();
-                                return false;
-                            }
-
-                        }
+  urlCustoms +=         "&no_bultos"+i+"=" + no_bultos + 
+                        "&peso_kg"+i+"=" + peso_kg + 
+                        "&transferencia"+i+"=" + transferencia + 
+                        "&fecha_inicio_etiquetado"+i+"=" + fecha_inicio_etiquetado + 
+                        "&fecha_termino_etiquetado"+i+"=" + fecha_termino_etiquetado + 
+                        "&hora_termino_etiquetado"+i+"=" + hora_termino_etiquetado + 
+                        "&proveedor"+i+"=" + proveedor + 
+                        "&proveedor_carga"+i+"=" + proveedor_carga;
+}
 
 
-                        /* # REGLA 4: */
-                        if(pedimento_r1_1er === ""){
+/* # REGLA 1: */
+if(permiso === "SI"){
 
-                            if (motivo_rectificacion_1er === "") {
-                                swal("Ingrese Motivo Rectificación 1", "info");
-                                alertclose();
-                                return false;
-                            }
+if (fecha_envio === "") {
+swal("Ingrese Fecha Envío", "info");
+alertclose();
+return false;
+}
 
-                        }
+if (fecha_recepcion_perm === "") {
+swal("Ingrese Fecha Recepción Permiso", "info");
+alertclose();
+return false;
+}
+
+if (fecha_activacion_perm === "") {
+swal("Ingrese Fecha Activación Permiso", "info");
+alertclose();
+return false;
+}
+
+if (fecha_permisos_aut === "") {
+swal("Ingrese Fecha Permisos Autorizados", "info");
+alertclose();
+return false;
+}
+
+}
 
 
-                        /* # REGLA 5: */
-                        if(pedimento_r1_2do === ""){
+/* # REGLA 2: */
+if (req_ca === "SI") {
 
-                            if (motivo_rectificacion_2do === "") {
-                                swal("Ingrese Motivo Rectificación 2", "info");
-                                alertclose();
-                                return false;
-                            }
+if (fecha_recepcion_ca === "") {
+swal("Ingrese Fecha Recepción CA", "info");
+alertclose();
+return false;
+}
 
-                        }
-            
-              try {
-                const response = await fetch("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);   
-                if (!response.ok) {
-                  throw new Error('Error en la solicitud');   
-                }
-                const data = await response.text();
+if (num_constancia_ca === "") {
+swal("Ingrese Número de Constancia CA", "info");
+alertclose();
+return false;
+}
 
-                if (data === "1") {
-                    document.getElementById('tr'+cont).bgColor='#95c799';
-                    console.log("tr"+cont);
-                } else {
-                    document.getElementById('tr'+cont).bgColor='#e4605e';
-                    console.log("tr"+cont);
-                }
+if (monto_ca === "") {
+swal("Ingrese Monto CA", "info");
+alertclose();
+return false;
+}
 
-                urlCustoms = "";
-                cont++; 
+}
 
-              } catch (error) {
-                console.error(error);
-              }
-              
-          }
-          
-          $("#WindowLoad").remove();
-          
-          swal("", "Registro exitoso", "success");
-          alertclose();    
-    }
-    
+
+/* # REGLA 3: */
+if (resultado_modulacion === "ROJO") {
+
+if (sello_origen === "") {
+swal("Ingrese Sello Origen", "info");
+alertclose();
+return false;
+}
+
+}
+
+
+/* # REGLA 4: */
+if(pedimento_r1_1er === ""){
+
+if (motivo_rectificacion_1er === "") {
+swal("Ingrese Motivo Rectificación 1", "info");
+alertclose();
+return false;
+}
+
+}
+
+
+/* # REGLA 5: */
+if(pedimento_r1_2do === ""){
+
+if (motivo_rectificacion_2do === "") {
+swal("Ingrese Motivo Rectificación 2", "info");
+alertclose();
+return false;
+}
+
+}
+
+try {
+    console.log("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);
+const response = await fetch("../InsertarCustomsForms?idAgenteAduanal="+idAgenteAduanal+"&numCustoms="+cont+urlCustoms);   
+if (!response.ok) {
+throw new Error('Error en la solicitud');   
+}
+const data = await response.text();
+
+if (data === "1") {
+document.getElementById('tr'+cont).bgColor='#95c799';
+console.log("tr"+cont);
+} else {
+document.getElementById('tr'+cont).bgColor='#e4605e';
+console.log("tr"+cont);
+}
+
+urlCustoms = "";
+cont++; 
+
+} catch (error) {
+console.error(error);
+}
+
+}
+
+$("#WindowLoad").remove();
+
+swal("", "Registro exitoso", "success");
+alertclose();    
+}
+
+
+
     function openModalPlantilla() {
         $("#modalSubirPlantilla").modal("show");
     }
