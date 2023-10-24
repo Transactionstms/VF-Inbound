@@ -1948,11 +1948,11 @@ public class ConsultasQuery {
         /*12*/ + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
         /*13*/ + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
         /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
-        /*15*/ + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
+        /*15*/  + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
         /*16*/ + " TIP2.NOMBRE_POL, "
         /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
         /*18*/ + " GTN.PLANTILLA_ID, "
-        /*19*/ + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+        /*19*/ + " SYSDATE AS FECHA_CAPTURAOLD, "
         /*20*/ + " TIP1.NOMBRE_POD, "
         /*21*/ + " TIP2.NOMBRE_POL, "
         /*22*/ + " TIBD.NOMBRE_BD, "
@@ -2052,7 +2052,7 @@ public class ConsultasQuery {
     }else{                         //OTROS
           sql += " ";
     }
-          sql += " ORDER BY TIE.ID_EVENTO ASC ";
+          sql += " ORDER BY TIE.ID_EVENTO DESC ";
           
         return sql;
     }
@@ -2074,16 +2074,16 @@ public class ConsultasQuery {
         /*12*/ + " TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY') AS EST_DEPARTURE_POL, "
         /*13*/ + " TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY') AS ETA_REAL_PORT, "
         /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
-        /*15*/ + " 'INBOUND NOTIFICATION' AS NOTIFICATION_TYPE, "
+        /*15*/+ " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "//INBOUND NOTIFICATION
         /*16*/ + " TIP2.NOMBRE_POL, "
         /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
         /*18*/ + " GTN.PLANTILLA_ID, "
-        /*19*/ + " TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YY') AS FECHA_CAPTURA, "
+        /*19*/ + " SYSDATE AS FECHA_CAPTURAOLD, "
         /*20*/ + " TIP1.NOMBRE_POD, "
         /*21*/ + " TIP2.NOMBRE_POL, "
         /*22*/ + " TIBD.NOMBRE_BD, "
-        /*23*/ + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'MM/DD/YY'),' '), "
-        /*24*/ + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC, "
+        /*23*/ + " NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YY'), ' ') AS ETA_DC, "
+        /*24*/ + " NVL(TO_CHAR(TIE.EST_ETA_DC, 'MM/DD/YY'),' '), "
         /*25*/ + " NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YY'), ' ') AS ETA_DC1, "
         /*26*/ + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
         /*27*/ + " TIE.ESTATUS_EVENTO, "
@@ -2355,8 +2355,9 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-          sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
-                  
+         // sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
+           sql += "  ORDER BY tie.id_evento DESC, tibd.nombre_bd ASC ";  
+           System.out.println("sql-"+sql);
         return sql;
     }
     
@@ -2656,7 +2657,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-          sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
+          sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') DESC ";
 
         return sql;
     }

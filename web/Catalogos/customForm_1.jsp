@@ -79,13 +79,15 @@
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
                                 <div class="card ">
-                                    <div class="col-md-12 card-header justify-content-between">
+                                  <!-- 
+                                  <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h2 class="card-heading">Personalizar Customs</h2>
                                             </div>
                                         </div>
-                                    </div>   
+                                    </div>
+                                  -->   
 
                                     <div class="card-body">
                                         <p align="center">
