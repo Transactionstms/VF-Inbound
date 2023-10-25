@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,14 +29,14 @@ public class CrearSemaforoCustoms {
 
         /* Identificar cuantos días hábiles tiene cada LoadType */ 
         String diasLoadType = diasTotalDespachoLoadType(loadType);
-        String[] par = diasLoadType.split("*");
+        String[] par = diasLoadType.split("/");
         String diasHabilesLoadType = par[0];         /*Días Hábiles*/
         String diasLimitePrioridadBaja = par[1];     /*Días Limite Semaforo (Verde)*/    
         String diasLimitePrioridadMedia = par[2];    /*Días Limite Semaforo (Amarillo)*/  
         String diasLimitePrioridadAlta = par[3];     /*Días Limite Semaforo (Rojo)*/  
         
         /* Obtener rango de fechas con días hábiles considereando el Load Type */
-        String rangoFechasDiasHabiles = calcularRangoFechasDiasHabiles(month, dias, anio, diasLoadType);
+        String rangoFechasDiasHabiles = calcularRangoFechasDiasHabiles(month, dias, anio, diasHabilesLoadType);
         String[] par1 = rangoFechasDiasHabiles.split("@");
         String fechaInicial = par1[0]; 
         String fechaFinal = par1[1];                 /* Estatus del Semaforo */
@@ -43,18 +44,18 @@ public class CrearSemaforoCustoms {
         /*Identificar si el fecha a validar es <,>, = a la fecha actual */
         String typeTime = CalcularFechaAnteriorActual(fechaInicial);
         
-        if(typeTime.equals("<")){
-            
-            estatusSemaforo = "3";
-            
-        }else if(typeTime.equals("=")||typeTime.equals(">")){
+        if(typeTime.equals("=")||typeTime.equals(">")){
             
             /* Identificar si el shipmentId tiene prioridad */
-            if(Prioridad.equals("No")){
-                estatusSemaforo = "1";
-            }else{
-                estatusSemaforo = "3";
+            if(Prioridad.equals("No") || Prioridad.equals("")){
+                estatusSemaforo = "1";  //prioridad baja
+            }else {
+                estatusSemaforo = "2";  //prioridad media
             }
+            
+        }else if(typeTime.equals("<")){
+            
+            estatusSemaforo = "3"; //prioridad
             
         }
         
@@ -98,7 +99,7 @@ public class CrearSemaforoCustoms {
             dayLimitRed = "11";
         }
         
-        days = daysHabilits+"*"+dayLimitGreen+"*"+dayLimitYellow+"*"+dayLimitRed;
+        days = daysHabilits+"/"+dayLimitGreen+"/"+dayLimitYellow+"/"+dayLimitRed;
         
         return days;
     }
@@ -146,12 +147,9 @@ public class CrearSemaforoCustoms {
         
         // Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
-
-        // Convertir la fecha a un formato específico
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
-        // Convertir la fecha de texto a LocalDate
-        LocalDate fechaVerificar = LocalDate.parse(dateValidate, formato);
+        
+        try {
+            LocalDate fechaVerificar = LocalDate.parse(dateValidate);
 
         // Comparar las fechas
         if (fechaVerificar.isBefore(fechaActual)) {
@@ -160,6 +158,11 @@ public class CrearSemaforoCustoms {
             dateTime = "=";
         }else {
             dateTime = ">";
+        }
+           
+        } catch (DateTimeParseException e) {
+            System.err.println("Error al analizar la fecha: " + e.getMessage());
+            // Puedes manejar el error de formato de fecha aquí
         }
  
         return dateTime;

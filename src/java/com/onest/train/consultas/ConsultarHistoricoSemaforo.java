@@ -47,14 +47,12 @@ public class ConsultarHistoricoSemaforo extends HttpServlet {
         if (db.doDB(consulta)) {
             for (String[] row : db.getResultado()) {
                 
-                 if(row[1].equals("1")){
-                     prioridad = "ALTA";
+                 if(row[1].equals("1")||row[1].equals("")){
+                     prioridad = "BAJA";
                  }else if(row[1].equals("2")){
                      prioridad = "MEDIA";
                  }else if(row[1].equals("3")){
-                     prioridad = "BAJA";
-                 }else{
-                     prioridad = "BAJA";
+                     prioridad = "ALTA";
                  }
                 
                salida= " <tr id=\"tr" + sal + "\"> "
