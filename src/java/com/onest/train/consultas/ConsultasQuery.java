@@ -2172,8 +2172,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
-                 + " "  
-               + " WHERE TIE.ESTADO = 1 ";  //ESTATUS EVENTO
+               + " "  
+               + " WHERE TIE.ESTADO = 1 "
+               + " AND TIE.ID_EVENTO IN (231215,230960) ";  //ESTATUS EVENTO
                //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
          
         if(!tipoAgente.equals("4006")){ //VF GENERAL
@@ -2355,9 +2356,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-         // sql += " ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'3') ASC ";
-           sql += "  ORDER BY tie.id_evento DESC, tibd.nombre_bd ASC ";  
-           System.out.println("sql-"+sql);
+           sql += "  ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'0') DESC ";  
         return sql;
     }
     
