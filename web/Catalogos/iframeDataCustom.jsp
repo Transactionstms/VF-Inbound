@@ -300,7 +300,7 @@
             <div id="contenedor">
                 <div class="row">
                     <div class="columna">
-                        <button type="button" class="btn btn-primary" onclick="openModalPlantilla()">Subir Plantilla</button>
+                        <!--<button type="button" class="btn btn-primary" onclick="openModalPlantilla()">Subir Plantilla</button>-->
                     </div>
                 </div>
                 <div style="text-align: right;">
@@ -1034,7 +1034,7 @@
                                  colorSemaforo = "../img/circle-red.png";
                                  sizeSemaforo = "60%";
                              }else{
-                                 colorSemaforo = "../img/circle-green.png";
+                                 colorSemaforo = "../img/circle-gray.png";
                                  sizeSemaforo = "100%";
                              }
                         %>   
@@ -1044,8 +1044,11 @@
                             <th class="font-numero">                    <!-- Referencia Aduanal -->
                                 <input type="text" onkeyup="this.value = this.value.toUpperCase()" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30]%>" autocomplete="off">
                             </th>
-                            <th class="font-numero" class="first-column"> <!-- Número de Evento -->
-                                    <%=row[0]%><input type="hidden" id="evento[<%=cont%>]" name="evento[<%=cont%>]" value="<%=row[0]%>">
+                            <th class="font-numero first-column" id="elemento<%=cont%>"> <!-- Número de Evento -->
+                                <%=row[0]%><input type="hidden" id="evento[<%=cont%>]" name="evento[<%=cont%>]" value="<%=row[0]%>">                    
+                                <div id="popup<%=cont%>" style="display: none;">
+                                    <div id="mSgError<%=cont%>"></div>
+                                </div>
                             </th>
                             <td class="font-numero">                    <!-- Responsable -->
                                     <%=row[1]%>
@@ -1127,13 +1130,13 @@
                               <input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[36]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37]%>" autocomplete="off">
+                              <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37]%>" autocomplete="off" onblur="cleanPedimento_r1_1er(this.value,<%=cont%>)">
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[38]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39]%>" autocomplete="off">
+                              <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39]%>" autocomplete="off" onblur="cleanPedimento_r1_2do(this.value,<%=cont%>)">
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="motivo_rectificacion_2do[<%=cont%>]" name="motivo_rectificacion_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[40]%>" autocomplete="off">
@@ -1166,7 +1169,7 @@
                               <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[49]%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]"  value="<%=row[50]%>"> 
+                                <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]" value="<%=row[50]%>" onchange="cleanPermiso(this.value,'<%=cont%>')"> 
                                  <option value="<%=row[50]%>"><%=row[50]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
@@ -1206,7 +1209,7 @@
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"  value="<%=row[58]%>"> 
+                                <select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"  value="<%=row[58]%>" onchange="cleanRequerimientoCA(this.value,'<%=cont%>')"> 
                                  <option value="<%=row[59]%>"><%=row[59]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
@@ -1241,7 +1244,7 @@
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>"> 
+                                <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>" onchange="cleanResultadoModulacion(this.value,'<%=cont%>')"> 
                                  <option value="<%=row[67]%>"><%=row[67]%></option> 
                                  <option value="Verde">Verde</option> 
                                  <option value="Rojo">Rojo</option> 
