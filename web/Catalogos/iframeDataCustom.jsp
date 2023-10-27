@@ -1075,7 +1075,7 @@
                               </select> 
                             </td>
                             <td class="font-numero">
-                                <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>" onchange="cleanResultadoModulacion(this.value,'<%=cont%>')"> 
+                                <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>" onchange="cleanResultadoModulacion(this.value,'<%=cont%>','<%=AgentType%>')"> 
                                  <option value="<%=row[67]%>"><%=row[67]%></option> 
                                  <option value="Verde">Verde</option> 
                                  <option value="Rojo">Rojo</option> 

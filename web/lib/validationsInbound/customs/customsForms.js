@@ -584,7 +584,6 @@
 
             }
 
-
             /* # REGLA 2: */
             if (req_ca === "Si") {
 
@@ -608,20 +607,43 @@
 
             }
 
-
             /* # REGLA 3: */
-            if (resultado_modulacion === "Rojo") {
-
-                if (sello_origen.replace(/\s/g, "") === "") {
-                    contadorError++;
-                    txtErrormSg += "("+contadorError+")Ingrese Sello Origen. ";
-                    changeColorByPositionError(i);
+            if (idAgenteAduanal != "4005") { //RECHY
+                
+                if (resultado_modulacion === "Rojo") {
+                    
+                    if (idAgenteAduanal === "4002") { //CUSA
+                        
+                        if (sello_final.replace(/\s/g, "") === "") {
+                            contadorError++;
+                            txtErrormSg += "(" + contadorError + ")Ingrese Sello Final. ";
+                            changeColorByPositionError(i);
+                        }
+                    } else {
+                        
+                        if (sello_origen.replace(/\s/g, "") === "") {
+                            contadorError++;
+                            txtErrormSg += "(" + contadorError + ")Ingrese Sello Origen. ";
+                            changeColorByPositionError(i);
+                        }
+                    }
                 }
-
             }
+            
+            /* #REGLA 4: */
+            //Establecer listado de estatus validos. (ok)
+            
+            /* RULE #5 */
+	    //Si se exede dias de load type ------> motivo atraso (campo obligatorio) (pendiente)
+            
+            /* RULE #6 */
+            // Calendario (FISCAL YEAR) (pendiente)                            
+            
+            /* RULE #7 */
+            // Limite de Bytes campo_ Observaciones (VARCHAR2(4000 BYTE)) (ok)
 
-
-            /* # REGLA 4: */
+            /* RULE #8 */
+            
             if (pedimento_r1_1er === "") {
 
                 if (motivo_rectificacion_1er.replace(/\s/g, "") === "") {
@@ -632,8 +654,7 @@
 
             }
 
-
-            /* # REGLA 5: */
+            /* RULE #9 */
             if (pedimento_r1_2do === "") {
 
                 if (motivo_rectificacion_2do.replace(/\s/g, "") === "") {
@@ -643,12 +664,218 @@
                 }
 
             }
+            
+            /* RULE #10 */
+            if(estatus_operacion === "19"){ //IMPORTADO
+                if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        size_container.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        recinto.replace(/\s/g, "") === "" ||
+                        naviera.replace(/\s/g, "") === "" ||
+                        buque.replace(/\s/g, "") === "" ||
+                        fecha_revalidacion.replace(/\s/g, "") === "" ||
+                        fecha_previo_origen.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        req_uva.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        sello_origen.replace(/\s/g, "") === "" ||
+                        sello_final.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                     }
+                }else if(idAgenteAduanal === "4001"){ //LOGIX
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        size_container.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        recinto.replace(/\s/g, "") === "" ||
+                        naviera.replace(/\s/g, "") === "" ||
+                        buque.replace(/\s/g, "") === "" ||
+                        fecha_revalidacion.replace(/\s/g, "") === "" ||
+                        fecha_previo_origen.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        sello_origen.replace(/\s/g, "") === "" ||
+                        sello_final.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === "" ||
+                        llegada_a_nova.replace(/\s/g, "") === "" ||
+                        llegada_a_globe_trade_sd.replace(/\s/g, "") === "" ||
+                        archivo_m.replace(/\s/g, "") === "" ||
+                        fecha_archivo_m.replace(/\s/g, "") === "" ||
+                        fecha_solicit_manip.replace(/\s/g, "") === "" ||
+                        fecha_vencim_manip.replace(/\s/g, "") === "" ||
+                        fecha_confirm_clave_pedim.replace(/\s/g, "") === "" ||
+                        fecha_recep_increment.replace(/\s/g, "") === "" ||
+                        t_e.replace(/\s/g, "") === "" ||
+                        fecha_vencim_inbound.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                        }
+                }else if(idAgenteAduanal === "4002"){ //CUSA
+                    if(pais_origen.replace(/\s/g, "") === "" ||
+                       valor_usd.replace(/\s/g, "") === "" ||
+                       eta_port_discharge.replace(/\s/g, "") === "" ||
+                       agente_aduanal.replace(/\s/g, "") === "" ||
+                       pedimento_a1.replace(/\s/g, "") === "" ||
+                       pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                       motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                       pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                       motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                       naviera.replace(/\s/g, "") === "" ||
+                       fecha_revalidacion.replace(/\s/g, "") === "" ||
+                       fecha_previo_destino.replace(/\s/g, "") === "" ||
+                       fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                       proforma_final.replace(/\s/g, "") === "" ||
+                       permiso.replace(/\s/g, "") === "" ||
+                       fecha_envio.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                       fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                       fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                       co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                       aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                       req_uva.replace(/\s/g, "") === "" ||
+                       req_ca.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                       num_constancia_ca.replace(/\s/g, "") === "" ||
+                       monto_ca.replace(/\s/g, "") === "" ||
+                       fecha_doc_completos.replace(/\s/g, "") === "" ||
+                       fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                       fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                       fecha_modulacion.replace(/\s/g, "") === "" ||
+                       modalidad.replace(/\s/g, "") === "" ||
+                       resultado_modulacion.replace(/\s/g, "") === "" ||
+                       fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                       fecha_liberacion.replace(/\s/g, "") === "" ||
+                       sello_final.replace(/\s/g, "") === "" ||
+                       estatus_operacion.replace(/\s/g, "") === "" ||
+                       motivo_atraso.replace(/\s/g, "") === "" ||
+                       fy.replace(/\s/g, "") === "" ||
+                       no_bultos.replace(/\s/g, "") === "" ||
+                       peso_kg.replace(/\s/g, "") === "" ||
+                       transferencia.replace(/\s/g, "") === "" ||
+                       fecha_inicio_etiquetado.replace(/\s/g, "") === "" ||
+                       fecha_termino_etiquetado.replace(/\s/g, "") === "" ||
+                       hora_termino_etiquetado.replace(/\s/g, "") === "" ||
+                       proveedor.replace(/\s/g, "") === "" ||
+                       proveedor_carga.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                    }
+                }else if(idAgenteAduanal === "4005"){ //RECHY
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        req_uva.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                     }
+                }
+                
+            }
 
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + cont + urlCustoms);
             if(contadorError===0){
-
                 try {
-                    console.log(urlData);
                     const response = await fetch(urlData);
                     if (!response.ok) {
                         throw new Error('Error en la solicitud');
@@ -682,8 +909,10 @@
         jsShowWindowLoad('Cargando Información');
 
         let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
-            //Parametros Indicadores         
-
+        let contadorError = 0;
+        let txtErrormSg = "";
+        
+            //Parametros Indicadores   
             let temp4 = "referenciaAA[" + i + "]";
             let temp1 = "evento[" + i + "]";
             let temp2 = "shipmentId[" + i + "]";
@@ -946,135 +1175,346 @@
             if (permiso === "Si") {
 
                 if (fecha_envio.replace(/\s/g, "") === "") {
-                    swal("Ingrese Fecha Envío");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Fecha Envío. ";
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
                 if (fecha_recepcion_perm.replace(/\s/g, "") === "") {
-                    swal("Ingrese Fecha Recepción Permiso");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción Permiso. ";
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
                 if (fecha_activacion_perm.replace(/\s/g, "") === "") {
-                    swal("Ingrese Fecha Activación Permiso");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Fecha Activación Permiso. ";
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
                 if (fecha_permisos_aut.replace(/\s/g, "") === "") {
-                    swal("Ingrese Fecha Permisos Autorizados");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Fecha Permisos Autorizados. ";
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
             }
-
 
             /* # REGLA 2: */
             if (req_ca === "Si") {
 
                 if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
-                    swal("Ingrese Fecha Recepción CA");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción CA. ";                    
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
                 if (num_constancia_ca.replace(/\s/g, "") === "") {
-                    swal("Ingrese Número de Constancia CA");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Número de Constancia CA. ";                           
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
                 if (monto_ca.replace(/\s/g, "") === "") {
-                    swal("Ingrese Monto CA");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Monto CA. ";   
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
             }
-
 
             /* # REGLA 3: */
-            if (resultado_modulacion === "Rojo") {
-
-                if (sello_origen.replace(/\s/g, "") === "") {
-                    swal("Ingrese Sello Origen");
-                    alertclose();
-                    changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
+            if (idAgenteAduanal != "4005") { //RECHY
+                
+                if (resultado_modulacion === "Rojo") {
+                    
+                    if (idAgenteAduanal === "4002") { //CUSA
+                        
+                        if (sello_final.replace(/\s/g, "") === "") {
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Ingrese Sello Final. ";   
+                            changeColorByPositionError(i);
+                        }
+                    } else {
+                        
+                        if (sello_origen.replace(/\s/g, "") === "") {
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Ingrese Sello Origen. ";   
+                            changeColorByPositionError(i);
+                        }
+                    }
                 }
+            }            
+            
 
-            }
+            /* #REGLA 4: */
+            //Establecer listado de estatus validos. (ok)
+            
+            /* RULE #5 */
+	        //Si se exede dias de load type ------> motivo atraso (campo obligatorio) (pendiente)
+            
+            /* RULE #6 */
+            // Calendario (FISCAL YEAR) (pendiente)                            
+            
+            /* RULE #7 */
+            // Limite de Bytes campo_ Observaciones (VARCHAR2(4000 BYTE)) (ok)
 
-
-            /* # REGLA 4: */
+            /* RULE #8 */
             if (pedimento_r1_1er === "") {
 
                 if (motivo_rectificacion_1er.replace(/\s/g, "") === "") {
-                    swal("Ingrese Motivo Rectificación 1");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 1. ";  
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
             }
 
-
-            /* # REGLA 5: */
+            /* RULE #9 */
             if (pedimento_r1_2do === "") {
 
                 if (motivo_rectificacion_2do.replace(/\s/g, "") === "") {
-                    swal("Ingrese Motivo Rectificación 2");
-                    alertclose();
+                    contadorError++;
+                    txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 2. ";  
                     changeColorByPositionError(i);
-                    $("#WindowLoad").remove();
-                    return false;
                 }
 
+            }
+            
+            /* RULE #10 */
+            if(estatus_operacion === "19"){ //IMPORTADO
+                if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        size_container.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        recinto.replace(/\s/g, "") === "" ||
+                        naviera.replace(/\s/g, "") === "" ||
+                        buque.replace(/\s/g, "") === "" ||
+                        fecha_revalidacion.replace(/\s/g, "") === "" ||
+                        fecha_previo_origen.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        req_uva.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        sello_origen.replace(/\s/g, "") === "" ||
+                        sello_final.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                     }
+                }else if(idAgenteAduanal === "4001"){ //LOGIX
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        size_container.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        recinto.replace(/\s/g, "") === "" ||
+                        naviera.replace(/\s/g, "") === "" ||
+                        buque.replace(/\s/g, "") === "" ||
+                        fecha_revalidacion.replace(/\s/g, "") === "" ||
+                        fecha_previo_origen.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        sello_origen.replace(/\s/g, "") === "" ||
+                        sello_final.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === "" ||
+                        llegada_a_nova.replace(/\s/g, "") === "" ||
+                        llegada_a_globe_trade_sd.replace(/\s/g, "") === "" ||
+                        archivo_m.replace(/\s/g, "") === "" ||
+                        fecha_archivo_m.replace(/\s/g, "") === "" ||
+                        fecha_solicit_manip.replace(/\s/g, "") === "" ||
+                        fecha_vencim_manip.replace(/\s/g, "") === "" ||
+                        fecha_confirm_clave_pedim.replace(/\s/g, "") === "" ||
+                        fecha_recep_increment.replace(/\s/g, "") === "" ||
+                        t_e.replace(/\s/g, "") === "" ||
+                        fecha_vencim_inbound.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                        }
+                }else if(idAgenteAduanal === "4002"){ //CUSA
+                    if(pais_origen.replace(/\s/g, "") === "" ||
+                       valor_usd.replace(/\s/g, "") === "" ||
+                       eta_port_discharge.replace(/\s/g, "") === "" ||
+                       agente_aduanal.replace(/\s/g, "") === "" ||
+                       pedimento_a1.replace(/\s/g, "") === "" ||
+                       pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                       motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                       pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                       motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                       naviera.replace(/\s/g, "") === "" ||
+                       fecha_revalidacion.replace(/\s/g, "") === "" ||
+                       fecha_previo_destino.replace(/\s/g, "") === "" ||
+                       fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                       proforma_final.replace(/\s/g, "") === "" ||
+                       permiso.replace(/\s/g, "") === "" ||
+                       fecha_envio.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                       fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                       fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                       co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                       aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                       req_uva.replace(/\s/g, "") === "" ||
+                       req_ca.replace(/\s/g, "") === "" ||
+                       fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                       num_constancia_ca.replace(/\s/g, "") === "" ||
+                       monto_ca.replace(/\s/g, "") === "" ||
+                       fecha_doc_completos.replace(/\s/g, "") === "" ||
+                       fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                       fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                       fecha_modulacion.replace(/\s/g, "") === "" ||
+                       modalidad.replace(/\s/g, "") === "" ||
+                       resultado_modulacion.replace(/\s/g, "") === "" ||
+                       fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                       fecha_liberacion.replace(/\s/g, "") === "" ||
+                       sello_final.replace(/\s/g, "") === "" ||
+                       estatus_operacion.replace(/\s/g, "") === "" ||
+                       motivo_atraso.replace(/\s/g, "") === "" ||
+                       fy.replace(/\s/g, "") === "" ||
+                       no_bultos.replace(/\s/g, "") === "" ||
+                       peso_kg.replace(/\s/g, "") === "" ||
+                       transferencia.replace(/\s/g, "") === "" ||
+                       fecha_inicio_etiquetado.replace(/\s/g, "") === "" ||
+                       fecha_termino_etiquetado.replace(/\s/g, "") === "" ||
+                       hora_termino_etiquetado.replace(/\s/g, "") === "" ||
+                       proveedor.replace(/\s/g, "") === "" ||
+                       proveedor_carga.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorio. "; 
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                    }
+                }else if(idAgenteAduanal === "4005"){ //RECHY
+                     if(pais_origen.replace(/\s/g, "") === "" ||
+                        valor_usd.replace(/\s/g, "") === "" ||
+                        eta_port_discharge.replace(/\s/g, "") === "" ||
+                        agente_aduanal.replace(/\s/g, "") === "" ||
+                        pedimento_a1.replace(/\s/g, "") === "" ||
+                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
+                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
+                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
+                        fecha_previo_destino.replace(/\s/g, "") === "" ||
+                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
+                        proforma_final.replace(/\s/g, "") === "" ||
+                        permiso.replace(/\s/g, "") === "" ||
+                        fecha_envio.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
+                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
+                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
+                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
+                        req_uva.replace(/\s/g, "") === "" ||
+                        req_ca.replace(/\s/g, "") === "" ||
+                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
+                        num_constancia_ca.replace(/\s/g, "") === "" ||
+                        monto_ca.replace(/\s/g, "") === "" ||
+                        fecha_doc_completos.replace(/\s/g, "") === "" ||
+                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
+                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
+                        fecha_modulacion.replace(/\s/g, "") === "" ||
+                        modalidad.replace(/\s/g, "") === "" ||
+                        resultado_modulacion.replace(/\s/g, "") === "" ||
+                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
+                        fecha_liberacion.replace(/\s/g, "") === "" ||
+                        estatus_operacion.replace(/\s/g, "") === "" ||
+                        motivo_atraso.replace(/\s/g, "") === "" ||
+                        fy.replace(/\s/g, "") === ""){
+                            contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
+                            changeColorByPositionError(i);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                     }
+                }
+                
             }
 
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + i + urlCustoms);
-            try {
-                console.log(urlData);
-                const response = await fetch(urlData);
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
+            if(contadorError===0){
+                try {
+                    const response = await fetch(urlData);
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    const data = await response.text();
+                    changeColorByPosition(i);
+                    msgErrorAgenteAduanal(i,idAgenteAduanal);
+
+                    urlCustoms = "";
+                    document.getElementById('mSgError'+i).innerHTML = "";
+                    cont++;
+
+                } catch (error) {
+                    console.error(error);
                 }
-                const data = await response.text();
-                changeColorByPosition(i);
-
-                urlCustoms = "";
-                document.getElementById('mSgError'+i).innerHTML = "";
-                cont++;
-
-            } catch (error) {
-                console.error(error);
+            }else{
+                mSgErrorLineCustoms(txtErrormSg,i);
+                txtErrormSg = "";
             }
-
+            contadorError=0;
 
 
         $("#WindowLoad").remove();
-
-        swal("","Información Actualizada", "success");
-        alertclose();
     }
 
     function openModalPlantilla() {
@@ -1265,7 +1705,7 @@
         document.getElementById("monto_ca["+i+"]").style.borderColor = color;
     }
 
-    function cleanResultadoModulacion(modulacion,i){
+    function cleanResultadoModulacion(modulacion,i,AgentType){
         let color = "";
         
         if(modulacion==="Verde"){
@@ -1275,8 +1715,15 @@
             color = "#CC9D77";
         }
         
+        if (AgentType != "4005") { //RECHY
+            if (AgentType === "4002") { //CUSA
+                document.getElementById("sello_final["+i+"]").style.borderColor = color;
+            }else{
+                document.getElementById("sello_origen["+i+"]").style.borderColor = color;
+            }
+        }
+        
         document.getElementById("resultado_modulacion["+i+"]").style.borderColor = color;
-        document.getElementById("sello_origen["+i+"]").style.borderColor = color;
     }
 
     function cleanPedimento_r1_1er(pedimento,i){
@@ -1331,5 +1778,209 @@
         // Función para ocultar el popup
         function ocultarPopup() {
           popup.style.display = 'none';
+        }
+    }
+
+    function msgErrorAgenteAduanal(i,AgentType){
+        
+        let estatus = document.getElementById("estatus_operacion["+i+"]").value;
+        let color = "";
+        
+        if(estatus != 19){
+           color = "#ced4da";  
+        }else{
+           color = "#db7f7f";
+        }
+        
+        if (AgentType === "4001" || AgentType === "4002" || AgentType === "4006"){ //RADAR|SESMA|VF
+
+                document.getElementById("pais_origen["+i+"]").style.borderColor = color;
+                document.getElementById("size_container["+i+"]").style.borderColor = color;
+                document.getElementById("valor_usd["+i+"]").style.borderColor = color;
+                document.getElementById("eta_port_discharge["+i+"]").style.borderColor = color;
+                document.getElementById("agente_aduanal["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_a1["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_1er["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_1er["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_2do["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_2do["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_doc["+i+"]").style.borderColor = color;
+                document.getElementById("recinto["+i+"]").style.borderColor = color;
+                document.getElementById("naviera["+i+"]").style.borderColor = color;
+                document.getElementById("buque["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_revalidacion["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_previo_origen["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_previo_destino["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_resultado_previo["+i+"]").style.borderColor = color;
+                document.getElementById("proforma_final["+i+"]").style.borderColor = color;
+                document.getElementById("permiso["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_envio["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_activacion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_permisos_aut["+i+"]").style.borderColor = color;
+                document.getElementById("co_pref_arancelaria["+i+"]").style.borderColor = color;
+                document.getElementById("aplic_pref_arancelaria["+i+"]").style.borderColor = color;
+                document.getElementById("req_uva["+i+"]").style.borderColor = color;
+                document.getElementById("req_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_ca["+i+"]").style.borderColor = color;
+                document.getElementById("num_constancia_ca["+i+"]").style.borderColor = color;
+                document.getElementById("monto_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_doc_completos["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_pago_pedimento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_solicitud_transporte["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("modalidad["+i+"]").style.borderColor = color;
+                document.getElementById("resultado_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_reconocimiento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_liberacion["+i+"]").style.borderColor = color;
+                document.getElementById("sello_origen["+i+"]").style.borderColor = color;
+                document.getElementById("sello_final["+i+"]").style.borderColor = color;
+                document.getElementById("estatus_operacion["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_atraso["+i+"]").style.borderColor = color;
+                document.getElementById("fy["+i+"]").style.borderColor = color;
+
+        }else if(AgentType === "4001"){ //LOGIX
+
+                document.getElementById("pais_origen["+i+"]").style.borderColor = color;
+                document.getElementById("size_container["+i+"]").style.borderColor = color;
+                document.getElementById("valor_usd["+i+"]").style.borderColor = color;
+                document.getElementById("eta_port_discharge["+i+"]").style.borderColor = color;
+                document.getElementById("agente_aduanal["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_a1["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_1er["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_1er["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_2do["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_2do["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_doc["+i+"]").style.borderColor = color;
+                document.getElementById("recinto["+i+"]").style.borderColor = color;
+                document.getElementById("naviera["+i+"]").style.borderColor = color;
+                document.getElementById("buque["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_revalidacion["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_previo_origen["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_previo_destino["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_resultado_previo["+i+"]").style.borderColor = color;
+                document.getElementById("proforma_final["+i+"]").style.borderColor = color;
+                document.getElementById("permiso["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_envio["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_activacion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_permisos_aut["+i+"]").style.borderColor = color;
+                document.getElementById("req_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_ca["+i+"]").style.borderColor = color;
+                document.getElementById("num_constancia_ca["+i+"]").style.borderColor = color;
+                document.getElementById("monto_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_doc_completos["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_pago_pedimento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_solicitud_transporte["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("modalidad["+i+"]").style.borderColor = color;
+                document.getElementById("resultado_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_reconocimiento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_liberacion["+i+"]").style.borderColor = color;
+                document.getElementById("sello_origen["+i+"]").style.borderColor = color;
+                document.getElementById("sello_final["+i+"]").style.borderColor = color;
+                document.getElementById("estatus_operacion["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_atraso["+i+"]").style.borderColor = color;
+                document.getElementById("fy["+i+"]").style.borderColor = color;
+                document.getElementById("llegada_a_nova["+i+"]").style.borderColor = color;
+                document.getElementById("llegada_a_globe_trade_sd["+i+"]").style.borderColor = color;
+                document.getElementById("archivo_m["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_archivo_m["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_solicit_manip["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_vencim_manip["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_confirm_clave_pedim["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recep_increment["+i+"]").style.borderColor = color;
+                document.getElementById("t_e["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_vencim_inbound["+i+"]").style.borderColor = color;
+
+        }else if(AgentType === "4002"){ //CUSA
+
+               document.getElementById("pais_origen["+i+"]").style.borderColor = color;
+               document.getElementById("valor_usd["+i+"]").style.borderColor = color;
+               document.getElementById("eta_port_discharge["+i+"]").style.borderColor = color;
+               document.getElementById("agente_aduanal["+i+"]").style.borderColor = color;
+               document.getElementById("pedimento_a1["+i+"]").style.borderColor = color;
+               document.getElementById("pedimento_r1_1er["+i+"]").style.borderColor = color;
+               document.getElementById("motivo_rectificacion_1er["+i+"]").style.borderColor = color;
+               document.getElementById("pedimento_r1_2do["+i+"]").style.borderColor = color;
+               document.getElementById("motivo_rectificacion_2do["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_recepcion_doc["+i+"]").style.borderColor = color;
+               document.getElementById("naviera["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_revalidacion["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_previo_destino["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_resultado_previo["+i+"]").style.borderColor = color;
+               document.getElementById("proforma_final["+i+"]").style.borderColor = color;
+               document.getElementById("permiso["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_envio["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_recepcion_perm["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_activacion_perm["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_permisos_aut["+i+"]").style.borderColor = color;
+               document.getElementById("co_pref_arancelaria["+i+"]").style.borderColor = color;
+               document.getElementById("aplic_pref_arancelaria["+i+"]").style.borderColor = color;
+               document.getElementById("req_uva["+i+"]").style.borderColor = color;
+               document.getElementById("req_ca["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_recepcion_ca["+i+"]").style.borderColor = color;
+               document.getElementById("num_constancia_ca["+i+"]").style.borderColor = color;
+               document.getElementById("monto_ca["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_doc_completos["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_pago_pedimento["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_solicitud_transporte["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_modulacion["+i+"]").style.borderColor = color;
+               document.getElementById("modalidad["+i+"]").style.borderColor = color;
+               document.getElementById("resultado_modulacion["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_reconocimiento["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_liberacion["+i+"]").style.borderColor = color;
+               document.getElementById("sello_final["+i+"]").style.borderColor = color;
+               document.getElementById("estatus_operacion["+i+"]").style.borderColor = color;
+               document.getElementById("motivo_atraso["+i+"]").style.borderColor = color;
+               document.getElementById("fy["+i+"]").style.borderColor = color;
+               document.getElementById("no_bultos["+i+"]").style.borderColor = color;
+               document.getElementById("peso_kg["+i+"]").style.borderColor = color;
+               document.getElementById("transferencia["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_inicio_etiquetado["+i+"]").style.borderColor = color;
+               document.getElementById("fecha_termino_etiquetado["+i+"]").style.borderColor = color;
+               document.getElementById("hora_termino_etiquetado["+i+"]").style.borderColor = color;
+               document.getElementById("proveedor["+i+"]").style.borderColor = color;
+               document.getElementById("proveedor_carga["+i+"]").style.borderColor = color;
+
+        }else if(AgentType === "4005"){ //RECHY
+
+                document.getElementById("pais_origen["+i+"]").style.borderColor = color;
+                document.getElementById("valor_usd["+i+"]").style.borderColor = color;
+                document.getElementById("eta_port_discharge["+i+"]").style.borderColor = color;
+                document.getElementById("agente_aduanal["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_a1["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_1er["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_1er["+i+"]").style.borderColor = color;
+                document.getElementById("pedimento_r1_2do["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_rectificacion_2do["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_doc["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_previo_destino["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_resultado_previo["+i+"]").style.borderColor = color;
+                document.getElementById("proforma_final["+i+"]").style.borderColor = color;
+                document.getElementById("permiso["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_envio["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_activacion_perm["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_permisos_aut["+i+"]").style.borderColor = color;
+                document.getElementById("co_pref_arancelaria["+i+"]").style.borderColor = color;
+                document.getElementById("aplic_pref_arancelaria["+i+"]").style.borderColor = color;
+                document.getElementById("req_uva["+i+"]").style.borderColor = color;
+                document.getElementById("req_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_recepcion_ca["+i+"]").style.borderColor = color;
+                document.getElementById("num_constancia_ca["+i+"]").style.borderColor = color;
+                document.getElementById("monto_ca["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_doc_completos["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_pago_pedimento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_solicitud_transporte["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("modalidad["+i+"]").style.borderColor = color;
+                document.getElementById("resultado_modulacion["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_reconocimiento["+i+"]").style.borderColor = color;
+                document.getElementById("fecha_liberacion["+i+"]").style.borderColor = color;
+                document.getElementById("estatus_operacion["+i+"]").style.borderColor = color;
+                document.getElementById("motivo_atraso["+i+"]").style.borderColor = color;
+                document.getElementById("fy["+i+"]").style.borderColor = color;
+
         }
     }

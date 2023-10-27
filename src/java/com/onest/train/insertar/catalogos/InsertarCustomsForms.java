@@ -952,7 +952,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " 1) ";
                     }
 
-                    boolean oraOut4 = oraDB.execute(semaforo); System.out.println("semaforo:"+semaforo);
+                    boolean oraOut4 = oraDB.execute(semaforo); 
                     
                     if(oraOut4){
                         customs = " UPDATE TRA_INB_CUSTOMS SET "
