@@ -964,11 +964,13 @@ public class InsertarCustomsForms extends HttpServlet {
                         
                         System.out.println("Actualización de Shipment Id (customs/semaforo): " + shipmentId + ":" + ouraOut5);
                     }
-
+                    salida = "2"; //Registro Semaforo
+                 }else{
+                   salida = "1"; //Registro Customs
                 }      
             }     
             
-         out.print("1");
+         out.print(salida);
          oraDB.close(); //cerrar conexión
          
          } catch (Exception e) {

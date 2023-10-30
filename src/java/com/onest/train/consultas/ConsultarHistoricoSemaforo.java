@@ -43,7 +43,7 @@ public class ConsultarHistoricoSemaforo extends HttpServlet {
         String salida = "";
         int sal = 0;
         
-        String consulta = " SELECT DISTINCT TO_CHAR(FECHA_ACTIVACION,'MM/DD/YYYY'), ESTATUS_SEMAFORO, LOAD_TYPE_FINAL FROM TRA_HIST_INB_SEMAFORO WHERE SHIPMENT_ID = '" + idShipment + "' ";
+        String consulta = " SELECT DISTINCT TO_CHAR(FECHA_ACTIVACION,'MM/DD/YYYY'), ESTATUS_SEMAFORO, LOAD_TYPE_FINAL, TO_CHAR(FECHA_TERMINO,'MM/DD/YYYY') FROM TRA_HIST_INB_SEMAFORO WHERE SHIPMENT_ID = '" + idShipment + "' ";
         if (db.doDB(consulta)) {
             for (String[] row : db.getResultado()) {
                 
@@ -55,10 +55,11 @@ public class ConsultarHistoricoSemaforo extends HttpServlet {
                      prioridad = "ALTA";
                  }
                 
-               salida= " <tr id=\"tr" + sal + "\"> "
+               salida+= " <tr id=\"tr" + sal + "\"> "
                      + "    <td>" + row[0] + "</td> "
                      + "    <td>" + prioridad + "</td> "
                      + "    <td>" + row[2] + "</td> "
+                     + "    <td>" + row[3] + "</td> "
                      + " </tr> ";
                      
                      sal++; 
@@ -66,6 +67,7 @@ public class ConsultarHistoricoSemaforo extends HttpServlet {
         }
      
          out.print(salida);
+         System.out.println("Esqueleto tabla:"+salida);
          oraDB.close(); //cerrar conexión
             
         }

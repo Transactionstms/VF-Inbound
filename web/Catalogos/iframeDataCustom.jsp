@@ -38,6 +38,9 @@
         <!-- calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
+        <!-- uploadFile excel -->
+        <script src="../plantillas/lib/JSplantilla.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
         <!-- Window load -->
         <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -52,7 +55,7 @@
             }
 
             .columna {
-              width:25%;
+              width:30%;
               float:right;
             }
 
@@ -62,6 +65,19 @@
                 float:none;
               }
             }
+            
+            .containerExcel {
+              display: flex;
+              justify-content: center;
+            }
+
+            .box {
+              width: 100px;
+              height: 100px;
+              /*background-color: lightblue;*/
+              margin: 10px;
+            }
+
         </style>
     </head>
     <body>
@@ -177,7 +193,10 @@
                 HashSet<String> list_proveedor = new HashSet<String>();
                 HashSet<String> list_proveedor_carga = new HashSet<String>();     
                 HashSet<String> list_fy = new HashSet<String>();
-              
+                
+                /*HashSet<String> list_evento = new HashSet<>(list_evento1);
+                list_evento.remove(null);*/ /*PENDIENTE*/
+                
                 //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
@@ -186,9 +205,6 @@
                         namePlantilla = rowA[2];
                     }
                 }
-                
-                /*HashSet<String> list_evento = new HashSet<>(list_evento1);
-                list_evento.remove(null);*/ /*PENDIENTE*/
                 
                 //Generar caramelo: Opciones del multiselect
                 for (String a : arrOfStr) {
@@ -202,12 +218,19 @@
                         listStatusOperationEvent += "<option value=\"" + rowO[0] + "\" >" + rowO[1] + "</option>";
                     }
                 }
+                
+                long fechaMillis = System.currentTimeMillis();
+                Date fecha = new Date(fechaMillis);
+
+                if(idPlantilla.equals("26")){
+                idBodega= fecha.getDate()+""+fecha.getMonth()+ fecha.getYear()+fecha.getMinutes()+""+fecha.getSeconds();
+                }
         %>
         <div class="card-body">
             <div id="contenedor">
                 <div class="row">
                     <div class="columna">
-                        <!--<button type="button" class="btn btn-primary" onclick="openModalPlantilla()">Subir Plantilla</button>-->
+                        <button type="button" class="btn btn-primary" onclick="openModalPlantilla()">Subir Plantilla</button>
                     </div>
                 </div>
                 <div style="text-align: right;">
@@ -216,6 +239,7 @@
                     </div> 
                 </div>
             </div>
+            <br>
             <!--<br><label class="txtColor">Resolución de Pantalla</label>-->
             <div id="table-scroll" class="table-scroll">
                 <table id="main-table" class="main-table" style="table-layout:fixed; width:1500%;">
@@ -870,7 +894,7 @@
                              }
                         %>   
                             <th class="font-numero">                    <!--Semaforo -->
-                                    <center><img src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
+                                    <center><img id="imgSemaforo<%=cont%>" src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
                             </th>
                             <th class="font-numero">                    <!-- Referencia Aduanal -->
                                 <input type="text" onkeyup="this.value = this.value.toUpperCase()" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30]%>" autocomplete="off">
@@ -1186,7 +1210,9 @@
                                  <input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[95]%>" autocomplete="off">
                              </td>
                              <td class="font-numero">
-                                 <center><a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-save"></i></a></center>  
+                                 <center>
+                                   <a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-save"></i></a>
+                                   <!--<a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-edit"></i></a></center>-->
                              </td> 
                           </tr>
                     <%         
@@ -1200,71 +1226,31 @@
                     </tbody>
                 </table>
             </div>
-             <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
-             <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
-            <br>
         </div>                     
         <!-- modal - Subir Plantilla --> 
         <div class="modal fade text-start" id="modalSubirPlantilla" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content"> 
                     <div class="modal-header border-0 bg-gray-100">
                         <h3 class="h6 modal-title" id="exampleModalLabel"><i class="fas fa-folder-open"></i>&nbsp;<%=namePlantilla%></h3>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <div class="card-heading">*Descarga el archivo, llena los datos y sube tu documento</div>
+                        <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=namePlantilla%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
+                            <div class="card-body pt-1">
+                                <div class="mb-2">
+                                    <label for="input-id" class="form-label">Selecciona: </label>
+                                    <input class="form-control" type="file" id="input-id" name="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                </div>
+                                <div class="containerExcel">
+                                    <div class="box"><button class="btn float-start btn-primary" id="created_file" type="button">Descargar</button></div>
+                                    <div class="box"><div align="center" id="divResultado" name="divResultado"></div></div>
+                                    <div class="box"><button class="btn float-end btn-success" type="submit">Subir</button></div>
+                                </div>
                             </div>
-                            <div class="card-body text-muted">
-                                <!-- Selección de Clientes -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">  
-                                            <div class="row">
-                                                <div class="col-lg-3"></div> 
-                                                <div class="col-md-6 col-lg-11 mb-4">
-                                                    <div class="card h-100">
-                                                        <div class="card-header py-4">
-                                                            <!--<h6 class="card-heading">nombre</h6>-->
-                                                        </div>
-                                                        <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=namePlantilla%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
-                                                            <div class="card-body pt-3">
-                                                                <div class="mb-3">
-                                                                    <label for="input-id" class="form-label">Selecciona: </label>
-                                                                    <input class="form-control" type="file" id="input-id" name="input-id"
-                                                                           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                                                </div>
-                                                                <div class="row position-relative" style="top: 10px;">
-                                                                    <div class="col-6 text-center">
-                                                                        <button class="btn float-start btn-primary" id="created_file" type="button" >Descargar</button>
-                                                                    </div>
-                                                                    <div class="col-6 text-center">
-                                                                        <button class="btn float-end btn-success"  type="submit"  >Subir</button><!--id="upload_file"-->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <div align="center" class="col-md-8">
-                                                    <div align="center" id="divResultado" name="divResultado"></div>
-                                                </div>
-                                                <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
-                                                <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
-                                                <input type="hidden" name="idLenguaje" value="1" id="idLenguaje"/>
-                                                <input type="hidden" name="idDivision" value="<%=idDivision%>" id="idDivision"/>
-                                                <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
-                                                <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
-                                                <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>  
-                            </div>
-                        </div> 
-                    </div>
+                        </form>
+                        <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
+                    </div>         
                 </div>
             </div>
         </div>    
@@ -1279,32 +1265,38 @@
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <center><div id="idSemaforo"></div></center>
-                            </div>
-                            <div class="card-body text-muted">
-                                <table class="table" id="mytable" name="mytable" width="50%">
-                                    <thead>
-                                        <tr>
-                                            <th><strong>FECHA</strong></th>
-                                            <th><strong>PRIORIDAD</strong></th>
-                                            <th><strong>LOAD TYPE</strong></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="AddTableSemaforo"></tbody>
-                                </table>
-                            </div>
-                        </div> 
+                        <center><div id="idSemaforo"></div></center>
+                        <table class="table" id="mytable" name="mytable" width="50%">
+                            <thead>
+                                <tr>
+                                    <th><strong>FECHA ACTIVACION</strong></th>
+                                    <th><strong>PRIORIDAD</strong></th>
+                                    <th><strong>LOAD TYPE</strong></th>
+                                    <th><strong>FECHA ESTIMADA</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody id="AddTableSemaforo"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div> 
+        
+        <!-- Parametros - Generación de Excel -->
+        <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
+        <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
+        <input type="hidden" name="idLenguaje" value="1" id="idLenguaje"/>
+        <input type="hidden" name="idDivision" value="<%=idDivision%>" id="idDivision"/>
+        <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
+        <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
+        <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
+        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
+
         <script>
-            let AgentType = '<%=AgentType%>';
+            let idAgenteAduanal = '<%=AgentType%>';
             
             /*lectura de columnas (selects/filtros)*/
-            if(AgentType==="4001"||AgentType==="4002"||AgentType==="4003"||AgentType==="4004"||AgentType==="4005"||AgentType==="4006"){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
+            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4002"||idAgenteAduanal==="4003"||idAgenteAduanal==="4004"||idAgenteAduanal==="4005"||idAgenteAduanal==="4006"){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
             
                 var selectElement = document.getElementById("col_evento");
                 var selectElement1= document.getElementById("col_referenciaAA");
@@ -1375,7 +1367,7 @@
                 
            }
            
-           if(AgentType==="4001"||AgentType==="4006"){ //LOGIX Y VF  
+           if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF  
              
                 var selectElement66= document.getElementById("col_llegada_a_nova");
                 var selectElement67= document.getElementById("col_llegada_a_globe_trade_sd");
@@ -1390,7 +1382,7 @@
             
             }
             
-            if(AgentType==="4002"||AgentType==="4006"){  //CUSA Y VF
+            if(idAgenteAduanal==="4002"||idAgenteAduanal==="4006"){  //CUSA Y VF
                 
                 var selectElement76= document.getElementById("col_no_bultos");
                 var selectElement77= document.getElementById("col_peso_kg");
@@ -1405,7 +1397,7 @@
             }
             
             /*Asignar el listado de valores (selects/filtros)*/
-            if(AgentType==="4001"||AgentType==="4002"||AgentType==="4003"||AgentType==="4004"||AgentType==="4005"||AgentType==="4006"){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
+            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4002"||idAgenteAduanal==="4003"||idAgenteAduanal==="4004"||idAgenteAduanal==="4005"||idAgenteAduanal==="4006"){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
                 
                 selectElement.innerHTML="<%=list_evento%>";
                 selectElement1.innerHTML="<%=list_referenciaAA%>";
@@ -1476,7 +1468,7 @@
             
             }
             
-            if(AgentType==="4001"||AgentType==="4006"){ //LOGIX Y VF      
+            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF      
                 
                 selectElement66.innerHTML="<%=list_llegada_a_nova%>";
                 selectElement67.innerHTML="<%=list_llegada_a_globe_trade_sd%>";
@@ -1491,7 +1483,7 @@
                 
             }
             
-            if(AgentType==="4002"||AgentType==="4006"){  //CUSA Y VF
+            if(idAgenteAduanal==="4002"||idAgenteAduanal==="4006"){  //CUSA Y VF
                 
                 selectElement76.innerHTML="<%=list_no_bultos%>";
                 selectElement77.innerHTML="<%=list_peso_kg%>";
@@ -1512,7 +1504,7 @@
                     instance.setDate(dateStr, true, 'm/d/Y');
                 }
             });
-        </script>
+        </script>    
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->
@@ -1521,6 +1513,8 @@
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
         <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
+        <!-- uploadFile Excel -->
+        
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

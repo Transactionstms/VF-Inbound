@@ -2174,8 +2174,10 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
                + " "  
                + " WHERE TIE.ESTADO = 1 "
-               + " AND TIE.ID_EVENTO IN (231215,230960) ";  //ESTATUS EVENTO
-               //+ " AND GTN.ESTATUS <>19 "; //ESTATUS SHIPMENT
+               + " AND TIE.ID_EVENTO IN (231215,230960) "
+               + " AND tid.division_nombre <> 'No/DSN' "
+               + " AND gtn.load_type_final IS NOT NULL "   
+               + " AND GTN.ESTATUS <> 19 ";  
          
         if(!tipoAgente.equals("4006")){ //VF GENERAL
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') ";  

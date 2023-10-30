@@ -872,6 +872,13 @@
                 }
                 
             }
+            
+            /*# RULE 11*/
+            if(loadTypeFinal.replace("null", "") === "" || loadTypeFinal === null){
+                contadorError++;
+                txtErrormSg += "("+contadorError+")Evento sin Load Type. "; 
+                changeColorByPositionError(i);
+            }
 
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + cont + urlCustoms);
             if(contadorError===0){
@@ -886,6 +893,11 @@
                     urlCustoms = "";
                     document.getElementById('mSgError'+i).innerHTML = "";
                     cont++;
+                    
+                    if(data==="2"){  //Activación Semaforo
+                       var imgElement =document.getElementById("imgSemaforo"+i);
+                       imgElement.src = "../img/circle-green.png";
+                    }
 
                 } catch (error) {
                     console.error(error);
@@ -1488,7 +1500,14 @@
                 }
                 
             }
-
+            
+            /*# RULE 11*/
+            if(loadTypeFinal.replace("null", "") === "" || loadTypeFinal === null){
+                contadorError++;
+                txtErrormSg += "("+contadorError+")Evento sin Load Type. "; 
+                changeColorByPositionError(i);
+            }
+            
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + i + urlCustoms);
             if(contadorError===0){
                 try {
@@ -1503,6 +1522,11 @@
                     urlCustoms = "";
                     document.getElementById('mSgError'+i).innerHTML = "";
                     cont++;
+                    
+                    if(data==="2"){  //Activación Semaforo
+                       var imgElement =document.getElementById("imgSemaforo"+i);
+                       imgElement.src = "../img/circle-green.png";
+                    }
 
                 } catch (error) {
                     console.error(error);
