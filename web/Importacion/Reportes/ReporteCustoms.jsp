@@ -1,7 +1,7 @@
 <%-- 
-    Document   : ReporteCustoms
-    Created on : 12/05/2023, 03:06:29 PM
-    Author     : Desarrollo Tacts
+    Document   : customForm_1
+    Created on : 24/10/2023, 11:55:23 AM
+    Author     : grecendiz
 --%>
 
 <%@page import="java.util.HashSet"%>
@@ -36,14 +36,16 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
-        <title>Reporte Customs</title>
-        <link rel="stylesheet" href="../../lib/css/style.default.css" id="theme-stylesheet">
+        <title>Personalizar Customs</title>
+        <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- jQuery 3.6.0 -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Window load -->
-        <link href="../../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
+        <!-- scroll iFrame -->
+        <link href="<%=request.getContextPath()%>/lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <script>
-            window.onload = (event) =>{
+            window.onload = (event) => {
                 jsShowWindowLoad('Cargando Información');
                 onloadIframe();
             };
@@ -56,8 +58,19 @@
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                 DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
                 OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
+                String UserId = (String) ownsession.getAttribute("login.user_id_number");
                 String filterType = request.getParameter("filterType");
                 String id = request.getParameter("id");
+                String AgentType = "";
+
+                ConsultasQuery fac = new ConsultasQuery();
+   
+                //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
+                if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
+                    for (String[] rowA : db.getResultado()) {
+                        AgentType = rowA[0];
+                    }
+                }
         %>
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
@@ -65,60 +78,91 @@
                     <section>
                         <div class="row">
                             <div class="col-lg-12 mb-4 mb-lg-0">
-                                <div class="card h-100">
-                                    <div class="col-md-12 card-header justify-content-between">
+                                <div class="card ">
+                                  <!-- 
+                                  <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Reporte Customs</h2>
+                                                <h2 class="card-heading">Personalizar Customs</h2>
                                             </div>
                                         </div>
-                                    </div>                                    
-                                    <p align="center"><iframe id="frameTableReporteCustoms" height="950" width="1175" title="Data Table Customs"></iframe></p>
-                                    <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
-                                    <input type="hidden" id="id" name="id" value="<%=id%>">
+                                    </div>
+                                  -->   
+
+                                    <div class="card-body">
+                                        <p align="center">
+                                            <iframe id="frameTableCustoms" class="iFrame" title="Data Table Customs" style=" width:100%; height: 4000px"></iframe>
+                                        </p>
+                                        <input type="hidden" id="filterType" name="filterType" value="<%=filterType%>">
+                                        <input type="hidden" id="id" name="id" value="<%=id%>">
+                                        <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
+                                    </div>
+
+                                    
+                               
                                 </div>
                             </div>
                         </div>   
                     </section>
-                </div>  
-                <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 text-center text-md-start fw-bold">
-                                <p class="mb-2 mb-md-0 fw-bold">Transactions TMS &copy; <%=part3%></p>
-                            </div>
-                            <div class="col-md-6 text-center text-md-end text-gray-400">
-                                <p class="mb-0">Version 1.1.0</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                </div>   
             </div>
         </div> 
         <script>
-            function onloadIframe(){
-                
-                let filterType = document.getElementById("filterType").value;   
-                let id = document.getElementById("id").value;   
-               
-                document.getElementById('frameTableReporteCustoms').src = "iframeDetailsCustoms.jsp?filterType="+filterType+"&id="+id;
-                
-                $('#frameTableReporteCustoms').on("load", function() {
-                    jsRemoveWindowLoad();
+            function onloadIframe() {
+
+                let filterType = document.getElementById("filterType").value;
+                let id = document.getElementById("id").value;
+                let agenteId = document.getElementById("idAgenteAduanal").value;
+
+                document.getElementById('frameTableCustoms').src = "iframeDetailsCustoms.jsp?filterType=" + filterType + "&id=" + id;
+
+                /*fetch("<%=request.getContextPath()%>/UpdateSemaforoCustoms?agenteAduanal="+agenteId, {
+                 method: 'POST',
+                 }).then(r => r.text())
+                 .then(data => {
+                 if(data === "true"){
+                 console.log(data);
+                 }else{
+                 console.log(data);
+                 }
+                 }).catch(error => console.log(error));*/
+
+                $('#frameTableCustoms').on("load", function () {
+                    $("#WindowLoad").remove();
                 });
 
+                //email(agenteId);    
             }
+
+            function recibirParametroIFrame(event) {
+
+                // Obtener el parámetro enviado desde el iframe
+                var parametro = event.data;
+
+                // Realizar las acciones necesarias con el parámetro
+                let value = parametro.split("@");
+
+                document.getElementById("filterType").value = value[0];
+                document.getElementById("id").value = value[1];
+
+                jsShowWindowLoad('Cargando Información');
+                onloadIframe();
+
+            }
+
+            // Agregar un listener para escuchar los mensajes enviados desde el iframe
+            window.addEventListener('message', recibirParametroIFrame, false);
         </script>
         <!-- Window load -->
-        <script src="../../lib/Loader/js/windowLoadReport.js" type="text/javascript"></script>
-        <!-- JavaScript files-->
-        <script src="../../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+        <script src="<%=request.getContextPath()%>/lib/Loader/js/windowLoad.js" type="text/javascript"></script>
+        <!-- JavaScript files -->
+        <script src="<%=request.getContextPath()%>/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
     <%
         } catch (NullPointerException e) {
-            System.out.println("Error:" +e);
+            System.out.println("Error:" + e);
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");
         } catch (Exception e) {
