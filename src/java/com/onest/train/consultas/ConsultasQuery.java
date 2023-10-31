@@ -2993,7 +2993,7 @@ public class ConsultasQuery {
     
     public String consultarFechaSemaforo(String shipmentId) {
         sql = " SELECT DISTINCT "
-            + " TO_CHAR(FECHA_ACTIVACION,'MM/DD/YY'), "
+            + " TO_CHAR(FECHA_ACTIVACION,'MM/DD/YYYY'), "
             + " DIAS_TRANSCURRIDOS, "
             + " LOAD_TYPE_FINAL "
             + " FROM TRA_INB_SEMAFORO "
