@@ -98,7 +98,8 @@
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=23" target="data">Plantilla Previos</a></li>
 
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=20" target="data">Plantilla GTN</a></li>
-   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=31" target="data">Plantilla RDI</a></li>                         
+   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=31" target="data">Plantilla RDI</a></li>   
+   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/seleccionPlantilla.jsp?idPlantilla=31" target="data">Plantilla Customs</a></li> 
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=27" target="data">Agregar Evento Nuevo</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=21" target="data">Plantilla DSN</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
