@@ -946,6 +946,10 @@
         <servlet-name>ConsultarHistoricoUpEventos</servlet-name>
         <servlet-class>com.tacts.consultar.facturacion.ConsultarHistoricoUpEventos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.onest.security.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1886,6 +1890,10 @@
     <servlet-mapping>
         <servlet-name>ConsultarHistoricoUpEventos</servlet-name>
         <url-pattern>/ConsultarHistoricoUpEventos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
