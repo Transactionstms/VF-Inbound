@@ -559,27 +559,27 @@
             if (permiso === "Si") {
 
                 if (fecha_envio.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Envío. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_recepcion_perm.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción Permiso. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_activacion_perm.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Activación Permiso. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_permisos_aut.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Permisos Autorizados. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -588,21 +588,21 @@
             if (req_ca === "Si") {
 
                 if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción CA. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (num_constancia_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Número de Constancia CA. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (monto_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Monto CA. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -615,16 +615,16 @@
                     if (idAgenteAduanal === "4002") { //CUSA
                         
                         if (sello_final.replace(/\s/g, "") === "") {
-                            contadorError++;
+                            //contadorError++;
                             txtErrormSg += "(" + contadorError + ")Ingrese Sello Final. ";
-                            changeColorByPositionError(i);
+                            //changeColorByPositionError(i);
                         }
                     } else {
                         
                         if (sello_origen.replace(/\s/g, "") === "") {
-                            contadorError++;
+                            //contadorError++;
                             txtErrormSg += "(" + contadorError + ")Ingrese Sello Origen. ";
-                            changeColorByPositionError(i);
+                            //changeColorByPositionError(i);
                         }
                     }
                 }
@@ -647,9 +647,9 @@
             if (pedimento_r1_1er === "") {
 
                 if (motivo_rectificacion_1er.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 1. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -658,227 +658,216 @@
             if (pedimento_r1_2do === "") {
 
                 if (motivo_rectificacion_2do.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 2. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
             
             /* RULE #10 */
-            if(estatus_operacion === "19"){ //IMPORTADO
-                if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        size_container.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        recinto.replace(/\s/g, "") === "" ||
-                        naviera.replace(/\s/g, "") === "" ||
-                        buque.replace(/\s/g, "") === "" ||
-                        fecha_revalidacion.replace(/\s/g, "") === "" ||
-                        fecha_previo_origen.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        req_uva.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        sello_origen.replace(/\s/g, "") === "" ||
-                        sello_final.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === ""){
-                            contadorError++;
-                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
+                     if(pais_origen !== null &&
+                        size_container !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        recinto !== null &&
+                        naviera !== null &&
+                        buque !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_origen !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_origen !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null){
+                            /*contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
                      }
                 }else if(idAgenteAduanal === "4001"){ //LOGIX
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        size_container.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        recinto.replace(/\s/g, "") === "" ||
-                        naviera.replace(/\s/g, "") === "" ||
-                        buque.replace(/\s/g, "") === "" ||
-                        fecha_revalidacion.replace(/\s/g, "") === "" ||
-                        fecha_previo_origen.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        sello_origen.replace(/\s/g, "") === "" ||
-                        sello_final.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === "" ||
-                        llegada_a_nova.replace(/\s/g, "") === "" ||
-                        llegada_a_globe_trade_sd.replace(/\s/g, "") === "" ||
-                        archivo_m.replace(/\s/g, "") === "" ||
-                        fecha_archivo_m.replace(/\s/g, "") === "" ||
-                        fecha_solicit_manip.replace(/\s/g, "") === "" ||
-                        fecha_vencim_manip.replace(/\s/g, "") === "" ||
-                        fecha_confirm_clave_pedim.replace(/\s/g, "") === "" ||
-                        fecha_recep_increment.replace(/\s/g, "") === "" ||
-                        t_e.replace(/\s/g, "") === "" ||
-                        fecha_vencim_inbound.replace(/\s/g, "") === ""){
-                            contadorError++;
-                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                     if(pais_origen !== null &&
+                        size_container !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        recinto !== null &&
+                        naviera !== null &&
+                        buque !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_origen !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_origen !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null &&
+                        llegada_a_nova !== null &&
+                        llegada_a_globe_trade_sd !== null &&
+                        archivo_m !== null &&
+                        fecha_archivo_m !== null &&
+                        fecha_solicit_manip !== null &&
+                        fecha_vencim_manip !== null &&
+                        fecha_confirm_clave_pedim !== null &&
+                        fecha_recep_increment !== null &&
+                        t_e !== null &&
+                        fecha_vencim_inbound !== null){
+                            /*contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
                         }
                 }else if(idAgenteAduanal === "4002"){ //CUSA
-                    if(pais_origen.replace(/\s/g, "") === "" ||
-                       valor_usd.replace(/\s/g, "") === "" ||
-                       eta_port_discharge.replace(/\s/g, "") === "" ||
-                       agente_aduanal.replace(/\s/g, "") === "" ||
-                       pedimento_a1.replace(/\s/g, "") === "" ||
-                       pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                       motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                       pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                       motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                       naviera.replace(/\s/g, "") === "" ||
-                       fecha_revalidacion.replace(/\s/g, "") === "" ||
-                       fecha_previo_destino.replace(/\s/g, "") === "" ||
-                       fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                       proforma_final.replace(/\s/g, "") === "" ||
-                       permiso.replace(/\s/g, "") === "" ||
-                       fecha_envio.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                       fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                       fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                       co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                       aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                       req_uva.replace(/\s/g, "") === "" ||
-                       req_ca.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                       num_constancia_ca.replace(/\s/g, "") === "" ||
-                       monto_ca.replace(/\s/g, "") === "" ||
-                       fecha_doc_completos.replace(/\s/g, "") === "" ||
-                       fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                       fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                       fecha_modulacion.replace(/\s/g, "") === "" ||
-                       modalidad.replace(/\s/g, "") === "" ||
-                       resultado_modulacion.replace(/\s/g, "") === "" ||
-                       fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                       fecha_liberacion.replace(/\s/g, "") === "" ||
-                       sello_final.replace(/\s/g, "") === "" ||
-                       estatus_operacion.replace(/\s/g, "") === "" ||
-                       motivo_atraso.replace(/\s/g, "") === "" ||
-                       fy.replace(/\s/g, "") === "" ||
-                       no_bultos.replace(/\s/g, "") === "" ||
-                       peso_kg.replace(/\s/g, "") === "" ||
-                       transferencia.replace(/\s/g, "") === "" ||
-                       fecha_inicio_etiquetado.replace(/\s/g, "") === "" ||
-                       fecha_termino_etiquetado.replace(/\s/g, "") === "" ||
-                       hora_termino_etiquetado.replace(/\s/g, "") === "" ||
-                       proveedor.replace(/\s/g, "") === "" ||
-                       proveedor_carga.replace(/\s/g, "") === ""){
-                            contadorError++;
-                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                     if(pais_origen !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        naviera !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null &&
+                        no_bultos !== null &&
+                        peso_kg !== null &&
+                        transferencia !== null &&
+                        fecha_inicio_etiquetado !== null &&
+                        fecha_termino_etiquetado !== null &&
+                        hora_termino_etiquetado !== null &&
+                        proveedor !== null &&
+                        proveedor_carga !== null){
+                            /*contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorio. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
                     }
                 }else if(idAgenteAduanal === "4005"){ //RECHY
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        req_uva.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === ""){
-                            contadorError++;
-                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. ";
+                     if(pais_origen !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null){
+                            /*contadorError++;
+                            txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
                      }
                 }
-                
-            }
-            
-            /*# RULE 11*/
-            if(loadTypeFinal.replace("null", "") === "" || loadTypeFinal === null){
-                contadorError++;
-                txtErrormSg += "("+contadorError+")Evento sin Load Type. "; 
-                changeColorByPositionError(i);
-            }
 
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + cont + urlCustoms);
             if(contadorError===0){
@@ -1187,27 +1176,27 @@
             if (permiso === "Si") {
 
                 if (fecha_envio.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Envío. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_recepcion_perm.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción Permiso. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_activacion_perm.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Activación Permiso. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (fecha_permisos_aut.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Permisos Autorizados. ";
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -1216,21 +1205,21 @@
             if (req_ca === "Si") {
 
                 if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Fecha Recepción CA. ";                    
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (num_constancia_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Número de Constancia CA. ";                           
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
                 if (monto_ca.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Monto CA. ";   
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -1243,16 +1232,16 @@
                     if (idAgenteAduanal === "4002") { //CUSA
                         
                         if (sello_final.replace(/\s/g, "") === "") {
-                            contadorError++;
+                            //contadorError++;
                             txtErrormSg += "("+contadorError+")Ingrese Sello Final. ";   
-                            changeColorByPositionError(i);
+                            //changeColorByPositionError(i);
                         }
                     } else {
                         
                         if (sello_origen.replace(/\s/g, "") === "") {
-                            contadorError++;
+                            //contadorError++;
                             txtErrormSg += "("+contadorError+")Ingrese Sello Origen. ";   
-                            changeColorByPositionError(i);
+                            //changeColorByPositionError(i);
                         }
                     }
                 }
@@ -1275,9 +1264,9 @@
             if (pedimento_r1_1er === "") {
 
                 if (motivo_rectificacion_1er.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 1. ";  
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
@@ -1286,228 +1275,226 @@
             if (pedimento_r1_2do === "") {
 
                 if (motivo_rectificacion_2do.replace(/\s/g, "") === "") {
-                    contadorError++;
+                    //contadorError++;
                     txtErrormSg += "("+contadorError+")Ingrese Motivo Rectificación 2. ";  
-                    changeColorByPositionError(i);
+                    //changeColorByPositionError(i);
                 }
 
             }
             
-            /* RULE #10 */
-            if(estatus_operacion === "19"){ //IMPORTADO
-                if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        size_container.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        recinto.replace(/\s/g, "") === "" ||
-                        naviera.replace(/\s/g, "") === "" ||
-                        buque.replace(/\s/g, "") === "" ||
-                        fecha_revalidacion.replace(/\s/g, "") === "" ||
-                        fecha_previo_origen.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        req_uva.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        sello_origen.replace(/\s/g, "") === "" ||
-                        sello_final.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === ""){
-                            contadorError++;
+            /* RULE #10 */   /*(Estatus Importado)*/
+            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006"){ //RADAR|SESMA|VF
+                     if(pais_origen !== null &&
+                        size_container !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        recinto !== null &&
+                        naviera !== null &&
+                        buque !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_origen !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_origen !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null){
+                            /*contadorError++;
                             txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
+                            var selector = document.getElementById("estatus_operacion[" + i + "]");
+                            selector.options[19].disabled = false;
                      }
                 }else if(idAgenteAduanal === "4001"){ //LOGIX
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        size_container.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        recinto.replace(/\s/g, "") === "" ||
-                        naviera.replace(/\s/g, "") === "" ||
-                        buque.replace(/\s/g, "") === "" ||
-                        fecha_revalidacion.replace(/\s/g, "") === "" ||
-                        fecha_previo_origen.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        sello_origen.replace(/\s/g, "") === "" ||
-                        sello_final.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === "" ||
-                        llegada_a_nova.replace(/\s/g, "") === "" ||
-                        llegada_a_globe_trade_sd.replace(/\s/g, "") === "" ||
-                        archivo_m.replace(/\s/g, "") === "" ||
-                        fecha_archivo_m.replace(/\s/g, "") === "" ||
-                        fecha_solicit_manip.replace(/\s/g, "") === "" ||
-                        fecha_vencim_manip.replace(/\s/g, "") === "" ||
-                        fecha_confirm_clave_pedim.replace(/\s/g, "") === "" ||
-                        fecha_recep_increment.replace(/\s/g, "") === "" ||
-                        t_e.replace(/\s/g, "") === "" ||
-                        fecha_vencim_inbound.replace(/\s/g, "") === ""){
-                            contadorError++;
+                     if(pais_origen !== null &&
+                        size_container !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        recinto !== null &&
+                        naviera !== null &&
+                        buque !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_origen !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_origen !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null &&
+                        llegada_a_nova !== null &&
+                        llegada_a_globe_trade_sd !== null &&
+                        archivo_m !== null &&
+                        fecha_archivo_m !== null &&
+                        fecha_solicit_manip !== null &&
+                        fecha_vencim_manip !== null &&
+                        fecha_confirm_clave_pedim !== null &&
+                        fecha_recep_increment !== null &&
+                        t_e !== null &&
+                        fecha_vencim_inbound !== null){
+                            /*contadorError++;
                             txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
+                            var selector = document.getElementById("estatus_operacion[" + i + "]");
+                            selector.options[19].disabled = false;
                         }
                 }else if(idAgenteAduanal === "4002"){ //CUSA
-                    if(pais_origen.replace(/\s/g, "") === "" ||
-                       valor_usd.replace(/\s/g, "") === "" ||
-                       eta_port_discharge.replace(/\s/g, "") === "" ||
-                       agente_aduanal.replace(/\s/g, "") === "" ||
-                       pedimento_a1.replace(/\s/g, "") === "" ||
-                       pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                       motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                       pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                       motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                       naviera.replace(/\s/g, "") === "" ||
-                       fecha_revalidacion.replace(/\s/g, "") === "" ||
-                       fecha_previo_destino.replace(/\s/g, "") === "" ||
-                       fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                       proforma_final.replace(/\s/g, "") === "" ||
-                       permiso.replace(/\s/g, "") === "" ||
-                       fecha_envio.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                       fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                       fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                       co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                       aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                       req_uva.replace(/\s/g, "") === "" ||
-                       req_ca.replace(/\s/g, "") === "" ||
-                       fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                       num_constancia_ca.replace(/\s/g, "") === "" ||
-                       monto_ca.replace(/\s/g, "") === "" ||
-                       fecha_doc_completos.replace(/\s/g, "") === "" ||
-                       fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                       fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                       fecha_modulacion.replace(/\s/g, "") === "" ||
-                       modalidad.replace(/\s/g, "") === "" ||
-                       resultado_modulacion.replace(/\s/g, "") === "" ||
-                       fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                       fecha_liberacion.replace(/\s/g, "") === "" ||
-                       sello_final.replace(/\s/g, "") === "" ||
-                       estatus_operacion.replace(/\s/g, "") === "" ||
-                       motivo_atraso.replace(/\s/g, "") === "" ||
-                       fy.replace(/\s/g, "") === "" ||
-                       no_bultos.replace(/\s/g, "") === "" ||
-                       peso_kg.replace(/\s/g, "") === "" ||
-                       transferencia.replace(/\s/g, "") === "" ||
-                       fecha_inicio_etiquetado.replace(/\s/g, "") === "" ||
-                       fecha_termino_etiquetado.replace(/\s/g, "") === "" ||
-                       hora_termino_etiquetado.replace(/\s/g, "") === "" ||
-                       proveedor.replace(/\s/g, "") === "" ||
-                       proveedor_carga.replace(/\s/g, "") === ""){
-                            contadorError++;
+                     if(pais_origen !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        naviera !== null &&
+                        fecha_revalidacion !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        sello_final !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null &&
+                        no_bultos !== null &&
+                        peso_kg !== null &&
+                        transferencia !== null &&
+                        fecha_inicio_etiquetado !== null &&
+                        fecha_termino_etiquetado !== null &&
+                        hora_termino_etiquetado !== null &&
+                        proveedor !== null &&
+                        proveedor_carga !== null){
+                            /*contadorError++;
                             txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorio. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
+                            var selector = document.getElementById("estatus_operacion[" + i + "]");
+                            selector.options[19].disabled = false;
                     }
                 }else if(idAgenteAduanal === "4005"){ //RECHY
-                     if(pais_origen.replace(/\s/g, "") === "" ||
-                        valor_usd.replace(/\s/g, "") === "" ||
-                        eta_port_discharge.replace(/\s/g, "") === "" ||
-                        agente_aduanal.replace(/\s/g, "") === "" ||
-                        pedimento_a1.replace(/\s/g, "") === "" ||
-                        pedimento_r1_1er.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_1er.replace(/\s/g, "") === "" ||
-                        pedimento_r1_2do.replace(/\s/g, "") === "" ||
-                        motivo_rectificacion_2do.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_doc.replace(/\s/g, "") === "" ||
-                        fecha_previo_destino.replace(/\s/g, "") === "" ||
-                        fecha_resultado_previo.replace(/\s/g, "") === "" ||
-                        proforma_final.replace(/\s/g, "") === "" ||
-                        permiso.replace(/\s/g, "") === "" ||
-                        fecha_envio.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_perm.replace(/\s/g, "") === "" ||
-                        fecha_activacion_perm.replace(/\s/g, "") === "" ||
-                        fecha_permisos_aut.replace(/\s/g, "") === "" ||
-                        co_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        aplic_pref_arancelaria.replace(/\s/g, "") === "" ||
-                        req_uva.replace(/\s/g, "") === "" ||
-                        req_ca.replace(/\s/g, "") === "" ||
-                        fecha_recepcion_ca.replace(/\s/g, "") === "" ||
-                        num_constancia_ca.replace(/\s/g, "") === "" ||
-                        monto_ca.replace(/\s/g, "") === "" ||
-                        fecha_doc_completos.replace(/\s/g, "") === "" ||
-                        fecha_pago_pedimento.replace(/\s/g, "") === "" ||
-                        fecha_solicitud_transporte.replace(/\s/g, "") === "" ||
-                        fecha_modulacion.replace(/\s/g, "") === "" ||
-                        modalidad.replace(/\s/g, "") === "" ||
-                        resultado_modulacion.replace(/\s/g, "") === "" ||
-                        fecha_reconocimiento.replace(/\s/g, "") === "" ||
-                        fecha_liberacion.replace(/\s/g, "") === "" ||
-                        estatus_operacion.replace(/\s/g, "") === "" ||
-                        motivo_atraso.replace(/\s/g, "") === "" ||
-                        fy.replace(/\s/g, "") === ""){
-                            contadorError++;
+                     if(pais_origen !== null &&
+                        valor_usd !== null &&
+                        eta_port_discharge !== null &&
+                        agente_aduanal !== null &&
+                        pedimento_a1 !== null &&
+                        pedimento_r1_1er !== null &&
+                        motivo_rectificacion_1er !== null &&
+                        pedimento_r1_2do !== null &&
+                        motivo_rectificacion_2do !== null &&
+                        fecha_recepcion_doc !== null &&
+                        fecha_previo_destino !== null &&
+                        fecha_resultado_previo !== null &&
+                        proforma_final !== null &&
+                        permiso !== null &&
+                        fecha_envio !== null &&
+                        fecha_recepcion_perm !== null &&
+                        fecha_activacion_perm !== null &&
+                        fecha_permisos_aut !== null &&
+                        co_pref_arancelaria !== null &&
+                        aplic_pref_arancelaria !== null &&
+                        req_uva !== null &&
+                        req_ca !== null &&
+                        fecha_recepcion_ca !== null &&
+                        num_constancia_ca !== null &&
+                        monto_ca !== null &&
+                        fecha_doc_completos !== null &&
+                        fecha_pago_pedimento !== null &&
+                        fecha_solicitud_transporte !== null &&
+                        fecha_modulacion !== null &&
+                        modalidad !== null &&
+                        resultado_modulacion !== null &&
+                        fecha_reconocimiento !== null &&
+                        fecha_liberacion !== null &&
+                        //estatus_operacion !== null &&
+                        motivo_atraso !== null &&
+                        fy !== null){
+                            /*contadorError++;
                             txtErrormSg += "("+contadorError+")Todos los campos en rojo son obligatorios. "; 
                             changeColorByPositionError(i);
-                            msgErrorAgenteAduanal(i,idAgenteAduanal);
+                            msgErrorAgenteAduanal(i,idAgenteAduanal);*/
+                            var selector = document.getElementById("estatus_operacion[" + i + "]");
+                            selector.options[19].disabled = false;
                      }
                 }
-                
-            }
-            
-            /*# RULE 11*/
-            if(loadTypeFinal.replace("null", "") === "" || loadTypeFinal === null){
-                contadorError++;
-                txtErrormSg += "("+contadorError+")Evento sin Load Type. "; 
-                changeColorByPositionError(i);
-            }
-            
+             
             let urlData =encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustoms=" + i + urlCustoms);
             if(contadorError===0){
                 try {
@@ -1693,6 +1680,7 @@
 
     function cleanPermiso(permiso,i){
         let color = "";
+        let req = false;
         
         if(permiso==="No"){
             document.getElementById("fecha_envio["+i+"]").value = "";
@@ -1700,8 +1688,10 @@
             document.getElementById("fecha_activacion_perm["+i+"]").value = "";
             document.getElementById("fecha_permisos_aut["+i+"]").value = "";
             color = "#ced4da";
+            req = true;
         }else{
             color = "#CC9D77";
+            req = false;
         }
         
         document.getElementById("permiso["+i+"]").style.borderColor = color;
@@ -1709,24 +1699,34 @@
         document.getElementById("fecha_recepcion_perm["+i+"]").style.borderColor = color;
         document.getElementById("fecha_activacion_perm["+i+"]").style.borderColor = color;
         document.getElementById("fecha_permisos_aut["+i+"]").style.borderColor = color;
+        /*Habilitar/Deshabilitar campos*/
+        document.getElementById("fecha_envio["+i+"]").disabled = req;
+        document.getElementById("fecha_recepcion_perm["+i+"]").disabled = req;
+        document.getElementById("fecha_activacion_perm["+i+"]").disabled = req;
+        document.getElementById("fecha_permisos_aut["+i+"]").disabled = req;
     }
 
     function cleanRequerimientoCA(reqCa,i){
         let color = "";
+        let req = false;
         
         if(reqCa==="No"){
             document.getElementById("fecha_recepcion_ca["+i+"]").value = "";
             document.getElementById("num_constancia_ca["+i+"]").value = "";
             document.getElementById("monto_ca["+i+"]").value = "";
             color = "#ced4da";
+            req = true;
         }else{
             color = "#616363";
+            req = false;
         }
         
         document.getElementById("req_ca["+i+"]").style.borderColor = color;
         document.getElementById("fecha_recepcion_ca["+i+"]").style.borderColor = color;
         document.getElementById("num_constancia_ca["+i+"]").style.borderColor = color;
         document.getElementById("monto_ca["+i+"]").style.borderColor = color;
+        /*Habilitar/Deshabilitar campos*/
+        document.getElementById("fecha_recepcion_ca["+i+"]").disabled = req;
     }
 
     function cleanResultadoModulacion(modulacion,i,AgentType){

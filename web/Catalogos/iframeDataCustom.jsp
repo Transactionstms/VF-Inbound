@@ -105,6 +105,7 @@
                 String colorSemaforo = "";
                 String sizeSemaforo = "";
                 String listStatusOperationEvent = "";
+                String disabledOption = ""; 
                 int cont = 1; 
    
                 //Objetos Multiselect:
@@ -215,7 +216,9 @@
                /*Columna: Estatus Operación (listado)*/
                 if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
                     for (String[] rowO : db.getResultado()) {
-                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\" >" + rowO[1] + "</option>";
+                    
+                        if(rowO[0].equals("19")){disabledOption = "disabled";}else{disabledOption = "";}
+                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\" "+disabledOption+">" + rowO[1] + "</option>"; 
                     }
                 }
                 
@@ -959,11 +962,7 @@
                                     <%=row[28]%>
                             </td>
                             <td class="font-numero">                    <!-- Prioridad Si/No -->
-                              <select class="form-control" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>"> 
-                                 <option value="<%=row[97]%>"><%=row[97]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
+                                    <%=row[97]%><input type="hidden" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>">
                             </td>                                                 
                             <td class="font-numero">
                                 <input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[31]%>" autocomplete="off">

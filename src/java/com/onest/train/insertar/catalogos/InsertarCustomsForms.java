@@ -160,8 +160,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   size_container = request.getParameter("size_container[" + i + "]").trim(); 
                   valor_usd = request.getParameter("valor_usd[" + i + "]").trim();                
                  
-                  eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]");                                     //fecha   
-                  if(!eta_port_discharge.trim().equals("")){
+                  eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]").trim();                //fecha   
+                  if(!eta_port_discharge.equals("")){
                       Date date1 = sdfSource.parse(eta_port_discharge);                                                           //parse the string into Date object
                       eta_port_discharge = sdfDestination.format(date1);                                                          //parse the date into another format
                   } 
@@ -173,8 +173,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   pedimento_r1_2do = request.getParameter("pedimento_r1_2do[" + i + "]").trim();          
                   motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]").trim();  
                   
-                  fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]");               //fecha  
-                  if(!fecha_recepcion_doc.trim().equals("")){
+                  fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]").trim();               //fecha  
+                  if(!fecha_recepcion_doc.equals("")){
                       Date date2 = sdfSource.parse(fecha_recepcion_doc);                                                           //parse the string into Date object
                       fecha_recepcion_doc = sdfDestination.format(date2);                                                          //parse the date into another format
                   }
@@ -183,58 +183,58 @@ public class InsertarCustomsForms extends HttpServlet {
                   naviera = request.getParameter("naviera[" + i + "]").trim();
                   buque = request.getParameter("buque[" + i + "]").trim();
                   
-                  fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]");                 //fecha 
-                  if(!fecha_revalidacion.trim().equals("")){
+                  fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]").trim();                 //fecha 
+                  if(!fecha_revalidacion.equals("")){
                       Date date3 = sdfSource.parse(fecha_revalidacion);                                                            //parse the string into Date object
                       fecha_revalidacion = sdfDestination.format(date3);                                                           //parse the date into another format
                   }
                   
-                  fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]");               //fecha 
-                  if(!fecha_previo_origen.trim().equals("")){
+                  fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]").trim();               //fecha 
+                  if(!fecha_previo_origen.equals("")){
                       Date date4 = sdfSource.parse(fecha_previo_origen);                                                           //parse the string into Date object
                       fecha_previo_origen = sdfDestination.format(date4);                                                          //parse the date into another format
                   }
                   
-                  fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]");             //fecha 
-                  if(!fecha_previo_destino.trim().equals("")){
+                  fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]").trim();             //fecha 
+                  if(!fecha_previo_destino.equals("")){
                       Date date5 = sdfSource.parse(fecha_previo_destino);                                                          //parse the string into Date object
                       fecha_previo_destino = sdfDestination.format(date5);                                                         //parse the date into another format
                   }
                   
-                  fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]");         //fecha 
-                  if(!fecha_resultado_previo.trim().equals("")){
+                  fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]").trim();         //fecha 
+                  if(!fecha_resultado_previo.equals("")){
                       Date date6 = sdfSource.parse(fecha_resultado_previo);                                                        //parse the string into Date object
                       fecha_resultado_previo = sdfDestination.format(date6);                                                       //parse the date into another format
                   }
                   
-                  proforma_final = request.getParameter("proforma_final[" + i + "]");                  //fecha  
-                  if(!proforma_final.trim().equals("")){
+                  proforma_final = request.getParameter("proforma_final[" + i + "]").trim();                  //fecha  
+                  if(!proforma_final.equals("")){
                       Date date20 = sdfSource.parse(proforma_final);                                                               //parse the string into Date object
                       proforma_final = sdfDestination.format(date20);                                                              //parse the date into another format
                   }
                   
                   permiso = request.getParameter("permiso[" + i + "]").trim();                   
                   
-                  fecha_envio = request.getParameter("fecha_envio[" + i + "]");                               //fecha  
-                  if(!fecha_envio.trim().equals("")){
+                  fecha_envio = request.getParameter("fecha_envio[" + i + "]").trim();                               //fecha  
+                  if(!fecha_envio.equals("")){
                       Date date7 = sdfSource.parse(fecha_envio);                                                                   //parse the string into Date object
                       fecha_envio = sdfDestination.format(date7);                                                                  //parse the date into another format
                   }
                   
-                  fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]");             //fecha 
-                  if(!fecha_recepcion_perm.trim().equals("")){
+                  fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]").trim();             //fecha 
+                  if(!fecha_recepcion_perm.equals("")){
                       Date date8 = sdfSource.parse(fecha_recepcion_perm);                                                          //parse the string into Date object
                       fecha_recepcion_perm = sdfDestination.format(date8);                                                         //parse the date into another format
                   }
                   
-                  fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]");           //fecha 
-                  if(!fecha_activacion_perm.trim().equals("")){
+                  fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]").trim();           //fecha 
+                  if(!fecha_activacion_perm.equals("")){
                       Date date9 = sdfSource.parse(fecha_activacion_perm);                                                         //parse the string into Date object
                       fecha_activacion_perm = sdfDestination.format(date9);                                                        //parse the date into another format
                   }
                   
-                  fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]");                 //fecha 
-                  if(!fecha_permisos_aut.trim().equals("")){
+                  fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]").trim();                 //fecha 
+                  if(!fecha_permisos_aut.equals("")){
                       Date date10 = sdfSource.parse(fecha_permisos_aut);                                                           //parse the string into Date object
                       fecha_permisos_aut = sdfDestination.format(date10);                                                          //parse the date into another format
                   }
@@ -244,8 +244,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   req_uva = request.getParameter("req_uva[" + i + "]").trim();   
                   req_ca = request.getParameter("req_ca[" + i + "]").trim();   
                   
-                  fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]");                  //fecha 
-                  if(!fecha_recepcion_ca.trim().equals("")){
+                  fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]").trim();                  //fecha 
+                  if(!fecha_recepcion_ca.equals("")){
                       Date date11 = sdfSource.parse(fecha_recepcion_ca);                                                            //parse the string into Date object
                       fecha_recepcion_ca = sdfDestination.format(date11);                                                           //parse the date into another format
                   }
@@ -253,26 +253,26 @@ public class InsertarCustomsForms extends HttpServlet {
                   num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]").trim();   
                   monto_ca = request.getParameter("monto_ca[" + i + "]").trim();   
                   
-                  fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]");                 //fecha 
-                  if(!fecha_doc_completos.trim().equals("")){
+                  fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]").trim();                 //fecha 
+                  if(!fecha_doc_completos.equals("")){
                       Date date12 = sdfSource.parse(fecha_doc_completos);                                                            //parse the string into Date object
                       fecha_doc_completos = sdfDestination.format(date12);                                                           //parse the date into another format
                   }
                   
-                  fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]");               //fecha 
-                  if(!fecha_pago_pedimento.trim().equals("")){
+                  fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]").trim();               //fecha 
+                  if(!fecha_pago_pedimento.equals("")){
                       Date date13 = sdfSource.parse(fecha_pago_pedimento);                                                           //parse the string into Date object
                       fecha_pago_pedimento = sdfDestination.format(date13);                                                          //parse the date into another format
                   }
                   
-                  fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]");   //fecha 
-                  if(!fecha_solicitud_transporte.trim().equals("")){
+                  fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]").trim();   //fecha 
+                  if(!fecha_solicitud_transporte.equals("")){
                       Date date14 = sdfSource.parse(fecha_solicitud_transporte);                                                     //parse the string into Date object
                       fecha_solicitud_transporte = sdfDestination.format(date14);                                                    //parse the date into another format
                   }
                   
-                  fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]");                       //fecha 
-                  if(!fecha_modulacion.trim().equals("")){
+                  fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]").trim();                       //fecha 
+                  if(!fecha_modulacion.equals("")){
                       Date date15 = sdfSource.parse(fecha_modulacion);                                                               //parse the string into Date object
                       fecha_modulacion = sdfDestination.format(date15);                                                              //parse the date into another format
                   }
@@ -280,14 +280,14 @@ public class InsertarCustomsForms extends HttpServlet {
                   modalidad = request.getParameter("modalidad[" + i + "]").trim();                 
                   resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]").trim();      
                   
-                  fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]");               //fecha 
-                  if(!fecha_reconocimiento.trim().equals("")){
+                  fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]").trim();               //fecha 
+                  if(!fecha_reconocimiento.equals("")){
                       Date date16 = sdfSource.parse(fecha_reconocimiento);                                                           //parse the string into Date object
                       fecha_reconocimiento = sdfDestination.format(date16);                                                          //parse the date into another format
                   }
                   
-                  fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]");                       //fecha 
-                  if(!fecha_liberacion.trim().equals("")){                  
+                  fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]").trim();                       //fecha 
+                  if(!fecha_liberacion.equals("")){                  
                       Date date17 = sdfSource.parse(fecha_liberacion);                                                               //parse the string into Date object
                       fecha_liberacion = sdfDestination.format(date17);                                                              //parse the date into another format
                   }
@@ -295,14 +295,14 @@ public class InsertarCustomsForms extends HttpServlet {
                   sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
                   sello_final = request.getParameter("sello_final[" + i + "]").trim();               
                   
-                  fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]");                 //fecha 
-                  if(!fecha_retencion_aut.trim().equals("")){
+                  fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]").trim();                 //fecha 
+                  if(!fecha_retencion_aut.equals("")){
                       Date date18 = sdfSource.parse(fecha_retencion_aut);                                                            //parse the string into Date object
                       fecha_retencion_aut = sdfDestination.format(date18);                                                           //parse the date into another format
                   }
                   
-                  fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]");               //fecha 
-                  if(!fecha_liberacion_aut.trim().equals("")){                  
+                  fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]").trim();               //fecha 
+                  if(!fecha_liberacion_aut.equals("")){                  
                       Date date19 = sdfSource.parse(fecha_liberacion_aut);                                                           //parse the string into Date object
                       fecha_liberacion_aut = sdfDestination.format(date19);                                                          //parse the date into another format
                   }
@@ -315,54 +315,54 @@ public class InsertarCustomsForms extends HttpServlet {
               
             if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                
-                llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]");                                 //fecha 
-                if(!llegada_a_nova.trim().equals("")){                  
+                llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]").trim();                                 //fecha 
+                if(!llegada_a_nova.equals("")){                  
                   Date date21 = sdfSource.parse(llegada_a_nova);                                                           //parse the string into Date object
                   llegada_a_nova = sdfDestination.format(date21);                                                          //parse the date into another format
                 }
                 
-                llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]");             //fecha 
-                if(!llegada_a_globe_trade_sd.trim().equals("")){                  
+                llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]").trim();             //fecha 
+                if(!llegada_a_globe_trade_sd.equals("")){                  
                   Date date22 = sdfSource.parse(llegada_a_globe_trade_sd);                                                           //parse the string into Date object
                   llegada_a_globe_trade_sd = sdfDestination.format(date22);                                                          //parse the date into another format
                 }
                                 
                 archivo_m = request.getParameter("archivo_m[" + i + "]").trim(); 
                 
-                fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]");                               //fecha  
-                if(!fecha_archivo_m.trim().equals("")){                  
+                fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]").trim();                               //fecha  
+                if(!fecha_archivo_m.equals("")){                  
                   Date date23 = sdfSource.parse(fecha_archivo_m);                                                           //parse the string into Date object
                   fecha_archivo_m = sdfDestination.format(date23);                                                          //parse the date into another format
                 }
                                 
-                fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]");                       //fecha 
-                if(!fecha_solicit_manip.trim().equals("")){                  
+                fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]").trim();                       //fecha 
+                if(!fecha_solicit_manip.equals("")){                  
                   Date date24 = sdfSource.parse(fecha_solicit_manip);                                                           //parse the string into Date object
                   fecha_solicit_manip = sdfDestination.format(date24);                                                          //parse the date into another format
                 }
                                 
-                fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]");                         //fecha 
-                if(!fecha_vencim_manip.trim().equals("")){                  
+                fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]").trim();                         //fecha 
+                if(!fecha_vencim_manip.equals("")){                  
                   Date date25 = sdfSource.parse(fecha_vencim_manip);                                                           //parse the string into Date object
                   fecha_vencim_manip = sdfDestination.format(date25);                                                          //parse the date into another format
                 }
                                 
-                fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]");           //fecha 
-                if(!fecha_confirm_clave_pedim.trim().equals("")){                  
+                fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]").trim();           //fecha 
+                if(!fecha_confirm_clave_pedim.equals("")){                  
                   Date date26 = sdfSource.parse(fecha_confirm_clave_pedim);                                                           //parse the string into Date object
                   fecha_confirm_clave_pedim = sdfDestination.format(date26);                                                          //parse the date into another format
                 }
                                 
-                fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]");                   //fecha 
-                if(!fecha_recep_increment.trim().equals("")){                  
+                fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]").trim();                   //fecha 
+                if(!fecha_recep_increment.equals("")){                  
                   Date date27 = sdfSource.parse(fecha_recep_increment);                                                           //parse the string into Date object
                   fecha_recep_increment = sdfDestination.format(date27);                                                          //parse the date into another format
                 }
                                 
                 t_e = request.getParameter("t_e[" + i + "]").trim(); 
                 
-                fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]");                     //fecha 
-                if(!fecha_vencim_inbound.trim().equals("")){                  
+                fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]").trim();                     //fecha 
+                if(!fecha_vencim_inbound.equals("")){                  
                   Date date28 = sdfSource.parse(fecha_vencim_inbound);                                                           //parse the string into Date object
                   fecha_vencim_inbound = sdfDestination.format(date28);                                                          //parse the date into another format
                 }
@@ -375,14 +375,14 @@ public class InsertarCustomsForms extends HttpServlet {
                 peso_kg = request.getParameter("peso_kg[" + i + "]").trim(); 
                 transferencia = request.getParameter("transferencia[" + i + "]").trim();
                 
-                fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado[" + i + "]");                //fecha 
-                if(!fecha_inicio_etiquetado.trim().equals("")){                  
+                fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado[" + i + "]").trim();                //fecha 
+                if(!fecha_inicio_etiquetado.equals("")){                  
                   Date date29 = sdfSource.parse(fecha_inicio_etiquetado);                                                           //parse the string into Date object
                   fecha_inicio_etiquetado = sdfDestination.format(date29);                                                          //parse the date into another format
                 }
                                 
-                fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]");             //fecha 
-                if(!fecha_termino_etiquetado.trim().equals("")){                  
+                fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]").trim();             //fecha 
+                if(!fecha_termino_etiquetado.equals("")){                  
                   Date date30 = sdfSource.parse(fecha_termino_etiquetado);                                                           //parse the string into Date object
                   fecha_termino_etiquetado = sdfDestination.format(date30);                                                          //parse the date into another format
                 }
@@ -407,87 +407,84 @@ public class InsertarCustomsForms extends HttpServlet {
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                       
                                 insertarCustoms += " PAIS_ORIGEN = '" + pais_origen + "', "   
                                                  + " SIZE_CONTAINER = '" + size_container + "', "   
-                                                 + " VALOR_USD = '" + valor_usd + "', ";       
-                        if(!eta_port_discharge.trim().equals("")){
-                                insertarCustoms += " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), ";
-                        }         
-                                insertarCustoms += " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
+                                                 + " VALOR_USD = '" + valor_usd + "', "
+                                                 + " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
                                                  + " PEDIMENTO_A1 = '" + pedimento_a1 + "', "               
                                                  + " PEDIMENTO_R1 = '" + pedimento_r1_1er + "', "           
                                                  + " MOTIVO_RECTIFICACION_1 = '" + motivo_rectificacion_1er + "', "   
                                                  + " PEDIMENTO_R1_2DO = '" + pedimento_r1_2do + "', "           
                                                  + " MOTIVO_RECTIFICACION_2 = '" + motivo_rectificacion_2do + "', ";   
-                        if(!fecha_recepcion_doc.trim().equals("")){        
+                        //if(!fecha_recepcion_doc.trim().equals("")){        
                                 insertarCustoms += " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YYYY'), ";
-                        }        
+                        //}        
                                 insertarCustoms += " RECINTO = '" + recinto + "', "     
                                                  + " NAVIERA_FORWARDER = '" + naviera + "', "     
                                                  + " BUQUE = '" + buque + "', "; 
-                        if(!fecha_revalidacion.trim().equals("")){        
+                        //if(!fecha_revalidacion.trim().equals("")){        
                                 insertarCustoms += " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YYYY'), "; 
-                        }  
-                        if(!fecha_previo_origen.trim().equals("")){
+                        //}  
+                        //if(!fecha_previo_origen.trim().equals("")){
                                 insertarCustoms += " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YYYY'), "; 
-                        } 
-                        if(!fecha_previo_destino.trim().equals("")){
+                       // } 
+                        //if(!fecha_previo_destino.trim().equals("")){
                                 insertarCustoms += " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YYYY'), ";
-                        }        
-                        if(!fecha_resultado_previo.trim().equals("")){
+                        //}        
+                       // if(!fecha_resultado_previo.trim().equals("")){
                                 insertarCustoms += " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YYYY'), ";    
-                        }       
-                        if(!proforma_final.trim().equals("")){
+                        //}       
+                        //if(!proforma_final.trim().equals("")){
                                 insertarCustoms += " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'MM/DD/YYYY'), ";  
-                        }        
+                       // }        
                                 insertarCustoms += " REQUIERE_PERMISO = '" + permiso + "', ";
-                        if(!fecha_envio.trim().equals("")){        
+                        //if(!fecha_envio.trim().equals("")){        
                                 insertarCustoms += " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'MM/DD/YYYY'), "; 
-                        }        
-                        if(!fecha_recepcion_perm.trim().equals("")){
+                       // }        
+                       // if(!fecha_recepcion_perm.trim().equals("")){
                                 insertarCustoms += " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YYYY'), ";  
-                        }
-                        if(!fecha_activacion_perm.trim().equals("")){
+                        //}
+                        //if(!fecha_activacion_perm.trim().equals("")){
                                 insertarCustoms += " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YYYY'), ";
-                        }    
-                        if(!fecha_permisos_aut.trim().equals("")){
+                       // }    
+                       // if(!fecha_permisos_aut.trim().equals("")){
                                 insertarCustoms += " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YYYY'), "; 
-                        }        
+                        //}        
                                 insertarCustoms += " CO_APLIC_PREF_ARANCELARIA = '" + co_pref_arancelaria + "', "        
                                                  + " APLIC_PREF_ARANCELARIA_CO = '" + aplic_pref_arancelaria + "', "     
                                                  + " REQUIERE_UVA = '" + req_uva + "', "     
                                                  + " REQUIERE_CA = '" + req_ca + "', ";   
-                        if(!fecha_recepcion_ca.trim().equals("")){        
+                        //if(!fecha_recepcion_ca.trim().equals("")){        
                                 insertarCustoms += " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YYYY'), ";  
-                        }        
+                       // }        
                                 insertarCustoms += " NÚMERO_CONSTANCIA_CA = '" + num_constancia_ca + "', "   
                                                  + " MONTO_CA = '" + monto_ca + "', ";   
-                        if(!fecha_doc_completos.trim().equals("")){        
+                        //if(!fecha_doc_completos.trim().equals("")){        
                                 insertarCustoms += " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YYYY'), "; 
-                        }  
-                        if(!fecha_pago_pedimento.trim().equals("")){
+                        //}  
+                       // if(!fecha_pago_pedimento.trim().equals("")){
                                 insertarCustoms += " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YYYY'), "; 
-                        }
-                        if(!fecha_solicitud_transporte.trim().equals("")){
+                        //}
+                       // if(!fecha_solicitud_transporte.trim().equals("")){
                                 insertarCustoms += " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YYYY'), "; 
-                        }
-                        if(!fecha_modulacion.trim().equals("")){
+                        //}
+                        //if(!fecha_modulacion.trim().equals("")){
                                 insertarCustoms += " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'MM/DD/YYYY'), ";
-                        }        
+                       // }        
                                 insertarCustoms += " MODALIDAD_CAMION_TREN = '" + modalidad + "', "                  
                                                  + " RESULT_MODULACION_VERDE_ROJO = '" + resultado_modulacion + "', ";   
-                        if(!fecha_reconocimiento.trim().equals("")){        
+                       // if(!fecha_reconocimiento.trim().equals("")){        
                                 insertarCustoms += " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YYYY'), ";  
-                        } 
-                        if(!fecha_liberacion.trim().equals("")){
+                        //} 
+                        //if(!fecha_liberacion.trim().equals("")){
                                 insertarCustoms += " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), ";    
-                        }                
+                        //}                
                                 insertarCustoms += " SELLO_ORIGEN = '" + sello_origen + "', "               
                                                  + " SELLO_FINAL = '" + sello_final + "', ";    
-                        if(!fecha_retencion_aut.trim().equals("")){        
+                        //if(!fecha_retencion_aut.trim().equals("")){        
                                 insertarCustoms += " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YYYY'), ";
-                        }   
-                        if(!fecha_liberacion_aut.trim().equals("")){
+                        //}   
+                       // if(!fecha_liberacion_aut.trim().equals("")){
                                 insertarCustoms += " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), ";   
-                        }        
+                        //}        
                                 insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
                                                  + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                                  + " OBSERVACIONES = '" + observaciones + "', ";   
@@ -495,33 +492,33 @@ public class InsertarCustomsForms extends HttpServlet {
             
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                     
-                        if(!llegada_a_nova.trim().equals("")){        
+                        //if(!llegada_a_nova.trim().equals("")){        
                                 insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), "; 
-                        }        
-                        if(!llegada_a_globe_trade_sd.trim().equals("")){        
+                        //}        
+                        //if(!llegada_a_globe_trade_sd.trim().equals("")){        
                                 insertarCustoms += " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YYYY'), "; 
-                        }       
+                        //}       
                                 insertarCustoms += " ARCHIVO_M = '" + archivo_m + "', "; 
 
-                        if(!fecha_archivo_m.trim().equals("")){        
+                        //if(!fecha_archivo_m.trim().equals("")){        
                                 insertarCustoms += " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YYYY'), ";  
-                        }        
-                        if(!fecha_solicit_manip.trim().equals("")){        
+                       // }        
+                        //if(!fecha_solicit_manip.trim().equals("")){        
                                 insertarCustoms += " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YYYY'), ";  
-                        }        
-                        if(!fecha_vencim_manip.trim().equals("")){        
+                        //}        
+                        //if(!fecha_vencim_manip.trim().equals("")){        
                                 insertarCustoms += " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YYYY'), ";  
-                        }        
-                        if(!fecha_confirm_clave_pedim.trim().equals("")){        
+                        //}        
+                        //if(!fecha_confirm_clave_pedim.trim().equals("")){        
                                 insertarCustoms += " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YYYY'), ";  
-                        }        
-                        if(!fecha_recep_increment.trim().equals("")){        
+                        //}        
+                       // if(!fecha_recep_increment.trim().equals("")){        
                                 insertarCustoms += " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YYYY'), ";   
-                        }        
+                        //}        
                                 insertarCustoms += " T_E = '" + t_e + "', "; 
-                        if(!fecha_vencim_inbound.trim().equals("")){        
+                        //if(!fecha_vencim_inbound.trim().equals("")){        
                                 insertarCustoms += " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YYYY'), ";
-                        }        
+                        //}        
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //CUSA Y VF
@@ -529,13 +526,13 @@ public class InsertarCustomsForms extends HttpServlet {
                                 insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
                                                  + " PESO_KG = '" + peso_kg + "', "  
                                                  + " TRANSFERENCIA = '" + transferencia + "', ";  
-                        if(!fecha_inicio_etiquetado.trim().equals("")){        
+                       // if(!fecha_inicio_etiquetado.trim().equals("")){        
 
                                 insertarCustoms += " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YYYY'), ";
-                        }        
-                        if(!fecha_termino_etiquetado.trim().equals("")){        
+                       // }        
+                       // if(!fecha_termino_etiquetado.trim().equals("")){        
                                 insertarCustoms += " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YYYY'), ";
-                        }        
+                       // }        
                                 insertarCustoms += " HORA_TERMINO_ETIQUETADO = '" + hora_termino_etiquetado + "', "  
                                                  + " PROVEEDOR = '" + proveedor + "', "  
                                                  + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
@@ -562,9 +559,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms += " PAIS_ORIGEN, "  
                                                   + " SIZE_CONTAINER, "  
                                                   + " VALOR_USD, ";       
-                        if(!eta_port_discharge.trim().equals("")){         
+                       /* if(!eta_port_discharge.trim().equals("")){         
                                  insertarCustoms += " ETA_PORT_OF_DISCHARGE, ";
-                        }         
+                        } */         
                                  insertarCustoms += " AGENTE_ADUANAL, "            
                                                   + " PEDIMENTO_A1, "              
                                                   + " PEDIMENTO_R1, "          
@@ -708,9 +705,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms += " '" + pais_origen + "', "  
                                                   + " '" + size_container + "', "  
                                                   + " '" + valor_usd + "', ";  
-                        if(!eta_port_discharge.trim().equals("")){         
+                        /*if(!eta_port_discharge.trim().equals("")){         
                                  insertarCustoms += " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), ";     
-                        }         
+                        }*/         
                                  insertarCustoms += " '" + agente_aduanal + "', "            
                                                   + " '" + pedimento_a1 + "', "              
                                                   + " '" + pedimento_r1_1er + "', "          
@@ -956,6 +953,7 @@ public class InsertarCustomsForms extends HttpServlet {
                     
                     if(oraOut4){
                         customs = " UPDATE TRA_INB_CUSTOMS SET "
+                                + " ETA_PORT_OF_DISCHARGE = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), "
                                 + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', "
                                 + " ESTADO_ID = 1 "
                                 + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
