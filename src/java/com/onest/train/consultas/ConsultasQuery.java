@@ -2172,7 +2172,6 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
-               + " "  
                + " WHERE TIE.ESTADO = 1 "
                + " AND TIE.ID_EVENTO IN (231215,230960) "
                + " AND tid.division_nombre <> 'No/DSN' "
@@ -2181,8 +2180,6 @@ public class ConsultasQuery {
          
         if(!tipoAgente.equals("4006")){ //VF GENERAL
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') ";  
-        }else{                         //OTROS
-          sql += "";
         }
         
         if(tipoFiltro.equals("0")){        //Sin filtros
@@ -2358,7 +2355,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-           sql += "  ORDER BY NVL(TIC.ESTATUS_SEMAFORO,'0') DESC ";  
+           sql += " ORDER BY tibd.nombre_bd, tie.id_evento, nvl(tic.estatus_semaforo,'0') DESC ";  
         return sql;
     }
     
