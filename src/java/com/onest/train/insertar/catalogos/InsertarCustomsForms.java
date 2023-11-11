@@ -38,7 +38,6 @@ public class InsertarCustomsForms extends HttpServlet {
         DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
         DBConfData dbData = (DBConfData) ownsession.getAttribute("db.data");
         String UserId = (String) ownsession.getAttribute("login.user_id_number");
-        String cve = (String) ownsession.getAttribute("cbdivcuenta");
         OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
         oraDB.connect(dbData.getUser(), dbData.getPassword());
         ConsultasQuery fac = new ConsultasQuery();                     //Objeto para consultas 
@@ -394,7 +393,7 @@ public class InsertarCustomsForms extends HttpServlet {
             }
             
             //Consultar existencia de Shipmentd para el tipo de registro:
-            String valExist = "SELECT DISTINCT CUSTREG_ID FROM TRA_INB_CUSTOMS WHERE SHIPMENT_ID = '" + shipmentId + "' AND CBDIV_ID = '" + cve + "'";
+            String valExist = "SELECT DISTINCT CUSTREG_ID FROM TRA_INB_CUSTOMS WHERE SHIPMENT_ID = '" + shipmentId + "'"; //";
             boolean oraOut = oraDB.execute(valExist);
             
             if(oraOut){
@@ -539,8 +538,7 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 insertarCustoms += " FY = '" + fy + "', " 
                                                  + " AGENTE_ADUANAL_ID = '" + idAgenteAduanal + "', " 
-                                                 + " PRIORIDAD = '" + prioridad + "', "         
-                                                 + " CBDIV_ID = '" + cve + "', " 
+                                                 + " PRIORIDAD = '" + prioridad + "', "
                                                  + " USER_NID = '" + UserId + "' "
                                                  + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
                     
@@ -838,7 +836,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + idAgenteAduanal + "', "
                                                   + " '" + prioridad + "', "
                                                   + " TO_DATE(SYSDATE, 'DD/MM/YYYY'), "    //INSERTAR DEFAULT        
-                                                  + " '" + cve + "', "
+                                                  + " '20', "
                                                   + " '" + UserId + "') ";  
             }      
                     boolean oraOut1 = oraDB.execute(insertarCustoms); 
@@ -902,7 +900,7 @@ public class InsertarCustomsForms extends HttpServlet {
                             semaforo = " UPDATE TRA_INB_SEMAFORO SET "
                                      + " DIAS_TRANSCURRIDOS = 1, "
                                      + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
-                                     + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "' " 
+                                     + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', " 
                                      + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
                                      + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
                                      + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
@@ -962,9 +960,9 @@ public class InsertarCustomsForms extends HttpServlet {
                         
                         System.out.println("Actualización de Shipment Id (customs/semaforo): " + shipmentId + ":" + ouraOut5);
                     }
-                    salida = "2"; //Registro Semaforo
+                    salida = estatus_semaforo; //Registro Semaforo
                  }else{
-                   salida = "1"; //Registro Customs
+                   salida = "0"; //Registro Customs
                 }      
             }     
             

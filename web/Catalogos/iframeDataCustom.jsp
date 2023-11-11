@@ -23,7 +23,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+        <!--<link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.webp">-->
         <title>Personalizar Customs</title>
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- Table css -->
@@ -77,7 +77,6 @@
               /*background-color: lightblue;*/
               margin: 10px;
             }
-
         </style>
     </head>
     <body>
@@ -105,7 +104,7 @@
                 String colorSemaforo = "";
                 String sizeSemaforo = "";
                 String listStatusOperationEvent = "";
-                String disabledOption = ""; 
+                String blockedDate = "";
                 int cont = 1; 
    
                 //Objetos Multiselect:
@@ -216,9 +215,7 @@
                /*Columna: Estatus Operación (listado)*/
                 if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
                     for (String[] rowO : db.getResultado()) {
-                    
-                        if(rowO[0].equals("19")){disabledOption = "disabled";}else{disabledOption = "";}
-                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\" "+disabledOption+">" + rowO[1] + "</option>"; 
+                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>"; 
                     }
                 }
                 
@@ -883,18 +880,22 @@
                             if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                                                    
                              
                              if(row[99].equals("1")){
-                                 colorSemaforo = "../img/circle-green.png";
+                                 colorSemaforo = "../img/circle-green.webp";
                                  sizeSemaforo = "100%";
                              }else if(row[99].equals("2")){
-                                 colorSemaforo = "../img/circle-yellow.png";
+                                 colorSemaforo = "../img/circle-yellow.webp";
                                  sizeSemaforo = "80%";
                              }else if(row[99].equals("3")){
-                                 colorSemaforo = "../img/circle-red.png";
+                                 colorSemaforo = "../img/circle-red.webp";
                                  sizeSemaforo = "60%";
                              }else{
-                                 colorSemaforo = "../img/circle-gray.png";
+                                 colorSemaforo = "../img/circle-gray.webp";
                                  sizeSemaforo = "100%";
                              }
+                             
+                            if(row[58]=="No"){ /*req_ca*/
+                                blockedDate = "false";
+                            }
                         %>   
                             <th class="font-numero">                    <!--Semaforo -->
                                     <center><img id="imgSemaforo<%=cont%>" src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
@@ -965,38 +966,38 @@
                                     <%=row[97]%><input type="hidden" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>">
                             </td>                                                 
                             <td class="font-numero">
-                                <input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[31].trim().trim()%>" autocomplete="off">
+                                <input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[31].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control" id="size_container[<%=cont%>]" name="size_container[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[32].trim().trim()%>" autocomplete="off">
+                                <input class="form-control" id="size_container[<%=cont%>]" name="size_container[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[32].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[33].trim().trim()%>" autocomplete="off">
+                                <input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[33].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[34].trim().trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34].trim()%>" onchange="pedimento(this.value,'<%=cont%>')" autocomplete="off">
                                 <a class="text-lg text-blue" onclick="historicoSemaforo('<%=row[5]%>')"><i class="fa fa-folder-open"></i></a>
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="agente_aduanal[<%=cont%>]" name="agente_aduanal[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[35].trim()%>" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[36].trim().trim()%>" autocomplete="off">
+                              <input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[36].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37].trim().trim()%>" autocomplete="off" onblur="cleanPedimento_r1_1er(this.value,<%=cont%>)">
+                              <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_1er(this.value,'<%=cont%>')">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[38].trim().trim()%>" autocomplete="off">
+                              <input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[38].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39].trim().trim()%>" autocomplete="off" onblur="cleanPedimento_r1_2do(this.value,<%=cont%>)">
+                              <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_2do(this.value,'<%=cont%>')">
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="motivo_rectificacion_2do[<%=cont%>]" name="motivo_rectificacion_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[40].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_doc[<%=cont%>]" name="fecha_recepcion_doc[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[41].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_recepcion_doc[<%=cont%>]" name="fecha_recepcion_doc[<%=cont%>]" type="text" value="<%=row[41].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="recinto[<%=cont%>]" name="recinto[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[42].trim()%>" autocomplete="off">
@@ -1008,19 +1009,19 @@
                               <input class="form-control" id="buque[<%=cont%>]" name="buque[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[44].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_revalidacion[<%=cont%>]" name="fecha_revalidacion[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[45].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_revalidacion[<%=cont%>]" name="fecha_revalidacion[<%=cont%>]" type="text" value="<%=row[45].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_previo_origen[<%=cont%>]" name="fecha_previo_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[46].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_previo_origen[<%=cont%>]" name="fecha_previo_origen[<%=cont%>]" type="text" value="<%=row[46].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_previo_destino[<%=cont%>]" name="fecha_previo_destino[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[47].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_previo_destino[<%=cont%>]" name="fecha_previo_destino[<%=cont%>]" type="text" value="<%=row[47].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_resultado_previo[<%=cont%>]" name="fecha_resultado_previo[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[48].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_resultado_previo[<%=cont%>]" name="fecha_resultado_previo[<%=cont%>]" type="text" value="<%=row[48].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[49].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" value="<%=row[49].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                                 <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]" value="<%=row[50]%>" onchange="cleanPermiso(this.value,'<%=cont%>')"> 
@@ -1030,47 +1031,47 @@
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_envio[<%=cont%>]" name="fecha_envio[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[51].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_envio[<%=cont%>]" name="fecha_envio[<%=cont%>]" type="text" value="<%=row[51].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_perm[<%=cont%>]" name="fecha_recepcion_perm[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[52].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_recepcion_perm[<%=cont%>]" name="fecha_recepcion_perm[<%=cont%>]" type="text" value="<%=row[52].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_activacion_perm[<%=cont%>]" name="fecha_activacion_perm[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[53].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_activacion_perm[<%=cont%>]" name="fecha_activacion_perm[<%=cont%>]" type="text" value="<%=row[53].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[54].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" value="<%=row[54].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>"> 
-                                 <option value="<%=row[56]%>"><%=row[56]%></option> 
+                                 <option value="<%=row[55]%>"><%=row[55]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>"> 
-                                 <option value="<%=row[57]%>"><%=row[57]%></option> 
+                                 <option value="<%=row[56]%>"><%=row[56]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>"> 
-                                 <option value="<%=row[58]%>"><%=row[58]%></option> 
+                                 <option value="<%=row[57]%>"><%=row[57]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
                                 <select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"  value="<%=row[58]%>" onchange="cleanRequerimientoCA(this.value,'<%=cont%>')"> 
-                                 <option value="<%=row[59]%>"><%=row[59]%></option> 
+                                 <option value="<%=row[58]%>"><%=row[58]%></option> 
                                  <option value="Si">Si</option> 
                                  <option value="No">No</option> 
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_ca[<%=cont%>]" name="fecha_recepcion_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[59].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_recepcion_ca[<%=cont%>]" name="fecha_recepcion_ca[<%=cont%>]" type="text" value="<%=row[59].trim()%>" autocomplete="off" disabled="<%=blockedDate%>">
                             </td> 
                             <td class="font-numero"> 
                               <input class="form-control" id="num_constancia_ca[<%=cont%>]" name="num_constancia_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[60].trim()%>" autocomplete="off">
@@ -1079,16 +1080,16 @@
                               <input class="form-control" id="monto_ca[<%=cont%>]" name="monto_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[61].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[62].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" value="<%=row[62].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[63].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker-pedimento<%=cont%>" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63].trim()%>" onchange="modulacion(this.value,'<%=cont%>')">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[64].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" value="<%=row[64].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_modulacion[<%=cont%>]" name="fecha_modulacion[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[65].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker-modulacion<%=cont%>" id="fecha_modulacion[<%=cont%>]" name="fecha_modulacion[<%=cont%>]" type="text" value="<%=row[65].trim()%>">
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="modalidad[<%=cont%>]" name="modalidad[<%=cont%>]" value="<%=row[66]%>"> 
@@ -1105,10 +1106,10 @@
                               </select> 
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_reconocimiento[<%=cont%>]" name="fecha_reconocimiento[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[68].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_reconocimiento[<%=cont%>]" name="fecha_reconocimiento[<%=cont%>]" type="text" value="<%=row[68].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_liberacion[<%=cont%>]" name="fecha_liberacion[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[69].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_liberacion[<%=cont%>]" name="fecha_liberacion[<%=cont%>]" type="text" value="<%=row[69].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                               <input class="form-control" id="sello_origen[<%=cont%>]" name="sello_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[70].trim()%>" autocomplete="off">
@@ -1117,10 +1118,10 @@
                               <input class="form-control" id="sello_final[<%=cont%>]" name="sello_final[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[71].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_retencion_aut[<%=cont%>]" name="fecha_retencion_aut[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[72].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_retencion_aut[<%=cont%>]" name="fecha_retencion_aut[<%=cont%>]" type="text" value="<%=row[72].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[73].trim()%>" autocomplete="off">
+                              <input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" value="<%=row[73].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                               <select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"  value="<%=row[74]%>">
@@ -1140,34 +1141,34 @@
                             if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF
                         %>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="llegada_a_nova[<%=cont%>]" name="llegada_a_nova[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[77].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="llegada_a_nova[<%=cont%>]" name="llegada_a_nova[<%=cont%>]" type="text" value="<%=row[77].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="llegada_a_globe_trade_sd[<%=cont%>]" name="llegada_a_globe_trade_sd[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[78].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="llegada_a_globe_trade_sd[<%=cont%>]" name="llegada_a_globe_trade_sd[<%=cont%>]" type="text" value="<%=row[78].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                                 <input class="form-control" id="archivo_m[<%=cont%>]" name="archivo_m[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[79].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_archivo_m[<%=cont%>]" name="fecha_archivo_m[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[80].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_archivo_m[<%=cont%>]" name="fecha_archivo_m[<%=cont%>]" type="text" value="<%=row[80].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_solicit_manip[<%=cont%>]" name="fecha_solicit_manip[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[81].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_solicit_manip[<%=cont%>]" name="fecha_solicit_manip[<%=cont%>]" type="text" value="<%=row[81].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_vencim_manip[<%=cont%>]" name="fecha_vencim_manip[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[82].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_vencim_manip[<%=cont%>]" name="fecha_vencim_manip[<%=cont%>]" type="text" value="<%=row[82].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_confirm_clave_pedim[<%=cont%>]" name="fecha_confirm_clave_pedim[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[83].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_confirm_clave_pedim[<%=cont%>]" name="fecha_confirm_clave_pedim[<%=cont%>]" type="text" value="<%=row[83].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_recep_increment[<%=cont%>]" name="fecha_recep_increment[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[84].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_recep_increment[<%=cont%>]" name="fecha_recep_increment[<%=cont%>]" type="text" value="<%=row[84].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
                                 <input class="form-control" id="t_e[<%=cont%>]" name="t_e[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[85].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_vencim_inbound[<%=cont%>]" name="fecha_vencim_inbound[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[86].trim()%>" autocomplete="off">
+                                <input class="form-control datepicker" id="fecha_vencim_inbound[<%=cont%>]" name="fecha_vencim_inbound[<%=cont%>]" type="text" value="<%=row[86].trim()%>" autocomplete="off">
                             </td>
                         <%
                             }
@@ -1188,10 +1189,10 @@
                                   </select> 
                              </td>
                              <td class="font-numero">
-                                 <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[90].trim()%>" autocomplete="off">
+                                 <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" type="text" value="<%=row[90].trim()%>" autocomplete="off">
                              </td>
                              <td class="font-numero">
-                                 <input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[91].trim()%>" autocomplete="off">
+                                 <input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" value="<%=row[91].trim()%>" autocomplete="off">
                              </td>
                              <td class="font-numero">
                                  <input class="form-control" id="hora_termino_etiquetado[<%=cont%>]" name="hora_termino_etiquetado[<%=cont%>]" type="time" value="<%=row[92].trim()%>" autocomplete="off">
@@ -1202,9 +1203,9 @@
                              <td class="font-numero">
                                  <input class="form-control" id="proveedor_carga[<%=cont%>]" name="proveedor_carga[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[94].trim()%>" autocomplete="off">
                              </td>
-                        <%	 
+                        <%   
                             }
-                        %>					
+                        %>                  
                              <td class="font-numero">
                                  <input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[95].trim()%>" autocomplete="off">
                              </td>
@@ -1258,7 +1259,7 @@
                 <div class="modal-content">
                     <div class="modal-header border-0 bg-gray-100">
                         <h3 class="h6 modal-title" id="exampleModalLabel">
-                            <div class="card-heading"><img src="../img/Semaforo.png" width="3%"/>&nbsp;ETA Port Of Discharge Historic</div>
+                            <div class="card-heading"><img src="../img/Semaforo.webp" width="3%"/>&nbsp;ETA Port Of Discharge Historic</div>
                         </h3>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -1494,14 +1495,7 @@
                 selectElement84.innerHTML="<%=list_fy%>";
                 
             }
-
-            //Cargar función para formato de fechas 
-            $('.datepicker').flatpickr({
-                dateFormat: 'm/d/Y',
-                onClose: function (selectedDates, dateStr, instance) {
-                    instance.setDate(dateStr, true, 'm/d/Y');
-                }
-            });
+            
         </script>    
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1511,8 +1505,6 @@
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
         <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
-        <!-- uploadFile Excel -->
-        
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

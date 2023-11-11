@@ -14,8 +14,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  *
@@ -25,6 +27,13 @@ public class CrearSemaforoCustoms {
     
     public static String dataSemaforo(int month, int dias, int anio, String loadType, String Prioridad) {
 
+        /* Obtener fecha actual */
+        Date date = new Date();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String dateActual = formato.format(date);
+        String[] row = dateActual.split("/");
+    
+        int diasHabiles = 0;
         String estatusSemaforo = "";
         String res = "";
 
@@ -45,22 +54,32 @@ public class CrearSemaforoCustoms {
         /*Identificar si el fecha a validar es <,>, = a la fecha actual */
         String typeTime = CalcularFechaAnteriorActual(fechaInicial);
         
-        if(typeTime.equals("=")||typeTime.equals(">")){
+            if(typeTime.equals("=")||typeTime.equals(">")){
             
-            /* Identificar si el shipmentId tiene prioridad */
-            /*if(Prioridad.equals("No") || Prioridad.equals("")){
-                estatusSemaforo = "1";  //prioridad baja
-            }else {
-                estatusSemaforo = "1";  //prioridad media
-            }*/
+                estatusSemaforo = "1"; //prioridad baja
             
-            estatusSemaforo = "1"; //prioridad baja
-            
-        }else if(typeTime.equals("<")){
-            
-            estatusSemaforo = "3"; //prioridad alta
-            
-        }
+            }else if(typeTime.equals("<")){
+               
+                /*Obtener el día actual*/
+                int dayActual = Integer.parseInt(row[0]);
+                int monthActual = Integer.parseInt(row[1]);
+                int yearActual = Integer.parseInt(row[2]);
+
+                /*Obtener los días habiles del rango de fechas*/
+                LocalDate fechaEtaPortDischarge = LocalDate.of(anio, month, dias);                      
+                LocalDate fechaActual = LocalDate.of(yearActual, monthActual, dayActual);   
+                diasHabiles = contarDiasHabilesTranscurridos(fechaEtaPortDischarge, fechaActual);
+              
+                /*Asignar estatus del semaforo conforme al rango dias limite (consulta)*/
+                if(diasHabiles < Integer.parseInt(diasLimitePrioridadMedia)){
+                    estatusSemaforo = "1"; //prioridad baja
+                }else if(diasHabiles > Integer.parseInt(diasLimitePrioridadBaja) && diasHabiles < Integer.parseInt(diasLimitePrioridadAlta)){
+                    estatusSemaforo = "2"; //prioridad media
+                }else if(diasHabiles > Integer.parseInt(diasLimitePrioridadMedia)){
+                    estatusSemaforo = "3"; //prioridad alta
+                }
+                
+            }
         
         res = fechaInicial+"@"+fechaFinal+"@"+diasHabilesLoadType+"@"+estatusSemaforo+"@"+diasLimitePrioridadBaja+"@"+diasLimitePrioridadMedia+"@"+diasLimitePrioridadAlta;
         
@@ -153,15 +172,6 @@ public class CrearSemaforoCustoms {
         return fechaActual;
     }
 
-    public static boolean esFinSemana(LocalDate fecha) {
-        // Verificar si es fin de semana (sábado o domingo)
-        if (fecha.getDayOfWeek() == DayOfWeek.SATURDAY || fecha.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            return true;
-        }
-        
-        return false;
-    }
-  
    public static boolean esFestivo(LocalDate startDate) {
         
         int dayOfYear = startDate.getYear();
@@ -223,5 +233,47 @@ public class CrearSemaforoCustoms {
         
     }
     
- 
+    public static int contarDiasHabilesTranscurridos(LocalDate fechaInicio, LocalDate fechaFin) {
+        
+        int dayOfYear = fechaInicio.getYear();
+        int monthYear = fechaInicio.getMonthValue();  
+        int dayYear = fechaInicio.getDayOfMonth();
+        int diasHabiles = 0;
+
+        // Agregar tus días festivos a la lista
+        Set<LocalDate> diasFestivos = new HashSet<>();
+        
+        diasFestivos.add(LocalDate.of(dayOfYear,1,1));   //Año Nuevo
+        diasFestivos.add(LocalDate.of(dayOfYear,2,3));   //Const. Mexicana
+        diasFestivos.add(LocalDate.of(dayOfYear,2,6));   //Const. Mexicana
+        diasFestivos.add(LocalDate.of(dayOfYear,3,16));  //Na. Benito Juarez
+        diasFestivos.add(LocalDate.of(dayOfYear,3,20));  //Na. Benito Juarez
+        diasFestivos.add(LocalDate.of(dayOfYear,4,6));   //Jueves Santo
+        diasFestivos.add(LocalDate.of(dayOfYear,4,7));   //Viernes Santo
+        diasFestivos.add(LocalDate.of(dayOfYear,5,1));   //Día del trabajador
+        diasFestivos.add(LocalDate.of(dayOfYear,9,16));  //Semana santa (1/2)
+        diasFestivos.add(LocalDate.of(dayOfYear,11,2));  //Día de los muertos
+        diasFestivos.add(LocalDate.of(dayOfYear,11,20)); //Revolución Mexicana
+        diasFestivos.add(LocalDate.of(dayOfYear,12,25)); //Navidad
+        // Puedes agregar días festivos a la lista
+        // Ejemplo: diasFestivos.add(LocalDate.of(2023, 1, 1));
+
+        LocalDate fechaActual = fechaInicio;
+
+        while (!fechaActual.isAfter(fechaFin)) {
+            if (esDiaHabil(fechaActual) && !diasFestivos.contains(fechaActual.getDayOfMonth())) {
+                diasHabiles++;
+            }
+            fechaActual = fechaActual.plus(1, ChronoUnit.DAYS);
+        }
+        //if (esFestivo(fechaActual)) {
+        return diasHabiles;
+    }
+
+    public static boolean esDiaHabil(LocalDate fecha) {
+        DayOfWeek diaSemana = fecha.getDayOfWeek();
+        return diaSemana != DayOfWeek.SATURDAY && diaSemana != DayOfWeek.SUNDAY;
+    }
+
+   
 }

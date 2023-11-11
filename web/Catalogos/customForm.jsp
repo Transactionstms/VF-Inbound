@@ -35,7 +35,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+        <!--<link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">-->
         <title>Personalizar Customs</title>
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- jQuery 3.6.0 -->
