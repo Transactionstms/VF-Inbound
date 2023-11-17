@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSession;
 public class InsertarCustomsForms extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+        throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
     try (PrintWriter out = response.getWriter()) {
         
@@ -133,7 +133,7 @@ public class InsertarCustomsForms extends HttpServlet {
             String eta_port_discharge_old = "";
             int diasTranscurridos = 0;
             String customs = "";
-            String salida = "";
+            String salida = "0";
             
             
             // create SimpleDateFormat object with source string date format: Tratamiento 1
@@ -397,8 +397,6 @@ public class InsertarCustomsForms extends HttpServlet {
             boolean oraOut = oraDB.execute(valExist);
             
             if(oraOut){
-                
-                //oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
 
                                  insertarCustoms = " UPDATE TRA_INB_CUSTOMS SET "                              
                                                  + " REFERENCIA_AA = '" + referenciaAA + "', ";
@@ -556,10 +554,7 @@ public class InsertarCustomsForms extends HttpServlet {
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF             
                                  insertarCustoms += " PAIS_ORIGEN, "  
                                                   + " SIZE_CONTAINER, "  
-                                                  + " VALOR_USD, ";       
-                       /* if(!eta_port_discharge.trim().equals("")){         
-                                 insertarCustoms += " ETA_PORT_OF_DISCHARGE, ";
-                        } */         
+                                                  + " VALOR_USD, ";          
                                  insertarCustoms += " AGENTE_ADUANAL, "            
                                                   + " PEDIMENTO_A1, "              
                                                   + " PEDIMENTO_R1, "          
@@ -703,9 +698,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms += " '" + pais_origen + "', "  
                                                   + " '" + size_container + "', "  
                                                   + " '" + valor_usd + "', ";  
-                        /*if(!eta_port_discharge.trim().equals("")){         
-                                 insertarCustoms += " TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), ";     
-                        }*/         
+     
                                  insertarCustoms += " '" + agente_aduanal + "', "            
                                                   + " '" + pedimento_a1 + "', "              
                                                   + " '" + pedimento_r1_1er + "', "          
@@ -839,9 +832,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '20', "
                                                   + " '" + UserId + "') ";  
             }      
-                    boolean oraOut1 = oraDB.execute(insertarCustoms); 
-                    
-                    System.out.println("Registro:" + insertarCustoms);    
+                    boolean oraOut1 = oraDB.execute(insertarCustoms);  
                     
                     regPrioridad = " UPDATE TRA_INC_GTN_TEST SET ESTATUS='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
                     boolean oraOut2 = oraDB.execute(regPrioridad);
@@ -944,7 +935,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " '" + diasLimitePrioridadBaja + "', "
                                      + " '" + diasLimitePrioridadMedia + "', "
                                      + " '" + diasLimitePrioridadAlta + "', "
-                                     + " 1) ";
+                                     + " 0) ";
                     }
 
                     boolean oraOut4 = oraDB.execute(semaforo); 
@@ -961,8 +952,15 @@ public class InsertarCustomsForms extends HttpServlet {
                         System.out.println("Actualización de Shipment Id (customs/semaforo): " + shipmentId + ":" + ouraOut5);
                     }
                     salida = estatus_semaforo; //Registro Semaforo
+                    
                  }else{
-                   salida = "0"; //Registro Customs
+                    
+                    if (db.doDB(fac.consultarColorSemaforo(shipmentId))) {
+                        for (String[] rowO : db.getResultado()) {
+                            salida = rowO[0];  
+                        }
+                    } 
+                   
                 }      
             }     
             

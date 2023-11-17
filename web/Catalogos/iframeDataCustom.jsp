@@ -38,9 +38,8 @@
         <!-- calendarios -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
-        <!-- uploadFile excel -->
-        <script src="../plantillas/lib/JSplantilla.js" type="text/javascript"></script>
-        <script src="<%=request.getContextPath()%>/plantillas/lib/upload_file.js" type="text/javascript"></script>
+        <!-- Upload excel - SheetJS -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
         <!-- Window load -->
         <link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -55,7 +54,7 @@
             }
 
             .columna {
-              width:30%;
+              width:25%;
               float:right;
             }
 
@@ -230,13 +229,22 @@
             <div id="contenedor">
                 <div class="row">
                     <div class="columna">
-                        <button type="button" class="btn btn-primary" onclick="openModalPlantilla()">Subir Plantilla</button>
+                        <button class="btn btn-primary" id="divResultado" type="button"></button>
+                    </div>
+                    <div class="columna">
+                        <button type="button" class="btn btn-primary" onclick="leerArchivo()"><i class="fa fa-save"></i></button>
                     </div>
                 </div>
                 <div style="text-align: right;">
                     <div id="example_filter" class="dataTables_filter">
                         <label><font class="redtext1">Busqueda:&nbsp; <input id="searchTerm" type="text" onkeyup="this.value = this.value.toUpperCase()" onkeyup="doSearch()" style="text-transform:uppercase;" data-mobile-responsive="true"/></font>&nbsp;&nbsp;<a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></label>
                     </div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <input type="file" class="form-control" id="fileInput" name="fileInput">
                 </div>
             </div>
             <br>
@@ -875,7 +883,7 @@
                                     list_fy.add("<option value='"+row[95]+"'>"+row[95]+"</option>");
                                 }
                         %>
-                        <tr id="tr<%=cont%>" onmouseover="formComplet('<%=AgentType%>','<%=cont%>')">
+                        <tr id="tr<%=cont%>">
                         <%
                             if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                                                    
                              
@@ -1123,7 +1131,7 @@
                             <td class="font-numero">
                               <input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" value="<%=row[73].trim()%>" autocomplete="off">
                             </td>
-                            <td class="font-numero">
+                            <td class="font-numero" onmouseover="formComplet('<%=AgentType%>','<%=cont%>')">
                               <select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"  value="<%=row[74]%>">
                                   <option value="<%=row[98]%>"><%=row[74]%></option> 
                                     <%=listStatusOperationEvent%>
@@ -1210,7 +1218,6 @@
                                  <input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[95].trim()%>" autocomplete="off">
                              </td>
                              <td class="font-numero">
-                                 <center>
                                    <a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-save"></i></a>
                              </td> 
                           </tr>
@@ -1225,34 +1232,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>                     
-        <!-- modal - Subir Plantilla --> 
-        <div class="modal fade text-start" id="modalSubirPlantilla" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content"> 
-                    <div class="modal-header border-0 bg-gray-100">
-                        <h3 class="h6 modal-title" id="exampleModalLabel"><i class="fas fa-folder-open"></i>&nbsp;<%=namePlantilla%></h3>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=namePlantilla%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
-                            <div class="card-body pt-1">
-                                <div class="mb-2">
-                                    <label for="input-id" class="form-label">Selecciona: </label>
-                                    <input class="form-control" type="file" id="input-id" name="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                </div>
-                                <div class="containerExcel">
-                                    <div class="box"><button class="btn float-start btn-primary" id="created_file" type="button">Descargar</button></div>
-                                    <div class="box"><div align="center" id="divResultado" name="divResultado"></div></div>
-                                    <div class="box"><button class="btn float-end btn-success" type="submit">Subir</button></div>
-                                </div>
-                            </div>
-                        </form>
-                        <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
-                    </div>         
-                </div>
-            </div>
-        </div>    
+        </div>           
         <!-- modal - Discharge Semaforo -->
         <div class="modal fade text-start" id="modalSemaforo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -1366,7 +1346,7 @@
                 
            }
            
-           if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF  
+            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF  
              
                 var selectElement66= document.getElementById("col_llegada_a_nova");
                 var selectElement67= document.getElementById("col_llegada_a_globe_trade_sd");
@@ -1494,15 +1474,16 @@
                 selectElement83.innerHTML="<%=list_proveedor_carga%>";
                 selectElement84.innerHTML="<%=list_fy%>";
                 
-            }
-            
-        </script>    
+            }    
+        </script> 
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
         <!-- Actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <!-- Download/Upload Excel -->
+        <script src="../lib/validationsInbound/customs/readExcel.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
         <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->

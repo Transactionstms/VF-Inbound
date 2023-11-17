@@ -2173,7 +2173,9 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
                + " WHERE TIE.ESTADO = 1 "
-               + " AND TIE.ID_EVENTO IN (231215,230960) "
+               + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') " 
+               + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/10/2023','dd/mm/yyyy') "
+               //+ " AND TIE.ID_EVENTO IN (231215,230960) "
                + " AND tid.division_nombre <> 'No/DSN' "
                + " AND gtn.load_type_final IS NOT NULL "   
                + " AND GTN.ESTATUS <> 19 ";  
@@ -2355,7 +2357,8 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-           sql += " ORDER BY tibd.nombre_bd, tie.id_evento, nvl(tic.estatus_semaforo,'0') DESC ";  
+           sql += //"tibd.nombre_bd, tie.id_evento, "
+                " ORDER BY nvl(tic.estatus_semaforo,'0') ASC ";  
         return sql;
     }
     
@@ -3272,6 +3275,12 @@ public class ConsultasQuery {
         sql = "SELECT LOAD_TYPE FROM TRA_INB_LOAD_TYPE ORDER BY ID_REG ASC";
         return sql;
     }
+    
+    public String consultarColorSemaforo(String shipment_id){
+        sql = "SELECT DISTINCT ESTATUS_SEMAFORO FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '"+shipment_id+"'";
+        return sql;
+    }
+    
     
 } 
  
