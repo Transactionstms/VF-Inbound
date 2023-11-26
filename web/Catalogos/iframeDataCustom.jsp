@@ -76,6 +76,10 @@
               /*background-color: lightblue;*/
               margin: 10px;
             }
+            
+            /*::-webkit-scrollbar {
+                overflow-x: hidden;
+            }*/
         </style>
     </head>
     <body>
@@ -905,7 +909,7 @@
                                 blockedDate = "false";
                             }
                         %>   
-                            <th class="font-numero">                    <!--Semaforo -->
+                            <th class="font-numero" id="columna">                    <!--Semaforo -->
                                     <center><img id="imgSemaforo<%=cont%>" src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
                             </th>
                             <th class="font-numero">                    <!-- Referencia Aduanal -->
@@ -1091,7 +1095,7 @@
                               <input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" value="<%=row[62].trim()%>" autocomplete="off">
                             </td>
                             <td class="font-numero">
-                                <input class="form-control datepicker-pedimento<%=cont%>" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63].trim()%>" onchange="modulacion(this.value,'<%=cont%>')">
+                                <input class="form-control datepicker-pedimento<%=cont%>" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63].trim()%>" onchange="modulacion('<%=cont%>')">
                             </td>
                             <td class="font-numero">
                               <input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" value="<%=row[64].trim()%>" autocomplete="off">
@@ -1475,7 +1479,7 @@
                 selectElement84.innerHTML="<%=list_fy%>";
                 
             }    
-        </script> 
+        </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->

@@ -1614,63 +1614,6 @@ let contadorExcel = "";
                 }).catch(error => console.log(error));
     }
 
-    function jsShowWindowLoad(mensaje) {
-        //eliminamos si existe un div ya bloqueando
-        jsRemoveWindowLoad();
-
-        //si no enviamos mensaje se pondra este por defecto
-        if (mensaje === undefined)
-            mensaje = "Procesando la información&amp;lt;br&amp;gt;Espere por favor";
-
-        //centrar imagen gif
-        height = 20;//El div del titulo, para que se vea mas arriba (H)
-        var ancho = 0;
-        var alto = 0;
-
-        //obtenemos el ancho y alto de la ventana de nuestro navegador, compatible con todos los navegadores
-        if (window.innerWidth == undefined)
-            ancho = window.screen.width;
-        else
-            ancho = window.innerWidth;
-        if (window.innerHeight == undefined)
-            alto = window.screen.height;
-        else
-            alto = window.innerHeight;
-
-        //operación necesaria para centrar el div que muestra el mensaje
-        var heightdivsito = alto / 2 - parseInt(height) / 2;//Se utiliza en el margen superior, para centrar
-
-        //imagen que aparece mientras nuestro div es mostrado y da apariencia de cargando
-        imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#000;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='../img/LoaderCustoms.gif' width='10%'></div>";
-
-        //creamos el div que bloquea grande------------------------------------------
-        div = document.createElement("div");
-        div.id = "WindowLoad";
-        div.style.width = ancho + "px";
-        div.style.height = alto + "px";
-        $("body").append(div);
-
-        //creamos un input text para que el foco se plasme en este y el usuario no pueda escribir en nada de atras
-        input = document.createElement("input");
-        input.id = "focusInput";
-        input.type = "text"
-
-        //asignamos el div que bloquea
-        $("#WindowLoad").append(input);
-
-        //asignamos el foco y ocultamos el input text
-        $("#focusInput").focus();
-        $("#focusInput").hide();
-
-        //centramos el div del texto
-        $("#WindowLoad").html(imgCentro);
-    }
-
-    function jsRemoveWindowLoad() {
-        // eliminamos el div que bloquea pantalla
-        $("#WindowLoad").remove();
-    }
-
     function changeColorByPositionSuccess(i) {
         const table = document.querySelector("table");
         if (table) {
@@ -2032,7 +1975,6 @@ let contadorExcel = "";
        /* RULE #10 */
         const formulario = document.getElementById('tr' + i);
         let disabledOption = "";
-        let disabledDate= "";
 
         pais_origen = formulario.querySelector('[name="pais_origen[' + i + ']"]').value;
         size_container = formulario.querySelector('[name="size_container[' + i + ']"]').value;
@@ -2144,45 +2086,218 @@ let contadorExcel = "";
         var selector = document.getElementById("estatus_operacion[" + i + "]");
         selector.options[19].disabled = disabledOption;
 
-        /*Calendarios: etaPortDischarge/pagoPedimento/modulacion*/
-        if(eta_port_discharge === ""){
-           disabledDate= "false";
-        }else{
-           pedimento(eta_port_discharge,i);
-           modulacion(fecha_pago_pedimento,i);
-           disabledDate= "";
-        }
-           /*document.getElementById("fecha_pago_pedimento["+i+"]").disabled=disabledDate;
-           document.getElementById("fecha_modulacion["+i+"]").disabled=disabledDate;*/
-
      }
  
     //Cargar función para formato de fechas 
     $('.datepicker').flatpickr({
-        dateFormat: 'm/d/Y',
-        onClose: function (dateStr, instance) {
-            instance.setDate(dateStr, true, 'm/d/Y');
-        }
+        dateFormat: 'm/d/Y'
     });
 
     function pedimento(dateEtaPortDischarge, i){
-        //document.getElementById("fecha_pago_pedimento["+i+"]").disabled="";
-        $('.datepicker-pedimento'+i).flatpickr({
-            dateFormat: 'm/d/Y',
-            minDate: dateEtaPortDischarge,
-            maxDate: new Date().fp_incr(50)
-        });
+        
+        /*Calendarios: etaPortDischarge/pagoPedimento/modulacion*/
+        if(dateEtaPortDischarge !== ""){
+            
+            $('.datepicker-pedimento'+i).flatpickr({
+                dateFormat: 'm/d/Y',
+                minDate: dateEtaPortDischarge,
+                maxDate: new Date().fp_incr(50)
+            });
+        
+            $('.datepicker-modulacion'+i).flatpickr({
+                dateFormat: 'm/d/Y'
+            });
+        }
     }            
 
-    function modulacion(datePagoPedimento,i){
-        //document.getElementById("fecha_modulacion["+i+"]").disabled="";
+    function modulacion(i){
+        
+        let fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento["+i+"]").value;
         $('.datepicker-modulacion'+i).flatpickr({
             dateFormat: 'm/d/Y',
-            minDate: datePagoPedimento,
+            minDate: fecha_pago_pedimento,
             maxDate: new Date().fp_incr(50)
         });
     }
+    
+    /*document.addEventListener("DOMContentLoaded", function() {
+        // Your code here
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "none";
+        alert("Page has finished loading! evt 1");
+    });*/
+    
+    /*window.addEventListener("load", function() {
+        
+        // Your code here
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "none";
+        
+        // Obtener la tabla y agregar un evento load
+        var myTable = document.getElementById("main-table");
+        myTable.addEventListener("readystatechange", function () {
+            
+            if (myTable.readyState === "complete") {
+                // Ocultar el loader cuando la tabla haya cargado completamente
+                loaderWrapper.style.display = "none";           
+                alert("Page has finished loading! evt 2");
+            }
+        });
+        
+    });*/
 
+    /*window.addEventListener("load", async function () {
+        await mostrarLoader();
+
+        // Realizar operaciones de carga de datos aquí
+
+        await waitForTableToLoad();
+
+        // Aquí puedes realizar otras operaciones después de que la tabla haya cargado completamente
+
+        await ocultarLoader();
+    });
+
+    async function mostrarLoader() {
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "flex";
+    }
+
+    function waitForTableToLoad() {
+        return new Promise(resolve => {
+            var myTable = document.getElementById("main-table");
+            myTable.addEventListener("readystatechange", function () {
+                if (myTable.readyState === "complete") {
+                    resolve();
+                }
+            });
+        });
+    }
+    
+    async function ocultarLoader() {
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "none";
+    }*/
+
+    /*document.addEventListener("DOMContentLoaded", async function () {
+        
+        //await jsShowWindowLoad('Cargando Información');
+        //await mostrarLoader();
+        
+        await waitForTableToLoad();
+        
+    });*/
+    
+    function waitForTableToLoad() {
+        return new Promise(resolve => {
+            document.addEventListener("readystatechange", async function () {
+
+                if (document.readyState === "complete") {
+                    resolve();
+                    await jsRemoveWindowLoad();   
+                }
+                
+            });
+        });
+    }
+
+    async function mostrarLoader() {
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "flex";
+    }
+    
+    async function ocultarLoader() {
+        var loaderWrapper = document.getElementById("loader-wrapper");
+        loaderWrapper.style.display = "none";
+    }
+    
+    function jsShowWindowLoad() {
+        let mensaje = "Cargando Información";
+        
+        //eliminamos si existe un div ya bloqueando
+        jsRemoveWindowLoad();
+
+        //si no enviamos mensaje se pondra este por defecto
+        if (mensaje === undefined)
+            mensaje = "Procesando la información&amp;lt;br&amp;gt;Espere por favor";
+
+        //centrar imagen gif
+        height = 20;//El div del titulo, para que se vea mas arriba (H)
+        var ancho = 0;
+        var alto = 0;
+
+        //obtenemos el ancho y alto de la ventana de nuestro navegador, compatible con todos los navegadores
+        if (window.innerWidth == undefined)
+            ancho = window.screen.width;
+        else
+            ancho = window.innerWidth;
+        if (window.innerHeight == undefined)
+            alto = window.screen.height;
+        else
+            alto = window.innerHeight;
+
+        //operación necesaria para centrar el div que muestra el mensaje
+        var heightdivsito = alto / 2 - parseInt(height) / 2;//Se utiliza en el margen superior, para centrar
+
+        //imagen que aparece mientras nuestro div es mostrado y da apariencia de cargando
+        imgCentro = "<div style='text-align:center;height:" + alto + "px;'><div  style='color:#000;margin-top:" + heightdivsito + "px; font-size:20px;font-weight:bold'>" + mensaje + "</div><img  src='../img/LoaderCustoms.gif' width='10%'></div>";
+
+        //creamos el div que bloquea grande------------------------------------------
+        div = document.createElement("div");
+        div.id = "WindowLoad";
+        div.style.width = ancho + "px";
+        div.style.height = alto + "px";
+        $("body").append(div);
+
+        //creamos un input text para que el foco se plasme en este y el usuario no pueda escribir en nada de atras
+        input = document.createElement("input");
+        input.id = "focusInput";
+        input.type = "text"
+
+        //asignamos el div que bloquea
+        $("#WindowLoad").append(input);
+
+        //asignamos el foco y ocultamos el input text
+        $("#focusInput").focus();
+        $("#focusInput").hide();
+
+        //centramos el div del texto
+        $("#WindowLoad").html(imgCentro);
+    }
+
+    async function jsRemoveWindowLoad() {
+        // eliminamos el div que bloquea pantalla
+        $("#WindowLoad").remove();
+    }
+
+    function logExcel(){
+       mostrarOcultarDiv('divAMostrarOcultar', true); 
+    }
+
+    /*document.getElementById('upload_file').addEventListener('mouseover', function() {
+        mostrarOcultarDiv('divAMostrarOcultar', true);
+    });
+
+    document.getElementById('upload_file').addEventListener('mouseout', function() {
+        //mostrarOcultarDiv('divAMostrarOcultar', false);
+    });
+    
+    document.getElementById('created_file').addEventListener('mouseover', function() {
+        mostrarOcultarDiv('divAMostrarOcultar', true);
+    });
+
+    document.getElementById('created_file').addEventListener('mouseout', function() {
+        //mostrarOcultarDiv('divAMostrarOcultar', false);
+    });*/
+
+      function mostrarOcultarDiv(id, mostrar) {
+        var elemento = document.getElementById(id);
+        if (mostrar) {
+          elemento.style.display = 'block';
+        } else {
+          elemento.style.display = 'none';
+        }
+      }
 
 
    

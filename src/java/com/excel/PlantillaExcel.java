@@ -87,7 +87,7 @@ public class PlantillaExcel extends HttpServlet {
                 fileOut.flush();
                 fileOut.close();
 
-                response.getWriter().write("<a href='../tmpPlantillas/" + nombreArchivo + ".xls'><img src=\"../img/tomaPlantilla.png\" id=\"idArchivo\"  name=\"idArchivo\" title=\"Obtener Archivo\" /></a>");
+                response.getWriter().write("<a href='../tmpPlantillas/" + nombreArchivo + ".xls'><img src=\"../img/tomaPlantilla.png\" id=\"idArchivo\"  name=\"idArchivo\" title=\"Obtener Archivo\" width=\"5%\"/></a>");
                 //wb.write(response.getOutputStream());
                 //response.setContentType("application/octet-stream");
                 //response.setHeader("Content-Disposition", "attachment;filename=plantilla" + idPlantilla + ".xls");
