@@ -44,51 +44,6 @@
         <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script>
         <!-- Window load -->
         <!--<link href="../lib/Loader/css/windowsLoad.css" rel="stylesheet" type="text/css"/>-->
-        <style>
-            #loader-wrapper {
-                position: fixed;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(255, 255, 255, 0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            }
-        
-            #loader {
-                border: 16px solid #f3f3f3;
-                border-top: 16px solid #3498db;
-                border-radius: 50%;
-                width: 80px;
-                height: 80px;
-                animation: spin 1s linear infinite;
-            }
-                
-            .loaderMsg {
-                position: fixed;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            
-            #divAMostrarOcultar {
-              display: none; /* Inicialmente oculto */
-              border: 1px solid white;
-            }
-                
-            /* Set a fixed height for the container */
-            .scroll-container {
-              height: 70px; /* You can adjust the height as needed */
-              overflow-y: scroll; /* Enable vertical scrolling */
-              border: 1px solid #ccc; /* Optional: Add a border for styling */
-            }
-        </style>
         <script>            
             document.addEventListener("readystatechange", async function () {
 
@@ -124,7 +79,6 @@
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
-                String idDivision = ownsession.getAttribute("cbdivcuenta").toString();
                 String idBodega = ownsession.getAttribute("cbbodegaId").toString();
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
 
@@ -134,9 +88,9 @@
                 String filterType = request.getParameter("filterType");       //Inicializar con 0
                 String id = request.getParameter("id");                  //Inicializar con 0
                 String[] arrOfStr = id.split(",");
-                
+                String idDivision = "20";
                 String AgentType = ""; 
-                String idPlantilla = "26";
+                String idPlantilla = "";  /*Gral (26) | Logix(24) | Cusa(25)*/
                 String namePlantilla = "";
                 String caramelo = "";
                 String colorSemaforo = "";
@@ -239,7 +193,7 @@
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
                         AgentType = rowA[0]; 
-                        //idPlantilla = rowA[1];
+                        idPlantilla = rowA[1];
                         namePlantilla = rowA[2];
                     }
                 }
@@ -264,544 +218,118 @@
                 <div class="columna2"><button type="button" class="btn btn-primary" id="upload_file" onclick="logExcel()"><i class="fa fa-upload"></i></button></div>
                 <div class="columna2"><button type="button" class="btn btn-primary" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
                 <div class="columna4"><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
-                <div class="columna5"><label><font class="redtext1">Busqueda:&nbsp; <input id="searchTerm" type="text" onkeyup="this.value = this.value.toUpperCase()" onkeyup="doSearch()" style="text-transform:uppercase;" data-mobile-responsive="true"/></font>&nbsp;&nbsp;<a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></label></div>
+                <div class="columna5"><label><font class="redtext1">Busqueda:&nbsp; <input id="searchTerm" type="text" onkeyup="this.value = this.value.toUpperCase()" onkeyup="doSearch()" style="text-transform:uppercase;" data-mobile-responsive="true"/>&nbsp;&nbsp;<a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></label></div>
             </div> 
             <div class="scroll-container" id="divAMostrarOcultar">
-                <div align="center" id="divResultado" name="divResultado"></div>
+                <div align="center" id="divResultado" name="divResultado"><%=namePlantilla%></div>
             </div>
             <div id="table-scroll" class="table-scroll">
-                <table id="main-table" class="main-table" style="table-layout:fixed; width:1750%;">
+                <table id="main-table" class="main-table" style="table-layout:fixed; width:1500%;">
                     <thead>
                         <tr>
                 <%            
                     if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF   
                 %>                 
-                            <th class="col-sm-1" class="font-titulo" style="background-color:#FFFFFF;"></th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#333F4F;">
-                                <font size="1">Referencia AA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('1')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_referenciaAA" name="col_referenciaAA"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Evento <strong style="color:red">*</strong></font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('2')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_evento" name="col_evento"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Responsable</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('3')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_responsable" name="col_responsable"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Final Destination</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('4')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_finalDestination" name="col_finalDestination"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Brand-Division</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('5')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_brandDivision" name="col_brandDivision"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Division</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('6')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_division" name="col_division"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Shipment ID</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('7')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_shipmentId" name="col_shipmentId"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Container</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('8')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_container" name="col_container"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">BL/AWB/PRO</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('9')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_blAwbPro" name="col_blAwbPro"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">LoadType</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('10')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_loadType" name="col_loadType"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Quantity</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('11')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_quantity" name="col_quantity"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">POD</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('12')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pod" name="col_pod"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Est. Departure from POL</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('13')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_estDepartFromPol" name="col_estDepartFromPol"></select> 
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">ETA REAL Port of Discharge</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('14')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_etaRealPortOfDischarge" name="col_etaRealPortOfDischarge"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Est. Eta DC</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('15')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_estEtaDc" name="col_estEtaDc"></select> 
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Inbound notification</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('16')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_inboundNotification" name="col_inboundNotification"></select> 
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">POL</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('17')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pol" name="col_pol"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">A.A.</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('18')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_aa" name="col_aa"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha Mes de Venta</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('19')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fechaMesVenta" name="col_fechaMesVenta"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Prioridad Si/No</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('20')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_prioridad" name="col_prioridad"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">País Origen</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('21')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pais_origen" name="col_pais_origen"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Size Container</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('22')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_size_container" name="col_size_container"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Valor USD</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('23')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_valor_usd" name="col_valor_usd"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">ETA Port Of Discharge</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('24')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_eta_port_discharge" name="col_eta_port_discharge"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Agente Aduanal</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('25')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_agente_aduanal" name="col_agente_aduanal"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Pedimento A1</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('26')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pedimento_a1" name="col_pedimento_a1"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Pedimento R1</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('27')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pedimento_r1_1er" name="col_pedimento_r1_1er"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Motivo rectificación 1</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('28')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_motivo_rectificacion_1er" name="col_motivo_rectificacion_1er"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Pedimento R1 (2do)</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('29')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_pedimento_r1_2do" name="col_pedimento_r1_2do"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Motivo rectificación 2</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('30')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_motivo_rectificacion_2do" name="col_motivo_rectificacion_2do"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Recepción Documentos</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('31')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_recepcion_doc" name="col_fecha_recepcion_doc"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
-                                <font size="1">Recinto</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('32')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_recinto" name="col_recinto"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
-                                <font size="1">Naviera / Forwarder</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('33')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_naviera" name="col_naviera"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#e04141;">
-                                <font size="1">Buque</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('34')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_buque" name="col_buque"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Revalidación/Liberación de BL</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('35')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_revalidacion" name="col_fecha_revalidacion"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Previo Origen</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('36')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_previo_origen" name="col_fecha_previo_origen"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Previo en destino</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('37')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_previo_destino" name="col_fecha_previo_destino"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Resultado Previo</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('38')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_resultado_previo" name="col_fecha_resultado_previo"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Proforma Final</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('39')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_proforma_final" name="col_proforma_final"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Requiere permiso</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('40')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_permiso" name="col_permiso"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha envío Fichas/notas</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('41')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_envio" name="col_fecha_envio"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fec. Recepción de permisos tramit.</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('42')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_recepcion_perm" name="col_fecha_recepcion_perm"></select>
-                            </th>
-
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fec. Act Permisos (Inic Vigencia)</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('43')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_activacion_perm" name="col_fecha_activacion_perm"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fec. Perm. Aut. (Fin de Vigencia)</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('44')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_permisos_aut" name="col_fecha_permisos_aut"></select>
-                            </th>
-                            <th class="col-sm-6" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Cuenta con CO para aplicar preferencia Arancelaria</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('45')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_co_pref_arancelaria" name="col_co_pref_arancelaria"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Aplico Preferencia Arancelaria</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('46')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_aplic_pref_arancelaria" name="col_aplic_pref_arancelaria"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Requiere UVA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('47')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_req_uva" name="col_req_uva"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
-                                <font size="1">Requiere CA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('48')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_req_ca" name="col_req_ca"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
-                                <font size="1">Fecha Recepción CA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('49')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_recepcion_ca" name="col_fecha_recepcion_ca"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
-                                <font size="1">Número de Constancia CA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('50')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_num_constancia_ca" name="col_num_constancia_ca"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#a6a2a2;">
-                                <font size="1">Monto CA</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('51')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_monto_ca" name="col_monto_ca"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Documentos Completos</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('52')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_doc_completos" name="col_fecha_doc_completos"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Pago Pedimento</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('53')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_pago_pedimento" name="col_fecha_pago_pedimento"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Solicitud de transporte</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('54')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_solicitud_transporte" name="col_fecha_solicitud_transporte"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Modulacion</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('55')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_modulacion" name="col_fecha_modulacion"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Modalidad</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('56')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_modalidad" name="col_modalidad"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Resultado Modulacion</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('57')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_resultado_modulacion" name="col_resultado_modulacion"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Reconocimiento</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('58')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_reconocimiento" name="col_fecha_reconocimiento"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha Liberacion</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('59')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_liberacion" name="col_fecha_liberacion"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Sello Origen</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('60')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_sello_origen" name="col_sello_origen"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Sello Final</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('61')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_sello_final" name="col_sello_final"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fecha de retencion por la autoridad</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('62')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_retencion_aut" name="col_fecha_retencion_aut"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Fec. de liberacion por ret. de la aut.</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('63')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_liberacion_aut" name="col_fecha_liberacion_aut"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Estatus de la operación</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('64')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_estatus_operacion" name="col_festatus_operacion"></select> 
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Motivo Atraso</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('65')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_motivo_atraso" name="col_motivo_atraso"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#CC9D77;">
-                                <font size="1">Observaciones</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('66')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_observaciones" name="col_observaciones"></select>
-                            </th>
+                            <th class="col-sm-1" style="background-color:#FFFFFF;"></th>
+                            <th class="col-sm-4" style="background-color:#333F4F;">Referencia AA&nbsp;<a onclick="FiltrerData('1')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_referenciaAA" name="col_referenciaAA"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Evento <strong style="color:red">*</strong>&nbsp;<a onclick="FiltrerData('2')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_evento" name="col_evento"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Responsable&nbsp;<a onclick="FiltrerData('3')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_responsable" name="col_responsable"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Final Destination&nbsp;<a onclick="FiltrerData('4')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_finalDestination" name="col_finalDestination"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Brand-Division&nbsp;<a onclick="FiltrerData('5')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_brandDivision" name="col_brandDivision"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Division&nbsp;<a onclick="FiltrerData('6')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_division" name="col_division"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Shipment ID&nbsp;<a onclick="FiltrerData('7')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_shipmentId" name="col_shipmentId"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Container&nbsp;<a onclick="FiltrerData('8')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_container" name="col_container"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">BL/AWB/PRO&nbsp;<a onclick="FiltrerData('9')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_blAwbPro" name="col_blAwbPro"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">LoadType&nbsp;<a onclick="FiltrerData('10')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_loadType" name="col_loadType"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Quantity&nbsp;<a onclick="FiltrerData('11')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_quantity" name="col_quantity"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">POD&nbsp;<a onclick="FiltrerData('12')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pod" name="col_pod"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Est. Departure from POL&nbsp;<a onclick="FiltrerData('13')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_estDepartFromPol" name="col_estDepartFromPol"></select></th>
+                            <th class="col-sm-5" style="background-color:#1C84C6;">ETA REAL Port of Discharge&nbsp;<a onclick="FiltrerData('14')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_etaRealPortOfDischarge" name="col_etaRealPortOfDischarge"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Est. Eta DC&nbsp;<a onclick="FiltrerData('15')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_estEtaDc" name="col_estEtaDc"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Inbound notification&nbsp;<a onclick="FiltrerData('16')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_inboundNotification" name="col_inboundNotification"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">POL&nbsp;<a onclick="FiltrerData('17')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pol" name="col_pol"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">A.A.&nbsp;<a onclick="FiltrerData('18')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_aa" name="col_aa"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Fecha Mes de Venta&nbsp;<a onclick="FiltrerData('19')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fechaMesVenta" name="col_fechaMesVenta"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Prioridad Si/No&nbsp;<a onclick="FiltrerData('20')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_prioridad" name="col_prioridad"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">País Origen&nbsp;<a onclick="FiltrerData('21')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pais_origen" name="col_pais_origen"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Size Container&nbsp;<a onclick="FiltrerData('22')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_size_container" name="col_size_container"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Valor USD&nbsp;<a onclick="FiltrerData('23')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_valor_usd" name="col_valor_usd"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">ETA Port Of Discharge&nbsp;<a onclick="FiltrerData('24')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_eta_port_discharge" name="col_eta_port_discharge"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Agente Aduanal&nbsp;<a onclick="FiltrerData('25')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_agente_aduanal" name="col_agente_aduanal"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Pedimento A1&nbsp;<a onclick="FiltrerData('26')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pedimento_a1" name="col_pedimento_a1"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Pedimento R1&nbsp;<a onclick="FiltrerData('27')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pedimento_r1_1er" name="col_pedimento_r1_1er"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Motivo rectificación 1&nbsp;<a onclick="FiltrerData('28')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_motivo_rectificacion_1er" name="col_motivo_rectificacion_1er"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Pedimento R1 (2do)&nbsp;<a onclick="FiltrerData('29')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_pedimento_r1_2do" name="col_pedimento_r1_2do"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Motivo rectificación 2&nbsp;<a onclick="FiltrerData('30')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_motivo_rectificacion_2do" name="col_motivo_rectificacion_2do"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fecha Recepción Documentos&nbsp;<a onclick="FiltrerData('31')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_recepcion_doc" name="col_fecha_recepcion_doc"></select></th>
+                            <th class="col-sm-4" style="background-color:#e04141;">Recinto&nbsp;<a onclick="FiltrerData('32')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_recinto" name="col_recinto"></select></th>
+                            <th class="col-sm-4" style="background-color:#e04141;">Naviera / Forwarder&nbsp;<a onclick="FiltrerData('33')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_naviera" name="col_naviera"></select></th>
+                            <th class="col-sm-4" style="background-color:#e04141;">Buque&nbsp;<a onclick="FiltrerData('34')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_buque" name="col_buque"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fecha Revalidación/Liberación de BL&nbsp;<a onclick="FiltrerData('35')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_revalidacion" name="col_fecha_revalidacion"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Previo Origen&nbsp;<a onclick="FiltrerData('36')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_previo_origen" name="col_fecha_previo_origen"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Previo en destino&nbsp;<a onclick="FiltrerData('37')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_previo_destino" name="col_fecha_previo_destino"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Resultado Previo&nbsp;<a onclick="FiltrerData('38')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_resultado_previo" name="col_fecha_resultado_previo"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Proforma Final&nbsp;<a onclick="FiltrerData('39')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_proforma_final" name="col_proforma_final"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Requiere permiso&nbsp;<a onclick="FiltrerData('40')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_permiso" name="col_permiso"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha envío Fichas/notas&nbsp;<a onclick="FiltrerData('41')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_envio" name="col_fecha_envio"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fec. Recepción de permisos tramit.&nbsp;<a onclick="FiltrerData('42')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_recepcion_perm" name="col_fecha_recepcion_perm"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick="FiltrerData('43')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_activacion_perm" name="col_fecha_activacion_perm"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick="FiltrerData('44')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_permisos_aut" name="col_fecha_permisos_aut"></select></th>
+                            <th class="col-sm-6" style="background-color:#CC9D77;">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick="FiltrerData('45')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_co_pref_arancelaria" name="col_co_pref_arancelaria"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Aplico Preferencia Arancelaria&nbsp;<a onclick="FiltrerData('46')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_aplic_pref_arancelaria" name="col_aplic_pref_arancelaria"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Requiere UVA&nbsp;<a onclick="FiltrerData('47')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_req_uva" name="col_req_uva"></select></th>
+                            <th class="col-sm-4" style="background-color:#a6a2a2;">Requiere CA&nbsp;<a onclick="FiltrerData('48')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_req_ca" name="col_req_ca"></select></th>
+                            <th class="col-sm-4" style="background-color:#a6a2a2;">Fecha Recepción CA&nbsp;<a onclick="FiltrerData('49')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_recepcion_ca" name="col_fecha_recepcion_ca"></select></th>
+                            <th class="col-sm-4" style="background-color:#a6a2a2;">Número de Constancia CA&nbsp;<a onclick="FiltrerData('50')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_num_constancia_ca" name="col_num_constancia_ca"></select></th>
+                            <th class="col-sm-4" style="background-color:#a6a2a2;">Monto CA&nbsp;<a onclick="FiltrerData('51')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_monto_ca" name="col_monto_ca"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fecha Documentos Completos&nbsp;<a onclick="FiltrerData('52')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_doc_completos" name="col_fecha_doc_completos"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Pago Pedimento&nbsp;<a onclick="FiltrerData('53')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_pago_pedimento" name="col_fecha_pago_pedimento"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fecha Solicitud de transporte&nbsp;<a onclick="FiltrerData('54')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_solicitud_transporte" name="col_fecha_solicitud_transporte"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Modulacion&nbsp;<a onclick="FiltrerData('55')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_modulacion" name="col_fecha_modulacion"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Modalidad&nbsp;<a onclick="FiltrerData('56')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_modalidad" name="col_modalidad"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Resultado Modulacion&nbsp;<a onclick="FiltrerData('57')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_resultado_modulacion" name="col_resultado_modulacion"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Reconocimiento&nbsp;<a onclick="FiltrerData('58')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_reconocimiento" name="col_fecha_reconocimiento"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Fecha Liberacion&nbsp;<a onclick="FiltrerData('59')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_liberacion" name="col_fecha_liberacion"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Sello Origen&nbsp;<a onclick="FiltrerData('60')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_sello_origen" name="col_sello_origen"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Sello Final&nbsp;<a onclick="FiltrerData('61')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_sello_final" name="col_sello_final"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fecha de retencion por la autoridad&nbsp;<a onclick="FiltrerData('62')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_retencion_aut" name="col_fecha_retencion_aut"></select></th>
+                            <th class="col-sm-5" style="background-color:#CC9D77;">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick="FiltrerData('63')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_liberacion_aut" name="col_fecha_liberacion_aut"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Estatus de la operación&nbsp;<a onclick="FiltrerData('64')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_estatus_operacion" name="col_festatus_operacion"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Motivo Atraso&nbsp;<a onclick="FiltrerData('65')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_motivo_atraso" name="col_motivo_atraso"></select></th>
+                            <th class="col-sm-4" style="background-color:#CC9D77;">Observaciones&nbsp;<a onclick="FiltrerData('66')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_observaciones" name="col_observaciones"></select></th>
                 <% 
                     }
 
                     if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF 
                 %>           
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Llegada a NOVA</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('67')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_llegada_a_nova" name="col_llegada_a_nova"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Llegada a Globe trade SD</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('68')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Archivo M</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('69')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_archivo_m" name="col_archivo_m"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha de Archivo M</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('70')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_archivo_m" name="col_fecha_archivo_m"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha Solicitud de Manipulacion</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('71')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_solicit_manip" name="col_fecha_solicit_manip"></select>
-                            </th>
-                            <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha de vencimiento de Manipulacion</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('72')"><i class="fa fa-search"></i></a>   
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_vencim_manip" name="col_fecha_vencim_manip"></select>
-                            </th>
-                            <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha confirmacion Clave de Pedimento</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('73')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_confirm_clave_pedim" name="col_fecha_confirm_clave_pedim"></select>
-                            </th>
-                            <th class="col-sm-6" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha de Recepcion de Incrementables</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('74')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_recep_increment" name="col_fecha_recep_increment"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">T&E</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('75')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_t_e" name="col_t_e"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha de Vencimiento del Inbound</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('76')"><i class="fa fa-search"></i></a>     
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound"></select>
-                            </th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Llegada a NOVA&nbsp;<a onclick="FiltrerData('67')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_llegada_a_nova" name="col_llegada_a_nova"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Llegada a Globe trade SD&nbsp;<a onclick="FiltrerData('68')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Archivo M&nbsp;<a onclick="FiltrerData('69')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_archivo_m" name="col_archivo_m"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Fecha de Archivo M&nbsp;<a onclick="FiltrerData('70')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_archivo_m" name="col_fecha_archivo_m"></select></th>
+                            <th class="col-sm-5" style="background-color:#1C84C6;">Fecha Solicitud de Manipulacion&nbsp;<a onclick="FiltrerData('71')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_solicit_manip" name="col_fecha_solicit_manip"></select></th>
+                            <th class="col-sm-6" style="background-color:#1C84C6;">Fecha de vencimiento de Manipulacion&nbsp;<a onclick="FiltrerData('72')"><i class="fa fa-search"></i></a>  &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_vencim_manip" name="col_fecha_vencim_manip"></select></th>
+                            <th class="col-sm-6" style="background-color:#1C84C6;">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick="FiltrerData('73')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_confirm_clave_pedim" name="col_fecha_confirm_clave_pedim"></select></th>
+                            <th class="col-sm-6" style="background-color:#1C84C6;">Fecha de Recepcion de Incrementables&nbsp;<a onclick="FiltrerData('74')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_recep_increment" name="col_fecha_recep_increment"></select></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">T&E&nbsp;<a onclick="FiltrerData('75')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_t_e" name="col_t_e"></select></th>
+                            <th class="col-sm-5" style="background-color:#1C84C6;">Fecha de Vencimiento del Inbound&nbsp;<a onclick="FiltrerData('76')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound"></select></th>
                 <%
                     }
 
                     if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
                 %>            
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">No. BULTOS</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('77')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_no_bultos" name="col_no_bultos"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Peso (KG)</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('78')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_peso_kg" name="col_peso_kg"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Transferencia</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('79')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_transferencia" name="col_transferencia"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha Inicio Etiquetado</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('80')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_inicio_etiquetado" name="col_fecha_inicio_etiquetado"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Fecha Termino Etiquetado</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('81')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fecha_termino_etiquetado" name="col_fecha_termino_etiquetado"></select>
-                            </th>
-                            <th class="col-sm-5" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Hora de termino Etiquetado</font>
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('82')"><i class="fa fa-search"></i></a> 
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Proveedor</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('83')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_proveedor" name="col_proveedor"></select>
-                            </th>
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">Proveedor de Carga</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('84')"><i class="fa fa-search"></i></a>  
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_proveedor_carga" name="col_proveedor_carga"></select>
-                            </th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">No. BULTOS&nbsp;<a onclick="FiltrerData('77')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_no_bultos" name="col_no_bultos"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Peso (KG)&nbsp;<a onclick="FiltrerData('78')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_peso_kg" name="col_peso_kg"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Transferencia&nbsp;<a onclick="FiltrerData('79')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_transferencia" name="col_transferencia"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Fecha Inicio Etiquetado&nbsp;<a onclick="FiltrerData('80')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_inicio_etiquetado" name="col_fecha_inicio_etiquetado"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Fecha Termino Etiquetado&nbsp;<a onclick="FiltrerData('81')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_termino_etiquetado" name="col_fecha_termino_etiquetado"></select> </th> 
+                            <th class="col-sm-5" style="background-color:#1C84C6;">Hora de termino Etiquetado&nbsp;<a onclick="FiltrerData('82')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Proveedor&nbsp;<a onclick="FiltrerData('83')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_proveedor" name="col_proveedor"></select> </th> 
+                            <th class="col-sm-4" style="background-color:#1C84C6;">Proveedor de Carga&nbsp;<a onclick="FiltrerData('84')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_proveedor_carga" name="col_proveedor_carga"></select> </th>
                 <%
                     }
                 %>            
-                            <th class="col-sm-4" class="font-titulo" style="background-color:#1C84C6;">
-                                <font size="1">FY</font> 
-                                &nbsp;<a class="text-lg text-white" onclick="FiltrerData('85')"><i class="fa fa-search"></i></a>
-                                &nbsp;<a class="text-lg text-white" onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a> 
-                                <select multiple class="custom-select" id="col_fy" name="col_fy"></select>
-                            </th>
-                            <th class="col-sm-1" class="font-titulo" style="background-color:#FFFFFF;"></th>
+                            <th class="col-sm-4" style="background-color:#1C84C6;">FY&nbsp;<a onclick="FiltrerData('85')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fy" name="col_fy"></select></th>
+                            <th class="col-sm-1" style="background-color:#FFFFFF;"></th>
                         </tr>
                     </thead>
                     <tbody id="detalleCustom">
@@ -925,328 +453,110 @@
                                 blockedDate = "false";
                             }
                         %>   
-                            <th class="font-numero" id="columna">                    <!--Semaforo -->
-                                    <center><img id="imgSemaforo<%=cont%>" src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center>
-                            </th>
-                            <th class="font-numero">                    <!-- Referencia Aduanal -->
-                                <input type="text" onkeyup="this.value = this.value.toUpperCase()" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30].trim()%>" autocomplete="off">
-                            </th>
-                            <th class="font-numero first-column" id="elemento<%=cont%>"> <!-- Número de Evento -->
-                                <%=row[0]%><input type="hidden" id="evento[<%=cont%>]" name="evento[<%=cont%>]" value="<%=row[0]%>">                    
-                                <div id="popup<%=cont%>" style="display: none;">
-                                    <div id="mSgError<%=cont%>"></div>
-                                </div>
-                            </th>
-                            <td class="font-numero">                    <!-- Responsable -->
-                                    <%=row[1]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Final Destination -->
-                                    <%=row[2]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Brand-Division -->
-                                    <%=row[21]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Division -->
-                                    <%=row[4]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Shipment ID -->
-                                    <%=row[5]%><input type="hidden" id="shipmentId[<%=cont%>]" name="shipmentId[<%=cont%>]" value="<%=row[5]%>">
-                            </td>
-                            <td class="font-numero">                    <!-- Container -->
-                                    <%=row[6]%><input type="hidden" id="containerId[<%=cont%>]" name="containerId[<%=cont%>]" value="<%=row[6]%>">
-                            </td>
-                            <td class="font-numero">                    <!-- BL/AWB/PRO -->
-                                    <%=row[7]%>
-                            </td>
-                            <td class="font-numero">                    <!-- LoadType -->
-                                    <%=row[8]%>
-                                    <input type="hidden" id="loadTypeFinal[<%=cont%>]" name="loadTypeFinal[<%=cont%>]" value="<%=row[8]%>"> <!-- LoadTypeFinal -->
-                                    <input type="hidden" id="plantillaId[<%=cont%>]" name="plantillaId[<%=cont%>]" value="<%=row[17]%>"> <!-- plantillaId -->
-                            </td>
-                            <td class="font-numero">                    <!-- Quantity -->
-                                    <%=row[9]%>
-                            </td>
-                            <td class="font-numero">                    <!-- POD -->
-                                    <%=row[19]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Est. Departure from POL -->
-                                    <%=row[11]%>
-                            </td>
-                            <td class="font-numero">                    <!-- ETA REAL Port of Discharge -->
-                                    <%=row[12]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Est. Eta DC -->
-                                    <%=row[22]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Inbound notification -->
-                                    <%=row[14]%>
-                            </td>
-                            <td class="font-numero">                    <!-- POL -->
-                                    <%=row[20]%>
-                            </td>
-                            <td class="font-numero">                    <!-- A.A. -->
-                                    <%=row[16]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Fecha Mes de Venta -->
-                                    <%=row[28]%>
-                            </td>
-                            <td class="font-numero">                    <!-- Prioridad Si/No -->
-                                    <%=row[97]%><input type="hidden" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>">
-                            </td>                                                 
-                            <td class="font-numero">
-                                <input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[31].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control" id="size_container[<%=cont%>]" name="size_container[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[32].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[33].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34].trim()%>" onchange="pedimento(this.value,'<%=cont%>')" autocomplete="off">
-                                <!--<a class="text-lg text-blue" onclick="historicoSemaforo('<%=row[5]%>')"><i class="fa fa-folder-open"></i></a>-->
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="agente_aduanal[<%=cont%>]" name="agente_aduanal[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[35].trim()%>" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[36].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_1er(this.value,'<%=cont%>')">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[38].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_2do(this.value,'<%=cont%>')">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="motivo_rectificacion_2do[<%=cont%>]" name="motivo_rectificacion_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[40].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_doc[<%=cont%>]" name="fecha_recepcion_doc[<%=cont%>]" type="text" value="<%=row[41].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="recinto[<%=cont%>]" name="recinto[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[42].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="naviera[<%=cont%>]" name="naviera[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[43].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="buque[<%=cont%>]" name="buque[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[44].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_revalidacion[<%=cont%>]" name="fecha_revalidacion[<%=cont%>]" type="text" value="<%=row[45].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_previo_origen[<%=cont%>]" name="fecha_previo_origen[<%=cont%>]" type="text" value="<%=row[46].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_previo_destino[<%=cont%>]" name="fecha_previo_destino[<%=cont%>]" type="text" value="<%=row[47].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_resultado_previo[<%=cont%>]" name="fecha_resultado_previo[<%=cont%>]" type="text" value="<%=row[48].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" value="<%=row[49].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]" value="<%=row[50]%>" onchange="cleanPermiso(this.value,'<%=cont%>')"> 
-                                 <option value="<%=row[50]%>"><%=row[50]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_envio[<%=cont%>]" name="fecha_envio[<%=cont%>]" type="text" value="<%=row[51].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_perm[<%=cont%>]" name="fecha_recepcion_perm[<%=cont%>]" type="text" value="<%=row[52].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_activacion_perm[<%=cont%>]" name="fecha_activacion_perm[<%=cont%>]" type="text" value="<%=row[53].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" value="<%=row[54].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>"> 
-                                 <option value="<%=row[55]%>"><%=row[55]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                              <select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>"> 
-                                 <option value="<%=row[56]%>"><%=row[56]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                              <select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>"> 
-                                 <option value="<%=row[57]%>"><%=row[57]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                                <select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"  value="<%=row[58]%>" onchange="cleanRequerimientoCA(this.value,'<%=cont%>')"> 
-                                 <option value="<%=row[58]%>"><%=row[58]%></option> 
-                                 <option value="Si">Si</option> 
-                                 <option value="No">No</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_recepcion_ca[<%=cont%>]" name="fecha_recepcion_ca[<%=cont%>]" type="text" value="<%=row[59].trim()%>" autocomplete="off" disabled="<%=blockedDate%>">
-                            </td> 
-                            <td class="font-numero"> 
-                              <input class="form-control" id="num_constancia_ca[<%=cont%>]" name="num_constancia_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[60].trim()%>" autocomplete="off">
-                            </td> 
-                            <td class="font-numero"> 
-                              <input class="form-control" id="monto_ca[<%=cont%>]" name="monto_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[61].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" value="<%=row[62].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker-pedimento<%=cont%>" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63].trim()%>" onchange="modulacion('<%=cont%>')">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" value="<%=row[64].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker-modulacion<%=cont%>" id="fecha_modulacion[<%=cont%>]" name="fecha_modulacion[<%=cont%>]" type="text" value="<%=row[65].trim()%>">
-                            </td>
-                            <td class="font-numero">
-                              <select class="form-control" id="modalidad[<%=cont%>]" name="modalidad[<%=cont%>]" value="<%=row[66]%>"> 
-                                 <option value="<%=row[66]%>"><%=row[66]%></option>   
-                                 <option value="Camión">Camión</option> 
-                                 <option value="Tren">Tren</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                                <select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"  value="<%=row[67]%>" onchange="cleanResultadoModulacion(this.value,'<%=cont%>','<%=AgentType%>')"> 
-                                 <option value="<%=row[67]%>"><%=row[67]%></option> 
-                                 <option value="Verde">Verde</option> 
-                                 <option value="Rojo">Rojo</option> 
-                              </select> 
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_reconocimiento[<%=cont%>]" name="fecha_reconocimiento[<%=cont%>]" type="text" value="<%=row[68].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_liberacion[<%=cont%>]" name="fecha_liberacion[<%=cont%>]" type="text" value="<%=row[69].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="sello_origen[<%=cont%>]" name="sello_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[70].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="sello_final[<%=cont%>]" name="sello_final[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[71].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_retencion_aut[<%=cont%>]" name="fecha_retencion_aut[<%=cont%>]" type="text" value="<%=row[72].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" value="<%=row[73].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero" onmouseover="formComplet('<%=AgentType%>','<%=cont%>')">
-                              <select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"  value="<%=row[74]%>">
-                                  <option value="<%=row[98]%>"><%=row[74]%></option> 
-                                    <%=listStatusOperationEvent%>
-                              </select>
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="motivo_atraso[<%=cont%>]" name="motivo_atraso[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"  value="<%=row[75].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                              <input class="form-control" id="observaciones[<%=cont%>]" name="observaciones[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[76].trim()%>" autocomplete="off">
-                            </td>
+                                <th id="columna"><center><img id="imgSemaforo<%=cont%>" src="<%=colorSemaforo%>" width="<%=sizeSemaforo%>"/></center></th>
+                                <th id="ReferenciaAduanal"><input type="text" onkeyup="this.value = this.value.toUpperCase()" class="form-control" id="referenciaAA[<%=cont%>]" name="referenciaAA[<%=cont%>]" value="<%=row[30].trim()%>" autocomplete="off"></th>
+                                <th class="font-numero first-column" id="elemento<%=cont%>"><%=row[0]%><input type="hidden" id="evento[<%=cont%>]" name="evento[<%=cont%>]" value="<%=row[0]%>"><div id="popup<%=cont%>" style="display: none;"><div id="mSgError<%=cont%>"></div></div></th>
+                                <td id="Responsable[<%=cont%>]"><%=row[1]%></td>
+                                <td id="FinalDestination[<%=cont%>]"><%=row[2]%></td>
+                                <td id="BrandDivision[<%=cont%>]"><%=row[21]%></td>
+                                <td id="Division[<%=cont%>]"><%=row[4]%></td>
+                                <td><%=row[5]%><input type="hidden" id="shipmentId[<%=cont%>]" name="shipmentId[<%=cont%>]" value="<%=row[5]%>"></td>
+                                <td> <%=row[6]%><input type="hidden" id="containerId[<%=cont%>]" name="containerId[<%=cont%>]" value="<%=row[6]%>"></td>
+                                <td id="blAwbPro[<%=cont%>]"><%=row[7]%></td>
+                                <td><%=row[8]%><input type="hidden" id="loadTypeFinal[<%=cont%>]" name="loadTypeFinal[<%=cont%>]" value="<%=row[8]%>"><input type="hidden" id="plantillaId[<%=cont%>]" name="plantillaId[<%=cont%>]" value="<%=row[17]%>"></td>
+                                <td id="Quantity[<%=cont%>]"><%=row[9]%></td>
+                                <td id="Pod[<%=cont%>]"><%=row[19]%></td>
+                                <td id="EstDepartureFromPol[<%=cont%>]"><%=row[11]%></td>
+                                <td id="EtaRealPortOfDischarge[<%=cont%>]"><%=row[12]%></td>
+                                <td id="EstEtaDc[<%=cont%>]"><%=row[22]%></td>
+                                <td id="InboundNotification[<%=cont%>]"><%=row[14]%></td>
+                                <td id="Pol[<%=cont%>]"><%=row[20]%></td>
+                                <td id="aa[<%=cont%>]"><%=row[16]%></td>
+                                <td id="FechaMesVenta[<%=cont%>]"><%=row[28]%></td>
+                                <td><%=row[97]%><input type="hidden" id="prioridad[<%=cont%>]" name="prioridad[<%=cont%>]" value="<%=row[97]%>"></td>
+                                <td><input class="form-control" id="pais_origen[<%=cont%>]" name="pais_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[31].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="size_container[<%=cont%>]" name="size_container[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[32].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="valor_usd[<%=cont%>]" name="valor_usd[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[33].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="eta_port_discharge[<%=cont%>]" name="eta_port_discharge[<%=cont%>]" type="text" value="<%=row[34].trim()%>" onchange="pedimento(this.value,'<%=cont%>')" autocomplete="off"><a class="text-lg text-blue" onclick="historicoSemaforo('<%=row[5]%>')"><i class="fa fa-folder-open"></i></a></td>
+                                <td><input class="form-control" id="agente_aduanal[<%=cont%>]" name="agente_aduanal[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[35].trim()%>" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off"></td>
+                                <td><input class="form-control" id="pedimento_a1[<%=cont%>]" name="pedimento_a1[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[36].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="pedimento_r1_1er[<%=cont%>]" name="pedimento_r1_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[37].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_1er(this.value,'<%=cont%>')"></td>
+                                <td><input class="form-control" id="motivo_rectificacion_1er[<%=cont%>]" name="motivo_rectificacion_1er[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[38].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="pedimento_r1_2do[<%=cont%>]" name="pedimento_r1_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[39].trim()%>" autocomplete="off" onblur="cleanPedimento_r1_2do(this.value,'<%=cont%>')"></td>
+                                <td><input class="form-control" id="motivo_rectificacion_2do[<%=cont%>]" name="motivo_rectificacion_2do[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[40].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_recepcion_doc[<%=cont%>]" name="fecha_recepcion_doc[<%=cont%>]" type="text" value="<%=row[41].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="recinto[<%=cont%>]" name="recinto[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[42].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="naviera[<%=cont%>]" name="naviera[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[43].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="buque[<%=cont%>]" name="buque[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[44].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_revalidacion[<%=cont%>]" name="fecha_revalidacion[<%=cont%>]" type="text" value="<%=row[45].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_previo_origen[<%=cont%>]" name="fecha_previo_origen[<%=cont%>]" type="text" value="<%=row[46].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_previo_destino[<%=cont%>]" name="fecha_previo_destino[<%=cont%>]" type="text" value="<%=row[47].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_resultado_previo[<%=cont%>]" name="fecha_resultado_previo[<%=cont%>]" type="text" value="<%=row[48].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="proforma_final[<%=cont%>]" name="proforma_final[<%=cont%>]" type="text" value="<%=row[49].trim()%>" autocomplete="off"></td>
+                                <td><select class="form-control" id="permiso[<%=cont%>]" name="permiso[<%=cont%>]" value="<%=row[50]%>" onchange="cleanPermiso(this.value,'<%=cont%>')"><option value="<%=row[50]%>"><%=row[50]%></option><option value="Si">Si</option><option value="No">No</option></select></td>
+                                <td><input class="form-control datepicker" id="fecha_envio[<%=cont%>]" name="fecha_envio[<%=cont%>]" type="text" value="<%=row[51].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_recepcion_perm[<%=cont%>]" name="fecha_recepcion_perm[<%=cont%>]" type="text" value="<%=row[52].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_activacion_perm[<%=cont%>]" name="fecha_activacion_perm[<%=cont%>]" type="text" value="<%=row[53].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_permisos_aut[<%=cont%>]" name="fecha_permisos_aut[<%=cont%>]" type="text" value="<%=row[54].trim()%>" autocomplete="off"></td>
+                                <td><select class="form-control" id="co_pref_arancelaria[<%=cont%>]" name="co_pref_arancelaria[<%=cont%>]" value="<%=row[55]%>"><option value="<%=row[55]%>"><%=row[55]%></option><option value="Si">Si</option><option value="No">No</option></select></td>
+                                <td><select class="form-control" id="aplic_pref_arancelaria[<%=cont%>]" name="aplic_pref_arancelaria[<%=cont%>]" value="<%=row[56]%>"><option value="<%=row[56]%>"><%=row[56]%></option><option value="Si">Si</option><option value="No">No</option></select></td>
+                                <td><select class="form-control" id="req_uva[<%=cont%>]" name="req_uva[<%=cont%>]" value="<%=row[57]%>"><option value="<%=row[57]%>"><%=row[57]%></option><option value="Si">Si</option><option value="No">No</option></select></td>
+                                <td><select class="form-control" id="req_ca[<%=cont%>]" name="req_ca[<%=cont%>]"value="<%=row[58]%>" onchange="cleanRequerimientoCA(this.value,'<%=cont%>')"><option value="<%=row[58]%>"><%=row[58]%></option><option value="Si">Si</option><option value="No">No</option></select></td>
+                                <td><input class="form-control datepicker" id="fecha_recepcion_ca[<%=cont%>]" name="fecha_recepcion_ca[<%=cont%>]" type="text" value="<%=row[59].trim()%>" autocomplete="off" disabled="<%=blockedDate%>"></td>
+                                <td><input class="form-control" id="num_constancia_ca[<%=cont%>]" name="num_constancia_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[60].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="monto_ca[<%=cont%>]" name="monto_ca[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[61].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_doc_completos[<%=cont%>]" name="fecha_doc_completos[<%=cont%>]" value="<%=row[62].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker-pedimento<%=cont%>" id="fecha_pago_pedimento[<%=cont%>]" name="fecha_pago_pedimento[<%=cont%>]" type="text" value="<%=row[63].trim()%>" onchange="modulacion('<%=cont%>')"></td>
+                                <td><input class="form-control datepicker" id="fecha_solicitud_transporte[<%=cont%>]" name="fecha_solicitud_transporte[<%=cont%>]" type="text" value="<%=row[64].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker-modulacion<%=cont%>" id="fecha_modulacion[<%=cont%>]" name="fecha_modulacion[<%=cont%>]" type="text" value="<%=row[65].trim()%>"></td>
+                                <td><select class="form-control" id="modalidad[<%=cont%>]" name="modalidad[<%=cont%>]" value="<%=row[66]%>"><option value="<%=row[66]%>"><%=row[66]%></option><option value="Camión">Camión</option><option value="Tren">Tren</option></select></td>
+                                <td><select class="form-control" id="resultado_modulacion[<%=cont%>]" name="resultado_modulacion[<%=cont%>]"value="<%=row[67]%>" onchange="cleanResultadoModulacion(this.value,'<%=cont%>','<%=AgentType%>')"><option value="<%=row[67]%>"><%=row[67]%></option><option value="Verde">Verde</option><option value="Rojo">Rojo</option></select></td>
+                                <td><input class="form-control datepicker" id="fecha_reconocimiento[<%=cont%>]" name="fecha_reconocimiento[<%=cont%>]" type="text" value="<%=row[68].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_liberacion[<%=cont%>]" name="fecha_liberacion[<%=cont%>]" type="text" value="<%=row[69].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="sello_origen[<%=cont%>]" name="sello_origen[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"value="<%=row[70].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="sello_final[<%=cont%>]" name="sello_final[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"value="<%=row[71].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_retencion_aut[<%=cont%>]" name="fecha_retencion_aut[<%=cont%>]" type="text" value="<%=row[72].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control datepicker" id="fecha_liberacion_aut[<%=cont%>]" name="fecha_liberacion_aut[<%=cont%>]" type="text" value="<%=row[73].trim()%>" autocomplete="off"></td>
+                                <td onmouseover="formComplet('<%=AgentType%>','<%=cont%>')"><select class="form-control" id="estatus_operacion[<%=cont%>]" name="estatus_operacion[<%=cont%>]"value="<%=row[74]%>"> <option value="<%=row[98]%>"><%=row[74]%></option><%=listStatusOperationEvent%></select></td>
+                                <td><input class="form-control" id="motivo_atraso[<%=cont%>]" name="motivo_atraso[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()"value="<%=row[75].trim()%>" autocomplete="off"></td>
+                                <td><input class="form-control" id="observaciones[<%=cont%>]" name="observaciones[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[76].trim()%>" autocomplete="off"></td>
                         <%
                             }
 
                             if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF
                         %>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="llegada_a_nova[<%=cont%>]" name="llegada_a_nova[<%=cont%>]" type="text" value="<%=row[77].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="llegada_a_globe_trade_sd[<%=cont%>]" name="llegada_a_globe_trade_sd[<%=cont%>]" type="text" value="<%=row[78].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control" id="archivo_m[<%=cont%>]" name="archivo_m[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[79].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_archivo_m[<%=cont%>]" name="fecha_archivo_m[<%=cont%>]" type="text" value="<%=row[80].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_solicit_manip[<%=cont%>]" name="fecha_solicit_manip[<%=cont%>]" type="text" value="<%=row[81].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_vencim_manip[<%=cont%>]" name="fecha_vencim_manip[<%=cont%>]" type="text" value="<%=row[82].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_confirm_clave_pedim[<%=cont%>]" name="fecha_confirm_clave_pedim[<%=cont%>]" type="text" value="<%=row[83].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_recep_increment[<%=cont%>]" name="fecha_recep_increment[<%=cont%>]" type="text" value="<%=row[84].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control" id="t_e[<%=cont%>]" name="t_e[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[85].trim()%>" autocomplete="off">
-                            </td>
-                            <td class="font-numero">
-                                <input class="form-control datepicker" id="fecha_vencim_inbound[<%=cont%>]" name="fecha_vencim_inbound[<%=cont%>]" type="text" value="<%=row[86].trim()%>" autocomplete="off">
-                            </td>
+                               <td><input class="form-control datepicker" id="llegada_a_nova[<%=cont%>]" name="llegada_a_nova[<%=cont%>]" type="text" value="<%=row[77].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="llegada_a_globe_trade_sd[<%=cont%>]" name="llegada_a_globe_trade_sd[<%=cont%>]" type="text" value="<%=row[78].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="archivo_m[<%=cont%>]" name="archivo_m[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[79].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_archivo_m[<%=cont%>]" name="fecha_archivo_m[<%=cont%>]" type="text" value="<%=row[80].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_solicit_manip[<%=cont%>]" name="fecha_solicit_manip[<%=cont%>]" type="text" value="<%=row[81].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_vencim_manip[<%=cont%>]" name="fecha_vencim_manip[<%=cont%>]" type="text" value="<%=row[82].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_confirm_clave_pedim[<%=cont%>]" name="fecha_confirm_clave_pedim[<%=cont%>]" type="text" value="<%=row[83].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_recep_increment[<%=cont%>]" name="fecha_recep_increment[<%=cont%>]" type="text" value="<%=row[84].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="t_e[<%=cont%>]" name="t_e[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[85].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_vencim_inbound[<%=cont%>]" name="fecha_vencim_inbound[<%=cont%>]" type="text" value="<%=row[86].trim()%>" autocomplete="off"></td>
                         <%
                             }
 
                             if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
                         %>
-                             <td class="font-numero">
-                                 <input class="form-control" id="no_bultos[<%=cont%>]" name="no_bultos[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[87].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control" id="peso_kg[<%=cont%>]" name="peso_kg[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[88].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                  <select class="form-control" id="transferencia[<%=cont%>]" name="transferencia[<%=cont%>]" value="<%=row[89]%>"> 
-                                     <option value="<%=row[89]%>"><%=row[89]%></option> 
-                                     <option value="Si">Si</option> 
-                                     <option value="No">No</option> 
-                                  </select> 
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" type="text" value="<%=row[90].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" value="<%=row[91].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control" id="hora_termino_etiquetado[<%=cont%>]" name="hora_termino_etiquetado[<%=cont%>]" type="time" value="<%=row[92].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control" id="proveedor[<%=cont%>]" name="proveedor[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[93].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                 <input class="form-control" id="proveedor_carga[<%=cont%>]" name="proveedor_carga[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[94].trim()%>" autocomplete="off">
-                             </td>
+                               <td><input class="form-control" id="no_bultos[<%=cont%>]" name="no_bultos[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[87].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="peso_kg[<%=cont%>]" name="peso_kg[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[88].trim()%>" autocomplete="off"></td>
+                               <td> <select class="form-control" id="transferencia[<%=cont%>]" name="transferencia[<%=cont%>]" value="<%=row[89]%>"><option value="<%=row[89]%>"><%=row[89]%></option><option value="Si">Si</option><option value="No">No</option> </select></td>
+                               <td><input class="form-control datepicker" id="fecha_inicio_etiquetado[<%=cont%>]" name="fecha_inicio_etiquetado[<%=cont%>]" type="text" value="<%=row[90].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control datepicker" id="fecha_termino_etiquetado[<%=cont%>]" name="fecha_termino_etiquetado[<%=cont%>]" type="text" value="<%=row[91].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="hora_termino_etiquetado[<%=cont%>]" name="hora_termino_etiquetado[<%=cont%>]" type="time" value="<%=row[92].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="proveedor[<%=cont%>]" name="proveedor[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[93].trim()%>" autocomplete="off"></td>
+                               <td><input class="form-control" id="proveedor_carga[<%=cont%>]" name="proveedor_carga[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[94].trim()%>" autocomplete="off"></td>
                         <%   
                             }
                         %>                  
-                             <td class="font-numero">
-                                 <input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[95].trim()%>" autocomplete="off">
-                             </td>
-                             <td class="font-numero">
-                                   <a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-save"></i></a>
-                             </td> 
+                               <td><input class="form-control" id="fy[<%=cont%>]" name="fy[<%=cont%>]" type="text" onkeyup="this.value = this.value.toUpperCase()" value="<%=row[95].trim()%>" autocomplete="off"></td>
+                               <td><a class="btn btn-primary text-uppercase" onclick="AddLineCustoms('<%=cont%>')"><i class="fa fa-save"></i></a></td> 
                           </tr>
                     <%         
                         cont++;
                           }
-                    %>
-                        <script>$(document).ready(function () { jsRemoveWindowLoad(); });</script>
-                    <%
                         }
                     %>      
                     </tbody>
@@ -1497,10 +807,6 @@
                 selectElement84.innerHTML="<%=list_fy%>";
                 
             }  
-            
-            window.addEventListener("load", function (event) {
-              console.log("'Todos los recursos terminaron de cargar!");
-           });
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
