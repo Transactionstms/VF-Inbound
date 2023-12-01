@@ -6,6 +6,8 @@
 
 //Contadores
 let urlCustoms = "";
+let contModals = 0;
+let AgenteId= "";
 
 //Parametros Indicadores
 let evento;
@@ -94,226 +96,12 @@ let tipo_clase = "";
 let tipo_escritura = "";
 let contadorExcel = "";
 
-    async function consultarCustoms(idAgenteAduanal,filterType,caramelo) {
-        
-            try {
-                const response = await fetch("../ConsultarCustoms?AgentType=" + idAgenteAduanal + "&filterType="+ filterType + "&id=" + caramelo);
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-                
-                await loadCss();
-                await loadJsPicker();
-                
-                const data = await response.text();
-                document.getElementById('AddTableDetalleCustom').innerHTML = data;
-                await ocultarLoader(); 
-                    
-            } catch (error) {
-                console.error(error);
-            }        
-       
-    }
-
-    function FiltrerData(tipoFiltro) {
-
-        let valueJsp = "";
-        let selectedValues = "0";
-        var selected = "";
-
-        if (tipoFiltro === "0") {
-            selectedValues = "0";
-        } else if (tipoFiltro === "1") {
-            selectedValues = document.getElementById('col_referenciaAA');
-        } else if (tipoFiltro === "2") {
-            selectedValues = document.getElementById('col_evento');
-        } else if (tipoFiltro === "3") {
-            selectedValues = document.getElementById('col_responsable');
-        } else if (tipoFiltro === "4") {
-            selectedValues = document.getElementById('col_finalDestination');
-        } else if (tipoFiltro === "5") {
-            selectedValues = document.getElementById('col_brandDivision');
-        } else if (tipoFiltro === "6") {
-            selectedValues = document.getElementById('col_division');
-        } else if (tipoFiltro === "7") {
-            selectedValues = document.getElementById('col_shipmentId');
-        } else if (tipoFiltro === "8") {
-            selectedValues = document.getElementById('col_container');
-        } else if (tipoFiltro === "9") {
-            selectedValues = document.getElementById('col_blAwbPro');
-        } else if (tipoFiltro === "10") {
-            selectedValues = document.getElementById('col_loadType');
-        } else if (tipoFiltro === "11") {
-            selectedValues = document.getElementById('col_quantity');
-        } else if (tipoFiltro === "12") {
-            selectedValues = document.getElementById('col_pod');
-        } else if (tipoFiltro === "13") {
-            selectedValues = document.getElementById('col_estDepartFromPol');
-        } else if (tipoFiltro === "14") {
-            selectedValues = document.getElementById('col_etaRealPortOfDischarge');
-        } else if (tipoFiltro === "15") {
-            selectedValues = document.getElementById('col_estEtaDc');
-        } else if (tipoFiltro === "16") {
-            selectedValues = document.getElementById('col_inboundNotification');
-        } else if (tipoFiltro === "17") {
-            selectedValues = document.getElementById('col_pol');
-        } else if (tipoFiltro === "18") {
-            selectedValues = document.getElementById('col_aa');
-        } else if (tipoFiltro === "19") {
-            selectedValues = document.getElementById('col_fechaMesVenta');
-        } else if (tipoFiltro === "20") {
-            selectedValues = document.getElementById('col_prioridad');
-        } else if (tipoFiltro === "21") {
-            selectedValues = document.getElementById('col_pais_origen');
-        } else if (tipoFiltro === "22") {
-            selectedValues = document.getElementById('col_size_container');
-        } else if (tipoFiltro === "23") {
-            selectedValues = document.getElementById('col_valor_usd');
-        } else if (tipoFiltro === "24") {
-            selectedValues = document.getElementById('col_eta_port_discharge');
-        } else if (tipoFiltro === "25") {
-            selectedValues = document.getElementById('col_agente_aduanal');
-        } else if (tipoFiltro === "26") {
-            selectedValues = document.getElementById('col_pedimento_a1');
-        } else if (tipoFiltro === "27") {
-            selectedValues = document.getElementById('col_pedimento_r1_1er');
-        } else if (tipoFiltro === "28") {
-            selectedValues = document.getElementById('col_motivo_rectificacion_1er');
-        } else if (tipoFiltro === "29") {
-            selectedValues = document.getElementById('col_pedimento_r1_2do');
-        } else if (tipoFiltro === "30") {
-            selectedValues = document.getElementById('col_motivo_rectificacion_2do');
-        } else if (tipoFiltro === "31") {
-            selectedValues = document.getElementById('col_fecha_recepcion_doc');
-        } else if (tipoFiltro === "32") {
-            selectedValues = document.getElementById('col_recinto');
-        } else if (tipoFiltro === "33") {
-            selectedValues = document.getElementById('col_naviera');
-        } else if (tipoFiltro === "34") {
-            selectedValues = document.getElementById('col_buque');
-        } else if (tipoFiltro === "35") {
-            selectedValues = document.getElementById('col_fecha_revalidacion');
-        } else if (tipoFiltro === "36") {
-            selectedValues = document.getElementById('col_fecha_previo_origen');
-        } else if (tipoFiltro === "37") {
-            selectedValues = document.getElementById('col_fecha_previo_destino');
-        } else if (tipoFiltro === "38") {
-            selectedValues = document.getElementById('col_fecha_resultado_previo');
-        } else if (tipoFiltro === "39") {
-            selectedValues = document.getElementById('col_proforma_final');
-        } else if (tipoFiltro === "40") {
-            selectedValues = document.getElementById('col_permiso');
-        } else if (tipoFiltro === "41") {
-            selectedValues = document.getElementById('col_fecha_envio');
-        } else if (tipoFiltro === "42") {
-            selectedValues = document.getElementById('col_fecha_recepcion_perm');
-        } else if (tipoFiltro === "43") {
-            selectedValues = document.getElementById('col_fecha_activacion_perm');
-        } else if (tipoFiltro === "44") {
-            selectedValues = document.getElementById('col_fecha_permisos_aut');
-        } else if (tipoFiltro === "45") {
-            selectedValues = document.getElementById('col_co_pref_arancelaria');
-        } else if (tipoFiltro === "46") {
-            selectedValues = document.getElementById('col_aplic_pref_arancelaria');
-        } else if (tipoFiltro === "47") {
-            selectedValues = document.getElementById('col_req_uva');
-        } else if (tipoFiltro === "48") {
-            selectedValues = document.getElementById('col_req_ca');
-        } else if (tipoFiltro === "49") {
-            selectedValues = document.getElementById('col_fecha_recepcion_ca');
-        } else if (tipoFiltro === "50") {
-            selectedValues = document.getElementById('col_num_constancia_ca');
-        } else if (tipoFiltro === "51") {
-            selectedValues = document.getElementById('col_monto_ca');
-        } else if (tipoFiltro === "52") {
-            selectedValues = document.getElementById('col_fecha_doc_completos');
-        } else if (tipoFiltro === "53") {
-            selectedValues = document.getElementById('col_fecha_pago_pedimento');
-        } else if (tipoFiltro === "54") {
-            selectedValues = document.getElementById('col_fecha_solicitud_transporte');
-        } else if (tipoFiltro === "55") {
-            selectedValues = document.getElementById('col_fecha_modulacion');
-        } else if (tipoFiltro === "56") {
-            selectedValues = document.getElementById('col_modalidad');
-        } else if (tipoFiltro === "57") {
-            selectedValues = document.getElementById('col_resultado_modulacion');
-        } else if (tipoFiltro === "58") {
-            selectedValues = document.getElementById('col_fecha_reconocimiento');
-        } else if (tipoFiltro === "59") {
-            selectedValues = document.getElementById('col_fecha_liberacion');
-        } else if (tipoFiltro === "60") {
-            selectedValues = document.getElementById('col_sello_origen');
-        } else if (tipoFiltro === "61") {
-            selectedValues = document.getElementById('col_sello_final');
-        } else if (tipoFiltro === "62") {
-            selectedValues = document.getElementById('col_fecha_retencion_aut');
-        } else if (tipoFiltro === "63") {
-            selectedValues = document.getElementById('col_fecha_liberacion_aut');
-        } else if (tipoFiltro === "64") {
-            selectedValues = document.getElementById('col_estatus_operacion');
-        } else if (tipoFiltro === "65") {
-            selectedValues = document.getElementById('col_motivo_atraso');
-        } else if (tipoFiltro === "66") {
-            selectedValues = document.getElementById('col_observaciones');
-        } else if (tipoFiltro === "67") {
-            selectedValues = document.getElementById('col_llegada_a_nova');
-        } else if (tipoFiltro === "68") {
-            selectedValues = document.getElementById('col_llegada_a_globe_trade_sd');
-        } else if (tipoFiltro === "69") {
-            selectedValues = document.getElementById('col_archivo_m');
-        } else if (tipoFiltro === "70") {
-            selectedValues = document.getElementById('col_fecha_archivo_m');
-        } else if (tipoFiltro === "71") {
-            selectedValues = document.getElementById('col_fecha_solicit_manip');
-        } else if (tipoFiltro === "72") {
-            selectedValues = document.getElementById('col_fecha_vencim_manip');
-        } else if (tipoFiltro === "73") {
-            selectedValues = document.getElementById('col_fecha_confirm_clave_pedim');
-        } else if (tipoFiltro === "74") {
-            selectedValues = document.getElementById('col_fecha_recep_increment');
-        } else if (tipoFiltro === "75") {
-            selectedValues = document.getElementById('col_t_e');
-        } else if (tipoFiltro === "76") {
-            selectedValues = document.getElementById('col_fecha_vencim_inbound');
-        } else if (tipoFiltro === "77") {
-            selectedValues = document.getElementById('col_no_bultos');
-        } else if (tipoFiltro === "78") {
-            selectedValues = document.getElementById('col_peso_kg');
-        } else if (tipoFiltro === "79") {
-            selectedValues = document.getElementById('col_transferencia');
-        } else if (tipoFiltro === "80") {
-            selectedValues = document.getElementById('col_fecha_inicio_etiquetado');
-        } else if (tipoFiltro === "81") {
-            selectedValues = document.getElementById('col_fecha_termino_etiquetado');
-        } else if (tipoFiltro === "82") {
-            selectedValues = document.getElementById('col_hora_termino_etiquetado');
-        } else if (tipoFiltro === "83") {
-            selectedValues = document.getElementById('col_proveedor');
-        } else if (tipoFiltro === "84") {
-            selectedValues = document.getElementById('col_proveedor_carga');
-        } else if (tipoFiltro === "85") {
-            selectedValues = document.getElementById('col_fy');
-        }
-
-        if (tipoFiltro === "0") {
-            selected = "0";
-        } else {
-            selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
-        }
-
-        valueJsp = tipoFiltro + "@" + selected;
-
-        // Obtener una referencia al objeto window de la página principal
-        var ventanaPrincipal = window.parent;
-
-        // Enviar el parámetro al objeto window de la página principal
-        ventanaPrincipal.postMessage(valueJsp, "*");
-
-    }
-
+   /*--------------------------------------------------------------------------
+                          FUNCIONES - CELDAS TABLA CUSTOMS
+     --------------------------------------------------------------------------*/
     async function AddPullCustoms() {
 
-        jsShowWindowLoad('Cargando Información');
+        await mostrarLoader();
 
         let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
         let contadorCustoms = document.getElementById("numCustoms").value;
@@ -322,191 +110,95 @@ let contadorExcel = "";
 
         for (let i = 1; i < contadorCustoms; i++) {
 
-            //Parametros Indicadores         
+        //Parametros Indicadores   
+            referenciaAA = document.getElementById("referenciaAA[" + i + "]").innerHTML;
+            evento = document.getElementById("evento[" + i + "]").innerHTML;
+            shipmentId = document.getElementById("shipmentId[" + i + "]").innerHTML;
+            containerId = document.getElementById("containerId[" + i + "]").innerHTML;
+            prioridad = document.getElementById("prioridad[" + i + "]").innerHTML;
+            loadTypeFinal = document.getElementById("loadTypeFinal[" + i + "]").innerHTML;
+            pais_origen =  document.getElementById("pais_origen[" + i + "]").innerHTML;
+            size_container =  document.getElementById("size_container[" + i + "]").innerHTML;
+            valor_usd =  document.getElementById("valor_usd[" + i + "]").innerHTML;
+            eta_port_discharge = document.getElementById("eta_port_discharge[" + i + "]").innerHTML;
+            agente_aduanal = document.getElementById("agente_aduanal[" + i + "]").innerHTML;
+            pedimento_a1 = document.getElementById("pedimento_a1[" + i + "]").innerHTML;
+            pedimento_r1_1er = document.getElementById("pedimento_r1_1er[" + i + "]").innerHTML;
+            motivo_rectificacion_1er = document.getElementById("motivo_rectificacion_1er[" + i + "]").innerHTML;
+            pedimento_r1_2do = document.getElementById("pedimento_r1_2do[" + i + "]").innerHTML;
+            motivo_rectificacion_2do = document.getElementById("motivo_rectificacion_2do[" + i + "]").innerHTML;
+            fecha_recepcion_doc = document.getElementById("fecha_recepcion_doc[" + i + "]").innerHTML;
+            recinto = document.getElementById("recinto[" + i + "]").innerHTML;
+            naviera = document.getElementById("naviera[" + i + "]").innerHTML;
+            buque = document.getElementById("buque[" + i + "]").innerHTML;
+            fecha_revalidacion = document.getElementById("fecha_revalidacion[" + i + "]").innerHTML;
+            fecha_previo_origen = document.getElementById("fecha_previo_origen[" + i + "]").innerHTML;
+            fecha_previo_destino = document.getElementById("fecha_previo_destino[" + i + "]").innerHTML;
+            fecha_resultado_previo = document.getElementById("fecha_resultado_previo[" + i + "]").innerHTML;
+            proforma_final = document.getElementById("proforma_final[" + i + "]").innerHTML;
+            permiso = document.getElementById("permiso[" + i + "]").innerHTML;
+            fecha_envio = document.getElementById("fecha_envio[" + i + "]").innerHTML;
+            fecha_recepcion_perm = document.getElementById("fecha_recepcion_perm[" + i + "]").innerHTML;
+            fecha_activacion_perm = document.getElementById("fecha_activacion_perm[" + i + "]").innerHTML;
+            fecha_permisos_aut = document.getElementById("fecha_permisos_aut[" + i + "]").innerHTML;
+            co_pref_arancelaria = document.getElementById("co_pref_arancelaria[" + i + "]").innerHTML;
+            aplic_pref_arancelaria = document.getElementById("aplic_pref_arancelaria[" + i + "]").innerHTML;
+            req_uva = document.getElementById("req_uva[" + i + "]").innerHTML;
+            req_ca = document.getElementById("req_ca[" + i + "]").innerHTML;
+            fecha_recepcion_ca = document.getElementById("fecha_recepcion_ca[" + i + "]").innerHTML;
+            num_constancia_ca = document.getElementById("num_constancia_ca[" + i + "]").innerHTML;
+            monto_ca = document.getElementById("monto_ca[" + i + "]").innerHTML;
+            fecha_doc_completos = document.getElementById("fecha_doc_completos[" + i + "]").innerHTML;
+            fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML;
+            fecha_solicitud_transporte = document.getElementById("fecha_solicitud_transporte[" + i + "]").innerHTML;
+            fecha_modulacion = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
+            modalidad = document.getElementById("modalidad[" + i + "]").innerHTML;
+            resultado_modulacion = document.getElementById("resultado_modulacion[" + i + "]").innerHTML;
+            fecha_reconocimiento = document.getElementById("fecha_reconocimiento[" + i + "]").innerHTML;
+            fecha_liberacion = document.getElementById("fecha_liberacion[" + i + "]").innerHTML;
+            sello_origen = document.getElementById("sello_origen[" + i + "]").innerHTML;
+            sello_final = document.getElementById("sello_final[" + i + "]").innerHTML;
+            fecha_retencion_aut = document.getElementById("fecha_retencion_aut[" + i + "]").innerHTML;
+            fecha_liberacion_aut = document.getElementById("fecha_liberacion_aut[" + i + "]").innerHTML;
+            estatus_operacion = document.getElementById("estatus_operacion[" + i + "]").value;
+            motivo_atraso = document.getElementById("motivo_atraso[" + i + "]").innerHTML;
+            observaciones = document.getElementById("observaciones[" + i + "]").innerHTML;
+            fy = document.getElementById("fy[" + i + "]").innerHTML;
 
-            let temp4 = "referenciaAA[" + i + "]";
-            let temp1 = "evento[" + i + "]";
-            let temp2 = "shipmentId[" + i + "]";
-            let temp3 = "containerId[" + i + "]";
-            let temp5 = "prioridad[" + i + "]";
-            let temp6 = "loadTypeFinal[" + i + "]";
-            let temp6_1 = "plantillaId[" + i + "]";
+        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF
 
-            referenciaAA = document.getElementById(temp4).value;
-            evento = document.getElementById(temp1).value;
-            shipmentId = document.getElementById(temp2).value;
-            containerId = document.getElementById(temp3).value;
-            prioridad = document.getElementById(temp5).value;
-            loadTypeFinal = document.getElementById(temp6).value;
-            plantillaId = document.getElementById(temp6_1).value;
+            llegada_a_nova = document.getElementById("llegada_a_nova[" + i + "]").innerHTML;
+            llegada_a_globe_trade_sd = document.getElementById("llegada_a_globe_trade_sd[" + i + "]").innerHTML;
+            archivo_m = document.getElementById("archivo_m[" + i + "]").innerHTML;
+            fecha_archivo_m = document.getElementById("fecha_archivo_m[" + i + "]").innerHTML;
+            fecha_solicit_manip = document.getElementById("fecha_solicit_manip[" + i + "]").innerHTML;
+            fecha_vencim_manip = document.getElementById("fecha_vencim_manip[" + i + "]").innerHTML;
+            fecha_confirm_clave_pedim = document.getElementById("fecha_confirm_clave_pedim[" + i + "]").innerHTML;
+            fecha_recep_increment = document.getElementById("fecha_recep_increment[" + i + "]").innerHTML;
+            t_e = document.getElementById("t_e[" + i + "]").innerHTML;
+            fecha_vencim_inbound = document.getElementById("fecha_vencim_inbound[" + i + "]").innerHTML;
 
-            //Parametros Generales  
-            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006") { //RADAR, SESMA, RECHY Y VF  
+        }
 
-                let temp7 = "pais_origen[" + i + "]";
-                let temp8 = "size_container[" + i + "]";
-                let temp9 = "valor_usd[" + i + "]";
-                let temp10 = "eta_port_discharge[" + i + "]";
-                let temp11 = "agente_aduanal[" + i + "]";
-                let temp12 = "pedimento_a1[" + i + "]";
-                let temp13 = "pedimento_r1_1er[" + i + "]";
-                let temp14 = "motivo_rectificacion_1er[" + i + "]";
-                let temp15 = "pedimento_r1_2do[" + i + "]";
-                let temp16 = "motivo_rectificacion_2do[" + i + "]";
-                let temp17 = "fecha_recepcion_doc[" + i + "]";
-                let temp18 = "recinto[" + i + "]";
-                let temp19 = "naviera[" + i + "]";
-                let temp20 = "buque[" + i + "]";
-                let temp21 = "fecha_revalidacion[" + i + "]";
-                let temp22 = "fecha_previo_origen[" + i + "]";
-                let temp23 = "fecha_previo_destino[" + i + "]";
-                let temp24 = "fecha_resultado_previo[" + i + "]";
-                let temp25 = "proforma_final[" + i + "]";
-                let temp26 = "permiso[" + i + "]";
-                let temp27 = "fecha_envio[" + i + "]";
-                let temp28 = "fecha_recepcion_perm[" + i + "]";
-                let temp29 = "fecha_activacion_perm[" + i + "]";
-                let temp30 = "fecha_permisos_aut[" + i + "]";
-                let temp31 = "co_pref_arancelaria[" + i + "]";
-                let temp32 = "aplic_pref_arancelaria[" + i + "]";
-                let temp33 = "req_uva[" + i + "]";
-                let temp34 = "req_ca[" + i + "]";
-                let temp35 = "fecha_recepcion_ca[" + i + "]";
-                let temp36 = "num_constancia_ca[" + i + "]";
-                let temp37 = "monto_ca[" + i + "]";
-                let temp38 = "fecha_doc_completos[" + i + "]";
-                let temp39 = "fecha_pago_pedimento[" + i + "]";
-                let temp40 = "fecha_solicitud_transporte[" + i + "]";
-                let temp41 = "fecha_modulacion[" + i + "]";
-                let temp42 = "modalidad[" + i + "]";
-                let temp43 = "resultado_modulacion[" + i + "]";
-                let temp44 = "fecha_reconocimiento[" + i + "]";
-                let temp45 = "fecha_liberacion[" + i + "]";
-                let temp46 = "sello_origen[" + i + "]";
-                let temp47 = "sello_final[" + i + "]";
-                let temp48 = "fecha_retencion_aut[" + i + "]";
-                let temp49 = "fecha_liberacion_aut[" + i + "]";
-                let temp50 = "estatus_operacion[" + i + "]";
-                let temp51 = "motivo_atraso[" + i + "]";
-                let temp52 = "observaciones[" + i + "]";
-                let temp53 = "fy[" + i + "]";
+        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
 
-                pais_origen = document.getElementById(temp7).value;
-                size_container = document.getElementById(temp8).value;
-                valor_usd = document.getElementById(temp9).value;
-                eta_port_discharge = document.getElementById(temp10).value;
-                agente_aduanal = document.getElementById(temp11).value;
-                pedimento_a1 = document.getElementById(temp12).value;
-                pedimento_r1_1er = document.getElementById(temp13).value;
-                motivo_rectificacion_1er = document.getElementById(temp14).value;
-                pedimento_r1_2do = document.getElementById(temp15).value;
-                motivo_rectificacion_2do = document.getElementById(temp16).value;
-                fecha_recepcion_doc = document.getElementById(temp17).value;
-                recinto = document.getElementById(temp18).value;
-                naviera = document.getElementById(temp19).value;
-                buque = document.getElementById(temp20).value;
-                fecha_revalidacion = document.getElementById(temp21).value;
-                fecha_previo_origen = document.getElementById(temp22).value;
-                fecha_previo_destino = document.getElementById(temp23).value;
-                fecha_resultado_previo = document.getElementById(temp24).value;
-                proforma_final = document.getElementById(temp25).value;
-                permiso = document.getElementById(temp26).value;
-                fecha_envio = document.getElementById(temp27).value;
-                fecha_recepcion_perm = document.getElementById(temp28).value;
-                fecha_activacion_perm = document.getElementById(temp29).value;
-                fecha_permisos_aut = document.getElementById(temp30).value;
-                co_pref_arancelaria = document.getElementById(temp31).value;
-                aplic_pref_arancelaria = document.getElementById(temp32).value;
-                req_uva = document.getElementById(temp33).value;
-                req_ca = document.getElementById(temp34).value;
-                fecha_recepcion_ca = document.getElementById(temp35).value;
-                num_constancia_ca = document.getElementById(temp36).value;
-                monto_ca = document.getElementById(temp37).value;
-                fecha_doc_completos = document.getElementById(temp38).value;
-                fecha_pago_pedimento = document.getElementById(temp39).value;
-                fecha_solicitud_transporte = document.getElementById(temp40).value;
-                fecha_modulacion = document.getElementById(temp41).value;
-                modalidad = document.getElementById(temp42).value;
-                resultado_modulacion = document.getElementById(temp43).value;
-                fecha_reconocimiento = document.getElementById(temp44).value;
-                fecha_liberacion = document.getElementById(temp45).value;
-                sello_origen = document.getElementById(temp46).value;
-                sello_final = document.getElementById(temp47).value;
-                fecha_retencion_aut = document.getElementById(temp48).value;
-                fecha_liberacion_aut = document.getElementById(temp49).value;
-                estatus_operacion = document.getElementById(temp50).value;
-                motivo_atraso = document.getElementById(temp51).value;
-                observaciones = document.getElementById(temp52).value;
-                fy = document.getElementById(temp53).value;
-            }
+            no_bultos = document.getElementById("no_bultos[" + i + "]").innerHTML;
+            peso_kg = document.getElementById("peso_kg[" + i + "]").innerHTML;
+            transferencia = document.getElementById("transferencia[" + i + "]").innerHTML;
+            fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado[" + i + "]").innerHTML;
+            fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado[" + i + "]").innerHTML;
+            hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado[" + i + "]").value;
+            proveedor = document.getElementById("proveedor[" + i + "]").innerHTML;
+            proveedor_carga = document.getElementById("proveedor_carga[" + i + "]").innerHTML;
+        }
 
-            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF
-
-                let temp54 = "llegada_a_nova[" + i + "]";
-                let temp55 = "llegada_a_globe_trade_sd[" + i + "]";
-                let temp56 = "archivo_m[" + i + "]";
-                let temp57 = "fecha_archivo_m[" + i + "]";
-                let temp58 = "fecha_solicit_manip[" + i + "]";
-                let temp59 = "fecha_vencim_manip[" + i + "]";
-                let temp60 = "fecha_confirm_clave_pedim[" + i + "]";
-                let temp61 = "fecha_recep_increment[" + i + "]";
-                let temp62 = "t_e[" + i + "]";
-                let temp63 = "fecha_vencim_inbound[" + i + "]";
-
-                llegada_a_nova = document.getElementById(temp54).value;
-                llegada_a_globe_trade_sd = document.getElementById(temp55).value;
-                archivo_m = document.getElementById(temp56).value;
-                fecha_archivo_m = document.getElementById(temp57).value;
-                fecha_solicit_manip = document.getElementById(temp58).value;
-                fecha_vencim_manip = document.getElementById(temp59).value;
-                fecha_confirm_clave_pedim = document.getElementById(temp60).value;
-                fecha_recep_increment = document.getElementById(temp61).value;
-                t_e = document.getElementById(temp62).value;
-                fecha_vencim_inbound = document.getElementById(temp63).value;
-
-            }
-
-            if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
-
-                let temp64 = "no_bultos[" + i + "]";
-                let temp65 = "peso_kg[" + i + "]";
-                let temp66 = "transferencia[" + i + "]";
-                let temp67 = "fecha_inicio_etiquetado[" + i + "]";
-                let temp68 = "fecha_termino_etiquetado[" + i + "]";
-                let temp69 = "hora_termino_etiquetado[" + i + "]";
-                let temp70 = "proveedor[" + i + "]";
-                let temp71 = "proveedor_carga[" + i + "]";
-
-                no_bultos = document.getElementById(temp64).value;
-                peso_kg = document.getElementById(temp65).value;
-                transferencia = document.getElementById(temp66).value;
-                fecha_inicio_etiquetado = document.getElementById(temp67).value;
-                fecha_termino_etiquetado = document.getElementById(temp68).value;
-                hora_termino_etiquetado = document.getElementById(temp69).value;
-                proveedor = document.getElementById(temp70).value;
-                proveedor_carga = document.getElementById(temp71).value;
-            }
-
-            urlCustoms += "&evento[" + i + "]=" + evento +
-                    "&shipmentId[" + i + "]=" + shipmentId +
-                    "&containerId[" + i + "]=" + containerId +
-                    "&referenciaAA[" + i + "]=" + referenciaAA +
-                    "&prioridad[" + i + "]=" + prioridad +
-                    "&loadTypeFinal[" + i + "]=" + loadTypeFinal +
-                    "&plantillaId[" + i + "]=" + plantillaId;
-
-
-            urlCustoms += "&evento" + i + "=" + evento +
-                    "&shipmentId" + i + "=" + shipmentId +
-                    "&containerId" + i + "=" + containerId +
-                    "&referenciaAA" + i + "=" + referenciaAA +
-                    "&prioridad" + i + "=" + prioridad +
-                    "&loadTypeFinal" + i + "=" + loadTypeFinal +
-                    "&plantillaId" + i + "=" + plantillaId;
-
-            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006") { //RADAR, SESMA, RECHY Y VF 
-
-                urlCustoms += "&pais_origen[" + i + "]=" + pais_origen +
+          urlCustoms += "&evento" + i + "=" + evento +
+                        "&shipmentId" + i + "=" + shipmentId +
+                        "&containerId" + i + "=" + containerId +
+                        "&referenciaAA" + i + "=" + referenciaAA +
+                        "&prioridad" + i + "=" + prioridad +
+                        "&loadTypeFinal" + i + "=" + loadTypeFinal + 
+                        "&pais_origen[" + i + "]=" + pais_origen +
                         "&size_container[" + i + "]=" + size_container +
                         "&valor_usd[" + i + "]=" + valor_usd +
                         "&eta_port_discharge[" + i + "]=" + eta_port_discharge +
@@ -553,32 +245,31 @@ let contadorExcel = "";
                         "&motivo_atraso[" + i + "]=" + motivo_atraso +
                         "&observaciones[" + i + "]=" + observaciones +
                         "&fy[" + i + "]=" + fy;
-            }
 
             if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF
 
                 urlCustoms += "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
-                        "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
-                        "&archivo_m[" + i + "]=" + archivo_m +
-                        "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m +
-                        "&fecha_solicit_manip[" + i + "]=" + fecha_solicit_manip +
-                        "&fecha_vencim_manip[" + i + "]=" + fecha_vencim_manip +
-                        "&fecha_confirm_clave_pedim[" + i + "]=" + fecha_confirm_clave_pedim +
-                        "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment +
-                        "&t_e[" + i + "]=" + t_e +
-                        "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
+                              "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
+                              "&archivo_m[" + i + "]=" + archivo_m +
+                              "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m +
+                              "&fecha_solicit_manip[" + i + "]=" + fecha_solicit_manip +
+                              "&fecha_vencim_manip[" + i + "]=" + fecha_vencim_manip +
+                              "&fecha_confirm_clave_pedim[" + i + "]=" + fecha_confirm_clave_pedim +
+                              "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment +
+                              "&t_e[" + i + "]=" + t_e +
+                              "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
             }
 
             if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
 
                 urlCustoms += "&no_bultos[" + i + "]=" + no_bultos +
-                        "&peso_kg[" + i + "]=" + peso_kg +
-                        "&transferencia[" + i + "]=" + transferencia +
-                        "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado +
-                        "&fecha_termino_etiquetado[" + i + "]=" + fecha_termino_etiquetado +
-                        "&hora_termino_etiquetado[" + i + "]=" + hora_termino_etiquetado +
-                        "&proveedor[" + i + "]=" + proveedor +
-                        "&proveedor_carga[" + i + "]=" + proveedor_carga;
+                              "&peso_kg[" + i + "]=" + peso_kg +
+                              "&transferencia[" + i + "]=" + transferencia +
+                              "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado +
+                              "&fecha_termino_etiquetado[" + i + "]=" + fecha_termino_etiquetado +
+                              "&hora_termino_etiquetado[" + i + "]=" + hora_termino_etiquetado +
+                              "&proveedor[" + i + "]=" + proveedor +
+                              "&proveedor_carga[" + i + "]=" + proveedor_carga;
             }
 
 
@@ -938,203 +629,109 @@ let contadorExcel = "";
             txtErrormSg = "";
         }
 
-        $("#WindowLoad").remove();
+        await ocultarLoader();
         swal("", "Información Actualizada", "success");
         alertclose();
     }
 
     async function AddLineCustoms(i) {
 
-        jsShowWindowLoad('Cargando Información');
+        await mostrarLoader();
 
         let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
         let contadorError = 0;
         let txtErrormSg = "";
 
         //Parametros Indicadores   
-        let temp4 = "referenciaAA[" + i + "]";
-        let temp1 = "evento[" + i + "]";
-        let temp2 = "shipmentId[" + i + "]";
-        let temp3 = "containerId[" + i + "]";
-        let temp5 = "prioridad[" + i + "]";
-        let temp6 = "loadTypeFinal[" + i + "]";
-        let temp6_1 = "plantillaId[" + i + "]";
-
-        referenciaAA = document.getElementById(temp4).value;
-        evento = document.getElementById(temp1).value;
-        shipmentId = document.getElementById(temp2).value;
-        containerId = document.getElementById(temp3).value;
-        prioridad = document.getElementById(temp5).value;
-        loadTypeFinal = document.getElementById(temp6).value;
-        plantillaId = document.getElementById(temp6_1).value;
-
-        //Parametros Generales  
-        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006") { //RADAR, SESMA, RECHY Y VF  
-
-            let temp7 = "pais_origen[" + i + "]";
-            let temp8 = "size_container[" + i + "]";
-            let temp9 = "valor_usd[" + i + "]";
-            let temp10 = "eta_port_discharge[" + i + "]";
-            let temp11 = "agente_aduanal[" + i + "]";
-            let temp12 = "pedimento_a1[" + i + "]";
-            let temp13 = "pedimento_r1_1er[" + i + "]";
-            let temp14 = "motivo_rectificacion_1er[" + i + "]";
-            let temp15 = "pedimento_r1_2do[" + i + "]";
-            let temp16 = "motivo_rectificacion_2do[" + i + "]";
-            let temp17 = "fecha_recepcion_doc[" + i + "]";
-            let temp18 = "recinto[" + i + "]";
-            let temp19 = "naviera[" + i + "]";
-            let temp20 = "buque[" + i + "]";
-            let temp21 = "fecha_revalidacion[" + i + "]";
-            let temp22 = "fecha_previo_origen[" + i + "]";
-            let temp23 = "fecha_previo_destino[" + i + "]";
-            let temp24 = "fecha_resultado_previo[" + i + "]";
-            let temp25 = "proforma_final[" + i + "]";
-            let temp26 = "permiso[" + i + "]";
-            let temp27 = "fecha_envio[" + i + "]";
-            let temp28 = "fecha_recepcion_perm[" + i + "]";
-            let temp29 = "fecha_activacion_perm[" + i + "]";
-            let temp30 = "fecha_permisos_aut[" + i + "]";
-            let temp31 = "co_pref_arancelaria[" + i + "]";
-            let temp32 = "aplic_pref_arancelaria[" + i + "]";
-            let temp33 = "req_uva[" + i + "]";
-            let temp34 = "req_ca[" + i + "]";
-            let temp35 = "fecha_recepcion_ca[" + i + "]";
-            let temp36 = "num_constancia_ca[" + i + "]";
-            let temp37 = "monto_ca[" + i + "]";
-            let temp38 = "fecha_doc_completos[" + i + "]";
-            let temp39 = "fecha_pago_pedimento[" + i + "]";
-            let temp40 = "fecha_solicitud_transporte[" + i + "]";
-            let temp41 = "fecha_modulacion[" + i + "]";
-            let temp42 = "modalidad[" + i + "]";
-            let temp43 = "resultado_modulacion[" + i + "]";
-            let temp44 = "fecha_reconocimiento[" + i + "]";
-            let temp45 = "fecha_liberacion[" + i + "]";
-            let temp46 = "sello_origen[" + i + "]";
-            let temp47 = "sello_final[" + i + "]";
-            let temp48 = "fecha_retencion_aut[" + i + "]";
-            let temp49 = "fecha_liberacion_aut[" + i + "]";
-            let temp50 = "estatus_operacion[" + i + "]";
-            let temp51 = "motivo_atraso[" + i + "]";
-            let temp52 = "observaciones[" + i + "]";
-            let temp53 = "fy[" + i + "]";
-
-            pais_origen = document.getElementById(temp7).value;
-            size_container = document.getElementById(temp8).value;
-            valor_usd = document.getElementById(temp9).value;
-            eta_port_discharge = document.getElementById(temp10).value;
-            agente_aduanal = document.getElementById(temp11).value;
-            pedimento_a1 = document.getElementById(temp12).value;
-            pedimento_r1_1er = document.getElementById(temp13).value;
-            motivo_rectificacion_1er = document.getElementById(temp14).value;
-            pedimento_r1_2do = document.getElementById(temp15).value;
-            motivo_rectificacion_2do = document.getElementById(temp16).value;
-            fecha_recepcion_doc = document.getElementById(temp17).value;
-            recinto = document.getElementById(temp18).value;
-            naviera = document.getElementById(temp19).value;
-            buque = document.getElementById(temp20).value;
-            fecha_revalidacion = document.getElementById(temp21).value;
-            fecha_previo_origen = document.getElementById(temp22).value;
-            fecha_previo_destino = document.getElementById(temp23).value;
-            fecha_resultado_previo = document.getElementById(temp24).value;
-            proforma_final = document.getElementById(temp25).value;
-            permiso = document.getElementById(temp26).value;
-            fecha_envio = document.getElementById(temp27).value;
-            fecha_recepcion_perm = document.getElementById(temp28).value;
-            fecha_activacion_perm = document.getElementById(temp29).value;
-            fecha_permisos_aut = document.getElementById(temp30).value;
-            co_pref_arancelaria = document.getElementById(temp31).value;
-            aplic_pref_arancelaria = document.getElementById(temp32).value;
-            req_uva = document.getElementById(temp33).value;
-            req_ca = document.getElementById(temp34).value;
-            fecha_recepcion_ca = document.getElementById(temp35).value;
-            num_constancia_ca = document.getElementById(temp36).value;
-            monto_ca = document.getElementById(temp37).value;
-            fecha_doc_completos = document.getElementById(temp38).value;
-            fecha_pago_pedimento = document.getElementById(temp39).value;
-            fecha_solicitud_transporte = document.getElementById(temp40).value;
-            fecha_modulacion = document.getElementById(temp41).value;
-            modalidad = document.getElementById(temp42).value;
-            resultado_modulacion = document.getElementById(temp43).value;
-            fecha_reconocimiento = document.getElementById(temp44).value;
-            fecha_liberacion = document.getElementById(temp45).value;
-            sello_origen = document.getElementById(temp46).value;
-            sello_final = document.getElementById(temp47).value;
-            fecha_retencion_aut = document.getElementById(temp48).value;
-            fecha_liberacion_aut = document.getElementById(temp49).value;
-            estatus_operacion = document.getElementById(temp50).value;
-            motivo_atraso = document.getElementById(temp51).value;
-            observaciones = document.getElementById(temp52).value;
-            fy = document.getElementById(temp53).value;
-        }
+            referenciaAA = document.getElementById("referenciaAA[" + i + "]").innerHTML;
+            evento = document.getElementById("evento[" + i + "]").innerHTML;
+            shipmentId = document.getElementById("shipmentId[" + i + "]").innerHTML;
+            containerId = document.getElementById("containerId[" + i + "]").innerHTML;
+            prioridad = document.getElementById("prioridad[" + i + "]").innerHTML;
+            loadTypeFinal = document.getElementById("loadTypeFinal[" + i + "]").innerHTML;
+            pais_origen =  document.getElementById("pais_origen[" + i + "]").innerHTML;
+            size_container =  document.getElementById("size_container[" + i + "]").innerHTML;
+            valor_usd =  document.getElementById("valor_usd[" + i + "]").innerHTML;
+            eta_port_discharge = document.getElementById("eta_port_discharge[" + i + "]").innerHTML;
+            agente_aduanal = document.getElementById("agente_aduanal[" + i + "]").innerHTML;
+            pedimento_a1 = document.getElementById("pedimento_a1[" + i + "]").innerHTML;
+            pedimento_r1_1er = document.getElementById("pedimento_r1_1er[" + i + "]").innerHTML;
+            motivo_rectificacion_1er = document.getElementById("motivo_rectificacion_1er[" + i + "]").innerHTML;
+            pedimento_r1_2do = document.getElementById("pedimento_r1_2do[" + i + "]").innerHTML;
+            motivo_rectificacion_2do = document.getElementById("motivo_rectificacion_2do[" + i + "]").innerHTML;
+            fecha_recepcion_doc = document.getElementById("fecha_recepcion_doc[" + i + "]").innerHTML;
+            recinto = document.getElementById("recinto[" + i + "]").innerHTML;
+            naviera = document.getElementById("naviera[" + i + "]").innerHTML;
+            buque = document.getElementById("buque[" + i + "]").innerHTML;
+            fecha_revalidacion = document.getElementById("fecha_revalidacion[" + i + "]").innerHTML;
+            fecha_previo_origen = document.getElementById("fecha_previo_origen[" + i + "]").innerHTML;
+            fecha_previo_destino = document.getElementById("fecha_previo_destino[" + i + "]").innerHTML;
+            fecha_resultado_previo = document.getElementById("fecha_resultado_previo[" + i + "]").innerHTML;
+            proforma_final = document.getElementById("proforma_final[" + i + "]").innerHTML;
+            permiso = document.getElementById("permiso[" + i + "]").innerHTML;
+            fecha_envio = document.getElementById("fecha_envio[" + i + "]").innerHTML;
+            fecha_recepcion_perm = document.getElementById("fecha_recepcion_perm[" + i + "]").innerHTML;
+            fecha_activacion_perm = document.getElementById("fecha_activacion_perm[" + i + "]").innerHTML;
+            fecha_permisos_aut = document.getElementById("fecha_permisos_aut[" + i + "]").innerHTML;
+            co_pref_arancelaria = document.getElementById("co_pref_arancelaria[" + i + "]").innerHTML;
+            aplic_pref_arancelaria = document.getElementById("aplic_pref_arancelaria[" + i + "]").innerHTML;
+            req_uva = document.getElementById("req_uva[" + i + "]").innerHTML;
+            req_ca = document.getElementById("req_ca[" + i + "]").innerHTML;
+            fecha_recepcion_ca = document.getElementById("fecha_recepcion_ca[" + i + "]").innerHTML;
+            num_constancia_ca = document.getElementById("num_constancia_ca[" + i + "]").innerHTML;
+            monto_ca = document.getElementById("monto_ca[" + i + "]").innerHTML;
+            fecha_doc_completos = document.getElementById("fecha_doc_completos[" + i + "]").innerHTML;
+            fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML;
+            fecha_solicitud_transporte = document.getElementById("fecha_solicitud_transporte[" + i + "]").innerHTML;
+            fecha_modulacion = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
+            modalidad = document.getElementById("modalidad[" + i + "]").innerHTML;
+            resultado_modulacion = document.getElementById("resultado_modulacion[" + i + "]").innerHTML;
+            fecha_reconocimiento = document.getElementById("fecha_reconocimiento[" + i + "]").innerHTML;
+            fecha_liberacion = document.getElementById("fecha_liberacion[" + i + "]").innerHTML;
+            sello_origen = document.getElementById("sello_origen[" + i + "]").innerHTML;
+            sello_final = document.getElementById("sello_final[" + i + "]").innerHTML;
+            fecha_retencion_aut = document.getElementById("fecha_retencion_aut[" + i + "]").innerHTML;
+            fecha_liberacion_aut = document.getElementById("fecha_liberacion_aut[" + i + "]").innerHTML;
+            estatus_operacion = document.getElementById("estatus_operacion[" + i + "]").value;
+            motivo_atraso = document.getElementById("motivo_atraso[" + i + "]").innerHTML;
+            observaciones = document.getElementById("observaciones[" + i + "]").innerHTML;
+            fy = document.getElementById("fy[" + i + "]").innerHTML;
 
         if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF
 
-            let temp54 = "llegada_a_nova[" + i + "]";
-            let temp55 = "llegada_a_globe_trade_sd[" + i + "]";
-            let temp56 = "archivo_m[" + i + "]";
-            let temp57 = "fecha_archivo_m[" + i + "]";
-            let temp58 = "fecha_solicit_manip[" + i + "]";
-            let temp59 = "fecha_vencim_manip[" + i + "]";
-            let temp60 = "fecha_confirm_clave_pedim[" + i + "]";
-            let temp61 = "fecha_recep_increment[" + i + "]";
-            let temp62 = "t_e[" + i + "]";
-            let temp63 = "fecha_vencim_inbound[" + i + "]";
-
-            llegada_a_nova = document.getElementById(temp54).value;
-            llegada_a_globe_trade_sd = document.getElementById(temp55).value;
-            archivo_m = document.getElementById(temp56).value;
-            fecha_archivo_m = document.getElementById(temp57).value;
-            fecha_solicit_manip = document.getElementById(temp58).value;
-            fecha_vencim_manip = document.getElementById(temp59).value;
-            fecha_confirm_clave_pedim = document.getElementById(temp60).value;
-            fecha_recep_increment = document.getElementById(temp61).value;
-            t_e = document.getElementById(temp62).value;
-            fecha_vencim_inbound = document.getElementById(temp63).value;
+            llegada_a_nova = document.getElementById("llegada_a_nova[" + i + "]").innerHTML;
+            llegada_a_globe_trade_sd = document.getElementById("llegada_a_globe_trade_sd[" + i + "]").innerHTML;
+            archivo_m = document.getElementById("archivo_m[" + i + "]").innerHTML;
+            fecha_archivo_m = document.getElementById("fecha_archivo_m[" + i + "]").innerHTML;
+            fecha_solicit_manip = document.getElementById("fecha_solicit_manip[" + i + "]").innerHTML;
+            fecha_vencim_manip = document.getElementById("fecha_vencim_manip[" + i + "]").innerHTML;
+            fecha_confirm_clave_pedim = document.getElementById("fecha_confirm_clave_pedim[" + i + "]").innerHTML;
+            fecha_recep_increment = document.getElementById("fecha_recep_increment[" + i + "]").innerHTML;
+            t_e = document.getElementById("t_e[" + i + "]").innerHTML;
+            fecha_vencim_inbound = document.getElementById("fecha_vencim_inbound[" + i + "]").innerHTML;
 
         }
 
         if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
 
-            let temp64 = "no_bultos[" + i + "]";
-            let temp65 = "peso_kg[" + i + "]";
-            let temp66 = "transferencia[" + i + "]";
-            let temp67 = "fecha_inicio_etiquetado[" + i + "]";
-            let temp68 = "fecha_termino_etiquetado[" + i + "]";
-            let temp69 = "hora_termino_etiquetado[" + i + "]";
-            let temp70 = "proveedor[" + i + "]";
-            let temp71 = "proveedor_carga[" + i + "]";
-
-            no_bultos = document.getElementById(temp64).value;
-            peso_kg = document.getElementById(temp65).value;
-            transferencia = document.getElementById(temp66).value;
-            fecha_inicio_etiquetado = document.getElementById(temp67).value;
-            fecha_termino_etiquetado = document.getElementById(temp68).value;
-            hora_termino_etiquetado = document.getElementById(temp69).value;
-            proveedor = document.getElementById(temp70).value;
-            proveedor_carga = document.getElementById(temp71).value;
+            no_bultos = document.getElementById("no_bultos[" + i + "]").innerHTML;
+            peso_kg = document.getElementById("peso_kg[" + i + "]").innerHTML;
+            transferencia = document.getElementById("transferencia[" + i + "]").innerHTML;
+            fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado[" + i + "]").innerHTML;
+            fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado[" + i + "]").innerHTML;
+            hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado[" + i + "]").value;
+            proveedor = document.getElementById("proveedor[" + i + "]").innerHTML;
+            proveedor_carga = document.getElementById("proveedor_carga[" + i + "]").innerHTML;
         }
 
-        urlCustoms += "&evento[" + i + "]=" + evento +
-                "&shipmentId[" + i + "]=" + shipmentId +
-                "&containerId[" + i + "]=" + containerId +
-                "&referenciaAA[" + i + "]=" + referenciaAA +
-                "&prioridad[" + i + "]=" + prioridad +
-                "&loadTypeFinal[" + i + "]=" + loadTypeFinal +
-                "&plantillaId[" + i + "]=" + plantillaId;
 
-
-        urlCustoms += "&evento" + i + "=" + evento +
-                "&shipmentId" + i + "=" + shipmentId +
-                "&containerId" + i + "=" + containerId +
-                "&referenciaAA" + i + "=" + referenciaAA +
-                "&prioridad" + i + "=" + prioridad +
-                "&loadTypeFinal" + i + "=" + loadTypeFinal +
-                "&plantillaId" + i + "=" + plantillaId;
-
-        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4003" || idAgenteAduanal === "4004" || idAgenteAduanal === "4005" || idAgenteAduanal === "4006") { //RADAR, SESMA, RECHY Y VF 
-
-            urlCustoms += "&pais_origen[" + i + "]=" + pais_origen +
+      urlCustoms += "&evento[" + i + "]=" + evento +
+                    "&shipmentId[" + i + "]=" + shipmentId +
+                    "&containerId[" + i + "]=" + containerId +
+                    "&referenciaAA[" + i + "]=" + referenciaAA +
+                    "&prioridad[" + i + "]=" + prioridad +
+                    "&loadTypeFinal[" + i + "]=" + loadTypeFinal +
+                    "&pais_origen[" + i + "]=" + pais_origen +
                     "&size_container[" + i + "]=" + size_container +
                     "&valor_usd[" + i + "]=" + valor_usd +
                     "&eta_port_discharge[" + i + "]=" + eta_port_discharge +
@@ -1181,32 +778,31 @@ let contadorExcel = "";
                     "&motivo_atraso[" + i + "]=" + motivo_atraso +
                     "&observaciones[" + i + "]=" + observaciones +
                     "&fy[" + i + "]=" + fy;
-        }
 
         if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF
 
             urlCustoms += "&llegada_a_nova[" + i + "]=" + llegada_a_nova +
-                    "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
-                    "&archivo_m[" + i + "]=" + archivo_m +
-                    "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m +
-                    "&fecha_solicit_manip[" + i + "]=" + fecha_solicit_manip +
-                    "&fecha_vencim_manip[" + i + "]=" + fecha_vencim_manip +
-                    "&fecha_confirm_clave_pedim[" + i + "]=" + fecha_confirm_clave_pedim +
-                    "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment +
-                    "&t_e[" + i + "]=" + t_e +
-                    "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
+                          "&llegada_a_globe_trade_sd[" + i + "]=" + llegada_a_globe_trade_sd +
+                          "&archivo_m[" + i + "]=" + archivo_m +
+                          "&fecha_archivo_m[" + i + "]=" + fecha_archivo_m +
+                          "&fecha_solicit_manip[" + i + "]=" + fecha_solicit_manip +
+                          "&fecha_vencim_manip[" + i + "]=" + fecha_vencim_manip +
+                          "&fecha_confirm_clave_pedim[" + i + "]=" + fecha_confirm_clave_pedim +
+                          "&fecha_recep_increment[" + i + "]=" + fecha_recep_increment +
+                          "&t_e[" + i + "]=" + t_e +
+                          "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
         }
 
         if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
 
             urlCustoms += "&no_bultos[" + i + "]=" + no_bultos +
-                    "&peso_kg[" + i + "]=" + peso_kg +
-                    "&transferencia[" + i + "]=" + transferencia +
-                    "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado +
-                    "&fecha_termino_etiquetado[" + i + "]=" + fecha_termino_etiquetado +
-                    "&hora_termino_etiquetado[" + i + "]=" + hora_termino_etiquetado +
-                    "&proveedor[" + i + "]=" + proveedor +
-                    "&proveedor_carga[" + i + "]=" + proveedor_carga;
+                          "&peso_kg[" + i + "]=" + peso_kg +
+                          "&transferencia[" + i + "]=" + transferencia +
+                          "&fecha_inicio_etiquetado[" + i + "]=" + fecha_inicio_etiquetado +
+                          "&fecha_termino_etiquetado[" + i + "]=" + fecha_termino_etiquetado +
+                          "&hora_termino_etiquetado[" + i + "]=" + hora_termino_etiquetado +
+                          "&proveedor[" + i + "]=" + proveedor +
+                          "&proveedor_carga[" + i + "]=" + proveedor_carga;
         }
 
 
@@ -1563,29 +1159,296 @@ let contadorExcel = "";
         contadorError = 0;
         txtErrormSg = "";
 
-        $("#WindowLoad").remove();
+        await ocultarLoader();
         swal("", "Información Actualizada", "success");
         alertclose();
+    }    
+    
+    async function consultarCustoms(idAgenteAduanal,filterType,caramelo) {
+        
+            try {
+                const response = await fetch("../ConsultarCustoms?AgentType=" + idAgenteAduanal + "&filterType="+ filterType + "&id=" + caramelo);
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                
+                await loadCss();
+                await loadJsPicker();
+                
+                const data = await response.text();
+                document.getElementById('AddTableDetalleCustom').innerHTML = data;
+                await ocultarLoader(); 
+                    
+            } catch (error) {
+                console.error(error);
+            }        
+       
+    }
+    
+   /*--------------------------------------------------------------------------
+                           FUNCIONES - REGLAS DE NEGOCIO
+     --------------------------------------------------------------------------*/
+    function pedimento(dateEtaPortDischarge, i){
+        
+        if(dateEtaPortDischarge !== ""){
+            document.getElementById("fecha_pago_pedimento["+i+"]").innerHTML = dateEtaPortDischarge;
+        }
+    }    
+
+    function cleanPedimento_r1_1er(pedimento, i) {
+        let color = "";
+
+        /*if (pedimento.replace(/\s/g, "") === "") {
+            document.getElementById("motivo_rectificacion_1er[" + i + "]").innerHTML = "";
+            color = "#ced4da";
+        } else {
+            color = "#CC9D77";
+        }*/ 
+        console.log("Pedimento:" + pedimento);
+        
+        if(pedimento != ""){
+           color = "#ced4da";
+        }else{
+           color = "#CC9D77";
+        }
+        
+        document.getElementById("pedimento_r1_1er[" + i + "]").style.borderColor = color;
+        document.getElementById("motivo_rectificacion_1er[" + i + "]").style.borderColor = color;
+
+
     }
 
-    function openModalPlantilla() {
-        $("#modalSubirPlantilla").modal("show");
+    function cleanPedimento_r1_2do(pedimento, i) {
+        let color = "";
+
+        if (pedimento.replace(/\s/g, "") === "") {
+            document.getElementById("motivo_rectificacion_2do[" + i + "]").innerHTML = "";
+            color = "#ced4da";
+        } else {
+            color = "#CC9D77";
+        }
+
+        document.getElementById("pedimento_r1_2do[" + i + "]").style.borderColor = color;
+        document.getElementById("motivo_rectificacion_2do[" + i + "]").style.borderColor = color;
+    }
+    
+    function cleanPermiso(permiso, i) {
+        let colorcelda = "";
+        let color = "";
+        let req = false;
+
+        if (permiso === "No") {
+            document.getElementById("fecha_envio[" + i + "]").innerHTML = "";
+            document.getElementById("fecha_recepcion_perm[" + i + "]").innerHTML = "";
+            document.getElementById("fecha_activacion_perm[" + i + "]").innerHTML = "";
+            document.getElementById("fecha_permisos_aut[" + i + "]").innerHTML = "";
+            color = "#ced4da";
+            colorcelda = "celda-no-bloqueada";
+            req = true;
+        } else {
+            color = "#CC9D77";
+            colorcelda = "celda-bloqueada";
+            req = false;
+        }
+
+        document.getElementById("permiso[" + i + "]").style.borderColor = color;
+        document.getElementById("fecha_envio[" + i + "]").style.borderColor = color;
+        document.getElementById("fecha_recepcion_perm[" + i + "]").style.borderColor = color;
+        document.getElementById("fecha_activacion_perm[" + i + "]").style.borderColor = color;
+        document.getElementById("fecha_permisos_aut[" + i + "]").style.borderColor = color;
+        
+        /*Habilitar/Deshabilitar campos*/
+        let celda1 = document.getElementById("fecha_envio[" + i + "]").contentEditable = req;
+        let celda2 = document.getElementById("fecha_recepcion_perm[" + i + "]").contentEditable = req;
+        let celda3 = document.getElementById("fecha_activacion_perm[" + i + "]").contentEditable = req;
+        let celda4 = document.getElementById("fecha_permisos_aut[" + i + "]").contentEditable = req;
+
+        // Aplicar clase para indicar que la edición está deshabilitada
+        celda1.classList.add(colorcelda);
+        celda2.classList.add(colorcelda);
+        celda3.classList.add(colorcelda);
+        celda4.classList.add(colorcelda);
+        
+    }
+    
+    function cleanRequerimientoCA(reqCa, i) {
+        let color = "";
+        let req = false;
+
+        if (reqCa === "No") {
+            document.getElementById("fecha_recepcion_ca[" + i + "]").innerHTML = "";
+            document.getElementById("num_constancia_ca[" + i + "]").innerHTML = "";
+            document.getElementById("monto_ca[" + i + "]").innerHTML = "";
+            colorcelda = "celda-no-bloqueada";
+            color = "#ced4da";
+            req = true;
+        } else {
+            colorcelda = "celda-bloqueada";
+            color = "#616363";
+            req = false;
+        }
+
+        document.getElementById("req_ca[" + i + "]").style.borderColor = color;
+        document.getElementById("fecha_recepcion_ca[" + i + "]").style.borderColor = color;
+        document.getElementById("num_constancia_ca[" + i + "]").style.borderColor = color;
+        document.getElementById("monto_ca[" + i + "]").style.borderColor = color;
+        
+        /*Habilitar/Deshabilitar campos*/
+        let celda1 = document.getElementById("fecha_recepcion_ca[" + i + "]").contentEditable = req;
+        
+        // Aplicar clase para indicar que la edición está deshabilitada
+        celda1.classList.add(colorcelda);
+        
     }
 
-    function alertclose() {
-        setTimeout(function () {
-            swal.close();
-            //$("#WindowLoad").remove();
-        }, 1000);
-    }
+    function modulacion(datePagoPedimento, i){
 
-    function onSemaforo() {
-        swal("", "Semaforo Activado", "info");
-        setTimeout(function () {
-            swal.close();
-        }, 1000);
+        if(datePagoPedimento !== ""){
+           document.getElementById("fecha_modulacion["+i+"]").innerHTML = datePagoPedimento;
+        }
     }
+    
+    function cleanResultadoModulacion(modulacion, i, AgentType) {
+        let color = "";
 
+        if (modulacion === "Verde") {
+            document.getElementById("sello_origen[" + i + "]").innerHTML = "";
+            color = "#ced4da";
+        } else {
+            color = "#CC9D77";
+        }
+
+        if (AgentType != "4005") { //RECHY
+            if (AgentType === "4002") { //CUSA
+                document.getElementById("sello_final[" + i + "]").style.borderColor = color;
+            } else {
+                document.getElementById("sello_origen[" + i + "]").style.borderColor = color;
+            }
+        }
+
+        document.getElementById("resultado_modulacion[" + i + "]").style.borderColor = color;
+    }
+    
+    function formComplet(idAgenteAduanal, i) {
+       /* RULE #10 */
+        const formulario = document.getElementById('tr' + i);
+        let disabledOption = "";
+
+            pais_origen = document.getElementById("pais_origen[" + i + "]").innerHTML;
+            size_container = document.getElementById("size_container[" + i + "]").innerHTML;
+            valor_usd = document.getElementById("valor_usd[" + i + "]").innerHTML;
+            eta_port_discharge = document.getElementById("eta_port_discharge[" + i + "]").innerHTML;
+            agente_aduanal = document.getElementById("agente_aduanal[" + i + "]").innerHTML;
+            pedimento_a1 = document.getElementById("pedimento_a1[" + i + "]").innerHTML;
+            pedimento_r1_1er = document.getElementById("pedimento_r1_1er[" + i + "]").innerHTML;
+            motivo_rectificacion_1er = document.getElementById("motivo_rectificacion_1er[" + i + "]").innerHTML;
+            pedimento_r1_2do = document.getElementById("pedimento_r1_2do[" + i + "]").innerHTML;
+            motivo_rectificacion_2do = document.getElementById("motivo_rectificacion_2do[" + i + "]").innerHTML;
+            fecha_recepcion_doc = document.getElementById("fecha_recepcion_doc[" + i + "]").innerHTML;
+            recinto = document.getElementById("recinto[" + i + "]").innerHTML;
+            naviera = document.getElementById("naviera[" + i + "]").innerHTML;
+            buque = document.getElementById("buque[" + i + "]").innerHTML;
+            fecha_revalidacion = document.getElementById("fecha_revalidacion[" + i + "]").innerHTML;
+            fecha_previo_origen = document.getElementById("fecha_previo_origen[" + i + "]").innerHTML;
+            fecha_previo_destino = document.getElementById("fecha_previo_destino[" + i + "]").innerHTML;
+            fecha_resultado_previo = document.getElementById("fecha_resultado_previo[" + i + "]").innerHTML;
+            proforma_final = document.getElementById("proforma_final[" + i + "]").innerHTML;
+            permiso = document.getElementById("permiso[" + i + "]").innerHTML;
+            fecha_envio = document.getElementById("fecha_envio[" + i + "]").innerHTML;
+            fecha_recepcion_perm = document.getElementById("fecha_recepcion_perm[" + i + "]").innerHTML;
+            fecha_activacion_perm = document.getElementById("fecha_activacion_perm[" + i + "]").innerHTML;
+            fecha_permisos_aut = document.getElementById("fecha_permisos_aut[" + i + "]").innerHTML;
+            co_pref_arancelaria = document.getElementById("co_pref_arancelaria[" + i + "]").innerHTML;
+            aplic_pref_arancelaria = document.getElementById("aplic_pref_arancelaria[" + i + "]").innerHTML;
+            req_uva = document.getElementById("req_uva[" + i + "]").innerHTML;
+            req_ca = document.getElementById("req_ca[" + i + "]").innerHTML;
+            fecha_recepcion_ca = document.getElementById("fecha_recepcion_ca[" + i + "]").innerHTML;
+            num_constancia_ca = document.getElementById("num_constancia_ca[" + i + "]").innerHTML;
+            monto_ca = document.getElementById("monto_ca[" + i + "]").innerHTML;
+            fecha_doc_completos = document.getElementById("fecha_doc_completos[" + i + "]").innerHTML;
+            fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML;
+            fecha_solicitud_transporte = document.getElementById("fecha_solicitud_transporte[" + i + "]").innerHTML;
+            fecha_modulacion = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
+            modalidad = document.getElementById("modalidad[" + i + "]").innerHTML;
+            resultado_modulacion = document.getElementById("resultado_modulacion[" + i + "]").innerHTML;
+            fecha_reconocimiento = document.getElementById("fecha_reconocimiento[" + i + "]").innerHTML;
+            fecha_liberacion = document.getElementById("fecha_liberacion[" + i + "]").innerHTML;
+            sello_origen = document.getElementById("sello_origen[" + i + "]").innerHTML;
+            sello_final = document.getElementById("sello_final[" + i + "]").innerHTML;
+            motivo_atraso = document.getElementById("motivo_atraso[" + i + "]").innerHTML;
+            fy = document.getElementById("fy[" + i + "]").innerHTML;
+
+        if (idAgenteAduanal === "4001") { //LOGIX
+            llegada_a_nova = document.getElementById("llegada_a_nova[" + i + "]").innerHTML;
+            llegada_a_globe_trade_sd = document.getElementById("llegada_a_globe_trade_sd[" + i + "]").innerHTML;
+            archivo_m = document.getElementById("archivo_m[" + i + "]").innerHTML;
+            fecha_archivo_m = document.getElementById("fecha_archivo_m[" + i + "]").innerHTML;
+            fecha_solicit_manip = document.getElementById("fecha_solicit_manip[" + i + "]").innerHTML;
+            fecha_vencim_manip = document.getElementById("fecha_vencim_manip[" + i + "]").innerHTML;
+            fecha_confirm_clave_pedim = document.getElementById("fecha_confirm_clave_pedim[" + i + "]").innerHTML;
+            fecha_recep_increment = document.getElementById("fecha_recep_increment[" + i + "]").innerHTML;
+            t_e = document.getElementById("t_e[" + i + "]").innerHTML;
+            fecha_vencim_inbound = document.getElementById("fecha_vencim_inbound[" + i + "]").innerHTML;
+        }
+
+        if (idAgenteAduanal === "4002") { //CUSA
+            no_bultos = document.getElementById("no_bultos[" + i + "]").innerHTML;
+            peso_kg = document.getElementById("peso_kg[" + i + "]").innerHTML;
+            transferencia = document.getElementById("transferencia[" + i + "]").innerHTML;
+            fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado[" + i + "]").innerHTML;
+            fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado[" + i + "]").innerHTML;
+            hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado[" + i + "]").value;
+            proveedor = document.getElementById("proveedor[" + i + "]").innerHTML;
+            proveedor_carga = document.getElementById("proveedor_carga[" + i + "]").innerHTML;
+        }
+
+        /* RULE #10 */   /*(Estatus Importado)*/
+        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //RADAR|SESMA|VF
+            if (pais_origen == "" || size_container == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || recinto == "" || naviera == "" || buque == "" || fecha_revalidacion == "" || fecha_previo_origen == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_origen == "" || sello_final == "" || motivo_atraso == "" || fy == "") {
+                disabledOption = "false";
+            }
+            if (permiso === "Si") {
+                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
+                    disabledOption = "false";
+                }
+            }
+        } else if (idAgenteAduanal === "4001") { //LOGIX
+            if (pais_origen == "" || size_container == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || recinto == "" || naviera == "" || buque == "" || fecha_revalidacion == "" || fecha_previo_origen == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_origen == "" || sello_final == "" || motivo_atraso == "" || fy == "" || llegada_a_nova == "" || llegada_a_globe_trade_sd == "" || archivo_m == "" || fecha_archivo_m == "" || fecha_solicit_manip == "" || fecha_vencim_manip == "" || fecha_confirm_clave_pedim == "" || fecha_recep_increment == "" || t_e == "" || fecha_vencim_inbound == "") {
+                disabledOption = "false";
+            }
+            if (permiso === "Si") {
+                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
+                    disabledOption = "false";
+                }
+            }
+        } else if (idAgenteAduanal === "4002") { //CUSA
+            if (pais_origen == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || naviera == "" || fecha_revalidacion == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_final == "" || motivo_atraso == "" || fy == "" || no_bultos == "" || peso_kg == "" || transferencia == "" || fecha_inicio_etiquetado == "" || fecha_termino_etiquetado == "" || hora_termino_etiquetado == "" || proveedor == "" || proveedor_carga == "") {
+                disabledOption = "false";
+            }
+            if (permiso === "Si") {
+                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
+                    disabledOption = "false";
+                }
+            }
+        } else if (idAgenteAduanal === "4005") { //RECHY
+            if (pais_origen == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || motivo_atraso == "" || fy == "") {
+                disabledOption = "false";
+            }
+            if (permiso === "Si") {
+                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
+                    disabledOption = "false";
+                }
+            }
+        }
+
+        var selector = document.getElementById("estatus_operacion[" + i + "]");
+        selector.options[19].disabled = disabledOption;
+
+    }
+    
+   /*--------------------------------------------------------------------------
+                           FUNCIONES - BUSCADOR GENERAL
+     --------------------------------------------------------------------------*/
     function doSearch() {
         var tableReg = document.getElementById('main-table');
         var searchText = document.getElementById('searchTerm').value.toLowerCase();
@@ -1618,12 +1481,213 @@ let contadorExcel = "";
             }
         }
     }
+    
+   /*--------------------------------------------------------------------------
+                        FUNCIONES - BUSCADORES MULTISELECT
+     --------------------------------------------------------------------------*/    
+    function FiltrerData(tipoFiltro) {
 
+        let valueJsp = "";
+        let selectedValues = "0";
+        var selected = "";
+
+        if (tipoFiltro === "0") {
+            selectedValues = "0";
+        } else if (tipoFiltro === "1") {
+            selectedValues = document.getElementById('col_referenciaAA');
+        } else if (tipoFiltro === "2") {
+            selectedValues = document.getElementById('col_evento');
+        } else if (tipoFiltro === "3") {
+            selectedValues = document.getElementById('col_responsable');
+        } else if (tipoFiltro === "4") {
+            selectedValues = document.getElementById('col_finalDestination');
+        } else if (tipoFiltro === "5") {
+            selectedValues = document.getElementById('col_brandDivision');
+        } else if (tipoFiltro === "6") {
+            selectedValues = document.getElementById('col_division');
+        } else if (tipoFiltro === "7") {
+            selectedValues = document.getElementById('col_shipmentId');
+        } else if (tipoFiltro === "8") {
+            selectedValues = document.getElementById('col_container');
+        } else if (tipoFiltro === "9") {
+            selectedValues = document.getElementById('col_blAwbPro');
+        } else if (tipoFiltro === "10") {
+            selectedValues = document.getElementById('col_loadType');
+        } else if (tipoFiltro === "11") {
+            selectedValues = document.getElementById('col_quantity');
+        } else if (tipoFiltro === "12") {
+            selectedValues = document.getElementById('col_pod');
+        } else if (tipoFiltro === "13") {
+            selectedValues = document.getElementById('col_estDepartFromPol');
+        } else if (tipoFiltro === "14") {
+            selectedValues = document.getElementById('col_etaRealPortOfDischarge');
+        } else if (tipoFiltro === "15") {
+            selectedValues = document.getElementById('col_estEtaDc');
+        } else if (tipoFiltro === "16") {
+            selectedValues = document.getElementById('col_inboundNotification');
+        } else if (tipoFiltro === "17") {
+            selectedValues = document.getElementById('col_pol');
+        } else if (tipoFiltro === "18") {
+            selectedValues = document.getElementById('col_aa');
+        } else if (tipoFiltro === "19") {
+            selectedValues = document.getElementById('col_fechaMesVenta');
+        } else if (tipoFiltro === "20") {
+            selectedValues = document.getElementById('col_prioridad');
+        } else if (tipoFiltro === "21") {
+            selectedValues = document.getElementById('col_pais_origen');
+        } else if (tipoFiltro === "22") {
+            selectedValues = document.getElementById('col_size_container');
+        } else if (tipoFiltro === "23") {
+            selectedValues = document.getElementById('col_valor_usd');
+        } else if (tipoFiltro === "24") {
+            selectedValues = document.getElementById('col_eta_port_discharge');
+        } else if (tipoFiltro === "25") {
+            selectedValues = document.getElementById('col_agente_aduanal');
+        } else if (tipoFiltro === "26") {
+            selectedValues = document.getElementById('col_pedimento_a1');
+        } else if (tipoFiltro === "27") {
+            selectedValues = document.getElementById('col_pedimento_r1_1er');
+        } else if (tipoFiltro === "28") {
+            selectedValues = document.getElementById('col_motivo_rectificacion_1er');
+        } else if (tipoFiltro === "29") {
+            selectedValues = document.getElementById('col_pedimento_r1_2do');
+        } else if (tipoFiltro === "30") {
+            selectedValues = document.getElementById('col_motivo_rectificacion_2do');
+        } else if (tipoFiltro === "31") {
+            selectedValues = document.getElementById('col_fecha_recepcion_doc');
+        } else if (tipoFiltro === "32") {
+            selectedValues = document.getElementById('col_recinto');
+        } else if (tipoFiltro === "33") {
+            selectedValues = document.getElementById('col_naviera');
+        } else if (tipoFiltro === "34") {
+            selectedValues = document.getElementById('col_buque');
+        } else if (tipoFiltro === "35") {
+            selectedValues = document.getElementById('col_fecha_revalidacion');
+        } else if (tipoFiltro === "36") {
+            selectedValues = document.getElementById('col_fecha_previo_origen');
+        } else if (tipoFiltro === "37") {
+            selectedValues = document.getElementById('col_fecha_previo_destino');
+        } else if (tipoFiltro === "38") {
+            selectedValues = document.getElementById('col_fecha_resultado_previo');
+        } else if (tipoFiltro === "39") {
+            selectedValues = document.getElementById('col_proforma_final');
+        } else if (tipoFiltro === "40") {
+            selectedValues = document.getElementById('col_permiso');
+        } else if (tipoFiltro === "41") {
+            selectedValues = document.getElementById('col_fecha_envio');
+        } else if (tipoFiltro === "42") {
+            selectedValues = document.getElementById('col_fecha_recepcion_perm');
+        } else if (tipoFiltro === "43") {
+            selectedValues = document.getElementById('col_fecha_activacion_perm');
+        } else if (tipoFiltro === "44") {
+            selectedValues = document.getElementById('col_fecha_permisos_aut');
+        } else if (tipoFiltro === "45") {
+            selectedValues = document.getElementById('col_co_pref_arancelaria');
+        } else if (tipoFiltro === "46") {
+            selectedValues = document.getElementById('col_aplic_pref_arancelaria');
+        } else if (tipoFiltro === "47") {
+            selectedValues = document.getElementById('col_req_uva');
+        } else if (tipoFiltro === "48") {
+            selectedValues = document.getElementById('col_req_ca');
+        } else if (tipoFiltro === "49") {
+            selectedValues = document.getElementById('col_fecha_recepcion_ca');
+        } else if (tipoFiltro === "50") {
+            selectedValues = document.getElementById('col_num_constancia_ca');
+        } else if (tipoFiltro === "51") {
+            selectedValues = document.getElementById('col_monto_ca');
+        } else if (tipoFiltro === "52") {
+            selectedValues = document.getElementById('col_fecha_doc_completos');
+        } else if (tipoFiltro === "53") {
+            selectedValues = document.getElementById('col_fecha_pago_pedimento');
+        } else if (tipoFiltro === "54") {
+            selectedValues = document.getElementById('col_fecha_solicitud_transporte');
+        } else if (tipoFiltro === "55") {
+            selectedValues = document.getElementById('col_fecha_modulacion');
+        } else if (tipoFiltro === "56") {
+            selectedValues = document.getElementById('col_modalidad');
+        } else if (tipoFiltro === "57") {
+            selectedValues = document.getElementById('col_resultado_modulacion');
+        } else if (tipoFiltro === "58") {
+            selectedValues = document.getElementById('col_fecha_reconocimiento');
+        } else if (tipoFiltro === "59") {
+            selectedValues = document.getElementById('col_fecha_liberacion');
+        } else if (tipoFiltro === "60") {
+            selectedValues = document.getElementById('col_sello_origen');
+        } else if (tipoFiltro === "61") {
+            selectedValues = document.getElementById('col_sello_final');
+        } else if (tipoFiltro === "62") {
+            selectedValues = document.getElementById('col_fecha_retencion_aut');
+        } else if (tipoFiltro === "63") {
+            selectedValues = document.getElementById('col_fecha_liberacion_aut');
+        } else if (tipoFiltro === "64") {
+            selectedValues = document.getElementById('col_estatus_operacion');
+        } else if (tipoFiltro === "65") {
+            selectedValues = document.getElementById('col_motivo_atraso');
+        } else if (tipoFiltro === "66") {
+            selectedValues = document.getElementById('col_observaciones');
+        } else if (tipoFiltro === "67") {
+            selectedValues = document.getElementById('col_llegada_a_nova');
+        } else if (tipoFiltro === "68") {
+            selectedValues = document.getElementById('col_llegada_a_globe_trade_sd');
+        } else if (tipoFiltro === "69") {
+            selectedValues = document.getElementById('col_archivo_m');
+        } else if (tipoFiltro === "70") {
+            selectedValues = document.getElementById('col_fecha_archivo_m');
+        } else if (tipoFiltro === "71") {
+            selectedValues = document.getElementById('col_fecha_solicit_manip');
+        } else if (tipoFiltro === "72") {
+            selectedValues = document.getElementById('col_fecha_vencim_manip');
+        } else if (tipoFiltro === "73") {
+            selectedValues = document.getElementById('col_fecha_confirm_clave_pedim');
+        } else if (tipoFiltro === "74") {
+            selectedValues = document.getElementById('col_fecha_recep_increment');
+        } else if (tipoFiltro === "75") {
+            selectedValues = document.getElementById('col_t_e');
+        } else if (tipoFiltro === "76") {
+            selectedValues = document.getElementById('col_fecha_vencim_inbound');
+        } else if (tipoFiltro === "77") {
+            selectedValues = document.getElementById('col_no_bultos');
+        } else if (tipoFiltro === "78") {
+            selectedValues = document.getElementById('col_peso_kg');
+        } else if (tipoFiltro === "79") {
+            selectedValues = document.getElementById('col_transferencia');
+        } else if (tipoFiltro === "80") {
+            selectedValues = document.getElementById('col_fecha_inicio_etiquetado');
+        } else if (tipoFiltro === "81") {
+            selectedValues = document.getElementById('col_fecha_termino_etiquetado');
+        } else if (tipoFiltro === "82") {
+            selectedValues = document.getElementById('col_hora_termino_etiquetado');
+        } else if (tipoFiltro === "83") {
+            selectedValues = document.getElementById('col_proveedor');
+        } else if (tipoFiltro === "84") {
+            selectedValues = document.getElementById('col_proveedor_carga');
+        } else if (tipoFiltro === "85") {
+            selectedValues = document.getElementById('col_fy');
+        }
+
+        if (tipoFiltro === "0") {
+            selected = "0";
+        } else {
+            selected = [...selectedValues.options].filter(option => option.selected).map(option => option.value);
+        }
+
+        valueJsp = tipoFiltro + "@" + selected;
+
+        // Obtener una referencia al objeto window de la página principal
+        var ventanaPrincipal = window.parent;
+
+        // Enviar el parámetro al objeto window de la página principal
+        ventanaPrincipal.postMessage(valueJsp, "*");
+
+    }
+    
     function cleanMultiselects() {
         //$('.selectpicker').selectpicker('deselectAll');
         FiltrerData("0");
     }
-
+   /*--------------------------------------------------------------------------
+                     FUNCIONES - CONSULTA HISTORICO SEMAFORO
+     --------------------------------------------------------------------------*/    
     function historicoSemaforo(idShipment) {
         fetch("../ConsultarHistoricoSemaforo?idShipment=" + idShipment, {
             method: 'POST',
@@ -1635,159 +1699,9 @@ let contadorExcel = "";
                 }).catch(error => console.log(error));
     }
     
-    function changeColorByPositionSuccess(i) {
-        const table = document.querySelector("table");
-        if (table) {
-            const row = table.rows[i]; // Primera fila
-            const cell = row.cells[2]; // Primer <td> en la primera fila
-
-            if (cell) {
-                cell.style.backgroundColor = "#ABD1D5";
-                cell.style.color = "#000000";
-            }
-        }
-    }
-
-    function changeColorByPositionError(i) {
-        const table = document.querySelector("table");
-        if (table) {
-            const row = table.rows[i]; // Primera fila
-            const cell = row.cells[2]; // Primer <td> en la primera fila
-
-            if (cell) {
-                cell.style.backgroundColor = "#E88C50";
-                cell.style.color = "#000000";
-            }
-        }
-    }
-
-    function cleanPermiso(permiso, i) {
-        let color = "";
-        let req = false;
-
-        if (permiso === "No") {
-            document.getElementById("fecha_envio[" + i + "]").value = "";
-            document.getElementById("fecha_recepcion_perm[" + i + "]").value = "";
-            document.getElementById("fecha_activacion_perm[" + i + "]").value = "";
-            document.getElementById("fecha_permisos_aut[" + i + "]").value = "";
-            color = "#ced4da";
-            req = true;
-        } else {
-            color = "#CC9D77";
-            req = false;
-        }
-
-        document.getElementById("permiso[" + i + "]").style.borderColor = color;
-        document.getElementById("fecha_envio[" + i + "]").style.borderColor = color;
-        document.getElementById("fecha_recepcion_perm[" + i + "]").style.borderColor = color;
-        document.getElementById("fecha_activacion_perm[" + i + "]").style.borderColor = color;
-        document.getElementById("fecha_permisos_aut[" + i + "]").style.borderColor = color;
-        /*Habilitar/Deshabilitar campos*/
-        document.getElementById("fecha_envio[" + i + "]").disabled = req;
-        document.getElementById("fecha_recepcion_perm[" + i + "]").disabled = req;
-        document.getElementById("fecha_activacion_perm[" + i + "]").disabled = req;
-        document.getElementById("fecha_permisos_aut[" + i + "]").disabled = req;
-    }
-
-    function cleanRequerimientoCA(reqCa, i) {
-        let color = "";
-        let req = false;
-
-        if (reqCa === "No") {
-            document.getElementById("fecha_recepcion_ca[" + i + "]").value = "";
-            document.getElementById("num_constancia_ca[" + i + "]").value = "";
-            document.getElementById("monto_ca[" + i + "]").value = "";
-            color = "#ced4da";
-            req = true;
-        } else {
-            color = "#616363";
-            req = false;
-        }
-
-        document.getElementById("req_ca[" + i + "]").style.borderColor = color;
-        document.getElementById("fecha_recepcion_ca[" + i + "]").style.borderColor = color;
-        document.getElementById("num_constancia_ca[" + i + "]").style.borderColor = color;
-        document.getElementById("monto_ca[" + i + "]").style.borderColor = color;
-        /*Habilitar/Deshabilitar campos*/
-        document.getElementById("fecha_recepcion_ca[" + i + "]").disabled = req;
-    }
-
-    function cleanResultadoModulacion(modulacion, i, AgentType) {
-        let color = "";
-
-        if (modulacion === "Verde") {
-            document.getElementById("sello_origen[" + i + "]").value = "";
-            color = "#ced4da";
-        } else {
-            color = "#CC9D77";
-        }
-
-        if (AgentType != "4005") { //RECHY
-            if (AgentType === "4002") { //CUSA
-                document.getElementById("sello_final[" + i + "]").style.borderColor = color;
-            } else {
-                document.getElementById("sello_origen[" + i + "]").style.borderColor = color;
-            }
-        }
-
-        document.getElementById("resultado_modulacion[" + i + "]").style.borderColor = color;
-    }
-
-    function cleanPedimento_r1_1er(pedimento, i) {
-        let color = "";
-
-        if (pedimento.replace(/\s/g, "") === "") {
-            document.getElementById("motivo_rectificacion_1er[" + i + "]").value = "";
-            color = "#ced4da";
-        } else {
-            color = "#CC9D77";
-        }
-
-        document.getElementById("pedimento_r1_1er[" + i + "]").style.borderColor = color;
-        document.getElementById("motivo_rectificacion_1er[" + i + "]").style.borderColor = color;
-    }
-
-    function cleanPedimento_r1_2do(pedimento, i) {
-        let color = "";
-
-        if (pedimento.replace(/\s/g, "") === "") {
-            document.getElementById("motivo_rectificacion_2do[" + i + "]").value = "";
-            color = "#ced4da";
-        } else {
-            color = "#CC9D77";
-        }
-
-        document.getElementById("pedimento_r1_2do[" + i + "]").style.borderColor = color;
-        document.getElementById("motivo_rectificacion_2do[" + i + "]").style.borderColor = color;
-    }
-
-    function mSgErrorLineCustoms(txtErrormSg, i) {
-        // Obtén una referencia al elemento y al popup
-        const elemento = document.getElementById('elemento' + i);
-        const popup = document.getElementById('popup' + i);
-
-        //Formato texto 
-        const txt = txtErrormSg.substring(0, txtErrormSg.length - 1);
-        let msg = txt.replace(",", "\t");
-
-        //Cargar mensaje en label
-        document.getElementById('mSgError' + i).innerHTML = msg;
-
-        // Agrega un manejador de eventos al elemento para detectar el paso del cursor
-        elemento.addEventListener('mouseover', mostrarPopup);
-        elemento.addEventListener('mouseout', ocultarPopup);
-
-        // Función para mostrar el popup
-        function mostrarPopup() {
-            popup.style.display = 'block';
-        }
-
-        // Función para ocultar el popup
-        function ocultarPopup() {
-            popup.style.display = 'none';
-        }
-    }
-
+   /*--------------------------------------------------------------------------
+                      FUNCIONES - LOG DE ERRORES/ALERTAS
+     --------------------------------------------------------------------------*/ 
     function msgErrorAgenteAduanal(i, AgentType) {
 
         let estatus = document.getElementById("estatus_operacion[" + i + "]").value;
@@ -1991,155 +1905,74 @@ let contadorExcel = "";
 
         }
     }
+    
+    function changeColorByPositionSuccess(i) {
+        const table = document.querySelector("table");
+        if (table) {
+            const row = table.rows[i]; // Primera fila
+            const cell = row.cells[2]; // Primer <td> en la primera fila
 
-    function formComplet(idAgenteAduanal, i) {
-       /* RULE #10 */
-        const formulario = document.getElementById('tr' + i);
-        let disabledOption = "";
-
-        pais_origen = formulario.querySelector('[name="pais_origen[' + i + ']"]').value;
-        size_container = formulario.querySelector('[name="size_container[' + i + ']"]').value;
-        valor_usd = formulario.querySelector('[name="valor_usd[' + i + ']"]').value;
-        eta_port_discharge = formulario.querySelector('[name="eta_port_discharge[' + i + ']"]').value;
-        agente_aduanal = formulario.querySelector('[name="agente_aduanal[' + i + ']"]').value;
-        pedimento_a1 = formulario.querySelector('[name="pedimento_a1[' + i + ']"]').value;
-        pedimento_r1_1er = formulario.querySelector('[name="pedimento_r1_1er[' + i + ']"]').value;
-        motivo_rectificacion_1er = formulario.querySelector('[name="motivo_rectificacion_1er[' + i + ']"]').value;
-        pedimento_r1_2do = formulario.querySelector('[name="pedimento_r1_2do[' + i + ']"]').value;
-        motivo_rectificacion_2do = formulario.querySelector('[name="motivo_rectificacion_2do[' + i + ']"]').value;
-        fecha_recepcion_doc = formulario.querySelector('[name="fecha_recepcion_doc[' + i + ']"]').value;
-        recinto = formulario.querySelector('[name="recinto[' + i + ']"]').value;
-        naviera = formulario.querySelector('[name="naviera[' + i + ']"]').value;
-        buque = formulario.querySelector('[name="buque[' + i + ']"]').value;
-        fecha_revalidacion = formulario.querySelector('[name="fecha_revalidacion[' + i + ']"]').value;
-        fecha_previo_origen = formulario.querySelector('[name="fecha_previo_origen[' + i + ']"]').value;
-        fecha_previo_destino = formulario.querySelector('[name="fecha_previo_destino[' + i + ']"]').value;
-        fecha_resultado_previo = formulario.querySelector('[name="fecha_resultado_previo[' + i + ']"]').value;
-        proforma_final = formulario.querySelector('[name="proforma_final[' + i + ']"]').value;
-        permiso = formulario.querySelector('[name="permiso[' + i + ']"]').value;
-        fecha_envio = formulario.querySelector('[name="fecha_envio[' + i + ']"]').value;
-        fecha_recepcion_perm = formulario.querySelector('[name="fecha_recepcion_perm[' + i + ']"]').value;
-        fecha_activacion_perm = formulario.querySelector('[name="fecha_activacion_perm[' + i + ']"]').value;
-        fecha_permisos_aut = formulario.querySelector('[name="fecha_permisos_aut[' + i + ']"]').value;
-        co_pref_arancelaria = formulario.querySelector('[name="co_pref_arancelaria[' + i + ']"]').value;
-        aplic_pref_arancelaria = formulario.querySelector('[name="aplic_pref_arancelaria[' + i + ']"]').value;
-        req_uva = formulario.querySelector('[name="req_uva[' + i + ']"]').value;
-        req_ca = formulario.querySelector('[name="req_ca[' + i + ']"]').value;
-        fecha_recepcion_ca = formulario.querySelector('[name="fecha_recepcion_ca[' + i + ']"]').value;
-        num_constancia_ca = formulario.querySelector('[name="num_constancia_ca[' + i + ']"]').value;
-        monto_ca = formulario.querySelector('[name="monto_ca[' + i + ']"]').value;
-        fecha_doc_completos = formulario.querySelector('[name="fecha_doc_completos[' + i + ']"]').value;
-        fecha_pago_pedimento = formulario.querySelector('[name="fecha_pago_pedimento[' + i + ']"]').value;
-        fecha_solicitud_transporte = formulario.querySelector('[name="fecha_solicitud_transporte[' + i + ']"]').value;
-        fecha_modulacion = formulario.querySelector('[name="fecha_modulacion[' + i + ']"]').value;
-        modalidad = formulario.querySelector('[name="modalidad[' + i + ']"]').value;
-        resultado_modulacion = formulario.querySelector('[name="resultado_modulacion[' + i + ']"]').value;
-        fecha_reconocimiento = formulario.querySelector('[name="fecha_reconocimiento[' + i + ']"]').value;
-        fecha_liberacion = formulario.querySelector('[name="fecha_liberacion[' + i + ']"]').value;
-        sello_origen = formulario.querySelector('[name="sello_origen[' + i + ']"]').value;
-        sello_final = formulario.querySelector('[name="sello_final[' + i + ']"]').value;
-        motivo_atraso = formulario.querySelector('[name="motivo_atraso[' + i + ']"]').value;
-        fy = formulario.querySelector('[name="fy[' + i + ']"]').value;
-
-        if (idAgenteAduanal === "4001") { //LOGIX
-            llegada_a_nova = formulario.querySelector('[name="llegada_a_nova[' + i + ']"]').value;
-            llegada_a_globe_trade_sd = formulario.querySelector('[name="llegada_a_globe_trade_sd[' + i + ']"]').value;
-            archivo_m = formulario.querySelector('[name="archivo_m[' + i + ']"]').value;
-            fecha_archivo_m = formulario.querySelector('[name="fecha_archivo_m[' + i + ']"]').value;
-            fecha_solicit_manip = formulario.querySelector('[name="fecha_solicit_manip[' + i + ']"]').value;
-            fecha_vencim_manip = formulario.querySelector('[name="fecha_vencim_manip[' + i + ']"]').value;
-            fecha_confirm_clave_pedim = formulario.querySelector('[name="fecha_confirm_clave_pedim[' + i + ']"]').value;
-            fecha_recep_increment = formulario.querySelector('[name="fecha_recep_increment[' + i + ']"]').value;
-            t_e = formulario.querySelector('[name="t_e[' + i + ']"]').value;
-            fecha_vencim_inbound = formulario.querySelector('[name="fecha_vencim_inbound[' + i + ']"]').value;
-        }
-
-        if (idAgenteAduanal === "4002") { //CUSA
-            no_bultos = formulario.querySelector('[name="no_bultos[' + i + ']"]').value;
-            peso_kg = formulario.querySelector('[name="peso_kg[' + i + ']"]').value;
-            transferencia = formulario.querySelector('[name="transferencia[' + i + ']"]').value;
-            fecha_inicio_etiquetado = formulario.querySelector('[name="fecha_inicio_etiquetado[' + i + ']"]').value;
-            fecha_termino_etiquetado = formulario.querySelector('[name="fecha_termino_etiquetado[' + i + ']"]').value;
-            hora_termino_etiquetado = formulario.querySelector('[name="hora_termino_etiquetado[' + i + ']"]').value;
-            proveedor = formulario.querySelector('[name="proveedor[' + i + ']"]').value;
-            proveedor_carga = formulario.querySelector('[name="proveedor_carga[' + i + ']"]').value;
-        }
-
-        /* RULE #10 */   /*(Estatus Importado)*/
-        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //RADAR|SESMA|VF
-            if (pais_origen == "" || size_container == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || recinto == "" || naviera == "" || buque == "" || fecha_revalidacion == "" || fecha_previo_origen == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_origen == "" || sello_final == "" || motivo_atraso == "" || fy == "") {
-                disabledOption = "false";
-            }
-            if (permiso === "Si") {
-                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
-                    disabledOption = "false";
-                }
-            }
-        } else if (idAgenteAduanal === "4001") { //LOGIX
-            if (pais_origen == "" || size_container == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || recinto == "" || naviera == "" || buque == "" || fecha_revalidacion == "" || fecha_previo_origen == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_origen == "" || sello_final == "" || motivo_atraso == "" || fy == "" || llegada_a_nova == "" || llegada_a_globe_trade_sd == "" || archivo_m == "" || fecha_archivo_m == "" || fecha_solicit_manip == "" || fecha_vencim_manip == "" || fecha_confirm_clave_pedim == "" || fecha_recep_increment == "" || t_e == "" || fecha_vencim_inbound == "") {
-                disabledOption = "false";
-            }
-            if (permiso === "Si") {
-                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
-                    disabledOption = "false";
-                }
-            }
-        } else if (idAgenteAduanal === "4002") { //CUSA
-            if (pais_origen == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || naviera == "" || fecha_revalidacion == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || sello_final == "" || motivo_atraso == "" || fy == "" || no_bultos == "" || peso_kg == "" || transferencia == "" || fecha_inicio_etiquetado == "" || fecha_termino_etiquetado == "" || hora_termino_etiquetado == "" || proveedor == "" || proveedor_carga == "") {
-                disabledOption = "false";
-            }
-            if (permiso === "Si") {
-                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
-                    disabledOption = "false";
-                }
-            }
-        } else if (idAgenteAduanal === "4005") { //RECHY
-            if (pais_origen == "" || valor_usd == "" || eta_port_discharge == "" || agente_aduanal == "" || pedimento_a1 == "" || pedimento_r1_1er == "" || motivo_rectificacion_1er == "" || pedimento_r1_2do == "" || motivo_rectificacion_2do == "" || fecha_recepcion_doc == "" || fecha_previo_destino == "" || fecha_resultado_previo == "" || proforma_final == "" || co_pref_arancelaria == "" || aplic_pref_arancelaria == "" || req_uva == "" || req_ca == "" || fecha_recepcion_ca == "" || num_constancia_ca == "" || monto_ca == "" || fecha_doc_completos == "" || fecha_pago_pedimento == "" || fecha_solicitud_transporte == "" || fecha_modulacion == "" || modalidad == "" || resultado_modulacion == "" || fecha_reconocimiento == "" || fecha_liberacion == "" || motivo_atraso == "" || fy == "") {
-                disabledOption = "false";
-            }
-            if (permiso === "Si") {
-                if (fecha_envio == "" || fecha_recepcion_perm == "" || fecha_activacion_perm == "" || fecha_permisos_aut == "") {
-                    disabledOption = "false";
-                }
+            if (cell) {
+                cell.style.backgroundColor = "#ABD1D5";
+                cell.style.color = "#000000";
             }
         }
-
-        var selector = document.getElementById("estatus_operacion[" + i + "]");
-        selector.options[19].disabled = disabledOption;
-
-     }
-
-    function pedimento(dateEtaPortDischarge, i){
-        
-        /*Calendarios: etaPortDischarge/pagoPedimento/modulacion*/
-        if(dateEtaPortDischarge !== ""){
-            
-            $('.datepicker-pedimento'+i).flatpickr({
-                dateFormat: 'm/d/Y',
-                minDate: dateEtaPortDischarge,
-                maxDate: new Date().fp_incr(50)
-            });
-        
-            $('.datepicker-modulacion'+i).flatpickr({
-                dateFormat: 'm/d/Y'
-            });
-        }
-    }            
-
-    function modulacion(i){
-        
-        let fecha_pago_pedimento = document.getElementById("fecha_pago_pedimento["+i+"]").value;
-        $('.datepicker-modulacion'+i).flatpickr({
-            dateFormat: 'm/d/Y',
-            minDate: fecha_pago_pedimento,
-            maxDate: new Date().fp_incr(50)
-        });
     }
 
+    function changeColorByPositionError(i) {
+        const table = document.querySelector("table");
+        if (table) {
+            const row = table.rows[i]; // Primera fila
+            const cell = row.cells[2]; // Primer <td> en la primera fila
+
+            if (cell) {
+                cell.style.backgroundColor = "#E88C50";
+                cell.style.color = "#000000";
+            }
+        }
+    }
+    
+    function mSgErrorLineCustoms(txtErrormSg, i) {
+        // Obtén una referencia al elemento y al popup
+        const elemento = document.getElementById('elemento' + i);
+        const popup = document.getElementById('popup' + i);
+
+        //Formato texto 
+        const txt = txtErrormSg.substring(0, txtErrormSg.length - 1);
+        let msg = txt.replace(",", "\t");
+
+        //Cargar mensaje en label
+        document.getElementById('mSgError' + i).innerHTML = msg;
+
+        // Agrega un manejador de eventos al elemento para detectar el paso del cursor
+        elemento.addEventListener('mouseover', mostrarPopup);
+        elemento.addEventListener('mouseout', ocultarPopup);
+
+        // Función para mostrar el popup
+        function mostrarPopup() {
+            popup.style.display = 'block';
+        }
+
+        // Función para ocultar el popup
+        function ocultarPopup() {
+            popup.style.display = 'none';
+        }
+    }
+    
+    function alertclose() {
+        setTimeout(function () {
+            swal.close();
+            //$("#WindowLoad").remove();
+        }, 1000);
+    }
+    
+   /*--------------------------------------------------------------------------
+                               FUNCIONES - EXCEL
+     --------------------------------------------------------------------------*/ 
     function logExcel(){
        mostrarOcultarDiv('divAMostrarOcultar', true); 
     }
-
+    
     function mostrarOcultarDiv(id, mostrar) {
         var elemento = document.getElementById(id);
         if (mostrar) {
@@ -2147,8 +1980,11 @@ let contadorExcel = "";
         } else {
           elemento.style.display = 'none';
         }
-      }
+    }
     
+   /*--------------------------------------------------------------------------
+                              FUNCIONES - LOADER
+     --------------------------------------------------------------------------*/
     function waitForTableToLoad() {
         return new Promise(resolve => {
             document.addEventListener("readystatechange", async function () {
@@ -2171,7 +2007,10 @@ let contadorExcel = "";
         var loaderWrapper = document.getElementById("loader-wrapper");
         loaderWrapper.style.display = "none";
     }
-      
+
+   /*--------------------------------------------------------------------------
+                          FUNCIONES - RECARGA DE SCRIPTS
+     --------------------------------------------------------------------------*/
     async function loadCss() {
         // Create a new script element
         var script = document.createElement('script');
@@ -2191,14 +2030,495 @@ let contadorExcel = "";
             }
         });
     }
+
+   /*--------------------------------------------------------------------------
+                   FUNCIONES - MODALS ELEMENTOS HTML/CONTROLADORES
+     --------------------------------------------------------------------------*/    
     
+    function show_eta_port_discharge(data, i){
+        $("#modal_show_eta_port_discharge").modal("show");
+        document.getElementById("eta_port_discharge").value = data;
+        contModals = i;
+    }
+    
+    function hide_eta_port_discharge(data){ 
+        $("#modal_show_eta_port_discharge").modal("hide");
+        document.getElementById("eta_port_discharge["+contModals+"]").innerHTML = data;
+        pedimento(data,contModals);
+    }
+    
+    /*function show_pedimento_r1_1er(data, i){
+        $("#modal_pedimento_r1_1er").modal("show");
+        document.getElementById("pedimento_r1_1er").value = data;
+        contModals = i;
+    }
+    
+    function hide_pedimento_r1_1er(data){ 
+        $("#modal_pedimento_r1_1er").modal("hide");
+        cleanPedimento_r1_1er(data, contModals);
+    }*/
+    
+    /*function show_pedimento_r1_2do(data, i){
+        $("#modal_pedimento_r1_2do").modal("show");
+        document.getElementById("pedimento_r1_2do").value = data;
+        contModals = i;
+    }
+    
+    function hide_pedimento_r1_2do(data){ 
+        $("#modal_pedimento_r1_2do").modal("hide");
+        cleanPedimento_r1_2do(data, contModals);
+    }*/
+    
+    function show_fecha_recepcion_doc(data, i){
+        $("#modal_fecha_recepcion_doc").modal("show");
+        document.getElementById("fecha_recepcion_doc").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_recepcion_doc(data){
+        contModals;
+        document.getElementById("fecha_recepcion_doc["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_recepcion_doc").modal("hide");
+    }
+
+    function show_fecha_revalidacion(data, i){
+        $("#modal_fecha_revalidacion").modal("show");
+        document.getElementById("fecha_revalidacion").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_revalidacion(data){
+        contModals;
+        document.getElementById("fecha_revalidacion["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_revalidacion").modal("hide");
+    }
+
+    function show_fecha_previo_origen(data, i){
+        $("#modal_fecha_previo_origen").modal("show");
+        document.getElementById("fecha_previo_origen").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_previo_origen(data){
+        contModals;
+        document.getElementById("fecha_previo_origen["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_previo_origen").modal("hide");
+    }
+
+    function show_fecha_previo_destino(data, i){
+        $("#modal_fecha_previo_destino").modal("show");
+        document.getElementById("fecha_previo_destino").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_previo_destino(data){
+        contModals;
+        document.getElementById("fecha_previo_destino["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_previo_destino").modal("hide");
+    }
+
+    function show_fecha_resultado_previo(data, i){
+        $("#modal_fecha_resultado_previo").modal("show");
+        document.getElementById("fecha_resultado_previo").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_resultado_previo(data){
+        contModals;
+        document.getElementById("fecha_resultado_previo["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_resultado_previo").modal("hide");
+    }
+
+    function show_proforma_final(data, i){
+        $("#modal_proforma_final").modal("show");
+        document.getElementById("proforma_final").value = data;
+        contModals = i;
+    }
+    
+    function hide_proforma_final(data){
+        contModals;
+        document.getElementById("proforma_final["+contModals+"]").innerHTML = data;
+        $("#modal_proforma_final").modal("hide");
+    }
+    
+    function show_permiso(data, i){
+        $("#modal_permiso").modal("show");
+        document.getElementById("permiso").value = data;
+        contModals = i;
+    }
+    
+    function hide_permiso(data){ 
+        $("#modal_permiso").modal("hide");
+        document.getElementById("permiso["+contModals+"]").innerHTML = data;
+        cleanPermiso(data, contModals);
+    }
+    
+    function show_fecha_envio(data, i){
+        $("#modal_fecha_envio").modal("show");
+        document.getElementById("fecha_envio").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_envio(data){
+        contModals;
+        document.getElementById("fecha_envio["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_envio").modal("hide");
+    }
+
+    function show_fecha_recepcion_perm(data, i){
+        $("#modal_fecha_recepcion_perm").modal("show");
+        document.getElementById("fecha_recepcion_perm").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_recepcion_perm(data){
+        contModals;
+        document.getElementById("fecha_recepcion_perm["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_recepcion_perm").modal("hide");
+    }
+
+    function show_fecha_activacion_perm(data, i){
+        $("#modal_fecha_activacion_perm").modal("show");
+        document.getElementById("fecha_activacion_perm").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_activacion_perm(data){
+        contModals;
+        document.getElementById("fecha_activacion_perm["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_activacion_perm").modal("hide");
+    }
+
+    function show_fecha_permisos_aut(data, i){
+        $("#modal_fecha_permisos_aut").modal("show");
+        document.getElementById("fecha_permisos_aut").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_permisos_aut(data){
+        contModals;
+        document.getElementById("fecha_permisos_aut["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_permisos_aut").modal("hide");
+    }
+
+    function show_co_pref_arancelaria(data, i){
+        $("#modal_co_pref_arancelaria").modal("show");
+        document.getElementById("co_pref_arancelaria").value = data;
+        contModals = i;
+    }
+    
+    function hide_co_pref_arancelaria(data){
+        contModals;
+        document.getElementById("co_pref_arancelaria["+contModals+"]").innerHTML = data;
+        $("#modal_co_pref_arancelaria").modal("hide");
+    }
+
+    function show_aplic_pref_arancelaria(data, i){
+        $("#modal_aplic_pref_arancelaria").modal("show");
+        document.getElementById("aplic_pref_arancelaria").value = data;
+        contModals = i;
+    }
+    
+    function hide_aplic_pref_arancelaria(data){
+        contModals;
+        document.getElementById("aplic_pref_arancelaria["+contModals+"]").innerHTML = data;
+        $("#modal_aplic_pref_arancelaria").modal("hide");
+    }
+
+    function show_req_uva(data, i){
+        $("#modal_req_uva").modal("show");
+        document.getElementById("req_uva").value = data;
+        contModals = i;
+    }
+    
+    function hide_req_uva(data){
+        contModals;
+        document.getElementById("req_uva["+contModals+"]").innerHTML = data;
+        $("#modal_req_uva").modal("hide");
+    }
+
+    function show_req_ca(data, i){
+        $("#modal_req_ca").modal("show");
+        document.getElementById("req_ca").value = data;
+        contModals = i;
+    }
+    
+    function hide_req_ca(data){ 
+        $("#modal_req_ca").modal("hide");
+        document.getElementById("req_ca["+contModals+"]").innerHTML = data;
+        cleanRequerimientoCA(data, contModals);
+    }  
+    
+    function show_fecha_recepcion_ca(data, i){
+        $("#modal_fecha_recepcion_ca").modal("show");
+        document.getElementById("fecha_recepcion_ca").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_recepcion_ca(data){
+        contModals;
+        document.getElementById("fecha_recepcion_ca["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_recepcion_ca").modal("hide");
+    }
+    
+    function show_fecha_doc_completos(data, i){
+        $("#modal_fecha_doc_completos").modal("show");
+        document.getElementById("fecha_doc_completos").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_doc_completos(data){
+        contModals;
+        document.getElementById("fecha_doc_completos["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_doc_completos").modal("hide");
+    }
+   
+    function show_fecha_pago_pedimento(data, i){
+        $("#modal_fecha_pago_pedimento").modal("show");
+        document.getElementById("fecha_pago_pedimento").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_pago_pedimento(data){ 
+        $("#modal_fecha_pago_pedimento").modal("hide");
+        modulacion(data,contModals);
+    }
+       
+    function show_fecha_solicitud_transporte(data, i){
+        $("#modal_fecha_solicitud_transporte").modal("show");
+        document.getElementById("fecha_solicitud_transporte").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_solicitud_transporte(data){
+        contModals;
+        document.getElementById("fecha_solicitud_transporte["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_solicitud_transporte").modal("hide");
+    }
+
+    function show_fecha_modulacion(data, i){
+        $("#modal_fecha_modulacion").modal("show");
+        document.getElementById("fecha_modulacion").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_modulacion(data){
+        contModals;
+        document.getElementById("fecha_modulacion["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_modulacion").modal("hide");
+    }
+
+    function show_modalidad(data, i){
+        $("#modal_modalidad").modal("show");
+        document.getElementById("modalidad").value=data;
+        contModals = i;
+    }
+    
+    function hide_modalidad(data){
+        contModals;
+        document.getElementById("modalidad["+contModals+"]").innerHTML = data;
+        $("#modal_modalidad").modal("hide");
+    }
+ 
+    function show_resultado_modulacion(data, i, AgenteType){
+        $("#modal_resultado_modulacion").modal("show");
+        document.getElementById("resultado_modulacion").value = data;
+        contModals = i;
+        AgenteId = AgenteType;
+    }
+    
+    function hide_resultado_modulacion(data){ 
+        $("#modal_resultado_modulacion").modal("hide");
+        document.getElementById("resultado_modulacion["+contModals+"]").innerHTML = data;
+        cleanResultadoModulacion(data, contModals, AgenteId);
+    } 
+ 
+    function show_fecha_reconocimiento(data, i){
+        $("#modal_fecha_reconocimiento").modal("show");
+        document.getElementById("fecha_reconocimiento").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_reconocimiento(data){
+        contModals;
+        document.getElementById("fecha_reconocimiento["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_reconocimiento").modal("hide");
+    }
+
+    function show_fecha_liberacion(data, i){
+        $("#modal_fecha_liberacion").modal("show");
+        document.getElementById("fecha_liberacion").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_liberacion(data){
+        contModals;
+        document.getElementById("fecha_liberacion["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_liberacion").modal("hide");
+    }
+
+    function show_fecha_retencion_aut(data, i){
+        $("#modal_fecha_retencion_aut").modal("show");
+        document.getElementById("fecha_retencion_aut").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_retencion_aut(data){
+        contModals;
+        document.getElementById("fecha_retencion_aut["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_retencion_aut").modal("hide");
+    }
+
+    function show_fecha_liberacion_aut(data, i){
+        $("#modal_fecha_liberacion_aut").modal("show");
+        document.getElementById("fecha_liberacion_aut").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_liberacion_aut(data){
+        contModals;
+        document.getElementById("fecha_liberacion_aut["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_liberacion_aut").modal("hide");
+    }
+
+    function show_llegada_a_nova(data, i){
+        $("#modal_llegada_a_nova").modal("show");
+        document.getElementById("llegada_a_nova").value = data;
+        contModals = i;
+    }
+    
+    function hide_llegada_a_nova(data){
+        contModals;
+        document.getElementById("llegada_a_nova["+contModals+"]").innerHTML = data;
+        $("#modal_llegada_a_nova").modal("hide");
+    }
+
+    function show_llegada_a_globe_trade_sd(data, i){
+        $("#modal_llegada_a_globe_trade_sd").modal("show");
+        document.getElementById("llegada_a_globe_trade_sd").value = data;
+        contModals = i;
+    }
+    
+    function hide_llegada_a_globe_trade_sd(data){
+        contModals;
+        document.getElementById("llegada_a_globe_trade_sd["+contModals+"]").innerHTML = data;
+        $("#modal_llegada_a_globe_trade_sd").modal("hide");
+    }
+
+    function show_fecha_archivo_m(data, i){
+        $("#modal_fecha_archivo_m").modal("show");
+        document.getElementById("fecha_archivo_m").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_archivo_m(data){
+        contModals;
+        document.getElementById("fecha_archivo_m["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_archivo_m").modal("hide");
+    }
+
+    function show_fecha_solicit_manip(data, i){
+        $("#modal_fecha_solicit_manip").modal("show");
+        document.getElementById("fecha_solicit_manip").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_solicit_manip(data){
+        contModals;
+        document.getElementById("fecha_solicit_manip["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_solicit_manip").modal("hide");
+    }
+
+    function show_fecha_vencim_manip(data, i){
+        $("#modal_fecha_vencim_manip").modal("show");
+        document.getElementById("fecha_vencim_manip").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_vencim_manip(data){
+        contModals;
+        document.getElementById("fecha_vencim_manip["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_vencim_manip").modal("hide");
+    }
+
+    function show_fecha_confirm_clave_pedim(data, i){
+        $("#modal_fecha_confirm_clave_pedim").modal("show");
+        document.getElementById("fecha_confirm_clave_pedim").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_confirm_clave_pedim(data){
+        contModals;
+        document.getElementById("fecha_confirm_clave_pedim["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_confirm_clave_pedim").modal("hide");
+    }
+
+    function show_fecha_recep_increment(data, i){
+        $("#modal_fecha_recep_increment").modal("show");
+        document.getElementById("fecha_recep_increment").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_recep_increment(data){
+        contModals;
+        document.getElementById("fecha_recep_increment["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_recep_increment").modal("hide");
+    }
+
+    function show_fecha_vencim_inbound(data, i){
+        $("#modal_fecha_vencim_inbound").modal("show");
+        document.getElementById("fecha_vencim_inbound").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_vencim_inbound(data){
+        contModals;
+        document.getElementById("fecha_vencim_inbound["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_vencim_inbound").modal("hide");
+    }
+    
+    function show_transferencia(data, i){
+        $("#modal_transferencia").modal("show");
+        document.getElementById("transferencia").value = data;
+        contModals = i;
+    }
+    
+    function hide_transferencia(data){
+        contModals;
+        document.getElementById("transferencia["+contModals+"]").innerHTML = data;
+        $("#modal_transferencia").modal("hide");
+    }
+    
+    function show_fecha_inicio_etiquetado(data, i){
+        $("#modal_fecha_inicio_etiquetado").modal("show");
+        document.getElementById("fecha_inicio_etiquetado").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_inicio_etiquetado(data){
+        contModals;
+        document.getElementById("fecha_inicio_etiquetado["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_inicio_etiquetado").modal("hide");
+    }
+
+    function show_fecha_termino_etiquetado(data, i){
+        $("#modal_fecha_termino_etiquetado").modal("show");
+        document.getElementById("fecha_termino_etiquetado").value = data;
+        contModals = i;
+    }
+    
+    function hide_fecha_termino_etiquetado(data){
+        contModals;
+        document.getElementById("fecha_termino_etiquetado["+contModals+"]").innerHTML = data;
+        $("#modal_fecha_termino_etiquetado").modal("hide");
+    }
+    /*--------------------------------------------------------------------------
+                           FUNCIONES - CALENDARIOS
+    --------------------------------------------------------------------------*/ 
     //Cargar función para formato de fechas 
     $('.datepicker').flatpickr({
         dateFormat: 'm/d/Y'
     });
-   
-    /*$("#upload_file").click(function () {
-       mostrarOcultarDiv('divAMostrarOcultar', false);
-    });*/
     
+
     

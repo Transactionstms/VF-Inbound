@@ -2174,7 +2174,7 @@ public class ConsultasQuery {
                + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
                + " WHERE TIE.ESTADO = 1 "
                + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') " 
-               + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/10/2023','dd/mm/yyyy') "
+               + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/11/2023','dd/mm/yyyy') "
                //+ " AND TIE.ID_EVENTO IN (231215,230960) "
                + " AND tid.division_nombre <> 'No/DSN' "
                + " AND gtn.load_type_final IS NOT NULL "   
@@ -2357,8 +2357,7 @@ public class ConsultasQuery {
         }else if(tipoFiltro.equals("85")){ // FY
           sql += " AND TIC.FY IN (" + id + ") ";
         }
-           sql += //"tibd.nombre_bd, tie.id_evento, "
-                " ORDER BY nvl(tic.estatus_semaforo,'0') ASC ";  
+           sql += " ORDER BY tie.id_evento, tibd.nombre_bd ASC ";  
         return sql;
     }
     

@@ -150,10 +150,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   String shipmentId = request.getParameter("shipmentId[" + i + "]").trim();
                   String containerId = request.getParameter("containerId[" + i + "]").trim();
                   String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
-                  String loadTypeFinal = request.getParameter("loadTypeFinal[" + i + "]").trim(); 
-                  String plantillaId = request.getParameter("plantillaId[" + i + "]").trim(); 
+                  String loadTypeFinal = request.getParameter("loadTypeFinal[" + i + "]").trim();
                   
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF 
                   //Parametros Generales
                   pais_origen = request.getParameter("pais_origen[" + i + "]").trim(); 
                   size_container = request.getParameter("size_container[" + i + "]").trim(); 
@@ -310,7 +308,7 @@ public class InsertarCustomsForms extends HttpServlet {
                   motivo_atraso = request.getParameter("motivo_atraso[" + i + "]").trim();             
                   observaciones = request.getParameter("observaciones[" + i + "]").trim(); 
                   fy = request.getParameter("fy[" + i + "]").trim();
-            }
+ 
               
             if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                
@@ -909,7 +907,6 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " EVENTO_ID, "
                                      + " SHIPMENT_ID, "
                                      + " CONTAINER_ID, "
-                                     + " PLANTILLA_ID, "
                                      + " AGENTE_ID, "
                                      + " LOAD_TYPE_FINAL, "
                                      + " ESTATUS_SEMAFORO, "
@@ -925,7 +922,6 @@ public class InsertarCustomsForms extends HttpServlet {
                                      + " '" + evento + "', "
                                      + " '" + shipmentId + "', "
                                      + " '" + containerId + "', "
-                                     + " '" + plantillaId +  "', "
                                      + " '" + idAgenteAduanal + "', "
                                      + " '" + loadTypeFinal + "', "
                                      + " '" + estatus_semaforo + "', "

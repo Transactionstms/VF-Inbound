@@ -79,7 +79,7 @@ html {
 @media only screen and (min-width: 1200px) {
   .table-scroll { height: 600px;   /*altura de la tabla*/ }
   .custom-select{
-        width: 170px; 
+        width: 160px; 
         margin-left: auto;
         margin-right: auto;
     }
@@ -260,6 +260,15 @@ a{
       padding: 15px;*/
       text-align: right;
     }  
+    
+    /* Estilo de ejemplo para resaltar la celda editada */
+    .celda-bloqueada {
+        background-color: #ECECEC; /* Fondo verde para indicar edición */
+    }
+
+    .celda-no-bloqueada {
+        background-color: #ffffff; /* Fondo verde para indicar edición */
+    }
     
     
     
