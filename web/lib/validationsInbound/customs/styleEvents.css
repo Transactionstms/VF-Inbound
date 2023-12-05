@@ -261,14 +261,33 @@ a{
       text-align: right;
     }  
     
-    /* Estilo de ejemplo para resaltar la celda editada */
-    .celda-bloqueada {
-        background-color: #ECECEC; /* Fondo verde para indicar edición */
-    }
-
-    .celda-no-bloqueada {
-        background-color: #ffffff; /* Fondo verde para indicar edición */
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     
+    
+    /*estilos chekbox - modals */
+    .contenedor_modal {
+      display: flex;
+      padding: 10px;
+    }
+
+    .columna1_modal {
+      flex: 1;
+      /*background-color: #3498db; 
+      padding: 15px;*/
+      text-align: left;
+    }
+
+    .columna2_modal {
+      flex: 2;
+      /*background-color: #33FFF6;
+      padding: 15px;*/
+      text-align: center;
+    }
     
     

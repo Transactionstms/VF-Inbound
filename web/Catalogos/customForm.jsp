@@ -1,5 +1,5 @@
 <%-- 
-    Document   : iframeDataCustom
+    Document   : customForm
     Created on : 2/06/2023, 01:43:04 AM
     Author     : luis_
 --%>
@@ -30,7 +30,7 @@
         <!-- Table css -->
         <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- jquery 3.6.0 -->
-        <script src="../lib/jQuery3.6.0/js/jquery.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Multiselect -->
         <link href="../lib/Multiselect2_4.0.13/css/select2.min.css" rel="stylesheet" type="text/css"/>
         <script src="../lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
@@ -39,24 +39,34 @@
         <!-- calendarios -->
         <link href="../lib/calendarios/css/flatpickr.min.css" rel="stylesheet" type="text/css"/>
         <script src="../lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
-        <script>            
+        <style>
+            /* Estilo de ejemplo para resaltar la celda editada */
+            .celda-bloqueada {
+                background-color: #ECECEC; /* Fondo verde para indicar edición */
+            }
+
+            .celda-no-bloqueada {
+                background-color: #ffffff; /* Fondo verde para indicar edición */
+            }
+        </style>
+        <script>
             document.addEventListener("readystatechange", async function () {
 
                 if (document.readyState === "loading") {
                     await mostrarLoader();
                     document.getElementById("loaderMsg").innerHTML = "loading";
                 }
-                
+
                 if (document.readyState === "interactive") {
-                    document.getElementById("loaderMsg").innerHTML = "";
+                    document.getElementById("loaderMsg").innerHTML = "loading";
                 }
-                
+
                 /*if (document.readyState === "complete") {
-                    document.getElementById("loaderMsg").innerHTML = "complete";
-                }*/
-                
+                 document.getElementById("loaderMsg").innerHTML = "complete";
+                 }*/
+
             });
-            
+
             // estado actual
             console.log(document.readyState);
 
@@ -77,22 +87,23 @@
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
 
                 ConsultasQuery fac = new ConsultasQuery();
-                
+
                 //Parametros Generales
                 String filterType = request.getParameter("filterType");       //Inicializar con 0
                 String id = request.getParameter("id");                  //Inicializar con 0
                 String[] arrOfStr = id.split(",");
                 String idDivision = "20";
-                String AgentType = ""; 
-                String idPlantilla = "";  /*Gral (26) | Logix(24) | Cusa(25)*/
+                String AgentType = "";
+                String idPlantilla = "";
+                /*Gral (26) | Logix(24) | Cusa(25)*/
                 String namePlantilla = "";
                 String caramelo = "";
                 String colorSemaforo = "";
                 String sizeSemaforo = "";
                 String listStatusOperationEvent = "";
                 String blockedDate = "";
-                int cont = 1; 
-   
+                int cont = 1;
+
                 //Objetos Multiselect:
                 HashSet<String> list_evento = new HashSet<String>();
                 HashSet<String> list_referenciaAA = new HashSet<String>();
@@ -114,52 +125,52 @@
                 HashSet<String> list_aa = new HashSet<String>();
                 HashSet<String> list_fechaMesVenta = new HashSet<String>();
                 HashSet<String> list_prioridad = new HashSet<String>();
-                HashSet<String> list_pais_origen= new HashSet<String>();
-                HashSet<String> list_size_container = new HashSet<String>();    
-                HashSet<String> list_valor_usd = new HashSet<String>();                 
-                HashSet<String> list_eta_port_discharge = new HashSet<String>();         
-                HashSet<String> list_agente_aduanal = new HashSet<String>();              
-                HashSet<String> list_pedimento_a1 = new HashSet<String>();              
-                HashSet<String> list_pedimento_r1_1er = new HashSet<String>();          
-                HashSet<String> list_motivo_rectificacion_1er = new HashSet<String>();    
-                HashSet<String> list_pedimento_r1_2do = new HashSet<String>();         
-                HashSet<String> list_motivo_rectificacion_2do = new HashSet<String>();    
-                HashSet<String> list_fecha_recepcion_doc = new HashSet<String>();    
+                HashSet<String> list_pais_origen = new HashSet<String>();
+                HashSet<String> list_size_container = new HashSet<String>();
+                HashSet<String> list_valor_usd = new HashSet<String>();
+                HashSet<String> list_eta_port_discharge = new HashSet<String>();
+                HashSet<String> list_agente_aduanal = new HashSet<String>();
+                HashSet<String> list_pedimento_a1 = new HashSet<String>();
+                HashSet<String> list_pedimento_r1_1er = new HashSet<String>();
+                HashSet<String> list_motivo_rectificacion_1er = new HashSet<String>();
+                HashSet<String> list_pedimento_r1_2do = new HashSet<String>();
+                HashSet<String> list_motivo_rectificacion_2do = new HashSet<String>();
+                HashSet<String> list_fecha_recepcion_doc = new HashSet<String>();
                 HashSet<String> list_recinto = new HashSet<String>();
                 HashSet<String> list_naviera = new HashSet<String>();
                 HashSet<String> list_buque = new HashSet<String>();
-                HashSet<String> list_fecha_revalidacion = new HashSet<String>();      
-                HashSet<String> list_fecha_previo_origen = new HashSet<String>();     
-                HashSet<String> list_fecha_previo_destino = new HashSet<String>();   
-                HashSet<String> list_fecha_resultado_previo = new HashSet<String>();   
-                HashSet<String> list_proforma_final = new HashSet<String>();        
-                HashSet<String> list_permiso = new HashSet<String>();               
-                HashSet<String> list_fecha_envio = new HashSet<String>();             
+                HashSet<String> list_fecha_revalidacion = new HashSet<String>();
+                HashSet<String> list_fecha_previo_origen = new HashSet<String>();
+                HashSet<String> list_fecha_previo_destino = new HashSet<String>();
+                HashSet<String> list_fecha_resultado_previo = new HashSet<String>();
+                HashSet<String> list_proforma_final = new HashSet<String>();
+                HashSet<String> list_permiso = new HashSet<String>();
+                HashSet<String> list_fecha_envio = new HashSet<String>();
                 HashSet<String> list_fecha_recepcion_perm = new HashSet<String>();
-                HashSet<String> list_fecha_activacion_perm = new HashSet<String>();   
-                HashSet<String> list_fecha_permisos_aut = new HashSet<String>();     
-                HashSet<String> list_co_pref_arancelaria = new HashSet<String>();    
-                HashSet<String> list_aplic_pref_arancelaria = new HashSet<String>();  
-                HashSet<String> list_req_uva = new HashSet<String>();  
-                HashSet<String> list_req_ca = new HashSet<String>();    
-                HashSet<String> list_fecha_recepcion_ca = new HashSet<String>(); 
-                HashSet<String> list_num_constancia_ca = new HashSet<String>();   
+                HashSet<String> list_fecha_activacion_perm = new HashSet<String>();
+                HashSet<String> list_fecha_permisos_aut = new HashSet<String>();
+                HashSet<String> list_co_pref_arancelaria = new HashSet<String>();
+                HashSet<String> list_aplic_pref_arancelaria = new HashSet<String>();
+                HashSet<String> list_req_uva = new HashSet<String>();
+                HashSet<String> list_req_ca = new HashSet<String>();
+                HashSet<String> list_fecha_recepcion_ca = new HashSet<String>();
+                HashSet<String> list_num_constancia_ca = new HashSet<String>();
                 HashSet<String> list_monto_ca = new HashSet<String>();
-                HashSet<String> list_fecha_doc_completos = new HashSet<String>();  
-                HashSet<String> list_fecha_pago_pedimento = new HashSet<String>();     
+                HashSet<String> list_fecha_doc_completos = new HashSet<String>();
+                HashSet<String> list_fecha_pago_pedimento = new HashSet<String>();
                 HashSet<String> list_fecha_solicitud_transporte = new HashSet<String>();
-                HashSet<String> list_fecha_modulacion = new HashSet<String>();   
-                HashSet<String> list_modalidad = new HashSet<String>();          
-                HashSet<String> list_resultado_modulacion = new HashSet<String>();    
-                HashSet<String> list_fecha_reconocimiento = new HashSet<String>();     
-                HashSet<String> list_fecha_liberacion = new HashSet<String>();       
-                HashSet<String> list_sello_origen = new HashSet<String>();            
-                HashSet<String> list_sello_final = new HashSet<String>();      
-                HashSet<String> list_fecha_retencion_aut = new HashSet<String>();     
-                HashSet<String> list_fecha_liberacion_aut = new HashSet<String>();   
-                HashSet<String> list_estatus_operacion = new HashSet<String>();      
-                HashSet<String> list_motivo_atraso = new HashSet<String>();          
-                HashSet<String> list_observaciones = new HashSet<String>(); 
+                HashSet<String> list_fecha_modulacion = new HashSet<String>();
+                HashSet<String> list_modalidad = new HashSet<String>();
+                HashSet<String> list_resultado_modulacion = new HashSet<String>();
+                HashSet<String> list_fecha_reconocimiento = new HashSet<String>();
+                HashSet<String> list_fecha_liberacion = new HashSet<String>();
+                HashSet<String> list_sello_origen = new HashSet<String>();
+                HashSet<String> list_sello_final = new HashSet<String>();
+                HashSet<String> list_fecha_retencion_aut = new HashSet<String>();
+                HashSet<String> list_fecha_liberacion_aut = new HashSet<String>();
+                HashSet<String> list_estatus_operacion = new HashSet<String>();
+                HashSet<String> list_motivo_atraso = new HashSet<String>();
+                HashSet<String> list_observaciones = new HashSet<String>();
                 HashSet<String> list_llegada_a_nova = new HashSet<String>();
                 HashSet<String> list_llegada_a_globe_trade_sd = new HashSet<String>();
                 HashSet<String> list_archivo_m = new HashSet<String>();
@@ -169,7 +180,7 @@
                 HashSet<String> list_fecha_confirm_clave_pedim = new HashSet<String>();
                 HashSet<String> list_fecha_recep_increment = new HashSet<String>();
                 HashSet<String> list_t_e = new HashSet<String>();
-                HashSet<String> list_fecha_vencim_inbound = new HashSet<String>();  
+                HashSet<String> list_fecha_vencim_inbound = new HashSet<String>();
                 HashSet<String> list_no_bultos = new HashSet<String>();
                 HashSet<String> list_peso_kg = new HashSet<String>();
                 HashSet<String> list_transferencia = new HashSet<String>();
@@ -177,131 +188,131 @@
                 HashSet<String> list_fecha_termino_etiquetado = new HashSet<String>();
                 HashSet<String> list_hora_termino_etiquetado = new HashSet<String>();
                 HashSet<String> list_proveedor = new HashSet<String>();
-                HashSet<String> list_proveedor_carga = new HashSet<String>();     
+                HashSet<String> list_proveedor_carga = new HashSet<String>();
                 HashSet<String> list_fy = new HashSet<String>();
-                
+
                 /*HashSet<String> list_evento = new HashSet<>(list_evento1);
                 list_evento.remove(null);*/ /*PENDIENTE*/
-                
+
                 //Obtener el agente aduanal, id plantilla y nombre plantilla del usuario: 
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
-                        AgentType = rowA[0]; 
+                        AgentType = rowA[0];
                         idPlantilla = rowA[1];
                         namePlantilla = rowA[2];
                     }
                 }
-                
+
                 //Generar caramelo: Opciones del multiselect
                 for (String a : arrOfStr) {
                     caramelo += a + ",";
                 }
                 caramelo = caramelo.replaceAll(",$", "");
-                
-               /*Columna: Estatus Operación (listado)*/
+
+                /*Columna: Estatus Operación (listado)*/
                 if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
                     for (String[] rowO : db.getResultado()) {
-                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>"; 
+                        listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>";
                     }
                 }
-                
-            if (db.doDB(fac.consultarEventosCustoms(AgentType,filterType,caramelo))) {
-                for (String[] row : db.getResultado()) {
-              
-                        list_evento.add("<option value='"+row[0]+"'>"+row[0]+"</option>");
-                        list_referenciaAA.add("<option value='"+row[30]+"'>"+row[30]+"</option>");
-                        list_responsable.add("<option value='"+row[1]+"'>"+row[1]+"</option>");
-                        list_finalDestination.add("<option value='"+row[2]+"'>"+row[2]+"</option>");
-                        list_brandDivision.add("<option value='"+row[21]+"'>"+row[21]+"</option>");
-                        list_division.add("<option value='"+row[4]+"'>"+row[4]+"</option>");
-                        list_shipmentId.add("<option value='"+row[5]+"'>"+row[5]+"</option>");
-                        list_containerId.add("<option value='"+row[6]+"'>"+row[6]+"</option>");
-                        list_blAwbPro.add("<option value='"+row[7]+"'>"+row[7]+"</option>");
-                        list_loadType.add("<option value='"+row[8]+"'>"+row[8]+"</option>");
-                        list_quantity.add("<option value='"+row[9]+"'>"+row[9]+"</option>");
-                        list_pod.add("<option value='"+row[19]+"'>"+row[19]+"</option>");
-                        list_estDepartFromPol.add("<option value='"+row[11]+"'>"+row[11]+"</option>");
-                        list_etaRealPortOfDischarge.add("<option value='"+row[12]+"'>"+row[12]+"</option>");
-                        list_estEtaDc.add("<option value='"+row[22]+"'>"+row[22]+"</option>");
-                        list_inboundNotification.add("<option value='"+row[14]+"'>"+row[14]+"</option>"); 
-                        list_pol.add("<option value='"+row[20]+"'>"+row[20]+"</option>");
-                        list_aa.add("<option value='"+row[16]+"'>"+row[16]+"</option>");
-                        list_fechaMesVenta.add("<option value='"+row[28]+"'>"+row[28]+"</option>");
-                        list_prioridad.add("<option value='"+row[97]+"'>"+row[97]+"</option>");
-                        list_pais_origen.add("<option value='"+row[31]+"'>"+row[31]+"</option>");   
-                        list_size_container.add("<option value='"+row[32]+"'>"+row[32]+"</option>");    
-                        list_valor_usd.add("<option value='"+row[33]+"'>"+row[33]+"</option>");                 
-                        list_eta_port_discharge.add("<option value='"+row[34]+"'>"+row[34]+"</option>");         
-                        list_agente_aduanal.add("<option value='"+row[35]+"'>"+row[35]+"</option>");              
-                        list_pedimento_a1.add("<option value='"+row[36]+"'>"+row[36]+"</option>");              
-                        list_pedimento_r1_1er.add("<option value='"+row[37]+"'>"+row[37]+"</option>");          
-                        list_motivo_rectificacion_1er.add("<option value='"+row[38]+"'>"+row[38]+"</option>");    
-                        list_pedimento_r1_2do.add("<option value='"+row[39]+"'>"+row[39]+"</option>");         
-                        list_motivo_rectificacion_2do.add("<option value='"+row[40]+"'>"+row[40]+"</option>");    
-                        list_fecha_recepcion_doc.add("<option value='"+row[41]+"'>"+row[41]+"</option>");    
-                        list_recinto.add("<option value='"+row[42]+"'>"+row[42]+"</option>");
-                        list_naviera.add("<option value='"+row[43]+"'>"+row[43]+"</option>");
-                        list_buque.add("<option value='"+row[44]+"'>"+row[44]+"</option>");
-                        list_fecha_revalidacion.add("<option value='"+row[45]+"'>"+row[45]+"</option>");      
-                        list_fecha_previo_origen.add("<option value='"+row[46]+"'>"+row[46]+"</option>");     
-                        list_fecha_previo_destino.add("<option value='"+row[47]+"'>"+row[47]+"</option>");   
-                        list_fecha_resultado_previo.add("<option value='"+row[48]+"'>"+row[48]+"</option>");   
-                        list_proforma_final.add("<option value='"+row[49]+"'>"+row[49]+"</option>");        
-                        list_permiso.add("<option value='"+row[50]+"'>"+row[50]+"</option>");               
-                        list_fecha_envio.add("<option value='"+row[51]+"'>"+row[51]+"</option>");             
-                        list_fecha_recepcion_perm.add("<option value='"+row[52]+"'>"+row[52]+"</option>");
-                        list_fecha_activacion_perm.add("<option value='"+row[53]+"'>"+row[53]+"</option>");    
-                        list_fecha_permisos_aut.add("<option value='"+row[54]+"'>"+row[54]+"</option>");     
-                        list_co_pref_arancelaria.add("<option value='"+row[55]+"'>"+row[55]+"</option>");    
-                        list_aplic_pref_arancelaria.add("<option value='"+row[56]+"'>"+row[56]+"</option>");  
-                        list_req_uva.add("<option value='"+row[57]+"'>"+row[57]+"</option>");   
-                        list_req_ca.add("<option value='"+row[58]+"'>"+row[58]+"</option>");    
-                        list_fecha_recepcion_ca.add("<option value='"+row[59]+"'>"+row[59]+"</option>"); 
-                        list_num_constancia_ca.add("<option value='"+row[60]+"'>"+row[60]+"</option>");   
-                        list_monto_ca.add("<option value='"+row[61]+"'>"+row[61]+"</option>");
-                        list_fecha_doc_completos.add("<option value='"+row[62]+"'>"+row[62]+"</option>");  
-                        list_fecha_pago_pedimento.add("<option value='"+row[63]+"'>"+row[63]+"</option>");     
-                        list_fecha_solicitud_transporte.add("<option value='"+row[64]+"'>"+row[64]+"</option>");
-                        list_fecha_modulacion.add("<option value='"+row[65]+"'>"+row[65]+"</option>");   
-                        list_modalidad.add("<option value='"+row[66]+"'>"+row[66]+"</option>");          
-                        list_resultado_modulacion.add("<option value='"+row[67]+"'>"+row[67]+"</option>");    
-                        list_fecha_reconocimiento.add("<option value='"+row[68]+"'>"+row[68]+"</option>");     
-                        list_fecha_liberacion.add("<option value='"+row[69]+"'>"+row[69]+"</option>");       
-                        list_sello_origen.add("<option value='"+row[70]+"'>"+row[70]+"</option>");            
-                        list_sello_final.add("<option value='"+row[71]+"'>"+row[71]+"</option>");      
-                        list_fecha_retencion_aut.add("<option value='"+row[72]+"'>"+row[72]+"</option>");     
-                        list_fecha_liberacion_aut.add("<option value='"+row[73]+"'>"+row[73]+"</option>");   
-                        list_estatus_operacion.add("<option value='"+row[74]+"'>"+row[74]+"</option>");      
-                        list_motivo_atraso.add("<option value='"+row[75]+"'>"+row[75]+"</option>");          
-                        list_observaciones.add("<option value='"+row[76]+"'>"+row[76]+"</option>"); 
 
-                    if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF            
-                        list_llegada_a_nova.add("<option value='"+row[77]+"'>"+row[77]+"</option>");
-                        list_llegada_a_globe_trade_sd.add("<option value='"+row[78]+"'>"+row[78]+"</option>");
-                        list_archivo_m.add("<option value='"+row[79]+"'>"+row[79]+"</option>");
-                        list_fecha_archivo_m.add("<option value='"+row[80]+"'>"+row[80]+"</option>");
-                        list_fecha_solicit_manip.add("<option value='"+row[81]+"'>"+row[81]+"</option>");
-                        list_fecha_vencim_manip.add("<option value='"+row[82]+"'>"+row[82]+"</option>");
-                        list_fecha_confirm_clave_pedim.add("<option value='"+row[83]+"'>"+row[83]+"</option>");
-                        list_fecha_recep_increment.add("<option value='"+row[84]+"'>"+row[84]+"</option>");
-                        list_t_e.add("<option value='"+row[85]+"'>"+row[85]+"</option>");
-                        list_fecha_vencim_inbound.add("<option value='"+row[86]+"'>"+row[86]+"</option>");
-                    }
+                if (db.doDB(fac.consultarEventosCustoms(AgentType, filterType, caramelo))) {
+                    for (String[] row : db.getResultado()) {
 
-                    if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
-                        list_no_bultos.add("<option value='"+row[87]+"'>"+row[87]+"</option>");
-                        list_peso_kg.add("<option value='"+row[88]+"'>"+row[88]+"</option>");
-                        list_transferencia.add("<option value='"+row[89]+"'>"+row[89]+"</option>");
-                        list_fecha_inicio_etiquetado.add("<option value='"+row[90]+"'>"+row[90]+"</option>");
-                        list_fecha_termino_etiquetado.add("<option value='"+row[91]+"'>"+row[91]+"</option>");
-                        list_hora_termino_etiquetado.add("<option value='"+row[92]+"'>"+row[92]+"</option>");
-                        list_proveedor.add("<option value='"+row[93]+"'>"+row[93]+"</option>");
-                        list_proveedor_carga.add("<option value='"+row[94]+"'>"+row[94]+"</option>");
-                        list_fy.add("<option value='"+row[95]+"'>"+row[95]+"</option>");
+                        list_evento.add("<option value='" + row[0] + "'>" + row[0] + "</option>");
+                        list_referenciaAA.add("<option value='" + row[30] + "'>" + row[30] + "</option>");
+                        list_responsable.add("<option value='" + row[1] + "'>" + row[1] + "</option>");
+                        list_finalDestination.add("<option value='" + row[2] + "'>" + row[2] + "</option>");
+                        list_brandDivision.add("<option value='" + row[21] + "'>" + row[21] + "</option>");
+                        list_division.add("<option value='" + row[4] + "'>" + row[4] + "</option>");
+                        list_shipmentId.add("<option value='" + row[5] + "'>" + row[5] + "</option>");
+                        list_containerId.add("<option value='" + row[6] + "'>" + row[6] + "</option>");
+                        list_blAwbPro.add("<option value='" + row[7] + "'>" + row[7] + "</option>");
+                        list_loadType.add("<option value='" + row[8] + "'>" + row[8] + "</option>");
+                        list_quantity.add("<option value='" + row[9] + "'>" + row[9] + "</option>");
+                        list_pod.add("<option value='" + row[19] + "'>" + row[19] + "</option>");
+                        list_estDepartFromPol.add("<option value='" + row[11] + "'>" + row[11] + "</option>");
+                        list_etaRealPortOfDischarge.add("<option value='" + row[12] + "'>" + row[12] + "</option>");
+                        list_estEtaDc.add("<option value='" + row[22] + "'>" + row[22] + "</option>");
+                        list_inboundNotification.add("<option value='" + row[14] + "'>" + row[14] + "</option>");
+                        list_pol.add("<option value='" + row[20] + "'>" + row[20] + "</option>");
+                        list_aa.add("<option value='" + row[16] + "'>" + row[16] + "</option>");
+                        list_fechaMesVenta.add("<option value='" + row[28] + "'>" + row[28] + "</option>");
+                        list_prioridad.add("<option value='" + row[97] + "'>" + row[97] + "</option>");
+                        list_pais_origen.add("<option value='" + row[31] + "'>" + row[31] + "</option>");
+                        list_size_container.add("<option value='" + row[32] + "'>" + row[32] + "</option>");
+                        list_valor_usd.add("<option value='" + row[33] + "'>" + row[33] + "</option>");
+                        list_eta_port_discharge.add("<option value='" + row[34] + "'>" + row[34] + "</option>");
+                        list_agente_aduanal.add("<option value='" + row[35] + "'>" + row[35] + "</option>");
+                        list_pedimento_a1.add("<option value='" + row[36] + "'>" + row[36] + "</option>");
+                        list_pedimento_r1_1er.add("<option value='" + row[37] + "'>" + row[37] + "</option>");
+                        list_motivo_rectificacion_1er.add("<option value='" + row[38] + "'>" + row[38] + "</option>");
+                        list_pedimento_r1_2do.add("<option value='" + row[39] + "'>" + row[39] + "</option>");
+                        list_motivo_rectificacion_2do.add("<option value='" + row[40] + "'>" + row[40] + "</option>");
+                        list_fecha_recepcion_doc.add("<option value='" + row[41] + "'>" + row[41] + "</option>");
+                        list_recinto.add("<option value='" + row[42] + "'>" + row[42] + "</option>");
+                        list_naviera.add("<option value='" + row[43] + "'>" + row[43] + "</option>");
+                        list_buque.add("<option value='" + row[44] + "'>" + row[44] + "</option>");
+                        list_fecha_revalidacion.add("<option value='" + row[45] + "'>" + row[45] + "</option>");
+                        list_fecha_previo_origen.add("<option value='" + row[46] + "'>" + row[46] + "</option>");
+                        list_fecha_previo_destino.add("<option value='" + row[47] + "'>" + row[47] + "</option>");
+                        list_fecha_resultado_previo.add("<option value='" + row[48] + "'>" + row[48] + "</option>");
+                        list_proforma_final.add("<option value='" + row[49] + "'>" + row[49] + "</option>");
+                        list_permiso.add("<option value='" + row[50] + "'>" + row[50] + "</option>");
+                        list_fecha_envio.add("<option value='" + row[51] + "'>" + row[51] + "</option>");
+                        list_fecha_recepcion_perm.add("<option value='" + row[52] + "'>" + row[52] + "</option>");
+                        list_fecha_activacion_perm.add("<option value='" + row[53] + "'>" + row[53] + "</option>");
+                        list_fecha_permisos_aut.add("<option value='" + row[54] + "'>" + row[54] + "</option>");
+                        list_co_pref_arancelaria.add("<option value='" + row[55] + "'>" + row[55] + "</option>");
+                        list_aplic_pref_arancelaria.add("<option value='" + row[56] + "'>" + row[56] + "</option>");
+                        list_req_uva.add("<option value='" + row[57] + "'>" + row[57] + "</option>");
+                        list_req_ca.add("<option value='" + row[58] + "'>" + row[58] + "</option>");
+                        list_fecha_recepcion_ca.add("<option value='" + row[59] + "'>" + row[59] + "</option>");
+                        list_num_constancia_ca.add("<option value='" + row[60] + "'>" + row[60] + "</option>");
+                        list_monto_ca.add("<option value='" + row[61] + "'>" + row[61] + "</option>");
+                        list_fecha_doc_completos.add("<option value='" + row[62] + "'>" + row[62] + "</option>");
+                        list_fecha_pago_pedimento.add("<option value='" + row[63] + "'>" + row[63] + "</option>");
+                        list_fecha_solicitud_transporte.add("<option value='" + row[64] + "'>" + row[64] + "</option>");
+                        list_fecha_modulacion.add("<option value='" + row[65] + "'>" + row[65] + "</option>");
+                        list_modalidad.add("<option value='" + row[66] + "'>" + row[66] + "</option>");
+                        list_resultado_modulacion.add("<option value='" + row[67] + "'>" + row[67] + "</option>");
+                        list_fecha_reconocimiento.add("<option value='" + row[68] + "'>" + row[68] + "</option>");
+                        list_fecha_liberacion.add("<option value='" + row[69] + "'>" + row[69] + "</option>");
+                        list_sello_origen.add("<option value='" + row[70] + "'>" + row[70] + "</option>");
+                        list_sello_final.add("<option value='" + row[71] + "'>" + row[71] + "</option>");
+                        list_fecha_retencion_aut.add("<option value='" + row[72] + "'>" + row[72] + "</option>");
+                        list_fecha_liberacion_aut.add("<option value='" + row[73] + "'>" + row[73] + "</option>");
+                        list_estatus_operacion.add("<option value='" + row[74] + "'>" + row[74] + "</option>");
+                        list_motivo_atraso.add("<option value='" + row[75] + "'>" + row[75] + "</option>");
+                        list_observaciones.add("<option value='" + row[76] + "'>" + row[76] + "</option>");
+
+                        if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF            
+                            list_llegada_a_nova.add("<option value='" + row[77] + "'>" + row[77] + "</option>");
+                            list_llegada_a_globe_trade_sd.add("<option value='" + row[78] + "'>" + row[78] + "</option>");
+                            list_archivo_m.add("<option value='" + row[79] + "'>" + row[79] + "</option>");
+                            list_fecha_archivo_m.add("<option value='" + row[80] + "'>" + row[80] + "</option>");
+                            list_fecha_solicit_manip.add("<option value='" + row[81] + "'>" + row[81] + "</option>");
+                            list_fecha_vencim_manip.add("<option value='" + row[82] + "'>" + row[82] + "</option>");
+                            list_fecha_confirm_clave_pedim.add("<option value='" + row[83] + "'>" + row[83] + "</option>");
+                            list_fecha_recep_increment.add("<option value='" + row[84] + "'>" + row[84] + "</option>");
+                            list_t_e.add("<option value='" + row[85] + "'>" + row[85] + "</option>");
+                            list_fecha_vencim_inbound.add("<option value='" + row[86] + "'>" + row[86] + "</option>");
+                        }
+
+                        if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+                            list_no_bultos.add("<option value='" + row[87] + "'>" + row[87] + "</option>");
+                            list_peso_kg.add("<option value='" + row[88] + "'>" + row[88] + "</option>");
+                            list_transferencia.add("<option value='" + row[89] + "'>" + row[89] + "</option>");
+                            list_fecha_inicio_etiquetado.add("<option value='" + row[90] + "'>" + row[90] + "</option>");
+                            list_fecha_termino_etiquetado.add("<option value='" + row[91] + "'>" + row[91] + "</option>");
+                            list_hora_termino_etiquetado.add("<option value='" + row[92] + "'>" + row[92] + "</option>");
+                            list_proveedor.add("<option value='" + row[93] + "'>" + row[93] + "</option>");
+                            list_proveedor_carga.add("<option value='" + row[94] + "'>" + row[94] + "</option>");
+                            list_fy.add("<option value='" + row[95] + "'>" + row[95] + "</option>");
+                        }
+
                     }
-                    
                 }
-            }
 
         %>
         <div class="card-body">
@@ -386,9 +397,9 @@
                             <th class="col-sm-4" style="background-color:#CC9D77;">Estatus de la operación&nbsp;<a onclick="FiltrerData('64')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_estatus_operacion" name="col_festatus_operacion"></select></th>
                             <th class="col-sm-4" style="background-color:#CC9D77;">Motivo Atraso&nbsp;<a onclick="FiltrerData('65')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_motivo_atraso" name="col_motivo_atraso"></select></th>
                             <th class="col-sm-4" style="background-color:#CC9D77;">Observaciones&nbsp;<a onclick="FiltrerData('66')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_observaciones" name="col_observaciones"></select></th>
-                <%
-                    if(AgentType.equals("4001")||AgentType.equals("4006")){ //LOGIX Y VF 
-                %>           
+                                    <%
+                                        if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF 
+                                    %>           
                             <th class="col-sm-4" style="background-color:#1C84C6;">Llegada a NOVA&nbsp;<a onclick="FiltrerData('67')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_llegada_a_nova" name="col_llegada_a_nova"></select></th>
                             <th class="col-sm-4" style="background-color:#1C84C6;">Llegada a Globe trade SD&nbsp;<a onclick="FiltrerData('68')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_llegada_a_globe_trade_sd" name="col_llegada_a_globe_trade_sd"></select></th>
                             <th class="col-sm-4" style="background-color:#1C84C6;">Archivo M&nbsp;<a onclick="FiltrerData('69')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_archivo_m" name="col_archivo_m"></select></th>
@@ -399,11 +410,11 @@
                             <th class="col-sm-6" style="background-color:#1C84C6;">Fecha de Recepcion de Incrementables&nbsp;<a onclick="FiltrerData('74')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_recep_increment" name="col_fecha_recep_increment"></select></th>
                             <th class="col-sm-4" style="background-color:#1C84C6;">T&E&nbsp;<a onclick="FiltrerData('75')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_t_e" name="col_t_e"></select></th>
                             <th class="col-sm-5" style="background-color:#1C84C6;">Fecha de Vencimiento del Inbound&nbsp;<a onclick="FiltrerData('76')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fecha_vencim_inbound" name="col_fecha_vencim_inbound"></select></th>
-                <%
-                    }
+                                    <%
+                                        }
 
-                    if(AgentType.equals("4002")||AgentType.equals("4006")){  //CUSA Y VF
-                %>            
+                                        if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+                                    %>            
                             <th class="col-sm-4" style="background-color:#1C84C6;">No. BULTOS&nbsp;<a onclick="FiltrerData('77')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_no_bultos" name="col_no_bultos"></select> </th> 
                             <th class="col-sm-4" style="background-color:#1C84C6;">Peso (KG)&nbsp;<a onclick="FiltrerData('78')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_peso_kg" name="col_peso_kg"></select> </th> 
                             <th class="col-sm-4" style="background-color:#1C84C6;">Transferencia&nbsp;<a onclick="FiltrerData('79')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_transferencia" name="col_transferencia"></select> </th> 
@@ -412,9 +423,9 @@
                             <th class="col-sm-5" style="background-color:#1C84C6;">Hora de termino Etiquetado&nbsp;<a onclick="FiltrerData('82')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_hora_termino_etiquetado" name="col_hora_termino_etiquetado"></select> </th> 
                             <th class="col-sm-4" style="background-color:#1C84C6;">Proveedor&nbsp;<a onclick="FiltrerData('83')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_proveedor" name="col_proveedor"></select> </th> 
                             <th class="col-sm-4" style="background-color:#1C84C6;">Proveedor de Carga&nbsp;<a onclick="FiltrerData('84')"><i class="fa fa-search"></i></a> &nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_proveedor_carga" name="col_proveedor_carga"></select> </th>
-                <%
-                    }
-                %>            
+                                    <%
+                                        }
+                                    %>            
                             <th class="col-sm-4" style="background-color:#1C84C6;">FY&nbsp;<a onclick="FiltrerData('85')"><i class="fa fa-search"></i></a>&nbsp;<a onclick="cleanMultiselects()"><i class="fa fa-trash-alt"></i></a><select multiple class="custom-select" id="col_fy" name="col_fy"></select></th>
                             <th class="col-sm-1" style="background-color:#FFFFFF;"></th>
                         </tr>
@@ -423,7 +434,7 @@
                 </table>
             </div>
         </div>
-        
+
         <!-- modal - histórico eta_port_discharge -->
         <div class="modal fade text-start" id="modalSemaforo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -451,58 +462,56 @@
                 </div>
             </div>
         </div>
-                
+
         <!----- modal_eta_port_discharge ----->
         <div class="modal fade text-start" id="modal_show_eta_port_discharge" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="eta_port_discharge" name="eta_port_discharge" type="text" autocomplete="off" onchange="hide_eta_port_discharge(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="eta_port_discharge" name="eta_port_discharge" type="text" autocomplete="off" onchange="hide_eta_port_discharge(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_pedimento_r1_1er ----->
         <div class="modal fade text-start" id="modal_pedimento_r1_1er" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control" id="pedimento_r1_1er" name="pedimento_r1_1er" type="text" autocomplete="off" onchange="hide_pedimento_r1_1er(this.value)">
-                    </div>
+
+                    <input class="form-control" id="pedimento_r1_1er" name="pedimento_r1_1er" type="text" autocomplete="off" onchange="hide_pedimento_r1_1er(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_pedimento_r1_2do ----->
         <div class="modal fade text-start" id="modal_pedimento_r1_2do" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control" id="pedimento_r1_2do" name="pedimento_r1_2do" type="text" autocomplete="off" onchange="hide_pedimento_r1_2do(this.value)">
-                    </div>
+
+                    <input class="form-control" id="pedimento_r1_2do" name="pedimento_r1_2do" type="text" autocomplete="off" onchange="hide_pedimento_r1_2do(this.value)">
+
                 </div>
             </div>
         </div>    
-        
+
         <!----- modal_fecha_recepcion_doc ----->
         <div class="modal fade text-start" id="modal_fecha_recepcion_doc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_recepcion_doc" name="fecha_recepcion_doc" type="text" autocomplete="off" onchange="hide_fecha_recepcion_doc(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="fecha_recepcion_doc" name="fecha_recepcion_doc" type="text" autocomplete="off" onchange="hide_fecha_recepcion_doc(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_revalidacion ----->
         <div class="modal fade text-start" id="modal_fecha_revalidacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_revalidacion" name="fecha_revalidacion" type="text" autocomplete="off" onchange="hide_fecha_revalidacion(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="fecha_revalidacion" name="fecha_revalidacion" type="text" autocomplete="off" onchange="hide_fecha_revalidacion(this.value)">
+
                 </div>
             </div>
         </div> 
@@ -511,78 +520,80 @@
         <div class="modal fade text-start" id="modal_fecha_previo_origen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_previo_origen" name="fecha_previo_origen" type="text" autocomplete="off" onchange="hide_fecha_previo_origen(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="fecha_previo_origen" name="fecha_previo_origen" type="text" autocomplete="off" onchange="hide_fecha_previo_origen(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_previo_destino ----->
         <div class="modal fade text-start" id="modal_fecha_previo_destino" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_previo_destino" name="fecha_previo_destino" type="text" autocomplete="off" onchange="hide_fecha_previo_destino(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="fecha_previo_destino" name="fecha_previo_destino" type="text" autocomplete="off" onchange="hide_fecha_previo_destino(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_resultado_previo ----->
         <div class="modal fade text-start" id="modal_fecha_resultado_previo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_resultado_previo" name="fecha_resultado_previo" type="text" autocomplete="off" onchange="hide_fecha_resultado_previo(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="fecha_resultado_previo" name="fecha_resultado_previo" type="text" autocomplete="off" onchange="hide_fecha_resultado_previo(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_proforma_final ----->
         <div class="modal fade text-start" id="modal_proforma_final" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="proforma_final" name="proforma_final" type="text" autocomplete="off" onchange="hide_proforma_final(this.value)">
-                    </div>
+
+                    <input class="form-control datepicker" value="" id="proforma_final" name="proforma_final" type="text" autocomplete="off" onchange="hide_proforma_final(this.value)">
+
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_permiso ----->
         <div class="modal fade text-start" id="modal_permiso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
+                <div class="modal-content">    
                     <div class="modal-body">
-                        <select class="form-control" id="permiso" name="permiso" onchange="hide_permiso(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                            <div class="contenedor_modal">
+                                <div class="columna1_modal">
+                                    <input type="checkbox" id="permiso1" name="permiso1" value="Si" onclick="hide_permiso(this.value)">
+                                    <label>Si</label> 
+                                </div>
+                                <div class="columna2_modal">
+                                    <input type="checkbox" id="permiso2" name="permiso2" value="No" onclick="hide_permiso(this.value)">
+                                    <label>No</label> 
+                                </div>
+                            </div>   
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_envio ----->
         <div class="modal fade text-start" id="modal_fecha_envio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_envio" name="fecha_envio" type="text" autocomplete="off" onchange="hide_fecha_envio(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_envio" name="fecha_envio" type="text" autocomplete="off" onchange="hide_fecha_envio(this.value)">
                 </div>
             </div>
         </div> 
-       
+
         <!----- modal_fecha_recepcion_perm ----->
         <div class="modal fade text-start" id="modal_fecha_recepcion_perm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_recepcion_perm" name="fecha_recepcion_perm" type="text" autocomplete="off" onchange="hide_fecha_recepcion_perm(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_recepcion_perm" name="fecha_recepcion_perm" type="text" autocomplete="off" onchange="hide_fecha_recepcion_perm(this.value)"> 
                 </div>
             </div>
         </div> 
@@ -591,9 +602,7 @@
         <div class="modal fade text-start" id="modal_fecha_activacion_perm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_activacion_perm" name="fecha_activacion_perm" type="text" autocomplete="off" onchange="hide_fecha_activacion_perm(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_activacion_perm" name="fecha_activacion_perm" type="text" autocomplete="off" onchange="hide_fecha_activacion_perm(this.value)">
                 </div>
             </div>
         </div> 
@@ -602,181 +611,199 @@
         <div class="modal fade text-start" id="modal_fecha_permisos_aut" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_permisos_aut" name="fecha_permisos_aut" type="text" autocomplete="off" onchange="hide_fecha_permisos_aut(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_permisos_aut" name="fecha_permisos_aut" type="text" autocomplete="off" onchange="hide_fecha_permisos_aut(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_co_pref_arancelaria ----->
         <div class="modal fade text-start" id="modal_co_pref_arancelaria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="co_pref_arancelaria" name="co_pref_arancelaria" onchange="hide_co_pref_arancelaria(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="co_pref_arancelaria1" name="co_pref_arancelaria1" value="Si" onclick="hide_co_pref_arancelaria(this.value)">
+                                <label>Si</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="co_pref_arancelaria2" name="co_pref_arancelaria2" value="No" onclick="hide_co_pref_arancelaria(this.value)">
+                                <label>No</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_aplic_pref_arancelaria ----->
         <div class="modal fade text-start" id="modal_aplic_pref_arancelaria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="aplic_pref_arancelaria" name="aplic_pref_arancelaria" onchange="hide_aplic_pref_arancelaria(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="aplic_pref_arancelaria1" name="aplic_pref_arancelaria1" value="Si" onclick="hide_aplic_pref_arancelaria(this.value)">
+                                <label>Si</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="aplic_pref_arancelaria2" name="aplic_pref_arancelaria2" value="No" onclick="hide_aplic_pref_arancelaria(this.value)">
+                                <label>No</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_req_uva ----->
         <div class="modal fade text-start" id="modal_req_uva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="req_uva" name="req_uva" onchange="hide_req_uva(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="req_uva1" name="req_uva1" value="Si" onclick="hide_req_uva(this.value)">
+                                <label>Si</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="req_uva2" name="req_uva2" value="No" onclick="hide_req_uva(this.value)">
+                                <label>No</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_req_ca ----->
         <div class="modal fade text-start" id="modal_req_ca" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="req_ca" name="req_ca" onchange="hide_req_ca(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="req_ca1" name="req_ca1" value="Si" onclick="hide_req_ca(this.value)">
+                                <label>Si</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="req_ca2" name="req_ca2" value="No" onclick="hide_req_ca(this.value)">
+                                <label>No</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_recepcion_ca ----->
         <div class="modal fade text-start" id="modal_fecha_recepcion_ca" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_recepcion_ca" name="fecha_recepcion_ca" type="text" autocomplete="off" onchange="hide_fecha_recepcion_ca(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_recepcion_ca" name="fecha_recepcion_ca" type="text" autocomplete="off" onchange="hide_fecha_recepcion_ca(this.value)">               
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_doc_completos ----->
         <div class="modal fade text-start" id="modal_fecha_doc_completos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_doc_completos" name="fecha_doc_completos" type="text" autocomplete="off" onchange="hide_fecha_doc_completos(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_doc_completos" name="fecha_doc_completos" type="text" autocomplete="off" onchange="hide_fecha_doc_completos(this.value)">             
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_pago_pedimento ----->
         <div class="modal fade text-start" id="modal_fecha_pago_pedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_pago_pedimento" name="fecha_pago_pedimento" type="text" autocomplete="off" onchange="hide_fecha_pago_pedimento(this.value)">
-                    </div>
+                    <input class="form-control datepicker-pedimento" value="" id="fecha_pago_pedimento" name="fecha_pago_pedimento" type="text" autocomplete="off" onchange="hide_fecha_pago_pedimento(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_solicitud_transporte ----->
         <div class="modal fade text-start" id="modal_fecha_solicitud_transporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_solicitud_transporte" name="fecha_solicitud_transporte" type="text" autocomplete="off" onchange="hide_fecha_solicitud_transporte(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_solicitud_transporte" name="fecha_solicitud_transporte" type="text" autocomplete="off" onchange="hide_fecha_solicitud_transporte(this.value)">
                 </div>
             </div>
         </div>
-        
+
         <!----- modal_fecha_modulacion ----->
         <div class="modal fade text-start" id="modal_fecha_modulacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_modulacion" name="fecha_modulacion" type="text" autocomplete="off" onchange="hide_fecha_modulacion(this.value)">
-                    </div>
+                    <input class="form-control datepicker-modulacion" value="" id="fecha_modulacion" name="fecha_modulacion" type="text" autocomplete="off" onchange="hide_fecha_modulacion(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!-- modal_modalidad -->
         <div class="modal fade text-start" id="modal_modalidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="modalidad" name="modalidad" onchange="hide_modalidad(this.value)">
-                            <option value="Camión">Camión</option>
-                            <option value="Tren">Tren</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="modalidad1" name="modalidad1" value="Camión" onclick="hide_modalidad(this.value)">
+                                <label>Camión</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="modalidad2" name="modalidad2" value="Tren" onclick="hide_modalidad(this.value)">
+                                <label>Tren</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>  
-        
-        <!-- modal_resultado_modulacion -->
+
+        <!----- modal_resultado_modulacion ----->
         <div class="modal fade text-start" id="modal_resultado_modulacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="resultado_modulacion" name="resultado_modulacion" onchange="hide_resultado_modulacion(this.value)">
-                          <option value="Verde">Verde</option>
-                          <option value="Rojo">Rojo</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="resultado_modulacion1" name="resultado_modulacion1" value="Verde" onclick="hide_resultado_modulacion(this.value)">
+                                <label>Verde</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="resultado_modulacion2" name="resultado_modulacion2" value="Rojo" onclick="hide_resultado_modulacion(this.value)">
+                                <label>Rojo</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_reconocimiento ----->
         <div class="modal fade text-start" id="modal_fecha_reconocimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_reconocimiento" name="fecha_reconocimiento" type="text" autocomplete="off" onchange="hide_fecha_reconocimiento(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_reconocimiento" name="fecha_reconocimiento" type="text" autocomplete="off" onchange="hide_fecha_reconocimiento(this.value)">
                 </div>
             </div>
         </div>
-        
+
         <!----- modal_fecha_liberacion ----->
         <div class="modal fade text-start" id="modal_fecha_liberacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_liberacion" name="fecha_liberacion" type="text" autocomplete="off" onchange="hide_fecha_liberacion(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_liberacion" name="fecha_liberacion" type="text" autocomplete="off" onchange="hide_fecha_liberacion(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_retencion_aut ----->
         <div class="modal fade text-start" id="modal_fecha_retencion_aut" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_retencion_aut" name="fecha_retencion_aut" type="text" autocomplete="off" onchange="hide_fecha_retencion_aut(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_retencion_aut" name="fecha_retencion_aut" type="text" autocomplete="off" onchange="hide_fecha_retencion_aut(this.value)"> 
                 </div>
             </div>
         </div>  
@@ -785,42 +812,35 @@
         <div class="modal fade text-start" id="modal_fecha_liberacion_aut" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_liberacion_aut" name="fecha_liberacion_aut" type="text" autocomplete="off" onchange="hide_fecha_liberacion_aut(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_liberacion_aut" name="fecha_liberacion_aut" type="text" autocomplete="off" onchange="hide_fecha_liberacion_aut(this.value)">
                 </div>
             </div>
         </div>
-        
+
         <!----- modal_llegada_a_nova ----->
         <div class="modal fade text-start" id="modal_llegada_a_nova" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="llegada_a_nova" name="llegada_a_nova" type="text" autocomplete="off" onchange="hide_llegada_a_nova(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="llegada_a_nova" name="llegada_a_nova" type="text" autocomplete="off" onchange="hide_llegada_a_nova(this.value)">
                 </div>
             </div>
         </div>
-        
+
         <!----- modal_llegada_a_globe_trade_sd ----->
         <div class="modal fade text-start" id="modal_llegada_a_globe_trade_sd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="llegada_a_globe_trade_sd" name="llegada_a_globe_trade_sd" type="text" autocomplete="off" onchange="hide_llegada_a_globe_trade_sd(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="llegada_a_globe_trade_sd" name="llegada_a_globe_trade_sd" type="text" autocomplete="off" onchange="hide_llegada_a_globe_trade_sd(this.value)">
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_archivo_m ----->
         <div class="modal fade text-start" id="modal_fecha_archivo_m" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_archivo_m" name="fecha_archivo_m" type="text" autocomplete="off" onchange="hide_fecha_archivo_m(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_archivo_m" name="fecha_archivo_m" type="text" autocomplete="off" onchange="hide_fecha_archivo_m(this.value)">
+
                 </div>
             </div>
         </div> 
@@ -829,9 +849,7 @@
         <div class="modal fade text-start" id="modal_fecha_solicit_manip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_solicit_manip" name="fecha_solicit_manip" type="text" autocomplete="off" onchange="hide_fecha_solicit_manip(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_solicit_manip" name="fecha_solicit_manip" type="text" autocomplete="off" onchange="hide_fecha_solicit_manip(this.value)">
                 </div>
             </div>
         </div> 
@@ -840,9 +858,7 @@
         <div class="modal fade text-start" id="modal_fecha_vencim_manip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_vencim_manip" name="fecha_vencim_manip" type="text" autocomplete="off" onchange="hide_fecha_vencim_manip(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_vencim_manip" name="fecha_vencim_manip" type="text" autocomplete="off" onchange="hide_fecha_vencim_manip(this.value)">
                 </div>
             </div>
         </div> 
@@ -851,9 +867,7 @@
         <div class="modal fade text-start" id="modal_fecha_confirm_clave_pedim" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_confirm_clave_pedim" name="fecha_confirm_clave_pedim" type="text" autocomplete="off" onchange="hide_fecha_confirm_clave_pedim(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_confirm_clave_pedim" name="fecha_confirm_clave_pedim" type="text" autocomplete="off" onchange="hide_fecha_confirm_clave_pedim(this.value)">
                 </div>
             </div>
         </div> 
@@ -862,9 +876,7 @@
         <div class="modal fade text-start" id="modal_fecha_recep_increment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_recep_increment" name="fecha_recep_increment" type="text" autocomplete="off" onchange="hide_fecha_recep_increment(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_recep_increment" name="fecha_recep_increment" type="text" autocomplete="off" onchange="hide_fecha_recep_increment(this.value)">
                 </div>
             </div>
         </div> 
@@ -873,9 +885,7 @@
         <div class="modal fade text-start" id="modal_fecha_vencim_inbound" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_vencim_inbound" name="fecha_vencim_inbound" type="text" autocomplete="off" onchange="hide_fecha_vencim_inbound(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_vencim_inbound" name="fecha_vencim_inbound" type="text" autocomplete="off" onchange="hide_fecha_vencim_inbound(this.value)">
                 </div>
             </div>
         </div> 
@@ -885,52 +895,34 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <select class="form-control" id="transferencia" name="transferencia" onchange="hide_transferencia(this.value)">
-                          <option value="Si">Si</option>
-                          <option value="No">No</option>
-                        </select>
+                        <div class="contenedor_modal">
+                            <div class="columna1_modal">
+                                <input type="checkbox" id="transferencia1" name="transferencia1" value="Si" onclick="hide_transferencia(this.value)">
+                                <label>Si</label> 
+                            </div>
+                            <div class="columna2_modal">
+                                <input type="checkbox" id="transferencia2" name="transferencia2" value="No" onclick="hide_transferencia(this.value)">
+                                <label>No</label> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div> 
-        
+
         <!----- modal_fecha_inicio_etiquetado ----->
         <div class="modal fade text-start" id="modal_fecha_inicio_etiquetado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_inicio_etiquetado" name="fecha_inicio_etiquetado" type="text" autocomplete="off" onchange="hide_fecha_inicio_etiquetado(this.value)">
-                    </div>
+                    <input class="form-control datepicker" value="" id="fecha_inicio_etiquetado" name="fecha_inicio_etiquetado" type="text" autocomplete="off" onchange="hide_fecha_inicio_etiquetado(this.value)">
                 </div>
             </div>
         </div> 
-        
-        <!----- modal_fecha_termino_etiquetado ----->
-        <div class="modal fade text-start" id="modal_fecha_termino_etiquetado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control datepicker" value="" id="fecha_termino_etiquetado" name="fecha_termino_etiquetado" type="text" autocomplete="off" onchange="hide_fecha_termino_etiquetado(this.value)">
-                    </div>
-                </div>
-            </div>
-        </div> 
-        
-        <!----- modal_hora_termino_etiquetado ----->
-        <div class="modal fade text-start" id="modal_hora_termino_etiquetado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <input class="form-control" id="hora_termino_etiquetado" name="hora_termino_etiquetado" type="time" onchange="hide_hora_termino_etiquetado(this.value)" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-        </div>       
-        
+
         <!-- Parametros - Customs -->
         <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
-        
+
         <!-- Parametros - Generación de Excel -->
         <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
         <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>
@@ -939,206 +931,206 @@
         <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
         <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
         <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
-        
+
         <script>
-            $(document).ready(async function () { 
-                await consultarCustoms('<%=AgentType%>','<%=filterType%>','<%=caramelo%>');
+            $(document).ready(async function () {
+                await consultarCustoms('<%=AgentType%>', '<%=filterType%>', '<%=caramelo%>');
             });
-            
+
             let idAgenteAduanal = '<%=AgentType%>';
-            
+
             /*lectura de columnas (selects/filtros)*/
-                var selectElement = document.getElementById("col_evento");
-                var selectElement1= document.getElementById("col_referenciaAA");
-                var selectElement2= document.getElementById("col_responsable");
-                var selectElement3= document.getElementById("col_finalDestination");
-                var selectElement4= document.getElementById("col_brandDivision");
-                var selectElement5= document.getElementById("col_division");
-                var selectElement6= document.getElementById("col_shipmentId");
-                var selectElement7= document.getElementById("col_container");
-                var selectElement8= document.getElementById("col_blAwbPro");
-                var selectElement9= document.getElementById("col_loadType");
-                var selectElement10= document.getElementById("col_quantity");
-                var selectElement11= document.getElementById("col_pod");
-                var selectElement12= document.getElementById("col_estDepartFromPol");
-                var selectElement13= document.getElementById("col_etaRealPortOfDischarge");
-                var selectElement14= document.getElementById("col_estEtaDc");
-                var selectElement15= document.getElementById("col_inboundNotification");
-                var selectElement16= document.getElementById("col_pol");
-                var selectElement17= document.getElementById("col_aa");
-                var selectElement18= document.getElementById("col_fechaMesVenta");
-                var selectElement19= document.getElementById("col_prioridad");
-                var selectElement20= document.getElementById("col_pais_origen");
-                var selectElement21= document.getElementById("col_size_container");
-                var selectElement22= document.getElementById("col_valor_usd");
-                var selectElement23= document.getElementById("col_eta_port_discharge");
-                var selectElement24= document.getElementById("col_agente_aduanal");
-                var selectElement25= document.getElementById("col_pedimento_a1");
-                var selectElement26= document.getElementById("col_pedimento_r1_1er");
-                var selectElement27= document.getElementById("col_motivo_rectificacion_1er");
-                var selectElement28= document.getElementById("col_pedimento_r1_2do");
-                var selectElement29= document.getElementById("col_motivo_rectificacion_2do");
-                var selectElement30= document.getElementById("col_fecha_recepcion_doc");
-                var selectElement31= document.getElementById("col_recinto");
-                var selectElement32= document.getElementById("col_naviera");
-                var selectElement33= document.getElementById("col_buque");
-                var selectElement34= document.getElementById("col_fecha_revalidacion");
-                var selectElement35= document.getElementById("col_fecha_previo_origen");
-                var selectElement36= document.getElementById("col_fecha_previo_destino");
-                var selectElement37= document.getElementById("col_fecha_resultado_previo");
-                var selectElement38= document.getElementById("col_proforma_final");
-                var selectElement39= document.getElementById("col_permiso");
-                var selectElement40= document.getElementById("col_fecha_envio");
-                var selectElement41= document.getElementById("col_fecha_recepcion_perm");
-                var selectElement42= document.getElementById("col_fecha_activacion_perm");
-                var selectElement43= document.getElementById("col_fecha_permisos_aut");
-                var selectElement44= document.getElementById("col_co_pref_arancelaria");
-                var selectElement45= document.getElementById("col_aplic_pref_arancelaria");
-                var selectElement46= document.getElementById("col_req_uva");
-                var selectElement47= document.getElementById("col_req_ca");
-                var selectElement48= document.getElementById("col_fecha_recepcion_ca");
-                var selectElement49= document.getElementById("col_num_constancia_ca");
-                var selectElement50= document.getElementById("col_monto_ca");
-                var selectElement51= document.getElementById("col_fecha_doc_completos");
-                var selectElement52= document.getElementById("col_fecha_pago_pedimento");
-                var selectElement53= document.getElementById("col_fecha_solicitud_transporte");
-                var selectElement54= document.getElementById("col_fecha_modulacion");
-                var selectElement55= document.getElementById("col_modalidad");
-                var selectElement56= document.getElementById("col_resultado_modulacion");
-                var selectElement57= document.getElementById("col_fecha_reconocimiento");
-                var selectElement58= document.getElementById("col_fecha_liberacion");
-                var selectElement59= document.getElementById("col_sello_origen");
-                var selectElement60= document.getElementById("col_sello_final");
-                var selectElement61= document.getElementById("col_fecha_retencion_aut");
-                var selectElement62= document.getElementById("col_fecha_liberacion_aut");
-                var selectElement63= document.getElementById("col_estatus_operacion");
-                var selectElement64= document.getElementById("col_motivo_atraso");
-                var selectElement65= document.getElementById("col_observaciones");
-           
-            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF  
-             
-                var selectElement66= document.getElementById("col_llegada_a_nova");
-                var selectElement67= document.getElementById("col_llegada_a_globe_trade_sd");
-                var selectElement68= document.getElementById("col_archivo_m");
-                var selectElement69= document.getElementById("col_fecha_archivo_m");
-                var selectElement70= document.getElementById("col_fecha_solicit_manip");
-                var selectElement71= document.getElementById("col_fecha_vencim_manip");
-                var selectElement72= document.getElementById("col_fecha_confirm_clave_pedim");
-                var selectElement73= document.getElementById("col_fecha_recep_increment");
-                var selectElement74= document.getElementById("col_t_e");
-                var selectElement75= document.getElementById("col_fecha_vencim_inbound");
-            
-            }
-            
-            if(idAgenteAduanal==="4002"||idAgenteAduanal==="4006"){  //CUSA Y VF
-                
-                var selectElement76= document.getElementById("col_no_bultos");
-                var selectElement77= document.getElementById("col_peso_kg");
-                var selectElement78= document.getElementById("col_transferencia");
-                var selectElement79= document.getElementById("col_fecha_inicio_etiquetado");
-                var selectElement80= document.getElementById("col_fecha_termino_etiquetado");
-                var selectElement81= document.getElementById("col_hora_termino_etiquetado");
-                var selectElement82= document.getElementById("col_proveedor");
-                var selectElement83= document.getElementById("col_proveedor_carga");
-                var selectElement84= document.getElementById("col_fy");
-                
+            var selectElement = document.getElementById("col_evento");
+            var selectElement1 = document.getElementById("col_referenciaAA");
+            var selectElement2 = document.getElementById("col_responsable");
+            var selectElement3 = document.getElementById("col_finalDestination");
+            var selectElement4 = document.getElementById("col_brandDivision");
+            var selectElement5 = document.getElementById("col_division");
+            var selectElement6 = document.getElementById("col_shipmentId");
+            var selectElement7 = document.getElementById("col_container");
+            var selectElement8 = document.getElementById("col_blAwbPro");
+            var selectElement9 = document.getElementById("col_loadType");
+            var selectElement10 = document.getElementById("col_quantity");
+            var selectElement11 = document.getElementById("col_pod");
+            var selectElement12 = document.getElementById("col_estDepartFromPol");
+            var selectElement13 = document.getElementById("col_etaRealPortOfDischarge");
+            var selectElement14 = document.getElementById("col_estEtaDc");
+            var selectElement15 = document.getElementById("col_inboundNotification");
+            var selectElement16 = document.getElementById("col_pol");
+            var selectElement17 = document.getElementById("col_aa");
+            var selectElement18 = document.getElementById("col_fechaMesVenta");
+            var selectElement19 = document.getElementById("col_prioridad");
+            var selectElement20 = document.getElementById("col_pais_origen");
+            var selectElement21 = document.getElementById("col_size_container");
+            var selectElement22 = document.getElementById("col_valor_usd");
+            var selectElement23 = document.getElementById("col_eta_port_discharge");
+            var selectElement24 = document.getElementById("col_agente_aduanal");
+            var selectElement25 = document.getElementById("col_pedimento_a1");
+            var selectElement26 = document.getElementById("col_pedimento_r1_1er");
+            var selectElement27 = document.getElementById("col_motivo_rectificacion_1er");
+            var selectElement28 = document.getElementById("col_pedimento_r1_2do");
+            var selectElement29 = document.getElementById("col_motivo_rectificacion_2do");
+            var selectElement30 = document.getElementById("col_fecha_recepcion_doc");
+            var selectElement31 = document.getElementById("col_recinto");
+            var selectElement32 = document.getElementById("col_naviera");
+            var selectElement33 = document.getElementById("col_buque");
+            var selectElement34 = document.getElementById("col_fecha_revalidacion");
+            var selectElement35 = document.getElementById("col_fecha_previo_origen");
+            var selectElement36 = document.getElementById("col_fecha_previo_destino");
+            var selectElement37 = document.getElementById("col_fecha_resultado_previo");
+            var selectElement38 = document.getElementById("col_proforma_final");
+            var selectElement39 = document.getElementById("col_permiso");
+            var selectElement40 = document.getElementById("col_fecha_envio");
+            var selectElement41 = document.getElementById("col_fecha_recepcion_perm");
+            var selectElement42 = document.getElementById("col_fecha_activacion_perm");
+            var selectElement43 = document.getElementById("col_fecha_permisos_aut");
+            var selectElement44 = document.getElementById("col_co_pref_arancelaria");
+            var selectElement45 = document.getElementById("col_aplic_pref_arancelaria");
+            var selectElement46 = document.getElementById("col_req_uva");
+            var selectElement47 = document.getElementById("col_req_ca");
+            var selectElement48 = document.getElementById("col_fecha_recepcion_ca");
+            var selectElement49 = document.getElementById("col_num_constancia_ca");
+            var selectElement50 = document.getElementById("col_monto_ca");
+            var selectElement51 = document.getElementById("col_fecha_doc_completos");
+            var selectElement52 = document.getElementById("col_fecha_pago_pedimento");
+            var selectElement53 = document.getElementById("col_fecha_solicitud_transporte");
+            var selectElement54 = document.getElementById("col_fecha_modulacion");
+            var selectElement55 = document.getElementById("col_modalidad");
+            var selectElement56 = document.getElementById("col_resultado_modulacion");
+            var selectElement57 = document.getElementById("col_fecha_reconocimiento");
+            var selectElement58 = document.getElementById("col_fecha_liberacion");
+            var selectElement59 = document.getElementById("col_sello_origen");
+            var selectElement60 = document.getElementById("col_sello_final");
+            var selectElement61 = document.getElementById("col_fecha_retencion_aut");
+            var selectElement62 = document.getElementById("col_fecha_liberacion_aut");
+            var selectElement63 = document.getElementById("col_estatus_operacion");
+            var selectElement64 = document.getElementById("col_motivo_atraso");
+            var selectElement65 = document.getElementById("col_observaciones");
+
+            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF  
+
+                var selectElement66 = document.getElementById("col_llegada_a_nova");
+                var selectElement67 = document.getElementById("col_llegada_a_globe_trade_sd");
+                var selectElement68 = document.getElementById("col_archivo_m");
+                var selectElement69 = document.getElementById("col_fecha_archivo_m");
+                var selectElement70 = document.getElementById("col_fecha_solicit_manip");
+                var selectElement71 = document.getElementById("col_fecha_vencim_manip");
+                var selectElement72 = document.getElementById("col_fecha_confirm_clave_pedim");
+                var selectElement73 = document.getElementById("col_fecha_recep_increment");
+                var selectElement74 = document.getElementById("col_t_e");
+                var selectElement75 = document.getElementById("col_fecha_vencim_inbound");
+
             }
 
-                selectElement.innerHTML="<%=list_evento%>";
-                selectElement1.innerHTML="<%=list_referenciaAA%>";
-                selectElement2.innerHTML="<%=list_responsable%>";
-                selectElement3.innerHTML="<%=list_finalDestination%>";
-                selectElement4.innerHTML="<%=list_brandDivision%>";
-                selectElement5.innerHTML="<%=list_division%>";
-                selectElement6.innerHTML="<%=list_shipmentId%>";
-                selectElement7.innerHTML="<%=list_containerId%>";
-                selectElement8.innerHTML="<%=list_blAwbPro%>";
-                selectElement9.innerHTML="<%=list_loadType%>";
-                selectElement10.innerHTML="<%=list_quantity%>";
-                selectElement11.innerHTML="<%=list_pod%>";
-                selectElement12.innerHTML="<%=list_estDepartFromPol%>";
-                selectElement13.innerHTML="<%=list_etaRealPortOfDischarge%>";
-                selectElement14.innerHTML="<%=list_estEtaDc%>";
-                selectElement15.innerHTML="<%=list_inboundNotification%>";
-                selectElement16.innerHTML="<%=list_pol%>";
-                selectElement17.innerHTML="<%=list_aa%>";
-                selectElement18.innerHTML="<%=list_fechaMesVenta%>";
-                selectElement19.innerHTML="<%=list_prioridad%>";
-                selectElement20.innerHTML="<%=list_pais_origen%>";
-                selectElement21.innerHTML="<%=list_size_container%>";
-                selectElement22.innerHTML="<%=list_valor_usd%>";
-                selectElement23.innerHTML="<%=list_eta_port_discharge%>";
-                selectElement24.innerHTML="<%=list_agente_aduanal%>";
-                selectElement25.innerHTML="<%=list_pedimento_a1%>";
-                selectElement26.innerHTML="<%=list_pedimento_r1_1er%>";
-                selectElement27.innerHTML="<%=list_motivo_rectificacion_1er%>";
-                selectElement28.innerHTML="<%=list_pedimento_r1_2do%>";
-                selectElement29.innerHTML="<%=list_motivo_rectificacion_2do%>";
-                selectElement30.innerHTML="<%=list_fecha_recepcion_doc%>";
-                selectElement31.innerHTML="<%=list_recinto%>";
-                selectElement32.innerHTML="<%=list_naviera%>";
-                selectElement33.innerHTML="<%=list_buque%>";
-                selectElement34.innerHTML="<%=list_fecha_revalidacion%>";
-                selectElement35.innerHTML="<%=list_fecha_previo_origen%>";
-                selectElement36.innerHTML="<%=list_fecha_previo_destino%>";
-                selectElement37.innerHTML="<%=list_fecha_resultado_previo%>";
-                selectElement38.innerHTML="<%=list_proforma_final%>";
-                selectElement39.innerHTML="<%=list_permiso%>";
-                selectElement40.innerHTML="<%=list_fecha_envio%>";
-                selectElement41.innerHTML="<%=list_fecha_recepcion_perm%>";
-                selectElement42.innerHTML="<%=list_fecha_activacion_perm%>";
-                selectElement43.innerHTML="<%=list_fecha_permisos_aut%>";
-                selectElement44.innerHTML="<%=list_co_pref_arancelaria%>";
-                selectElement45.innerHTML="<%=list_aplic_pref_arancelaria%>";
-                selectElement46.innerHTML="<%=list_req_uva%>";
-                selectElement47.innerHTML="<%=list_req_ca%>";
-                selectElement48.innerHTML="<%=list_fecha_recepcion_ca%>";
-                selectElement49.innerHTML="<%=list_num_constancia_ca%>";
-                selectElement50.innerHTML="<%=list_monto_ca%>";
-                selectElement51.innerHTML="<%=list_fecha_doc_completos%>";
-                selectElement52.innerHTML="<%=list_fecha_pago_pedimento%>";
-                selectElement53.innerHTML="<%=list_fecha_solicitud_transporte%>";
-                selectElement54.innerHTML="<%=list_fecha_modulacion%>";
-                selectElement55.innerHTML="<%=list_modalidad%>";
-                selectElement56.innerHTML="<%=list_resultado_modulacion%>";
-                selectElement57.innerHTML="<%=list_fecha_reconocimiento%>";
-                selectElement58.innerHTML="<%=list_fecha_liberacion%>";
-                selectElement59.innerHTML="<%=list_sello_origen%>";
-                selectElement60.innerHTML="<%=list_sello_final%>";
-                selectElement61.innerHTML="<%=list_fecha_retencion_aut%>";
-                selectElement62.innerHTML="<%=list_fecha_liberacion_aut%>";
-                selectElement63.innerHTML="<%=list_estatus_operacion%>";
-                selectElement64.innerHTML="<%=list_motivo_atraso%>";
-                selectElement65.innerHTML="<%=list_observaciones%>";
-            
-            if(idAgenteAduanal==="4001"||idAgenteAduanal==="4006"){ //LOGIX Y VF      
-                
-                selectElement66.innerHTML="<%=list_llegada_a_nova%>";
-                selectElement67.innerHTML="<%=list_llegada_a_globe_trade_sd%>";
-                selectElement68.innerHTML="<%=list_archivo_m%>";
-                selectElement69.innerHTML="<%=list_fecha_archivo_m%>";
-                selectElement70.innerHTML="<%=list_fecha_solicit_manip%>";
-                selectElement71.innerHTML="<%=list_fecha_vencim_manip%>";
-                selectElement72.innerHTML="<%=list_fecha_confirm_clave_pedim%>";
-                selectElement73.innerHTML="<%=list_fecha_recep_increment%>";
-                selectElement74.innerHTML="<%=list_t_e%>";
-                selectElement75.innerHTML="<%=list_fecha_vencim_inbound%>";
-                
+            if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+
+                var selectElement76 = document.getElementById("col_no_bultos");
+                var selectElement77 = document.getElementById("col_peso_kg");
+                var selectElement78 = document.getElementById("col_transferencia");
+                var selectElement79 = document.getElementById("col_fecha_inicio_etiquetado");
+                var selectElement80 = document.getElementById("col_fecha_termino_etiquetado");
+                var selectElement81 = document.getElementById("col_hora_termino_etiquetado");
+                var selectElement82 = document.getElementById("col_proveedor");
+                var selectElement83 = document.getElementById("col_proveedor_carga");
+                var selectElement84 = document.getElementById("col_fy");
+
             }
-            
-            if(idAgenteAduanal==="4002"||idAgenteAduanal==="4006"){  //CUSA Y VF
-                
-                selectElement76.innerHTML="<%=list_no_bultos%>";
-                selectElement77.innerHTML="<%=list_peso_kg%>";
-                selectElement78.innerHTML="<%=list_transferencia%>";
-                selectElement79.innerHTML="<%=list_fecha_inicio_etiquetado%>";
-                selectElement80.innerHTML="<%=list_fecha_termino_etiquetado%>";
-                selectElement81.innerHTML="<%=list_hora_termino_etiquetado%>";
-                selectElement82.innerHTML="<%=list_proveedor%>";
-                selectElement83.innerHTML="<%=list_proveedor_carga%>";
-                selectElement84.innerHTML="<%=list_fy%>";
-                
-            }  
+
+            selectElement.innerHTML = "<%=list_evento%>";
+            selectElement1.innerHTML = "<%=list_referenciaAA%>";
+            selectElement2.innerHTML = "<%=list_responsable%>";
+            selectElement3.innerHTML = "<%=list_finalDestination%>";
+            selectElement4.innerHTML = "<%=list_brandDivision%>";
+            selectElement5.innerHTML = "<%=list_division%>";
+            selectElement6.innerHTML = "<%=list_shipmentId%>";
+            selectElement7.innerHTML = "<%=list_containerId%>";
+            selectElement8.innerHTML = "<%=list_blAwbPro%>";
+            selectElement9.innerHTML = "<%=list_loadType%>";
+            selectElement10.innerHTML = "<%=list_quantity%>";
+            selectElement11.innerHTML = "<%=list_pod%>";
+            selectElement12.innerHTML = "<%=list_estDepartFromPol%>";
+            selectElement13.innerHTML = "<%=list_etaRealPortOfDischarge%>";
+            selectElement14.innerHTML = "<%=list_estEtaDc%>";
+            selectElement15.innerHTML = "<%=list_inboundNotification%>";
+            selectElement16.innerHTML = "<%=list_pol%>";
+            selectElement17.innerHTML = "<%=list_aa%>";
+            selectElement18.innerHTML = "<%=list_fechaMesVenta%>";
+            selectElement19.innerHTML = "<%=list_prioridad%>";
+            selectElement20.innerHTML = "<%=list_pais_origen%>";
+            selectElement21.innerHTML = "<%=list_size_container%>";
+            selectElement22.innerHTML = "<%=list_valor_usd%>";
+            selectElement23.innerHTML = "<%=list_eta_port_discharge%>";
+            selectElement24.innerHTML = "<%=list_agente_aduanal%>";
+            selectElement25.innerHTML = "<%=list_pedimento_a1%>";
+            selectElement26.innerHTML = "<%=list_pedimento_r1_1er%>";
+            selectElement27.innerHTML = "<%=list_motivo_rectificacion_1er%>";
+            selectElement28.innerHTML = "<%=list_pedimento_r1_2do%>";
+            selectElement29.innerHTML = "<%=list_motivo_rectificacion_2do%>";
+            selectElement30.innerHTML = "<%=list_fecha_recepcion_doc%>";
+            selectElement31.innerHTML = "<%=list_recinto%>";
+            selectElement32.innerHTML = "<%=list_naviera%>";
+            selectElement33.innerHTML = "<%=list_buque%>";
+            selectElement34.innerHTML = "<%=list_fecha_revalidacion%>";
+            selectElement35.innerHTML = "<%=list_fecha_previo_origen%>";
+            selectElement36.innerHTML = "<%=list_fecha_previo_destino%>";
+            selectElement37.innerHTML = "<%=list_fecha_resultado_previo%>";
+            selectElement38.innerHTML = "<%=list_proforma_final%>";
+            selectElement39.innerHTML = "<%=list_permiso%>";
+            selectElement40.innerHTML = "<%=list_fecha_envio%>";
+            selectElement41.innerHTML = "<%=list_fecha_recepcion_perm%>";
+            selectElement42.innerHTML = "<%=list_fecha_activacion_perm%>";
+            selectElement43.innerHTML = "<%=list_fecha_permisos_aut%>";
+            selectElement44.innerHTML = "<%=list_co_pref_arancelaria%>";
+            selectElement45.innerHTML = "<%=list_aplic_pref_arancelaria%>";
+            selectElement46.innerHTML = "<%=list_req_uva%>";
+            selectElement47.innerHTML = "<%=list_req_ca%>";
+            selectElement48.innerHTML = "<%=list_fecha_recepcion_ca%>";
+            selectElement49.innerHTML = "<%=list_num_constancia_ca%>";
+            selectElement50.innerHTML = "<%=list_monto_ca%>";
+            selectElement51.innerHTML = "<%=list_fecha_doc_completos%>";
+            selectElement52.innerHTML = "<%=list_fecha_pago_pedimento%>";
+            selectElement53.innerHTML = "<%=list_fecha_solicitud_transporte%>";
+            selectElement54.innerHTML = "<%=list_fecha_modulacion%>";
+            selectElement55.innerHTML = "<%=list_modalidad%>";
+            selectElement56.innerHTML = "<%=list_resultado_modulacion%>";
+            selectElement57.innerHTML = "<%=list_fecha_reconocimiento%>";
+            selectElement58.innerHTML = "<%=list_fecha_liberacion%>";
+            selectElement59.innerHTML = "<%=list_sello_origen%>";
+            selectElement60.innerHTML = "<%=list_sello_final%>";
+            selectElement61.innerHTML = "<%=list_fecha_retencion_aut%>";
+            selectElement62.innerHTML = "<%=list_fecha_liberacion_aut%>";
+            selectElement63.innerHTML = "<%=list_estatus_operacion%>";
+            selectElement64.innerHTML = "<%=list_motivo_atraso%>";
+            selectElement65.innerHTML = "<%=list_observaciones%>";
+
+            if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF      
+
+                selectElement66.innerHTML = "<%=list_llegada_a_nova%>";
+                selectElement67.innerHTML = "<%=list_llegada_a_globe_trade_sd%>";
+                selectElement68.innerHTML = "<%=list_archivo_m%>";
+                selectElement69.innerHTML = "<%=list_fecha_archivo_m%>";
+                selectElement70.innerHTML = "<%=list_fecha_solicit_manip%>";
+                selectElement71.innerHTML = "<%=list_fecha_vencim_manip%>";
+                selectElement72.innerHTML = "<%=list_fecha_confirm_clave_pedim%>";
+                selectElement73.innerHTML = "<%=list_fecha_recep_increment%>";
+                selectElement74.innerHTML = "<%=list_t_e%>";
+                selectElement75.innerHTML = "<%=list_fecha_vencim_inbound%>";
+
+            }
+
+            if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+
+                selectElement76.innerHTML = "<%=list_no_bultos%>";
+                selectElement77.innerHTML = "<%=list_peso_kg%>";
+                selectElement78.innerHTML = "<%=list_transferencia%>";
+                selectElement79.innerHTML = "<%=list_fecha_inicio_etiquetado%>";
+                selectElement80.innerHTML = "<%=list_fecha_termino_etiquetado%>";
+                selectElement81.innerHTML = "<%=list_hora_termino_etiquetado%>";
+                selectElement82.innerHTML = "<%=list_proveedor%>";
+                selectElement83.innerHTML = "<%=list_proveedor_carga%>";
+                selectElement84.innerHTML = "<%=list_fy%>";
+
+            }
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1155,7 +1147,7 @@
     </body>
     <%
         } catch (NullPointerException e) {
-            System.out.println("Error:" +e);
+            System.out.println("Error:" + e);
             out.println("<script>alert('La session se termino'); top.location.href='" + request.getContextPath() + "/badreq.jsp';</script>");
             out.println("<script>window.close();</script>");
         } catch (Exception e) {
