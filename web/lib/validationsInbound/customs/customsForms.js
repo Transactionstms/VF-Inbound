@@ -1821,179 +1821,91 @@ async function FiltrerData(tipoFiltro) {
 
     await mostrarLoader();
     
-     if (tipoFiltro === "1") {
         selected1 = $('#col_referenciaAA').val();
-        selected_referenciaAA = true;
-    } else if (tipoFiltro === "2") {
         selected2 = $('#col_evento').val(); 
-        selected_evento = true;
-    } else if (tipoFiltro === "3") { 
         selected3 = $('#col_responsable').val();
-    } else if (tipoFiltro === "4") { 
         selected4 = $('#col_finalDestination').val();
-    } else if (tipoFiltro === "5") {
         selected5 = $('#col_brandDivision').val();
-    } else if (tipoFiltro === "6") {
         selected6 = $('#col_division').val();
-    } else if (tipoFiltro === "7") {
         selected7 = $('#col_shipmentId').val();
-    } else if (tipoFiltro === "8") {
         selected8 = $('#col_container').val();
-    } else if (tipoFiltro === "9") {
         selected9 = $('#col_blAwbPro').val();
-    } else if (tipoFiltro === "10") {
         selected10 = $('#col_loadType').val();
-    } else if (tipoFiltro === "11") {
         selected11 = $('#col_quantity').val();
-    } else if (tipoFiltro === "12") {
         selected12 = $('#col_pod').val();
-    } else if (tipoFiltro === "13") {
         selected13 = $('#col_estDepartFromPol').val();
-    } else if (tipoFiltro === "14") {
         selected14 = $('#col_etaRealPortOfDischarge').val();
-    } else if (tipoFiltro === "15") {
         selected15 = $('#col_estEtaDc').val();
-    } else if (tipoFiltro === "16") {
         selected16 = $('#col_inboundNotification').val();
-    } else if (tipoFiltro === "17") {
         selected17 = $('#col_pol').val();
-    } else if (tipoFiltro === "18") {
         selected18 = $('#col_aa').val();
-    } else if (tipoFiltro === "19") {
         selected19 = $('#col_fechaMesVenta').val();
-    } else if (tipoFiltro === "20") {
         selected20 = $('#col_prioridad').val();
-    } else if (tipoFiltro === "21") {
         selected21 = $('#col_pais_origen').val();
-    } else if (tipoFiltro === "22") {
         selected22 = $('#col_size_container').val();
-    } else if (tipoFiltro === "23") {
         selected23 = $('#col_valor_usd').val();
-    } else if (tipoFiltro === "24") {
         selected24 = $('#col_eta_port_discharge').val();
-    } else if (tipoFiltro === "25") {
         selected25 = $('#col_agente_aduanal').val();
-    } else if (tipoFiltro === "26") {
         selected26 = $('#col_pedimento_a1').val();
-    } else if (tipoFiltro === "27") {
         selected27 = $('#col_pedimento_r1_1er').val();
-    } else if (tipoFiltro === "28") {
         selected28 = $('#col_motivo_rectificacion_1er').val();
-    } else if (tipoFiltro === "29") {
         selected29 = $('#col_pedimento_r1_2do').val();
-    } else if (tipoFiltro === "30") {
         selected30 = $('#col_motivo_rectificacion_2do').val();
-    } else if (tipoFiltro === "31") {
         selected31 = $('#col_fecha_recepcion_doc').val();
-    } else if (tipoFiltro === "32") {
         selected32 = $('#col_recinto').val();
-    } else if (tipoFiltro === "33") {
         selected33 = $('#col_naviera').val();
-    } else if (tipoFiltro === "34") {
         selected34 = $('#col_buque').val();
-    } else if (tipoFiltro === "35") {
         selected35 = $('#col_fecha_revalidacion').val();
-    } else if (tipoFiltro === "36") {
         selected36 = $('#col_fecha_previo_origen').val();
-    } else if (tipoFiltro === "37") {
         selected37 = $('#col_fecha_previo_destino').val();
-    } else if (tipoFiltro === "38") {
         selected38 = $('#col_fecha_resultado_previo').val();
-    } else if (tipoFiltro === "39") {
         selected39 = $('#col_proforma_final').val();
-    } else if (tipoFiltro === "40") {
         selected40 = $('#col_permiso').val();
-    } else if (tipoFiltro === "41") {
         selected41 = $('#col_fecha_envio').val();
-    } else if (tipoFiltro === "42") {
         selected42 = $('#col_fecha_recepcion_perm').val();
-    } else if (tipoFiltro === "43") {
         selected43 = $('#col_fecha_activacion_perm').val();
-    } else if (tipoFiltro === "44") {
         selected44 = $('#col_fecha_permisos_aut').val();
-    } else if (tipoFiltro === "45") {
         selected45 = $('#col_co_pref_arancelaria').val();
-    } else if (tipoFiltro === "46") {
         selected46 = $('#col_aplic_pref_arancelaria').val();
-    } else if (tipoFiltro === "47") {
         selected47 = $('#col_req_uva').val();
-    } else if (tipoFiltro === "48") {
         selected48 = $('#col_req_ca').val();
-    } else if (tipoFiltro === "49") {
         selected49 = $('#col_fecha_recepcion_ca').val();
-    } else if (tipoFiltro === "50") { 
         selected50 = $('#col_num_constancia_ca').val();
-    } else if (tipoFiltro === "51") { 
         selected51 = $('#col_monto_ca').val();
-    } else if (tipoFiltro === "52") {
         selected52 = $('#col_fecha_doc_completos').val();
-    } else if (tipoFiltro === "53") {
         selected53 = $('#col_fecha_pago_pedimento').val();
-    } else if (tipoFiltro === "54") {
         selected54 = $('#col_fecha_solicitud_transporte').val();
-    } else if (tipoFiltro === "55") {
         selected55 = $('#col_fecha_modulacion').val();
-    } else if (tipoFiltro === "56") {
         selected56 = $('#col_modalidad').val();
-    } else if (tipoFiltro === "57") {
         selected57 = $('#col_resultado_modulacion').val();
-    } else if (tipoFiltro === "58") {
         selected58 = $('#col_fecha_reconocimiento').val();
-    } else if (tipoFiltro === "59") {
         selected59 = $('#col_fecha_liberacion').val();
-    } else if (tipoFiltro === "60") {
         selected60 = $('#col_sello_origen').val();
-    } else if (tipoFiltro === "61") {
         selected61 = $('#col_sello_final').val();
-    } else if (tipoFiltro === "62") {
         selected62 = $('#col_fecha_retencion_aut').val();
-    } else if (tipoFiltro === "63") {
         selected63 = $('#col_fecha_liberacion_aut').val();
-    } else if (tipoFiltro === "64") {
         selected64 = $('#col_estatus_operacion').val();
-    } else if (tipoFiltro === "65") {
         selected65 = $('#col_motivo_atraso').val();
-    } else if (tipoFiltro === "66") {
         selected66 = $('#col_observaciones').val();
-    } else if (tipoFiltro === "67") {
         selected67 = $('#col_llegada_a_nova').val();
-    } else if (tipoFiltro === "68") {
         selected68 = $('#col_llegada_a_globe_trade_sd').val();
-    } else if (tipoFiltro === "69") {
         selected69 = $('#col_archivo_m').val();
-    } else if (tipoFiltro === "70") {
         selected70 = $('#col_fecha_archivo_m').val();
-    } else if (tipoFiltro === "71") {
         selected71 = $('#col_fecha_solicit_manip').val();
-    } else if (tipoFiltro === "72") {
         selected72 = $('#col_fecha_vencim_manip').val();
-    } else if (tipoFiltro === "73") {
         selected73 = $('#col_fecha_confirm_clave_pedim').val();
-    } else if (tipoFiltro === "74") {
         selected74 = $('#col_fecha_recep_increment').val();
-    } else if (tipoFiltro === "75") {
         selected75 = $('#col_t_e').val();
-    } else if (tipoFiltro === "76") {
         selected76 = $('#col_fecha_vencim_inbound').val();
-    } else if (tipoFiltro === "77") {
         selected77 = $('#col_no_bultos').val();
-    } else if (tipoFiltro === "78") {
         selected78 = $('#col_peso_kg').val();
-    } else if (tipoFiltro === "79") {
         selected79 = $('#col_transferencia').val();
-    } else if (tipoFiltro === "80") {
         selected80 = $('#col_fecha_inicio_etiquetado').val();
-    } else if (tipoFiltro === "81") {
         selected81 = $('#col_fecha_termino_etiquetado').val();
-    } else if (tipoFiltro === "82") {
         selected82 = $('#col_hora_termino_etiquetado').val();
-    } else if (tipoFiltro === "83") {
         selected83 = $('#col_proveedor').val();
-    } else if (tipoFiltro === "84") {
         selected84 = $('#col_proveedor_carga').val();
-    } else if (tipoFiltro === "85") {
         selected85 = $('#col_fy').val();
-    }
 
     await consultarCustoms(idAgenteAduanal, tipoFiltro, 
                             selected1,
