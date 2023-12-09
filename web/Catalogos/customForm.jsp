@@ -406,9 +406,14 @@
                 <div class="columna1"><input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
                 <div class="columna2"><button type="button" class="btn btn-primary" id="upload_file" onclick="logExcel()"><i class="fa fa-upload"></i></button></div>
                 <div class="columna2"><button type="button" class="btn btn-primary" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
-                <div class="columna4"><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
-                <div class="columna5"><label><font class="redtext1">Busqueda:&nbsp; <input id="searchTerm" type="text" onkeyup="this.value = this.value.toUpperCase()" onkeyup="doSearch()" style="text-transform:uppercase;" data-mobile-responsive="true"/>&nbsp;&nbsp;<a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></label></div>
+                <div class="columna4"><button type="button" class="btn btn-primary" id="created_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
+                <div class="columna5"><a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
+                <div class="columna6"></div>            
             </div> 
+            
+            <!--<input class="form-control" type="text" id="rfcSupport" name="rfcSupport"  value=""  autocomplete="off" oninput="validarInput(this)" onkeyup="this.value = this.value.toUpperCase()">
+            <pre id="rfcOK" style="font-family: Arial; font-weight: bold; color:#4d73d1;" size="1"></pre>
+            -->
             <div class="scroll-container" id="divAMostrarOcultar">
                 <div align="center" id="divResultado" name="divResultado"><%=namePlantilla%></div>
             </div>

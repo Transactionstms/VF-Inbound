@@ -215,7 +215,7 @@ a{
 
     /* Set a fixed height for the container */
     .scroll-container {
-      height: 70px; /* You can adjust the height as needed */
+      height: 100px; /* You can adjust the height as needed */
       overflow-y: scroll; /* Enable vertical scrolling */
       border: 1px solid #ccc; /* Optional: Add a border for styling */
     }
@@ -234,31 +234,37 @@ a{
     }
 
     .columna2 {
-      flex: .5;
+      flex: .3;
       /*background-color: #33FFF6;
       padding: 15px;*/
       text-align: center;
     }
 
     .columna3 {
-      flex: .5;
+      flex: .3;
       /*background-color: #33DDFF;
       padding: 15px;*/
-      text-align: left;
+      text-align: center;
     } 
 
     .columna4 {
-      flex: 2;
+      flex: .3;
       /*background-color: #8BC4C4;
       padding: 15px;*/
       text-align: center;
     } 
 
     .columna5 {
+      flex: .3;
+      /*background-color: #3349FF;
+      padding: 15px;*/
+      text-align: center;
+    }  
+    
+    .columna6 {
       flex: 3;
       /*background-color: #3349FF;
       padding: 15px;*/
-      text-align: right;
     }  
     
     /* Modal */

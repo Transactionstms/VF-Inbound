@@ -1996,8 +1996,9 @@ async function FiltrerData(tipoFiltro) {
 }
 
 function cleanMultiselects(tipoFiltro) {
-    FiltrerData("0");
     
+    FiltrerData("0");
+        
     if (tipoFiltro === "1") {
        $('#col_referenciaAA').val(null).trigger('change');
     } else if (tipoFiltro === "2") {
@@ -2523,6 +2524,12 @@ function show_eta_port_discharge(data, i) {
     loadJsPicker();
     document.getElementById("eta_port_discharge").value = data;
     contModals = i;
+    var numRows = i;
+    
+    for(var v = 0; v < numRows; v++){
+        
+    }
+    
 }
 
 function hide_eta_port_discharge(data) {
@@ -2540,7 +2547,7 @@ function hide_eta_port_discharge(data) {
     document.getElementById("eta_port_discharge[" + contModals + "]").style.borderColor = color;
     document.getElementById("fecha_pago_pedimento[" + contModals + "]").style.borderColor = color;
     document.getElementById("fecha_modulacion[" + contModals + "]").style.borderColor = color;
-    
+    parametrizacionValoresEvento("eta_port_discharge",contModals); 
 }
 
 /*function show_pedimento_r1_1er(data, i){
@@ -2576,6 +2583,7 @@ function hide_fecha_recepcion_doc(data) {
     contModals;
     document.getElementById("fecha_recepcion_doc[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_doc").modal("hide");
+    parametrizacionValoresEvento("fecha_recepcion_doc",contModals); 
 }
 
 function show_fecha_revalidacion(data, i) {
@@ -2589,6 +2597,7 @@ function hide_fecha_revalidacion(data) {
     contModals;
     document.getElementById("fecha_revalidacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_revalidacion").modal("hide");
+    parametrizacionValoresEvento("fecha_revalidacion",contModals); 
 }
 
 function show_fecha_previo_origen(data, i) {
@@ -2602,6 +2611,7 @@ function hide_fecha_previo_origen(data) {
     contModals;
     document.getElementById("fecha_previo_origen[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_previo_origen").modal("hide");
+    parametrizacionValoresEvento("fecha_previo_origen",contModals);     
 }
 
 function show_fecha_previo_destino(data, i) {
@@ -2615,6 +2625,7 @@ function hide_fecha_previo_destino(data) {
     contModals;
     document.getElementById("fecha_previo_destino[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_previo_destino").modal("hide");
+    parametrizacionValoresEvento("fecha_previo_destino",contModals); 
 }
 
 function show_fecha_resultado_previo(data, i) {
@@ -2628,6 +2639,7 @@ function hide_fecha_resultado_previo(data) {
     contModals;
     document.getElementById("fecha_resultado_previo[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_resultado_previo").modal("hide");
+    parametrizacionValoresEvento("fecha_resultado_previo",contModals); 
 }
 
 function show_proforma_final(data, i) {
@@ -2641,6 +2653,7 @@ function hide_proforma_final(data) {
     contModals;
     document.getElementById("proforma_final[" + contModals + "]").innerHTML = data;
     $("#modal_proforma_final").modal("hide");
+    parametrizacionValoresEvento("proforma_final",contModals); 
 }
 
 function show_permiso(i) {
@@ -2697,6 +2710,7 @@ function hide_fecha_envio(data) {
     contModals;
     document.getElementById("fecha_envio[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_envio").modal("hide");
+    parametrizacionValoresEvento("fecha_envio",contModals); 
 }
 
 function show_fecha_recepcion_perm(data, i) {
@@ -2710,6 +2724,7 @@ function hide_fecha_recepcion_perm(data) {
     contModals;
     document.getElementById("fecha_recepcion_perm[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_perm").modal("hide");
+    parametrizacionValoresEvento("fecha_recepcion_perm",contModals); 
 }
 
 function show_fecha_activacion_perm(data, i) {
@@ -2723,6 +2738,7 @@ function hide_fecha_activacion_perm(data) {
     contModals;
     document.getElementById("fecha_activacion_perm[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_activacion_perm").modal("hide");
+    parametrizacionValoresEvento("fecha_activacion_perm",contModals); 
 }
 
 function show_fecha_permisos_aut(data, i) {
@@ -2736,6 +2752,7 @@ function hide_fecha_permisos_aut(data) {
     contModals;
     document.getElementById("fecha_permisos_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_permisos_aut").modal("hide");
+    parametrizacionValoresEvento("fecha_permisos_aut",contModals); 
 }
 
 function show_co_pref_arancelaria(i) {
@@ -2902,6 +2919,7 @@ function hide_fecha_recepcion_ca(data) {
     contModals;
     document.getElementById("fecha_recepcion_ca[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_ca").modal("hide");
+    parametrizacionValoresEvento("fecha_recepcion_ca",contModals); 
 }
 
 function show_fecha_doc_completos(data, i) {
@@ -2915,6 +2933,7 @@ function hide_fecha_doc_completos(data) {
     contModals;
     document.getElementById("fecha_doc_completos[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_doc_completos").modal("hide");
+    parametrizacionValoresEvento("fecha_doc_completos",contModals); 
 }
 
 function show_fecha_pago_pedimento(i) {
@@ -2936,6 +2955,7 @@ function hide_fecha_pago_pedimento(data) {
     contModals;
     document.getElementById("fecha_pago_pedimento[" + contModals + "]").innerHTML =data;
     modulacion(data, contModals);
+    parametrizacionValoresEvento("fecha_pago_pedimento",contModals); 
 }
 
 function show_fecha_solicitud_transporte(data, i) {
@@ -2949,6 +2969,7 @@ function hide_fecha_solicitud_transporte(data) {
     contModals;
     document.getElementById("fecha_solicitud_transporte[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_solicitud_transporte").modal("hide");
+    parametrizacionValoresEvento("fecha_solicitud_transporte",contModals); 
 }
 
 function show_fecha_modulacion(i) {
@@ -2969,6 +2990,7 @@ function hide_fecha_modulacion(data) {
     contModals;
     document.getElementById("fecha_modulacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_modulacion").modal("hide");
+    parametrizacionValoresEvento("fecha_modulacion",contModals); 
 }
 
 function show_modalidad(i) {
@@ -3056,6 +3078,7 @@ function hide_fecha_reconocimiento(data) {
     contModals;
     document.getElementById("fecha_reconocimiento[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_reconocimiento").modal("hide");
+    parametrizacionValoresEvento("fecha_reconocimiento",contModals);
 }
 
 function show_fecha_liberacion(data, i) {
@@ -3069,6 +3092,7 @@ function hide_fecha_liberacion(data) {
     contModals;
     document.getElementById("fecha_liberacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_liberacion").modal("hide");
+    parametrizacionValoresEvento("fecha_liberacion",contModals);
 }
 
 function show_fecha_retencion_aut(data, i) {
@@ -3082,6 +3106,7 @@ function hide_fecha_retencion_aut(data) {
     contModals;
     document.getElementById("fecha_retencion_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_retencion_aut").modal("hide");
+    parametrizacionValoresEvento("fecha_retencion_aut",contModals);
 }
 
 function show_fecha_liberacion_aut(data, i) {
@@ -3095,6 +3120,7 @@ function hide_fecha_liberacion_aut(data) {
     contModals;
     document.getElementById("fecha_liberacion_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_liberacion_aut").modal("hide");
+    parametrizacionValoresEvento("fecha_liberacion_aut",contModals);
 }
 
 function show_llegada_a_nova(data, i) {
@@ -3108,6 +3134,7 @@ function hide_llegada_a_nova(data) {
     contModals;
     document.getElementById("llegada_a_nova[" + contModals + "]").innerHTML = data;
     $("#modal_llegada_a_nova").modal("hide");
+    parametrizacionValoresEvento("llegada_a_nova",contModals);
 }
 
 function show_llegada_a_globe_trade_sd(data, i) {
@@ -3121,6 +3148,7 @@ function hide_llegada_a_globe_trade_sd(data) {
     contModals;
     document.getElementById("llegada_a_globe_trade_sd[" + contModals + "]").innerHTML = data;
     $("#modal_llegada_a_globe_trade_sd").modal("hide");
+    parametrizacionValoresEvento("llegada_a_globe_trade_sd",contModals);
 }
 
 function show_fecha_archivo_m(data, i) {
@@ -3134,6 +3162,7 @@ function hide_fecha_archivo_m(data) {
     contModals;
     document.getElementById("fecha_archivo_m[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_archivo_m").modal("hide");
+    parametrizacionValoresEvento("fecha_archivo_m",contModals);
 }
 
 function show_fecha_solicit_manip(data, i) {
@@ -3147,6 +3176,7 @@ function hide_fecha_solicit_manip(data) {
     contModals;
     document.getElementById("fecha_solicit_manip[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_solicit_manip").modal("hide");
+    parametrizacionValoresEvento("fecha_solicit_manip",contModals);
 }
 
 function show_fecha_vencim_manip(data, i) {
@@ -3160,6 +3190,7 @@ function hide_fecha_vencim_manip(data) {
     contModals;
     document.getElementById("fecha_vencim_manip[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_vencim_manip").modal("hide");
+    parametrizacionValoresEvento("fecha_vencim_manip",contModals);
 }
 
 function show_fecha_confirm_clave_pedim(data, i) {
@@ -3173,6 +3204,7 @@ function hide_fecha_confirm_clave_pedim(data) {
     contModals;
     document.getElementById("fecha_confirm_clave_pedim[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_confirm_clave_pedim").modal("hide");
+    parametrizacionValoresEvento("fecha_confirm_clave_pedim",contModals);
 }
 
 function show_fecha_recep_increment(data, i) {
@@ -3186,6 +3218,7 @@ function hide_fecha_recep_increment(data) {
     contModals;
     document.getElementById("fecha_recep_increment[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recep_increment").modal("hide");
+    parametrizacionValoresEvento("fecha_recep_increment",contModals);
 }
 
 function show_fecha_vencim_inbound(data, i) {
@@ -3199,6 +3232,7 @@ function hide_fecha_vencim_inbound(data) {
     contModals;
     document.getElementById("fecha_vencim_inbound[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_vencim_inbound").modal("hide");
+    parametrizacionValoresEvento("fecha_vencim_inbound",contModals);
 }
 
 function show_transferencia(i) {
@@ -3248,6 +3282,7 @@ function hide_fecha_inicio_etiquetado(data) {
     contModals;
     document.getElementById("fecha_inicio_etiquetado[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_inicio_etiquetado").modal("hide");
+    parametrizacionValoresEvento("fecha_inicio_etiquetado",contModals);
 }
 
 function show_fecha_termino_etiquetado(data, i) {
@@ -3261,5 +3296,301 @@ function hide_fecha_termino_etiquetado(data) {
     contModals;
     document.getElementById("fecha_termino_etiquetado[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_termino_etiquetado").modal("hide");
+    parametrizacionValoresEvento("fecha_termino_etiquetado",contModals);
 }
 
+function validarNumero(event) {
+    // Obtener el contenido actual del TD
+    let contenido = event.target.innerText;
+
+    // Reemplazar comas por puntos para asegurar el formato decimal
+    contenido = contenido.replace(',', '.');
+
+    // Validar si el contenido es un número o un número decimal
+    if (/^(\d*\.?\d+|\d+\.?\d*)$/.test(contenido)) {
+        // Si es un número o un número decimal válido, permitir que permanezca en el TD
+        event.target.style.color = 'black';
+    } else {
+        // Si no es un número o un número decimal válido, eliminar el contenido y mostrar un color de texto rojo
+        event.target.innerText = '';
+        event.target.style.color = 'red';
+    }
+}
+
+function validarTexto(td) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z\s]+$/.test(contenido)) {
+    // Si es solo texto, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene números u otros caracteres, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+}
+
+function formatoNumero(event) {
+      // Obtener el código ASCII de la tecla presionada
+      var charCode = (event.which) ? event.which : event.keyCode;
+
+      // Validar que solo se permitan números y el carácter de retroceso
+      if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 8) {
+        event.preventDefault();
+        return false;
+      }
+
+      // Obtener el contenido actual de la celda
+      var valor = event.target.innerText;
+
+      // Filtrar caracteres no numéricos
+      var numeroFiltrado = valor.replace(/\D/g, '');
+
+      // Limitar la longitud total a 16 caracteres
+      numeroFiltrado = numeroFiltrado.slice(0, 16);
+
+      // Aplicar el formato XX XX XXXX XXXXXXXX
+      if (numeroFiltrado.length > 1) {
+        numeroFiltrado = numeroFiltrado.replace(/(\d{2})(\d{2})(\d{4})(\d{8})/, '$1 $2 $3 $4');
+      }
+
+      // Actualizar el contenido de la celda con el número filtrado
+      event.target.innerText = numeroFiltrado;
+
+      // Posicionar el cursor al final del contenido
+      var range = document.createRange();
+      var selection = window.getSelection();
+      range.selectNodeContents(event.target);
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      return true;
+}
+
+
+function clearFiltres(){
+        
+       $('#col_referenciaAA').val(null).trigger('change');
+
+       $('#col_evento').val(null).trigger('change'); 
+    
+       $('#col_responsable').val(null).trigger('change');
+
+       $('#col_finalDestination').val(null).trigger('change');
+  
+       $('#col_brandDivision').val(null).trigger('change');
+  
+       $('#col_division').val(null).trigger('change');
+  
+       $('#col_shipmentId').val(null).trigger('change');
+    
+       $('#col_container').val(null).trigger('change');
+   
+       $('#col_blAwbPro').val(null).trigger('change');
+    
+       $('#col_loadType').val(null).trigger('change');
+   
+       $('#col_quantity').val(null).trigger('change');
+    
+       $('#col_pod').val(null).trigger('change');
+    
+       $('#col_estDepartFromPol').val(null).trigger('change');
+    
+       $('#col_etaRealPortOfDischarge').val(null).trigger('change');
+    
+       $('#col_estEtaDc').val(null).trigger('change');
+   
+       $('#col_inboundNotification').val(null).trigger('change');
+    
+       $('#col_pol').val(null).trigger('change');
+    
+       $('#col_aa').val(null).trigger('change');
+    
+       $('#col_fechaMesVenta').val(null).trigger('change');
+    
+       $('#col_prioridad').val(null).trigger('change');
+    
+       $('#col_pais_origen').val(null).trigger('change');
+   
+       $('#col_size_container').val(null).trigger('change');
+    
+       $('#col_valor_usd').val(null).trigger('change');
+   
+       $('#col_eta_port_discharge').val(null).trigger('change');
+   
+       $('#col_agente_aduanal').val(null).trigger('change');
+   
+       $('#col_pedimento_a1').val(null).trigger('change');
+   
+       $('#col_pedimento_r1_1er').val(null).trigger('change');
+    
+       $('#col_motivo_rectificacion_1er').val(null).trigger('change');
+    
+       $('#col_pedimento_r1_2do').val(null).trigger('change');
+    
+       $('#col_motivo_rectificacion_2do').val(null).trigger('change');
+    
+       $('#col_fecha_recepcion_doc').val(null).trigger('change');
+    
+       $('#col_recinto').val(null).trigger('change');
+    
+       $('#col_naviera').val(null).trigger('change');
+    
+       $('#col_buque').val(null).trigger('change');
+   
+       $('#col_fecha_revalidacion').val(null).trigger('change');
+   
+       $('#col_fecha_previo_origen').val(null).trigger('change');
+   
+       $('#col_fecha_previo_destino').val(null).trigger('change');
+   
+       $('#col_fecha_resultado_previo').val(null).trigger('change');
+   
+       $('#col_proforma_final').val(null).trigger('change');
+    
+       $('#col_permiso').val(null).trigger('change');
+    
+       $('#col_fecha_envio').val(null).trigger('change');
+   
+       $('#col_fecha_recepcion_perm').val(null).trigger('change');
+   
+       $('#col_fecha_activacion_perm').val(null).trigger('change');
+   
+       $('#col_fecha_permisos_aut').val(null).trigger('change');
+   
+       $('#col_co_pref_arancelaria').val(null).trigger('change');
+   
+       $('#col_aplic_pref_arancelaria').val(null).trigger('change');
+    
+       $('#col_req_uva').val(null).trigger('change');
+    
+       $('#col_req_ca').val(null).trigger('change');
+    
+       $('#col_fecha_recepcion_ca').val(null).trigger('change');
+    
+       $('#col_num_constancia_ca').val(null).trigger('change');
+    
+       $('#col_monto_ca').val(null).trigger('change');
+     
+       $('#col_fecha_doc_completos').val(null).trigger('change');
+    
+       $('#col_fecha_pago_pedimento').val(null).trigger('change');
+ 
+       $('#col_fecha_solicitud_transporte').val(null).trigger('change');
+   
+       $('#col_fecha_modulacion').val(null).trigger('change');
+    
+       $('#col_modalidad').val(null).trigger('change');
+    
+       $('#col_resultado_modulacion').val(null).trigger('change');
+    
+       $('#col_fecha_reconocimiento').val(null).trigger('change');
+   
+       $('#col_fecha_liberacion').val(null).trigger('change');
+     
+       $('#col_sello_origen').val(null).trigger('change');
+    
+       $('#col_sello_final').val(null).trigger('change');
+    
+       $('#col_fecha_retencion_aut').val(null).trigger('change');
+   
+       $('#col_fecha_liberacion_aut').val(null).trigger('change');
+ 
+       $('#col_estatus_operacion').val(null).trigger('change');
+  
+       $('#col_motivo_atraso').val(null).trigger('change');
+    
+       $('#col_observaciones').val(null).trigger('change');
+ 
+       $('#col_llegada_a_nova').val(null).trigger('change');
+     
+       $('#col_llegada_a_globe_trade_sd').val(null).trigger('change');
+   
+       $('#col_archivo_m').val(null).trigger('change');
+    
+       $('#col_fecha_archivo_m').val(null).trigger('change');
+    
+       $('#col_fecha_solicit_manip').val(null).trigger('change');
+    
+       $('#col_fecha_vencim_manip').val(null).trigger('change');
+   
+       $('#col_fecha_confirm_clave_pedim').val(null).trigger('change');
+     
+       $('#col_fecha_recep_increment').val(null).trigger('change');
+    
+       $('#col_t_e').val(null).trigger('change');
+   
+       $('#col_fecha_vencim_inbound').val(null).trigger('change');
+   
+       $('#col_no_bultos').val(null).trigger('change');
+    
+       $('#col_peso_kg').val(null).trigger('change');
+     
+       $('#col_transferencia').val(null).trigger('change');
+    
+       $('#col_fecha_inicio_etiquetado').val(null).trigger('change');
+ 
+       $('#col_fecha_termino_etiquetado').val(null).trigger('change');
+  
+       $('#col_hora_termino_etiquetado').val(null).trigger('change');
+    
+       $('#col_proveedor').val(null).trigger('change');
+    
+       $('#col_proveedor_carga').val(null).trigger('change');
+    
+       $('#col_fy').val(null).trigger('change');
+       
+       FiltrerData("0");
+       
+}
+
+
+/*
+  -Posicionar onFocus al presionar event.key === 'Enter' por celda de forma vertical.
+*/
+function tabuladorVertical(event, namecelda, contador) {
+
+    let posicion =0;
+
+    // Verificar si la tecla presionada es Enter
+    if (event.key === 'Enter') {
+
+        posicion = parseInt(contador)+1;
+
+        // Obtener el id de la celda de abajo
+        const nextCellId = namecelda+"[" + posicion + "]";
+
+        console.log("Se obtiene celda siguiente: "+nextCellId);
+
+        // Enfocar la celda de abajo
+        const nextCell = document.getElementById(nextCellId);
+        if (nextCell) {
+            event.preventDefault();  //eliminación del enter
+            nextCell.focus();
+        }
+    }
+}
+
+/* -Recorrer lista para tomar valor y asignarlo a las demas filas de forma vertical. */
+function parametrizacionValoresEvento(name_celda, contador) {
+
+    let eventoActual = document.getElementById("evento["+contador+"]").value;
+    let valorCeldaActual = document.getElementById(name_celda+"["+contador+"]").innerHTML;
+    let numCustoms = document.getElementById("numCustoms").value;
+    let listEventos;
+
+    for (var i = 1, max =numCustoms; i < max; i++) {
+
+          listEventos = document.getElementById("evento["+i+"]").value;
+
+          if(eventoActual === listEventos){
+              document.getElementById(name_celda+"["+i+"]").innerHTML = valorCeldaActual;
+          }
+
+    }
+
+}

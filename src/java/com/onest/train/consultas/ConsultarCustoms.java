@@ -215,7 +215,6 @@ public class ConsultarCustoms extends HttpServlet {
             String caramelo_proveedor_carga ="";
             String caramelo_fy ="";
             String sql = "";
-
             
             //Generar caramelo: Opciones del multiselect
             if (!selected_referenciaAA.equals("")) { 
@@ -1435,7 +1434,7 @@ public class ConsultarCustoms extends HttpServlet {
 
                     salida += "<tr id=\"tr<" + cont + "\">"
                             + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
-                            + " <th contenteditable=\"true\" id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
+                            + " <th contenteditable=\"true\" id=\"referenciaAA[" + cont + "]\" oninput=\"validarInput(this);\">" + row[30] + "<pre id=\"rfcOK\" style=\"font-family: Arial; font-weight: bold; color:#4d73d1;\" size=\"1\"></pre></th> "
                             + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
                             + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
                             + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
@@ -1458,22 +1457,22 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"InboundNotification[" + cont + "]\">" + row[14] + "</td> "
                             + " <td id=\"Pol[" + cont + "]\">" + row[20] + "</td> "
                             + " <td id=\"aa[" + cont + "]\">" + row[16] + "</td> "
-                            + " <td id=\"FechaMesVenta[" + cont + "]\">" + row[28] + "</td> "
+                            + " <td id=\"FechaMesVenta[" + cont + "]\">" + row[28] + "</td> " 
                             + " <td id=\"prioridad[" + cont + "]\">" + row[97] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"pais_origen[" + cont + "]\">" + row[31] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'pais_origen'," + cont + ")\" id=\"pais_origen[" + cont + "]\">" + row[31] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'size_container'," + cont + ")\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
                             + " <td id=\"eta_port_discharge[" + cont + "]\" onclick=\"show_eta_port_discharge('" + row[34] + "'," + cont + ")\">" + row[34] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"pedimento_r1_1er[" + cont + "]\" onclick=\"cleanPedimento_r1_1er(''," + cont + ")\">" + row[37] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"pedimento_r1_2do[" + cont + "]\" onclick=\"cleanPedimento_r1_2do('" + row[39] + "'," + cont + ")\">" + row[39] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" id=\"pedimento_r1_1er[" + cont + "]\" onclick=\"cleanPedimento_r1_1er(''," + cont + ")\">" + row[37] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" id=\"pedimento_r1_2do[" + cont + "]\" onclick=\"cleanPedimento_r1_2do('" + row[39] + "'," + cont + ")\">" + row[39] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
                             + " <td id=\"fecha_recepcion_doc[" + cont + "]\" onclick=\"show_fecha_recepcion_doc('" + row[41] + "'," + cont + ")\">" + row[41] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'naviera'," + cont + ")\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'buque'," + cont + ")\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
                             + " <td id=\"fecha_revalidacion[" + cont + "]\" onclick=\"show_fecha_revalidacion('" + row[45] + "'," + cont + ")\">" + row[45] + "</td> "
                             + " <td id=\"fecha_previo_origen[" + cont + "]\" onclick=\"show_fecha_previo_origen('" + row[46] + "'," + cont + ")\">" + row[46] + "</td> "
                             + " <td id=\"fecha_previo_destino[" + cont + "]\" onclick=\"show_fecha_previo_destino('" + row[47] + "'," + cont + ")\">" + row[47] + "</td> "
@@ -1489,8 +1488,8 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"req_uva[" + cont + "]\" onclick=\"show_req_uva(" + cont + ")\">" + row[57] + "</td> "
                             + " <td id=\"req_ca[" + cont + "]\" onclick=\"show_req_ca(" + cont + ")\">" + row[58] + "</td> "
                             + " <td id=\"fecha_recepcion_ca[" + cont + "]\" onclick=\"show_fecha_recepcion_ca('" + row[59] + "'," + cont + ")\">" + row[59] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'num_constancia_ca'," + cont + ")\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'monto_ca'," + cont + ")\" contenteditable=\"true\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
                             + " <td id=\"fecha_doc_completos[" + cont + "]\" onclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\">" + row[62] + "</td> "
                             + " <td id=\"fecha_pago_pedimento[" + cont + "]\" onclick=\"show_fecha_pago_pedimento(" + cont + ")\">" + row[63] + "</td> "
                             + " <td id=\"fecha_solicitud_transporte[" + cont + "]\" onclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\">" + row[64] + "</td> "
@@ -1499,41 +1498,41 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"resultado_modulacion[" + cont + "]\" onclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\">" + row[67] + "</td> "
                             + " <td id=\"fecha_reconocimiento[" + cont + "]\" onclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\">" + row[68] + "</td> "
                             + " <td id=\"fecha_liberacion[" + cont + "]\" onclick=\"show_fecha_liberacion('" + row[69] + "'," + cont + ")\">" + row[69] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'sello_origen'," + cont + ")\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
                             + " <td id=\"fecha_retencion_aut[" + cont + "]\" onclick=\"show_fecha_retencion_aut('" + row[72] + "'," + cont + ")\">" + row[72] + "</td> "
                             + " <td id=\"fecha_liberacion_aut[" + cont + "]\" onclick=\"show_fecha_liberacion_aut('" + row[73] + "'," + cont + ")\">" + row[73] + "</td> "
                             + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
-                            + " <td contenteditable=\"true\" id=\"motivo_atraso[" + cont + "]\">" + row[75] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" id=\"motivo_atraso[" + cont + "]\">" + row[75] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
 
                     if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
 
                         salida += " <td id=\"llegada_a_nova[" + cont + "]\" onclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\">" + row[77] + "</td> "
                                 + " <td id=\"llegada_a_globe_trade_sd[" + cont + "]\" onclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\">" + row[78] + "</td> "
-                                + " <td contenteditable=\"true\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
                                 + " <td id=\"fecha_archivo_m[" + cont + "]\" onclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\">" + row[80] + "</td> "
                                 + " <td id=\"fecha_solicit_manip[" + cont + "]\" onclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\">" + row[81] + "</td> "
                                 + " <td id=\"fecha_vencim_manip[" + cont + "]\" onclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\">" + row[82] + "</td> "
                                 + " <td id=\"fecha_confirm_clave_pedim[" + cont + "]\" onclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\">" + row[83] + "</td> "
                                 + " <td id=\"fecha_recep_increment[" + cont + "]\" onclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\">" + row[84] + "</td> "
-                                + " <td contenteditable=\"true\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
                                 + " <td id=\"fecha_vencim_inbound[" + cont + "]\" onclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\">" + row[86] + "</td> ";
                     }
 
                     if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-                        salida += " <td contenteditable=\"true\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
-                                + " <td contenteditable=\"true\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
+                        salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
                                 + " <td id=\"transferencia[" + cont + "]\" onclick=\"show_transferencia(" + cont + ")\">" + row[89] + "</td> "
                                 + " <td id=\"fecha_inicio_etiquetado[" + cont + "]\" onclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\">" + row[90] + "</td> "
                                 + " <td id=\"fecha_termino_etiquetado[" + cont + "]\" onclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\">" + row[91] + "</td> "
                                 + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" autocomplete=\"off\"></td> "
-                                + " <td contenteditable=\"true\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
-                                + " <td contenteditable=\"true\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
+                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
                     }
 
-                    salida += " <td contenteditable=\"true\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
+                    salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
                             + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
                             + "</tr>";
 
