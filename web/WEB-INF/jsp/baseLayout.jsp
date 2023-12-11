@@ -101,7 +101,7 @@
    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=31" target="data">Plantilla RDI</a></li>   
    <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/seleccionPlantilla.jsp?idPlantilla=31" target="data">Plantilla Customs</a></li> 
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=27" target="data">Agregar Evento Nuevo</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=21" target="data">Plantilla DSN</a></li>
+                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=33" target="data">Plantilla SCI</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Asignar Eventos Nuevos</a></li>
                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/modificarEventos.jsp" target="data">Modificar Eventos </a></li>

@@ -206,7 +206,7 @@
                 try {
                       //let urlF='https://www.ta2.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
                       // let urlF='http://74.208.140.125:8080/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
-                       // let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
+                      //  let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
                       let urlF='https://www.tacts.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
@@ -238,6 +238,9 @@
 
                     }else if (<%=sql1%> === 31) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logRDIBatch.jsp?folio=' + fecha;
+
+                    }else if (<%=sql1%> === 33) {
+                        window.location.href = '<%=request.getContextPath()%>/Importacion/logSCIBatch.jsp?folio=' + fecha;
 
                     }else{
                         
