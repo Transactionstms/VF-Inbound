@@ -295,5 +295,13 @@ a{
       padding: 15px;*/
       text-align: center;
     }
-    
+       
+    /* Estilo de ejemplo para resaltar la celda editada */
+    .celda-bloqueada {
+        background-color: #ECECEC; /* Fondo verde para indicar edición */
+    }
+
+    .celda-no-bloqueada {
+        background-color: #ffffff; /* Fondo verde para indicar edición */
+    }
     
