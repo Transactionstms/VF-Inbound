@@ -397,10 +397,8 @@ public class InsertarCustomsForms extends HttpServlet {
             if(oraOut){
 
                                  insertarCustoms = " UPDATE TRA_INB_CUSTOMS SET "                              
-                                                 + " REFERENCIA_AA = '" + referenciaAA + "', ";
-                                
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                       
-                                insertarCustoms += " PAIS_ORIGEN = '" + pais_origen + "', "   
+                                                 + " REFERENCIA_AA = '" + referenciaAA + "', "
+                                                 + " PAIS_ORIGEN = '" + pais_origen + "', "   
                                                  + " SIZE_CONTAINER = '" + size_container + "', "   
                                                  + " VALOR_USD = '" + valor_usd + "', "
                                                  + " AGENTE_ADUANAL = '" + agente_aduanal + "', "             
@@ -483,7 +481,6 @@ public class InsertarCustomsForms extends HttpServlet {
                                 insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
                                                  + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                                  + " OBSERVACIONES = '" + observaciones + "', ";   
-                }
             
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                     
@@ -547,10 +544,8 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " NUMERO_DE_EVENTO, "  
                                                   + " SHIPMENT_ID, "  
                                                   + " CONTAINER_ID, "  
-                                                  + " REFERENCIA_AA, ";
-                                
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF             
-                                 insertarCustoms += " PAIS_ORIGEN, "  
+                                                  + " REFERENCIA_AA, "
+                                                  + " PAIS_ORIGEN, "  
                                                   + " SIZE_CONTAINER, "  
                                                   + " VALOR_USD, ";          
                                  insertarCustoms += " AGENTE_ADUANAL, "            
@@ -633,8 +628,7 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms += " ESTATUS_OPERACION, "         
                                                   + " MOTIVO_ATRASO, "             
                                                   + " OBSERVACIONES, ";        
-               }
-            
+
                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                         if(!llegada_a_nova.trim().equals("")){        
                                 insertarCustoms += " LLEGADA_A_NOVA, ";
@@ -689,11 +683,8 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + evento + "', "  
                                                   + " '" + shipmentId + "', "  
                                                   + " '" + containerId + "', "  
-                                                  + " '" + referenciaAA + "', ";
-                                 
-                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4003")||idAgenteAduanal.equals("4004")||idAgenteAduanal.equals("4005")||idAgenteAduanal.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                            
-                                                 
-                                 insertarCustoms += " '" + pais_origen + "', "  
+                                                  + " '" + referenciaAA + "', "
+                                                  + " '" + pais_origen + "', "  
                                                   + " '" + size_container + "', "  
                                                   + " '" + valor_usd + "', ";  
      
@@ -777,7 +768,6 @@ public class InsertarCustomsForms extends HttpServlet {
                                  insertarCustoms +=  " '" + estatus_operacion + "', "         
                                                    + " '" + motivo_atraso + "', "             
                                                    + " '" + observaciones + "', "; 
-                }  
                 
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
 
