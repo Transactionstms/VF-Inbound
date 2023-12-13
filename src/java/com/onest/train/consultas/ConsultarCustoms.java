@@ -1432,9 +1432,9 @@ public class ConsultarCustoms extends HttpServlet {
                         blockedDate = "false";
                     }
 
-                    salida += "<tr id=\"tr<" + cont + "\">"
+                    salida += "<tr id=\"tr" + cont + "\">"
                             + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
-                            + " <th contenteditable=\"true\" id=\"referenciaAA[" + cont + "]\" oninput=\"validarInput(this);\">" + row[30] + "<pre id=\"rfcOK\" style=\"font-family: Arial; font-weight: bold; color:#4d73d1;\" size=\"1\"></pre></th> "
+                            + " <th contenteditable=\"true\" id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
                             + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
                             + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
                             + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
@@ -1464,10 +1464,10 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
                             + " <td id=\"eta_port_discharge[" + cont + "]\" onclick=\"show_eta_port_discharge('" + row[34] + "'," + cont + ")\">" + row[34] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" id=\"pedimento_r1_1er[" + cont + "]\" onclick=\"cleanPedimento_r1_1er(''," + cont + ")\">" + row[37] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" id=\"pedimento_r1_1er[" + cont + "]\">" + row[37] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event)\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" id=\"pedimento_r1_2do[" + cont + "]\" onclick=\"cleanPedimento_r1_2do('" + row[39] + "'," + cont + ")\">" + row[39] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" id=\"pedimento_r1_2do[" + cont + "]\">" + row[39] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
                             + " <td id=\"fecha_recepcion_doc[" + cont + "]\" onclick=\"show_fecha_recepcion_doc('" + row[41] + "'," + cont + ")\">" + row[41] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "

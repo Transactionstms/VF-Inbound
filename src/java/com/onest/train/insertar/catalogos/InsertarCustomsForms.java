@@ -48,8 +48,12 @@ public class InsertarCustomsForms extends HttpServlet {
                     
             String idAgenteAduanal = request.getParameter("idAgenteAduanal"); 
           //Contadores
-            String contCustoms = request.getParameter("numCustoms");
-            int numCustoms = Integer.parseInt(contCustoms);
+            String contCustomsI = request.getParameter("numCustomsInicial");
+            int numCustomsInicial = Integer.parseInt(contCustomsI);
+
+            String contCustomsF = request.getParameter("numCustomsFinal");
+            int numCustomsFinal = Integer.parseInt(contCustomsF);
+
             
           //Casteo Fechas Inbound Gral
             String eta_port_discharge = "";
@@ -129,8 +133,8 @@ public class InsertarCustomsForms extends HttpServlet {
             String regPrioridad = "";
 
             //Parametros Semaforo:
-            String semaforo = "";
             String eta_port_discharge_old = "";
+            String insertarSemaforo = "";
             int diasTranscurridos = 0;
             String customs = "";
             String salida = "0";
@@ -142,15 +146,15 @@ public class InsertarCustomsForms extends HttpServlet {
             // create SimpleDateFormat object with desired date format:       Tratamiento 2
             SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
               
-              for (int i=numCustoms; i<=numCustoms; i++){
+              for (int i=numCustomsInicial; i<=numCustomsFinal; i++){
                   
                   //Parametros Indicadores
                   String referenciaAA = request.getParameter("referenciaAA[" + i + "]").trim(); 
                   String evento = request.getParameter("evento[" + i + "]").trim();
                   String shipmentId = request.getParameter("shipmentId[" + i + "]").trim();
                   String containerId = request.getParameter("containerId[" + i + "]").trim();
-                  String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
                   String loadTypeFinal = request.getParameter("loadTypeFinal[" + i + "]").trim();
+                  String prioridad = request.getParameter("prioridad[" + i + "]").trim(); 
                   
                   //Parametros Generales
                   pais_origen = request.getParameter("pais_origen[" + i + "]").trim(); 
@@ -876,55 +880,55 @@ public class InsertarCustomsForms extends HttpServlet {
 
                         if (!eta_port_discharge.equals(eta_port_dischargeSystem)) {
 
-                            semaforo = " UPDATE TRA_INB_SEMAFORO SET "
-                                     + " DIAS_TRANSCURRIDOS = 1, "
-                                     + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
-                                     + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', " 
-                                     + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
-                                     + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                     + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
-                                     + " DAY_LIMIT_GREEN = '" + diasLimitePrioridadBaja + "', "
-                                     + " DAY_LIMIT_YELLOW = '" + diasLimitePrioridadMedia + "', "
-                                     + " DAY_LIMIT_RED = '" + diasLimitePrioridadAlta + "' "
-                                     + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                     + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
+                            insertarSemaforo = " UPDATE TRA_INB_SEMAFORO SET "
+                                             + " DIAS_TRANSCURRIDOS = 1, "
+                                             + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
+                                             + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', " 
+                                             + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
+                                             + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                             + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
+                                             + " DAY_LIMIT_GREEN = '" + diasLimitePrioridadBaja + "', "
+                                             + " DAY_LIMIT_YELLOW = '" + diasLimitePrioridadMedia + "', "
+                                             + " DAY_LIMIT_RED = '" + diasLimitePrioridadAlta + "' "
+                                             + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                                             + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
                         }
 
                     }else{
 
-                            semaforo = " INSERT INTO TRA_INB_SEMAFORO "
-                                     + " (REG_ID, "
-                                     + " EVENTO_ID, "
-                                     + " SHIPMENT_ID, "
-                                     + " CONTAINER_ID, "
-                                     + " AGENTE_ID, "
-                                     + " LOAD_TYPE_FINAL, "
-                                     + " ESTATUS_SEMAFORO, "
-                                     + " FECHA_ACTIVACION, "
-                                     + " FECHA_TERMINO, "
-                                     + " DIAS_CALCULADOS, "
-                                     + " DAY_LIMIT_GREEN, "
-                                     + " DAY_LIMIT_YELLOW, "
-                                     + " DAY_LIMIT_RED, "
-                                     + " DIAS_TRANSCURRIDOS) "
-                                     + " VALUES "
-                                     + "(NULL, "
-                                     + " '" + evento + "', "
-                                     + " '" + shipmentId + "', "
-                                     + " '" + containerId + "', "
-                                     + " '" + idAgenteAduanal + "', "
-                                     + " '" + loadTypeFinal + "', "
-                                     + " '" + estatus_semaforo + "', "
-                                     + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
-                                     + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                     + " '" + dias_total_despacho + "', "
-                                     + " '" + diasLimitePrioridadBaja + "', "
-                                     + " '" + diasLimitePrioridadMedia + "', "
-                                     + " '" + diasLimitePrioridadAlta + "', "
-                                     + " 0) ";
+                            insertarSemaforo = " INSERT INTO TRA_INB_SEMAFORO "
+                                             + " (REG_ID, "
+                                             + " EVENTO_ID, "
+                                             + " SHIPMENT_ID, "
+                                             + " CONTAINER_ID, "
+                                             + " AGENTE_ID, "
+                                             + " LOAD_TYPE_FINAL, "
+                                             + " ESTATUS_SEMAFORO, "
+                                             + " FECHA_ACTIVACION, "
+                                             + " FECHA_TERMINO, "
+                                             + " DIAS_CALCULADOS, "
+                                             + " DAY_LIMIT_GREEN, "
+                                             + " DAY_LIMIT_YELLOW, "
+                                             + " DAY_LIMIT_RED, "
+                                             + " DIAS_TRANSCURRIDOS) "
+                                             + " VALUES "
+                                             + "(NULL, "
+                                             + " '" + evento + "', "
+                                             + " '" + shipmentId + "', "
+                                             + " '" + containerId + "', "
+                                             + " '" + idAgenteAduanal + "', "
+                                             + " '" + loadTypeFinal + "', "
+                                             + " '" + estatus_semaforo + "', "
+                                             + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
+                                             + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                             + " '" + dias_total_despacho + "', "
+                                             + " '" + diasLimitePrioridadBaja + "', "
+                                             + " '" + diasLimitePrioridadMedia + "', "
+                                             + " '" + diasLimitePrioridadAlta + "', "
+                                             + " 0) ";
                     }
 
-                    boolean oraOut4 = oraDB.execute(semaforo); 
+                    boolean oraOut4 = oraDB.execute(insertarSemaforo); 
                     
                     if(oraOut4){
                         customs = " UPDATE TRA_INB_CUSTOMS SET "
