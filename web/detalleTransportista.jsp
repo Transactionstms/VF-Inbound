@@ -120,7 +120,7 @@
                                                         </div>
                                                         <div class="row ">    
                                                             <div class="col-md-12">
-                                                                <input type="hidden" name="nombre" value="DetallePlaneacion1.txt">
+                                                                <input type="hidden" name="nombre" value="DetallePlaneacionINB.txt">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -336,6 +336,22 @@
 
                     }
 
+ function muestraRepartos2(agrupador, gde1) {
+console.log(agrupador)
+                        fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
+                            method: 'POST',
+                        }).then(r => r.text())
+                                .then(data => {
+
+                                    //  document.getElementById('pedidos2').innerHTML = data;
+
+                                    document.getElementById('agrupador12').innerHTML = gde1;
+                                    $("#ModalCamion").modal('show');
+                                    document.getElementById('idpantallaCom').value = agrupador;
+                                }).catch(error => console.log(error));
+
+                    }
+                    
                     function pantallaCom( ) {
 
                         let idPan = document.getElementById('idpantallaCom').value;
