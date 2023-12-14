@@ -186,7 +186,7 @@ public class ConsultarRepartoTransportista extends HttpServlet {
                           "     <td class=\"\"><b>"+rs.getString(3)+"</b></td> \n" +
                           "     <td class=\"\"><b>"+rs.getString(4)+"</b></td>\n" +
                        "     <td class=\"\"> <button type=\"button\" class=\"btn btn-primary\" onclick=\"muestraRepartos('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\">Modificar</button> </td>\n" +
-                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\"/></b></td>\n" +
+                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(1)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\"/></b></td>\n" +
                           "      " +
                           " </tr>"
                         + ""; 
