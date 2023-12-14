@@ -954,6 +954,10 @@
         <servlet-name>ConsultarCustoms</servlet-name>
         <servlet-class>com.onest.train.consultas.ConsultarCustoms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>consultarRepartosTransportista</servlet-name>
+        <servlet-class>com.onest.train.consultas.consultarRepartosTransportista</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1902,6 +1906,10 @@
     <servlet-mapping>
         <servlet-name>ConsultarCustoms</servlet-name>
         <url-pattern>/ConsultarCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>consultarRepartosTransportista</servlet-name>
+        <url-pattern>/consultarRepartosTransportista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
