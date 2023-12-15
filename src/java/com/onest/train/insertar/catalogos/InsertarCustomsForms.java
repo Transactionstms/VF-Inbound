@@ -866,66 +866,59 @@ public class InsertarCustomsForms extends HttpServlet {
                     Date dateFec2 = sdfSource2.parse(f2);                                                           //parse the string into Date object
                     String fecha_final = sdfDestination2.format(dateFec2); 
 
-                    /*Consultar si existe el SHIPMENT_ID en la tabla de tra_inb_semaforo*/
-                    String valShipmentSemaforo = "SELECT DISTINCT SHIPMENT_ID FROM TRA_INB_SEMAFORO WHERE SHIPMENT_ID = '" + shipmentId + "'";
-                    boolean oraOut3 = oraDB.execute(valShipmentSemaforo); 
-
-                    if(oraOut3){
-
-                        if (db.doDB(fac.consultarFechaSemaforo(shipmentId))) {
-                            for (String[] rowF : db.getResultado()) {
-                               eta_port_dischargeSystem =  rowF[0];
-                            }
+                    /* Consultar Fecha Eta Port Discharge */
+                    if (db.doDB(fac.consultarFechaSemaforo(shipmentId))) {
+                        for (String[] rowF : db.getResultado()) {
+                           eta_port_dischargeSystem =  rowF[0];
                         }
+                    }
 
-                        if (!eta_port_discharge.equals(eta_port_dischargeSystem)) {
+                    if (!eta_port_discharge.equals(eta_port_dischargeSystem)) {
 
-                            insertarSemaforo = " UPDATE TRA_INB_SEMAFORO SET "
-                                             + " DIAS_TRANSCURRIDOS = 1, "
-                                             + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
-                                             + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', " 
-                                             + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
-                                             + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                             + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
-                                             + " DAY_LIMIT_GREEN = '" + diasLimitePrioridadBaja + "', "
-                                             + " DAY_LIMIT_YELLOW = '" + diasLimitePrioridadMedia + "', "
-                                             + " DAY_LIMIT_RED = '" + diasLimitePrioridadAlta + "' "
-                                             + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
-                                             + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
-                        }
-
+                        insertarSemaforo = " UPDATE TRA_INB_SEMAFORO SET "
+                                         + " DIAS_TRANSCURRIDOS = 1, "
+                                         + " LOAD_TYPE_FINAL = '" + loadTypeFinal + "', "
+                                         + " ESTATUS_SEMAFORO = '" + estatus_semaforo + "', " 
+                                         + " FECHA_ACTIVACION = TO_DATE('" + eta_port_discharge + "', 'MM/DD/YYYY'), " 
+                                         + " FECHA_TERMINO = TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                         + " DIAS_CALCULADOS = '" + dias_total_despacho + "', "
+                                         + " DAY_LIMIT_GREEN = '" + diasLimitePrioridadBaja + "', "
+                                         + " DAY_LIMIT_YELLOW = '" + diasLimitePrioridadMedia + "', "
+                                         + " DAY_LIMIT_RED = '" + diasLimitePrioridadAlta + "' "
+                                         + " WHERE SHIPMENT_ID = '" + shipmentId + "' "
+                                         + " AND AGENTE_ID = '" + idAgenteAduanal + "' "; //idAgenteAduanal
                     }else{
 
-                            insertarSemaforo = " INSERT INTO TRA_INB_SEMAFORO "
-                                             + " (REG_ID, "
-                                             + " EVENTO_ID, "
-                                             + " SHIPMENT_ID, "
-                                             + " CONTAINER_ID, "
-                                             + " AGENTE_ID, "
-                                             + " LOAD_TYPE_FINAL, "
-                                             + " ESTATUS_SEMAFORO, "
-                                             + " FECHA_ACTIVACION, "
-                                             + " FECHA_TERMINO, "
-                                             + " DIAS_CALCULADOS, "
-                                             + " DAY_LIMIT_GREEN, "
-                                             + " DAY_LIMIT_YELLOW, "
-                                             + " DAY_LIMIT_RED, "
-                                             + " DIAS_TRANSCURRIDOS) "
-                                             + " VALUES "
-                                             + "(NULL, "
-                                             + " '" + evento + "', "
-                                             + " '" + shipmentId + "', "
-                                             + " '" + containerId + "', "
-                                             + " '" + idAgenteAduanal + "', "
-                                             + " '" + loadTypeFinal + "', "
-                                             + " '" + estatus_semaforo + "', "
-                                             + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
-                                             + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
-                                             + " '" + dias_total_despacho + "', "
-                                             + " '" + diasLimitePrioridadBaja + "', "
-                                             + " '" + diasLimitePrioridadMedia + "', "
-                                             + " '" + diasLimitePrioridadAlta + "', "
-                                             + " 0) ";
+                        insertarSemaforo = " INSERT INTO TRA_INB_SEMAFORO "
+                                         + " (REG_ID, "
+                                         + " EVENTO_ID, "
+                                         + " SHIPMENT_ID, "
+                                         + " CONTAINER_ID, "
+                                         + " AGENTE_ID, "
+                                         + " LOAD_TYPE_FINAL, "
+                                         + " ESTATUS_SEMAFORO, "
+                                         + " FECHA_ACTIVACION, "
+                                         + " FECHA_TERMINO, "
+                                         + " DIAS_CALCULADOS, "
+                                         + " DAY_LIMIT_GREEN, "
+                                         + " DAY_LIMIT_YELLOW, "
+                                         + " DAY_LIMIT_RED, "
+                                         + " DIAS_TRANSCURRIDOS) "
+                                         + " VALUES "
+                                         + "(NULL, "
+                                         + " '" + evento + "', "
+                                         + " '" + shipmentId + "', "
+                                         + " '" + containerId + "', "
+                                         + " '" + idAgenteAduanal + "', "
+                                         + " '" + loadTypeFinal + "', "
+                                         + " '" + estatus_semaforo + "', "
+                                         + " TO_DATE('" + fecha_inicial + "', 'MM/DD/YYYY'), "
+                                         + " TO_DATE('" + fecha_final + "', 'MM/DD/YYYY'), "
+                                         + " '" + dias_total_despacho + "', "
+                                         + " '" + diasLimitePrioridadBaja + "', "
+                                         + " '" + diasLimitePrioridadMedia + "', "
+                                         + " '" + diasLimitePrioridadAlta + "', "
+                                         + " 0) ";
                     }
 
                     boolean oraOut4 = oraDB.execute(insertarSemaforo); 

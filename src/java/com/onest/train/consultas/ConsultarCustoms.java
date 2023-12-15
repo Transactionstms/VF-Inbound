@@ -10,7 +10,6 @@ import com.onest.oracle.OracleDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.util.HashSet;
 /**
  *
  * @author Desarrollo Tacts
@@ -127,6 +126,93 @@ public class ConsultarCustoms extends HttpServlet {
             String selected_proveedor = request.getParameter("selected_proveedor").trim();
             String selected_proveedor_carga = request.getParameter("selected_proveedor_carga").trim();
             String selected_fy = request.getParameter("selected_fy").trim();
+            
+            //Objetos Multiselect:
+            HashSet<String> list_evento = new HashSet<String>();
+            HashSet<String> list_referenciaAA = new HashSet<String>();
+            HashSet<String> list_responsable = new HashSet<String>();
+            HashSet<String> list_finalDestination = new HashSet<String>();
+            HashSet<String> list_brandDivision = new HashSet<String>();
+            HashSet<String> list_division = new HashSet<String>();
+            HashSet<String> list_shipmentId = new HashSet<String>();
+            HashSet<String> list_containerId = new HashSet<String>();
+            HashSet<String> list_blAwbPro = new HashSet<String>();
+            HashSet<String> list_loadType = new HashSet<String>();
+            HashSet<String> list_quantity = new HashSet<String>();
+            HashSet<String> list_pod = new HashSet<String>();
+            HashSet<String> list_estDepartFromPol = new HashSet<String>();
+            HashSet<String> list_etaRealPortOfDischarge = new HashSet<String>();
+            HashSet<String> list_estEtaDc = new HashSet<String>();
+            HashSet<String> list_inboundNotification = new HashSet<String>();
+            HashSet<String> list_pol = new HashSet<String>();
+            HashSet<String> list_aa = new HashSet<String>();
+            HashSet<String> list_fechaMesVenta = new HashSet<String>();
+            HashSet<String> list_prioridad = new HashSet<String>();
+            HashSet<String> list_pais_origen = new HashSet<String>();
+            HashSet<String> list_size_container = new HashSet<String>();
+            HashSet<String> list_valor_usd = new HashSet<String>();
+            HashSet<String> list_eta_port_discharge = new HashSet<String>();
+            HashSet<String> list_agente_aduanal = new HashSet<String>();
+            HashSet<String> list_pedimento_a1 = new HashSet<String>();
+            HashSet<String> list_pedimento_r1_1er = new HashSet<String>();
+            HashSet<String> list_motivo_rectificacion_1er = new HashSet<String>();
+            HashSet<String> list_pedimento_r1_2do = new HashSet<String>();
+            HashSet<String> list_motivo_rectificacion_2do = new HashSet<String>();
+            HashSet<String> list_fecha_recepcion_doc = new HashSet<String>();
+            HashSet<String> list_recinto = new HashSet<String>();
+            HashSet<String> list_naviera = new HashSet<String>();
+            HashSet<String> list_buque = new HashSet<String>();
+            HashSet<String> list_fecha_revalidacion = new HashSet<String>();
+            HashSet<String> list_fecha_previo_origen = new HashSet<String>();
+            HashSet<String> list_fecha_previo_destino = new HashSet<String>();
+            HashSet<String> list_fecha_resultado_previo = new HashSet<String>();
+            HashSet<String> list_proforma_final = new HashSet<String>();
+            HashSet<String> list_permiso = new HashSet<String>();
+            HashSet<String> list_fecha_envio = new HashSet<String>();
+            HashSet<String> list_fecha_recepcion_perm = new HashSet<String>();
+            HashSet<String> list_fecha_activacion_perm = new HashSet<String>();
+            HashSet<String> list_fecha_permisos_aut = new HashSet<String>();
+            HashSet<String> list_co_pref_arancelaria = new HashSet<String>();
+            HashSet<String> list_aplic_pref_arancelaria = new HashSet<String>();
+            HashSet<String> list_req_uva = new HashSet<String>();
+            HashSet<String> list_req_ca = new HashSet<String>();
+            HashSet<String> list_fecha_recepcion_ca = new HashSet<String>();
+            HashSet<String> list_num_constancia_ca = new HashSet<String>();
+            HashSet<String> list_monto_ca = new HashSet<String>();
+            HashSet<String> list_fecha_doc_completos = new HashSet<String>();
+            HashSet<String> list_fecha_pago_pedimento = new HashSet<String>();
+            HashSet<String> list_fecha_solicitud_transporte = new HashSet<String>();
+            HashSet<String> list_fecha_modulacion = new HashSet<String>();
+            HashSet<String> list_modalidad = new HashSet<String>();
+            HashSet<String> list_resultado_modulacion = new HashSet<String>();
+            HashSet<String> list_fecha_reconocimiento = new HashSet<String>();
+            HashSet<String> list_fecha_liberacion = new HashSet<String>();
+            HashSet<String> list_sello_origen = new HashSet<String>();
+            HashSet<String> list_sello_final = new HashSet<String>();
+            HashSet<String> list_fecha_retencion_aut = new HashSet<String>();
+            HashSet<String> list_fecha_liberacion_aut = new HashSet<String>();
+            HashSet<String> list_estatus_operacion = new HashSet<String>();
+            HashSet<String> list_motivo_atraso = new HashSet<String>();
+            HashSet<String> list_observaciones = new HashSet<String>();
+            HashSet<String> list_llegada_a_nova = new HashSet<String>();
+            HashSet<String> list_llegada_a_globe_trade_sd = new HashSet<String>();
+            HashSet<String> list_archivo_m = new HashSet<String>();
+            HashSet<String> list_fecha_archivo_m = new HashSet<String>();
+            HashSet<String> list_fecha_solicit_manip = new HashSet<String>();
+            HashSet<String> list_fecha_vencim_manip = new HashSet<String>();
+            HashSet<String> list_fecha_confirm_clave_pedim = new HashSet<String>();
+            HashSet<String> list_fecha_recep_increment = new HashSet<String>();
+            HashSet<String> list_t_e = new HashSet<String>();
+            HashSet<String> list_fecha_vencim_inbound = new HashSet<String>();
+            HashSet<String> list_no_bultos = new HashSet<String>();
+            HashSet<String> list_peso_kg = new HashSet<String>();
+            HashSet<String> list_transferencia = new HashSet<String>();
+            HashSet<String> list_fecha_inicio_etiquetado = new HashSet<String>();
+            HashSet<String> list_fecha_termino_etiquetado = new HashSet<String>();
+            HashSet<String> list_hora_termino_etiquetado = new HashSet<String>();
+            HashSet<String> list_proveedor = new HashSet<String>();
+            HashSet<String> list_proveedor_carga = new HashSet<String>();
+            HashSet<String> list_fy = new HashSet<String>();
 
 
             String caramelo_referenciaAA ="";
@@ -216,7 +302,24 @@ public class ConsultarCustoms extends HttpServlet {
             String caramelo_fy ="";
             String sql = "";
             
-            //Generar caramelo: Opciones del multiselect
+            //Parametros Generales
+            String colorSemaforo = "";
+            String sizeSemaforo = "";
+            String listStatusOperationEvent = "";
+            String blockedDate = "";
+            String salida = "";
+            int cont = 1;
+
+            /*Columna: Estatus Operación (listado)*/
+            if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
+                for (String[] rowO : db.getResultado()) {
+                    listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>";
+                }
+            }
+            
+            
+    /*  ----------------------------- FILTROS MULTISELECT ENCABEZADOS  -----------------------------  */  
+    
             if (!selected_referenciaAA.equals("")) { 
                 String[] selected = selected_referenciaAA.split(",");
                 for (String a : selected) {
@@ -1005,23 +1108,10 @@ public class ConsultarCustoms extends HttpServlet {
                 caramelo_fy = caramelo_fy.replaceAll(",$", "");
             }
 
-            //Parametros Generales
-            String colorSemaforo = "";
-            String sizeSemaforo = "";
-            String listStatusOperationEvent = "";
-            String blockedDate = "";
-            String salida = "";
-            int cont = 1;
-
-            /*Columna: Estatus Operación (listado)*/
-            if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
-                for (String[] rowO : db.getResultado()) {
-                    listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>";
-                }
-            }
-
+        /*  ----------------------------- DATA/CONSULTA DE TABLA  -----------------------------  */    
+            
             sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
-                    + " SELECT DISTINCT "
+                + " SELECT DISTINCT "
                     /*1*/ + " TIE.ID_EVENTO, "
                     /*2*/ + " NVL(BP.RESPONSABLE, ' ') AS RESPONSABLE, "
                     /*3*/ + " GTN.FINAL_DESTINATION, "
@@ -1122,24 +1212,24 @@ public class ConsultarCustoms extends HttpServlet {
                     /*98*/ + " NVL(TIC.PRIORIDAD,'No'), "
                     /*99*/ + " NVL(GTN.ESTATUS,1), "
                     /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'0') "
-                    + " FROM TRA_INB_EVENTO TIE "
-                    + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
-                    + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
-                    + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
-                    + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
-                    + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
-                    + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
-                    + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
-                    + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
-                    + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
-                    + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
-                    + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
-                    + " WHERE TIE.ESTADO = 1 "
-                    + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') "
-                    + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/11/2023','dd/mm/yyyy') "
-                    + " AND tid.division_nombre <> 'No/DSN' "
-                    + " AND gtn.load_type_final IS NOT NULL "
-                    + " AND GTN.ESTATUS <> 19 ";
+                            + " FROM TRA_INB_EVENTO TIE "
+                            + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
+                            + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
+                            + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
+                            + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
+                            + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
+                            + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
+                            + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
+                            + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
+                            + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
+                            + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
+                            + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
+                            + " WHERE TIE.ESTADO = 1 "
+                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') "
+                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/11/2023','dd/mm/yyyy') "
+                            + " AND tid.division_nombre <> 'No/DSN' "
+                            + " AND gtn.load_type_final IS NOT NULL "
+                            + " AND GTN.ESTATUS <> 19 ";
 
             if (!AgentType.equals("4006")) { //VF GENERAL
                 sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + AgentType + "') ";
@@ -1411,30 +1501,237 @@ public class ConsultarCustoms extends HttpServlet {
             }
             sql += " ORDER BY tie.id_evento, tibd.nombre_bd ASC ";
 
+        /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */
+            
             if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
+                    
+                        list_evento.add("<option value='" + row[0] + "'>" + row[0] + "</option>");
+                        list_referenciaAA.add("<option value='" + row[30] + "'>" + row[30] + "</option>");
+                        list_responsable.add("<option value='" + row[1] + "'>" + row[1] + "</option>");
+                        list_finalDestination.add("<option value='" + row[2] + "'>" + row[2] + "</option>");
+                        list_brandDivision.add("<option value='" + row[21] + "'>" + row[21] + "</option>");
+                        list_division.add("<option value='" + row[4] + "'>" + row[4] + "</option>");
+                        list_shipmentId.add("<option value='" + row[5] + "'>" + row[5] + "</option>");
+                        list_containerId.add("<option value='" + row[6] + "'>" + row[6] + "</option>");
+                        list_blAwbPro.add("<option value='" + row[7] + "'>" + row[7] + "</option>");
+                        list_loadType.add("<option value='" + row[8] + "'>" + row[8] + "</option>");
+                        list_quantity.add("<option value='" + row[9] + "'>" + row[9] + "</option>");
+                        list_pod.add("<option value='" + row[19] + "'>" + row[19] + "</option>");
+                        list_estDepartFromPol.add("<option value='" + row[11] + "'>" + row[11] + "</option>");
+                        list_etaRealPortOfDischarge.add("<option value='" + row[12] + "'>" + row[12] + "</option>");
+                        list_estEtaDc.add("<option value='" + row[22] + "'>" + row[22] + "</option>");
+                        list_inboundNotification.add("<option value='" + row[14] + "'>" + row[14] + "</option>");
+                        list_pol.add("<option value='" + row[20] + "'>" + row[20] + "</option>");
+                        list_aa.add("<option value='" + row[16] + "'>" + row[16] + "</option>");
+                        list_fechaMesVenta.add("<option value='" + row[28] + "'>" + row[28] + "</option>");
+                        list_prioridad.add("<option value='" + row[97] + "'>" + row[97] + "</option>");
+                        list_pais_origen.add("<option value='" + row[31] + "'>" + row[31] + "</option>");
+                        list_size_container.add("<option value='" + row[32] + "'>" + row[32] + "</option>");
+                        list_valor_usd.add("<option value='" + row[33] + "'>" + row[33] + "</option>");
+                        list_eta_port_discharge.add("<option value='" + row[34] + "'>" + row[34] + "</option>");
+                        list_agente_aduanal.add("<option value='" + row[35] + "'>" + row[35] + "</option>");
+                        list_pedimento_a1.add("<option value='" + row[36] + "'>" + row[36] + "</option>");
+                        list_pedimento_r1_1er.add("<option value='" + row[37] + "'>" + row[37] + "</option>");
+                        list_motivo_rectificacion_1er.add("<option value='" + row[38] + "'>" + row[38] + "</option>");
+                        list_pedimento_r1_2do.add("<option value='" + row[39] + "'>" + row[39] + "</option>");
+                        list_motivo_rectificacion_2do.add("<option value='" + row[40] + "'>" + row[40] + "</option>");
+                        list_fecha_recepcion_doc.add("<option value='" + row[41] + "'>" + row[41] + "</option>");
+                        list_recinto.add("<option value='" + row[42] + "'>" + row[42] + "</option>");
+                        list_naviera.add("<option value='" + row[43] + "'>" + row[43] + "</option>");
+                        list_buque.add("<option value='" + row[44] + "'>" + row[44] + "</option>");
+                        list_fecha_revalidacion.add("<option value='" + row[45] + "'>" + row[45] + "</option>");
+                        list_fecha_previo_origen.add("<option value='" + row[46] + "'>" + row[46] + "</option>");
+                        list_fecha_previo_destino.add("<option value='" + row[47] + "'>" + row[47] + "</option>");
+                        list_fecha_resultado_previo.add("<option value='" + row[48] + "'>" + row[48] + "</option>");
+                        list_proforma_final.add("<option value='" + row[49] + "'>" + row[49] + "</option>");
+                        list_permiso.add("<option value='" + row[50] + "'>" + row[50] + "</option>");
+                        list_fecha_envio.add("<option value='" + row[51] + "'>" + row[51] + "</option>");
+                        list_fecha_recepcion_perm.add("<option value='" + row[52] + "'>" + row[52] + "</option>");
+                        list_fecha_activacion_perm.add("<option value='" + row[53] + "'>" + row[53] + "</option>");
+                        list_fecha_permisos_aut.add("<option value='" + row[54] + "'>" + row[54] + "</option>");
+                        list_co_pref_arancelaria.add("<option value='" + row[55] + "'>" + row[55] + "</option>");
+                        list_aplic_pref_arancelaria.add("<option value='" + row[56] + "'>" + row[56] + "</option>");
+                        list_req_uva.add("<option value='" + row[57] + "'>" + row[57] + "</option>");
+                        list_req_ca.add("<option value='" + row[58] + "'>" + row[58] + "</option>");
+                        list_fecha_recepcion_ca.add("<option value='" + row[59] + "'>" + row[59] + "</option>");
+                        list_num_constancia_ca.add("<option value='" + row[60] + "'>" + row[60] + "</option>");
+                        list_monto_ca.add("<option value='" + row[61] + "'>" + row[61] + "</option>");
+                        list_fecha_doc_completos.add("<option value='" + row[62] + "'>" + row[62] + "</option>");
+                        list_fecha_pago_pedimento.add("<option value='" + row[63] + "'>" + row[63] + "</option>");
+                        list_fecha_solicitud_transporte.add("<option value='" + row[64] + "'>" + row[64] + "</option>");
+                        list_fecha_modulacion.add("<option value='" + row[65] + "'>" + row[65] + "</option>");
+                        list_modalidad.add("<option value='" + row[66] + "'>" + row[66] + "</option>");
+                        list_resultado_modulacion.add("<option value='" + row[67] + "'>" + row[67] + "</option>");
+                        list_fecha_reconocimiento.add("<option value='" + row[68] + "'>" + row[68] + "</option>");
+                        list_fecha_liberacion.add("<option value='" + row[69] + "'>" + row[69] + "</option>");
+                        list_sello_origen.add("<option value='" + row[70] + "'>" + row[70] + "</option>");
+                        list_sello_final.add("<option value='" + row[71] + "'>" + row[71] + "</option>");
+                        list_fecha_retencion_aut.add("<option value='" + row[72] + "'>" + row[72] + "</option>");
+                        list_fecha_liberacion_aut.add("<option value='" + row[73] + "'>" + row[73] + "</option>");
+                        list_estatus_operacion.add("<option value='" + row[74] + "'>" + row[74] + "</option>");
+                        list_motivo_atraso.add("<option value='" + row[75] + "'>" + row[75] + "</option>");
+                        list_observaciones.add("<option value='" + row[76] + "'>" + row[76] + "</option>");
 
+                    if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF            
+                        list_llegada_a_nova.add("<option value='" + row[77] + "'>" + row[77] + "</option>");
+                        list_llegada_a_globe_trade_sd.add("<option value='" + row[78] + "'>" + row[78] + "</option>");
+                        list_archivo_m.add("<option value='" + row[79] + "'>" + row[79] + "</option>");
+                        list_fecha_archivo_m.add("<option value='" + row[80] + "'>" + row[80] + "</option>");
+                        list_fecha_solicit_manip.add("<option value='" + row[81] + "'>" + row[81] + "</option>");
+                        list_fecha_vencim_manip.add("<option value='" + row[82] + "'>" + row[82] + "</option>");
+                        list_fecha_confirm_clave_pedim.add("<option value='" + row[83] + "'>" + row[83] + "</option>");
+                        list_fecha_recep_increment.add("<option value='" + row[84] + "'>" + row[84] + "</option>");
+                        list_t_e.add("<option value='" + row[85] + "'>" + row[85] + "</option>");
+                        list_fecha_vencim_inbound.add("<option value='" + row[86] + "'>" + row[86] + "</option>");
+                    }
+
+                    if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+                        list_no_bultos.add("<option value='" + row[87] + "'>" + row[87] + "</option>");
+                        list_peso_kg.add("<option value='" + row[88] + "'>" + row[88] + "</option>");
+                        list_transferencia.add("<option value='" + row[89] + "'>" + row[89] + "</option>");
+                        list_fecha_inicio_etiquetado.add("<option value='" + row[90] + "'>" + row[90] + "</option>");
+                        list_fecha_termino_etiquetado.add("<option value='" + row[91] + "'>" + row[91] + "</option>");
+                        list_hora_termino_etiquetado.add("<option value='" + row[92] + "'>" + row[92] + "</option>");
+                        list_proveedor.add("<option value='" + row[93] + "'>" + row[93] + "</option>");
+                        list_proveedor_carga.add("<option value='" + row[94] + "'>" + row[94] + "</option>");
+                        list_fy.add("<option value='" + row[95] + "'>" + row[95] + "</option>");
+                    }
+                    
+                }
+            }         
+
+                   salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
+                          + "     <thead> "
+                          + "         <tr> "    
+                          + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"FiltrerData('1')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('1')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_referenciaAA\" name=\"col_referenciaAA\">"+list_referenciaAA+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<a onclick=\"FiltrerData('2')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('2')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_evento\" name=\"col_evento\">"+list_evento+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"FiltrerData('3')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('3')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_responsable\" name=\"col_responsable\">"+list_responsable+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"FiltrerData('4')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('4')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_finalDestination\" name=\"col_finalDestination\">"+list_finalDestination+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"FiltrerData('5')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('5')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_brandDivision\" name=\"col_brandDivision\">"+list_brandDivision+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Division&nbsp;<a onclick=\"FiltrerData('6')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('6')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_division\" name=\"col_division\">"+list_division+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Shipment ID&nbsp;<a onclick=\"FiltrerData('7')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('7')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_shipmentId\" name=\"col_shipmentId\">"+list_shipmentId+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Container&nbsp;<a onclick=\"FiltrerData('8')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('8')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_container\" name=\"col_container\">"+list_containerId+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">BL/AWB/PRO&nbsp;<a onclick=\"FiltrerData('9')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('9')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_blAwbPro\" name=\"col_blAwbPro\">"+list_blAwbPro+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">LoadType&nbsp;<a onclick=\"FiltrerData('10')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('10')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_loadType\" name=\"col_loadType\">"+list_loadType+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Quantity&nbsp;<a onclick=\"FiltrerData('11')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('11')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_quantity\" name=\"col_quantity\">"+list_quantity+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POD&nbsp;<a onclick=\"FiltrerData('12')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('12')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pod\" name=\"col_pod\">"+list_pod+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Departure from POL&nbsp;<a onclick=\"FiltrerData('13')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('13')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_estDepartFromPol\" name=\"col_estDepartFromPol\">"+list_estDepartFromPol+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">ETA REAL Port of Discharge&nbsp;<a onclick=\"FiltrerData('14')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('14')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_etaRealPortOfDischarge\" name=\"col_etaRealPortOfDischarge\">"+list_etaRealPortOfDischarge+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Eta DC&nbsp;<a onclick=\"FiltrerData('15')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('15')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_estEtaDc\" name=\"col_estEtaDc\">"+list_estEtaDc+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Inbound notification&nbsp;<a onclick=\"FiltrerData('16')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('16')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_inboundNotification\" name=\"col_inboundNotification\">"+list_inboundNotification+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POL&nbsp;<a onclick=\"FiltrerData('17')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('17')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pol\" name=\"col_pol\">"+list_pol+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">A.A.&nbsp;<a onclick=\"FiltrerData('18')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('18')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_aa\" name=\"col_aa\">"+list_aa+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Mes de Venta&nbsp;<a onclick=\"FiltrerData('19')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('19')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fechaMesVenta\" name=\"col_fechaMesVenta\">"+list_fechaMesVenta+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Prioridad Si/No&nbsp;<a onclick=\"FiltrerData('20')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('20')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_prioridad\" name=\"col_prioridad\">"+list_prioridad+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">País Origen&nbsp;<a onclick=\"FiltrerData('21')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('21')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pais_origen\" name=\"col_pais_origen\">"+list_pais_origen+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Size Container&nbsp;<a onclick=\"FiltrerData('22')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('22')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_size_container\" name=\"col_size_container\">"+list_size_container+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Valor USD&nbsp;<a onclick=\"FiltrerData('23')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('23')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_valor_usd\" name=\"col_valor_usd\">"+list_valor_usd+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">ETA Port Of Discharge&nbsp;<a onclick=\"FiltrerData('24')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('24')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_eta_port_discharge\" name=\"col_eta_port_discharge\">"+list_eta_port_discharge+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Agente Aduanal&nbsp;<a onclick=\"FiltrerData('25')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('25')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_agente_aduanal\" name=\"col_agente_aduanal\">"+list_agente_aduanal+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento A1&nbsp;<a onclick=\"FiltrerData('26')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('26')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pedimento_a1\" name=\"col_pedimento_a1\">"+list_pedimento_a1+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1&nbsp;<a onclick=\"FiltrerData('27')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('27')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pedimento_r1_1er\" name=\"col_pedimento_r1_1er\">"+list_pedimento_r1_1er+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 1&nbsp;<a onclick=\"FiltrerData('28')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('28')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_motivo_rectificacion_1er\" name=\"col_motivo_rectificacion_1er\">"+list_motivo_rectificacion_1er+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1 (2do)&nbsp;<a onclick=\"FiltrerData('29')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('29')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_pedimento_r1_2do\" name=\"col_pedimento_r1_2do\">"+list_pedimento_r1_2do+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 2&nbsp;<a onclick=\"FiltrerData('30')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('30')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_motivo_rectificacion_2do\" name=\"col_motivo_rectificacion_2do\">"+list_motivo_rectificacion_2do+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Recepción Documentos&nbsp;<a onclick=\"FiltrerData('31')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('31')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_recepcion_doc\" name=\"col_fecha_recepcion_doc\">"+list_fecha_recepcion_doc+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Recinto&nbsp;<a onclick=\"FiltrerData('32')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('32')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_recinto\" name=\"col_recinto\">"+list_recinto+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Naviera / Forwarder&nbsp;<a onclick=\"FiltrerData('33')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('33')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_naviera\" name=\"col_naviera\">"+list_naviera+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Buque&nbsp;<a onclick=\"FiltrerData('34')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('34')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_buque\" name=\"col_buque\">"+list_buque+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Revalidación/Liberación de BL&nbsp;<a onclick=\"FiltrerData('35')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('35')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_revalidacion\" name=\"col_fecha_revalidacion\">"+list_fecha_revalidacion+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo Origen&nbsp;<a onclick=\"FiltrerData('36')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('36')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_previo_origen\" name=\"col_fecha_previo_origen\">"+list_fecha_previo_origen+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo en destino&nbsp;<a onclick=\"FiltrerData('37')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('37')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_previo_destino\" name=\"col_fecha_previo_destino\">"+list_fecha_previo_destino+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Resultado Previo&nbsp;<a onclick=\"FiltrerData('38')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('38')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_resultado_previo\" name=\"col_fecha_resultado_previo\">"+list_fecha_resultado_previo+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Proforma Final&nbsp;<a onclick=\"FiltrerData('39')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('39')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_proforma_final\" name=\"col_proforma_final\">"+list_proforma_final+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere permiso&nbsp;<a onclick=\"FiltrerData('40')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('40')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_permiso\" name=\"col_permiso\">"+list_permiso+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha envío Fichas/notas&nbsp;<a onclick=\"FiltrerData('41')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('41')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_envio\" name=\"col_fecha_envio\">"+list_fecha_envio+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Recepción de permisos tramit.&nbsp;<a onclick=\"FiltrerData('42')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('42')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_recepcion_perm\" name=\"col_fecha_recepcion_perm\">"+list_fecha_recepcion_perm+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick=\"FiltrerData('43')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('43')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_activacion_perm\" name=\"col_fecha_activacion_perm\">"+list_fecha_activacion_perm+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick=\"FiltrerData('44')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('44')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_permisos_aut\" name=\"col_fecha_permisos_aut\">"+list_fecha_permisos_aut+"</select></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#CC9D77;\">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick=\"FiltrerData('45')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('45')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_co_pref_arancelaria\" name=\"col_co_pref_arancelaria\">"+list_co_pref_arancelaria+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Aplico Preferencia Arancelaria&nbsp;<a onclick=\"FiltrerData('46')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('46')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_aplic_pref_arancelaria\" name=\"col_aplic_pref_arancelaria\">"+list_aplic_pref_arancelaria+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere UVA&nbsp;<a onclick=\"FiltrerData('47')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('47')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_req_uva\" name=\"col_req_uva\">"+list_req_uva+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Requiere CA&nbsp;<a onclick=\"FiltrerData('48')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('48')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_req_ca\" name=\"col_req_ca\">"+list_req_ca+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Fecha Recepción CA&nbsp;<a onclick=\"FiltrerData('49')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('49')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_recepcion_ca\" name=\"col_fecha_recepcion_ca\">"+list_fecha_recepcion_ca+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Número de Constancia CA&nbsp;<a onclick=\"FiltrerData('50')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('50')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_num_constancia_ca\" name=\"col_num_constancia_ca\">"+list_num_constancia_ca+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Monto CA&nbsp;<a onclick=\"FiltrerData('51')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('51')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_monto_ca\" name=\"col_monto_ca\">"+list_monto_ca+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Documentos Completos&nbsp;<a onclick=\"FiltrerData('52')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('52')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_doc_completos\" name=\"col_fecha_doc_completos\">"+list_fecha_doc_completos+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Pago Pedimento&nbsp;<a onclick=\"FiltrerData('53')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('53')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_pago_pedimento\" name=\"col_fecha_pago_pedimento\">"+list_fecha_pago_pedimento+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Solicitud de transporte&nbsp;<a onclick=\"FiltrerData('54')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('54')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_solicitud_transporte\" name=\"col_fecha_solicitud_transporte\">"+list_fecha_solicitud_transporte+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Modulacion&nbsp;<a onclick=\"FiltrerData('55')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('55')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_modulacion\" name=\"col_fecha_modulacion\">"+list_fecha_modulacion+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Modalidad&nbsp;<a onclick=\"FiltrerData('56')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('56')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_modalidad\" name=\"col_modalidad\">"+list_modalidad+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Resultado Modulacion&nbsp;<a onclick=\"FiltrerData('57')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('57')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_resultado_modulacion\" name=\"col_resultado_modulacion\">"+list_resultado_modulacion+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Reconocimiento&nbsp;<a onclick=\"FiltrerData('58')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('58')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_reconocimiento\" name=\"col_fecha_reconocimiento\">"+list_fecha_reconocimiento+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Liberacion&nbsp;<a onclick=\"FiltrerData('59')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('59')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_liberacion\" name=\"col_fecha_liberacion\">"+list_fecha_liberacion+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Origen&nbsp;<a onclick=\"FiltrerData('60')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('60')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_sello_origen\" name=\"col_sello_origen\">"+list_sello_origen+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Final&nbsp;<a onclick=\"FiltrerData('61')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('61')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_sello_final\" name=\"col_sello_final\">"+list_sello_final+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha de retencion por la autoridad&nbsp;<a onclick=\"FiltrerData('62')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('62')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_retencion_aut\" name=\"col_fecha_retencion_aut\">"+list_fecha_retencion_aut+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick=\"FiltrerData('63')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('63')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_liberacion_aut\" name=\"col_fecha_liberacion_aut\">"+list_fecha_liberacion_aut+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Estatus de la operación&nbsp;<a onclick=\"FiltrerData('64')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('64')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_estatus_operacion\" name=\"col_festatus_operacion\">"+list_estatus_operacion+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo Atraso&nbsp;<a onclick=\"FiltrerData('65')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('65')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_motivo_atraso\" name=\"col_motivo_atraso\">"+list_motivo_atraso+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Observaciones&nbsp;<a onclick=\"FiltrerData('66')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('66')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_observaciones\" name=\"col_observaciones\">"+list_observaciones+"</select></th> ";                                   
+
+            if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF 
+
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a NOVA&nbsp;<a onclick=\"FiltrerData('67')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('67')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_llegada_a_nova\" name=\"col_llegada_a_nova\">"+list_llegada_a_nova+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a Globe trade SD&nbsp;<a onclick=\"FiltrerData('68')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('68')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_llegada_a_globe_trade_sd\" name=\"col_llegada_a_globe_trade_sd\">"+list_llegada_a_globe_trade_sd+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Archivo M&nbsp;<a onclick=\"FiltrerData('69')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('69')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_archivo_m\" name=\"col_archivo_m\">"+list_archivo_m+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha de Archivo M&nbsp;<a onclick=\"FiltrerData('70')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('70')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_archivo_m\" name=\"col_fecha_archivo_m\">"+list_fecha_archivo_m+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha Solicitud de Manipulacion&nbsp;<a onclick=\"FiltrerData('71')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('71')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_solicit_manip\" name=\"col_fecha_solicit_manip\">"+list_fecha_solicit_manip+"</select></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de vencimiento de Manipulacion&nbsp;<a onclick=\"FiltrerData('72')\"><i class=\"fa fa-search\"></i></a>  &nbsp;<a onclick=\"cleanMultiselects('72')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_vencim_manip\" name=\"col_fecha_vencim_manip\">"+list_fecha_vencim_manip+"</select></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick=\"FiltrerData('73')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('73')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_confirm_clave_pedim\" name=\"col_fecha_confirm_clave_pedim\">"+list_fecha_confirm_clave_pedim+"</select></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de Recepcion de Incrementables&nbsp;<a onclick=\"FiltrerData('74')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('74')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_recep_increment\" name=\"col_fecha_recep_increment\">"+list_fecha_recep_increment+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">T&E&nbsp;<a onclick=\"FiltrerData('75')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('75')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_t_e\" name=\"col_t_e\">"+list_t_e+"</select></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha de Vencimiento del Inbound&nbsp;<a onclick=\"FiltrerData('76')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('76')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_vencim_inbound\" name=\"col_fecha_vencim_inbound\">"+list_fecha_vencim_inbound+"</select></th> ";
+
+            }
+
+            if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">No. BULTOS&nbsp;<a onclick=\"FiltrerData('77')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('77')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_no_bultos\" name=\"col_no_bultos\">"+list_no_bultos+"</select> </th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Peso (KG)&nbsp;<a onclick=\"FiltrerData('78')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('78')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_peso_kg\" name=\"col_peso_kg\">"+list_peso_kg+"</select> </th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Transferencia&nbsp;<a onclick=\"FiltrerData('79')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('79')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_transferencia\" name=\"col_transferencia\">"+list_transferencia+"</select> </th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Inicio Etiquetado&nbsp;<a onclick=\"FiltrerData('80')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('80')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_inicio_etiquetado\" name=\"col_fecha_inicio_etiquetado\">"+list_fecha_inicio_etiquetado+"</select> </th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Termino Etiquetado&nbsp;<a onclick=\"FiltrerData('81')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('81')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fecha_termino_etiquetado\" name=\"col_fecha_termino_etiquetado\">"+list_fecha_termino_etiquetado+"</select> </th> " 
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Hora de termino Etiquetado&nbsp;<a onclick=\"FiltrerData('82')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('82')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_hora_termino_etiquetado\" name=\"col_hora_termino_etiquetado\">"+list_hora_termino_etiquetado+"</select> </th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor&nbsp;<a onclick=\"FiltrerData('83')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('83')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_proveedor\" name=\"col_proveedor\">"+list_proveedor+"</select></th> " 
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor de Carga&nbsp;<a onclick=\"FiltrerData('84')\"><i class=\"fa fa-search\"></i></a> &nbsp;<a onclick=\"cleanMultiselects('84')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_proveedor_carga\" name=\"col_proveedor_carga\">"+list_proveedor_carga+"</select></th> ";
+
+            }
+
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"FiltrerData('85')\"><i class=\"fa fa-search\"></i></a>&nbsp;<a onclick=\"cleanMultiselects('85')\"><i class=\"fa fa-trash-alt\"></i></a><select multiple class=\"custom-select\" id=\"col_fy\" name=\"col_fy\">"+list_fy+"</select></th> "
+                          + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
+                          + "         </tr> "
+                          + "     </thead> "
+                          + "<tbody>   "; 
+
+            if (db.doDB(sql)) {
+                for (String[] row : db.getResultado()) {
+                    
                     if (row[99].equals("1")) {
                         colorSemaforo = "../img/circle-green.webp";
-                        sizeSemaforo = "100%";
+                        sizeSemaforo = "55%";
                     } else if (row[99].equals("2")) {
                         colorSemaforo = "../img/circle-yellow.webp";
-                        sizeSemaforo = "80%";
+                        sizeSemaforo = "50%";
                     } else if (row[99].equals("3")) {
                         colorSemaforo = "../img/circle-red.webp";
-                        sizeSemaforo = "60%";
+                        sizeSemaforo = "30%";
                     } else {
                         colorSemaforo = "../img/circle-gray.webp";
-                        sizeSemaforo = "100%";
+                        sizeSemaforo = "60%";
                     }
 
                     if (row[58] == "No") {
                         blockedDate = "false";
                     }
 
-                    salida += "<tr id=\"tr" + cont + "\">"
+            /*  ----------------------------- CUERPO/DATA DE TABLA  -----------------------------  */
+            
+                    salida += "<tr id=\"tr<" + cont + "\">"
                             + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
-                            + " <th contenteditable=\"true\" id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
+                            + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'referenciaAA',"+cont+")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
                             + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
                             + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
                             + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
@@ -1459,20 +1756,20 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"aa[" + cont + "]\">" + row[16] + "</td> "
                             + " <td id=\"FechaMesVenta[" + cont + "]\">" + row[28] + "</td> " 
                             + " <td id=\"prioridad[" + cont + "]\">" + row[97] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'pais_origen'," + cont + ")\" id=\"pais_origen[" + cont + "]\">" + row[31] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'size_container'," + cont + ")\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoPais(this," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pais_origen'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"pais_origen[" + cont + "]\">" + row[31] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'size_container',"+cont+")\" onkeydown=\"tabuladorVertical(event,'size_container'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
                             + " <td id=\"eta_port_discharge[" + cont + "]\" onclick=\"show_eta_port_discharge('" + row[34] + "'," + cont + ")\">" + row[34] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" id=\"pedimento_r1_1er[" + cont + "]\">" + row[37] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" id=\"pedimento_r1_2do[" + cont + "]\">" + row[39] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'agente_aduanal',"+cont+")\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,"+cont+")\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,"+cont+")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"pedimento_r1_1er[" + cont + "]\">" + row[37] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
+                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,"+cont+")\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"pedimento_r1_2do[" + cont + "]\">" + row[39] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
                             + " <td id=\"fecha_recepcion_doc[" + cont + "]\" onclick=\"show_fecha_recepcion_doc('" + row[41] + "'," + cont + ")\">" + row[41] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'naviera'," + cont + ")\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'buque'," + cont + ")\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'recinto',"+cont+")\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'naviera',"+cont+")\" onkeydown=\"tabuladorVertical(event,'naviera'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'buque',"+cont+")\" onkeydown=\"tabuladorVertical(event,'buque'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
                             + " <td id=\"fecha_revalidacion[" + cont + "]\" onclick=\"show_fecha_revalidacion('" + row[45] + "'," + cont + ")\">" + row[45] + "</td> "
                             + " <td id=\"fecha_previo_origen[" + cont + "]\" onclick=\"show_fecha_previo_origen('" + row[46] + "'," + cont + ")\">" + row[46] + "</td> "
                             + " <td id=\"fecha_previo_destino[" + cont + "]\" onclick=\"show_fecha_previo_destino('" + row[47] + "'," + cont + ")\">" + row[47] + "</td> "
@@ -1488,8 +1785,8 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"req_uva[" + cont + "]\" onclick=\"show_req_uva(" + cont + ")\">" + row[57] + "</td> "
                             + " <td id=\"req_ca[" + cont + "]\" onclick=\"show_req_ca(" + cont + ")\">" + row[58] + "</td> "
                             + " <td id=\"fecha_recepcion_ca[" + cont + "]\" onclick=\"show_fecha_recepcion_ca('" + row[59] + "'," + cont + ")\">" + row[59] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'num_constancia_ca'," + cont + ")\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'monto_ca'," + cont + ")\" contenteditable=\"true\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'num_constancia_ca'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'monto_ca'," + cont + ")\" onpaste=\"handlePaste(event)\" contenteditable=\"true\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
                             + " <td id=\"fecha_doc_completos[" + cont + "]\" onclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\">" + row[62] + "</td> "
                             + " <td id=\"fecha_pago_pedimento[" + cont + "]\" onclick=\"show_fecha_pago_pedimento(" + cont + ")\">" + row[63] + "</td> "
                             + " <td id=\"fecha_solicitud_transporte[" + cont + "]\" onclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\">" + row[64] + "</td> "
@@ -1498,50 +1795,52 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td id=\"resultado_modulacion[" + cont + "]\" onclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\">" + row[67] + "</td> "
                             + " <td id=\"fecha_reconocimiento[" + cont + "]\" onclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\">" + row[68] + "</td> "
                             + " <td id=\"fecha_liberacion[" + cont + "]\" onclick=\"show_fecha_liberacion('" + row[69] + "'," + cont + ")\">" + row[69] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'sello_origen'," + cont + ")\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_origen',"+cont+")\" onkeydown=\"tabuladorVertical(event,'sello_origen'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_final',"+cont+")\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
                             + " <td id=\"fecha_retencion_aut[" + cont + "]\" onclick=\"show_fecha_retencion_aut('" + row[72] + "'," + cont + ")\">" + row[72] + "</td> "
                             + " <td id=\"fecha_liberacion_aut[" + cont + "]\" onclick=\"show_fecha_liberacion_aut('" + row[73] + "'," + cont + ")\">" + row[73] + "</td> "
                             + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" id=\"motivo_atraso[" + cont + "]\">" + row[75] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"motivo_atraso[" + cont + "]\">" + row[75] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
 
-                    if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
+                if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
 
-                        salida += " <td id=\"llegada_a_nova[" + cont + "]\" onclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\">" + row[77] + "</td> "
-                                + " <td id=\"llegada_a_globe_trade_sd[" + cont + "]\" onclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\">" + row[78] + "</td> "
-                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
-                                + " <td id=\"fecha_archivo_m[" + cont + "]\" onclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\">" + row[80] + "</td> "
-                                + " <td id=\"fecha_solicit_manip[" + cont + "]\" onclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\">" + row[81] + "</td> "
-                                + " <td id=\"fecha_vencim_manip[" + cont + "]\" onclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\">" + row[82] + "</td> "
-                                + " <td id=\"fecha_confirm_clave_pedim[" + cont + "]\" onclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\">" + row[83] + "</td> "
-                                + " <td id=\"fecha_recep_increment[" + cont + "]\" onclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\">" + row[84] + "</td> "
-                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
-                                + " <td id=\"fecha_vencim_inbound[" + cont + "]\" onclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\">" + row[86] + "</td> ";
-                    }
+                    salida += " <td id=\"llegada_a_nova[" + cont + "]\" onclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\">" + row[77] + "</td> "
+                            + " <td id=\"llegada_a_globe_trade_sd[" + cont + "]\" onclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\">" + row[78] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
+                            + " <td id=\"fecha_archivo_m[" + cont + "]\" onclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\">" + row[80] + "</td> "
+                            + " <td id=\"fecha_solicit_manip[" + cont + "]\" onclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\">" + row[81] + "</td> "
+                            + " <td id=\"fecha_vencim_manip[" + cont + "]\" onclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\">" + row[82] + "</td> "
+                            + " <td id=\"fecha_confirm_clave_pedim[" + cont + "]\" onclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\">" + row[83] + "</td> "
+                            + " <td id=\"fecha_recep_increment[" + cont + "]\" onclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\">" + row[84] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
+                            + " <td id=\"fecha_vencim_inbound[" + cont + "]\" onclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\">" + row[86] + "</td> ";
+                }
 
-                    if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+                if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-                        salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
-                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
-                                + " <td id=\"transferencia[" + cont + "]\" onclick=\"show_transferencia(" + cont + ")\">" + row[89] + "</td> "
-                                + " <td id=\"fecha_inicio_etiquetado[" + cont + "]\" onclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\">" + row[90] + "</td> "
-                                + " <td id=\"fecha_termino_etiquetado[" + cont + "]\" onclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\">" + row[91] + "</td> "
-                                + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" autocomplete=\"off\"></td> "
-                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
-                                + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
-                    }
+                    salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
+                            + " <td id=\"transferencia[" + cont + "]\" onclick=\"show_transferencia(" + cont + ")\">" + row[89] + "</td> "
+                            + " <td id=\"fecha_inicio_etiquetado[" + cont + "]\" onclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\">" + row[90] + "</td> "
+                            + " <td id=\"fecha_termino_etiquetado[" + cont + "]\" onclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\">" + row[91] + "</td> "
+                            + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" autocomplete=\"off\"></td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
+                }
 
-                    salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
+                    salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePaste(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
                             + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
                             + "</tr>";
 
                     cont++;
                 }
             }
-
-            salida += "<input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + cont + "\">";
-
+            
+            salida += " </tbody> "
+                    + "</table> "
+                    + "<input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + cont + "\">";
+            
             out.print(salida);
             oraDB.close(); //cerrar conexión
 
