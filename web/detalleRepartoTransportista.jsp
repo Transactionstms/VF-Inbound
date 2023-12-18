@@ -31,62 +31,83 @@
              String agrupador=request.getParameter("agrupador");
              String titulo=request.getParameter("titulo"); 
               
-             String sql2 = "SELECT\n" +
-"    'SHIPTO',\n" +
-"    bod.bodega_nombre,\n" +
-"    bod.rfc,\n" +
-"    bod.bodega_direccion,\n" +
-"    BOD.COLONIA,\n" +
-"    BOD.CIUDAD,\n" +
-"    BOD.BODEGA_EDO,\n" +
-"    bod.destino_cp,\n" +
-"    bod.bodega_direccion,\n" +
-"    bod.no_int ,"
-+ " bod.no_ext,\n" +
-"    bod.clavelocal,\n" +
-"    bod.clave_mun,\n" +
-"    bod.bodega_pais,\n" +
-"    bod.clave_colonia,\n" +
-"    bod.clavelocal,\n" +
-"    bod.clave_mun,\n" +
-"    'Orden de compra',\n" +
-"    gtn.shipment_id,\n" +
-"    sci.total_actual_vol_cbms,\n" +
-"    sci.total_cartons,\n" +
-"    gtn.cantidad_final,\n" +
-"    gtn.volume,\n" +
-"    nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')),\n" +
-"    cus.fecha_pago_pedimento,\n" +
-"    gtn.style_desc,\n" +
-"    cus.recinto,\n" +
-"    sty.clave_sat,\n" +
-"    sty.descripcion_sat,\n" +
-"    sty.clave_unidad,\n" +
-"    sty.unidad_medida,"
-                 + "'0','0','0',\n" +
-"    tie.id_evento\n" +
-"FROM\n" +
-"    tra_inc_gtn_test gtn\n" +
-"    LEFT JOIN tra_inb_evento   tie ON gtn.plantilla_id = tie.plantilla_id\n" +
-"    LEFT JOIN tra_inb_customs  cus ON cus.shipment_id = gtn.shipment_id\n" +
-"    LEFT JOIN tra_inb_stylesat sty ON sty.style_desc = gtn.style_desc\n" +
-"    LEFT JOIN tra_inb_sci      sci ON sci.original_shipment_id = gtn.shipment_id\n" +
-"    LEFT JOIN ontms_bodega     bod ON bod.bodega_id = 2\n" +
-"WHERE\n" +
-"    GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"'"; 
+             String sql2 = " SELECT "
++"     'SHIPTO', "
++"     bod.bodega_nombre, "
++"     bod.rfc, "
++"     bod.bodega_direccion, "
++"     bod.colonia, "
++"     bod.ciudad, "
++"     bod.bodega_edo, "
++"     bod.destino_cp, "
++"     bod.bodega_direccion, "
++"     bod.no_int, "
++"     bod.no_ext, "
++"     bod.clavelocal, "
++"     bod.clave_mun, "
++"     bod.bodega_pais, "
++"     bod.clave_colonia, "
++"     bod.clavelocal, "
++"     bod.clave_mun, "
++"     'Orden de compra', "
++"     gtn.shipment_id, "
++"     sum(sci.TOTAL_ACTUAL_WT_KGS), "
++"     sum(sci.total_cartons), "
++"     gtn.cantidad_final, "
++"     sum(gtn.volume), "
++"     nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')), "
++"     to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), "
++"     gtn.style_desc, "
++"     nvl(pod.aduana_numero, 0), "
++"     sty.clave_sat, "
++"     sty.descripcion_sat, "
++"     sty.tipo_embalage, "
++"     sty.embalage_sat, "
++"     '0', "
++"     '0', "
++"     '0', "
++"     tie.id_evento, "
++"     gtn.DOCTOS_ADUANEROS , "
++"     gtn.TIPO_MATERIA  ,"
+                     + " gtn.clave ,"
+                     + " org.PUERTO ||' - '|| org.PATIO ||' - '|| org.DIRECCION , "
+                     + "nvl(org.CLAVE_LOC,' '), "
+                     + "nvl(org.CLAVE_MUN,' '), "
+                     + "nvl(org.CLAVE_COL,' ') "
++" FROM "
++"     tra_inc_gtn_test gtn "
++"     LEFT JOIN tra_inb_evento   tie ON gtn.plantilla_id = tie.plantilla_id "
++"     LEFT JOIN tra_inb_customs  cus ON cus.shipment_id = gtn.shipment_id "
++"     LEFT JOIN tra_inb_stylesat sty ON sty.style_desc = gtn.style_desc "
++"     LEFT JOIN tra_inb_sci      sci ON sci.original_shipment_id = gtn.shipment_id "
++"     LEFT JOIN tra_inb_pod      pod ON pod.id_pod = gtn.pod "
++"     LEFT JOIN ontms_bodega     bod ON bod.bodega_id = 2 "
+                     +"     LEFT JOIN TRA_INB_EMBARQUE      emb ON emb.EMBARQUE_AGRUPADOR = gtn.EMBARQUE_AGRUPADOR "
+                     +"     LEFT JOIN TRA_INB_ORIGEN        org ON org.ORIGEN_ID = emb.ORIGEN_ID "
++" WHERE "
++"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"' group by "
+                     + "  'SHIPTO', bod.bodega_nombre, bod.rfc, bod.bodega_direccion, bod.colonia, " 
+ + " bod.ciudad, bod.bodega_edo, bod.destino_cp, bod.bodega_direccion, bod.no_int, "
+ + " bod.no_ext, bod.clavelocal, bod.clave_mun, bod.bodega_pais, bod.clave_colonia, "
+ + " bod.clavelocal, bod.clave_mun, 'Orden de compra', gtn.shipment_id, gtn.cantidad_final, "
+ + " nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')), cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' '), cus.pedimento_r1_2do, ' ', "
+ + " to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), cus.fecha_pago_pedimento, 'mm/dd/yyyy', gtn.style_desc, nvl(pod.aduana_numero, 0), "
+ + " pod.aduana_numero, 0, sty.clave_sat, sty.descripcion_sat, sty.tipo_embalage, "
+ + " sty.embalage_sat, '0', '0', '0', tie.id_evento, "
+ + " doctos_aduaneros, tipo_materia, gtn.clave, org.PUERTO ||' - '|| org.PATIO ||' - '|| org.DIRECCION ,org.CLAVE_LOC,org.CLAVE_MUN,org.CLAVE_COL"
+                     + "";
+//   ";   
+
+System.out.println("sql"+sql2);
         %>
 
-       
-            
+ 
               <div class="container">
             <div class="row">
                 <div class="col">
                     <p class="h3">Guía de embarque <%=titulo%> </p>
                     <p> <button type="button" onclick="pantallaCom( )" class="btn btn-primary">regresar</button></p>
-
-
-
-                    <div class="table-responsive" style="overflow: auto">  
+                     <div class="table-responsive" style="overflow: auto">  
                         <div class="tableFixHead">
 
                                <div class="table-responsive" style="overflow: auto">  
@@ -102,22 +123,21 @@
                              <th class="repHdr"><center>Colonia</center></th>
                              <th class="repHdr"><center>Ciudad</center></th>
                              <th class="repHdr"><center>Estado</center></th>
-
                              <th class="repHdr"><center>Código Postal</center></th>
                              <th class="repHdr"><center>Calle </center></th> 
                              <th class="repHdr"><center>No Exterior </center></th> 
+                             
                              <th class="repHdr"><center>No Interior </center></th> 
                              <th class="repHdr"><center>Localidad </center></th> 
                              <th class="repHdr"><center>Municipio </center></th> 
                              <th class="repHdr"><center>País </center></th> 
-
                              <th class="repHdr"><center>Clave Colonia </center></th> 
                              <th class="repHdr"><center>Clave Localidad </center></th> 
                              <th class="repHdr"><center>Clave Municipio </center></th> 
 
 
-                             <th class="repHdr">Orden de compra</th>
-                             <th class="repHdr"><center>Referencia</center></th>
+                            <!-- <th class="repHdr">Orden de compra</th>-->
+                             <th class="repHdr"><center>SHIMPEMNT</center></th>
                            <!--  <th class="repHdr"><center>Cartón</center></th>-->
 
                              <th class="repHdr"><center>Peso</center></th>
@@ -129,17 +149,25 @@
                              <th class="repHdr"><center>Pedimento</center></th><!-- - Col 25-->
                              <th class="repHdr"><center>Fecha Pedimento</center></th><!-- - Col 26-->
                              <th class="repHdr"><center>Producto</center></th><!-- - Col 27-->
-                           <!--  <th class="repHdr"><center>STPRC</center></th>-->
+                              <th class="repHdr"><center>Regimen aduanero</center></th>
 
                              <th class="repHdr"><center>Aduana</center></th> <!-- - Col 28-->
+        
+        <th class="repHdr"><center>Origen</center></th>
+        <th class="repHdr"><center>Origen clave loc</center></th>
+        <th class="repHdr"><center>Origen clave mun</center></th>
+        <th class="repHdr"><center>Origen clave col</center></th>
                              <th class="repHdr"><center>Clave Producto Servicio</center></th><!-- - Col 29-->
+                             
                              <th class="repHdr"><center>Descripción</center></th>
                              <th class="repHdr"><center>Clave Unidad</center></th>
                              <th class="repHdr"><center>Unidad Medida</center></th>
-
+                            
                              <th class="repHdr"><center>Peso Bruto     </center></th>
                              <th class="repHdr"><center>Peso Tara      </center></th>
                              <th class="repHdr"><center>Peso Neto      </center></th>
+                             <th class="repHdr"><center>  Documentos Aduaneros   </center></th>
+                             <th class="repHdr"><center>  Tipo Materia   </center></th>
                          </tr>
                      </thead> <tbody>
                                                                         <%
@@ -162,6 +190,7 @@
                                                                             <td class=""><b><%=rs.getString(8)%></b></td> <!-- código postal -->
                                                                             <td class=""><b><%=rs.getString(9)%></b></td>  
                                                                             <td class=""><b><%=rs.getString(10)%></b></td>  
+                                                                            
                                                                             <td class=""><b><%=rs.getString(11)%></b></td>  
                                                                             <td class=""><b><%=rs.getString(12)%></b></td>  
                                                                             <td class=""><b><%=rs.getString(13)%></b></td>  
@@ -169,7 +198,8 @@
                                                                             <td class=""><b><%=rs.getString(15)%></b></td>
                                                                             <td class=""><b><%=rs.getString(16)%></b></td>
                                                                             <td class=""><b><%=rs.getString(17)%></b></td>
-                                                                            <td class=""><b><%=rs.getString(18)%></b></td>
+                                                                            
+                                                                            <!--<td class=""><b><%=rs.getString(18)%></b></td>-->
                                                                             <td class=""><b><%=rs.getString(19)%></b></td>
                                                                             <td class=""><b><%=rs.getString(20)%></b></td> <!--cartón-->
                                                                             <td class=""><b><%=rs.getString(21)%></b></td>
@@ -178,14 +208,27 @@
                                                                             <td class=""><b><%=rs.getString(24)%></b></td> <!-- - Col 24-->
                                                                             <td class=""><b><%=rs.getString(25)%></b></td> <!-- - Col 25-->
                                                                             <td class=""><b><%=rs.getString(26)%></b></td> <!-- - Col 26-->
+                                                                             <td class=""><b><%=rs.getString(38)%></b></td>   <!-- - Col 27-->
+                                             
                                                                             <td class=""><b><%=rs.getString(27)%></b></td> <!-- - Col 27-->
+                                                                            
+                                                                                <td class=""><b><%=rs.getString(39)%></b></td>
+                                                                                <td class=""><b><%=rs.getString(40)%></b></td>
+                                                                                <td class=""><b><%=rs.getString(41)%></b></td>
+                                                                                <td class=""><b><%=rs.getString(42)%></b></td> 
                                                                             <td class=""><b><%=rs.getString(28)%></b></td> <!-- - Col 28-->
+                                                                            
                                                                             <td class=""><b><%=rs.getString(29)%></b></td> <!-- - Col 29-->
                                                                             <td class=""><b><%=rs.getString(30)%></b></td>
                                                                             <td class=""><b><%=rs.getString(31)%></b></td> 
+                                                                            
                                                                             <td class=""><b><%=rs.getString(32)%></b></td> 
                                                                             <td class=""><b><%=rs.getString(33)%></b></td> 
                                                                             <td class=""><b><%=rs.getString(34)%></b></td>  
+                                                                            
+                                                                            <td class=""><b><%=rs.getString(36)%></b></td> 
+                                                                            <td class=""><b><%=rs.getString(37)%></b></td>  
+                                                                            
                                                                         </tr>
 
                                                                         <% 

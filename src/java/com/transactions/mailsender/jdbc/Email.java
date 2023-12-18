@@ -140,7 +140,7 @@ public class Email {
                         + "                <br>"
                         + "                <p>\n"
                         + "                <h4>La asignación de embarque, se ha generado de forma exitosa.</h4>\n "
-                        + "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.rtms.mx/INBOUND7/detalleTransportista.jsp?transporte=" + idLTransporte + "</h4>\n "
+                        + "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.tacts.mx/INBOUND7/detalleTransportista.jsp?transporte=" + idLTransporte + "</h4>\n "
                         + "                 <br>"
                         + "            </div>\n"
                         + "        </div>\n"
@@ -399,7 +399,7 @@ public class Email {
             while (rs.next()) {
                 emailenvio += rs.getString(1) + "/"; 
             }
-                emailenvio += "grecendiz@tacts.mx";
+                emailenvio += "grecendiz@tacts.mx/oamorales@tacts.mx";
                  
         } catch (SQLException e) {
             return false;
@@ -536,7 +536,7 @@ public class Email {
                             + "                <br>"
                             + "                <p>\n"
                             + "                <h4>La asignación de embarque, se ha generado de forma exitosa.</h4>\n "
-                            + "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.rtms.mx/VF/detallePaqueteria.jsp?paq=" + idLTransporte + "&id=" + agrupador + "</h4>\n " //Parámetros: Paquetería/Agrupador
+                            + "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.tacts.mx/VF/detallePaqueteria.jsp?paq=" + idLTransporte + "&id=" + agrupador + "</h4>\n " //Parámetros: Paquetería/Agrupador
                             + "                 <br>"
                             + "            </div>\n"
                             + "        </div>\n"
@@ -633,9 +633,9 @@ public class Email {
                             + "                <h4>La asignación de evidencia CFDI, se ha generado de forma exitosa.</h4>\n ";
                             
                         if(tipoT.equals("1")){
-                    mensaje +="                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.rtms.mx/VF/detalleTransportista.jsp?transporte=" + idLTransporte + "</h4>\n ";
+                    mensaje +="                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.tacts.mx/VF/detalleTransportista.jsp?transporte=" + idLTransporte + "</h4>\n ";
                         }else{
-                   mensaje += "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.rtms.mx/VF/detallePaqueteria.jsp?paq=" + idLTransporte + "&id=" + agrupador + "</h4>\n "; //Parámetros: Paquetería/Agrupador         
+                   mensaje += "                <h4>Para mayor infomación puede consultarlo en la siguienta liga: https://www.tacts.mx/VF/detallePaqueteria.jsp?paq=" + idLTransporte + "&id=" + agrupador + "</h4>\n "; //Parámetros: Paquetería/Agrupador         
                         }
                         
                     mensaje +="                 <br>"

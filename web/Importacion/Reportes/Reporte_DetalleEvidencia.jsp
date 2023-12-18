@@ -63,6 +63,26 @@
                 
                 String fec1 = request.getParameter("fechaInicial");
                 String fec2 = request.getParameter("fechaFinal");
+                
+
+String   sql = " SELECT DISTINCT "   
+            + " TIE.EMBARQUE_ID, "   
+            + " TO_CHAR(TIE.EMBARQUE_FEC_CAPTURA, 'DD/MM/YYYY'), " 
+            + " UPPER(TILT.LTRANSPORTE_NOMBRE), "
+            + " UPPER(OUT.UTRANSPORTE_DESC), " 
+            + " UPPER(TIE.CHOFER_ID), "
+            + " TIE.EMBARQUE_AGRUPADOR, "
+            + " NVL(TIGT.URL_POD,'0'), "
+            + " NVL(TIE.URL_CFDI,'0'), "
+            + " TIGT.SHIPMENT_ID "
+            + " FROM TRA_INB_EMBARQUE  TIE "   
+            + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR "
+            + " INNER JOIN TRA_INB_LINEA_TRANSPORTE TILT ON TIE.EMBARQUE_TRANSPORTISTA  = TILT.LTRANSPORTE_ID "   
+            + " INNER JOIN ONTMS_UNIDAD_TRANSPORTE OUT ON TIE.UTRANSPORTE_ID = OUT.UTRANSPORTE_ID  "
+            + " AND TO_DATE(trunc(TIE.EMBARQUE_FEC_CAPTURA),'dd/mm/yy') >= TO_DATE('" + fec1 + "','dd/mm/yyyy') "
+            + " AND TO_DATE(trunc(TIE.EMBARQUE_FEC_CAPTURA),'dd/mm/yy') <= TO_DATE('" + fec2 + "','dd/mm/yyyy') "
+            + " AND TIE.EMBARQUE_ESTADO_ID IN (1,4) "
+            + " ORDER BY TIE.EMBARQUE_ID ASC ";
         %>
         <!-- navbar-->
         <header class="header"></header>
@@ -109,7 +129,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <%   
-                                                        if (db.doDB(fac.consultarDetalleEvidenciaEvento(fec1, fec2))) {
+                                                        if (db.doDB(sql)) {
                                                             for (String[] row : db.getResultado()) {       
                                                     %>
                                                         <tr> 

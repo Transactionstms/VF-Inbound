@@ -39,12 +39,32 @@ public class CrearEmbarque extends HttpServlet {
                 String f1   = request.getParameter("f1"); 
                 String f2   = request.getParameter("f2"); 
                 String fol  = request.getParameter("fol");  
-
-                                                  
+                
+               //   String evento=request.getParameter("evento");
+            
+             String camionesValue        = request.getParameter("camionesValue");
+             String tipoUnidadValue      = request.getParameter("tipoUnidadValue");
+             String choferValue          = request.getParameter("choferValue");
+             String dispositivosValue    = request.getParameter("dispositivosValue");
+             String fechaRevisionValue   = request.getParameter("fechaRevisionValue");
+             String selloCajaValue       = request.getParameter("selloCajaValue");
+             String relacionEntregaValue = request.getParameter("relacionEntregaValue");
+             String fechaFinEntregaValue = request.getParameter("fechaFinEntregaValue");
+             String packingListValue     = request.getParameter("packingListValue");
+             String autorValue           = request.getParameter("autorValue");
+             String observacionesValue   = request.getParameter("observacionesValue");
+             
+String reg1   = request.getParameter("reg1");
+String reg2   = request.getParameter("reg2");
+String origen   = request.getParameter("origen");
+                                          //, clave='"+reg1+"',DOCTOS_ADUANEROS='"+reg2+"',TIPO_MATERIA='"+reg3+"'    
             String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE=2 where EMBARQUE_AGRUPADOR='"+fol+"' ";
-            String sqlEmb="insert into TRA_INB_EMBARQUE (EMBARQUE_AGRUPADOR,EMBARQUE_TRANSPORTISTA,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO,EMBARQUE_TCUSTODIA)"
+            String sqlEmb="insert into TRA_INB_EMBARQUE "
+                    + "(EMBARQUE_AGRUPADOR,EMBARQUE_TRANSPORTISTA,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO,EMBARQUE_TCUSTODIA,"
+                    + " CAMION_ID,UTRANSPORTE_ID,CHOFER_ID,DSPMOV_ID,EMBARQUE_FEC_REVISION,EMBARQUE_FEC_FIN,EMBARQUE_SELLO_CAJA,EMBARQUE_RELACION_ENT,EMBARQUE_PACKING_LIST,EMBARQUE_AUDITOR,EMBARQUE_OBSERVACIONES,ORIGEN_ID)"//EMBARQUE_ESTADO_ID
                     + "values"
-                    + "('"+fol+"','"+tran+"',TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),'"+cus+"') ";
+                    + "('"+fol+"','"+tran+"',TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),'"+cus+"',"
+                    + "'"+camionesValue+"', "+tipoUnidadValue+",'"+choferValue+"',"+dispositivosValue+", to_date('"+fechaRevisionValue+"','MM/DD/YYYY HH24:MI'), to_date('"+fechaFinEntregaValue+"','MM/DD/YYYY HH24:MI'), '"+selloCajaValue+"','"+relacionEntregaValue+"','"+packingListValue+"','"+autorValue+"','"+observacionesValue+"','"+origen+"'  ) ";
          
             System.out.println(sqlGtn);
             boolean update1=db.doDB(sqlGtn);
@@ -56,22 +76,22 @@ public class CrearEmbarque extends HttpServlet {
             
             
              if(update1 && update2){ 
-                  // Email correo = new Email();
-                  //try {
-                       //correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
-                       //String transportista = "";  
-                       //String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
-                       // if (db.doDB(sbuSQL)) {
-                       //      for (String[] row : db.getResultado()) {
-                       //         transportista =   row[0]  ;
-                       //   }
-                       // }
-                      
-                    //  correo.alertaLiberacionV2(null, fol, tran, transportista);
-                      
-                //  } catch (SQLException ex) {
-                //      Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
-                //  }
+                 //  Email correo = new Email();
+                 // try {
+                 //      correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
+                 //      String transportista = "";  
+                 //      String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
+                 //       if (db.doDB(sbuSQL)) {
+                 //            for (String[] row : db.getResultado()) {
+                 //               transportista =   row[0]  ;
+                 //         }
+                 //       }
+                 //     
+                 //     correo.alertaLiberacionV2(null, fol, tran, transportista);
+                 //     
+                 // } catch (SQLException ex) {
+                 //     Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
+                 // }
                     out.print("correcto"); 
                 }else{ 
                     out.print("error"); 

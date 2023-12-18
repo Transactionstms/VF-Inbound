@@ -55,6 +55,14 @@
                     custodia += "<option value='" + row[0] + "' >" + row[1] + "</option>";
                 }
             }
+            
+              String origen = "";
+            String sbuSQL23 = "select ORIGEN_ID,PUERTO ||' - '|| PATIO ||' - '|| DIRECCION from TRA_INB_ORIGEN";
+            if (db.doDB(sbuSQL23)) {
+                for (String[] row : db.getResultado()) {
+                    origen += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                }
+            }
 
             String opciones = request.getParameter("op");
             String sql = " "
@@ -69,6 +77,9 @@
                     + " where    EMBARQUE_AGRUPADOR='" + opciones + "'"
                     + " ORDER BY"
                     + "   tie.id_evento";
+
+
+
 
 
     %>
@@ -125,9 +136,105 @@
                                                         </select>
                                                     </div>
 
+                                                        
+                                                        
+                                      
+                                          
+                                            <div class="col-md-3 mb-4">
+                                                <label class="form-label" for="camiones">Camiones</label>
+                                                <input type="text" class="form-control" id="camiones">
+                                            </div>
+                                            <div class="col-md-3 mb-4">
+                                                <label class="form-label" for="tipoUnidad">Tipo de unidad</label>
+                                                <select class="form-select" id="tipoUnidad" aria-label="Default select example">
+                                                    <option value="0">Elija una opcion</option>
+                                                    <option value="1">	CAM 1.5 TONS</option>
+                                                    <option value="2">	CAM 3.5 TONS</option>
+                                                    <option value="3">	CAM 5.0 TONS</option>
+                                                    <option value="4">	RABON</option>
+                                                    <option value="5">	TORTHON</option>
+                                                    <option value="6">	MUDANZA</option>
+                                                    <option value="7">	TRAILER</option>
+                                                    <option value="8">	CAM 0.5 TONS</option> 
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="chofer">Chofer</label>
+                                                <input type="text" class="form-control" id="chofer">
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="dispositivos">Dispositivos</label>
+                                                <input type="number" class="form-control" id="dispositivos">
+                                            </div> 
+
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="fechaRevision">Fecha Revision</label>
+                                                <div class="input-group date" id="datepicker">
+                                                    <div class="input-group date" id="datepicker">
+                                                        <input type="text" name="date3" id="fechaRevision" class="datepicker infecha form-control" autocomplete="off" size="10" required="required">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="selloCaja">Sello de caja</label>
+                                                <input type="text" class="form-control" id="selloCaja" autocomplete="false">
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="relacionEntrega">Relacion de entrega</label>
+                                                <input type="text" class="form-control" id="relacionEntrega" autocomplete="false">
+                                            </div>
+
+
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="fechaFinEntrega">Fecha fin de carga</label>
+                                                <div class="input-group date" id="datepicker">
+                                                    <input type="text" name="date3" id="fechaFinEntrega" class="datepicker infecha form-control" autocomplete="off" size="10" required="required">
+                                                </div>   
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="packingList">Packing list</label>
+                                                <div class="input-group date" id="datepicker">
+                                                    <input type="text" name="date3" id="packingList" class="form-control" autocomplete="off" size="10" required="required">
+                                                </div>   
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label" for="autor">Auditor</label>
+                                                <input type="text" class="form-control" id="autor" autocomplete="false">
+                                            </div>
+
+                                            <div class="col-md-6 mb-4">
+                                                <label class="form-label">Observaciones</label>
+                                                <textarea type="text" class="form-control" id="observaciones" autocomplete="false"></textarea>
+                                            </div>
+                                             
+                                              <div class="col-md-3 mb-4">
+                                                        <label class="form-label" >Selecciona origen</label>
+                                                        <select class="form-select" id="origen" >
+                                                            <option selected value="0">Elija una opcion</option>
+                                                            <%=origen%>
+                                                        </select>
+                                                    </div>            
+          
+                                                        
+                                                        
+                                                  
+                                                        
+                                                        
+                                                </div>
+                                            </div>
+                                            
+
+
+
+                                                        
+                                                        
+                                                        
+                                                             
+
+
+
+<div class="row">
 
                                                 <div class="col-md-6">
 
@@ -168,24 +275,14 @@
 
 
                                                 </div>
-
-
-
-
+ 
                                                 <div class="row">                                                    
                                                     <div class="col-md-12" id="iframeid" style="display: none;">
                                                         <iframe class="responsive-iframe" width="100%" height="200%" id="pdfiframe" >
                                                         </iframe>                        
                                                     </div>
-                                                </div> 
-
-
-
+                                                </div>   
                                             </div>
-
-
-
-
 
 
 
@@ -243,6 +340,25 @@
                                                                 let tranp = document.getElementById('tranporte').value;
                                                                 let fecha = document.getElementById('f_enrampe').value;
                                                                 let f_ini = document.getElementById('f_inicio').value;
+                                                                
+                                                        let camionesValue        = document.getElementById('camiones').value;
+                                                        let tipoUnidadValue      = document.getElementById('tipoUnidad').value;
+                                                        let choferValue          = document.getElementById('chofer').value;
+                                                        let dispositivosValue    = document.getElementById('dispositivos').value;
+                                                        let fechaRevisionValue   = document.getElementById('fechaRevision').value;
+                                                        let selloCajaValue       = document.getElementById('selloCaja').value;
+                                                        let relacionEntregaValue = document.getElementById('relacionEntrega').value;
+                                                        let fechaFinEntregaValue = document.getElementById('fechaFinEntrega').value;
+                                                        let packingListValue     = document.getElementById('packingList').value;
+                                                        let autorValue           = document.getElementById('autor').value;
+                                                        let observacionesValue   = document.getElementById('observaciones').value;
+
+                                                        let origen   = document.getElementById('origen').value;
+                                                        let reg1   ='0';// document.getElementById('reg1').value;
+                                                        let reg2   ='0';// document.getElementById('reg2').value;
+                                                        let reg3   ='0';// document.getElementById('reg3').value;
+
+
 
                                                                 if (tranp === '' || tranp === null) {
                                                                     swal({title: "Selecciona el transporte", allowEscapeKey: false});
@@ -277,7 +393,7 @@
                                                                 }
 
                                                                 try {
-                                                                    const response = await fetch("<%=request.getContextPath()%>/CrearEmbarque?tran=" + tranp + "&cus=" + custo + "&f1=" + fecha + "&f2=" + f_ini + "&fol=<%=opciones%>");
+                                                                    const response = await fetch('<%=request.getContextPath()%>/CrearEmbarque?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=<%=opciones%>&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen);
                                                                     if (!response.ok) {
                                                                         throw new Error('Error en la solicitud');
                                                                     }
@@ -288,7 +404,7 @@
                                                                     var selectedText = selectedOption.textContent;
 
                                                                     insertaEmbarque1(tranp, selectedText, bandera, selectedValue1, selectedText1);
-                                                                    swal({title: "Correo enviado", allowEscapeKey: false});
+                                                                    swal({title: " correcto", allowEscapeKey: false});//Correo enviado
                                                                     const data = await response.text();
                                                                     console.log(data);
                                                                 } catch (error) {

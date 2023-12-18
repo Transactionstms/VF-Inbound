@@ -26,11 +26,17 @@ async function getData() {
     const pol = document.getElementById('pol').value;
     const observaciones = document.getElementById('observaciones').value;
     const actual_crd = document.getElementById('actual_crd').value;
+    
+     let reg1   = document.getElementById('reg1').value;
+     let reg2   = document.getElementById('reg2').value;
+     let reg3   = document.getElementById('reg3').value;
+
+
 
     swal("Espere...!");
 
     try {
-        const data = await fetchData('../ModificarEvento?numEventoActual=' + numEventoActual + '&ShipmentActual=' + shipmentIdActual + '&containerActual=' + containerActual + '&responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&actual_crd=' + actual_crd + '&numEventoOld=' + campo0 + '&shipmenIdOld='+campo7+'&containerOld='+campo1);
+        const data = await fetchData('../ModificarEvento?numEventoActual=' + numEventoActual + '&ShipmentActual=' + shipmentIdActual + '&containerActual=' + containerActual + '&responsable=' + responsable + '&finaldes=' + finalDestination + '&Brand=' + brandDivision + '&sbu_name=' + division + '&Load1=' + loadType + '&quantity=' + quantity + '&pod=' + pod + '&est_departure_pol=' + estDeparturePol + '&eta_port_discharge=' + etaRealPort + '&max_flete=' + max_flete + '&eta_plus2=' + eta_plus2 + '&eta_plus=' + eta_plus + '&pol=' + pol + '&observaciones=' + observaciones + '&bl=' + bl + '&actual_crd=' + actual_crd + '&numEventoOld=' + campo0 + '&shipmenIdOld='+campo7+'&containerOld='+campo1+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3);
           if(data==="true"){
              swal("Modificado");
           }else{

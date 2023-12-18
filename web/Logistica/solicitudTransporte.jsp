@@ -100,7 +100,7 @@
                                                     <label for="TipoDeEmbarque" class="form-label">Tipo de embarque:</label> <b style="strong">     DIRECTO</b>
 
                                                 </div>
-                                                <div class="mb-4">
+                                             <!--   <div class="mb-4">
                                                     <label class="form-label">Tipo de carga</label>
                                                     <select class="form-select" aria-label="Default select example" id="tcarga" name="tcarga">
                                                         <option selected value="0">Elija una opcion</option>
@@ -108,7 +108,7 @@
                                                         <option value="2">LCL</option>
                                                         <option value="3">FCL/LCL</option>
                                                     </select>
-                                                </div>
+                                                </div>-->
                                                 <div class="mb-4">
                                                     <label class="form-label">Shipment</label>
                                                     <input type="text" class="form-control" id="shipment" name="shipment"  >
@@ -155,17 +155,18 @@
         <script>
             
             function enviar(){
-          var tcarga    = document.getElementById('tcarga').value;
+          var tcarga    ='0';// document.getElementById('tcarga').value;
           var shipment  = document.getElementById('shipment').value;
           var container = document.getElementById('container').value;
           var evento    = document.getElementById('evento').value;
           
-          console.log(tcarga);
+         // console.log(tcarga);
           console.log(shipment);
           console.log(container);
           console.log(evento);
           
-          if(tcarga===''    || tcarga===null){    tcarga=0;   }
+        //  if(tcarga===''    || tcarga===null){    tcarga=0;   }
+          
           if(shipment===''  || shipment===null){  shipment=0;  }else{
                 let opciones =shipment; 
                 let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
@@ -187,7 +188,7 @@
               
           }
           
-          console.log(tcarga);
+          
           console.log(shipment);
           console.log(container);
           console.log(evento);

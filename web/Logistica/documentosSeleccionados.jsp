@@ -163,18 +163,7 @@
         +"   tip1.nombre_pod,"
         +"   tip2.nombre_pol,"//20
         +"   tibd.nombre_bd,"
-        +"   CASE"
-        +"     WHEN gtn.load_type = 'LTL' THEN 'LTL'"
-        +"     WHEN EXISTS ("
-        +"       SELECT 1"
-        +"       FROM tra_inc_gtn_test"
-        +"       WHERE container1 = gtn.container1"
-        +"       HAVING COUNT(DISTINCT brand_division) > 1"
-        +"     ) THEN 'FCL / LCL'"
-        +"     WHEN gtn.load_type = 'FCL' THEN 'FCL'"
-        +"     WHEN gtn.load_type = 'LCL' THEN 'LCL'"
-        +"     ELSE '-'"
-        +"   END AS estado,"
+        +"   gtn.LOAD_TYPE_FINAL as ltf1 ,"
         +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
         +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
         +"   NVL(tie.observaciones, ' ') AS observaciones,"//25
@@ -193,6 +182,7 @@
                                                                    + " where  EMBARQUE_AGRUPADOR='"+opciones+"'"
         +" ORDER BY"
         +"   tie.id_evento";
+                                                           System.out.println("sql"+sql);
 
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {

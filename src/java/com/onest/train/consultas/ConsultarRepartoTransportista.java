@@ -125,7 +125,7 @@ public class ConsultarRepartoTransportista extends HttpServlet {
 "                                                                            <th>Fecha de enrampe         </th>\n" +
 "                                                                            <th>Fecha inicio de entrega  </th>\n" +
                     
- "                                                                           <th>Modificar      </th>\n" + 
+ //"                                                                           <th>Modificar      </th>\n" + 
  "                                                                           <th>Opciones       </th>\n" + 
                     
 "                                                                        </tr>" + 
@@ -133,60 +133,18 @@ public class ConsultarRepartoTransportista extends HttpServlet {
 "                                                                    <tbody>"
                     + "";
             
-              String salida2 = ""
-                    + " <table id=\"myTable\" class=\"display nowrap\" cellspacing=\"0\" width=\"100%\">\n" +
-"                                                                    <thead class=\"thead-dark\">\n" +
-"                                                                        <tr>" +
-"                                                                            <th>Evento        </th>\n" +
-"                                                                            <th>Container #   </th>\n" +
-"                                                                            <th>BL            </th>\n" +
-                    
- "                                                                           <th>Shipment      </th>\n" +                   
-"                                                                            <th>Load Type     </th>\n" + 
-"                                                                            <th>LUM BRIO      </th>\n" +
-                    
-"                                                                            <th>Brand         </th>\n" +
-"                                                                            <th>Sbu Name      </th>\n" + 
-"                                                                            <th>MX Port       </th>\n" +
-                    
-"                                                                            <th>ETA MX Por    </th>\n" +
- "                                                                           <th>ETA DC        </th>\n" + 
- "                                                                           <th>Opciones       </th>\n" + 
-                    
-"                                                                        </tr>" + 
-"                                                                    </thead> " +
-"                                                                    <tbody>"
-                    + "";
+            
             while (rs.next()) {  
                  System.out.println("---**"+rs.getString(1));
-               // salida2 += ""
-               //         + " <tr>\n" +
-               //           "     <td class=\"\"><b>"+rs.getString(1)+"</b></td> \n" +
-               //           "     <td class=\"\"><b>"+rs.getString(7)+"</b></td> \n" +
-               //           "     <td class=\"\"><b>"+rs.getString(8)+"</b></td>\n" +
-               //         
-               //           "     <td class=\"\"><b>"+rs.getString(6)+"</b></td> <!--Cajas-->\n" +
-               //           "     <td class=\"\"><b>"+rs.getString(9)+"</b></td>\n" + 
-               //           "     <td class=\"\"><b>"+rs.getString(10)+"</b></td> \n" +
-               //         
-               //           "     <td class=\"\"><b>"+rs.getString(4)+"</b></td>\n" + 
-               //           "     <td class=\"\"><b>"+rs.getString(5)+"</b></td>\n" +
-               //           "     <td><b>"+rs.getString(3)+"</b></td>\n" +
-               //         
-               //           "     <td class=\"\"><b>"+rs.getString(24)+"</b></td>\n" +
-               //           "     <td class=\"\"><b>"+rs.getString(25)+"</b></td>\n" +
-               //           "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos('"+rs.getString(27)+"','"+ntransporte+"','"+idtransporte+"')\"/></b></td>\n" +
-               //           "      " +
-               //           " </tr>"
-               //         + ""; 
+            
                 
                  salida += ""
                         + " <tr>\n" +
                           "     <td class=\"\"><b>"+rs.getString(1)+"</b></td> \n" +
                           "     <td class=\"\"><b>"+rs.getString(3)+"</b></td> \n" +
                           "     <td class=\"\"><b>"+rs.getString(4)+"</b></td>\n" +
-                       "     <td class=\"\"> <button type=\"button\" class=\"btn btn-primary\" onclick=\"muestraRepartos('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\">Modificar</button> </td>\n" +
-                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(1)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\"/></b></td>\n" +
+                    //   "     <td class=\"\"> <button type=\"button\" class=\"btn btn-primary\" onclick=\"muestraRepartos('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\">Modificar</button> </td>\n" +
+                       "     <td class=\"\"><b><img src=\"img/moredetails.png\" width=\"40%\" style=\"cursor: pointer\"  onclick=\"muestraRepartos2('"+rs.getString(2)+"','"+ntransporte+"','"+idtransporte+"','"+rs.getString(3)+"','"+rs.getString(4)+"')\"/></b></td>\n" +
                           "      " +
                           " </tr>"
                         + ""; 

@@ -32,7 +32,8 @@ public class confirmarEmbarque extends HttpServlet {
     
     String evento=request.getParameter("evento");
     String sql2=" update tra_inc_gtn_test set STATUS_EMBARQUE=3 where EMBARQUE_AGRUPADOR='"+evento+"'";
-   
+    String sql3=" update TRA_INB_EMBARQUE set EMBARQUE_ESTADO_ID=1 where EMBARQUE_AGRUPADOR='"+evento+"'";
+db.doDB(sql3);
             
             if(db.doDB(sql2)){
             

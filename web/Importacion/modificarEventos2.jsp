@@ -127,6 +127,29 @@
                         loadT += "<option value='" + row[0] + "' >" + row[0] + "</option>";
                     }
                 }
+                
+
+  String custodia1 = "";
+            String sbuSQL21 = "select CLAVE, DESCRIPCION from  tra_inb_reg_aduanero";
+            if (db.doDB(sbuSQL21)) {
+                for (String[] row : db.getResultado()) {
+                    custodia1 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
+              String custodia2 = "";
+            String sbuSQL22 = "select CLAVE, DESCRIPCIÓN from  TRA_INB_TIPO_MATERIA";
+            if (db.doDB(sbuSQL22)) {
+                for (String[] row : db.getResultado()) {
+                    custodia2 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
+              String custodia3 = "";
+            String sbuSQL23 = "select CLAVE, DESCRIPCION from  TRA_INB_DOCTO_ADUANEROS";
+            if (db.doDB(sbuSQL23)) {
+                for (String[] row : db.getResultado()) {
+                    custodia3 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
         %>
  
         <div class="d-flex align-items-stretch">
@@ -335,9 +358,44 @@
                                                     <input class="form-control datepicker" type="text" placeholder="..." value="<%=row[29]%>" name="actual_crd" id="actual_crd" onchange="diasActualCrd(this.value);">
                                                 </div>
                                             </div> 
+                                                
+                                                
+                                                
+                                                
+                                                    <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg1">Regimen aduanero</label>
+                                                 <select class="form-select" id="reg1" >
+                                                            <option selected value="<%=row[34]%>"><%=row[34]%></option>
+                                                            <%=custodia1%>
+                                                        </select>
+                                            </div>
+                                                        
+                                        <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg2">Documentos Aduaneros</label>
+                                                <select class="form-select" id="reg2" >
+                                                            <option selected value="<%=row[32]%>"><%=row[32]%></option>
+                                                            <%=custodia3%>
+                                                        </select>
+                                            </div>
+                                                        
+                                         <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg3">Tipo Materia </label>
+                                                 <select class="form-select" id="reg3" >
+                                                            <option selected value="<%=row[33]%>"><%=row[33]%></option>
+                                                            <%=custodia2%>
+                                                        </select>
+                                            </div>   
+                                                        
 
                                         </div>
 
+                                                
+                                                
+                                                
+                                                
+                                              
+                                                        
+                                                        
                                         <div class="mb-3">       
                                             <button class="btn btn-primary" type="button" onclick="getData()">Modificar</button>
                                         </div>

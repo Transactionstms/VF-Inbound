@@ -72,22 +72,22 @@
             String evento = request.getParameter("evento");
              Usuario root = (Usuario) ownsession.getAttribute("login.root");
                 int usr = root.getId();
-            String tcarga1 = " ";
-           
-                if(tcarga.equals("1")){
-                 tcarga1 = "FCL";
-                }else  if(tcarga.equals("2")){
-                 tcarga1 = "LCL";
-                }else if(tcarga.equals("3")){
-                 tcarga1 = "FCL / LCL";
-                }
-                
-           
-            
-         try{    if(!tcarga.equals("0"))   {
-             where+=" and gtn.LOAD_TYPE_FINAL in('"+tcarga1+"')";
-         } 
-         }catch(Error e){}
+        //    String tcarga1 = " ";
+        //   
+        //        if(tcarga.equals("1")){
+        //         tcarga1 = "FCL";
+        //        }else  if(tcarga.equals("2")){
+        //         tcarga1 = "LCL";
+        //        }else if(tcarga.equals("3")){
+        //         tcarga1 = "FCL / LCL";
+        //        }
+        //        
+        //   
+        //    
+        // try{    if(!tcarga.equals("0"))   {
+        //     where+=" and gtn.LOAD_TYPE_FINAL in('"+tcarga1+"')";
+        // } 
+        // }catch(Error e){}
          try{    if(!shipment.equals("0")) { where+=" and gtn.shipment_id in ("+shipment+")";}  }catch(Error e){}
          try{    if(!container.equals("0")){ where+=" and gtn.container1 in ("+container+")";}  }catch(Error e){}
          try{    if(!evento.equals("0"))   { where+=" and tie.id_evento in ("+evento+")" ;}     }catch(Error e){}

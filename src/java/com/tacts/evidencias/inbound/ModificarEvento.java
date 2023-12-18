@@ -82,6 +82,11 @@ public class ModificarEvento extends HttpServlet {
                 //String numEventoDB = request.getParameter("numEventoDB").trim();
                 String bl       = request.getParameter("bl").trim();
 
+                String reg1   = request.getParameter("reg1");
+                String reg2   = request.getParameter("reg2");
+                String reg3   = request.getParameter("reg3");
+
+
                 /*Parametros - Comparación de información (formulario/dba)*/
                 String fecha1_est_departure_pol = "";
                 String fecha2_eta_port_discharge = "";
@@ -321,8 +326,8 @@ public class ModificarEvento extends HttpServlet {
                                 " container1= '"+containerActual+"', " + /*Parametro Principal (2)*/
                                 " shipment_id='"+ShipmentActual+"', " + /*Parametro Principal (3)*/
                                 " load_type='"+Load1+"', " +
-                                " LOAD_TYPE_FINAL='"+Load1+"', ";
-                        
+                                " LOAD_TYPE_FINAL='"+Load1+"', "+
+                                "  clave='"+reg1+"',DOCTOS_ADUANEROS='"+reg2+"',TIPO_MATERIA='"+reg3+"', " ;
                     /************************************ Validación QUANTITY ********************************************/    
                                 if(Integer.parseInt(sbu_name)!=0){   /*(campo:SUBNAME !=0) ---> (TOMA CAMPO: CANTIDAD FINAL)*/
                        sqlGtn +=" CANTIDAD_FINAL = '"+quantity+"', ";
@@ -364,7 +369,7 @@ public class ModificarEvento extends HttpServlet {
                         sqlEve =" update tra_inb_evento " +
                                 " set  " +
                                 " USER_NID ="+responsable+", " +
-                                " observaciones='"+observacionActual+"' " +
+                                " observaciones='"+observacionActual+"' "+ 
                                 " where ID_EVENTO='"+evento+"' ";
                  updateObservaciones=db.doDB(sqlEve);
                 } 

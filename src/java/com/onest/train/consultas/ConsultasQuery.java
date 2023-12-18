@@ -3218,6 +3218,9 @@ public class ConsultasQuery {
             + "   nvl(to_char(to_date(trim(gtn.ACTUAL_CRD),'dd/mm/yy'),'mm/dd/YYyy'),' ') AS actual_crd, "   
             + "   nvl(gtn.CANTIDAD_FINAL,0),  "    
             + "   upper(taa.agente_aduanal_nombre) "
+                +",gtn.DOCTOS_ADUANEROS, "//32
+                +" gtn.TIPO_MATERIA,"
+                +" nvl(gtn.clave,' ') "
             + " FROM"
             + "   tra_inb_evento tie"
             + "   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
