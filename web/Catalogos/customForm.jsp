@@ -28,15 +28,20 @@
         <title>Personalizar Customs</title>
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
         <!-- Table css -->
-        <link href="../lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/validationsInbound/customs/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- jQuery 3.6.0 -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/jQuery3.6.0/js/jquery.min.js" type="text/javascript"></script>
         <!-- Multiselect -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="<%=request.getContextPath()%>/lib/Multiselect2_4.0.13/css/select2.min.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
-        <link href="../lib/SweetAlert1.1.3/css/sweetalert.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/css/sweetalert.min.css" rel="stylesheet" type="text/css"/>
         <!-- calendarios -->
-        <link href="../lib/calendarios/css/flatpickr.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/calendarios/css/flatpickr.min.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .hidden-btn {
+               display: none;
+            }
+        </style>
         <script>
             document.addEventListener("readystatechange", async function () {
 
@@ -50,8 +55,7 @@
                 }
 
                 if (document.readyState === "complete") {
-                   //document.getElementById("loaderMsg").innerHTML = "complete";
-                   //$('#col_referenciaAA').select2();
+                     document.getElementById("loaderMsg").innerHTML = "complete";
                 }
 
             });
@@ -95,10 +99,10 @@
         <div class="card-body">
             <div class="contenedor">
                 <div class="columna1"><input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" id="upload_file" onclick="logExcel()"><i class="fa fa-upload"></i></button></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
-                <div class="columna4"><button type="button" class="btn btn-primary" id="created_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
-                <div class="columna5"><a class="btn btn-primary text-uppercase" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
+                <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" onclick="logExcel()"><i class="fa fa-upload"></i></button></div>
+                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
+                <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="created_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
+                <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
                 <div class="columna6"></div>            
             </div> 
             
@@ -607,24 +611,24 @@
         <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
         <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
         <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
-        
+        <a href=""></a>
         <script>
-            let idAgenteAduanal = '<%=AgentType%>';
+            let idAgenteAduanal = '<%=AgentType%>'; 
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->
-        <script src="../lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
-        <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Upload/Download Excel -->
-        <script src="../lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
         <!-- Multiselect -->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
-        <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- Calendarios -->
-        <script src="../lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
