@@ -598,6 +598,15 @@
                 </div>
             </div>
         </div> 
+        
+        <!----- modal_fecha_inicio_etiquetado ----->
+        <div class="modal fade text-start" id="modal_fecha_termino_etiquetado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <input class="form-control datepicker" value="" id="fecha_termino_etiquetado" name="fecha_termino_etiquetado" type="text" autocomplete="off" onchange="hide_fecha_termino_etiquetado(this.value)">
+                </div>
+            </div>
+        </div> 
 
         <!-- Parametros - Customs -->
         <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
