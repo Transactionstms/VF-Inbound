@@ -31,8 +31,7 @@
              String agrupador=request.getParameter("agrupador");
              String titulo=request.getParameter("titulo"); 
               
-             String sql2 = " SELECT "
-+"     'SHIPTO', "
+             String sql2 =" SELECT DISTINCT 'SHIPTO', "
 +"     bod.bodega_nombre, "
 +"     bod.rfc, "
 +"     bod.bodega_direccion, "
@@ -51,10 +50,10 @@
 +"     bod.clave_mun, "
 +"     'Orden de compra', "
 +"     gtn.shipment_id, "
-+"     sum(sci.TOTAL_ACTUAL_WT_KGS), "
-+"     sum(sci.total_cartons), "
-+"     gtn.cantidad_final, "
-+"     sum(gtn.volume), "
++"      sci.total_actual_wt_kgs, "
++"      gtn.OF_PACKAGES, "
++"      gtn.QUANTITY, "
++"      gtn.volume, "
 +"     nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')), "
 +"     to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), "
 +"     gtn.style_desc, "
@@ -64,43 +63,36 @@
 +"     sty.tipo_embalage, "
 +"     sty.embalage_sat, "
 +"     '0', "
-+"     '0', "
-+"     '0', "
++"      sci.total_actual_wt_kgs, "
++"     gtn.volume, "
 +"     tie.id_evento, "
-+"     gtn.DOCTOS_ADUANEROS , "
-+"     gtn.TIPO_MATERIA  ,"
-                     + " gtn.clave ,"
-                     + " org.PUERTO ||' - '|| org.PATIO ||' - '|| org.DIRECCION , "
-                     + "nvl(org.CLAVE_LOC,' '), "
-                     + "nvl(org.CLAVE_MUN,' '), "
-                     + "nvl(org.CLAVE_COL,' ') "
++"     gtn.doctos_aduaneros, "
++"     gtn.tipo_materia, "
++"     gtn.clave, "
++"     org.puerto "
++"     || ' - ' "
++"     || org.patio "
++"     || ' - ' "
++"     || org.direccion, "
++"     nvl(org.clave_loc, ' '), "
++"     nvl(org.clave_mun, ' '), "
++"     nvl(org.clave_col, ' ') "
 +" FROM "
 +"     tra_inc_gtn_test gtn "
 +"     LEFT JOIN tra_inb_evento   tie ON gtn.plantilla_id = tie.plantilla_id "
 +"     LEFT JOIN tra_inb_customs  cus ON cus.shipment_id = gtn.shipment_id "
 +"     LEFT JOIN tra_inb_stylesat sty ON sty.style_desc = gtn.style_desc "
-+"     LEFT JOIN tra_inb_sci      sci ON sci.original_shipment_id = gtn.shipment_id "
++"     LEFT JOIN tra_inb_sci      sci ON sci.original_shipment_id = gtn.shipment_id  and gtn.STYLE_DESC=sci.PRODUCT_CODE "
 +"     LEFT JOIN tra_inb_pod      pod ON pod.id_pod = gtn.pod "
 +"     LEFT JOIN ontms_bodega     bod ON bod.bodega_id = 2 "
-                     +"     LEFT JOIN TRA_INB_EMBARQUE      emb ON emb.EMBARQUE_AGRUPADOR = gtn.EMBARQUE_AGRUPADOR "
-                     +"     LEFT JOIN TRA_INB_ORIGEN        org ON org.ORIGEN_ID = emb.ORIGEN_ID "
++"     LEFT JOIN tra_inb_embarque emb ON emb.embarque_agrupador = gtn.embarque_agrupador "
++"     LEFT JOIN tra_inb_origen   org ON org.origen_id = emb.origen_id "
 +" WHERE "
-+"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"' group by "
-                     + "  'SHIPTO', bod.bodega_nombre, bod.rfc, bod.bodega_direccion, bod.colonia, " 
- + " bod.ciudad, bod.bodega_edo, bod.destino_cp, bod.bodega_direccion, bod.no_int, "
- + " bod.no_ext, bod.clavelocal, bod.clave_mun, bod.bodega_pais, bod.clave_colonia, "
- + " bod.clavelocal, bod.clave_mun, 'Orden de compra', gtn.shipment_id, gtn.cantidad_final, "
- + " nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')), cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' '), cus.pedimento_r1_2do, ' ', "
- + " to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), cus.fecha_pago_pedimento, 'mm/dd/yyyy', gtn.style_desc, nvl(pod.aduana_numero, 0), "
- + " pod.aduana_numero, 0, sty.clave_sat, sty.descripcion_sat, sty.tipo_embalage, "
- + " sty.embalage_sat, '0', '0', '0', tie.id_evento, "
- + " doctos_aduaneros, tipo_materia, gtn.clave, org.PUERTO ||' - '|| org.PATIO ||' - '|| org.DIRECCION ,org.CLAVE_LOC,org.CLAVE_MUN,org.CLAVE_COL"
-                     + "";
++"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"' ";
 //   ";   
 
-System.out.println("sql"+sql2);
+System.out.println("sql***********"+sql2);
         %>
-
  
               <div class="container">
             <div class="row">

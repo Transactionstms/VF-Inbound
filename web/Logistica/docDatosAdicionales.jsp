@@ -64,6 +64,15 @@
                 }
             }
 
+            
+                String mafacturar = "";
+            String sbuSQL21 = "select ID_MARCA, MARCA_NOMBRE from TRA_INB_MARCA_FACTURA";
+            if (db.doDB(sbuSQL21)) {
+                for (String[] row : db.getResultado()) {
+                    mafacturar += "<option value='" + row[1] + "' >" + row[1] + "</option>";
+                }
+            }
+            
             String opciones = request.getParameter("op");
             String sql = " "
                     + " SELECT DISTINCT"
@@ -107,7 +116,7 @@
                                             <div class="container">
                                                 <div class="row">
 
-                                                    <div class="col-md-3 mb-4">
+                                                    <div class="col-md-4 mb-4">
                                                         <label class="form-label" >Transportista</label>
                                                         <select class="form-select" id="tranporte" >
                                                             <option selected value="" >Elija una opcion</option>
@@ -115,29 +124,29 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-md-3 mb-4">
+                                                    <div class="col-md-4 mb-4">
                                                         <label class="form-label" >Fecha de enrampe</label>
                                                         <div class="input-group date" id="datepicker">
                                                             <input type="text" name="f_enrampe" id="f_enrampe" class="datepicker form-control"  autocomplete="off" size="10" required="required" >                                                        </div>
                                                     </div>
 
-                                                    <div class="col-md-3 mb-4">
+                                                    <div class="col-md-4 mb-4">
                                                         <label class="form-label" >Fecha inicio de entrega</label>
                                                         <div class="input-group date" id="datepicker">
                                                             <input type="text" name="f_inicio" id="f_inicio" class="datepicker form-control"  autocomplete="off" size="10" required="required" >
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3 mb-4">
+                                                 <!--   <div class="col-md-3 mb-4">
                                                         <label class="form-label" >Custodia</label>
                                                         <select class="form-select" id="custodia" >
                                                             <option selected value="0">Elija una opcion</option>
                                                             <%=custodia%>
                                                         </select>
-                                                    </div>
+                                                    </div>-->
 
                                                         
-                                                        
+                                                    
                                       
                                           
                                             <div class="col-md-3 mb-4">
@@ -168,14 +177,14 @@
                                                 <input type="number" class="form-control" id="dispositivos">
                                             </div> 
 
-                                            <div class="col-md-6 mb-4">
+                                         <!--   <div class="col-md-6 mb-4">
                                                 <label class="form-label" for="fechaRevision">Fecha Revision</label>
                                                 <div class="input-group date" id="datepicker">
                                                     <div class="input-group date" id="datepicker">
                                                         <input type="text" name="date3" id="fechaRevision" class="datepicker infecha form-control" autocomplete="off" size="10" required="required">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="col-md-6 mb-4">
                                                 <label class="form-label" for="selloCaja">Sello de caja</label>
                                                 <input type="text" class="form-control" id="selloCaja" autocomplete="false">
@@ -186,12 +195,12 @@
                                             </div>
 
 
-                                            <div class="col-md-6 mb-4">
+                                          <!--  <div class="col-md-6 mb-4">
                                                 <label class="form-label" for="fechaFinEntrega">Fecha fin de carga</label>
                                                 <div class="input-group date" id="datepicker">
                                                     <input type="text" name="date3" id="fechaFinEntrega" class="datepicker infecha form-control" autocomplete="off" size="10" required="required">
                                                 </div>   
-                                            </div>
+                                            </div>-->
                                             <div class="col-md-6 mb-4">
                                                 <label class="form-label" for="packingList">Packing list</label>
                                                 <div class="input-group date" id="datepicker">
@@ -199,8 +208,11 @@
                                                 </div>   
                                             </div>
                                             <div class="col-md-6 mb-4">
-                                                <label class="form-label" for="autor">Auditor</label>
-                                                <input type="text" class="form-control" id="autor" autocomplete="false">
+                                                <label class="form-label" for="autor">Marca a facturar</label>
+                                                    <select class="form-select" id="autor" >
+                                                            <option selected value="0">Elija una opcion</option>
+                                                            <%=mafacturar%>
+                                                        </select>
                                             </div>
 
                                             <div class="col-md-6 mb-4">
@@ -345,10 +357,10 @@
                                                         let tipoUnidadValue      = document.getElementById('tipoUnidad').value;
                                                         let choferValue          = document.getElementById('chofer').value;
                                                         let dispositivosValue    = document.getElementById('dispositivos').value;
-                                                        let fechaRevisionValue   = document.getElementById('fechaRevision').value;
+                                                        let fechaRevisionValue   ='01/01/2023';// document.getElementById('fechaRevision').value;
                                                         let selloCajaValue       = document.getElementById('selloCaja').value;
                                                         let relacionEntregaValue = document.getElementById('relacionEntrega').value;
-                                                        let fechaFinEntregaValue = document.getElementById('fechaFinEntrega').value;
+                                                        let fechaFinEntregaValue ='01/01/2023';// document.getElementById('fechaFinEntrega').value;
                                                         let packingListValue     = document.getElementById('packingList').value;
                                                         let autorValue           = document.getElementById('autor').value;
                                                         let observacionesValue   = document.getElementById('observaciones').value;
@@ -377,20 +389,20 @@
 
 
                                                                 swal({title: "Guardando,Espere...", allowEscapeKey: false});
-                                                                let custo = document.getElementById('custodia').value;
+                                                                let custo ='1';// document.getElementById('custodia').value;
 
 
 
-                                                                var selectElement1 = document.getElementById("custodia");
-                                                                var selectedOption1 = selectElement1.options[selectElement1.selectedIndex];
-                                                                var selectedValue1 = selectedOption1.value;
-                                                                var selectedText1 = selectedOption1.textContent;
-                                                                var bandera = '0';
-                                                                if (selectedValue1 == '0') {
-                                                                    bandera = '0';
-                                                                } else {
-                                                                    bandera = '1';
-                                                                }
+                                                               var selectElement1  ='N/A';// document.getElementById("custodia");
+                                                               var selectedOption1 ='N/A';// selectElement1.options[selectElement1.selectedIndex];
+                                                               var selectedValue1  ='1';// selectedOption1.value;
+                                                               var selectedText1   ='N/A';//   selectedOption1.textContent;
+   var bandera = '0';
+   if (selectedValue1 == '0') {
+       bandera = '0';
+   } else {
+       bandera = '1';
+   }
 
                                                                 try {
                                                                     const response = await fetch('<%=request.getContextPath()%>/CrearEmbarque?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=<%=opciones%>&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen);
