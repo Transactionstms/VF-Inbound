@@ -3517,6 +3517,23 @@ function validarTextoAlfanumerico(td,namecelda,cont) {
   
 }
 
+function validarTextoPeso(td) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+  
+}
+
 function validarTextoPais(td, i) {
   // Obtener el contenido actual del TD
   let contenido = td.innerText;
@@ -3614,6 +3631,30 @@ function formatoNumero(event,i) {
       selection.addRange(range);
 
       return true;  
+}
+
+function formatoFecha(event) {
+  // Obtener el contenido actual de la celda
+  var valor = event.target.innerText;
+
+  // Filtrar caracteres no numéricos
+  var fechaFiltrada = valor.replace(/\D/g, '');
+
+  // Limitar la longitud total a 8 caracteres (formato: MMDDYYYY)
+  fechaFiltrada = fechaFiltrada.slice(0, 8);
+
+  // Aplicar el formato MM/DD/YYYY
+  if (fechaFiltrada.length > 1) {
+    fechaFiltrada = fechaFiltrada.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+  }
+
+  // Actualizar el contenido de la celda con la fecha filtrada
+  event.target.innerText = fechaFiltrada;
+}
+
+function formatoDosDigitos(texto) {
+  // Agregar un cero al principio si el texto tiene solo un dígito
+  return texto.length === 1 ? '0' + texto : texto;
 }
 
 function clearFiltres(){
