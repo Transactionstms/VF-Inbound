@@ -1817,20 +1817,20 @@ public class ConsultarCustoms extends HttpServlet {
 
                     salida += " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_nova[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_nova'," + cont + ")\" ondblclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\">" + row[77] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_globe_trade_sd[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_globe_trade_sd'," + cont + ")\" ondblclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\">" + row[78] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_archivo_m[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_archivo_m'," + cont + ")\" ondblclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\">" + row[80] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicit_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicit_manip'," + cont + ")\" ondblclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\">" + row[81] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_manip'," + cont + ")\" ondblclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\">" + row[82] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_confirm_clave_pedim[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_confirm_clave_pedim'," + cont + ")\" ondblclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\">" + row[83] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recep_increment[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recep_increment'," + cont + ")\" ondblclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\">" + row[84] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumeroT_E(event)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" onpaste=\"handlePasteNumberT_E(event)\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_inbound[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_inbound'," + cont + ")\" ondblclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\">" + row[86] + "</td> ";
                 }
 
                 if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
                     salida += " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoPeso(this,'peso_kg',"+cont+")\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
+                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
                             + " <td contenteditable=\"true\" id=\"transferencia[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'transferencia'," + cont + ")\" ondblclick=\"show_transferencia(" + cont + ")\">" + row[89] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_inicio_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_inicio_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\">" + row[90] + "</td> "
                             + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_termino_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_termino_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\">" + row[91] + "</td> "
@@ -1839,7 +1839,7 @@ public class ConsultarCustoms extends HttpServlet {
                             + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
                 }
 
-                    salida += " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
+                    salida += " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
                             + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
                             + "</tr>";
 
