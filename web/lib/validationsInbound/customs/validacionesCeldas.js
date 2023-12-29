@@ -5,6 +5,9 @@
 
 function validarNumero(event) {
     
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+    
     // Obtener el contenido actual del TD
     let contenido = event.target.innerText;
     var patron = /^[0-9]+([.])?([0-9]+)?$/;
@@ -25,6 +28,9 @@ function validarNumero(event) {
 }
 
 function validarNumeroT_E(event) {
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
         
     // Obtener el contenido actual del TD
     let contenido = event.target.innerText;
@@ -43,6 +49,25 @@ function validarNumeroT_E(event) {
         event.target.innerText = "";
         event.target.style.color = 'red';
     }
+}
+
+function validarTextoAlfanumericoMotivoAtraso(td,namecelda,cont) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s.\/ñÑ]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+  
+  parametrizacionValoresEvento(namecelda,cont); 
+  
 }
 
 function validarTextoAlfanumerico(td,namecelda,cont) {
@@ -108,7 +133,7 @@ function validarTextoParametrizacion(td,namecelda,cont) {
   // Obtener el contenido actual del TD
   let contenido = td.innerText;
   
-  if (/^[a-zA-Z\u00D1\u00F1\s-]+$/.test(contenido)) {
+  if (/^[a-zA-Z\u00D1\u00F1\s-.]+$/.test(contenido)) {
     // Si es solo texto, puedes realizar acciones adicionales
     console.log("Contenido del TD:", contenido);
     td.style.color = 'black';
@@ -139,6 +164,9 @@ function validarTexto(td) {
 }
 
 function validarTextoCheckbox(event) {
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
   
     // Obtener el contenido actual de la celda
     var contenido = event.target.innerText;
@@ -156,8 +184,9 @@ function validarTextoCheckbox(event) {
 
 function formatoNumero(event,i,nameCelda) {
     
-      cleanPedimento_r1_1er(i);
-      cleanPedimento_r1_2do(i);
+      // Evitar el comportamiento predeterminado de pegado
+      event.preventDefault();
+   
       let resultado = "";
       
       // Obtener el código ASCII de la tecla presionada
@@ -200,11 +229,18 @@ function formatoNumero(event,i,nameCelda) {
       range.collapse(false);
       selection.removeAllRanges();
       selection.addRange(range);
+      
+      cleanPedimento_r1_1er(i);
+      cleanPedimento_r1_2do(i);
 
       return true;  
 }
 
 function formatoFecha(event) {
+    
+   // Evitar el comportamiento predeterminado de pegado
+   event.preventDefault();
+    
   // Obtener el contenido actual de la celda
   var valor = event.target.innerText;
 
@@ -216,7 +252,7 @@ function formatoFecha(event) {
 
   // Aplicar el formato MM/DD/YYYY
   if (fechaFiltrada.length > 1) {
-    fechaFiltrada = fechaFiltrada.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3');
+    fechaFiltrada = fechaFiltrada.replace(/^\d{2}\/\d{2}\/\d{4}$/, '$1/$2/$3');
   }
 
   // Actualizar el contenido de la celda con la fecha filtrada
@@ -228,7 +264,8 @@ function formatoDosDigitos(texto) {
   return texto.length === 1 ? '0' + texto : texto;
 }
 
-function handlePasteAlfanumerico(event) {
+function handlePasteAlfanumericoMotivoAtraso(event) {
+    
     // Evitar el comportamiento predeterminado de pegado
     event.preventDefault();
 
@@ -236,20 +273,39 @@ function handlePasteAlfanumerico(event) {
     const clipboardData = event.clipboardData || window.clipboardData;
     const contenido = clipboardData.getData('text/plain');
 
-    // Realizar manipulaciones con el texto pegado según tus necesidades
-    // Aquí puedes agregar lógica para analizar y controlar la información
+  if (/^[a-zA-Z0-9\s.\/ñÑ]+$/.test(contenido)) {
+      // Actualizar la celda con el texto manipulado (si es necesario)
+      event.target.innerText = contenido;
+      td.style.color = 'black';
+  } else {
+      // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+      console.log("Por favor, ingrese solo texto alfanumérico.");
+      td.innerText = '';
+      td.style.color = 'red';
+  }
+  
+}
 
-    // Filtrar caracteres no alfabeticos
-    var pastedData = contenido.replace(/[^A-Za-z0-9]/g, '');
-   
-    // Ejemplo: Imprimir el texto pegado en la consola
-    console.log("Texto pegado:", pastedData);
+function handlePasteAlfanumerico(event) {
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
 
-    // Puedes realizar más manipulaciones aquí según tus requisitos
-    // ...
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
 
-    // Actualizar la celda con el texto manipulado (si es necesario)
-    event.target.innerText = pastedData;
+  if (/^[a-zA-Z0-9\s.]+$/.test(contenido)) {
+      // Actualizar la celda con el texto manipulado (si es necesario)
+      event.target.innerText = contenido;
+      td.style.color = 'black';
+  } else {
+      // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+      console.log("Por favor, ingrese solo texto alfanumérico.");
+      td.innerText = '';
+      td.style.color = 'red';
+  }
+  
 }
 
 function handlePasteText(event) {
@@ -259,21 +315,15 @@ function handlePasteText(event) {
     // Obtener el texto pegado
     const clipboardData = event.clipboardData || window.clipboardData;
     const contenido = clipboardData.getData('text/plain');
+    var patron = /^[a-zA-Z\u00D1\u00F1\s-.]+$/;
 
     // Realizar manipulaciones con el texto pegado según tus necesidades
     // Aquí puedes agregar lógica para analizar y controlar la información
-
-    // Filtrar caracteres no alfabeticos
-    var pastedData = contenido.replace(/[^A-Za-z]/g, '');
-   
-    // Ejemplo: Imprimir el texto pegado en la consola
-    console.log("Texto pegado:", pastedData);
-
-    // Puedes realizar más manipulaciones aquí según tus requisitos
-    // ...
-
-    // Actualizar la celda con el texto manipulado (si es necesario)
-    event.target.innerText = pastedData;
+    if (patron.test(contenido)) {
+        event.target.innerText = contenido;
+    }else{
+        event.target.innerText = "";
+    }
 }
 
 function handlePasteText2Caracteres(event) {
@@ -302,27 +352,47 @@ function handlePasteText2Caracteres(event) {
 }
 
 function handlePasteNumber(event) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
   var clipboardData = event.clipboardData || window.clipboardData;
   var pastedData = clipboardData.getData('text');
 
   var regex = /^[0-9]+([.])?([0-9]+)?$/;
 
-  if (!regex.test(pastedData)) {
-    event.preventDefault();
+  if (regex.test(pastedData)) {
+    event.target.innerText = pastedData; 
     console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
 
 function handlePasteNumberT_E(event) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
   var clipboardData = event.clipboardData || window.clipboardData;
   var pastedData = clipboardData.getData('text');
+  var patron = /^[0-9-]+$/;
+  let resultado = "";
 
-  var regex = /^[0-9-]+$/;
+    // Reemplazar comas por puntos para asegurar el formato decimal
+    resultado = pastedData.replace('.', '-');
 
-  if (!regex.test(pastedData)) {
-    event.preventDefault();
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
-  }
+    // Validar si el contenido es un número o un número decimal
+    if (patron.test(resultado)) {
+        // Si es un número o un número decimal válido, permitir que permanezca en el TD
+        // 
+// Actualizar el contenido de la celda con el número filtrado
+        event.target.innerText = resultado;
+        event.target.style.color = 'black';
+    } else {
+        // Si no es un número o un número decimal válido, eliminar el contenido y mostrar un color de texto rojo
+        event.target.innerText = "";
+        event.target.style.color = 'red';
+    }
+  
 }
 
 function handlePasteNumberPedimento(event,i,nameCelda) {
@@ -332,8 +402,6 @@ function handlePasteNumberPedimento(event,i,nameCelda) {
       // Evitar el comportamiento predeterminado de pegado
       event.preventDefault();
       
-      cleanPedimento_r1_1er(i);
-      cleanPedimento_r1_2do(i);
       let resultado = "";
       
       // Obtener el código ASCII de la tecla presionada
@@ -379,6 +447,9 @@ function handlePasteNumberPedimento(event,i,nameCelda) {
       range.collapse(false);
       selection.removeAllRanges();
       selection.addRange(range);
+      
+      cleanPedimento_r1_1er(i);
+      cleanPedimento_r1_2do(i);
 
       return true;  
 }
@@ -390,4 +461,66 @@ function toggleEditable(name_celda,i) {
       
     const cell = document.querySelector(celda);
     cell.setAttribute("contentEditable", "true");
+}
+
+
+function handlePasteFechaEtaPortDischarge(event,i) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
+  var clipboardData = event.clipboardData || window.clipboardData;
+  var pastedData = clipboardData.getData('text/plain');
+
+  var regex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  if (regex.test(pastedData)) {
+      
+     // Actualizar el contenido de la celda con el número filtrado
+     event.target.innerText = pastedData; 
+     
+     pedimento(pastedData, i);
+     
+    console.log('Contenido no válido. Solo se permiten números o números decimales.');
+  }
+}
+
+function handlePasteFechaPagoPedimento(event,i) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
+  var clipboardData = event.clipboardData || window.clipboardData;
+  var pastedData = clipboardData.getData('text/plain');
+
+  var regex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  if (regex.test(pastedData)) {
+      
+     // Actualizar el contenido de la celda con el número filtrado
+     event.target.innerText = pastedData; 
+     
+     modulacion(pastedData, i);
+     
+    console.log('Contenido no válido. Solo se permiten números o números decimales.');
+  }
+}
+
+function handlePasteFecha(event) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
+  var clipboardData = event.clipboardData || window.clipboardData;
+  var pastedData = clipboardData.getData('text/plain');
+
+  var regex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  if (regex.test(pastedData)) {
+      
+     // Actualizar el contenido de la celda con el número filtrado
+     event.target.innerText = pastedData;  
+     
+    console.log('Contenido no válido. Solo se permiten números o números decimales.');
+  }
 }
