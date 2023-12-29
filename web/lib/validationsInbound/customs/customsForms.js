@@ -279,6 +279,101 @@ var selected83 = "0";
 var selected84 = "0";
 var selected85 = "0";
 
+/*selected - historico multiselect */
+let selected_old_referenciaAA="";
+let selected_old_evento="";
+let selected_old_responsable="";
+let selected_old_final_destination="";
+let selected_old_brand_division="";
+let selected_old_division="";
+let selected_old_shipmentId="";
+let selected_old_containerId="";
+let selected_old_blAwbPro="";
+let selected_old_loadTypeFinal="";
+let selected_old_quantity="";
+let selected_old_pod="";
+let selected_old_estDepartFromPol="";
+let selected_old_etaRealPortOfDischarge="";
+let selected_old_estEtaDc="";
+let selected_old_inboundNotification="";
+let selected_old_pol="";
+let selected_old_aa="";
+let selected_old_fechaMesVenta="";
+let selected_old_prioridad="";
+
+//Parametros Generales
+let selected_old_pais_origen="";
+let selected_old_size_container="";
+let selected_old_valor_usd="";
+let selected_old_eta_port_discharge="";
+let selected_old_agente_aduanal="";
+let selected_old_pedimento_a1="";
+let selected_old_pedimento_r1_1er="";
+let selected_old_motivo_rectificacion_1er="";
+let selected_old_pedimento_r1_2do="";
+let selected_old_motivo_rectificacion_2do="";
+let selected_old_fecha_recepcion_doc="";
+let selected_old_recinto="";
+let selected_old_naviera="";
+let selected_old_buque="";
+let selected_old_fecha_revalidacion="";
+let selected_old_fecha_previo_origen="";
+let selected_old_fecha_previo_destino="";
+let selected_old_fecha_resultado_previo="";
+let selected_old_proforma_final="";
+let selected_old_permiso="";
+let selected_old_fecha_envio="";
+let selected_old_fecha_recepcion_perm="";
+let selected_old_fecha_activacion_perm="";
+let selected_old_fecha_permisos_aut="";
+let selected_old_co_pref_arancelaria="";
+let selected_old_aplic_pref_arancelaria="";
+let selected_old_req_uva="";
+let selected_old_req_ca="";
+let selected_old_fecha_recepcion_ca="";
+let selected_old_num_constancia_ca="";
+let selected_old_monto_ca="";
+let selected_old_fecha_doc_completos="";
+let selected_old_fecha_pago_pedimento="";
+let selected_old_fecha_solicitud_transporte="";
+let selected_old_fecha_modulacion="";
+let selected_old_modalidad="";
+let selected_old_resultado_modulacion="";
+let selected_old_fecha_reconocimiento="";
+let selected_old_fecha_liberacion="";
+let selected_old_sello_origen="";
+let selected_old_sello_final="";
+let selected_old_fecha_retencion_aut="";
+let selected_old_fecha_liberacion_aut="";
+let selected_old_estatus_operacion="";
+let selected_old_motivo_atraso="";
+let selected_old_observaciones="";
+
+//Parametros Logix
+let selected_old_llegada_a_nova="";
+let selected_old_llegada_a_globe_trade_sd="";
+let selected_old_archivo_m="";
+let selected_old_fecha_archivo_m="";
+let selected_old_fecha_solicit_manip="";
+let selected_old_fecha_vencim_manip="";
+let selected_old_fecha_confirm_clave_pedim="";
+let selected_old_fecha_recep_increment="";
+let selected_old_t_e="";
+let selected_old_fecha_vencim_inbound="";
+
+//Parametros Cusa
+let selected_old_no_bultos="";
+let selected_old_peso_kg="";
+let selected_old_transferencia="";
+let selected_old_fecha_inicio_etiquetado="";
+let selected_old_fecha_termino_etiquetado="";
+let selected_old_hora_termino_etiquetado="";
+let selected_old_proveedor="";
+let selected_old_proveedor_carga="";
+
+let selected_old_fy="";
+
+
 
     $(document).ready(async function () {
         
@@ -458,6 +553,95 @@ var selected85 = "0";
                                     selected_proveedor,
                                     selected_proveedor_carga,
                                     selected_fy) {
+                              
+                /*Historico Multiselect*/
+                selected_old_referenciaAA= selected_referenciaAA;
+                selected_old_evento= selected_evento;
+                selected_old_responsable= selected_responsable;
+                selected_old_final_destination= selected_final_destination;
+                selected_old_brand_division= selected_brand_division;
+                selected_old_division= selected_division;
+                selected_old_shipmentId= selected_shipmentId;
+                selected_old_containerId= selected_containerId;
+                selected_old_blAwbPro= selected_blAwbPro;
+                selected_old_loadTypeFinal= selected_loadTypeFinal;
+                selected_old_quantity= selected_quantity;
+                selected_old_pod= selected_pod;
+                selected_old_estDepartFromPol= selected_estDepartFromPol;
+                selected_old_etaRealPortOfDischarge= selected_etaRealPortOfDischarge;
+                selected_old_estEtaDc= selected_estEtaDc;
+                selected_old_inboundNotification= selected_inboundNotification;
+                selected_old_pol= selected_pol;
+                selected_old_aa= selected_aa;
+                selected_old_fechaMesVenta= selected_fechaMesVenta;
+                selected_old_prioridad= selected_prioridad;
+                selected_old_pais_origen= selected_pais_origen;
+                selected_old_size_container= selected_size_container;
+                selected_old_valor_usd= selected_valor_usd;
+                selected_old_eta_port_discharge= selected_eta_port_discharge;
+                selected_old_agente_aduanal= selected_agente_aduanal;
+                selected_old_pedimento_a1= selected_pedimento_a1;
+                selected_old_pedimento_r1_1er= selected_pedimento_r1_1er;
+                selected_old_motivo_rectificacion_1er= selected_motivo_rectificacion_1er;
+                selected_old_pedimento_r1_2do= selected_pedimento_r1_2do;
+                selected_old_motivo_rectificacion_2do= selected_motivo_rectificacion_2do;
+                selected_old_fecha_recepcion_doc= selected_fecha_recepcion_doc;
+                selected_old_recinto= selected_recinto;
+                selected_old_naviera= selected_naviera;
+                selected_old_buque= selected_buque;
+                selected_old_fecha_revalidacion= selected_fecha_revalidacion;
+                selected_old_fecha_previo_origen= selected_fecha_previo_origen;
+                selected_old_fecha_previo_destino= selected_fecha_previo_destino;
+                selected_old_fecha_resultado_previo= selected_fecha_resultado_previo;
+                selected_old_proforma_final= selected_proforma_final;
+                selected_old_permiso= selected_permiso;
+                selected_old_fecha_envio= selected_fecha_envio;
+                selected_old_fecha_recepcion_perm= selected_fecha_recepcion_perm;
+                selected_old_fecha_activacion_perm= selected_fecha_activacion_perm;
+                selected_old_fecha_permisos_aut= selected_fecha_permisos_aut;
+                selected_old_co_pref_arancelaria= selected_co_pref_arancelaria;
+                selected_old_aplic_pref_arancelaria= selected_aplic_pref_arancelaria;
+                selected_old_req_uva= selected_req_uva;
+                selected_old_req_ca= selected_req_ca;
+                selected_old_fecha_recepcion_ca= selected_fecha_recepcion_ca;
+                selected_old_num_constancia_ca= selected_num_constancia_ca;
+                selected_old_monto_ca= selected_monto_ca;
+                selected_old_fecha_doc_completos= selected_fecha_doc_completos;
+                selected_old_fecha_pago_pedimento= selected_fecha_pago_pedimento;
+                selected_old_fecha_solicitud_transporte= selected_fecha_solicitud_transporte;
+                selected_old_fecha_modulacion= selected_fecha_modulacion;
+                selected_old_modalidad= selected_modalidad;
+                selected_old_resultado_modulacion= selected_resultado_modulacion;
+                selected_old_fecha_reconocimiento= selected_fecha_reconocimiento;
+                selected_old_fecha_liberacion= selected_fecha_liberacion;
+                selected_old_sello_origen= selected_sello_origen;
+                selected_old_sello_final= selected_sello_final;
+                selected_old_fecha_retencion_aut= selected_fecha_retencion_aut;
+                selected_old_fecha_liberacion_aut= selected_fecha_liberacion_aut;
+                selected_old_estatus_operacion= selected_estatus_operacion;
+                selected_old_motivo_atraso= selected_motivo_atraso;
+                selected_old_observaciones= selected_observaciones;
+                selected_old_llegada_a_nova= selected_llegada_a_nova;
+                selected_old_llegada_a_globe_trade_sd= selected_llegada_a_globe_trade_sd;
+                selected_old_archivo_m= selected_archivo_m;
+                selected_old_fecha_archivo_m= selected_fecha_archivo_m;
+                selected_old_fecha_solicit_manip= selected_fecha_solicit_manip;
+                selected_old_fecha_vencim_manip= selected_fecha_vencim_manip;
+                selected_old_fecha_confirm_clave_pedim= selected_fecha_confirm_clave_pedim;
+                selected_old_fecha_recep_increment= selected_fecha_recep_increment;
+                selected_old_t_e= selected_t_e;
+                selected_old_fecha_vencim_inbound= selected_fecha_vencim_inbound;
+                selected_old_no_bultos= selected_no_bultos;
+                selected_old_peso_kg= selected_peso_kg;
+                selected_old_transferencia= selected_transferencia;
+                selected_old_fecha_inicio_etiquetado= selected_fecha_inicio_etiquetado;
+                selected_old_fecha_termino_etiquetado= selected_fecha_termino_etiquetado;
+                selected_old_hora_termino_etiquetado= selected_hora_termino_etiquetado;
+                selected_old_proveedor= selected_proveedor;
+                selected_old_proveedor_carga= selected_proveedor_carga;
+                selected_old_fy= selected_fy;
+
+            
         try {
             
             const response = await fetch("../ConsultarCustoms?AgentType="+idAgenteAduanal
@@ -547,12 +731,109 @@ var selected85 = "0";
                                         +"&selected_proveedor="+selected_proveedor
                                         +"&selected_proveedor_carga="+selected_proveedor_carga
                                         +"&selected_fy="+selected_fy);
+            
             if (!response.ok) {
                 throw new Error('Error en la solicitud');
             }
 
             const data = await response.text();
             document.getElementById('table-scroll').innerHTML = data;
+            
+            $('#col_referenciaAA').val(selected_referenciaAA); 
+            $('#col_evento').val(selected_evento); 
+            $('#col_responsable').val(selected_responsable); 
+            $('#col_finalDestination').val(selected_final_destination); 
+            $('#col_brandDivision').val(selected_brand_division); 
+            $('#col_division').val(selected_division); 
+            $('#col_shipmentId').val(selected_shipmentId); 
+            $('#col_container').val(selected_containerId); 
+            $('#col_blAwbPro').val(selected_blAwbPro); 
+            $('#col_loadType').val(selected_loadTypeFinal); 
+            $('#col_quantity').val(selected_quantity); 
+            $('#col_pod').val(selected_pod); 
+            $('#col_estDepartFromPol').val(selected_estDepartFromPol); 
+            $('#col_etaRealPortOfDischarge').val(selected_etaRealPortOfDischarge); 
+            $('#col_estEtaDc').val(selected_estEtaDc); 
+            $('#col_inboundNotification').val(selected_inboundNotification); 
+            $('#col_pol').val(selected_pol); 
+            $('#col_aa').val(selected_aa); 
+            $('#col_fechaMesVenta').val(selected_fechaMesVenta); 
+            $('#col_prioridad').val(selected_prioridad); 
+            $('#col_pais_origen').val(selected_pais_origen); 
+            $('#col_size_container').val(selected_size_container); 
+            $('#col_valor_usd').val(selected_valor_usd); 
+            $('#col_eta_port_discharge').val(selected_eta_port_discharge); 
+            $('#col_agente_aduanal').val(selected_agente_aduanal); 
+            $('#col_pedimento_a1').val(selected_pedimento_a1); 
+            $('#col_pedimento_r1_1er').val(selected_pedimento_r1_1er); 
+            $('#col_motivo_rectificacion_1er').val(selected_motivo_rectificacion_1er); 
+            $('#col_pedimento_r1_2do').val(selected_pedimento_r1_2do); 
+            $('#col_motivo_rectificacion_2do').val(selected_motivo_rectificacion_2do); 
+            $('#col_fecha_recepcion_doc').val(selected_fecha_recepcion_doc); 
+            $('#col_recinto').val(selected_recinto); 
+            $('#col_naviera').val(selected_naviera); 
+            $('#col_buque').val(selected_buque); 
+            $('#col_fecha_revalidacion').val(selected_fecha_revalidacion); 
+            $('#col_fecha_previo_origen').val(selected_fecha_previo_origen); 
+            $('#col_fecha_previo_destino').val(selected_fecha_previo_destino); 
+            $('#col_fecha_resultado_previo').val(selected_fecha_resultado_previo); 
+            $('#col_proforma_final').val(selected_proforma_final); 
+            $('#col_permiso').val(selected_permiso); 
+            $('#col_fecha_envio').val(selected_fecha_envio); 
+            $('#col_fecha_recepcion_perm').val(selected_fecha_recepcion_perm); 
+            $('#col_fecha_activacion_perm').val(selected_fecha_activacion_perm); 
+            $('#col_fecha_permisos_aut').val(selected_fecha_permisos_aut); 
+            $('#col_co_pref_arancelaria').val(selected_co_pref_arancelaria); 
+            $('#col_aplic_pref_arancelaria').val(selected_aplic_pref_arancelaria); 
+            $('#col_req_uva').val(selected_req_uva); 
+            $('#col_req_ca').val(selected_req_ca); 
+            $('#col_fecha_recepcion_ca').val(selected_fecha_recepcion_ca); 
+            $('#col_num_constancia_ca').val(selected_num_constancia_ca); 
+            $('#col_monto_ca').val(selected_monto_ca); 
+            $('#col_fecha_doc_completos').val(selected_fecha_doc_completos); 
+            $('#col_fecha_pago_pedimento').val(selected_fecha_pago_pedimento); 
+            $('#col_fecha_solicitud_transporte').val(selected_fecha_solicitud_transporte); 
+            $('#col_fecha_modulacion').val(selected_fecha_modulacion); 
+            $('#col_modalidad').val(selected_modalidad); 
+            $('#col_resultado_modulacion').val(selected_resultado_modulacion); 
+            $('#col_fecha_reconocimiento').val(selected_fecha_reconocimiento); 
+            $('#col_fecha_liberacion').val(selected_fecha_liberacion); 
+            $('#col_sello_origen').val(selected_sello_origen); 
+            $('#col_sello_final').val(selected_sello_final); 
+            $('#col_fecha_retencion_aut').val(selected_fecha_retencion_aut); 
+            $('#col_fecha_liberacion_aut').val(selected_fecha_liberacion_aut); 
+            $('#col_estatus_operacion').val(selected_estatus_operacion); 
+            $('#col_motivo_atraso').val(selected_motivo_atraso); 
+            $('#col_observaciones').val(selected_observaciones); 
+            
+        if (idAgenteAduanal === "4001" || idAgenteAduanal === "4006") { //LOGIX Y VF    
+            
+            $('#col_llegada_a_nova').val(selected_llegada_a_nova); 
+            $('#col_llegada_a_globe_trade_sd').val(selected_llegada_a_globe_trade_sd); 
+            $('#col_archivo_m').val(selected_archivo_m); 
+            $('#col_fecha_archivo_m').val(selected_fecha_archivo_m); 
+            $('#col_fecha_solicit_manip').val(selected_fecha_solicit_manip); 
+            $('#col_fecha_vencim_manip').val(selected_fecha_vencim_manip); 
+            $('#col_fecha_confirm_clave_pedim').val(selected_fecha_confirm_clave_pedim); 
+            $('#col_fecha_recep_increment').val(selected_fecha_recep_increment); 
+            $('#col_t_e').val(selected_t_e); 
+            $('#col_fecha_vencim_inbound').val(selected_fecha_vencim_inbound); 
+            
+        }    
+        
+        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+            
+            $('#col_no_bultos').val(selected_no_bultos); 
+            $('#col_peso_kg').val(selected_peso_kg); 
+            $('#col_transferencia').val(selected_transferencia); 
+            $('#col_fecha_inicio_etiquetado').val(selected_fecha_inicio_etiquetado); 
+            $('#col_fecha_termino_etiquetado').val(selected_fecha_termino_etiquetado); 
+            $('#col_hora_termino_etiquetado').val(selected_hora_termino_etiquetado); 
+            $('#col_proveedor').val(selected_proveedor); 
+            $('#col_proveedor_carga').val(selected_proveedor_carga); 
+            
+        }    
+            $('#col_fy').val(selected_fy);
             
             $('#col_referenciaAA').select2(); 
             $('#col_evento').select2();
@@ -2163,181 +2444,353 @@ async function FiltrerData(tipoFiltro) {
                             selected85);                        
 }
 
-function cleanMultiselects(tipoFiltro) {
+async function cleanMultiselects(tipoFiltro) {
     
-    FiltrerData("0");
-        
+    /*
     if (tipoFiltro === "1") {
-       $('#col_referenciaAA').val(null).trigger('change');
+            selected_old_referenciaAA = "";
     } else if (tipoFiltro === "2") {
-       $('#col_evento').val(null).trigger('change'); 
-    } else if (tipoFiltro === "3") { 
-       $('#col_responsable').val(null).trigger('change');
-    } else if (tipoFiltro === "4") { 
-       $('#col_finalDestination').val(null).trigger('change');
+            selected_old_evento = "";
+    } else if (tipoFiltro === "3") {
+            selected_old_responsable = "";
+    } else if (tipoFiltro === "4") {
+            selected_old_final_estination = "";
     } else if (tipoFiltro === "5") {
-       $('#col_brandDivision').val(null).trigger('change');
+            selected_old_brand_division = "";
     } else if (tipoFiltro === "6") {
-       $('#col_division').val(null).trigger('change');
+            selected_old_division = "";
     } else if (tipoFiltro === "7") {
-       $('#col_shipmentId').val(null).trigger('change');
+            selected_old_shipmentId = "";
     } else if (tipoFiltro === "8") {
-       $('#col_container').val(null).trigger('change');
+            selected_old_containerId = "";
     } else if (tipoFiltro === "9") {
-       $('#col_blAwbPro').val(null).trigger('change');
+            selected_old_blAwbPro = "";
     } else if (tipoFiltro === "10") {
-       $('#col_loadType').val(null).trigger('change');
+            selected_old_loadTypeFinal = "";
     } else if (tipoFiltro === "11") {
-       $('#col_quantity').val(null).trigger('change');
+            selected_old_quantity = "";
     } else if (tipoFiltro === "12") {
-       $('#col_pod').val(null).trigger('change');
+            selected_old_pod = "";
     } else if (tipoFiltro === "13") {
-       $('#col_estDepartFromPol').val(null).trigger('change');
+            selected_old_estDepartFromPol = "";
     } else if (tipoFiltro === "14") {
-       $('#col_etaRealPortOfDischarge').val(null).trigger('change');
+            selected_old_etaRealPortOfDischarge = "";
     } else if (tipoFiltro === "15") {
-       $('#col_estEtaDc').val(null).trigger('change');
+            selected_old_estEtaDc = "";
     } else if (tipoFiltro === "16") {
-       $('#col_inboundNotification').val(null).trigger('change');
+            selected_old_inboundNotification = "";
     } else if (tipoFiltro === "17") {
-       $('#col_pol').val(null).trigger('change');
+            selected_old_pol = "";
     } else if (tipoFiltro === "18") {
-       $('#col_aa').val(null).trigger('change');
+            selected_old_aa = "";
     } else if (tipoFiltro === "19") {
-       $('#col_fechaMesVenta').val(null).trigger('change');
+            selected_old_fechaMesVenta = "";
     } else if (tipoFiltro === "20") {
-       $('#col_prioridad').val(null).trigger('change');
+            selected_old_prioridad = "";
     } else if (tipoFiltro === "21") {
-       $('#col_pais_origen').val(null).trigger('change');
+            selected_old_pais_origen = "";
     } else if (tipoFiltro === "22") {
-       $('#col_size_container').val(null).trigger('change');
+            selected_old_size_container = "";
     } else if (tipoFiltro === "23") {
-       $('#col_valor_usd').val(null).trigger('change');
+            selected_old_valor_usd = "";
     } else if (tipoFiltro === "24") {
-       $('#col_eta_port_discharge').val(null).trigger('change');
+            selected_old_eta_port_discharge = "";
     } else if (tipoFiltro === "25") {
-       $('#col_agente_aduanal').val(null).trigger('change');
+            selected_old_agente_aduanal = "";
     } else if (tipoFiltro === "26") {
-       $('#col_pedimento_a1').val(null).trigger('change');
+            selected_old_pedimento_a1 = "";
     } else if (tipoFiltro === "27") {
-       $('#col_pedimento_r1_1er').val(null).trigger('change');
+            selected_old_pedimento_r1_1er = "";
     } else if (tipoFiltro === "28") {
-       $('#col_motivo_rectificacion_1er').val(null).trigger('change');
+            selected_old_motivo_rectificacion_1er = "";
     } else if (tipoFiltro === "29") {
-       $('#col_pedimento_r1_2do').val(null).trigger('change');
+            selected_old_pedimento_r1_2do = "";
     } else if (tipoFiltro === "30") {
-       $('#col_motivo_rectificacion_2do').val(null).trigger('change');
+            selected_old_motivo_rectificacion_2do = "";
     } else if (tipoFiltro === "31") {
-       $('#col_fecha_recepcion_doc').val(null).trigger('change');
+            selected_old_fecha_recepcion_doc = "";
     } else if (tipoFiltro === "32") {
-       $('#col_recinto').val(null).trigger('change');
+            selected_old_recinto = "";
     } else if (tipoFiltro === "33") {
-       $('#col_naviera').val(null).trigger('change');
+            selected_old_naviera = "";
     } else if (tipoFiltro === "34") {
-       $('#col_buque').val(null).trigger('change');
+            selected_old_buque = "";
     } else if (tipoFiltro === "35") {
-       $('#col_fecha_revalidacion').val(null).trigger('change');
+            selected_old_fecha_revalidacion = "";
     } else if (tipoFiltro === "36") {
-       $('#col_fecha_previo_origen').val(null).trigger('change');
+            selected_old_fecha_previo_origen = "";
     } else if (tipoFiltro === "37") {
-       $('#col_fecha_previo_destino').val(null).trigger('change');
+            selected_old_fecha_previo_destino = "";
     } else if (tipoFiltro === "38") {
-       $('#col_fecha_resultado_previo').val(null).trigger('change');
+            selected_old_fecha_resultado_previo = "";
     } else if (tipoFiltro === "39") {
-       $('#col_proforma_final').val(null).trigger('change');
+            selected_old_proforma_final = "";
     } else if (tipoFiltro === "40") {
-       $('#col_permiso').val(null).trigger('change');
+            selected_old_permiso = "";
     } else if (tipoFiltro === "41") {
-       $('#col_fecha_envio').val(null).trigger('change');
+            selected_old_fecha_envio = "";
     } else if (tipoFiltro === "42") {
-       $('#col_fecha_recepcion_perm').val(null).trigger('change');
+            selected_old_fecha_recepcion_perm = "";
     } else if (tipoFiltro === "43") {
-       $('#col_fecha_activacion_perm').val(null).trigger('change');
+            selected_old_fecha_activacion_perm = "";
     } else if (tipoFiltro === "44") {
-       $('#col_fecha_permisos_aut').val(null).trigger('change');
+            selected_old_fecha_permisos_aut = "";
     } else if (tipoFiltro === "45") {
-       $('#col_co_pref_arancelaria').val(null).trigger('change');
+            selected_old_co_pref_arancelaria = "";
     } else if (tipoFiltro === "46") {
-       $('#col_aplic_pref_arancelaria').val(null).trigger('change');
+            selected_old_aplic_pref_arancelaria = "";
     } else if (tipoFiltro === "47") {
-       $('#col_req_uva').val(null).trigger('change');
+            selected_old_req_uva = "";
     } else if (tipoFiltro === "48") {
-       $('#col_req_ca').val(null).trigger('change');
+            selected_old_req_ca = "";
     } else if (tipoFiltro === "49") {
-       $('#col_fecha_recepcion_ca').val(null).trigger('change');
-    } else if (tipoFiltro === "50") { 
-       $('#col_num_constancia_ca').val(null).trigger('change');
-    } else if (tipoFiltro === "51") { 
-       $('#col_monto_ca').val(null).trigger('change');
+            selected_old_fecha_recepcion_ca = "";
+    } else if (tipoFiltro === "50") {
+            selected_old_num_constancia_ca = "";
+    } else if (tipoFiltro === "51") {
+            selected_old_monto_ca = "";
     } else if (tipoFiltro === "52") {
-       $('#col_fecha_doc_completos').val(null).trigger('change');
+            selected_old_fecha_doc_completos = "";
     } else if (tipoFiltro === "53") {
-       $('#col_fecha_pago_pedimento').val(null).trigger('change');
+            selected_old_fecha_pago_pedimento = "";
     } else if (tipoFiltro === "54") {
-       $('#col_fecha_solicitud_transporte').val(null).trigger('change');
+            selected_old_fecha_solicitud_transporte = "";
     } else if (tipoFiltro === "55") {
-       $('#col_fecha_modulacion').val(null).trigger('change');
+            selected_old_fecha_modulacion = "";
     } else if (tipoFiltro === "56") {
-       $('#col_modalidad').val(null).trigger('change');
+            selected_old_modalidad = "";
     } else if (tipoFiltro === "57") {
-       $('#col_resultado_modulacion').val(null).trigger('change');
+            selected_old_resultado_modulacion = "";
     } else if (tipoFiltro === "58") {
-       $('#col_fecha_reconocimiento').val(null).trigger('change');
+            selected_old_fecha_reconocimiento = "";
     } else if (tipoFiltro === "59") {
-       $('#col_fecha_liberacion').val(null).trigger('change');
+            selected_old_fecha_liberacion = "";
     } else if (tipoFiltro === "60") {
-       $('#col_sello_origen').val(null).trigger('change');
+            selected_old_sello_origen = "";
     } else if (tipoFiltro === "61") {
-       $('#col_sello_final').val(null).trigger('change');
+            selected_old_sello_final = "";
     } else if (tipoFiltro === "62") {
-       $('#col_fecha_retencion_aut').val(null).trigger('change');
+            selected_old_fecha_retencion_aut = "";
     } else if (tipoFiltro === "63") {
-       $('#col_fecha_liberacion_aut').val(null).trigger('change');
+            selected_old_fecha_liberacion_aut = "";
     } else if (tipoFiltro === "64") {
-       $('#col_estatus_operacion').val(null).trigger('change');
+            selected_old_estatus_operacion = "";
     } else if (tipoFiltro === "65") {
-       $('#col_motivo_atraso').val(null).trigger('change');
+            selected_old_motivo_atraso = "";
     } else if (tipoFiltro === "66") {
-       $('#col_observaciones').val(null).trigger('change');
+            selected_old_observaciones = "";
     } else if (tipoFiltro === "67") {
-       $('#col_llegada_a_nova').val(null).trigger('change');
+            selected_old_llegada_a_nova = "";
     } else if (tipoFiltro === "68") {
-       $('#col_llegada_a_globe_trade_sd').val(null).trigger('change');
+            selected_old_llegada_a_globe_trade_sd = "";
     } else if (tipoFiltro === "69") {
-       $('#col_archivo_m').val(null).trigger('change');
+            selected_old_archivo_m = "";
     } else if (tipoFiltro === "70") {
-       $('#col_fecha_archivo_m').val(null).trigger('change');
+            selected_old_fecha_archivo_m = "";
     } else if (tipoFiltro === "71") {
-       $('#col_fecha_solicit_manip').val(null).trigger('change');
+            selected_old_fecha_solicit_manip = "";
     } else if (tipoFiltro === "72") {
-       $('#col_fecha_vencim_manip').val(null).trigger('change');
+            selected_old_fecha_vencim_manip = "";
     } else if (tipoFiltro === "73") {
-       $('#col_fecha_confirm_clave_pedim').val(null).trigger('change');
+            selected_old_fecha_confirm_clave_pedim = "";
     } else if (tipoFiltro === "74") {
-       $('#col_fecha_recep_increment').val(null).trigger('change');
+            selected_old_fecha_recep_increment = "";
     } else if (tipoFiltro === "75") {
-       $('#col_t_e').val(null).trigger('change');
+            selected_old_t_e = "";
     } else if (tipoFiltro === "76") {
-       $('#col_fecha_vencim_inbound').val(null).trigger('change');
+            selected_old_fecha_vencim_inbound = "";
     } else if (tipoFiltro === "77") {
-       $('#col_no_bultos').val(null).trigger('change');
+            selected_old_no_bultos = "";
     } else if (tipoFiltro === "78") {
-       $('#col_peso_kg').val(null).trigger('change');
+            selected_old_peso_kg = "";
     } else if (tipoFiltro === "79") {
-       $('#col_transferencia').val(null).trigger('change');
+            selected_old_transferencia = "";
     } else if (tipoFiltro === "80") {
-       $('#col_fecha_inicio_etiquetado').val(null).trigger('change');
+            selected_old_fecha_inicio_etiquetado = "";
     } else if (tipoFiltro === "81") {
-       $('#col_fecha_termino_etiquetado').val(null).trigger('change');
+            selected_old_fecha_termino_etiquetado = "";
     } else if (tipoFiltro === "82") {
-       $('#col_hora_termino_etiquetado').val(null).trigger('change');
+            selected_old_hora_termino_etiquetado = "";
     } else if (tipoFiltro === "83") {
-       $('#col_proveedor').val(null).trigger('change');
+            selected_old_proveedor = "";
     } else if (tipoFiltro === "84") {
-       $('#col_proveedor_carga').val(null).trigger('change');
+            selected_old_proveedor_carga = "";
     } else if (tipoFiltro === "85") {
-       $('#col_fy').val(null).trigger('change');
+            selected_old_fy = "";
     }
+            selected1 = $('#col_referenciaAA').val(selected_old_referenciaAA);
+            selected2 = $('#col_evento').val(selected_old_evento); 
+            selected3 = $('#col_responsable').val(selected_old_responsable);
+            selected4 = $('#col_finalDestination').val(selected_old_final_destination);
+            selected5 = $('#col_brandDivision').val(selected_old_brand_division);
+            selected6 = $('#col_division').val(selected_old_division);
+            selected7 = $('#col_shipmentId').val(selected_old_shipmentId);
+            selected8 = $('#col_container').val(selected_old_containerId);
+            selected9 = $('#col_blAwbPro').val(selected_old_blAwbPro);
+            selected10 = $('#col_loadType').val(selected_old_loadTypeFinal);
+            selected11 = $('#col_quantity').val(selected_old_quantity);
+            selected12 = $('#col_pod').val(selected_old_pod);
+            selected13 = $('#col_estDepartFromPol').val(selected_old_estDepartFromPol);
+            selected14 = $('#col_etaRealPortOfDischarge').val(selected_old_etaRealPortOfDischarge);
+            selected15 = $('#col_estEtaDc').val(selected_old_estEtaDc);
+            selected16 = $('#col_inboundNotification').val(selected_old_inboundNotification);
+            selected17 = $('#col_pol').val(selected_old_pol);
+            selected18 = $('#col_aa').val(selected_old_aa);
+            selected19 = $('#col_fechaMesVenta').val(selected_old_fechaMesVenta);
+            selected20 = $('#col_prioridad').val(selected_old_prioridad);
+            selected21 = $('#col_pais_origen').val(selected_old_pais_origen);
+            selected22 = $('#col_size_container').val(selected_old_size_container);
+            selected23 = $('#col_valor_usd').val(selected_old_valor_usd);
+            selected24 = $('#col_eta_port_discharge').val(selected_old_eta_port_discharge);
+            selected25 = $('#col_agente_aduanal').val(selected_old_agente_aduanal);
+            selected26 = $('#col_pedimento_a1').val(selected_old_pedimento_a1);
+            selected27 = $('#col_pedimento_r1_1er').val(selected_old_pedimento_r1_1er);
+            selected28 = $('#col_motivo_rectificacion_1er').val(selected_old_motivo_rectificacion_1er);
+            selected29 = $('#col_pedimento_r1_2do').val(selected_old_pedimento_r1_2do);
+            selected30 = $('#col_motivo_rectificacion_2do').val(selected_old_motivo_rectificacion_2do);
+            selected31 = $('#col_fecha_recepcion_doc').val(selected_old_fecha_recepcion_doc);
+            selected32 = $('#col_recinto').val(selected_old_recinto);
+            selected33 = $('#col_naviera').val(selected_old_naviera);
+            selected34 = $('#col_buque').val(selected_old_buque);
+            selected35 = $('#col_fecha_revalidacion').val(selected_old_fecha_revalidacion);
+            selected36 = $('#col_fecha_previo_origen').val(selected_old_fecha_previo_origen);
+            selected37 = $('#col_fecha_previo_destino').val(selected_old_fecha_previo_destino);
+            selected38 = $('#col_fecha_resultado_previo').val(selected_old_fecha_resultado_previo);
+            selected39 = $('#col_proforma_final').val(selected_old_proforma_final);
+            selected40 = $('#col_permiso').val(selected_old_permiso);
+            selected41 = $('#col_fecha_envio').val(selected_old_fecha_envio);
+            selected42 = $('#col_fecha_recepcion_perm').val(selected_old_fecha_recepcion_perm);
+            selected43 = $('#col_fecha_activacion_perm').val(selected_old_fecha_activacion_perm);
+            selected44 = $('#col_fecha_permisos_aut').val(selected_old_fecha_permisos_aut);
+            selected45 = $('#col_co_pref_arancelaria').val(selected_old_co_pref_arancelaria);
+            selected46 = $('#col_aplic_pref_arancelaria').val(selected_old_aplic_pref_arancelaria);
+            selected47 = $('#col_req_uva').val(selected_old_req_uva);
+            selected48 = $('#col_req_ca').val(selected_old_req_ca);
+            selected49 = $('#col_fecha_recepcion_ca').val(selected_old_fecha_recepcion_ca);
+            selected50 = $('#col_num_constancia_ca').val(selected_old_num_constancia_ca);
+            selected51 = $('#col_monto_ca').val(selected_old_monto_ca);
+            selected52 = $('#col_fecha_doc_completos').val(selected_old_fecha_doc_completos);
+            selected53 = $('#col_fecha_pago_pedimento').val(selected_old_fecha_pago_pedimento);
+            selected54 = $('#col_fecha_solicitud_transporte').val(selected_old_fecha_solicitud_transporte);
+            selected55 = $('#col_fecha_modulacion').val(selected_old_fecha_modulacion);
+            selected56 = $('#col_modalidad').val(selected_old_modalidad);
+            selected57 = $('#col_resultado_modulacion').val(selected_old_resultado_modulacion);
+            selected58 = $('#col_fecha_reconocimiento').val(selected_old_fecha_reconocimiento);
+            selected59 = $('#col_fecha_liberacion').val(selected_old_fecha_liberacion);
+            selected60 = $('#col_sello_origen').val(selected_old_sello_origen);
+            selected61 = $('#col_sello_final').val(selected_old_sello_final);
+            selected62 = $('#col_fecha_retencion_aut').val(selected_old_fecha_retencion_aut);
+            selected63 = $('#col_fecha_liberacion_aut').val(selected_old_fecha_liberacion_aut);
+            selected64 = $('#col_estatus_operacion').val(selected_old_estatus_operacion);
+            selected65 = $('#col_motivo_atraso').val(selected_old_motivo_atraso);
+            selected66 = $('#col_observaciones').val(selected_old_observaciones);
+            selected67 = $('#col_llegada_a_nova').val(selected_old_llegada_a_nova);
+            selected68 = $('#col_llegada_a_globe_trade_sd').val(selected_old_llegada_a_globe_trade_sd);
+            selected69 = $('#col_archivo_m').val(selected_old_archivo_m);
+            selected70 = $('#col_fecha_archivo_m').val(selected_old_fecha_archivo_m);
+            selected71 = $('#col_fecha_solicit_manip').val(selected_old_fecha_solicit_manip);
+            selected72 = $('#col_fecha_vencim_manip').val(selected_old_fecha_vencim_manip);
+            selected73 = $('#col_fecha_confirm_clave_pedim').val(selected_old_fecha_confirm_clave_pedim);
+            selected74 = $('#col_fecha_recep_increment').val(selected_old_fecha_recep_increment);
+            selected75 = $('#col_t_e').val(selected_old_t_e);
+            selected76 = $('#col_fecha_vencim_inbound').val(selected_old_fecha_vencim_inbound);
+            selected77 = $('#col_no_bultos').val(selected_old_no_bultos);
+            selected78 = $('#col_peso_kg').val(selected_old_peso_kg);
+            selected79 = $('#col_transferencia').val(selected_old_transferencia);
+            selected80 = $('#col_fecha_inicio_etiquetado').val(selected_old_fecha_inicio_etiquetado);
+            selected81 = $('#col_fecha_termino_etiquetado').val(selected_old_fecha_termino_etiquetado);
+            selected82 = $('#col_hora_termino_etiquetado').val(selected_old_hora_termino_etiquetado);
+            selected83 = $('#col_proveedor').val(selected_old_proveedor);
+            selected84 = $('#col_proveedor_carga').val(selected_old_proveedor_carga);
+            selected85 = $('#col_fy').val(selected_old_fy);
+
+    await consultarCustoms(idAgenteAduanal, tipoFiltro, 
+                            selected1,
+                            selected2,
+                            selected3,
+                            selected4,
+                            selected5,
+                            selected6,
+                            selected7,
+                            selected8,
+                            selected9,
+                            selected10,
+                            selected11,
+                            selected12,
+                            selected13,
+                            selected14,
+                            selected15,
+                            selected16,
+                            selected17,
+                            selected18,
+                            selected19,
+                            selected20,
+                            selected21,
+                            selected22,
+                            selected23,
+                            selected24,
+                            selected25,
+                            selected26,
+                            selected27,
+                            selected28,
+                            selected29,
+                            selected30,
+                            selected31,
+                            selected32,
+                            selected33,
+                            selected34,
+                            selected35,
+                            selected36,
+                            selected37,
+                            selected38,
+                            selected39,
+                            selected40,
+                            selected41,
+                            selected42,
+                            selected43,
+                            selected44,
+                            selected45,
+                            selected46,
+                            selected47,
+                            selected48,
+                            selected49,
+                            selected50,
+                            selected51,
+                            selected52,
+                            selected53,
+                            selected54,
+                            selected55,
+                            selected56,
+                            selected57,
+                            selected58,
+                            selected59,
+                            selected60,
+                            selected61,
+                            selected62,
+                            selected63,
+                            selected64,
+                            selected65,
+                            selected66,
+                            selected67,
+                            selected68,
+                            selected69,
+                            selected70,
+                            selected71,
+                            selected72,
+                            selected73,
+                            selected74,
+                            selected75,
+                            selected76,
+                            selected77,
+                            selected78,
+                            selected79,
+                            selected80,
+                            selected81,
+                            selected82,
+                            selected83,
+                            selected84,
+                            selected85);  
+    */
 }
 /*--------------------------------------------------------------------------
  FUNCIONES - CONSULTA HISTORICO SEMAFORO
@@ -2847,7 +3300,8 @@ function show_permiso(i) {
 }
 
 function hide_permiso(data) {
-
+    contModals;
+    
     if (data == "Si") {
         check1_permiso = true;
         check2_permiso = false;
@@ -2861,7 +3315,6 @@ function hide_permiso(data) {
     document.getElementById("permiso1").checked = check1_permiso;
     document.getElementById("permiso2").checked = check2_permiso;
 
-    contModals;
     document.getElementById("permiso[" + contModals + "]").innerHTML = data;
     cleanPermiso(data, contModals);
     $("#modal_permiso").modal("hide");
@@ -2906,7 +3359,7 @@ function hide_fecha_activacion_perm(data) {
     contModals;
     document.getElementById("fecha_activacion_perm[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_activacion_perm").modal("hide");
-    parametrizacionValoresEvento("fecha_activacion_perm",contModals); 
+    //parametrizacionValoresEvento("fecha_activacion_perm",contModals); 
 }
 
 function show_fecha_permisos_aut(data, i) {
@@ -3067,17 +3520,20 @@ function show_req_ca(i) {
 
 function hide_req_ca(data) {
 
+    contModals;
+    
     if (data == "Si") {
         check1_req_ca = true;
         check2_req_ca = false;
     } else if (data == "No") {
         check1_req_ca = false;
         check2_req_ca = true;
+        
+        toggleEditable('fecha_recepcion_ca',contModals);
     }
     document.getElementById("req_ca1").checked = check1_req_ca;
     document.getElementById("req_ca2").checked = check2_req_ca;
-
-    contModals;
+    
     $("#modal_req_ca").modal("hide");
     document.getElementById("req_ca[" + contModals + "]").innerHTML = data;
     cleanRequerimientoCA(data, contModals);
@@ -3487,7 +3943,7 @@ function validarNumero(event) {
     contenido = contenido.replace(',', '.');
 
     // Validar si el contenido es un número o un número decimal
-    if (/^(\d*\.?\d+|\d+\.?\d*)$/.test(contenido)) {
+    if (/^(\d+(\.\d+)?|\d+-\d+)$/.test(contenido)) {
         // Si es un número o un número decimal válido, permitir que permanezca en el TD
         event.target.style.color = 'black';
     } else {
@@ -3502,7 +3958,7 @@ function validarTextoAlfanumerico(td,namecelda,cont) {
   // Obtener el contenido actual del TD
   let contenido = td.innerText;
   
-  if (/^[a-zA-Z0-9\s]+$/.test(contenido)) {
+  if (/^[a-zA-Z0-9\s.]+$/.test(contenido)) {
     // Si es alfanumérico, puedes realizar acciones adicionales
     console.log("Contenido del TD:", contenido);
     td.style.color = 'black';
@@ -3514,6 +3970,23 @@ function validarTextoAlfanumerico(td,namecelda,cont) {
   }
   
   parametrizacionValoresEvento(namecelda,cont); 
+  
+}
+
+function validarTextoAlfanumericoSnParametrizacion(td) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s.]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
   
 }
 
@@ -3561,7 +4034,7 @@ function validarTextoParametrizacion(td,namecelda,cont) {
   // Obtener el contenido actual del TD
   let contenido = td.innerText;
   
-  if (/^[a-zA-Z\s]+$/.test(contenido)) {
+  if (/^[a-zA-Z\u00D1\u00F1\s-]+$/.test(contenido)) {
     // Si es solo texto, puedes realizar acciones adicionales
     console.log("Contenido del TD:", contenido);
     td.style.color = 'black';
@@ -3591,10 +4064,27 @@ function validarTexto(td) {
   }
 }
 
-function formatoNumero(event,i) {
+function validarTextoCheckbox(event) {
+  
+    // Obtener el contenido actual de la celda
+    var contenido = event.target.innerText;
+     
+    // Limitar la longitud a dos caracteres
+    var dosCaracteres = contenido.slice(0, 2);
+    
+    // Validación Caracteres Texto
+    if (/^[a-zA-Z\s]+$/.test(contenido)) {
+       // Actualizar el contenido de la celda con los dos caracteres
+       event.target.innerText = dosCaracteres;
+    }
+    
+}
+
+function formatoNumero(event,i,nameCelda) {
     
       cleanPedimento_r1_1er(i);
       cleanPedimento_r1_2do(i);
+      let resultado = "";
       
       // Obtener el código ASCII de la tecla presionada
       var charCode = (event.which) ? event.which : event.keyCode;
@@ -3618,10 +4108,17 @@ function formatoNumero(event,i) {
       if (numeroFiltrado.length > 1) {
         numeroFiltrado = numeroFiltrado.replace(/(\d{2})(\d{2})(\d{4})(\d{6})/, '$1 $2 $3 $4');
       }
-
+      
+      let respuesta = document.getElementById(nameCelda+"[" + i + "]").innerHTML;
+      
+      if(respuesta.length <=15){ 
+         resultado = numeroFiltrado.trim();  
+      }else{
+         resultado = respuesta.substring(0, respuesta.length - 1);
+      }
       // Actualizar el contenido de la celda con el número filtrado
-      event.target.innerText = numeroFiltrado.trim();
-
+      event.target.innerText = resultado;
+         
       // Posicionar el cursor al final del contenido
       var range = document.createRange();
       var selection = window.getSelection();
@@ -3881,7 +4378,7 @@ function parametrizacionValoresEvento(name_celda, contador) {
 
 }
 
-function handlePaste(event) {
+/*function handlePaste(event) {
     // Evitar el comportamiento predeterminado de pegado
     event.preventDefault();
 
@@ -3900,4 +4397,170 @@ function handlePaste(event) {
 
     // Actualizar la celda con el texto manipulado (si es necesario)
     event.target.innerText = pastedData;
+}*/
+
+function handlePasteAlfanumerico(event) {
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+    // Realizar manipulaciones con el texto pegado según tus necesidades
+    // Aquí puedes agregar lógica para analizar y controlar la información
+
+    // Filtrar caracteres no alfabeticos
+    var pastedData = contenido.replace(/[^A-Za-z0-9]/g, '');
+   
+    // Ejemplo: Imprimir el texto pegado en la consola
+    console.log("Texto pegado:", pastedData);
+
+    // Puedes realizar más manipulaciones aquí según tus requisitos
+    // ...
+
+    // Actualizar la celda con el texto manipulado (si es necesario)
+    event.target.innerText = pastedData;
 }
+
+function handlePasteText(event) {
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+    // Realizar manipulaciones con el texto pegado según tus necesidades
+    // Aquí puedes agregar lógica para analizar y controlar la información
+
+    // Filtrar caracteres no alfabeticos
+    var pastedData = contenido.replace(/[^A-Za-z]/g, '');
+   
+    // Ejemplo: Imprimir el texto pegado en la consola
+    console.log("Texto pegado:", pastedData);
+
+    // Puedes realizar más manipulaciones aquí según tus requisitos
+    // ...
+
+    // Actualizar la celda con el texto manipulado (si es necesario)
+    event.target.innerText = pastedData;
+}
+
+function handlePasteText2Caracteres(event) {
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+    // Realizar manipulaciones con el texto pegado según tus necesidades
+    // Aquí puedes agregar lógica para analizar y controlar la información
+
+    // Filtrar caracteres no alfabeticos
+    var pastedData = contenido.replace(/[^A-Za-z]/g, '');
+    //let data = pastedData.slice(0, 2);
+   
+    // Ejemplo: Imprimir el texto pegado en la consola
+    console.log("Texto pegado:", pastedData);
+
+    // Puedes realizar más manipulaciones aquí según tus requisitos
+    // ...
+
+    // Actualizar la celda con el texto manipulado (si es necesario)
+    event.target.innerText = pastedData;
+}
+
+function handlePasteNumber(event) {
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+    // Realizar manipulaciones con el texto pegado según tus necesidades
+    // Aquí puedes agregar lógica para analizar y controlar la información
+    
+    // Filtrar caracteres no numéricos
+     var pastedData = contenido.replace(/[\D\s]/g, '');
+
+    // Ejemplo: Imprimir el texto pegado en la consola
+    console.log("Texto pegado:", pastedData);
+
+    // Puedes realizar más manipulaciones aquí según tus requisitos
+    // ...
+
+    // Actualizar la celda con el texto manipulado (si es necesario)
+    event.target.innerText = pastedData;
+}
+
+
+function handlePasteNumberPedimento(event,i,nameCelda) {
+      
+      document.getElementById(nameCelda+"[" + i + "]").innerHTML = "";
+      
+      // Evitar el comportamiento predeterminado de pegado
+      event.preventDefault();
+      
+      cleanPedimento_r1_1er(i);
+      cleanPedimento_r1_2do(i);
+      let resultado = "";
+      
+      // Obtener el código ASCII de la tecla presionada
+      var charCode = (event.which) ? event.which : event.keyCode;
+
+      // Validar que solo se permitan números y el carácter de retroceso
+      if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 8) {
+        event.preventDefault(); // Evitar el comportamiento predeterminado de pegado
+        return false;
+      }
+      
+      // Obtener el texto pegado
+      const clipboardData = event.clipboardData || window.clipboardData;
+      
+      // Obtener el contenido actual de la celda
+      const contenido = clipboardData.getData('text/plain');
+
+      // Filtrar caracteres no numéricos
+      var numeroFiltrado = contenido.replace(/\D/g, '');
+
+      // Limitar la longitud total a 16 caracteres
+      numeroFiltrado = numeroFiltrado.slice(0, 17);
+
+      // Aplicar el formato XX XX XXXX XXXXXXXX
+      if (numeroFiltrado.length > 1) {
+        numeroFiltrado = numeroFiltrado.replace(/(\d{2})(\d{2})(\d{4})(\d{6})/, '$1 $2 $3 $4');
+      }
+      
+      let respuesta = document.getElementById(nameCelda+"[" + i + "]").innerHTML;
+      
+      if(respuesta.length <=15){ 
+         resultado = numeroFiltrado.trim();  
+      }else{
+         resultado = respuesta.substring(0, respuesta.length - 1);
+      }
+      // Actualizar el contenido de la celda con el número filtrado
+      event.target.innerText = resultado;
+         
+      // Posicionar el cursor al final del contenido
+      var range = document.createRange();
+      var selection = window.getSelection();
+      range.selectNodeContents(event.target);
+      range.collapse(false);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      return true;  
+}
+
+  // Función para habilitar o deshabilitar la edición
+  function toggleEditable(name_celda,i) {
+     
+      let celda = name_celda+'['+i+']';
+      console.log(celda);
+      
+    const cell = document.querySelector(celda);
+    cell.setAttribute("contentEditable", "true");
+  }
