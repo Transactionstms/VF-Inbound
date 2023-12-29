@@ -630,6 +630,10 @@
         <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <!-- Validaciones Celdas -->
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
+        <!-- Elementos Html Celdas -->
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
         <!-- Upload/Download Excel -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
         <!-- Multiselect -->
