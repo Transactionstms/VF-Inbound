@@ -75,7 +75,14 @@
         </div>
         <script src="../lib/js/loader.js"></script>
 
-        <!-- navbar-->
+        <!-- 
+        PERMITIR BUSQUEDA POR SHIPMENTS HASTA 20 SEPARADOS POR ESPACIOS
+        CONTENEDOR HASTA 6 
+        EVENTOS HASTA 6 
+        
+        
+        PONER PRIMERO EL EVENTO Y AL ULTIMO EL SHIPMNET
+        -->
         <header class="header"></header>
 
         <div class="d-flex align-items-stretch">
@@ -109,18 +116,22 @@
                                                         <option value="3">FCL/LCL</option>
                                                     </select>
                                                 </div>-->
-                                                <div class="mb-4">
-                                                    <label class="form-label">Shipment</label>
-                                                    <input type="text" class="form-control" id="shipment" name="shipment"  >
+                                               <div class="mb-4"> 
+                                                    <label class="form-label">Evento</label>
+                                                    <input type="text" class="form-control" id="evento" name="evento"  >
                                                 </div>
+                                             
+                                            
                                                 <div class="mb-4">
                                                     <label class="form-label">Contenedor</label>
                                                     <input type="text" class="form-control" id="container" name="container"  >
                                                 </div>
-                                                <div class="mb-4"> 
-                                                    <label class="form-label">Evento</label>
-                                                    <input type="text" class="form-control" id="evento" name="evento"  >
+                                             
+                                                 <div class="mb-4">
+                                                    <label class="form-label">Shipment</label>
+                                                    <input type="text" class="form-control" id="shipment" name="shipment"  >
                                                 </div>
+                                              
                                                 <!--button-->
                                                 <button class="btn btn-primary text-nowrap" type="button"  onclick="enviar()">Enviar</button>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

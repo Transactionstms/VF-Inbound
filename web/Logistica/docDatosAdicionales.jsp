@@ -73,6 +73,24 @@
                 }
             }
             
+            
+              String tunidad = "";
+            String sbuSQL23tu = "select UTRANSPORTE_ID, UTRANSPORTE_DESC from ONTMS_UNIDAD_TRANSPORTE";
+            if (db.doDB(sbuSQL23tu)) {
+                for (String[] row : db.getResultado()) {
+                    tunidad += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                }
+            }
+            
+            
+               String tcarga = "";
+            String sbuSQL23tc = "select ID_TIPO_CARGA, TIPO_CARGA from TRA_INB_TIPO_CARGA";
+            if (db.doDB(sbuSQL23tc)) {
+                for (String[] row : db.getResultado()) {
+                    tcarga += "<option value='" + row[1] + "' >" + row[1] + "</option>";
+                }
+            }
+            
             String opciones = request.getParameter("op");
             String sql = " "
                     + " SELECT DISTINCT"
@@ -125,13 +143,13 @@
                                                     </div>
 
                                                     <div class="col-md-4 mb-4">
-                                                        <label class="form-label" >Fecha de enrampe</label>
+                                                        <label class="form-label" >Fecha de salida</label>
                                                         <div class="input-group date" id="datepicker">
                                                             <input type="text" name="f_enrampe" id="f_enrampe" class="datepicker form-control"  autocomplete="off" size="10" required="required" >                                                        </div>
                                                     </div>
 
                                                     <div class="col-md-4 mb-4">
-                                                        <label class="form-label" >Fecha inicio de entrega</label>
+                                                        <label class="form-label" >Fecha de entrega</label>
                                                         <div class="input-group date" id="datepicker">
                                                             <input type="text" name="f_inicio" id="f_inicio" class="datepicker form-control"  autocomplete="off" size="10" required="required" >
                                                         </div>
@@ -141,7 +159,7 @@
                                                         <label class="form-label" >Custodia</label>
                                                         <select class="form-select" id="custodia" >
                                                             <option selected value="0">Elija una opcion</option>
-                                                            <%=custodia%>
+                                                          
                                                         </select>
                                                     </div>-->
 
@@ -157,14 +175,7 @@
                                                 <label class="form-label" for="tipoUnidad">Tipo de unidad</label>
                                                 <select class="form-select" id="tipoUnidad" aria-label="Default select example">
                                                     <option value="0">Elija una opcion</option>
-                                                    <option value="1">	CAM 1.5 TONS</option>
-                                                    <option value="2">	CAM 3.5 TONS</option>
-                                                    <option value="3">	CAM 5.0 TONS</option>
-                                                    <option value="4">	RABON</option>
-                                                    <option value="5">	TORTHON</option>
-                                                    <option value="6">	MUDANZA</option>
-                                                    <option value="7">	TRAILER</option>
-                                                    <option value="8">	CAM 0.5 TONS</option> 
+                                                     <%=tunidad%>
                                                 </select>
                                             </div>
 
@@ -190,8 +201,12 @@
                                                 <input type="text" class="form-control" id="selloCaja" autocomplete="false">
                                             </div>
                                             <div class="col-md-6 mb-4">
-                                                <label class="form-label" for="relacionEntrega">Relacion de entrega</label>
-                                                <input type="text" class="form-control" id="relacionEntrega" autocomplete="false">
+                                                <label class="form-label" for="relacionEntrega">Tipo de carga</label>
+                                                
+                                                 <select class="form-select" id="relacionEntrega" aria-label="..">
+                                                    <option value="0">Elija una opcion</option>
+                                                     <%=tcarga%>
+                                                </select>
                                             </div>
 
 

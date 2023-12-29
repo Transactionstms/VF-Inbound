@@ -114,6 +114,34 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 card-header justify-content-between">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                   <button class="btn btn-primary " onclick="marcarTodosLosChecks()">Marcar Todos</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                   
+    <script>
+        let ban=false;
+        function marcarTodosLosChecks() {
+            ban=!ban;
+        
+            if(ban){
+            var checkboxes = document.querySelectorAll('table input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = true;
+            });
+        }else{
+                   var checkboxes = document.querySelectorAll('table input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+                
+            }
+        }
+    </script>
                                     <div class="card-body">
                                         <form id="form1" name="uploadFileFormData1">
                                              <br>
