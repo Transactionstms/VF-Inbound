@@ -147,7 +147,7 @@
                                              <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 100%;">
                                              
-                                                <table  id="example" className="main-table">
+                                                <table   className="main-table table border">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col" class="font-titulo">Seleccionar <strong style="color:red">*</strong></th>
