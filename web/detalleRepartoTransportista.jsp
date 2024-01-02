@@ -98,7 +98,7 @@ System.out.println("sql***********"+sql2);
             <div class="row">
                 <div class="col">
                     <p class="h3">Guía de embarque <%=titulo%> </p>
-                    <p> <button type="button" onclick="pantallaCom( )" class="btn btn-primary">regresar</button></p>
+                    <p> <button type="button" onclick="pantallaCom( )" class="btn btn-primary">Regresar</button></p>
                      <div class="table-responsive" style="overflow: auto">  
                         <div class="tableFixHead">
 

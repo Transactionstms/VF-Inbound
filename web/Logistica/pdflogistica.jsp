@@ -822,15 +822,23 @@
                            Email correot = new Email();
                            
                             String email = request.getParameter("email");
+                            String emailNompdf ="";
                             String EMBARQUE_AGRUPADOR = request.getParameter("EMBARQUE_AGRUPADOR");
                             String LTRANSPORTE_ID = request.getParameter("LTRANSPORTE_ID");
                             String nameLTransporte = request.getParameter("nameLTransporte");
                             boolean correoPdf=true;
                             
+                            
+                             if (db.doDB("select DISTINCT EMBARQUE_ID,EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE where EMBARQUE_AGRUPADOR='"+agrupador+"'")) {
+                            for (String[] row51 : db.getResultado()) {
+                                emailNompdf  = row51[0];
+                            }
+                        }
+                             
                          
                             
                          if(email.equals("t")){   
-                           correoPdf=correot.alertaLiberacionV2(bytes, agrupador, LTRANSPORTE_ID, nameLTransporte,request.getContextPath());
+                           correoPdf=correot.alertaLiberacionV2(bytes, emailNompdf, LTRANSPORTE_ID, nameLTransporte,request.getContextPath());
                          }
                           String bc = request.getParameter("bc");
                          if(bc.equals("1")){  

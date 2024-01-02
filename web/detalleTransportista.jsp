@@ -336,7 +336,7 @@
 
                     }
 
- function muestraRepartos2(agrupador, gde1) {
+ function muestraRepartos2(agrupador, gde1,val3,val4,val5,val6) {
 console.log(agrupador)
                         fetch('<%=request.getContextPath()%>/consultarRepartosTransportista?agrupador=' + agrupador, {
                             method: 'POST',

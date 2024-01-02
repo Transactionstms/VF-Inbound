@@ -74,13 +74,13 @@
                                                 <table id="example" class="display" style="width:100%">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" class="font-titulo">Embarque  </th>	
-                                                            <th scope="col" class="font-titulo">Fecha Enrampe  </th>
-                                                            <th scope="col" class="font-titulo">Inicio  </th>
-                                                            <th scope="col" class="font-titulo">Transportista  </th>
-                                                            <th scope="col" class="font-titulo">CFDI  </th>
-                                                            <th scope="col" class="font-titulo">Planeacion  </th>
-                                                            <th scope="col" class="font-titulo">Confirmacion  </th>
+                                                            <th scope="col" class="font-titulo">Embarque         </th>	
+                                                            <th scope="col" class="font-titulo">Fecha de carga   </th>
+                                                            <th scope="col" class="font-titulo">Fecha de entrega </th>
+                                                            <th scope="col" class="font-titulo">Transportista    </th>
+                                                            <th scope="col" class="font-titulo">CFDI             </th>
+                                                            <th scope="col" class="font-titulo">Planeacion       </th>
+                                                            <th scope="col" class="font-titulo">Confirmacion     </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="cuerpo">
