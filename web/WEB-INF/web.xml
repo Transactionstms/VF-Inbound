@@ -958,6 +958,10 @@
         <servlet-name>consultarRepartosTransportista</servlet-name>
         <servlet-class>com.onest.train.consultas.consultarRepartosTransportista</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarTransportista</servlet-name>
+        <servlet-class>com.onest.train.consultas.AgregarTransportista</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1910,6 +1914,10 @@
     <servlet-mapping>
         <servlet-name>consultarRepartosTransportista</servlet-name>
         <url-pattern>/consultarRepartosTransportista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarTransportista</servlet-name>
+        <url-pattern>/AgregarTransportista</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
