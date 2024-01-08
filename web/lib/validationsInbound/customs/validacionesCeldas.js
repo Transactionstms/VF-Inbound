@@ -14,7 +14,7 @@ function validarNumero(event) {
     let resultado = "";
     
     // Reemplazar comas por puntos para asegurar el formato decimal
-    resultado = contenido.replace(',', '.');
+    resultado = contenido.replace(',', '');
 
     // Validar si el contenido es un número o un número decimal
     if (patron.test(resultado)) {
@@ -70,11 +70,69 @@ function validarTextoAlfanumericoMotivoAtraso(td,namecelda,cont) {
   
 }
 
+
+function validarTextoAlfanumericoReferenciaAA(td,namecelda,cont) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s.-]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+  
+  parametrizacionValoresEvento(namecelda,cont); 
+  
+}
+
+function validarTextoAlfanumericoMotivoRectificacion(td,namecelda,cont) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s./-]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+  
+  parametrizacionValoresEvento(namecelda,cont); 
+  
+}
+
+function validarTextoAlfanumericoObservaciones(td,namecelda,cont) {
+  // Obtener el contenido actual del TD
+  let contenido = td.innerText;
+  
+  if (/^[a-zA-Z0-9\s./-]+$/.test(contenido)) {
+    // Si es alfanumérico, puedes realizar acciones adicionales
+    console.log("Contenido del TD:", contenido);
+    td.style.color = 'black';
+  } else {
+    // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+    console.log("Por favor, ingrese solo texto alfanumérico.");
+    td.innerText = '';
+    td.style.color = 'red';
+  }
+  
+  parametrizacionValoresEvento(namecelda,cont); 
+  
+}
+
 function validarTextoAlfanumerico(td,namecelda,cont) {
   // Obtener el contenido actual del TD
   let contenido = td.innerText;
   
-  if (/^[a-zA-Z0-9\s.]+$/.test(contenido)) {
+  if (/^[a-zA-Z0-9\s.-]+$/.test(contenido)) {
     // Si es alfanumérico, puedes realizar acciones adicionales
     console.log("Contenido del TD:", contenido);
     td.style.color = 'black';
@@ -184,9 +242,8 @@ function validarTextoCheckbox(event) {
 
 function formatoNumero(event,i,nameCelda) {
     
-      // Evitar el comportamiento predeterminado de pegado
-      event.preventDefault();
-   
+      cleanPedimento_r1_1er(i);
+      cleanPedimento_r1_2do(i);
       let resultado = "";
       
       // Obtener el código ASCII de la tecla presionada
@@ -202,7 +259,7 @@ function formatoNumero(event,i,nameCelda) {
       var valor = event.target.innerText;
 
       // Filtrar caracteres no numéricos
-      var numeroFiltrado = valor.replace(/\D/g, '');
+      var numeroFiltrado = valor;
 
       // Limitar la longitud total a 16 caracteres
       numeroFiltrado = numeroFiltrado.slice(0, 14);
@@ -229,12 +286,10 @@ function formatoNumero(event,i,nameCelda) {
       range.collapse(false);
       selection.removeAllRanges();
       selection.addRange(range);
-      
-      cleanPedimento_r1_1er(i);
-      cleanPedimento_r1_2do(i);
 
       return true;  
 }
+
 
 function formatoFecha(event) {
     
@@ -274,6 +329,50 @@ function handlePasteAlfanumericoMotivoAtraso(event) {
     const contenido = clipboardData.getData('text/plain');
 
   if (/^[a-zA-Z0-9\s.\/ñÑ]+$/.test(contenido)) {
+      // Actualizar la celda con el texto manipulado (si es necesario)
+      event.target.innerText = contenido;
+      td.style.color = 'black';
+  } else {
+      // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+      console.log("Por favor, ingrese solo texto alfanumérico.");
+      td.innerText = '';
+      td.style.color = 'red';
+  }
+  
+}
+
+function handlePasteAlfanumericoMotivoRectificacion(event) {
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+  if (/^[a-zA-Z0-9\s./-]+$/.test(contenido)) {
+      // Actualizar la celda con el texto manipulado (si es necesario)
+      event.target.innerText = contenido;
+      td.style.color = 'black';
+  } else {
+      // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+      console.log("Por favor, ingrese solo texto alfanumérico.");
+      td.innerText = '';
+      td.style.color = 'red';
+  }
+  
+}
+
+function handlePasteAlfanumericoObservaciones(event) {
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+
+  if (/^[a-zA-Z0-9\s./-]+$/.test(contenido)) {
       // Actualizar la celda con el texto manipulado (si es necesario)
       event.target.innerText = contenido;
       td.style.color = 'black';
@@ -358,11 +457,15 @@ function handlePasteNumber(event) {
     
   var clipboardData = event.clipboardData || window.clipboardData;
   var pastedData = clipboardData.getData('text');
-
+  let resultado = "";
+  
   var regex = /^[0-9]+([.])?([0-9]+)?$/;
-
-  if (regex.test(pastedData)) {
-    event.target.innerText = pastedData; 
+  
+  // Reemplazar comas por puntos para asegurar el formato decimal
+  resultado = pastedData.replace(',', '');
+  
+  if (regex.test(resultado)) {
+    event.target.innerText = resultado; 
     console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
