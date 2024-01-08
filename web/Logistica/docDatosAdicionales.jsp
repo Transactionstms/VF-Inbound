@@ -41,7 +41,12 @@
             Usuario root = (Usuario) ownsession.getAttribute("login.root");
             int usr = root.getId();
             String transportista = "";
-            String sbuSQL = "select LTRANSPORTE_ID, LTRANSPORTE_NOMBRE from tra_inb_linea_transporte";
+            
+            String sbuSQL = " SELECT DISTINCT "
+                          + " tilt.ltransporte_id, "
+                          + " UPPER(tilt.ltransporte_nombre) "
+                          + " FROM tra_inb_linea_transporte tilt "
+                          + " WHERE tilt.user_nid = '"+usr+"' ";
             if (db.doDB(sbuSQL)) {
                 for (String[] row : db.getResultado()) {
                     transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
@@ -110,11 +115,7 @@
 
 
     %>
-
     <body>
-
-
-
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid ">
@@ -136,8 +137,7 @@
 
                                                     <div class="col-md-4 mb-4">
                                                         <label class="form-label" >Transportista</label>
-                                                        <select class="form-select" id="tranporte" >
-                                                            <option selected value="" >Elija una opcion</option>
+                                                        <select class="form-select" id="tranporte">
                                                             <%=transportista%>
                                                         </select>
                                                     </div>
