@@ -152,11 +152,9 @@ function hide_permiso(data) {
         check2_permiso = false;
     } else if (data == "No") {
         check1_permiso = false;
-        check2_permiso = true;
-    } else {
-        check1_permiso = false;
-        check2_permiso = false;
+        check2_permiso = true;   
     }
+    
     document.getElementById("permiso1").checked = check1_permiso;
     document.getElementById("permiso2").checked = check2_permiso;
 
@@ -165,11 +163,20 @@ function hide_permiso(data) {
     $("#modal_permiso").modal("hide");
 }
 
-function show_fecha_envio(data, i) {
-    $("#modal_fecha_envio").modal("show");
-    loadJsPicker();
-    document.getElementById("fecha_envio").value = data;
-    contModals = i;
+function show_fecha_envio(data, nameCelda, i) {
+    
+    let resultado = blocked_cell('permiso',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        $("#modal_fecha_envio").modal("show");
+        toggleEdit(nameCelda,i);
+
+        loadJsPicker();
+        document.getElementById("fecha_envio").value = data;
+        contModals = i;
+    }
 }
 
 function hide_fecha_envio(data) {
@@ -179,11 +186,20 @@ function hide_fecha_envio(data) {
     //parametrizacionValoresEvento("fecha_envio",contModals); 
 }
 
-function show_fecha_recepcion_perm(data, i) {
-    $("#modal_fecha_recepcion_perm").modal("show");
-    loadJsPicker();
-    document.getElementById("fecha_recepcion_perm").value = data;
-    contModals = i;
+function show_fecha_recepcion_perm(data, nameCelda, i) {
+    
+    let resultado = blocked_cell('permiso',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        $("#modal_fecha_recepcion_perm").modal("show");
+        toggleEdit(nameCelda,i);
+
+        loadJsPicker();
+        document.getElementById("fecha_recepcion_perm").value = data;
+        contModals = i;
+    }
 }
 
 function hide_fecha_recepcion_perm(data) {
@@ -193,11 +209,21 @@ function hide_fecha_recepcion_perm(data) {
     //parametrizacionValoresEvento("fecha_recepcion_perm",contModals); 
 }
 
-function show_fecha_activacion_perm(data, i) {
-    $("#modal_fecha_activacion_perm").modal("show");
-    loadJsPicker();
-    document.getElementById("fecha_activacion_perm").value = data;
-    contModals = i;
+function show_fecha_activacion_perm(data, nameCelda, i) {
+    
+    let resultado = blocked_cell('permiso',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        $("#modal_fecha_activacion_perm").modal("show");
+        toggleEdit(nameCelda,i);
+
+        loadJsPicker();
+        document.getElementById("fecha_activacion_perm").value = data;
+        contModals = i;
+    }
+    
 }
 
 function hide_fecha_activacion_perm(data) {
@@ -207,11 +233,20 @@ function hide_fecha_activacion_perm(data) {
     //parametrizacionValoresEvento("fecha_activacion_perm",contModals); 
 }
 
-function show_fecha_permisos_aut(data, i) {
-    $("#modal_fecha_permisos_aut").modal("show");
-    loadJsPicker();
-    document.getElementById("fecha_permisos_aut").value = data;
-    contModals = i;
+function show_fecha_permisos_aut(data, nameCelda, i) {
+    
+    let resultado = blocked_cell('permiso',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        $("#modal_fecha_permisos_aut").modal("show");
+        toggleEdit(nameCelda,i);
+
+        loadJsPicker();
+        document.getElementById("fecha_permisos_aut").value = data;
+        contModals = i;
+    }
 }
 
 function hide_fecha_permisos_aut(data) {
@@ -373,9 +408,8 @@ function hide_req_ca(data) {
     } else if (data == "No") {
         check1_req_ca = false;
         check2_req_ca = true;
-        
-        toggleEditable('fecha_recepcion_ca',contModals);
     }
+    
     document.getElementById("req_ca1").checked = check1_req_ca;
     document.getElementById("req_ca2").checked = check2_req_ca;
     
@@ -384,11 +418,20 @@ function hide_req_ca(data) {
     cleanRequerimientoCA(data, contModals);
 }
 
-function show_fecha_recepcion_ca(data, i) {
-    $("#modal_fecha_recepcion_ca").modal("show");
-    loadJsPicker();
-    document.getElementById("fecha_recepcion_ca").value = data;
-    contModals = i;
+function show_fecha_recepcion_ca(data, nameCelda, i) {
+    
+    let resultado = blocked_cell('req_ca',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        $("#modal_fecha_recepcion_ca").modal("show");
+        toggleEdit(nameCelda,i);
+
+        loadJsPicker();
+        document.getElementById("fecha_recepcion_ca").value = data;
+        contModals = i;
+    }
 }
 
 function hide_fecha_recepcion_ca(data) {
@@ -396,6 +439,28 @@ function hide_fecha_recepcion_ca(data) {
     document.getElementById("fecha_recepcion_ca[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_ca").modal("hide");
     //parametrizacionValoresEvento("fecha_recepcion_ca",contModals); 
+}
+
+function show_num_constancia_ca(nameCelda,i){
+    
+    let resultado = blocked_cell('req_ca',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        toggleEdit(nameCelda,i);
+    }
+}
+
+function show_monto_ca(nameCelda,i){
+    
+    let resultado = blocked_cell('req_ca',i);
+    
+    if(resultado){
+        toggleNotEdit(nameCelda,i);
+    }else{
+        toggleEdit(nameCelda,i);
+    }
 }
 
 function show_fecha_doc_completos(data, i) {
@@ -779,3 +844,47 @@ function hide_fecha_termino_etiquetado(data) {
     $("#modal_fecha_termino_etiquetado").modal("hide");
     parametrizacionValoresEvento("fecha_termino_etiquetado",contModals);
 }
+
+function blocked_cell(nameCelda, i){
+    let option = document.getElementById(nameCelda + "[" + i + "]").innerHTML;
+    let blocked;
+    
+    if(option === "Si"){
+        blocked = false;
+    }else{
+        blocked = true;
+    }
+    
+    return blocked;
+}
+
+function toggleEdit(nameCelda, i) {
+    
+    document.getElementById(nameCelda + "[" + i + "]").addEventListener('click', function (event) {
+        
+        document.getElementById(nameCelda + "[" + i + "]").style.backgroundColor = "#FFFFFF";
+
+        // No event.preventDefault() here
+        var miCelda = document.getElementById(nameCelda + "[" + i + "]");
+        miCelda.contentEditable = 'true';
+    });
+}
+
+function toggleNotEdit(nameCelda, i) {
+
+    document.getElementById(nameCelda + "[" + i + "]").addEventListener('click', function (event) {
+        
+        // Prevent the default behavior of the click event (e.g., navigating to a new page)
+        event.preventDefault();
+
+        document.getElementById(nameCelda + "[" + i + "]").style.backgroundColor = "#F8F7F7";
+        
+        var miCelda = document.getElementById(nameCelda + "[" + i + "]");
+        miCelda.contentEditable = 'false';
+    });
+}
+
+function handleClick(event) {
+    alert('Clic detectado en la celda');
+  }
+

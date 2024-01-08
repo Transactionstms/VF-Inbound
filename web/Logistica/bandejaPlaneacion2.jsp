@@ -4,6 +4,7 @@
     Author     : grecendiz
 --%>
 
+<%@page import="com.usuario.Usuario"%>
 <%@page import="com.onest.oracle.DB"%>
 <%@page import="com.onest.oracle.DBConfData"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -33,6 +34,9 @@
         try {
             HttpSession ownsession = request.getSession();
             DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+            Usuario root = (Usuario) ownsession.getAttribute("login.root");
+            int usr = root.getId();
+            
             String f1 = request.getParameter("f1");
             String f2 = request.getParameter("f2");
 
@@ -46,11 +50,10 @@
                     + " from tra_inb_embarque te"
                     + " left join tra_inb_linea_transporte tt on tt.LTRANSPORTE_ID=te.EMBARQUE_TRANSPORTISTA"
                     + " inner join tra_inc_gtn_test gtn on gtn.EMBARQUE_AGRUPADOR=te.EMBARQUE_AGRUPADOR"
-                    + " WHERE  gtn.STATUS_EMBARQUE<>3 and TRUNC(te.EMBARQUE_FEC_CAPTURA) "
-                    + " BETWEEN  TO_DATE('" + f1 + "', 'MM/DD/YYYY') AND TO_DATE('" + f2 + "', 'MM/DD/YYYY') ";
-
-            System.out.println("sql2" + sql2);
-
+                    + " WHERE gtn.STATUS_EMBARQUE<>3 "
+                    + " AND tt.user_nid = '"+usr+"' "
+                    + " AND TRUNC(te.EMBARQUE_FEC_CAPTURA) "
+                    + " BETWEEN  TO_DATE('" + f1 + "', 'MM/DD/YYYY') AND TO_DATE('" + f2 + "', 'MM/DD/YYYY')"; 
     %>
     <body>
 

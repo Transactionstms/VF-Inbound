@@ -3283,6 +3283,46 @@ public class ConsultasQuery {
         return sql;
     }
     
+    public String perfilUsuario(String UserId){
+        sql = " select DISTINCT "
+            + " id_perfil "
+            + " from tra_perfil_usuario "
+            + " where ID_USUARIO=" + UserId;
+        return sql;
+    }
+    
+    public String menus(String perfilUsuario){
+        sql = " select "
+            + " tm.descripcion, "
+            + " tm.url, "
+            + " tm.icono, "
+            + " tm.id_padre "
+            + " from tra_perfil_menu tpm "
+            + " inner join tra_menu tm on tm.id=tpm.id_menu "
+            + " inner join tra_perfil tp on tp.id_perfil=tpm.id "
+            + " where tpm.id=" + perfilUsuario + " "
+            + " and tpm.id_menu = tm.id_padre "
+            + " order by tm.id";
+        return sql;
+    }
+    
+     public String submenus(String perfilUsuario, String idPadre){
+        sql = " select "
+            + " tpm.id,"
+            + " tpm.id_menu, "
+            + " tm.id_padre, "
+            + " tm.descripcion, "
+            + " tm.url, "
+            + " tm.icono "
+            + " from tra_perfil_menu tpm "
+            + " inner join tra_menu tm on tm.id=tpm.id_menu "
+            + " inner join tra_perfil tp on tp.id_perfil=tpm.id "
+            + " where tpm.id=" + perfilUsuario + " "
+            + " and tm.id_padre=" + idPadre + " "
+            + " and tpm.id_menu <> tm.id_padre "
+            + " order by tm.id ";
+        return sql;
+    }
     
 } 
  

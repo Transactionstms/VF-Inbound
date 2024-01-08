@@ -3354,3 +3354,23 @@ function parametrizacionValoresEvento(name_celda, contador) {
     }
 
 }
+
+function parametrizacionValoresEventoInput(name_celda, contador) {
+
+    let eventoActual = document.getElementById("evento[" + contador + "]").value;
+    let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").value;
+    let numCustoms = document.getElementById("numCustoms").value;
+    let listEventos;
+
+    for (var i = 1, max = numCustoms; i < max; i++) {
+
+        listEventos = document.getElementById("evento[" + i + "]").value;
+
+        if (contador !== i) {
+            if (eventoActual === listEventos) {
+                document.getElementById(name_celda + "[" + i + "]").value = valorCeldaActual;
+            }
+        }
+    }
+
+}
