@@ -21,7 +21,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><tiles:getAsString name="title" ignore="true" /></title>
-        <style type="text/css">  * {margin:0; padding:0;}  </style>
+        <style type="text/css">  * {
+            margin:0;
+            padding:0;
+        }  </style>
         <script type="text/javascript">  window.history.forward(1);</script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,11 +52,18 @@
             String cve = (String) ownsession.getAttribute("cbdivcuenta");
             String UserId = (String) ownsession.getAttribute("login.user_id_number");
             ConsultasQuery fac = new ConsultasQuery();
+            String perfilUsuario = "";
             String nameUsuario = "";
 
             if (db.doDB(fac.consultarUsuarioName(UserId))) {
                 for (String[] rowFT : db.getResultado()) {
                     nameUsuario = rowFT[0];
+                }
+            }
+
+            if (db.doDB(fac.perfilUsuario(UserId))) {
+                for (String[] row : db.getResultado()) {
+                    perfilUsuario = row[0];
                 }
             }
     %>
@@ -71,7 +81,7 @@
                     </li>
                 </ul>
             </nav>
-        </header>
+        </header>             
         <div class="d-flex align-items-stretch">
             <div class="sidebar py-3" id="sidebar">
                 <h6 class="sidebar-heading">Menu</h6>
@@ -79,81 +89,32 @@
                     <li class="sidebar-list-item"><a class="sidebar-link text-muted active" href="forms/main.jsp" target="data">
                             <svg class="svg-icon svg-icon-md me-3">
                             <use xlink:href="lib/icons/orion-svg-sprite.svg#real-estate-1"> </use>
-                            </svg><span class="sidebar-link-title">Dashboard</span></a></li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="forms/main.jsp" data-bs-target="#cmsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#reading-1"> </use>
-                            </svg><span class="sidebar-link-title">Catálogos</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Productos/List.jsp" target="data">Productos y Servicios</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/customForm.jsp" target="data">Personalizar Customs</a></li>
-                        </ul>
+                            </svg><span class="sidebar-link-title">Dashboard</span></a>
                     </li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#widgetsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#statistic-1"> </use>
-                            </svg><span class="sidebar-link-title">Importación</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="widgetsDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=22" target="data">Plantilla UVAs</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=23" target="data">Plantilla Previos</a></li>
-
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=20" target="data">Plantilla GTN</a></li>
-   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=31" target="data">Plantilla RDI</a></li>   
-   <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/seleccionPlantilla.jsp?idPlantilla=31" target="data">Plantilla Customs</a></li> 
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="plantillas/plantilla.jsp?idPlantilla=27" target="data">Agregar Evento Nuevo</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/SubirPlantilla.jsp?idPlantilla=33" target="data">Plantilla SCI</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/gtnDetalle.jsp" target="data">Modificar GTN</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/eventosDetalle.jsp" target="data">Asignar Eventos Nuevos</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/modificarEventos.jsp" target="data">Modificar Eventos </a></li>
-                             <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/agregarShipmet.jsp" target="data">Agregar Shipment </a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#chartsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#pie-chart-1"> </use>
-                            </svg><span class="sidebar-link-title">Reportes</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="chartsDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/ReporteIBR.jsp" target="data">Reporte IBR</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteUvas.jsp" target="data">Reporte UVAs</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReportePO.jsp" target="data">Reporte PO</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/ReporteCustoms.jsp?filterType=0&id=0" target="data">Reporte CUSTOMS</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/Reporte_EvidenciarEmbarque.jsp" target="data">Reporte EVIDENCIAS</a></li>
-                           <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Importacion/Reportes/Reporte_RDI.jsp" target="data">Reporte RDI</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#page-1"> </use>
-                            </svg><span class="sidebar-link-title">Logistica</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="templetesDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/solicitudTransporte.jsp" target="data">Solicitud Transporte</a></li>
-                            <!--  <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/plantillaSolicitudTransporte.jsp" target="data">Armado de Embarque</a></li> 
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/documentosSeleccionados.jsp" target="data">Documentos Seleccionados</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/docDatosAdicionales.jsp" target="data">Datos Adicionales</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/datosComplementarios.jsp" target="data">Datos Complementarios</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/detalleTransportista.jsp" target="data">Detalle Transportista</a></li>-->
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/busquedaEmbarque.jsp" target="data">Busqueda Embarque</a></li>
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/bandejaPlaneacion.jsp" target="data">Bandeja de planeacion</a></li>
-                           <!-- <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/subirFactura.jsp" target="data">Subir Factura</a></li>-->
-                        </ul>
-                    </li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#templetesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#page-1"> </use>
-                            </svg><span class="sidebar-link-title">Control Documental</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="templetesDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" target="data" href="Logistica/guiaEmbarque.jsp" target="data">Evidenciar Embarque</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#tablesDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
-                            <svg class="svg-icon svg-icon-md me-3">
-                            <use xlink:href="lib/icons/orion-svg-sprite.svg#grid-1"> </use>
-                            </svg><span class="sidebar-link-title">Configuración</span></a>
-                        <ul class="sidebar-menu list-unstyled collapse " id="tablesDropdown">
-                            <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="Catalogos/index.jsp" target="data">Configuración</a></li>
-                        </ul>
-                    </li>
+                    <%
+                        if (db.doDB(fac.menus(perfilUsuario))) {
+                            for (String[] menus : db.getResultado()) {
+                    %> 
+                        <li class="sidebar-list-item"><a class="sidebar-link text-muted " href="#" data-bs-target="#cmsDropdown" role="button" aria-expanded="false" data-bs-toggle="collapse"> 
+                              <svg class="svg-icon svg-icon-md me-3">
+                              <use xlink:href="lib/icons/orion-svg-sprite.svg#reading-1"><%=menus[2]%></use>
+                              </svg><span class="sidebar-link-title"><%=menus[0]%></span></a>
+                            <ul class="sidebar-menu list-unstyled collapse " id="cmsDropdown">
+                    <%
+                        if (db.doDB(fac.submenus(perfilUsuario,menus[3]))) {
+                            for (String[] submenus : db.getResultado()) {
+                    %>
+                               <li class="sidebar-list-item"><a class="sidebar-link text-muted" href="<%=request.getContextPath()%><%=submenus[4]%>" target="data"><%=submenus[3]%></a></li>
+                    <%
+                            }
+                        }
+                    %>   
+                            </ul>
+                        </li>
+                    <%
+                            }
+                        }
+                    %>  
                 </ul>
             </div> 
             <tiles:insert attribute="body" ignore="true" /> 
