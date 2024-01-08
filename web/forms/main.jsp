@@ -120,8 +120,12 @@
             <!-- Indicadores -->
             <section class="mb-4 mb-lg-5">
                 <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row"></div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-12 col-xl-6 ms-xl-auto px-lg-4 text-center text-primary">
+                            <img  class="img-fluid mb-4" width="350" src="../lib/img/vf.png" alt="" style="transform: rotate(10deg);">
+                        </div>
+                        <!--<div class="col-lg-3">
                             <div class="widget boton_azul p-lg text-center">
                                 <br>
                                 <div class="m-b-sm">
@@ -132,8 +136,8 @@
                                 </div>
                                 <br>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
+                        </div>-->
+                        <!--<div class="col-lg-3">
                             <div class="widget boton_azul p-lg text-center">
                                 <br>
                                 <div class="m-b-sm">
@@ -144,8 +148,8 @@
                                 </div>
                                 <br>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
+                        </div>-->
+                        <!--<div class="col-lg-3">
                             <div class="widget boton_azul p-lg text-center">
                                 <br>
                                 <div class="m-b-sm">
@@ -156,8 +160,8 @@
                                 </div>
                                 <br>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
+                        </div>-->
+                        <!--<div class="col-lg-3">
                             <div class="widget-head-color-box navy-bg p-sm">
                                 <div class="row">
                                     <div class="form-group col-md-6">
@@ -173,13 +177,13 @@
                                     <a href="/Contratacion/Create" class="btn btn-sm btn-primary boton_azul"><i class="fa fa-shopping-cart fa-fw"></i> Comprar Folios </a>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </section>   
             
             <!-- Gráfica 12 meses -->
-            <section class="mb-4 mb-lg-5">
+            <!--<section class="mb-4 mb-lg-5">
                 <div class="row">
                     <div class="col-lg-12 mb-4 mb-lg-0">
                         <div class="card h-100">
@@ -194,10 +198,10 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>-->
                         
             <!-- Tabla - Facturas guradadas pendientes de timbrar -->
-            <section class="mb-4 mb-lg-5">
+            <!--<section class="mb-4 mb-lg-5">
                 <div class="row">
                     <div class="col-lg-12 mb-4 mb-lg-0">
                         <div class="card h-100">
@@ -247,10 +251,10 @@
                         </div>
                     </div>
                 </div>
-            </section> 
+            </section> -->
             
             <!-- Tabla - Recibos de pagos pendientes de timbrar -->
-            <section class="mb-4 mb-lg-5">
+            <!--<section class="mb-4 mb-lg-5">
                 <div class="row">
                     <div class="col-lg-12 mb-4 mb-lg-0">
                         <div class="card h-100">
@@ -300,7 +304,7 @@
                         </div>
                     </div>
                 </div>
-            </section> 
+            </section> -->
         </div>
         <!-- footer -->  
         <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
