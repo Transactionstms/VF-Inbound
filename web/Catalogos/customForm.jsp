@@ -17,6 +17,13 @@
 <%@page import="com.onest.misc.*" %>
 <%@page import="com.usuario.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    Date date = new Date();
+    SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
+    String fecha = formato.format(date);
+    String[] par = fecha.split("/");
+    String fecha_actual = par[0]+"/"+par[1]+"/"+par[2];
+%>    
 <!DOCTYPE html>
 <html>
     <head>
@@ -623,6 +630,7 @@
         <a href=""></a>
         <script>
             let idAgenteAduanal = '<%=AgentType%>'; 
+            let fechaActual = '<%=fecha_actual%>';
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

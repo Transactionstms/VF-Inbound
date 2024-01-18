@@ -221,22 +221,25 @@ function validarTexto(td) {
   }
 }
 
-function validarTextoCheckbox(event) {
+function validarTextoCheckbox(td) {
     
-    // Evitar el comportamiento predeterminado de pegado
-    event.preventDefault();
-  
-    // Obtener el contenido actual de la celda
-    var contenido = event.target.innerText;
-     
-    // Limitar la longitud a dos caracteres
-    var dosCaracteres = contenido.slice(0, 2);
-    
-    // Validación Caracteres Texto
-    if (/^[a-zA-Z\s]+$/.test(contenido)) {
-       // Actualizar el contenido de la celda con los dos caracteres
-       event.target.innerText = dosCaracteres;
-    }
+      // Obtener el contenido actual del TD
+      let contenido = td.innerText;
+      var expresionRegular = /^[a-zA-ZíÍ\s]*$/;
+      
+      // Limitar la longitud a dos caracteres
+      var dosCaracteres = contenido.slice(0, 2);
+
+      if (expresionRegular.test(dosCaracteres)) {
+        // Si es alfanumérico, puedes realizar acciones adicionales
+        console.log("Contenido del TD:", dosCaracteres);
+        td.style.color = 'black';
+      } else {
+        // Si contiene caracteres no alfanuméricos, puedes realizar acciones adicionales
+        console.log("Por favor, ingrese solo texto alfanumérico.");
+        td.innerText = '';
+        td.style.color = 'red';
+      }
     
 }
 
@@ -415,6 +418,24 @@ function handlePasteText(event) {
     const clipboardData = event.clipboardData || window.clipboardData;
     const contenido = clipboardData.getData('text/plain');
     var patron = /^[a-zA-Z\u00D1\u00F1\s-.]+$/;
+
+    // Realizar manipulaciones con el texto pegado según tus necesidades
+    // Aquí puedes agregar lógica para analizar y controlar la información
+    if (patron.test(contenido)) {
+        event.target.innerText = contenido;
+    }else{
+        event.target.innerText = "";
+    }
+}
+
+function handlePasteTextCheckBox(event) {
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+
+    // Obtener el texto pegado
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const contenido = clipboardData.getData('text/plain');
+    var patron = /^(s[ií]|n[oó])$/i;
 
     // Realizar manipulaciones con el texto pegado según tus necesidades
     // Aquí puedes agregar lógica para analizar y controlar la información
