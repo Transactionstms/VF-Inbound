@@ -76,7 +76,8 @@
 +"     || org.direccion, "
 +"     nvl(org.clave_loc, ' '), "
 +"     nvl(org.clave_mun, ' '), "
-+"     nvl(org.clave_col, ' ') "
++"     nvl(org.clave_col, ' '),"
+                     + " gtn.container1 "
 +" FROM "
 +"     tra_inc_gtn_test gtn "
 +"     LEFT JOIN tra_inb_evento   tie ON gtn.plantilla_id = tie.plantilla_id "
@@ -126,7 +127,7 @@ System.out.println("sql***********"+sql2);
                              <th class="repHdr"><center>Clave Colonia </center></th> 
                              <th class="repHdr"><center>Clave Localidad </center></th> 
                              <th class="repHdr"><center>Clave Municipio </center></th> 
-
+<th class="repHdr"><center>CONTEINER</center></th>
 
                             <!-- <th class="repHdr">Orden de compra</th>-->
                              <th class="repHdr"><center>SHIMPEMNT</center></th>
@@ -146,20 +147,19 @@ System.out.println("sql***********"+sql2);
                              <th class="repHdr"><center>Aduana</center></th> <!-- - Col 28-->
         
         <th class="repHdr"><center>Origen</center></th>
-        <th class="repHdr"><center>Origen clave loc</center></th>
+     <!--   <th class="repHdr"><center>Origen clave loc</center></th>
         <th class="repHdr"><center>Origen clave mun</center></th>
-        <th class="repHdr"><center>Origen clave col</center></th>
-                             <th class="repHdr"><center>Clave Producto Servicio</center></th><!-- - Col 29-->
-                             
+        <th class="repHdr"><center>Origen clave col</center></th>-->
+                             <th class="repHdr"><center>Clave Producto Servicio</center></th><!-- - Col 29--> 
                              <th class="repHdr"><center>Descripción</center></th>
                              <th class="repHdr"><center>Clave Unidad</center></th>
-                             <th class="repHdr"><center>Unidad Medida</center></th>
-                            
+                             <th class="repHdr"><center>Unidad Medida</center></th> 
+                             
                              <th class="repHdr"><center>Peso Bruto     </center></th>
                              <th class="repHdr"><center>Peso Tara      </center></th>
                              <th class="repHdr"><center>Peso Neto      </center></th>
-                             <th class="repHdr"><center>  Documentos Aduaneros   </center></th>
-                             <th class="repHdr"><center>  Tipo Materia   </center></th>
+                             <th class="repHdr"><center>Documentos Aduaneros   </center></th>
+                             <th class="repHdr"><center>Tipo Materia   </center></th>
                          </tr>
                      </thead> <tbody>
                                                                         <%
@@ -173,6 +173,7 @@ System.out.println("sql***********"+sql2);
                                                                          %>
                                                                         <tr>
                                                                             <td class=""><b><%=rs.getString(1)%></b></td> 
+                                                                            
                                                                             <td class=""><b><%=rs.getString(2)%></b></td>
                                                                             <td class=""><b><%=rs.getString(3)%></b></td> <!--rfc--> 
                                                                             <td class=""><b><%=rs.getString(4)%></b></td>
@@ -190,6 +191,7 @@ System.out.println("sql***********"+sql2);
                                                                             <td class=""><b><%=rs.getString(15)%></b></td>
                                                                             <td class=""><b><%=rs.getString(16)%></b></td>
                                                                             <td class=""><b><%=rs.getString(17)%></b></td>
+                                                                            <td class=""><b><%=rs.getString(43)%></b></td> 
                                                                             
                                                                             <!--<td class=""><b><%=rs.getString(18)%></b></td>-->
                                                                             <td class=""><b><%=rs.getString(19)%></b></td>
@@ -205,19 +207,18 @@ System.out.println("sql***********"+sql2);
                                                                             <td class=""><b><%=rs.getString(27)%></b></td> <!-- - Col 27-->
                                                                             
                                                                                 <td class=""><b><%=rs.getString(39)%></b></td>
-                                                                                <td class=""><b><%=rs.getString(40)%></b></td>
+                                                                              <!--  <td class=""><b><%=rs.getString(40)%></b></td>
                                                                                 <td class=""><b><%=rs.getString(41)%></b></td>
-                                                                                <td class=""><b><%=rs.getString(42)%></b></td> 
-                                                                            <td class=""><b><%=rs.getString(28)%></b></td> <!-- - Col 28-->
-                                                                            
+                                                                                <td class=""><b><%=rs.getString(42)%></b></td> -->
+                                                                           
+                                                                                <td class=""><b><%=rs.getString(28)%></b></td> <!-- - Col 28--> 
                                                                             <td class=""><b><%=rs.getString(29)%></b></td> <!-- - Col 29-->
                                                                             <td class=""><b><%=rs.getString(30)%></b></td>
                                                                             <td class=""><b><%=rs.getString(31)%></b></td> 
                                                                             
                                                                             <td class=""><b><%=rs.getString(32)%></b></td> 
                                                                             <td class=""><b><%=rs.getString(33)%></b></td> 
-                                                                            <td class=""><b><%=rs.getString(34)%></b></td>  
-                                                                            
+                                                                            <td class=""><b><%=rs.getString(34)%></b></td>   
                                                                             <td class=""><b><%=rs.getString(36)%></b></td> 
                                                                             <td class=""><b><%=rs.getString(37)%></b></td>  
                                                                             

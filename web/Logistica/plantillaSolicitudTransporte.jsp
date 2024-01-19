@@ -231,18 +231,18 @@
         +" ORDER BY"
         +"   tie.id_evento";
                                                            System.out.println("sql"+sql);
-
+int x=0;
                                                             if (db.doDB(sql)) {
                                                                 for (String[] row : db.getResultado()) {
                                                                     // out.println("<option value=\"" + row[0] + "\" >" + row[1] + " - " + row[2] + "</option>");
                                                                     //row[18]
                                                                     //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
                                                         %>
-
+ 
                                                      <tr>
                                                          <td class="font-numero" > 
                                                                 <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value=" shipment_id='<%=row[5]%>' and container1='<%=row[6]%>'" id="flexCheckDefault<%=row[0]%>" name="valor"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
+                                                                    <input class="form-check-input" type="checkbox" value=" shipment_id='<%=row[5]%>' and container1='<%=row[6]%>'" id="flexCheckDefault<%=row[0]%>" name="valorCheck"><!-- evento=<%=row[0]%> and gtn.shipment_id='<%=row[5]%>' and gtn.container1='<%=row[6]%> and gtn.LOAD_TYPE_FINAL='<%=row[26]%>'  -->
                                                                     <label class="form-check-label" for="flexCheckDefault<%=row[0]%>">
                                                                        Agregar
                                                                     </label>
@@ -266,7 +266,8 @@
                                                         </tr>
 
                                                         
-                                                       <% }
+                                                       <%
+                                                           x++;}
 
                                                             }
                                                        %>
@@ -293,9 +294,30 @@
         </div>   
         <script>
 
-         async function nuevoEvento() {
+
+
+function nuevoEvento5() {
+    let checkboxes = document.getElementsByName("valorCheck"); // Reemplaza "nombre_del_checkbox" con el nombre real de tus checkboxes
+    let cont = 0; // Variable que lleva la cuenta de los checkbox pulsados
+    let valores = '';
+
+    console.log(checkboxes);
+
+    for (var x = 0; x < checkboxes.length; x++) {
+        if (checkboxes[x].checked) {
+            console.log(checkboxes[x].value)
+            valores += checkboxes[x].value + ' or  ';
+            cont = cont + 1;
+        }
+    }
+
+    valores = valores.slice(0, -4);
+    console.log(valores);
+}
+
+  async function nuevoEvento() {
              swal({  title:  "Guardando. . .",    allowEscapeKey:false  });
-                        let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
+                         let checkboxes = document.getElementsByName("valorCheck"); //Array que contiene los checkbox
                         let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
                         let valores = '';
                         for (var x = 0; x < checkboxes.length; x++) {

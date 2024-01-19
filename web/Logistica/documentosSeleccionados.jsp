@@ -190,7 +190,7 @@
                                                                     //row[18]
                                                                     //select to_char(to_date('01/08/2023','MM/DD/YYYY')+1, 'DAY', 'NLS_DATE_LANGUAGE=SPANISH') from dual
                                                         %>
-
+ 
                                                      <tr>
                                                           
                                                             <th class="font-numero"><%=row[0]%></th>	

@@ -46,6 +46,8 @@
     <link rel="stylesheet" href="../lib/css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="../lib/img/favicon.png">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"   crossorigin="anonymous">
+
     <style>
         .boton_azul {
             background-color: #008ec8;
@@ -110,6 +112,7 @@
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
                 String cve = (String) ownsession.getAttribute("cbdivcuenta");
                 ConsultasQuery fac = new ConsultasQuery();
+                    String UserId = (String) ownsession.getAttribute("login.user_id_number");
         %>
     <!-- navbar-->
     <div class="d-flex align-items-stretch">
@@ -122,6 +125,52 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="row"></div>
                     <div class="row">
+                        
+                        <div class="col-lg-12 col-xl-6 ms-xl-auto px-lg-4 text-center text-primary">
+                          
+                            
+                            
+                           <%
+                                                    if (db.doDB("    select EMBARQUE_ID,'Pendiente de evidencia' from TRA_INB_embarque where EMBARQUE_ESTADO_ID=1 and EMBARQUE_TRANSPORTISTA in (select LTRANSPORTE_ID from TRA_INB_LINEA_TRANSPORTE where USER_NID in (6356,6381,6382,6383,6384,6385,6386,5428,"+UserId+") )")) {
+                                                 %>
+                   <div class="table-responsive" style="overflow: auto">    
+                                                            <div class="tableFixHead">
+                                  
+<table id="example" class="display" style="width:100%">                                 
+    <thead>
+                                                <tr>
+                                                    <th><font size="2">Embarque</font></th>
+                                                    <th><font size="2">Estatus</font></th> 
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recibos">
+                                                <%
+                                                         for (String[] rowFT : db.getResultado()) {   
+                                                %>
+                                                <tr>
+                                                    <td><font size="2" style="color:black"><%=rowFT[0]%></font></td>
+                                                    <td><font size="2" style="color:black"><%=rowFT[1]%></font></td> 
+                                                   
+                                                </tr>
+                                                <%
+                                                       }
+                                                    
+                                                %>
+                                            </tbody>
+                                        </table>
+                                            
+                         </div>
+                                 </div>
+                                            
+                                  <%
+                                                       }
+                                                     
+                                                %>      
+                                   
+                                    
+                                            
+                        </div>
+                        
                         <div class="col-lg-12 col-xl-6 ms-xl-auto px-lg-4 text-center text-primary">
                             <img  class="img-fluid mb-4" width="350" src="../lib/img/vf.png" alt="" style="transform: rotate(10deg);">
                         </div>
@@ -340,6 +389,12 @@
     <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
     <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
     <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+   
+<script src="https://code.jquery.com/jquery-3.7.0.js"   crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"   crossorigin="anonymous"></script>
+     
+
+          
     <script type="text/javascript">
       // Optional
       Prism.plugins.NormalizeWhitespace.setDefaults({
@@ -348,7 +403,9 @@
       'left-trim': true,
       'right-trim': true,
       });
-          
+        
+    new DataTable('#example');
+
     </script>
     <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
