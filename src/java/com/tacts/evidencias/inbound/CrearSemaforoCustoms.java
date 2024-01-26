@@ -54,8 +54,10 @@ public class CrearSemaforoCustoms {
         /*Identificar si el fecha a validar es <,>, = a la fecha actual */
         String typeTime = CalcularFechaAnteriorActual(fechaInicial);
         
-            if(typeTime.equals("=")||typeTime.equals(">")){
-            
+            if(typeTime.equals(">")){
+                estatusSemaforo = "0"; //prioridad nula
+                   
+            }else if(typeTime.equals("=")){
                 estatusSemaforo = "1"; //prioridad baja
             
             }else if(typeTime.equals("<")){
@@ -86,13 +88,14 @@ public class CrearSemaforoCustoms {
         return res;
     }
     
-    public static String diasTotalDespachoLoadType(String LoadType) {
+    public static String diasTotalDespachoLoadType(String loadtype) {
         
         String days = "";
         String daysHabilits = ""; 
         String dayLimitGreen = "";
         String dayLimitYellow = "";
         String dayLimitRed = "";
+        String LoadType = loadtype.replaceAll("\\s","");
 
         if (LoadType.equals("FCL")) {
             daysHabilits = "8";
