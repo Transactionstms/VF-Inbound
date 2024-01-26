@@ -2588,3 +2588,23 @@ function validarTextoAlfanumericoObservaciones(td,namecelda,cont) {
   parametrizacionValoresEvento(namecelda,cont); 
   
 }
+
+function parametrizacionValoresEstatusOperacion(contador) {
+
+    let eventoActual = document.getElementById("evento[" + contador + "]").value;
+    let valorCeldaActual = document.getElementById("estatus_operacion[" + contador + "]").value;
+    let numCustoms = document.getElementById("numCustoms").value;
+    let listEventos;
+
+    for (var i = 1, max = numCustoms; i < max; i++) {
+
+        listEventos = document.getElementById("evento[" + i + "]").value;
+
+        if (contador !== i) {
+            if (eventoActual === listEventos) {
+                document.getElementById("estatus_operacion[" + i + "]").value = valorCeldaActual;
+            }
+        }
+    }
+
+}

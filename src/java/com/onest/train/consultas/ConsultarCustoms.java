@@ -1516,7 +1516,7 @@ public class ConsultarCustoms extends HttpServlet {
             }
             sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC ";
             
-            //String list_test = "";
+            String list_eventos = "";
         /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
             if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
@@ -1613,7 +1613,7 @@ public class ConsultarCustoms extends HttpServlet {
                         list_fy.add("<option value='" + row[95] + "'>" + row[95] + "</option>");
                     } 
                     
-                    //list_test += row[30] + ",";
+                    list_eventos += row[0] + ",";
                 }
             }
         
@@ -1791,15 +1791,15 @@ public class ConsultarCustoms extends HttpServlet {
             Arrays.sort(array_list_proveedor_carga);
             Arrays.sort(array_list_fy);
             
-            //System.out.println("Listado Referencia: " + list_test);
-            //<button onclick=\"openForms('"+list_test+"')\">≡</button>
+            System.out.println("Listado Referencia: " + list_eventos);
+            
             
                    salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
                           + "     <thead> "
                           + "         <tr> "    
                           + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
                           + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"FiltrerData('1')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_referenciaAA\" name=\"col_referenciaAA\">"+Arrays.toString(array_list_referenciaAA)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<a onclick=\"FiltrerData('2')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_evento\" name=\"col_evento\">"+Arrays.toString(array_list_evento)+"</select></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<button onclick=\"openForms('"+list_eventos+"')\">≡</button><a onclick=\"FiltrerData('2')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_evento\" name=\"col_evento\">"+Arrays.toString(array_list_evento)+"</select></th> "
                           + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"FiltrerData('3')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_responsable\" name=\"col_responsable\">"+Arrays.toString(array_list_responsable)+"</select></th> "
                           + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"FiltrerData('4')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_finalDestination\" name=\"col_finalDestination\">"+Arrays.toString(array_list_finalDestination)+"</select></th> "
                           + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"FiltrerData('5')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_brandDivision\" name=\"col_brandDivision\">"+Arrays.toString(array_list_brandDivision)+"</select></th> "
@@ -2014,7 +2014,7 @@ public class ConsultarCustoms extends HttpServlet {
                                 + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_final'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_retencion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_retencion_aut'," + cont + ")\" ondblclick=\"show_fecha_retencion_aut('" + row[72] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[72] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_liberacion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_liberacion_aut'," + cont + ")\" ondblclick=\"show_fecha_liberacion_aut('" + row[73] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[73] + "</td> "
-                                + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
+                                + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" onchange=\"parametrizacionValoresEstatusOperacion("+cont+")\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
                                 + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoAtraso(this,'motivo_atraso'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" id=\"motivo_atraso[" + cont + "]\" onpaste=\"handlePasteAlfanumericoMotivoAtraso(event)\">" + row[75] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoObservaciones(this,'observaciones'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" onpaste=\"handlePasteAlfanumericoObservaciones(event)\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
 

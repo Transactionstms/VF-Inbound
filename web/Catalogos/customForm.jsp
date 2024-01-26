@@ -621,7 +621,9 @@
                 <input type="text" id="buscadorFiltro" oninput="filtrarOpciones()" placeholder="Buscar">
             </div>  
             <div class="scroll-container-filtrer">
-                <div id="multiselect"></div> 
+                <div id="multiselect">
+                    <label><input type="checkbox" id="seleccionarTodos"> (Seleccionar Todo)</label>
+                </div> 
                 <!-- Rellenar Filtros / ConsultarCustoms.java --> 
             </div>
             <div class="contenedorFiltro"> 
@@ -658,22 +660,25 @@
                 document.getElementById("viewFiltro").style.display = blocked;
                 
                 //Lista Inicial:
-                document.getElementById("multiselect").innerHTML = "<label><input type=\"checkbox\" id=\"seleccionarTodos\"> (Seleccionar Todo)</label>";
+                //document.getElementById("multiselect").innerHTML = "<label><input type=\"checkbox\" id=\"seleccionarTodos\"> (Seleccionar Todo)</label>";
                 
                 var parts = array_list.split(',');
 
                 // Iterate over the array
                 for (var i = 0; i < parts.length; i++) {
                     //Rellenar Filtros
-                    document.getElementById("multiselect").innerHTML += "<label><input type=\"checkbox\" onclick=\"selectedAll()\" value=\"" + parts[i] + "\"> " + parts[i] + "</label>";
+                    document.getElementById("multiselect").innerHTML += "<label><input type=\"checkbox\" value=\"" + parts[i] + "\"> " + parts[i] + "</label>";
                 }
                 
             }
 
             function closeForm() {
                 document.getElementById("viewFiltro").style.display = "none";
-                selectedAll();
-            }
+            
+                const checkboxes = document.querySelectorAll('#multiselect input[type="checkbox"]');
+                checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+    
+           }
         </script>
         <script>
             function obtenerSeleccion() {
@@ -693,10 +698,10 @@
                 });
             }
             
-            function selectedAll(){
+            document.getElementById('seleccionarTodos').addEventListener('change', function () {
                 const checkboxes = document.querySelectorAll('#multiselect input[type="checkbox"]');
                 checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-            }
+            });
         </script>
         <script>
             //Parametros: Validaciones
