@@ -7,10 +7,12 @@ package com.onest.train.consultas;
 import com.onest.oracle.DB;
 import com.onest.oracle.DBConfData;
 import com.onest.oracle.OracleDB;
+import static com.tacts.evidencias.inbound.CrearSemaforoCustoms.contarDiasHabilesTranscurridos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +46,7 @@ public class ConsultarCustoms extends HttpServlet {
             
             Date date = new Date();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy");
-            String fecha = formato.format(date);
-            String[] par = fecha.split("/");
-            String year = par[2];
+            String dateDay = formato.format(date);
 
             String AgentType = request.getParameter("AgentType");
             String filterType = request.getParameter("filterType");
@@ -310,13 +310,15 @@ public class ConsultarCustoms extends HttpServlet {
             String caramelo_proveedor ="";
             String caramelo_proveedor_carga ="";
             String caramelo_fy ="";
+            String fecha_importacion_registrada = "";
             String sql = "";
+            int diasHabiles = 0;
+            boolean excluirShipment = false;
             
             //Parametros Generales
             String colorSemaforo = "";
             String sizeSemaforo = "";
             String listStatusOperationEvent = "";
-            String blockedDate = "";
             String salida = "";
             int cont = 1;
 
@@ -326,7 +328,7 @@ public class ConsultarCustoms extends HttpServlet {
                     listStatusOperationEvent += "<option value=\"" + rowO[0] + "\">" + rowO[1] + "</option>";
                 }
             }
-            
+           
             
     /*  ----------------------------- FILTROS MULTISELECT ENCABEZADOS  -----------------------------  */  
     
@@ -1223,7 +1225,8 @@ public class ConsultarCustoms extends HttpServlet {
                     /*99*/ + " NVL(GTN.ESTATUS,1), "
                    /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'0'), "
                    /*101*/ + " NVL(TIP1.ADUANA_NUMERO,0), "
-                   /*102*/ + " NVL(TAA.PATENTE_AGENTE_ADUANERO,'0000') "
+                   /*102*/ + " NVL(TAA.PATENTE_AGENTE_ADUANERO,'0000'), "
+                   /*103*/ + " NVL(TO_CHAR(GTN.FECHA_IMPORTACION, 'DD/MM/YY'),'-') "
                             + " FROM TRA_INB_EVENTO TIE "
                             + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                             + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
@@ -1240,8 +1243,8 @@ public class ConsultarCustoms extends HttpServlet {
                             + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') "
                             + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('18/12/2023','dd/mm/yyyy') "
                             + " AND tid.division_nombre <> 'No/DSN' "
-                            + " AND gtn.load_type_final IS NOT NULL "
-                            + " AND GTN.ESTATUS <> 19 ";
+                            + " AND gtn.load_type_final IS NOT NULL ";
+                            //+ " AND GTN.ESTATUS <> 19 ";
 
             if (!AgentType.equals("4006")) { //VF GENERAL
                 sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + AgentType + "') ";
@@ -1512,10 +1515,9 @@ public class ConsultarCustoms extends HttpServlet {
                 sql += " AND TIC.FY IN (" + caramelo_fy + ") ";
             }
             sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC ";
-
-        /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */
-        String list_test = ""; 
-        
+            
+            //String list_test = "";
+        /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
             if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
                     
@@ -1586,8 +1588,6 @@ public class ConsultarCustoms extends HttpServlet {
                         list_motivo_atraso.add("<option value='" + row[75] + "'>" + row[75] + "</option>");
                         list_observaciones.add("<option value='" + row[76] + "'>" + row[76] + "</option>");
                         
-                        list_test += "<option value='" + row[5] + "'>" + row[5] + "</option>,";
-                        
                     if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF            
                         list_llegada_a_nova.add("<option value='" + row[77] + "'>" + row[77] + "</option>");
                         list_llegada_a_globe_trade_sd.add("<option value='" + row[78] + "'>" + row[78] + "</option>");
@@ -1612,6 +1612,8 @@ public class ConsultarCustoms extends HttpServlet {
                         list_proveedor_carga.add("<option value='" + row[94] + "'>" + row[94] + "</option>");
                         list_fy.add("<option value='" + row[95] + "'>" + row[95] + "</option>");
                     } 
+                    
+                    //list_test += row[30] + ",";
                 }
             }
         
@@ -1789,6 +1791,9 @@ public class ConsultarCustoms extends HttpServlet {
             Arrays.sort(array_list_proveedor_carga);
             Arrays.sort(array_list_fy);
             
+            //System.out.println("Listado Referencia: " + list_test);
+            //<button onclick=\"openForms('"+list_test+"')\">≡</button>
+            
                    salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
                           + "     <thead> "
                           + "         <tr> "    
@@ -1897,6 +1902,8 @@ public class ConsultarCustoms extends HttpServlet {
             if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
                     
+                    fecha_importacion_registrada = row[102].replaceAll("-", "");
+                            
                     if (row[99].equals("1")) {
                         colorSemaforo = "../img/circle-green.webp";
                         sizeSemaforo = "55%";
@@ -1911,117 +1918,140 @@ public class ConsultarCustoms extends HttpServlet {
                         sizeSemaforo = "60%";
                     }
 
-                    if (row[58] == "No") {
-                        blockedDate = "false";
+                    /*Fecha importación <-- { .... contar los días transcurridos .... } --> Fecha actual*/
+                    if(!fecha_importacion_registrada.equals("")){    
+                        
+                        String[] fImp = fecha_importacion_registrada.split("/"); /*Fecha Importación*/
+                        String[] fAct = dateDay.split("/");  /*Fecha Actual*/
+
+                        /*Obtener los días habiles del rango de fechas*/
+                        LocalDate fechaImportacion = LocalDate.of(Integer.parseInt(fImp[2]), Integer.parseInt(fImp[1]), Integer.parseInt(fImp[0]));                      
+                        LocalDate fechaActual = LocalDate.of(Integer.parseInt(fAct[2]), Integer.parseInt(fAct[1]), Integer.parseInt(fAct[0]));   
+                        
+                        diasHabiles = contarDiasHabilesTranscurridos(fechaImportacion, fechaActual);
+                        
+                        /*Excluir iteración del shipment (++ 5 días habiles)*/
+                        if(diasHabiles>5){
+                            excluirShipment = true;
+                        }else{
+                            excluirShipment = false;
+                        }
+                        
+                    }else{
+                       excluirShipment = false;
                     }
 
             /*  ----------------------------- CUERPO/DATA DE TABLA  -----------------------------  */
             
-                    salida += "<tr id=\"tr<" + cont + "\">"
-                            + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
-                            + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA',"+cont+")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
-                            + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
-                            + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
-                            + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
-                            + "     <div id=\"mSgError" + cont + "\"></div> "
-                            + "   </div> "
-                            + " </th> "
-                            + " <td id=\"Responsable[" + cont + "]\">" + row[1] + "</td> "
-                            + " <td id=\"FinalDestination[" + cont + "]\">" + row[2] + "</td> "
-                            + " <td id=\"BrandDivision[" + cont + "]\">" + row[21] + "</td> "
-                            + " <td id=\"Division[" + cont + "]\">" + row[4] + "</td> "
-                            + " <td id=\"shipmentId[" + cont + "]\">" + row[5] + "</td> "
-                            + " <td id=\"containerId[" + cont + "]\">" + row[6] + "</td> "
-                            + " <td id=\"blAwbPro[" + cont + "]\">" + row[7] + "</td> "
-                            + " <td id=\"loadTypeFinal[" + cont + "]\">" + row[8] + "</td> "
-                            + " <td id=\"Quantity[" + cont + "]\">" + row[9] + "</td> "
-                            + " <td id=\"Pod[" + cont + "]\">" + row[19] + "</td> "
-                            + " <td id=\"EstDepartureFromPol[" + cont + "]\">" + row[11] + "</td> "
-                            + " <td id=\"EtaRealPortOfDischarge[" + cont + "]\">" + row[12] + "</td> "
-                            + " <td id=\"EstEtaDc[" + cont + "]\">" + row[22] + "</td> "
-                            + " <td id=\"InboundNotification[" + cont + "]\">" + row[14] + "</td> "
-                            + " <td id=\"Pol[" + cont + "]\">" + row[20] + "</td> "
-                            + " <td id=\"aa[" + cont + "]\">" + row[16] + "</td> "
-                            + " <td id=\"FechaMesVenta[" + cont + "]\">" + row[28] + "</td> " 
-                            + " <td id=\"prioridad[" + cont + "]\">" + row[97] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoPais(this," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pais_origen'," + cont + ")\" id=\"pais_origen[" + cont + "]\" onpaste=\"handlePasteText(event)\">" + row[31] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'size_container',"+cont+")\" onkeydown=\"tabuladorVertical(event,'size_container'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"eta_port_discharge[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'eta_port_discharge'," + cont + ")\" ondblclick=\"show_eta_port_discharge('" + row[34] + "'," + cont + ")\" onpaste=\"handlePasteFechaEtaPortDischarge(event,"+cont+")\">" + row[34] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'agente_aduanal',"+cont+")\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'"+cont+"','pedimento_a1')\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'"+cont+"','pedimento_a1')\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'"+cont+"','pedimento_r1_1er')\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'"+cont+"','pedimento_r1_1er')\" id=\"pedimento_r1_1er[" + cont + "]\">" + row[37] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoRectificacion(this,'motivo_rectificacion_1er',"+cont+")\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" onpaste=\"handlePasteAlfanumericoMotivoRectificacion(event)\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
-                            + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'"+cont+"','pedimento_r1_2do')\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'"+cont+"','pedimento_r1_2do')\" id=\"pedimento_r1_2do[" + cont + "]\">" + row[39] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoRectificacion(this,'motivo_rectificacion_2do',"+cont+")\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" onpaste=\"handlePasteAlfanumericoMotivoRectificacion(event)\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_doc[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_doc'," + cont + ")\" ondblclick=\"show_fecha_recepcion_doc('" + row[41] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[41] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'recinto',"+cont+")\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'naviera',"+cont+")\" onkeydown=\"tabuladorVertical(event,'naviera'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'buque',"+cont+")\" onkeydown=\"tabuladorVertical(event,'buque'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_revalidacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_revalidacion'," + cont + ")\" ondblclick=\"show_fecha_revalidacion('" + row[45] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[45] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_previo_origen[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_previo_origen'," + cont + ")\" ondblclick=\"show_fecha_previo_origen('" + row[46] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[46] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_previo_destino[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_previo_destino'," + cont + ")\" ondblclick=\"show_fecha_previo_destino('" + row[47] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[47] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_resultado_previo[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_resultado_previo'," + cont + ")\" ondblclick=\"show_fecha_resultado_previo('" + row[48] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[48] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"proforma_final[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'proforma_final'," + cont + ")\" ondblclick=\"show_proforma_final('" + row[49] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[49] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"permiso[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'permiso'," + cont + ")\" ondblclick=\"show_permiso(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[50] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_envio[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_envio'," + cont + ")\" ondblclick=\"show_fecha_envio('" + row[51] + "','fecha_envio'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[51] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_perm[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_perm'," + cont + ")\" ondblclick=\"show_fecha_recepcion_perm('" + row[52] + "','fecha_recepcion_perm'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[52] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_activacion_perm[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_activacion_perm'," + cont + ")\" ondblclick=\"show_fecha_activacion_perm('" + row[53] + "','fecha_activacion_perm'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[53] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_permisos_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_permisos_aut'," + cont + ")\" ondblclick=\"show_fecha_permisos_aut('" + row[54] + "','fecha_permisos_aut'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[54] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"co_pref_arancelaria[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'co_pref_arancelaria'," + cont + ")\" ondblclick=\"show_co_pref_arancelaria(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[55] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"aplic_pref_arancelaria[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'aplic_pref_arancelaria'," + cont + ")\" ondblclick=\"show_aplic_pref_arancelaria(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[56] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"req_uva[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'req_uva'," + cont + ")\" ondblclick=\"show_req_uva(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[57] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"req_ca[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'req_ca'," + cont + ")\" ondblclick=\"show_req_ca(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[58] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_ca[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_ca'," + cont + ")\" ondblclick=\"show_fecha_recepcion_ca('" + row[59] + "','fecha_recepcion_ca'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[59] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'num_constancia_ca'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" onclick=\"show_num_constancia_ca('num_constancia_ca'," + cont + ")\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'monto_ca'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" contenteditable=\"true\" onclick=\"show_monto_ca('monto_ca'," + cont + ")\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_doc_completos[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_doc_completos'," + cont + ")\" ondblclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[62] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_pago_pedimento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_pago_pedimento'," + cont + ")\" ondblclick=\"show_fecha_pago_pedimento(" + cont + ")\" onpaste=\"handlePasteFechaPagoPedimento(event,"+cont+")\">" + row[63] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicitud_transporte[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicitud_transporte'," + cont + ")\" ondblclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[64] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion(" + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"modalidad[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'modalidad'," + cont + ")\" ondblclick=\"show_modalidad(" + cont + ")\" onpaste=\"handlePasteText(event)\">" + row[66] + "</td> "
-                            + " <td contenteditable=\"true\" id=\"resultado_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'resultado_modulacion'," + cont + ")\" ondblclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\" onpaste=\"handlePasteText(event)\">" + row[67] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_reconocimiento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_reconocimiento'," + cont + ")\" ondblclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[68] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_liberacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_liberacion'," + cont + ")\" ondblclick=\"show_fecha_liberacion('" + row[69] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[69] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_origen',"+cont+")\" onkeydown=\"tabuladorVertical(event,'sello_origen'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_final',"+cont+")\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_retencion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_retencion_aut'," + cont + ")\" ondblclick=\"show_fecha_retencion_aut('" + row[72] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[72] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_liberacion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_liberacion_aut'," + cont + ")\" ondblclick=\"show_fecha_liberacion_aut('" + row[73] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[73] + "</td> "
-                            + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoAtraso(this,'motivo_atraso',"+cont+")\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" id=\"motivo_atraso[" + cont + "]\" onpaste=\"handlePasteAlfanumericoMotivoAtraso(event)\">" + row[75] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoObservaciones(this,'observaciones',"+cont+")\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" onpaste=\"handlePasteAlfanumericoObservaciones(event)\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
+                    if (!excluirShipment) {
+                        salida += "<tr id=\"tr<" + cont + "\">"
+                                + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
+                                + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
+                                + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
+                                + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
+                                + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
+                                + "     <div id=\"mSgError" + cont + "\"></div> "
+                                + "   </div> "
+                                + " </th> "
+                                + " <td id=\"Responsable[" + cont + "]\">" + row[1] + "</td> "
+                                + " <td id=\"FinalDestination[" + cont + "]\">" + row[2] + "</td> "
+                                + " <td id=\"BrandDivision[" + cont + "]\">" + row[21] + "</td> "
+                                + " <td id=\"Division[" + cont + "]\">" + row[4] + "</td> "
+                                + " <td id=\"shipmentId[" + cont + "]\">" + row[5] + "</td> "
+                                + " <td id=\"containerId[" + cont + "]\">" + row[6] + "</td> "
+                                + " <td id=\"blAwbPro[" + cont + "]\">" + row[7] + "</td> "
+                                + " <td id=\"loadTypeFinal[" + cont + "]\">" + row[8] + "</td> "
+                                + " <td id=\"Quantity[" + cont + "]\">" + row[9] + "</td> "
+                                + " <td id=\"Pod[" + cont + "]\">" + row[19] + "</td> "
+                                + " <td id=\"EstDepartureFromPol[" + cont + "]\">" + row[11] + "</td> "
+                                + " <td id=\"EtaRealPortOfDischarge[" + cont + "]\">" + row[12] + "</td> "
+                                + " <td id=\"EstEtaDc[" + cont + "]\">" + row[22] + "</td> "
+                                + " <td id=\"InboundNotification[" + cont + "]\">" + row[14] + "</td> "
+                                + " <td id=\"Pol[" + cont + "]\">" + row[20] + "</td> "
+                                + " <td id=\"aa[" + cont + "]\">" + row[16] + "</td> "
+                                + " <td id=\"FechaMesVenta[" + cont + "]\">" + row[28] + "</td> "
+                                + " <td id=\"prioridad[" + cont + "]\">" + row[97] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoPais(this," + cont + ")\" onkeydown=\"tabuladorVertical(event,'pais_origen'," + cont + ")\" id=\"pais_origen[" + cont + "]\" onpaste=\"handlePasteText(event)\">" + row[31] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'size_container'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'size_container'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"size_container[" + cont + "]\">" + row[32] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'valor_usd'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"valor_usd[" + cont + "]\">" + row[33] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"eta_port_discharge[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'eta_port_discharge'," + cont + ")\" ondblclick=\"show_eta_port_discharge('" + row[34] + "'," + cont + ")\" onpaste=\"handlePasteFechaEtaPortDischarge(event," + cont + ")\">" + row[34] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'agente_aduanal'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'agente_aduanal'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"agente_aduanal[" + cont + "]\">" + row[35] + "</td> "
+                                + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'" + cont + "','pedimento_a1')\" onkeydown=\"tabuladorVertical(event,'pedimento_a1'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'" + cont + "','pedimento_a1')\" id=\"pedimento_a1[" + cont + "]\">" + row[36] + "</td> "
+                                + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'" + cont + "','pedimento_r1_1er')\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_1er'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'" + cont + "','pedimento_r1_1er')\" id=\"pedimento_r1_1er[" + cont + "]\">" + row[37] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoRectificacion(this,'motivo_rectificacion_1er'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_1er'," + cont + ")\" onpaste=\"handlePasteAlfanumericoMotivoRectificacion(event)\" id=\"motivo_rectificacion_1er[" + cont + "]\">" + row[38] + "</td> "
+                                + " <td contenteditable=\"true\" onkeypress=\"formatoNumero(event,'" + cont + "','pedimento_r1_2do')\" onkeydown=\"tabuladorVertical(event,'pedimento_r1_2do'," + cont + ")\" onpaste=\"handlePasteNumberPedimento(event,'" + cont + "','pedimento_r1_2do')\" id=\"pedimento_r1_2do[" + cont + "]\">" + row[39] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoRectificacion(this,'motivo_rectificacion_2do'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'motivo_rectificacion_2do'," + cont + ")\" onpaste=\"handlePasteAlfanumericoMotivoRectificacion(event)\" id=\"motivo_rectificacion_2do[" + cont + "]\">" + row[40] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_doc[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_doc'," + cont + ")\" ondblclick=\"show_fecha_recepcion_doc('" + row[41] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[41] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'recinto'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'recinto'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"recinto[" + cont + "]\">" + row[42] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'naviera'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'naviera'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"naviera[" + cont + "]\">" + row[43] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'buque'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'buque'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"buque[" + cont + "]\">" + row[44] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_revalidacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_revalidacion'," + cont + ")\" ondblclick=\"show_fecha_revalidacion('" + row[45] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[45] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_previo_origen[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_previo_origen'," + cont + ")\" ondblclick=\"show_fecha_previo_origen('" + row[46] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[46] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_previo_destino[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_previo_destino'," + cont + ")\" ondblclick=\"show_fecha_previo_destino('" + row[47] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[47] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_resultado_previo[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_resultado_previo'," + cont + ")\" ondblclick=\"show_fecha_resultado_previo('" + row[48] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[48] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"proforma_final[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'proforma_final'," + cont + ")\" ondblclick=\"show_proforma_final('" + row[49] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[49] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"permiso[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'permiso'," + cont + ")\" ondblclick=\"show_permiso(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[50] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_envio[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_envio'," + cont + ")\" ondblclick=\"show_fecha_envio('" + row[51] + "','fecha_envio'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[51] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_perm[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_perm'," + cont + ")\" ondblclick=\"show_fecha_recepcion_perm('" + row[52] + "','fecha_recepcion_perm'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[52] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_activacion_perm[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_activacion_perm'," + cont + ")\" ondblclick=\"show_fecha_activacion_perm('" + row[53] + "','fecha_activacion_perm'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[53] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_permisos_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_permisos_aut'," + cont + ")\" ondblclick=\"show_fecha_permisos_aut('" + row[54] + "','fecha_permisos_aut'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[54] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"co_pref_arancelaria[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'co_pref_arancelaria'," + cont + ")\" ondblclick=\"show_co_pref_arancelaria(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[55] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"aplic_pref_arancelaria[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'aplic_pref_arancelaria'," + cont + ")\" ondblclick=\"show_aplic_pref_arancelaria(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[56] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"req_uva[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'req_uva'," + cont + ")\" ondblclick=\"show_req_uva(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[57] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"req_ca[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'req_ca'," + cont + ")\" ondblclick=\"show_req_ca(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[58] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recepcion_ca[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recepcion_ca'," + cont + ")\" ondblclick=\"show_fecha_recepcion_ca('" + row[59] + "','fecha_recepcion_ca'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[59] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'num_constancia_ca'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" onclick=\"show_num_constancia_ca('num_constancia_ca'," + cont + ")\" id=\"num_constancia_ca[" + cont + "]\">" + row[60] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'monto_ca'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" contenteditable=\"true\" onclick=\"show_monto_ca('monto_ca'," + cont + ")\" id=\"monto_ca[" + cont + "]\">" + row[61] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_doc_completos[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_doc_completos'," + cont + ")\" ondblclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[62] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_pago_pedimento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_pago_pedimento'," + cont + ")\" ondblclick=\"show_fecha_pago_pedimento(" + cont + ")\" onpaste=\"handlePasteFechaPagoPedimento(event," + cont + ")\">" + row[63] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicitud_transporte[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicitud_transporte'," + cont + ")\" ondblclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[64] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion(" + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
+                                + " <td contenteditable=\"true\" id=\"modalidad[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'modalidad'," + cont + ")\" ondblclick=\"show_modalidad(" + cont + ")\" onpaste=\"handlePasteText(event)\">" + row[66] + "</td> "
+                                + " <td contenteditable=\"true\" id=\"resultado_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'resultado_modulacion'," + cont + ")\" ondblclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\" onpaste=\"handlePasteText(event)\">" + row[67] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_reconocimiento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_reconocimiento'," + cont + ")\" ondblclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[68] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_liberacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_liberacion'," + cont + ")\" ondblclick=\"show_fecha_liberacion('" + row[69] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[69] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_origen'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'sello_origen'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"sello_origen[" + cont + "]\">" + row[70] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumerico(this,'sello_final'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'sello_final'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"sello_final[" + cont + "]\">" + row[71] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_retencion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_retencion_aut'," + cont + ")\" ondblclick=\"show_fecha_retencion_aut('" + row[72] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[72] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_liberacion_aut[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_liberacion_aut'," + cont + ")\" ondblclick=\"show_fecha_liberacion_aut('" + row[73] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[73] + "</td> "
+                                + " <td onmouseover=\"formComplet('" + AgentType + "'," + cont + ")\"><select class=\"form-control\" style=\"border: none; outline: none;\" id=\"estatus_operacion[" + cont + "]\" name=\"estatus_operacion[" + cont + "]\" value=\"" + row[74] + "\"> <option value=\"" + row[98] + "\">" + row[74] + "</option>" + listStatusOperationEvent + "</select></td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoMotivoAtraso(this,'motivo_atraso'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'motivo_atraso'," + cont + ")\" id=\"motivo_atraso[" + cont + "]\" onpaste=\"handlePasteAlfanumericoMotivoAtraso(event)\">" + row[75] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoObservaciones(this,'observaciones'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'observaciones'," + cont + ")\" onpaste=\"handlePasteAlfanumericoObservaciones(event)\" id=\"observaciones[" + cont + "]\">" + row[76] + "</td> ";
 
-                if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
+                        if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
 
-                    salida += " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_nova[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_nova'," + cont + ")\" ondblclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[77] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_globe_trade_sd[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_globe_trade_sd'," + cont + ")\" ondblclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[78] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_archivo_m[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_archivo_m'," + cont + ")\" ondblclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[80] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicit_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicit_manip'," + cont + ")\" ondblclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[81] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_manip'," + cont + ")\" ondblclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[82] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_confirm_clave_pedim[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_confirm_clave_pedim'," + cont + ")\" ondblclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[83] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recep_increment[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recep_increment'," + cont + ")\" ondblclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[84] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumeroT_E(event)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" onpaste=\"handlePasteNumberT_E(event)\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_inbound[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_inbound'," + cont + ")\" ondblclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[86] + "</td> ";
-                }
+                            salida += " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_nova[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_nova'," + cont + ")\" ondblclick=\"show_llegada_a_nova('" + row[77] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[77] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"llegada_a_globe_trade_sd[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'llegada_a_globe_trade_sd'," + cont + ")\" ondblclick=\"show_llegada_a_globe_trade_sd('" + row[78] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[78] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'archivo_m'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"archivo_m[" + cont + "]\">" + row[79] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_archivo_m[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_archivo_m'," + cont + ")\" ondblclick=\"show_fecha_archivo_m('" + row[80] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[80] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicit_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicit_manip'," + cont + ")\" ondblclick=\"show_fecha_solicit_manip('" + row[81] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[81] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_manip[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_manip'," + cont + ")\" ondblclick=\"show_fecha_vencim_manip('" + row[82] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[82] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_confirm_clave_pedim[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_confirm_clave_pedim'," + cont + ")\" ondblclick=\"show_fecha_confirm_clave_pedim('" + row[83] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[83] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_recep_increment[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_recep_increment'," + cont + ")\" ondblclick=\"show_fecha_recep_increment('" + row[84] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[84] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarNumeroT_E(event)\" onkeydown=\"tabuladorVertical(event,'t_e'," + cont + ")\" onpaste=\"handlePasteNumberT_E(event)\" id=\"t_e[" + cont + "]\">" + row[85] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_vencim_inbound[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_vencim_inbound'," + cont + ")\" ondblclick=\"show_fecha_vencim_inbound('" + row[86] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[86] + "</td> ";
+                        }
 
-                if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
+                        if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-                    salida += " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"transferencia[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'transferencia'," + cont + ")\" ondblclick=\"show_transferencia(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[89] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_inicio_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_inicio_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[90] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_termino_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_termino_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[91] + "</td> "
-                            + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" oninput=\"parametrizacionValoresEventoInput('hora_termino_etiquetado'," + cont + ")\" autocomplete=\"off\"></td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
-                            + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'proveedor_carga',"+cont+")\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
-                }
+                            salida += " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'no_bultos'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"no_bultos[" + cont + "]\">" + row[87] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarNumero(event)\" onkeydown=\"tabuladorVertical(event,'peso_kg'," + cont + ")\" onpaste=\"handlePasteNumber(event)\" id=\"peso_kg[" + cont + "]\">" + row[88] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"transferencia[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'transferencia'," + cont + ")\" ondblclick=\"show_transferencia(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[89] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_inicio_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_inicio_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[90] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_termino_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_termino_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[91] + "</td> "
+                                    + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" oninput=\"parametrizacionValoresEventoInput('hora_termino_etiquetado'," + cont + ")\" autocomplete=\"off\"></td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
+                                    + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'proveedor_carga'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
+                        }
 
-                    salida += " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
-                            + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
-                            + "</tr>";
+                        salida += " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
+                                + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
+                                + "</tr>";
 
-                    cont++;
+                        cont++;
+
+                    }       
+                    
                 }
             }
             

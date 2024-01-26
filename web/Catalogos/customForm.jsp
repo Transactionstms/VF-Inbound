@@ -94,7 +94,8 @@
                 String idPlantilla = "";
                 String namePlantilla = ""; /*Gral (26) | Logix(24) | Cusa(25)*/
                 int cont = 1;
-
+                
+                //Consultar Información de Agente Aduanal
                 if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                     for (String[] rowA : db.getResultado()) {
                         AgentType = rowA[0];
@@ -112,7 +113,6 @@
                 <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
                 <div class="columna6"></div>            
             </div> 
-            
             <!--<input class="form-control" type="text" id="rfcSupport" name="rfcSupport"  value=""  autocomplete="off" oninput="validarInput(this)" onkeyup="this.value = this.value.toUpperCase()">
             <pre id="rfcOK" style="font-family: Arial; font-weight: bold; color:#4d73d1;" size="1"></pre>
             -->
@@ -614,7 +614,22 @@
                 </div>
             </div>
         </div> 
-
+        
+        <!-- popup filtros -->
+        <div class="form-popup" id="viewFiltro">
+            <div class="row">  
+                <input type="text" id="buscadorFiltro" oninput="filtrarOpciones()" placeholder="Buscar">
+            </div>  
+            <div class="scroll-container-filtrer">
+                <div id="multiselect"></div> 
+                <!-- Rellenar Filtros / ConsultarCustoms.java --> 
+            </div>
+            <div class="contenedorFiltro"> 
+                <div class="columnaFiltro1"><button onclick="obtenerSeleccion()">Aceptar</button></div>
+                <div class="columnaFiltro2"><button onclick="closeForm()">Cancelar</button></div>
+            </div>
+        </div> 
+        
         <!-- Parametros - Customs -->
         <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
@@ -627,29 +642,85 @@
         <input type="hidden" name="idBodega" value="<%=idBodega%>" id="idBodega"/>
         <input type="hidden" name="idAction" value="<%=request.getContextPath()%>/plantillaExcel" id="idAction"/>
         <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
-        <a href=""></a>
+        
         <script>
-            let idAgenteAduanal = '<%=AgentType%>'; 
-            let fechaActual = '<%=fecha_actual%>';
+            function openForms(array_list) {
+                const popup = document.getElementById("viewFiltro");
+                let blocked = "";
+                
+                if(popup.style.display === 'block'){
+                    blocked = "none";
+                }else{
+                    blocked = "block";
+                }
+                
+                //Ocultar/Mostrar Popup
+                document.getElementById("viewFiltro").style.display = blocked;
+                
+                //Lista Inicial:
+                document.getElementById("multiselect").innerHTML = "<label><input type=\"checkbox\" id=\"seleccionarTodos\"> (Seleccionar Todo)</label>";
+                
+                var parts = array_list.split(',');
+
+                // Iterate over the array
+                for (var i = 0; i < parts.length; i++) {
+                    //Rellenar Filtros
+                    document.getElementById("multiselect").innerHTML += "<label><input type=\"checkbox\" onclick=\"selectedAll()\" value=\"" + parts[i] + "\"> " + parts[i] + "</label>";
+                }
+                
+            }
+
+            function closeForm() {
+                document.getElementById("viewFiltro").style.display = "none";
+                selectedAll();
+            }
+        </script>
+        <script>
+            function obtenerSeleccion() {
+                const checkboxes = document.querySelectorAll('#multiselect input[type="checkbox"]:checked');
+                const seleccion = Array.from(checkboxes).map(checkbox => checkbox.value);
+                alert('Selección: ' + seleccion.join(', '));
+            }
+
+            function filtrarOpciones() {
+                const busqueda = document.getElementById('buscadorFiltro').value.toLowerCase();
+                const opciones = document.querySelectorAll('#multiselect label');
+
+                opciones.forEach(opcion => {
+                    const textoOpcion = opcion.textContent.toLowerCase();
+                    const estaIncluida = textoOpcion.includes(busqueda);
+                    opcion.style.display = estaIncluida ? 'block' : 'none';
+                });
+            }
+            
+            function selectedAll(){
+                const checkboxes = document.querySelectorAll('#multiselect input[type="checkbox"]');
+                checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            }
+        </script>
+        <script>
+            //Parametros: Validaciones
+                let idAgenteAduanal = '<%=AgentType%>'; 
+                let fechaActual = '<%=fecha_actual%>'; 
         </script>
         <!-- JavaScript files-->
         <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->
         <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Validaciones Celdas -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
         <!-- Elementos Html Celdas -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
         <!-- Upload/Download Excel -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
         <!-- Multiselect -->
-        <script src="<%=request.getContextPath()%>/lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
+        <script src="../lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- Calendarios -->
-        <script src="<%=request.getContextPath()%>/lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
+        <script src="../lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

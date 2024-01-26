@@ -101,10 +101,12 @@ public class InsertarCustomsForms extends HttpServlet {
             String resultado_modulacion = "";
             String sello_origen = "";
             String sello_final = "";
-            String estatus_operacion = "";
+            String estatus_operacion_actual = "";
             String motivo_atraso = "";
             String observaciones = "";
             String fy = "";
+            String estatus_importado = "19";
+            boolean addFechaImportacion = false;
           
           
           //Parametros Logix
@@ -308,7 +310,7 @@ public class InsertarCustomsForms extends HttpServlet {
                       fecha_liberacion_aut = sdfDestination.format(date19);                                                          //parse the date into another format
                   }
                   
-                  estatus_operacion = request.getParameter("estatus_operacion[" + i + "]").trim();         
+                  estatus_operacion_actual = request.getParameter("estatus_operacion[" + i + "]").trim();         
                   motivo_atraso = request.getParameter("motivo_atraso[" + i + "]").trim();             
                   observaciones = request.getParameter("observaciones[" + i + "]").trim(); 
                   fy = request.getParameter("fy[" + i + "]").trim();
@@ -393,6 +395,26 @@ public class InsertarCustomsForms extends HttpServlet {
                 proveedor_carga = request.getParameter("proveedor_carga[" + i + "]").trim(); 
             
             }
+           
+              //Consultar Estatus de Operación del shipment
+
+                      
+                      if (estatus_operacion_actual.equals(estatus_importado)) { 
+                      
+                          if (db.doDB(fac.consultarEstatusImportacion(shipmentId))) {
+                              for (String[] estatus_shipment : db.getResultado()) { 
+                                  
+                                  if(estatus_operacion_actual.equals(estatus_shipment[0])){
+                                     addFechaImportacion = false;  //shipment con fecha de importación.
+                                  }else{
+                                     addFechaImportacion = true;   //shipment sin fecha de importación.
+                                  }
+                                  
+                              }
+                          }  
+                          
+                      } //false: sin registro de fecha/cualquier estatus
+                      
             
             //Consultar existencia de Shipmentd para el tipo de registro:
             String valExist = "SELECT DISTINCT CUSTREG_ID FROM TRA_INB_CUSTOMS WHERE SHIPMENT_ID = '" + shipmentId + "'"; //";
@@ -482,7 +504,7 @@ public class InsertarCustomsForms extends HttpServlet {
                        // if(!fecha_liberacion_aut.trim().equals("")){
                                 insertarCustoms += " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), ";   
                         //}        
-                                insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion + "', "          
+                                insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion_actual + "', "          
                                                  + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                                  + " OBSERVACIONES = '" + observaciones + "', ";   
             
@@ -533,6 +555,10 @@ public class InsertarCustomsForms extends HttpServlet {
                                                  + " PROVEEDOR = '" + proveedor + "', "  
                                                  + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
                 }
+                
+                if(addFechaImportacion){
+                                insertarCustoms += " FECHA_IMPORTACION = TO_DATE(SYSDATE, 'DD/MM/YYYY'), ";
+                }               
                                 insertarCustoms += " FY = '" + fy + "', " 
                                                  + " AGENTE_ADUANAL_ID = '" + idAgenteAduanal + "', " 
                                                  + " PRIORIDAD = '" + prioridad + "', "
@@ -676,6 +702,10 @@ public class InsertarCustomsForms extends HttpServlet {
                                                  + " PROVEEDOR, " 
                                                  + " PROVEEDOR_CARGA, ";
                 } 
+                
+                if(addFechaImportacion){
+                                 insertarCustoms += " FECHA_IMPORTACION, ";
+                }                 
                                  insertarCustoms += " FY, "
                                                   + " AGENTE_ADUANAL_ID, "
                                                   + " PRIORIDAD, "
@@ -769,7 +799,7 @@ public class InsertarCustomsForms extends HttpServlet {
                         if(!fecha_liberacion_aut.trim().equals("")){
                                  insertarCustoms += " TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), "; 
                         }                 
-                                 insertarCustoms +=  " '" + estatus_operacion + "', "         
+                                 insertarCustoms +=  " '" + estatus_operacion_actual + "', "         
                                                    + " '" + motivo_atraso + "', "             
                                                    + " '" + observaciones + "', "; 
                 
@@ -817,6 +847,10 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + proveedor + "', "
                                                   + " '" + proveedor_carga + "', "; 
                 }        
+                
+                if(addFechaImportacion){
+                                insertarCustoms  += " TO_DATE(SYSDATE, 'DD/MM/YYYY'), ";
+                }                
                                 insertarCustoms  += " '" + fy + "', "
                                                   + " '" + idAgenteAduanal + "', "
                                                   + " '" + prioridad + "', "
@@ -825,9 +859,20 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + UserId + "') ";  
             }      
                     boolean oraOut1 = oraDB.execute(insertarCustoms);  
+                
+                
+                    //Actualización de estatus operación y fecha:
+                    regPrioridad = " UPDATE TRA_INC_GTN_TEST SET "
+                                 + " ESTATUS='" + estatus_operacion_actual + "', ";
                     
-                    regPrioridad = " UPDATE TRA_INC_GTN_TEST SET ESTATUS='" + estatus_operacion + "', PRIORIDAD = '"+ prioridad +"' WHERE SHIPMENT_ID = '" + shipmentId + "'";
-                    boolean oraOut2 = oraDB.execute(regPrioridad);
+                if(addFechaImportacion){    
+                   regPrioridad += " FECHA_IMPORTACION = TO_DATE(SYSDATE, 'DD/MM/YYYY'), ";
+                }             
+                
+                   regPrioridad += " PRIORIDAD = '"+ prioridad +"' "
+                                 + " WHERE SHIPMENT_ID = '" + shipmentId + "'";
+                   
+                   boolean oraOut2 = oraDB.execute(regPrioridad);
                 
                     
         /************************************* Proceso para activar semaforo /*************************************/
