@@ -1,0 +1,66 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26 ene 2024, 21:05:48
+    Author     : Desarrollo Tacts
+*/
+    /********************** Filtros **********************/
+    
+    /* Set a fixed height for the container */
+    .scroll-container-filtrer {
+        height: 250px; /* You can adjust the height as needed */
+        width: 200px;
+        overflow-y: scroll; /* Enable vertical scrolling */
+        border: 1px solid #ccc; /* Optional: Add a border for styling */
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+
+    /* view Filtro */
+    #viewFiltro {
+        display: none; /* Inicialmente oculto */
+        border: 1px solid white;
+    }
+
+    /*Fitros*/
+    #form-popup {
+        display: none;
+        position: absolute; /*Se visualiza por encima de los demas elementos html*/
+        top: 125px; /* Ajusta según sea necesario */
+        left: 150px;
+        border: 1px solid #d1cfcf;
+        z-index: 9;
+        background-color: #fff;
+    }
+
+    /*Buscador*/
+    #buscadorFiltro {
+      width: 200px;
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    /*Controles Filtros*/
+    .contenedorFiltro {
+      display: flex;
+      padding: 10px;
+    }
+
+    .columnaFiltro1 {
+      flex: 1;
+      text-align: right;
+    }
+
+    .columnaFiltro2 {
+      flex: 1;
+      text-align: right;
+    }
+    
+
+
