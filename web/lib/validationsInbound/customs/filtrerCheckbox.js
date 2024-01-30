@@ -47,7 +47,7 @@ function filtrerCheckbox(element, tipoFiltro) {
     const popup = document.getElementById("form-popup-"+tipoFiltro);
     
     /*Limpiar buscador de filtros*/
-    document.getElementById("buscadorFiltro").value="";
+    //cleanSearch(tipoFiltro);
 
     if (popup.style.display === 'block') {
         blocked = "none";
@@ -140,7 +140,7 @@ function modificar_coordenadas(top, left, cont) {
 }
 
 function filtrarOpciones(cont) {
-    const busqueda = document.getElementById('buscadorFiltro').value.toLowerCase();
+    const busqueda = document.getElementById('buscadorFiltro-'+cont).value.toLowerCase();
     const opciones = document.querySelectorAll('#multiselect'+cont+' label');
 
     /*iterar lista de checkbox para su selección*/
@@ -172,16 +172,16 @@ async function obtenerSeleccion(cont) {
 
     // Conversión de Array a String
     let data = String(seleccion);
+    const sendArray = String(data).replaceAll('on', '');
 
     // Dividir la cadena en un array usando la coma como delimitador
-    var array = data.split(',');
+    var array = sendArray.split(',');
 
     // Eliminar duplicados y valores vacíos usando un conjunto (Set)
     var arrayCheckbox = [...new Set(array.filter(item => item.trim() !== ''))];
 
     // Unir el array sin duplicados y valores vacíos en una cadena usando la coma como separador
     var sendData = arrayCheckbox.join(',');
-
 
     if (sendData.replaceAll(",", "") !== null) {
         console.log('Selección: ' + sendData);
@@ -564,7 +564,7 @@ function closeForm(cont) {
     checkboxes.forEach(checkbox => checkbox.checked = this.checked); */
     
     /*Limpiar buscador de filtros*/
-    document.getElementById("buscadorFiltro").value="";
+    //cleanSearch(cont);
 }
 
 function creacionFiltro(tipoFiltro) {
@@ -758,7 +758,7 @@ function createNewElementFiltrer(cont){
     // popup filtros
     nuevoElemento.innerHTML =  "<div id=\"form-popup-"+cont+"\"> "
                               +"    <div class=\"row\"> "  
-                              +"        <input type=\"text\" id=\"buscadorFiltro\" oninput=\"filtrarOpciones("+cont+")\" placeholder=\"Buscar\"> "
+                              +"        <input type=\"text\" id=\"buscadorFiltro-"+cont+"\" oninput=\"filtrarOpciones("+cont+")\" placeholder=\"Buscar\"> "
                               +"    </div> "  
                               +"    <div class=\"scroll-container-filtrer\"> "
                               +"        <div id=\"multiselect"+cont+"\"> "
@@ -777,6 +777,7 @@ function createNewElementFiltrer(cont){
     //validar si el elemento html, se creo en el body
     if (document.body.contains(nuevoElemento)) {
         newElement = true;
+        createNewStyleSearch(cont);
     }else{
         newElement = false;
     }
@@ -841,4 +842,40 @@ function validateCheckboxPrimary(numColumna,contTotalCheckbox){
         
     }
     
+}
+
+function createNewStyleSearch(cont){
+    // Create a style element
+    var styleElement = document.createElement('style');
+
+    // Set the type attribute to 'text/css'
+    styleElement.type = 'text/css';
+
+    // Definir las reglas del estilo
+    var cssRules = `
+        #buscadorFiltro-`+cont+` {
+          width: 200px;
+          display: block;
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+    `;
+
+    // Add the CSS rules to the style element
+    if (styleElement.styleSheet) {
+        // For Internet Explorer
+        styleElement.styleSheet.cssText = cssRules;
+    } else {
+        // For other browsers
+        styleElement.appendChild(document.createTextNode(cssRules));
+    }
+
+    // Append the style element to the head of the document
+    document.head.appendChild(styleElement);
+}
+
+function cleanSearch(cont){
+    document.getElementById("buscadorFiltro-"+cont).value='';
 }

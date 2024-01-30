@@ -258,19 +258,19 @@ public class ConsultarCustoms extends HttpServlet {
                 }
             }
             if (!columna_evento.equals("")) {
-                String[] selected = columna_evento.split(",");
+                String[] selected = columna_evento.split("@");
                 for (String a : selected) {
                     caramelo_evento += a + ",";
                 }
             }
             if (!columna_responsable.equals("")) {
-                String[] selected = columna_responsable.split(",");
+                String[] selected = columna_responsable.split("@");
                 for (String a : selected) {
                     caramelo_responsable += "'" + a + "',";
                 }
             }
             if (!columna_final_destination.equals("")) {
-                String[] selected = columna_final_destination.split(",");
+                String[] selected = columna_final_destination.split("@");
                 for (String a : selected) {
                     caramelo_final_destination += "'" + a + "',";
                 }
@@ -1054,8 +1054,8 @@ public class ConsultarCustoms extends HttpServlet {
                     /*9*/ + " GTN.LOAD_TYPE_FINAL, "
                     /*10*/ + " SQ.SUMA, "
                     /*11*/ + " TIP1.NOMBRE_POD, "
-                    /*12*/ + " REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*13*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*12*/ + " REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY'),' '), '01/01/1970', ' '), "
+                    /*13*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY'),' '), '01/01/1970', ' '), "
                     /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
                     /*15*/ + " REPLACE(NVL(TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*16*/ + " TIP2.NOMBRE_POL, "
@@ -1205,13 +1205,13 @@ public class ConsultarCustoms extends HttpServlet {
                 sql += " AND TIP1.NOMBRE_POD IN (" + caramelo_pod + ") ";
             }
             if (!caramelo_estDepartFromPol.equals("")) { //Departure Pol 
-                sql += " AND GTN.EST_DEPARTURE_POL IN (" + caramelo_estDepartFromPol + ") ";
+                sql += " AND TO_DATE(trunc(GTN.EST_DEPARTURE_POL),'DD/MM/YY') = TO_DATE(" + caramelo_estDepartFromPol + ",'MM/DD/YY') ";
             }
             if (!caramelo_etaRealPortOfDischarge.equals("")) { //ETA REAL Port of Discharge
                 sql += " AND TO_DATE(trunc(GTN.ETA_PORT_DISCHARGE),'DD/MM/YY') = TO_DATE(" + caramelo_etaRealPortOfDischarge + ",'MM/DD/YY') ";
             }
             if (!caramelo_estEtaDc.equals("")) { //Est. Eta DC
-                sql += " AND GTN.ETA_PLUS2 IN (" + caramelo_estEtaDc + ") ";
+                sql += " AND TO_DATE(trunc(GTN.ETA_PLUS2),'DD/MM/YY') = TO_DATE(" + caramelo_estEtaDc + ",'MM/DD/YY') ";
             }
             if (!caramelo_inboundNotification.equals("")) { //Inbound notification
                 sql += " AND TO_DATE(trunc(GTN.FECHA_CAPTURA),'DD/MM/YYYY') = TO_DATE(" + caramelo_inboundNotification + ",'MM/DD/YYYY') ";
