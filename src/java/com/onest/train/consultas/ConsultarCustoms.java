@@ -48,183 +48,93 @@ public class ConsultarCustoms extends HttpServlet {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy");
             String dateDay = formato.format(date);
 
-            String AgentType = request.getParameter("AgentType");
-            String filterType = request.getParameter("filterType");
+            String columna_referenciaAA = request.getParameter("columna_referenciaAA").trim();
+            String columna_evento = request.getParameter("columna_evento").trim();
+            String columna_responsable = request.getParameter("columna_responsable").trim();
+            String columna_final_destination = request.getParameter("columna_final_destination").trim();
+            String columna_brand_division = request.getParameter("columna_brand_division").trim();
+            String columna_division = request.getParameter("columna_division").trim();
+            String columna_shipmentId = request.getParameter("columna_shipmentId").trim();
+            String columna_containerId = request.getParameter("columna_containerId").trim();
+            String columna_blAwbPro = request.getParameter("columna_blAwbPro").trim();
+            String columna_loadTypeFinal = request.getParameter("columna_loadTypeFinal").trim();
+            String columna_quantity = request.getParameter("columna_quantity").trim();
+            String columna_pod = request.getParameter("columna_pod").trim();
+            String columna_estDepartFromPol = request.getParameter("columna_estDepartFromPol").trim();
+            String columna_etaRealPortOfDischarge = request.getParameter("columna_etaRealPortOfDischarge").trim();
+            String columna_estEtaDc = request.getParameter("columna_estEtaDc").trim();
+            String columna_inboundNotification = request.getParameter("columna_inboundNotification").trim();
+            String columna_pol = request.getParameter("columna_pol").trim();
+            String columna_aa = request.getParameter("columna_aa").trim();
+            String columna_fechaMesVenta = request.getParameter("columna_fechaMesVenta").trim();
+            String columna_prioridad = request.getParameter("columna_prioridad").trim();
+            String columna_pais_origen = request.getParameter("columna_pais_origen").trim();
+            String columna_size_container = request.getParameter("columna_size_container").trim();
+            String columna_valor_usd = request.getParameter("columna_valor_usd").trim();
+            String columna_eta_port_discharge = request.getParameter("columna_eta_port_discharge").trim();
+            String columna_agente_aduanal = request.getParameter("columna_agente_aduanal").trim();
+            String columna_pedimento_a1 = request.getParameter("columna_pedimento_a1").trim();
+            String columna_pedimento_r1_1er = request.getParameter("columna_pedimento_r1_1er").trim();
+            String columna_motivo_rectificacion_1er = request.getParameter("columna_motivo_rectificacion_1er").trim();
+            String columna_pedimento_r1_2do = request.getParameter("columna_pedimento_r1_2do").trim();
+            String columna_motivo_rectificacion_2do = request.getParameter("columna_motivo_rectificacion_2do").trim();
+            String columna_fecha_recepcion_doc = request.getParameter("columna_fecha_recepcion_doc").trim();
+            String columna_recinto = request.getParameter("columna_recinto").trim();
+            String columna_naviera = request.getParameter("columna_naviera").trim();
+            String columna_buque = request.getParameter("columna_buque").trim();
+            String columna_fecha_revalidacion = request.getParameter("columna_fecha_revalidacion").trim();
+            String columna_fecha_previo_origen = request.getParameter("columna_fecha_previo_origen").trim();
+            String columna_fecha_previo_destino = request.getParameter("columna_fecha_previo_destino").trim();
+            String columna_fecha_resultado_previo = request.getParameter("columna_fecha_resultado_previo").trim();
+            String columna_proforma_final = request.getParameter("columna_proforma_final").trim();
+            String columna_permiso = request.getParameter("columna_permiso").trim();
+            String columna_fecha_envio = request.getParameter("columna_fecha_envio").trim();
+            String columna_fecha_recepcion_perm = request.getParameter("columna_fecha_recepcion_perm").trim();
+            String columna_fecha_activacion_perm = request.getParameter("columna_fecha_activacion_perm").trim();
+            String columna_fecha_permisos_aut = request.getParameter("columna_fecha_permisos_aut").trim();
+            String columna_co_pref_arancelaria = request.getParameter("columna_co_pref_arancelaria").trim();
+            String columna_aplic_pref_arancelaria = request.getParameter("columna_aplic_pref_arancelaria").trim();
+            String columna_req_uva = request.getParameter("columna_req_uva").trim();
+            String columna_req_ca = request.getParameter("columna_req_ca").trim();
+            String columna_fecha_recepcion_ca = request.getParameter("columna_fecha_recepcion_ca").trim();
+            String columna_num_constancia_ca = request.getParameter("columna_num_constancia_ca").trim();
+            String columna_monto_ca = request.getParameter("columna_monto_ca").trim();
+            String columna_fecha_doc_completos = request.getParameter("columna_fecha_doc_completos").trim();
+            String columna_fecha_pago_pedimento = request.getParameter("columna_fecha_pago_pedimento").trim();
+            String columna_fecha_solicitud_transporte = request.getParameter("columna_fecha_solicitud_transporte").trim();
+            String columna_fecha_modulacion = request.getParameter("columna_fecha_modulacion").trim();
+            String columna_modalidad = request.getParameter("columna_modalidad").trim();
+            String columna_resultado_modulacion = request.getParameter("columna_resultado_modulacion").trim();
+            String columna_fecha_reconocimiento = request.getParameter("columna_fecha_reconocimiento").trim();
+            String columna_fecha_liberacion = request.getParameter("columna_fecha_liberacion").trim();
+            String columna_sello_origen = request.getParameter("columna_sello_origen").trim();
+            String columna_sello_final = request.getParameter("columna_sello_final").trim();
+            String columna_fecha_retencion_aut = request.getParameter("columna_fecha_retencion_aut").trim();
+            String columna_fecha_liberacion_aut = request.getParameter("columna_fecha_liberacion_aut").trim();
+            String columna_estatus_operacion = request.getParameter("columna_estatus_operacion").trim();
+            String columna_motivo_atraso = request.getParameter("columna_motivo_atraso").trim();
+            String columna_observaciones = request.getParameter("columna_observaciones").trim();
+            String columna_llegada_a_nova = request.getParameter("columna_llegada_a_nova").trim();
+            String columna_llegada_a_globe_trade_sd = request.getParameter("columna_llegada_a_globe_trade_sd").trim();
+            String columna_archivo_m = request.getParameter("columna_archivo_m").trim();
+            String columna_fecha_archivo_m = request.getParameter("columna_fecha_archivo_m").trim();
+            String columna_fecha_solicit_manip = request.getParameter("columna_fecha_solicit_manip").trim();
+            String columna_fecha_vencim_manip = request.getParameter("columna_fecha_vencim_manip").trim();
+            String columna_fecha_confirm_clave_pedim = request.getParameter("columna_fecha_confirm_clave_pedim").trim();
+            String columna_fecha_recep_increment = request.getParameter("columna_fecha_recep_increment").trim();
+            String columna_t_e = request.getParameter("columna_t_e").trim();
+            String columna_fecha_vencim_inbound = request.getParameter("columna_fecha_vencim_inbound").trim();
+            String columna_no_bultos = request.getParameter("columna_no_bultos").trim();
+            String columna_peso_kg = request.getParameter("columna_peso_kg").trim();
+            String columna_transferencia = request.getParameter("columna_transferencia").trim();
+            String columna_fecha_inicio_etiquetado = request.getParameter("columna_fecha_inicio_etiquetado").trim();
+            String columna_fecha_termino_etiquetado = request.getParameter("columna_fecha_termino_etiquetado").trim();
+            String columna_hora_termino_etiquetado = request.getParameter("columna_hora_termino_etiquetado").trim();
+            String columna_proveedor = request.getParameter("columna_proveedor").trim();
+            String columna_proveedor_carga = request.getParameter("columna_proveedor_carga").trim();
+            String columna_fy = request.getParameter("columna_fy").trim();
             
-            String selected_referenciaAA = request.getParameter("selected_referenciaAA").trim();
-            String selected_evento = request.getParameter("selected_evento").trim();
-            String selected_responsable = request.getParameter("selected_responsable").trim();
-            String selected_final_destination = request.getParameter("selected_final_destination").trim();
-            String selected_brand_division = request.getParameter("selected_brand_division").trim();
-            String selected_division = request.getParameter("selected_division").trim();
-            String selected_shipmentId = request.getParameter("selected_shipmentId").trim();
-            String selected_containerId = request.getParameter("selected_containerId").trim();
-            String selected_blAwbPro = request.getParameter("selected_blAwbPro").trim();
-            String selected_loadTypeFinal = request.getParameter("selected_loadTypeFinal").trim();
-            String selected_quantity = request.getParameter("selected_quantity").trim();
-            String selected_pod = request.getParameter("selected_pod").trim();
-            String selected_estDepartFromPol = request.getParameter("selected_estDepartFromPol").trim();
-            String selected_etaRealPortOfDischarge = request.getParameter("selected_etaRealPortOfDischarge").trim();
-            String selected_estEtaDc = request.getParameter("selected_estEtaDc").trim();
-            String selected_inboundNotification = request.getParameter("selected_inboundNotification").trim();
-            String selected_pol = request.getParameter("selected_pol").trim();
-            String selected_aa = request.getParameter("selected_aa").trim();
-            String selected_fechaMesVenta = request.getParameter("selected_fechaMesVenta").trim();
-            String selected_prioridad = request.getParameter("selected_prioridad").trim();
-            String selected_pais_origen = request.getParameter("selected_pais_origen").trim();
-            String selected_size_container = request.getParameter("selected_size_container").trim();
-            String selected_valor_usd = request.getParameter("selected_valor_usd").trim();
-            String selected_eta_port_discharge = request.getParameter("selected_eta_port_discharge").trim();
-            String selected_agente_aduanal = request.getParameter("selected_agente_aduanal").trim();
-            String selected_pedimento_a1 = request.getParameter("selected_pedimento_a1").trim();
-            String selected_pedimento_r1_1er = request.getParameter("selected_pedimento_r1_1er").trim();
-            String selected_motivo_rectificacion_1er = request.getParameter("selected_motivo_rectificacion_1er").trim();
-            String selected_pedimento_r1_2do = request.getParameter("selected_pedimento_r1_2do").trim();
-            String selected_motivo_rectificacion_2do = request.getParameter("selected_motivo_rectificacion_2do").trim();
-            String selected_fecha_recepcion_doc = request.getParameter("selected_fecha_recepcion_doc").trim();
-            String selected_recinto = request.getParameter("selected_recinto").trim();
-            String selected_naviera = request.getParameter("selected_naviera").trim();
-            String selected_buque = request.getParameter("selected_buque").trim();
-            String selected_fecha_revalidacion = request.getParameter("selected_fecha_revalidacion").trim();
-            String selected_fecha_previo_origen = request.getParameter("selected_fecha_previo_origen").trim();
-            String selected_fecha_previo_destino = request.getParameter("selected_fecha_previo_destino").trim();
-            String selected_fecha_resultado_previo = request.getParameter("selected_fecha_resultado_previo").trim();
-            String selected_proforma_final = request.getParameter("selected_proforma_final").trim();
-            String selected_permiso = request.getParameter("selected_permiso").trim();
-            String selected_fecha_envio = request.getParameter("selected_fecha_envio").trim();
-            String selected_fecha_recepcion_perm = request.getParameter("selected_fecha_recepcion_perm").trim();
-            String selected_fecha_activacion_perm = request.getParameter("selected_fecha_activacion_perm").trim();
-            String selected_fecha_permisos_aut = request.getParameter("selected_fecha_permisos_aut").trim();
-            String selected_co_pref_arancelaria = request.getParameter("selected_co_pref_arancelaria").trim();
-            String selected_aplic_pref_arancelaria = request.getParameter("selected_aplic_pref_arancelaria").trim();
-            String selected_req_uva = request.getParameter("selected_req_uva").trim();
-            String selected_req_ca = request.getParameter("selected_req_ca").trim();
-            String selected_fecha_recepcion_ca = request.getParameter("selected_fecha_recepcion_ca").trim();
-            String selected_num_constancia_ca = request.getParameter("selected_num_constancia_ca").trim();
-            String selected_monto_ca = request.getParameter("selected_monto_ca").trim();
-            String selected_fecha_doc_completos = request.getParameter("selected_fecha_doc_completos").trim();
-            String selected_fecha_pago_pedimento = request.getParameter("selected_fecha_pago_pedimento").trim();
-            String selected_fecha_solicitud_transporte = request.getParameter("selected_fecha_solicitud_transporte").trim();
-            String selected_fecha_modulacion = request.getParameter("selected_fecha_modulacion").trim();
-            String selected_modalidad = request.getParameter("selected_modalidad").trim();
-            String selected_resultado_modulacion = request.getParameter("selected_resultado_modulacion").trim();
-            String selected_fecha_reconocimiento = request.getParameter("selected_fecha_reconocimiento").trim();
-            String selected_fecha_liberacion = request.getParameter("selected_fecha_liberacion").trim();
-            String selected_sello_origen = request.getParameter("selected_sello_origen").trim();
-            String selected_sello_final = request.getParameter("selected_sello_final").trim();
-            String selected_fecha_retencion_aut = request.getParameter("selected_fecha_retencion_aut").trim();
-            String selected_fecha_liberacion_aut = request.getParameter("selected_fecha_liberacion_aut").trim();
-            String selected_estatus_operacion = request.getParameter("selected_estatus_operacion").trim();
-            String selected_motivo_atraso = request.getParameter("selected_motivo_atraso").trim();
-            String selected_observaciones = request.getParameter("selected_observaciones").trim();
-            String selected_llegada_a_nova = request.getParameter("selected_llegada_a_nova").trim();
-            String selected_llegada_a_globe_trade_sd = request.getParameter("selected_llegada_a_globe_trade_sd").trim();
-            String selected_archivo_m = request.getParameter("selected_archivo_m").trim();
-            String selected_fecha_archivo_m = request.getParameter("selected_fecha_archivo_m").trim();
-            String selected_fecha_solicit_manip = request.getParameter("selected_fecha_solicit_manip").trim();
-            String selected_fecha_vencim_manip = request.getParameter("selected_fecha_vencim_manip").trim();
-            String selected_fecha_confirm_clave_pedim = request.getParameter("selected_fecha_confirm_clave_pedim").trim();
-            String selected_fecha_recep_increment = request.getParameter("selected_fecha_recep_increment").trim();
-            String selected_t_e = request.getParameter("selected_t_e").trim();
-            String selected_fecha_vencim_inbound = request.getParameter("selected_fecha_vencim_inbound").trim();
-            String selected_no_bultos = request.getParameter("selected_no_bultos").trim();
-            String selected_peso_kg = request.getParameter("selected_peso_kg").trim();
-            String selected_transferencia = request.getParameter("selected_transferencia").trim();
-            String selected_fecha_inicio_etiquetado = request.getParameter("selected_fecha_inicio_etiquetado").trim();
-            String selected_fecha_termino_etiquetado = request.getParameter("selected_fecha_termino_etiquetado").trim();
-            String selected_hora_termino_etiquetado = request.getParameter("selected_hora_termino_etiquetado").trim();
-            String selected_proveedor = request.getParameter("selected_proveedor").trim();
-            String selected_proveedor_carga = request.getParameter("selected_proveedor_carga").trim();
-            String selected_fy = request.getParameter("selected_fy").trim();
-            
-            //Objetos Multiselect:
-            HashSet<String> list_evento = new HashSet<String>();
-            HashSet<String> list_referenciaAA = new HashSet<String>();
-            HashSet<String> list_responsable = new HashSet<String>();
-            HashSet<String> list_finalDestination = new HashSet<String>();
-            HashSet<String> list_brandDivision = new HashSet<String>();
-            HashSet<String> list_division = new HashSet<String>();
-            HashSet<String> list_shipmentId = new HashSet<String>();
-            HashSet<String> list_containerId = new HashSet<String>();
-            HashSet<String> list_blAwbPro = new HashSet<String>();
-            HashSet<String> list_loadType = new HashSet<String>();
-            HashSet<String> list_quantity = new HashSet<String>();
-            HashSet<String> list_pod = new HashSet<String>();
-            HashSet<String> list_estDepartFromPol = new HashSet<String>();
-            HashSet<String> list_etaRealPortOfDischarge = new HashSet<String>();
-            HashSet<String> list_estEtaDc = new HashSet<String>();
-            HashSet<String> list_inboundNotification = new HashSet<String>();
-            HashSet<String> list_pol = new HashSet<String>();
-            HashSet<String> list_aa = new HashSet<String>();
-            HashSet<String> list_fechaMesVenta = new HashSet<String>();
-            HashSet<String> list_prioridad = new HashSet<String>();
-            HashSet<String> list_pais_origen = new HashSet<String>();
-            HashSet<String> list_size_container = new HashSet<String>();
-            HashSet<String> list_valor_usd = new HashSet<String>();
-            HashSet<String> list_eta_port_discharge = new HashSet<String>();
-            HashSet<String> list_agente_aduanal = new HashSet<String>();
-            HashSet<String> list_pedimento_a1 = new HashSet<String>();
-            HashSet<String> list_pedimento_r1_1er = new HashSet<String>();
-            HashSet<String> list_motivo_rectificacion_1er = new HashSet<String>();
-            HashSet<String> list_pedimento_r1_2do = new HashSet<String>();
-            HashSet<String> list_motivo_rectificacion_2do = new HashSet<String>();
-            HashSet<String> list_fecha_recepcion_doc = new HashSet<String>();
-            HashSet<String> list_recinto = new HashSet<String>();
-            HashSet<String> list_naviera = new HashSet<String>();
-            HashSet<String> list_buque = new HashSet<String>();
-            HashSet<String> list_fecha_revalidacion = new HashSet<String>();
-            HashSet<String> list_fecha_previo_origen = new HashSet<String>();
-            HashSet<String> list_fecha_previo_destino = new HashSet<String>();
-            HashSet<String> list_fecha_resultado_previo = new HashSet<String>();
-            HashSet<String> list_proforma_final = new HashSet<String>();
-            HashSet<String> list_permiso = new HashSet<String>();
-            HashSet<String> list_fecha_envio = new HashSet<String>();
-            HashSet<String> list_fecha_recepcion_perm = new HashSet<String>();
-            HashSet<String> list_fecha_activacion_perm = new HashSet<String>();
-            HashSet<String> list_fecha_permisos_aut = new HashSet<String>();
-            HashSet<String> list_co_pref_arancelaria = new HashSet<String>();
-            HashSet<String> list_aplic_pref_arancelaria = new HashSet<String>();
-            HashSet<String> list_req_uva = new HashSet<String>();
-            HashSet<String> list_req_ca = new HashSet<String>();
-            HashSet<String> list_fecha_recepcion_ca = new HashSet<String>();
-            HashSet<String> list_num_constancia_ca = new HashSet<String>();
-            HashSet<String> list_monto_ca = new HashSet<String>();
-            HashSet<String> list_fecha_doc_completos = new HashSet<String>();
-            HashSet<String> list_fecha_pago_pedimento = new HashSet<String>();
-            HashSet<String> list_fecha_solicitud_transporte = new HashSet<String>();
-            HashSet<String> list_fecha_modulacion = new HashSet<String>();
-            HashSet<String> list_modalidad = new HashSet<String>();
-            HashSet<String> list_resultado_modulacion = new HashSet<String>();
-            HashSet<String> list_fecha_reconocimiento = new HashSet<String>();
-            HashSet<String> list_fecha_liberacion = new HashSet<String>();
-            HashSet<String> list_sello_origen = new HashSet<String>();
-            HashSet<String> list_sello_final = new HashSet<String>();
-            HashSet<String> list_fecha_retencion_aut = new HashSet<String>();
-            HashSet<String> list_fecha_liberacion_aut = new HashSet<String>();
-            HashSet<String> list_estatus_operacion = new HashSet<String>();
-            HashSet<String> list_motivo_atraso = new HashSet<String>();
-            HashSet<String> list_observaciones = new HashSet<String>();
-            HashSet<String> list_llegada_a_nova = new HashSet<String>();
-            HashSet<String> list_llegada_a_globe_trade_sd = new HashSet<String>();
-            HashSet<String> list_archivo_m = new HashSet<String>();
-            HashSet<String> list_fecha_archivo_m = new HashSet<String>();
-            HashSet<String> list_fecha_solicit_manip = new HashSet<String>();
-            HashSet<String> list_fecha_vencim_manip = new HashSet<String>();
-            HashSet<String> list_fecha_confirm_clave_pedim = new HashSet<String>();
-            HashSet<String> list_fecha_recep_increment = new HashSet<String>();
-            HashSet<String> list_t_e = new HashSet<String>();
-            HashSet<String> list_fecha_vencim_inbound = new HashSet<String>();
-            HashSet<String> list_no_bultos = new HashSet<String>();
-            HashSet<String> list_peso_kg = new HashSet<String>();
-            HashSet<String> list_transferencia = new HashSet<String>();
-            HashSet<String> list_fecha_inicio_etiquetado = new HashSet<String>();
-            HashSet<String> list_fecha_termino_etiquetado = new HashSet<String>();
-            HashSet<String> list_hora_termino_etiquetado = new HashSet<String>();
-            HashSet<String> list_proveedor = new HashSet<String>();
-            HashSet<String> list_proveedor_carga = new HashSet<String>();
-            HashSet<String> list_fy = new HashSet<String>();
-
-
+            //Lista de valores - filtros consulta sql
             String caramelo_referenciaAA ="";
             String caramelo_evento ="";
             String caramelo_responsable ="";
@@ -314,6 +224,7 @@ public class ConsultarCustoms extends HttpServlet {
             String sql = "";
             int diasHabiles = 0;
             boolean excluirShipment = false;
+            String AgentType = "";
             
             //Parametros Generales
             String colorSemaforo = "";
@@ -322,6 +233,14 @@ public class ConsultarCustoms extends HttpServlet {
             String salida = "";
             int cont = 1;
 
+            
+            //Consultar Información de Agente Aduanal
+            if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
+                for (String[] rowA : db.getResultado()) {
+                    AgentType = rowA[0];
+                }
+            }
+            
             /*Columna: Estatus Operación (listado)*/
             if (db.doDB(fac.consultarEstatusOperacionCustoms())) {
                 for (String[] rowO : db.getResultado()) {
@@ -332,398 +251,398 @@ public class ConsultarCustoms extends HttpServlet {
             
     /*  ----------------------------- FILTROS MULTISELECT ENCABEZADOS  -----------------------------  */  
     
-            if (!selected_referenciaAA.equals("")) { 
-                String[] selected = selected_referenciaAA.split(",");
+            if (!columna_referenciaAA.equals("")) { 
+                String[] selected = columna_referenciaAA.split(",");
                 for (String a : selected) {
                     caramelo_referenciaAA += "'" + a + "',";
                 }
             }
-            if (!selected_evento.equals("")) {
-                String[] selected = selected_evento.split(",");
+            if (!columna_evento.equals("")) {
+                String[] selected = columna_evento.split(",");
                 for (String a : selected) {
                     caramelo_evento += a + ",";
                 }
             }
-            if (!selected_responsable.equals("")) {
-                String[] selected = selected_responsable.split(",");
+            if (!columna_responsable.equals("")) {
+                String[] selected = columna_responsable.split(",");
                 for (String a : selected) {
                     caramelo_responsable += "'" + a + "',";
                 }
             }
-            if (!selected_final_destination.equals("")) {
-                String[] selected = selected_final_destination.split(",");
+            if (!columna_final_destination.equals("")) {
+                String[] selected = columna_final_destination.split(",");
                 for (String a : selected) {
                     caramelo_final_destination += "'" + a + "',";
                 }
             }
-            if (!selected_brand_division.equals("")) {
-                String[] selected = selected_brand_division.split(",");
+            if (!columna_brand_division.equals("")) {
+                String[] selected = columna_brand_division.split(",");
                 for (String a : selected) {
                     caramelo_brand_division += "'" + a + "',";
                 }
             }
-            if (!selected_division.equals("")) {
-                String[] selected = selected_division.split(",");
+            if (!columna_division.equals("")) {
+                String[] selected = columna_division.split(",");
                 for (String a : selected) {
                     caramelo_division += "'" + a + "',";
                 }
             }
-            if (!selected_shipmentId.equals("")) {
-                String[] selected = selected_shipmentId.split(",");
+            if (!columna_shipmentId.equals("")) {
+                String[] selected = columna_shipmentId.split(",");
                 for (String a : selected) {
                     caramelo_shipmentId += "'" + a + "',";
                 }
             }
-            if (!selected_containerId.equals("")) {
-                String[] selected = selected_containerId.split(",");
+            if (!columna_containerId.equals("")) {
+                String[] selected = columna_containerId.split(",");
                 for (String a : selected) {
                     caramelo_containerId += "'" + a + "',";
                 }
             }
-            if (!selected_blAwbPro.equals("")) {
-                String[] selected = selected_blAwbPro.split(",");
+            if (!columna_blAwbPro.equals("")) {
+                String[] selected = columna_blAwbPro.split(",");
                 for (String a : selected) {
                     caramelo_blAwbPro += "'" + a + "',";
                 }
             }
-            if (!selected_loadTypeFinal.equals("")) {
-                String[] selected = selected_loadTypeFinal.split(",");
+            if (!columna_loadTypeFinal.equals("")) {
+                String[] selected = columna_loadTypeFinal.split(",");
                 for (String a : selected) {
                     caramelo_loadTypeFinal += "'" + a + "',";
                 }
             }
-            if (!selected_quantity.equals("")) {
-                String[] selected = selected_quantity.split(",");
+            if (!columna_quantity.equals("")) {
+                String[] selected = columna_quantity.split(",");
                 for (String a : selected) {
                     caramelo_quantity += a + ",";
                 }
             }
-            if (!selected_pod.equals("")) {
-                String[] selected = selected_pod.split(",");
+            if (!columna_pod.equals("")) {
+                String[] selected = columna_pod.split(",");
                 for (String a : selected) {
                     caramelo_pod += "'" + a + "',";
                 }
             }
-            if (!selected_estDepartFromPol.equals("")) {
-                String[] selected = selected_estDepartFromPol.split(",");
+            if (!columna_estDepartFromPol.equals("")) {
+                String[] selected = columna_estDepartFromPol.split(",");
                 for (String a : selected) {
                     caramelo_estDepartFromPol += "'" + a + "',";
                 }
             }
-            if (!selected_etaRealPortOfDischarge.equals("")) {
-                String[] selected = selected_etaRealPortOfDischarge.split(",");
+            if (!columna_etaRealPortOfDischarge.equals("")) {
+                String[] selected = columna_etaRealPortOfDischarge.split(",");
                 for (String a : selected) {
                     caramelo_etaRealPortOfDischarge += "'" + a + "',";
                 }
             }
-            if (!selected_estEtaDc.equals("")) {
-                String[] selected = selected_estEtaDc.split(",");
+            if (!columna_estEtaDc.equals("")) {
+                String[] selected = columna_estEtaDc.split(",");
                 for (String a : selected) {
                     caramelo_estEtaDc += "'" + a + "',";
                 }
             }
-            if (!selected_inboundNotification.equals("")) {
-                String[] selected = selected_inboundNotification.split(",");
+            if (!columna_inboundNotification.equals("")) {
+                String[] selected = columna_inboundNotification.split(",");
                 for (String a : selected) {
                     caramelo_inboundNotification += "'" + a + "',";
                 }
             }
-            if (!selected_pol.equals("")) {
-                String[] selected = selected_pol.split(",");
+            if (!columna_pol.equals("")) {
+                String[] selected = columna_pol.split(",");
                 for (String a : selected) {
                     caramelo_pol += "'" + a + "',";
                 }
             }
-            if (!selected_aa.equals("")) {
-                String[] selected = selected_aa.split(",");
+            if (!columna_aa.equals("")) {
+                String[] selected = columna_aa.split(",");
                 for (String a : selected) {
                     caramelo_aa += "'" + a + "',";
                 }
             }
-            if (!selected_fechaMesVenta.equals("")) {
-                String[] selected = selected_fechaMesVenta.split(",");
+            if (!columna_fechaMesVenta.equals("")) {
+                String[] selected = columna_fechaMesVenta.split(",");
                 for (String a : selected) {
                     caramelo_fechaMesVenta += "'" + a + "',";
                 }
             }
-            if (!selected_prioridad.equals("")) {
-                String[] selected = selected_prioridad.split(",");
+            if (!columna_prioridad.equals("")) {
+                String[] selected = columna_prioridad.split(",");
                 for (String a : selected) {
                     caramelo_prioridad += "'" + a + "',";
                 }
             }
-            if (!selected_pais_origen.equals("")) {
-                String[] selected = selected_pais_origen.split(",");
+            if (!columna_pais_origen.equals("")) {
+                String[] selected = columna_pais_origen.split(",");
                 for (String a : selected) {
                     caramelo_pais_origen += "'" + a + "',";
                 }
             }
-            if (!selected_size_container.equals("")) {
-                String[] selected = selected_size_container.split(",");
+            if (!columna_size_container.equals("")) {
+                String[] selected = columna_size_container.split(",");
                 for (String a : selected) {
                     caramelo_size_container += "'" + a + "',";
                 }
             }
-            if (!selected_valor_usd.equals("")) {
-                String[] selected = selected_valor_usd.split(",");
+            if (!columna_valor_usd.equals("")) {
+                String[] selected = columna_valor_usd.split(",");
                 for (String a : selected) {
                     caramelo_valor_usd += "'" + a + "',";
                 }
             }
-            if (!selected_eta_port_discharge.equals("")) {
-                String[] selected = selected_eta_port_discharge.split(",");
+            if (!columna_eta_port_discharge.equals("")) {
+                String[] selected = columna_eta_port_discharge.split(",");
                 for (String a : selected) {
                     caramelo_eta_port_discharge += "'" + a + "',";
                 }
             }
-            if (!selected_agente_aduanal.equals("")) {
-                String[] selected = selected_agente_aduanal.split(",");
+            if (!columna_agente_aduanal.equals("")) {
+                String[] selected = columna_agente_aduanal.split(",");
                 for (String a : selected) {
                     caramelo_agente_aduanal += "'" + a + "',";
                 }
             }
-            if (!selected_pedimento_a1.equals("")) {
-                String[] selected = selected_pedimento_a1.split(",");
+            if (!columna_pedimento_a1.equals("")) {
+                String[] selected = columna_pedimento_a1.split(",");
                 for (String a : selected) {
                     caramelo_pedimento_a1 += "'" + a + "',";
                 }
             }
-            if (!selected_pedimento_r1_1er.equals("")) {
-                String[] selected = selected_pedimento_r1_1er.split(",");
+            if (!columna_pedimento_r1_1er.equals("")) {
+                String[] selected = columna_pedimento_r1_1er.split(",");
                 for (String a : selected) {
                     caramelo_pedimento_r1_1er += "'" + a + "',";
                 }
             }
-            if (!selected_motivo_rectificacion_1er.equals("")) {
-                String[] selected = selected_motivo_rectificacion_1er.split(",");
+            if (!columna_motivo_rectificacion_1er.equals("")) {
+                String[] selected = columna_motivo_rectificacion_1er.split(",");
                 for (String a : selected) {
                     caramelo_motivo_rectificacion_1er += "'" + a + "',";
                 }
             }
-            if (!selected_pedimento_r1_2do.equals("")) {
-                String[] selected = selected_pedimento_r1_2do.split(",");
+            if (!columna_pedimento_r1_2do.equals("")) {
+                String[] selected = columna_pedimento_r1_2do.split(",");
                 for (String a : selected) {
                     caramelo_pedimento_r1_2do += "'" + a + "',";
                 }
             }
-            if (!selected_motivo_rectificacion_2do.equals("")) {
-                String[] selected = selected_motivo_rectificacion_2do.split(",");
+            if (!columna_motivo_rectificacion_2do.equals("")) {
+                String[] selected = columna_motivo_rectificacion_2do.split(",");
                 for (String a : selected) {
                     caramelo_motivo_rectificacion_2do += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_recepcion_doc.equals("")) {
-                String[] selected = selected_fecha_recepcion_doc.split(",");
+            if (!columna_fecha_recepcion_doc.equals("")) {
+                String[] selected = columna_fecha_recepcion_doc.split(",");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_doc += "'" + a + "',";
                 }
             }
-            if (!selected_recinto.equals("")) {
-                String[] selected = selected_recinto.split(",");
+            if (!columna_recinto.equals("")) {
+                String[] selected = columna_recinto.split(",");
                 for (String a : selected) {
                     caramelo_recinto += "'" + a + "',";
                 }
             }
-            if (!selected_naviera.equals("")) {
-                String[] selected = selected_naviera.split(",");
+            if (!columna_naviera.equals("")) {
+                String[] selected = columna_naviera.split(",");
                 for (String a : selected) {
                     caramelo_naviera += "'" + a + "',";
                 }
             }
-            if (!selected_buque.equals("")) {
-                String[] selected = selected_buque.split(",");
+            if (!columna_buque.equals("")) {
+                String[] selected = columna_buque.split(",");
                 for (String a : selected) {
                     caramelo_buque += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_revalidacion.equals("")) {
-                String[] selected = selected_fecha_revalidacion.split(",");
+            if (!columna_fecha_revalidacion.equals("")) {
+                String[] selected = columna_fecha_revalidacion.split(",");
                 for (String a : selected) {
                     caramelo_fecha_revalidacion += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_previo_origen.equals("")) {
-                String[] selected = selected_fecha_previo_origen.split(",");
+            if (!columna_fecha_previo_origen.equals("")) {
+                String[] selected = columna_fecha_previo_origen.split(",");
                 for (String a : selected) {
                     caramelo_fecha_previo_origen += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_previo_destino.equals("")) {
-                String[] selected = selected_fecha_previo_destino.split(",");
+            if (!columna_fecha_previo_destino.equals("")) {
+                String[] selected = columna_fecha_previo_destino.split(",");
                 for (String a : selected) {
                     caramelo_fecha_previo_destino += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_resultado_previo.equals("")) {
-                String[] selected = selected_fecha_resultado_previo.split(",");
+            if (!columna_fecha_resultado_previo.equals("")) {
+                String[] selected = columna_fecha_resultado_previo.split(",");
                 for (String a : selected) {
                     caramelo_fecha_resultado_previo += "'" + a + "',";
                 }
             }
-            if (!selected_proforma_final.equals("")) {
-                String[] selected = selected_proforma_final.split(",");
+            if (!columna_proforma_final.equals("")) {
+                String[] selected = columna_proforma_final.split(",");
                 for (String a : selected) {
                     caramelo_proforma_final += "'" + a + "',";
                 }
             }
-            if (!selected_permiso.equals("")) {
-                String[] selected = selected_permiso.split(",");
+            if (!columna_permiso.equals("")) {
+                String[] selected = columna_permiso.split(",");
                 for (String a : selected) {
                     caramelo_permiso += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_envio.equals("")) {
-                String[] selected = selected_fecha_envio.split(",");
+            if (!columna_fecha_envio.equals("")) {
+                String[] selected = columna_fecha_envio.split(",");
                 for (String a : selected) {
                     caramelo_fecha_envio += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_recepcion_perm.equals("")) {
-                String[] selected = selected_fecha_recepcion_perm.split(",");
+            if (!columna_fecha_recepcion_perm.equals("")) {
+                String[] selected = columna_fecha_recepcion_perm.split(",");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_perm += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_activacion_perm.equals("")) {
-                String[] selected = selected_fecha_activacion_perm.split(",");
+            if (!columna_fecha_activacion_perm.equals("")) {
+                String[] selected = columna_fecha_activacion_perm.split(",");
                 for (String a : selected) {
                     caramelo_fecha_activacion_perm += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_permisos_aut.equals("")) {
-                String[] selected = selected_fecha_permisos_aut.split(",");
+            if (!columna_fecha_permisos_aut.equals("")) {
+                String[] selected = columna_fecha_permisos_aut.split(",");
                 for (String a : selected) {
                     caramelo_fecha_permisos_aut += "'" + a + "',";
                 }
             }
-            if (!selected_co_pref_arancelaria.equals("")) {
-                String[] selected = selected_co_pref_arancelaria.split(",");
+            if (!columna_co_pref_arancelaria.equals("")) {
+                String[] selected = columna_co_pref_arancelaria.split(",");
                 for (String a : selected) {
                     caramelo_co_pref_arancelaria += "'" + a + "',";
                 }
             }
-            if (!selected_aplic_pref_arancelaria.equals("")) {
-                String[] selected = selected_aplic_pref_arancelaria.split(",");
+            if (!columna_aplic_pref_arancelaria.equals("")) {
+                String[] selected = columna_aplic_pref_arancelaria.split(",");
                 for (String a : selected) {
                     caramelo_aplic_pref_arancelaria += "'" + a + "',";
                 }
             }
-            if (!selected_req_uva.equals("")) {
-                String[] selected = selected_req_uva.split(",");
+            if (!columna_req_uva.equals("")) {
+                String[] selected = columna_req_uva.split(",");
                 for (String a : selected) {
                     caramelo_req_uva += "'" + a + "',";
                 }
             }
-            if (!selected_req_ca.equals("")) {
-                String[] selected = selected_req_ca.split(",");
+            if (!columna_req_ca.equals("")) {
+                String[] selected = columna_req_ca.split(",");
                 for (String a : selected) {
                     caramelo_req_ca += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_recepcion_ca.equals("")) {
-                String[] selected = selected_fecha_recepcion_ca.split(",");
+            if (!columna_fecha_recepcion_ca.equals("")) {
+                String[] selected = columna_fecha_recepcion_ca.split(",");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_ca += "'" + a + "',";
                 }
             }
-            if (!selected_num_constancia_ca.equals("")) {
-                String[] selected = selected_num_constancia_ca.split(",");
+            if (!columna_num_constancia_ca.equals("")) {
+                String[] selected = columna_num_constancia_ca.split(",");
                 for (String a : selected) {
                     caramelo_num_constancia_ca += a + ",";
                 }
             }
-            if (!selected_monto_ca.equals("")) {
-                String[] selected = selected_monto_ca.split(",");
+            if (!columna_monto_ca.equals("")) {
+                String[] selected = columna_monto_ca.split(",");
                 for (String a : selected) {
                     caramelo_monto_ca += a + ",";
                 }
             }
-            if (!selected_fecha_doc_completos.equals("")) {
-                String[] selected = selected_fecha_doc_completos.split(",");
+            if (!columna_fecha_doc_completos.equals("")) {
+                String[] selected = columna_fecha_doc_completos.split(",");
                 for (String a : selected) {
                     caramelo_fecha_doc_completos += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_pago_pedimento.equals("")) {
-                String[] selected = selected_fecha_pago_pedimento.split(",");
+            if (!columna_fecha_pago_pedimento.equals("")) {
+                String[] selected = columna_fecha_pago_pedimento.split(",");
                 for (String a : selected) {
                     caramelo_fecha_pago_pedimento += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_solicitud_transporte.equals("")) {
-                String[] selected = selected_fecha_solicitud_transporte.split(",");
+            if (!columna_fecha_solicitud_transporte.equals("")) {
+                String[] selected = columna_fecha_solicitud_transporte.split(",");
                 for (String a : selected) {
                     caramelo_fecha_solicitud_transporte += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_modulacion.equals("")) {
-                String[] selected = selected_fecha_modulacion.split(",");
+            if (!columna_fecha_modulacion.equals("")) {
+                String[] selected = columna_fecha_modulacion.split(",");
                 for (String a : selected) {
                     caramelo_fecha_modulacion += "'" + a + "',";
                 }
             }
-            if (!selected_modalidad.equals("")) {
-                String[] selected = selected_modalidad.split(",");
+            if (!columna_modalidad.equals("")) {
+                String[] selected = columna_modalidad.split(",");
                 for (String a : selected) {
                     caramelo_modalidad += "'" + a + "',";
                 }
             }
-            if (!selected_resultado_modulacion.equals("")) {
-                String[] selected = selected_resultado_modulacion.split(",");
+            if (!columna_resultado_modulacion.equals("")) {
+                String[] selected = columna_resultado_modulacion.split(",");
                 for (String a : selected) {
                     caramelo_resultado_modulacion += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_reconocimiento.equals("")) {
-                String[] selected = selected_fecha_reconocimiento.split(",");
+            if (!columna_fecha_reconocimiento.equals("")) {
+                String[] selected = columna_fecha_reconocimiento.split(",");
                 for (String a : selected) {
                     caramelo_fecha_reconocimiento += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_liberacion.equals("")) {
-                String[] selected = selected_fecha_liberacion.split(",");
+            if (!columna_fecha_liberacion.equals("")) {
+                String[] selected = columna_fecha_liberacion.split(",");
                 for (String a : selected) {
                     caramelo_fecha_liberacion += "'" + a + "',";
                 }
             }
-            if (!selected_sello_origen.equals("")) {
-                String[] selected = selected_sello_origen.split(",");
+            if (!columna_sello_origen.equals("")) {
+                String[] selected = columna_sello_origen.split(",");
                 for (String a : selected) {
                     caramelo_sello_origen += "'" + a + "',";
                 }
             }
-            if (!selected_sello_final.equals("")) {
-                String[] selected = selected_sello_final.split(",");
+            if (!columna_sello_final.equals("")) {
+                String[] selected = columna_sello_final.split(",");
                 for (String a : selected) {
                     caramelo_sello_final += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_retencion_aut.equals("")) {
-                String[] selected = selected_fecha_retencion_aut.split(",");
+            if (!columna_fecha_retencion_aut.equals("")) {
+                String[] selected = columna_fecha_retencion_aut.split(",");
                 for (String a : selected) {
                     caramelo_fecha_retencion_aut += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_liberacion_aut.equals("")) {
-                String[] selected = selected_fecha_liberacion_aut.split(",");
+            if (!columna_fecha_liberacion_aut.equals("")) {
+                String[] selected = columna_fecha_liberacion_aut.split(",");
                 for (String a : selected) {
                     caramelo_fecha_liberacion_aut += "'" + a + "',";
                 }
             }
-            if (!selected_estatus_operacion.equals("")) {
-                String[] selected = selected_estatus_operacion.split(",");
+            if (!columna_estatus_operacion.equals("")) {
+                String[] selected = columna_estatus_operacion.split(",");
                 for (String a : selected) {
                     caramelo_estatus_operacion += "'" + a + "',";
                 }
             }
-            if (!selected_motivo_atraso.equals("")) {
-                String[] selected = selected_motivo_atraso.split(",");
+            if (!columna_motivo_atraso.equals("")) {
+                String[] selected = columna_motivo_atraso.split(",");
                 for (String a : selected) {
                     caramelo_motivo_atraso += "'" + a + "',";
                 }
             }
-            if (!selected_observaciones.equals("")) {
-                String[] selected = selected_observaciones.split(",");
+            if (!columna_observaciones.equals("")) {
+                String[] selected = columna_observaciones.split(",");
                 for (String a : selected) {
                     caramelo_observaciones += "'" + a + "',";
                 }
@@ -731,62 +650,62 @@ public class ConsultarCustoms extends HttpServlet {
             
         if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF    
             
-            if (!selected_llegada_a_nova.equals("")) {
-                String[] selected = selected_llegada_a_nova.split(",");
+            if (!columna_llegada_a_nova.equals("")) {
+                String[] selected = columna_llegada_a_nova.split(",");
                 for (String a : selected) {
                     caramelo_llegada_a_nova += "'" + a + "',";
                 }
             }
-            if (!selected_llegada_a_globe_trade_sd.equals("")) {
-                String[] selected = selected_llegada_a_globe_trade_sd.split(",");
+            if (!columna_llegada_a_globe_trade_sd.equals("")) {
+                String[] selected = columna_llegada_a_globe_trade_sd.split(",");
                 for (String a : selected) {
                     caramelo_llegada_a_globe_trade_sd += "'" + a + "',";
                 }
             }
-            if (!selected_archivo_m.equals("")) {
-                String[] selected = selected_archivo_m.split(",");
+            if (!columna_archivo_m.equals("")) {
+                String[] selected = columna_archivo_m.split(",");
                 for (String a : selected) {
                     caramelo_archivo_m += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_archivo_m.equals("")) {
-                String[] selected = selected_fecha_archivo_m.split(",");
+            if (!columna_fecha_archivo_m.equals("")) {
+                String[] selected = columna_fecha_archivo_m.split(",");
                 for (String a : selected) {
                     caramelo_fecha_archivo_m += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_solicit_manip.equals("")) {
-                String[] selected = selected_fecha_solicit_manip.split(",");
+            if (!columna_fecha_solicit_manip.equals("")) {
+                String[] selected = columna_fecha_solicit_manip.split(",");
                 for (String a : selected) {
                     caramelo_fecha_solicit_manip += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_vencim_manip.equals("")) {
-                String[] selected = selected_fecha_vencim_manip.split(",");
+            if (!columna_fecha_vencim_manip.equals("")) {
+                String[] selected = columna_fecha_vencim_manip.split(",");
                 for (String a : selected) {
                     caramelo_fecha_vencim_manip += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_confirm_clave_pedim.equals("")) {
-                String[] selected = selected_fecha_confirm_clave_pedim.split(",");
+            if (!columna_fecha_confirm_clave_pedim.equals("")) {
+                String[] selected = columna_fecha_confirm_clave_pedim.split(",");
                 for (String a : selected) {
                     caramelo_fecha_vencim_manip += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_recep_increment.equals("")) {
-                String[] selected = selected_fecha_recep_increment.split(",");
+            if (!columna_fecha_recep_increment.equals("")) {
+                String[] selected = columna_fecha_recep_increment.split(",");
                 for (String a : selected) {
                     caramelo_fecha_recep_increment += "'" + a + "',";
                 }
             }
-            if (!selected_t_e.equals("")) {
-                String[] selected = selected_t_e.split(",");
+            if (!columna_t_e.equals("")) {
+                String[] selected = columna_t_e.split(",");
                 for (String a : selected) {
                     caramelo_t_e += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_vencim_inbound.equals("")) {
-                String[] selected = selected_fecha_vencim_inbound.split(",");
+            if (!columna_fecha_vencim_inbound.equals("")) {
+                String[] selected = columna_fecha_vencim_inbound.split(",");
                 for (String a : selected) {
                     caramelo_fecha_vencim_inbound += "'" + a + "',";
                 }
@@ -796,295 +715,295 @@ public class ConsultarCustoms extends HttpServlet {
             
         if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-            if (!selected_no_bultos.equals("")) {
-                String[] selected = selected_no_bultos.split(",");
+            if (!columna_no_bultos.equals("")) {
+                String[] selected = columna_no_bultos.split(",");
                 for (String a : selected) {
                     caramelo_no_bultos += "'" + a + "',";
                 }
             }
-            if (!selected_peso_kg.equals("")) {
-                String[] selected = selected_peso_kg.split(",");
+            if (!columna_peso_kg.equals("")) {
+                String[] selected = columna_peso_kg.split(",");
                 for (String a : selected) {
                     caramelo_peso_kg += "'" + a + "',";
                 }
             }
-            if (!selected_transferencia.equals("")) {
-                String[] selected = selected_transferencia.split(",");
+            if (!columna_transferencia.equals("")) {
+                String[] selected = columna_transferencia.split(",");
                 for (String a : selected) {
                     caramelo_transferencia += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_inicio_etiquetado.equals("")) {
-                String[] selected = selected_fecha_inicio_etiquetado.split(",");
+            if (!columna_fecha_inicio_etiquetado.equals("")) {
+                String[] selected = columna_fecha_inicio_etiquetado.split(",");
                 for (String a : selected) {
                     caramelo_fecha_inicio_etiquetado += "'" + a + "',";
                 }
             }
-            if (!selected_fecha_termino_etiquetado.equals("")) {
-                String[] selected = selected_fecha_termino_etiquetado.split(",");
+            if (!columna_fecha_termino_etiquetado.equals("")) {
+                String[] selected = columna_fecha_termino_etiquetado.split(",");
                 for (String a : selected) {
                     caramelo_fecha_termino_etiquetado += "'" + a + "',";
                 }
             }
-            if (!selected_hora_termino_etiquetado.equals("")) {
-                String[] selected = selected_hora_termino_etiquetado.split(",");
+            if (!columna_hora_termino_etiquetado.equals("")) {
+                String[] selected = columna_hora_termino_etiquetado.split(",");
                 for (String a : selected) {
                     caramelo_hora_termino_etiquetado += "'" + a + "',";
                 }
             }
-            if (!selected_proveedor.equals("")) {
-                String[] selected = selected_proveedor.split(",");
+            if (!columna_proveedor.equals("")) {
+                String[] selected = columna_proveedor.split(",");
                 for (String a : selected) {
                     caramelo_proveedor += "'" + a + "',";
                 }
             }
-            if (!selected_proveedor_carga.equals("")) {
-                String[] selected = selected_proveedor_carga.split(",");
+            if (!columna_proveedor_carga.equals("")) {
+                String[] selected = columna_proveedor_carga.split(",");
                 for (String a : selected) {
                     caramelo_proveedor_carga += "'" + a + "',";
                 }
             }
             
         }    
-            if (!selected_fy.equals("")) {
-                String[] selected = selected_fy.split(",");
+            if (!columna_fy.equals("")) {
+                String[] selected = columna_fy.split(",");
                 for (String a : selected) {
                     caramelo_fy += "'" + a + "',";
                 }
             }
 
-            if (!selected_referenciaAA.equals("")) {
+            if (!columna_referenciaAA.equals("")) {
                 caramelo_referenciaAA = caramelo_referenciaAA.replaceAll(",$", "");
             }
-            if (!selected_evento.equals("")) {
+            if (!columna_evento.equals("")) {
                 caramelo_evento = caramelo_evento.replaceAll(",$", "");
             }
-            if (!selected_responsable.equals("")) {
+            if (!columna_responsable.equals("")) {
                 caramelo_responsable = caramelo_responsable.replaceAll(",$", "");
             }
-            if (!selected_final_destination.equals("")) {
+            if (!columna_final_destination.equals("")) {
                 caramelo_final_destination = caramelo_final_destination.replaceAll(",$", "");
             }
-            if (!selected_brand_division.equals("")) {
+            if (!columna_brand_division.equals("")) {
                 caramelo_brand_division = caramelo_brand_division.replaceAll(",$", "");
             }
-            if (!selected_division.equals("")) {
+            if (!columna_division.equals("")) {
                 caramelo_division = caramelo_division.replaceAll(",$", "");
             }
-            if (!selected_shipmentId.equals("")) {
+            if (!columna_shipmentId.equals("")) {
                 caramelo_shipmentId = caramelo_shipmentId.replaceAll(",$", "");
             }
-            if (!selected_containerId.equals("")) {
+            if (!columna_containerId.equals("")) {
                 caramelo_containerId = caramelo_containerId.replaceAll(",$", "");
             }
-            if (!selected_blAwbPro.equals("")) {
+            if (!columna_blAwbPro.equals("")) {
                 caramelo_blAwbPro = caramelo_blAwbPro.replaceAll(",$", "");
             }
-            if (!selected_loadTypeFinal.equals("")) {
+            if (!columna_loadTypeFinal.equals("")) {
                 caramelo_loadTypeFinal = caramelo_loadTypeFinal.replaceAll(",$", "");
             }
-            if (!selected_quantity.equals("")) {
+            if (!columna_quantity.equals("")) {
                 caramelo_quantity = caramelo_quantity.replaceAll(",$", "");
             }
-            if (!selected_pod.equals("")) {
+            if (!columna_pod.equals("")) {
                 caramelo_pod = caramelo_pod.replaceAll(",$", "");
             }
-            if (!selected_estDepartFromPol.equals("")) {
+            if (!columna_estDepartFromPol.equals("")) {
                 caramelo_estDepartFromPol = caramelo_estDepartFromPol.replaceAll(",$", "");
             }
-            if (!selected_etaRealPortOfDischarge.equals("")) {
+            if (!columna_etaRealPortOfDischarge.equals("")) {
                 caramelo_etaRealPortOfDischarge = caramelo_etaRealPortOfDischarge.replaceAll(",$", "");
             }
-            if (!selected_estEtaDc.equals("")) {
+            if (!columna_estEtaDc.equals("")) {
                 caramelo_estEtaDc = caramelo_estEtaDc.replaceAll(",$", "");
             }
-            if (!selected_inboundNotification.equals("")) {
+            if (!columna_inboundNotification.equals("")) {
                 caramelo_inboundNotification = caramelo_inboundNotification.replaceAll(",$", "");
             }
-            if (!selected_pol.equals("")) {
+            if (!columna_pol.equals("")) {
                 caramelo_pol = caramelo_pol.replaceAll(",$", "");
             }
-            if (!selected_aa.equals("")) {
+            if (!columna_aa.equals("")) {
                 caramelo_aa = caramelo_aa.replaceAll(",$", "");
             }
-            if (!selected_fechaMesVenta.equals("")) {
+            if (!columna_fechaMesVenta.equals("")) {
                 caramelo_fechaMesVenta = caramelo_fechaMesVenta.replaceAll(",$", "");
             }
-            if (!selected_prioridad.equals("")) {
+            if (!columna_prioridad.equals("")) {
                 caramelo_prioridad = caramelo_prioridad.replaceAll(",$", "");
             }
-            if (!selected_pais_origen.equals("")) {
+            if (!columna_pais_origen.equals("")) {
                 caramelo_pais_origen = caramelo_pais_origen.replaceAll(",$", "");
             }
-            if (!selected_size_container.equals("")) {
+            if (!columna_size_container.equals("")) {
                 caramelo_size_container = caramelo_size_container.replaceAll(",$", "");
             }
-            if (!selected_valor_usd.equals("")) {
+            if (!columna_valor_usd.equals("")) {
                 caramelo_valor_usd = caramelo_valor_usd.replaceAll(",$", "");
             }
-            if (!selected_eta_port_discharge.equals("")) {
+            if (!columna_eta_port_discharge.equals("")) {
                 caramelo_eta_port_discharge = caramelo_eta_port_discharge.replaceAll(",$", "");
             }
-            if (!selected_agente_aduanal.equals("")) {
+            if (!columna_agente_aduanal.equals("")) {
                 caramelo_agente_aduanal = caramelo_agente_aduanal.replaceAll(",$", "");
             }
-            if (!selected_pedimento_a1.equals("")) {
+            if (!columna_pedimento_a1.equals("")) {
                 caramelo_pedimento_a1 = caramelo_pedimento_a1.replaceAll(",$", "");
             }
-            if (!selected_pedimento_r1_1er.equals("")) {
+            if (!columna_pedimento_r1_1er.equals("")) {
                 caramelo_pedimento_r1_1er = caramelo_pedimento_r1_1er.replaceAll(",$", "");
             }
-            if (!selected_motivo_rectificacion_1er.equals("")) {
+            if (!columna_motivo_rectificacion_1er.equals("")) {
                 caramelo_motivo_rectificacion_1er = caramelo_motivo_rectificacion_1er.replaceAll(",$", "");
             }
-            if (!selected_pedimento_r1_2do.equals("")) {
+            if (!columna_pedimento_r1_2do.equals("")) {
                 caramelo_pedimento_r1_2do = caramelo_pedimento_r1_2do.replaceAll(",$", "");
             }
-            if (!selected_motivo_rectificacion_2do.equals("")) {
+            if (!columna_motivo_rectificacion_2do.equals("")) {
                 caramelo_motivo_rectificacion_2do = caramelo_motivo_rectificacion_2do.replaceAll(",$", "");
             }
-            if (!selected_fecha_recepcion_doc.equals("")) {
+            if (!columna_fecha_recepcion_doc.equals("")) {
                 caramelo_fecha_recepcion_doc = caramelo_fecha_recepcion_doc.replaceAll(",$", "");
             }
-            if (!selected_recinto.equals("")) {
+            if (!columna_recinto.equals("")) {
                 caramelo_recinto = caramelo_recinto.replaceAll(",$", "");
             }
-            if (!selected_naviera.equals("")) {
+            if (!columna_naviera.equals("")) {
                 caramelo_naviera = caramelo_naviera.replaceAll(",$", "");
             }
-            if (!selected_buque.equals("")) {
+            if (!columna_buque.equals("")) {
                 caramelo_buque = caramelo_buque.replaceAll(",$", "");
             }
-            if (!selected_fecha_revalidacion.equals("")) {
+            if (!columna_fecha_revalidacion.equals("")) {
                 caramelo_fecha_revalidacion = caramelo_fecha_revalidacion.replaceAll(",$", "");
             }
-            if (!selected_fecha_previo_origen.equals("")) {
+            if (!columna_fecha_previo_origen.equals("")) {
                 caramelo_fecha_previo_origen = caramelo_fecha_previo_origen.replaceAll(",$", "");
             }
-            if (!selected_fecha_previo_destino.equals("")) {
+            if (!columna_fecha_previo_destino.equals("")) {
                 caramelo_fecha_previo_destino = caramelo_fecha_previo_destino.replaceAll(",$", "");
             }
-            if (!selected_fecha_resultado_previo.equals("")) {
+            if (!columna_fecha_resultado_previo.equals("")) {
                 caramelo_fecha_resultado_previo = caramelo_fecha_resultado_previo.replaceAll(",$", "");
             }
-            if (!selected_proforma_final.equals("")) {
+            if (!columna_proforma_final.equals("")) {
                 caramelo_proforma_final = caramelo_proforma_final.replaceAll(",$", "");
             }
-            if (!selected_permiso.equals("")) {
+            if (!columna_permiso.equals("")) {
                 caramelo_permiso = caramelo_permiso.replaceAll(",$", "");
             }
-            if (!selected_fecha_envio.equals("")) {
+            if (!columna_fecha_envio.equals("")) {
                 caramelo_fecha_envio = caramelo_fecha_envio.replaceAll(",$", "");
             }
-            if (!selected_fecha_recepcion_perm.equals("")) {
+            if (!columna_fecha_recepcion_perm.equals("")) {
                 caramelo_fecha_recepcion_perm = caramelo_fecha_recepcion_perm.replaceAll(",$", "");
             }
-            if (!selected_fecha_activacion_perm.equals("")) {
+            if (!columna_fecha_activacion_perm.equals("")) {
                 caramelo_fecha_activacion_perm = caramelo_fecha_activacion_perm.replaceAll(",$", "");
             }
-            if (!selected_fecha_permisos_aut.equals("")) {
+            if (!columna_fecha_permisos_aut.equals("")) {
                 caramelo_fecha_permisos_aut = caramelo_fecha_permisos_aut.replaceAll(",$", "");
             }
-            if (!selected_co_pref_arancelaria.equals("")) {
+            if (!columna_co_pref_arancelaria.equals("")) {
                 caramelo_co_pref_arancelaria = caramelo_co_pref_arancelaria.replaceAll(",$", "");
             }
-            if (!selected_aplic_pref_arancelaria.equals("")) {
+            if (!columna_aplic_pref_arancelaria.equals("")) {
                 caramelo_aplic_pref_arancelaria = caramelo_aplic_pref_arancelaria.replaceAll(",$", "");
             }
-            if (!selected_req_uva.equals("")) {
+            if (!columna_req_uva.equals("")) {
                 caramelo_req_uva = caramelo_req_uva.replaceAll(",$", "");
             }
-            if (!selected_req_ca.equals("")) {
+            if (!columna_req_ca.equals("")) {
                 caramelo_req_ca = caramelo_req_ca.replaceAll(",$", "");
             }
-            if (!selected_fecha_recepcion_ca.equals("")) {
+            if (!columna_fecha_recepcion_ca.equals("")) {
                 caramelo_fecha_recepcion_ca = caramelo_fecha_recepcion_ca.replaceAll(",$", "");
             }
-            if (!selected_num_constancia_ca.equals("")) {
+            if (!columna_num_constancia_ca.equals("")) {
                 caramelo_num_constancia_ca = caramelo_num_constancia_ca.replaceAll(",$", "");
             }
-            if (!selected_monto_ca.equals("")) {
+            if (!columna_monto_ca.equals("")) {
                 caramelo_monto_ca = caramelo_monto_ca.replaceAll(",$", "");
             }
-            if (!selected_fecha_doc_completos.equals("")) {
+            if (!columna_fecha_doc_completos.equals("")) {
                 caramelo_fecha_doc_completos = caramelo_fecha_doc_completos.replaceAll(",$", "");
             }
-            if (!selected_fecha_pago_pedimento.equals("")) {
+            if (!columna_fecha_pago_pedimento.equals("")) {
                 caramelo_fecha_pago_pedimento = caramelo_fecha_pago_pedimento.replaceAll(",$", "");
             }
-            if (!selected_fecha_solicitud_transporte.equals("")) {
+            if (!columna_fecha_solicitud_transporte.equals("")) {
                 caramelo_fecha_solicitud_transporte = caramelo_fecha_solicitud_transporte.replaceAll(",$", "");
             }
-            if (!selected_fecha_modulacion.equals("")) {
+            if (!columna_fecha_modulacion.equals("")) {
                 caramelo_fecha_modulacion = caramelo_fecha_modulacion.replaceAll(",$", "");
             }
-            if (!selected_modalidad.equals("")) {
+            if (!columna_modalidad.equals("")) {
                 caramelo_modalidad = caramelo_modalidad.replaceAll(",$", "");
             }
-            if (!selected_resultado_modulacion.equals("")) {
+            if (!columna_resultado_modulacion.equals("")) {
                 caramelo_resultado_modulacion = caramelo_resultado_modulacion.replaceAll(",$", "");
             }
-            if (!selected_fecha_reconocimiento.equals("")) {
+            if (!columna_fecha_reconocimiento.equals("")) {
                 caramelo_fecha_reconocimiento = caramelo_fecha_reconocimiento.replaceAll(",$", "");
             }
-            if (!selected_fecha_liberacion.equals("")) {
+            if (!columna_fecha_liberacion.equals("")) {
                 caramelo_fecha_liberacion = caramelo_fecha_liberacion.replaceAll(",$", "");
             }
-            if (!selected_sello_origen.equals("")) {
+            if (!columna_sello_origen.equals("")) {
                 caramelo_sello_origen = caramelo_sello_origen.replaceAll(",$", "");
             }
-            if (!selected_sello_final.equals("")) {
+            if (!columna_sello_final.equals("")) {
                 caramelo_sello_final = caramelo_sello_final.replaceAll(",$", "");
             }
-            if (!selected_fecha_retencion_aut.equals("")) {
+            if (!columna_fecha_retencion_aut.equals("")) {
                 caramelo_fecha_retencion_aut = caramelo_fecha_retencion_aut.replaceAll(",$", "");
             }
-            if (!selected_fecha_liberacion_aut.equals("")) {
+            if (!columna_fecha_liberacion_aut.equals("")) {
                 caramelo_fecha_liberacion_aut = caramelo_fecha_liberacion_aut.replaceAll(",$", "");
             }
-            if (!selected_estatus_operacion.equals("")) {
+            if (!columna_estatus_operacion.equals("")) {
                 caramelo_estatus_operacion = caramelo_estatus_operacion.replaceAll(",$", "");
             }
-            if (!selected_motivo_atraso.equals("")) {
+            if (!columna_motivo_atraso.equals("")) {
                 caramelo_motivo_atraso = caramelo_motivo_atraso.replaceAll(",$", "");
             }
-            if (!selected_observaciones.equals("")) {
+            if (!columna_observaciones.equals("")) {
                 caramelo_observaciones = caramelo_observaciones.replaceAll(",$", "");
             }
             
         if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF
             
-            if (!selected_llegada_a_nova.equals("")) {
+            if (!columna_llegada_a_nova.equals("")) {
                 caramelo_llegada_a_nova = caramelo_llegada_a_nova.replaceAll(",$", "");
             }
-            if (!selected_llegada_a_globe_trade_sd.equals("")) {
+            if (!columna_llegada_a_globe_trade_sd.equals("")) {
                 caramelo_llegada_a_globe_trade_sd = caramelo_llegada_a_globe_trade_sd.replaceAll(",$", "");
             }
-            if (!selected_archivo_m.equals("")) {
+            if (!columna_archivo_m.equals("")) {
                 caramelo_archivo_m = caramelo_archivo_m.replaceAll(",$", "");
             }
-            if (!selected_fecha_archivo_m.equals("")) {
+            if (!columna_fecha_archivo_m.equals("")) {
                 caramelo_fecha_archivo_m = caramelo_fecha_archivo_m.replaceAll(",$", "");
             }
-            if (!selected_fecha_solicit_manip.equals("")) {
+            if (!columna_fecha_solicit_manip.equals("")) {
                 caramelo_fecha_solicit_manip = caramelo_fecha_solicit_manip.replaceAll(",$", "");
             }
-            if (!selected_fecha_vencim_manip.equals("")) {
+            if (!columna_fecha_vencim_manip.equals("")) {
                 caramelo_fecha_vencim_manip = caramelo_fecha_vencim_manip.replaceAll(",$", "");
             }
-            if (!selected_fecha_confirm_clave_pedim.equals("")) {
+            if (!columna_fecha_confirm_clave_pedim.equals("")) {
                 caramelo_fecha_confirm_clave_pedim = caramelo_fecha_confirm_clave_pedim.replaceAll(",$", "");
             }
-            if (!selected_fecha_recep_increment.equals("")) {
+            if (!columna_fecha_recep_increment.equals("")) {
                 caramelo_fecha_recep_increment = caramelo_fecha_recep_increment.replaceAll(",$", "");
             }
-            if (!selected_t_e.equals("")) {
+            if (!columna_t_e.equals("")) {
                 caramelo_t_e = caramelo_t_e.replaceAll(",$", "");
             }
-            if (!selected_fecha_vencim_inbound.equals("")) {
+            if (!columna_fecha_vencim_inbound.equals("")) {
                 caramelo_fecha_vencim_inbound = caramelo_fecha_vencim_inbound.replaceAll(",$", "");
             }
-            if (!selected_no_bultos.equals("")) {
+            if (!columna_no_bultos.equals("")) {
                 caramelo_no_bultos = caramelo_no_bultos.replaceAll(",$", "");
             }
             
@@ -1092,31 +1011,31 @@ public class ConsultarCustoms extends HttpServlet {
         
         if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
             
-            if (!selected_peso_kg.equals("")) {
+            if (!columna_peso_kg.equals("")) {
                 caramelo_peso_kg = caramelo_peso_kg.replaceAll(",$", "");
             }
-            if (!selected_transferencia.equals("")) {
+            if (!columna_transferencia.equals("")) {
                 caramelo_transferencia = caramelo_transferencia.replaceAll(",$", "");
             }
-            if (!selected_fecha_inicio_etiquetado.equals("")) {
+            if (!columna_fecha_inicio_etiquetado.equals("")) {
                 caramelo_fecha_inicio_etiquetado = caramelo_fecha_inicio_etiquetado.replaceAll(",$", "");
             }
-            if (!selected_fecha_termino_etiquetado.equals("")) {
+            if (!columna_fecha_termino_etiquetado.equals("")) {
                 caramelo_fecha_termino_etiquetado = caramelo_fecha_termino_etiquetado.replaceAll(",$", "");
             }
-            if (!selected_hora_termino_etiquetado.equals("")) {
+            if (!columna_hora_termino_etiquetado.equals("")) {
                 caramelo_hora_termino_etiquetado = caramelo_hora_termino_etiquetado.replaceAll(",$", "");
             }
-            if (!selected_proveedor.equals("")) {
+            if (!columna_proveedor.equals("")) {
                 caramelo_proveedor = caramelo_proveedor.replaceAll(",$", "");
             }
-            if (!selected_proveedor_carga.equals("")) {
+            if (!columna_proveedor_carga.equals("")) {
                 caramelo_proveedor_carga = caramelo_proveedor_carga.replaceAll(",$", "");
             }
             
         }
         
-            if (!selected_fy.equals("")) {
+            if (!columna_fy.equals("")) {
                 caramelo_fy = caramelo_fy.replaceAll(",$", "");
             }
 
@@ -1516,384 +1435,108 @@ public class ConsultarCustoms extends HttpServlet {
             }
             sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC ";
             
-            String list_eventos = "";
         /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
-            if (db.doDB(sql)) {
-                for (String[] row : db.getResultado()) {
-                    
-                        list_evento.add("<option value='" + row[0] + "'>" + row[0] + "</option>");
-                        list_referenciaAA.add("<option value='" + row[30] + "'>" + row[30] + "</option>");
-                        list_responsable.add("<option value='" + row[1] + "'>" + row[1] + "</option>");
-                        list_finalDestination.add("<option value='" + row[2] + "'>" + row[2] + "</option>");
-                        list_brandDivision.add("<option value='" + row[21] + "'>" + row[21] + "</option>");
-                        list_division.add("<option value='" + row[4] + "'>" + row[4] + "</option>");
-                        list_shipmentId.add("<option value='" + row[5] + "'>" + row[5] + "</option>");
-                        list_containerId.add("<option value='" + row[6] + "'>" + row[6] + "</option>");
-                        list_blAwbPro.add("<option value='" + row[7] + "'>" + row[7] + "</option>");
-                        list_loadType.add("<option value='" + row[8] + "'>" + row[8] + "</option>");
-                        list_quantity.add("<option value='" + row[9] + "'>" + row[9] + "</option>");
-                        list_pod.add("<option value='" + row[19] + "'>" + row[19] + "</option>");
-                        list_estDepartFromPol.add("<option value='" + row[11] + "'>" + row[11] + "</option>");
-                        list_etaRealPortOfDischarge.add("<option value='" + row[12] + "'>" + row[12] + "</option>");
-                        list_estEtaDc.add("<option value='" + row[22] + "'>" + row[22] + "</option>");
-                        list_inboundNotification.add("<option value='" + row[14] + "'>" + row[14] + "</option>");
-                        list_pol.add("<option value='" + row[20] + "'>" + row[20] + "</option>");
-                        list_aa.add("<option value='" + row[16] + "'>" + row[16] + "</option>");
-                        list_fechaMesVenta.add("<option value='" + row[28] + "'>" + row[28] + "</option>");
-                        list_prioridad.add("<option value='" + row[97] + "'>" + row[97] + "</option>");
-                        list_pais_origen.add("<option value='" + row[31] + "'>" + row[31] + "</option>");
-                        list_size_container.add("<option value='" + row[32] + "'>" + row[32] + "</option>");
-                        list_valor_usd.add("<option value='" + row[33] + "'>" + row[33] + "</option>");
-                        list_eta_port_discharge.add("<option value='" + row[34] + "'>" + row[34] + "</option>");
-                        list_agente_aduanal.add("<option value='" + row[35] + "'>" + row[35] + "</option>");
-                        list_pedimento_a1.add("<option value='" + row[36] + "'>" + row[36] + "</option>");
-                        list_pedimento_r1_1er.add("<option value='" + row[37] + "'>" + row[37] + "</option>");
-                        list_motivo_rectificacion_1er.add("<option value='" + row[38] + "'>" + row[38] + "</option>");
-                        list_pedimento_r1_2do.add("<option value='" + row[39] + "'>" + row[39] + "</option>");
-                        list_motivo_rectificacion_2do.add("<option value='" + row[40] + "'>" + row[40] + "</option>");
-                        list_fecha_recepcion_doc.add("<option value='" + row[41] + "'>" + row[41] + "</option>");
-                        list_recinto.add("<option value='" + row[42] + "'>" + row[42] + "</option>");
-                        list_naviera.add("<option value='" + row[43] + "'>" + row[43] + "</option>");
-                        list_buque.add("<option value='" + row[44] + "'>" + row[44] + "</option>");
-                        list_fecha_revalidacion.add("<option value='" + row[45] + "'>" + row[45] + "</option>");
-                        list_fecha_previo_origen.add("<option value='" + row[46] + "'>" + row[46] + "</option>");
-                        list_fecha_previo_destino.add("<option value='" + row[47] + "'>" + row[47] + "</option>");
-                        list_fecha_resultado_previo.add("<option value='" + row[48] + "'>" + row[48] + "</option>");
-                        list_proforma_final.add("<option value='" + row[49] + "'>" + row[49] + "</option>");
-                        list_permiso.add("<option value='" + row[50] + "'>" + row[50] + "</option>");
-                        list_fecha_envio.add("<option value='" + row[51] + "'>" + row[51] + "</option>");
-                        list_fecha_recepcion_perm.add("<option value='" + row[52] + "'>" + row[52] + "</option>");
-                        list_fecha_activacion_perm.add("<option value='" + row[53] + "'>" + row[53] + "</option>");
-                        list_fecha_permisos_aut.add("<option value='" + row[54] + "'>" + row[54] + "</option>");
-                        list_co_pref_arancelaria.add("<option value='" + row[55] + "'>" + row[55] + "</option>");
-                        list_aplic_pref_arancelaria.add("<option value='" + row[56] + "'>" + row[56] + "</option>");
-                        list_req_uva.add("<option value='" + row[57] + "'>" + row[57] + "</option>");
-                        list_req_ca.add("<option value='" + row[58] + "'>" + row[58] + "</option>");
-                        list_fecha_recepcion_ca.add("<option value='" + row[59] + "'>" + row[59] + "</option>");
-                        list_num_constancia_ca.add("<option value='" + row[60] + "'>" + row[60] + "</option>");
-                        list_monto_ca.add("<option value='" + row[61] + "'>" + row[61] + "</option>");
-                        list_fecha_doc_completos.add("<option value='" + row[62] + "'>" + row[62] + "</option>");
-                        list_fecha_pago_pedimento.add("<option value='" + row[63] + "'>" + row[63] + "</option>");
-                        list_fecha_solicitud_transporte.add("<option value='" + row[64] + "'>" + row[64] + "</option>");
-                        list_fecha_modulacion.add("<option value='" + row[65] + "'>" + row[65] + "</option>");
-                        list_modalidad.add("<option value='" + row[66] + "'>" + row[66] + "</option>");
-                        list_resultado_modulacion.add("<option value='" + row[67] + "'>" + row[67] + "</option>");
-                        list_fecha_reconocimiento.add("<option value='" + row[68] + "'>" + row[68] + "</option>");
-                        list_fecha_liberacion.add("<option value='" + row[69] + "'>" + row[69] + "</option>");
-                        list_sello_origen.add("<option value='" + row[70] + "'>" + row[70] + "</option>");
-                        list_sello_final.add("<option value='" + row[71] + "'>" + row[71] + "</option>");
-                        list_fecha_retencion_aut.add("<option value='" + row[72] + "'>" + row[72] + "</option>");
-                        list_fecha_liberacion_aut.add("<option value='" + row[73] + "'>" + row[73] + "</option>");
-                        list_estatus_operacion.add("<option value='" + row[74] + "'>" + row[74] + "</option>");
-                        list_motivo_atraso.add("<option value='" + row[75] + "'>" + row[75] + "</option>");
-                        list_observaciones.add("<option value='" + row[76] + "'>" + row[76] + "</option>");
-                        
-                    if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF            
-                        list_llegada_a_nova.add("<option value='" + row[77] + "'>" + row[77] + "</option>");
-                        list_llegada_a_globe_trade_sd.add("<option value='" + row[78] + "'>" + row[78] + "</option>");
-                        list_archivo_m.add("<option value='" + row[79] + "'>" + row[79] + "</option>");
-                        list_fecha_archivo_m.add("<option value='" + row[80] + "'>" + row[80] + "</option>");
-                        list_fecha_solicit_manip.add("<option value='" + row[81] + "'>" + row[81] + "</option>");
-                        list_fecha_vencim_manip.add("<option value='" + row[82] + "'>" + row[82] + "</option>");
-                        list_fecha_confirm_clave_pedim.add("<option value='" + row[83] + "'>" + row[83] + "</option>");
-                        list_fecha_recep_increment.add("<option value='" + row[84] + "'>" + row[84] + "</option>");
-                        list_t_e.add("<option value='" + row[85] + "'>" + row[85] + "</option>");
-                        list_fecha_vencim_inbound.add("<option value='" + row[86] + "'>" + row[86] + "</option>");
-                    }
-
-                    if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
-                        list_no_bultos.add("<option value='" + row[87] + "'>" + row[87] + "</option>");
-                        list_peso_kg.add("<option value='" + row[88] + "'>" + row[88] + "</option>");
-                        list_transferencia.add("<option value='" + row[89] + "'>" + row[89] + "</option>");
-                        list_fecha_inicio_etiquetado.add("<option value='" + row[90] + "'>" + row[90] + "</option>");
-                        list_fecha_termino_etiquetado.add("<option value='" + row[91] + "'>" + row[91] + "</option>");
-                        list_hora_termino_etiquetado.add("<option value='" + row[92] + "'>" + row[92] + "</option>");
-                        list_proveedor.add("<option value='" + row[93] + "'>" + row[93] + "</option>");
-                        list_proveedor_carga.add("<option value='" + row[94] + "'>" + row[94] + "</option>");
-                        list_fy.add("<option value='" + row[95] + "'>" + row[95] + "</option>");
-                    } 
-                    
-                    list_eventos += row[0] + ",";
-                }
-            }
         
-            // Convert HashSet to array
-            String[] array_list_evento = list_evento.toArray(new String[list_evento.size()]);
-            String[] array_list_referenciaAA = list_referenciaAA.toArray(new String[list_referenciaAA.size()]);
-            String[] array_list_responsable = list_responsable.toArray(new String[list_responsable.size()]);
-            String[] array_list_finalDestination = list_finalDestination.toArray(new String[list_finalDestination.size()]);
-            String[] array_list_brandDivision = list_brandDivision.toArray(new String[list_brandDivision.size()]);
-            String[] array_list_division = list_division.toArray(new String[list_division.size()]);
-            String[] array_list_shipmentId = list_shipmentId.toArray(new String[list_shipmentId.size()]);
-            String[] array_list_containerId = list_containerId.toArray(new String[list_containerId.size()]);
-            String[] array_list_blAwbPro = list_blAwbPro.toArray(new String[list_blAwbPro.size()]);
-            String[] array_list_loadType = list_loadType.toArray(new String[list_loadType.size()]);
-            String[] array_list_quantity = list_quantity.toArray(new String[list_quantity.size()]);
-            String[] array_list_pod = list_pod.toArray(new String[list_pod.size()]);
-            String[] array_list_estDepartFromPol = list_estDepartFromPol.toArray(new String[list_estDepartFromPol.size()]);
-            String[] array_list_etaRealPortOfDischarge = list_etaRealPortOfDischarge.toArray(new String[list_etaRealPortOfDischarge.size()]);
-            String[] array_list_estEtaDc = list_estEtaDc.toArray(new String[list_estEtaDc.size()]);
-            String[] array_list_inboundNotification = list_inboundNotification.toArray(new String[list_inboundNotification.size()]);
-            String[] array_list_pol = list_pol.toArray(new String[list_pol.size()]);
-            String[] array_list_aa = list_aa.toArray(new String[list_aa.size()]);
-            String[] array_list_fechaMesVenta = list_fechaMesVenta.toArray(new String[list_fechaMesVenta.size()]);
-            String[] array_list_prioridad = list_prioridad.toArray(new String[list_prioridad.size()]);
-            String[] array_list_pais_origen = list_pais_origen.toArray(new String[list_pais_origen.size()]);
-            String[] array_list_size_container = list_size_container.toArray(new String[list_size_container.size()]);
-            String[] array_list_valor_usd = list_valor_usd.toArray(new String[list_valor_usd.size()]);
-            String[] array_list_eta_port_discharge = list_eta_port_discharge.toArray(new String[list_eta_port_discharge.size()]);
-            String[] array_list_agente_aduanal = list_agente_aduanal.toArray(new String[list_agente_aduanal.size()]);
-            String[] array_list_pedimento_a1 = list_pedimento_a1.toArray(new String[list_pedimento_a1.size()]);
-            String[] array_list_pedimento_r1_1er = list_pedimento_r1_1er.toArray(new String[list_pedimento_r1_1er.size()]);
-            String[] array_list_motivo_rectificacion_1er = list_motivo_rectificacion_1er.toArray(new String[list_motivo_rectificacion_1er.size()]);
-            String[] array_list_pedimento_r1_2do = list_pedimento_r1_2do.toArray(new String[list_pedimento_r1_2do.size()]);
-            String[] array_list_motivo_rectificacion_2do = list_motivo_rectificacion_2do.toArray(new String[list_motivo_rectificacion_2do.size()]);
-            String[] array_list_fecha_recepcion_doc = list_fecha_recepcion_doc.toArray(new String[list_fecha_recepcion_doc.size()]);
-            String[] array_list_recinto = list_recinto.toArray(new String[list_recinto.size()]);
-            String[] array_list_naviera = list_naviera.toArray(new String[list_naviera.size()]);
-            String[] array_list_buque = list_buque.toArray(new String[list_buque.size()]);
-            String[] array_list_fecha_revalidacion = list_fecha_revalidacion.toArray(new String[list_fecha_revalidacion.size()]);
-            String[] array_list_fecha_previo_origen = list_fecha_previo_origen.toArray(new String[list_fecha_previo_origen.size()]);
-            String[] array_list_fecha_previo_destino = list_fecha_previo_destino.toArray(new String[list_fecha_previo_destino.size()]);
-            String[] array_list_fecha_resultado_previo = list_fecha_resultado_previo.toArray(new String[list_fecha_resultado_previo.size()]);
-            String[] array_list_proforma_final = list_proforma_final.toArray(new String[list_proforma_final.size()]);
-            String[] array_list_permiso = list_permiso.toArray(new String[list_permiso.size()]);
-            String[] array_list_fecha_envio = list_fecha_envio.toArray(new String[list_fecha_envio.size()]);
-            String[] array_list_fecha_recepcion_perm = list_fecha_recepcion_perm.toArray(new String[list_fecha_recepcion_perm.size()]);
-            String[] array_list_fecha_activacion_perm = list_fecha_activacion_perm.toArray(new String[list_fecha_activacion_perm.size()]);
-            String[] array_list_fecha_permisos_aut = list_fecha_permisos_aut.toArray(new String[list_fecha_permisos_aut.size()]);
-            String[] array_list_co_pref_arancelaria = list_co_pref_arancelaria.toArray(new String[list_co_pref_arancelaria.size()]);
-            String[] array_list_aplic_pref_arancelaria = list_aplic_pref_arancelaria.toArray(new String[list_aplic_pref_arancelaria.size()]);
-            String[] array_list_req_uva = list_req_uva.toArray(new String[list_req_uva.size()]);
-            String[] array_list_req_ca = list_req_ca.toArray(new String[list_req_ca.size()]);
-            String[] array_list_fecha_recepcion_ca = list_fecha_recepcion_ca.toArray(new String[list_fecha_recepcion_ca.size()]);
-            String[] array_list_num_constancia_ca = list_num_constancia_ca.toArray(new String[list_num_constancia_ca.size()]);
-            String[] array_list_monto_ca = list_monto_ca.toArray(new String[list_monto_ca.size()]);
-            String[] array_list_fecha_doc_completos = list_fecha_doc_completos.toArray(new String[list_fecha_doc_completos.size()]);
-            String[] array_list_fecha_pago_pedimento = list_fecha_pago_pedimento.toArray(new String[list_fecha_pago_pedimento.size()]);
-            String[] array_list_fecha_solicitud_transporte = list_fecha_solicitud_transporte.toArray(new String[list_fecha_solicitud_transporte.size()]);
-            String[] array_list_fecha_modulacion = list_fecha_modulacion.toArray(new String[list_fecha_modulacion.size()]);
-            String[] array_list_modalidad = list_modalidad.toArray(new String[list_modalidad.size()]);
-            String[] array_list_resultado_modulacion = list_resultado_modulacion.toArray(new String[list_resultado_modulacion.size()]);
-            String[] array_list_fecha_reconocimiento = list_fecha_reconocimiento.toArray(new String[list_fecha_reconocimiento.size()]);
-            String[] array_list_fecha_liberacion = list_fecha_liberacion.toArray(new String[list_fecha_liberacion.size()]);
-            String[] array_list_sello_origen = list_sello_origen.toArray(new String[list_sello_origen.size()]);
-            String[] array_list_sello_final = list_sello_final.toArray(new String[list_sello_final.size()]);
-            String[] array_list_fecha_retencion_aut = list_fecha_retencion_aut.toArray(new String[list_fecha_retencion_aut.size()]);
-            String[] array_list_fecha_liberacion_aut = list_fecha_liberacion_aut.toArray(new String[list_fecha_liberacion_aut.size()]);
-            String[] array_list_estatus_operacion = list_estatus_operacion.toArray(new String[list_estatus_operacion.size()]);
-            String[] array_list_motivo_atraso = list_motivo_atraso.toArray(new String[list_motivo_atraso.size()]);
-            String[] array_list_observaciones = list_observaciones.toArray(new String[list_observaciones.size()]);
-            String[] array_list_llegada_a_nova = list_llegada_a_nova.toArray(new String[list_llegada_a_nova.size()]);
-            String[] array_list_llegada_a_globe_trade_sd = list_llegada_a_globe_trade_sd.toArray(new String[list_llegada_a_globe_trade_sd.size()]);
-            String[] array_list_archivo_m = list_archivo_m.toArray(new String[list_archivo_m.size()]);
-            String[] array_list_fecha_archivo_m = list_fecha_archivo_m.toArray(new String[list_fecha_archivo_m.size()]);
-            String[] array_list_fecha_solicit_manip = list_fecha_solicit_manip.toArray(new String[list_fecha_solicit_manip.size()]);
-            String[] array_list_fecha_vencim_manip = list_fecha_vencim_manip.toArray(new String[list_fecha_vencim_manip.size()]);
-            String[] array_list_fecha_confirm_clave_pedim = list_fecha_confirm_clave_pedim.toArray(new String[list_fecha_confirm_clave_pedim.size()]);
-            String[] array_list_fecha_recep_increment = list_fecha_recep_increment.toArray(new String[list_fecha_recep_increment.size()]);
-            String[] array_list_t_e = list_t_e.toArray(new String[list_t_e.size()]);
-            String[] array_list_fecha_vencim_inbound = list_fecha_vencim_inbound.toArray(new String[list_fecha_vencim_inbound.size()]);
-            String[] array_list_no_bultos = list_no_bultos.toArray(new String[list_no_bultos.size()]);
-            String[] array_list_peso_kg = list_peso_kg.toArray(new String[list_peso_kg.size()]);
-            String[] array_list_transferencia = list_transferencia.toArray(new String[list_transferencia.size()]);
-            String[] array_list_fecha_inicio_etiquetado = list_fecha_inicio_etiquetado.toArray(new String[list_fecha_inicio_etiquetado.size()]);
-            String[] array_list_fecha_termino_etiquetado = list_fecha_termino_etiquetado.toArray(new String[list_fecha_termino_etiquetado.size()]);
-            String[] array_list_hora_termino_etiquetado = list_hora_termino_etiquetado.toArray(new String[list_hora_termino_etiquetado.size()]);
-            String[] array_list_proveedor = list_proveedor.toArray(new String[list_proveedor.size()]);
-            String[] array_list_proveedor_carga = list_proveedor_carga.toArray(new String[list_proveedor_carga.size()]);
-            String[] array_list_fy = list_fy.toArray(new String[list_fy.size()]);
-            
-            //order by to Arrays
-            Arrays.sort(array_list_evento);
-            Arrays.sort(array_list_referenciaAA);
-            Arrays.sort(array_list_responsable);
-            Arrays.sort(array_list_finalDestination);
-            Arrays.sort(array_list_brandDivision);
-            Arrays.sort(array_list_division);
-            Arrays.sort(array_list_shipmentId);
-            Arrays.sort(array_list_containerId);
-            Arrays.sort(array_list_blAwbPro);
-            Arrays.sort(array_list_loadType);
-            Arrays.sort(array_list_quantity);
-            Arrays.sort(array_list_pod);
-            Arrays.sort(array_list_estDepartFromPol);
-            Arrays.sort(array_list_etaRealPortOfDischarge);
-            Arrays.sort(array_list_estEtaDc);
-            Arrays.sort(array_list_inboundNotification);
-            Arrays.sort(array_list_pol);
-            Arrays.sort(array_list_aa);
-            Arrays.sort(array_list_fechaMesVenta);
-            Arrays.sort(array_list_prioridad);
-            Arrays.sort(array_list_pais_origen);
-            Arrays.sort(array_list_size_container);
-            Arrays.sort(array_list_valor_usd);
-            Arrays.sort(array_list_eta_port_discharge);
-            Arrays.sort(array_list_agente_aduanal);
-            Arrays.sort(array_list_pedimento_a1);
-            Arrays.sort(array_list_pedimento_r1_1er);
-            Arrays.sort(array_list_motivo_rectificacion_1er);
-            Arrays.sort(array_list_pedimento_r1_2do);
-            Arrays.sort(array_list_motivo_rectificacion_2do);
-            Arrays.sort(array_list_fecha_recepcion_doc);
-            Arrays.sort(array_list_recinto);
-            Arrays.sort(array_list_naviera);
-            Arrays.sort(array_list_buque);
-            Arrays.sort(array_list_fecha_revalidacion);
-            Arrays.sort(array_list_fecha_previo_origen);
-            Arrays.sort(array_list_fecha_previo_destino);
-            Arrays.sort(array_list_fecha_resultado_previo);
-            Arrays.sort(array_list_proforma_final);
-            Arrays.sort(array_list_permiso);
-            Arrays.sort(array_list_fecha_envio);
-            Arrays.sort(array_list_fecha_recepcion_perm);
-            Arrays.sort(array_list_fecha_activacion_perm);
-            Arrays.sort(array_list_fecha_permisos_aut);
-            Arrays.sort(array_list_co_pref_arancelaria);
-            Arrays.sort(array_list_aplic_pref_arancelaria);
-            Arrays.sort(array_list_req_uva);
-            Arrays.sort(array_list_req_ca);
-            Arrays.sort(array_list_fecha_recepcion_ca);
-            Arrays.sort(array_list_num_constancia_ca);
-            Arrays.sort(array_list_monto_ca);
-            Arrays.sort(array_list_fecha_doc_completos);
-            Arrays.sort(array_list_fecha_pago_pedimento);
-            Arrays.sort(array_list_fecha_solicitud_transporte);
-            Arrays.sort(array_list_fecha_modulacion);
-            Arrays.sort(array_list_modalidad);
-            Arrays.sort(array_list_resultado_modulacion);
-            Arrays.sort(array_list_fecha_reconocimiento);
-            Arrays.sort(array_list_fecha_liberacion);
-            Arrays.sort(array_list_sello_origen);
-            Arrays.sort(array_list_sello_final);
-            Arrays.sort(array_list_fecha_retencion_aut);
-            Arrays.sort(array_list_fecha_liberacion_aut);
-            Arrays.sort(array_list_estatus_operacion);
-            Arrays.sort(array_list_motivo_atraso);
-            Arrays.sort(array_list_observaciones);
-            Arrays.sort(array_list_llegada_a_nova);
-            Arrays.sort(array_list_llegada_a_globe_trade_sd);
-            Arrays.sort(array_list_archivo_m);
-            Arrays.sort(array_list_fecha_archivo_m);
-            Arrays.sort(array_list_fecha_solicit_manip);
-            Arrays.sort(array_list_fecha_vencim_manip);
-            Arrays.sort(array_list_fecha_confirm_clave_pedim);
-            Arrays.sort(array_list_fecha_recep_increment);
-            Arrays.sort(array_list_t_e);
-            Arrays.sort(array_list_fecha_vencim_inbound);
-            Arrays.sort(array_list_no_bultos);
-            Arrays.sort(array_list_peso_kg);
-            Arrays.sort(array_list_transferencia);
-            Arrays.sort(array_list_fecha_inicio_etiquetado);
-            Arrays.sort(array_list_fecha_termino_etiquetado);
-            Arrays.sort(array_list_hora_termino_etiquetado);
-            Arrays.sort(array_list_proveedor);
-            Arrays.sort(array_list_proveedor_carga);
-            Arrays.sort(array_list_fy);
-            
-            System.out.println("Listado Referencia: " + list_eventos);
-            
-            
                    salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
                           + "     <thead> "
                           + "         <tr> "    
                           + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"FiltrerData('1')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_referenciaAA\" name=\"col_referenciaAA\">"+Arrays.toString(array_list_referenciaAA)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<button onclick=\"openForms('"+list_eventos+"')\">≡</button><a onclick=\"FiltrerData('2')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_evento\" name=\"col_evento\">"+Arrays.toString(array_list_evento)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"FiltrerData('3')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_responsable\" name=\"col_responsable\">"+Arrays.toString(array_list_responsable)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"FiltrerData('4')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_finalDestination\" name=\"col_finalDestination\">"+Arrays.toString(array_list_finalDestination)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"FiltrerData('5')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_brandDivision\" name=\"col_brandDivision\">"+Arrays.toString(array_list_brandDivision)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Division&nbsp;<a onclick=\"FiltrerData('6')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_division\" name=\"col_division\">"+Arrays.toString(array_list_division)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Shipment ID&nbsp;<a onclick=\"FiltrerData('7')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_shipmentId\" name=\"col_shipmentId\">"+Arrays.toString(array_list_shipmentId)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Container&nbsp;<a onclick=\"FiltrerData('8')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_container\" name=\"col_container\">"+Arrays.toString(array_list_containerId)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">BL/AWB/PRO&nbsp;<a onclick=\"FiltrerData('9')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_blAwbPro\" name=\"col_blAwbPro\">"+Arrays.toString(array_list_blAwbPro)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">LoadType&nbsp;<a onclick=\"FiltrerData('10')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_loadType\" name=\"col_loadType\">"+Arrays.toString(array_list_loadType)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Quantity&nbsp;<a onclick=\"FiltrerData('11')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_quantity\" name=\"col_quantity\">"+Arrays.toString(array_list_quantity)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POD&nbsp;<a onclick=\"FiltrerData('12')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pod\" name=\"col_pod\">"+Arrays.toString(array_list_pod)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Departure from POL&nbsp;<a onclick=\"FiltrerData('13')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_estDepartFromPol\" name=\"col_estDepartFromPol\">"+Arrays.toString(array_list_estDepartFromPol)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">ETA REAL Port of Discharge&nbsp;<a onclick=\"FiltrerData('14')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_etaRealPortOfDischarge\" name=\"col_etaRealPortOfDischarge\">"+Arrays.toString(array_list_etaRealPortOfDischarge)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Eta DC&nbsp;<a onclick=\"FiltrerData('15')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_estEtaDc\" name=\"col_estEtaDc\">"+Arrays.toString(array_list_estEtaDc)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Inbound notification&nbsp;<a onclick=\"FiltrerData('16')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_inboundNotification\" name=\"col_inboundNotification\">"+Arrays.toString(array_list_inboundNotification)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POL&nbsp;<a onclick=\"FiltrerData('17')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pol\" name=\"col_pol\">"+Arrays.toString(array_list_pol)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">A.A.&nbsp;<a onclick=\"FiltrerData('18')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_aa\" name=\"col_aa\">"+Arrays.toString(array_list_aa)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Mes de Venta&nbsp;<a onclick=\"FiltrerData('19')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fechaMesVenta\" name=\"col_fechaMesVenta\">"+Arrays.toString(array_list_fechaMesVenta)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Prioridad Si/No&nbsp;<a onclick=\"FiltrerData('20')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_prioridad\" name=\"col_prioridad\">"+Arrays.toString(array_list_prioridad)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">País Origen&nbsp;<a onclick=\"FiltrerData('21')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pais_origen\" name=\"col_pais_origen\">"+Arrays.toString(array_list_pais_origen)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Size Container&nbsp;<a onclick=\"FiltrerData('22')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_size_container\" name=\"col_size_container\">"+Arrays.toString(array_list_size_container)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Valor USD&nbsp;<a onclick=\"FiltrerData('23')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_valor_usd\" name=\"col_valor_usd\">"+Arrays.toString(array_list_valor_usd)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">ETA Port Of Discharge&nbsp;<a onclick=\"FiltrerData('24')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_eta_port_discharge\" name=\"col_eta_port_discharge\">"+Arrays.toString(array_list_eta_port_discharge)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Agente Aduanal&nbsp;<a onclick=\"FiltrerData('25')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_agente_aduanal\" name=\"col_agente_aduanal\">"+Arrays.toString(array_list_agente_aduanal)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento A1&nbsp;<a onclick=\"FiltrerData('26')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pedimento_a1\" name=\"col_pedimento_a1\">"+Arrays.toString(array_list_pedimento_a1)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1&nbsp;<a onclick=\"FiltrerData('27')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pedimento_r1_1er\" name=\"col_pedimento_r1_1er\">"+Arrays.toString(array_list_pedimento_r1_1er)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 1&nbsp;<a onclick=\"FiltrerData('28')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_motivo_rectificacion_1er\" name=\"col_motivo_rectificacion_1er\">"+Arrays.toString(array_list_motivo_rectificacion_1er)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1 (2do)&nbsp;<a onclick=\"FiltrerData('29')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_pedimento_r1_2do\" name=\"col_pedimento_r1_2do\">"+Arrays.toString(array_list_pedimento_r1_2do)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 2&nbsp;<a onclick=\"FiltrerData('30')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_motivo_rectificacion_2do\" name=\"col_motivo_rectificacion_2do\">"+Arrays.toString(array_list_motivo_rectificacion_2do)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Recepción Documentos&nbsp;<a onclick=\"FiltrerData('31')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_recepcion_doc\" name=\"col_fecha_recepcion_doc\">"+Arrays.toString(array_list_fecha_recepcion_doc)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Recinto&nbsp;<a onclick=\"FiltrerData('32')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_recinto\" name=\"col_recinto\">"+Arrays.toString(array_list_recinto)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Naviera / Forwarder&nbsp;<a onclick=\"FiltrerData('33')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_naviera\" name=\"col_naviera\">"+Arrays.toString(array_list_naviera)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Buque&nbsp;<a onclick=\"FiltrerData('34')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_buque\" name=\"col_buque\">"+Arrays.toString(array_list_buque)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Revalidación/Liberación de BL&nbsp;<a onclick=\"FiltrerData('35')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_revalidacion\" name=\"col_fecha_revalidacion\">"+Arrays.toString(array_list_fecha_revalidacion)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo Origen&nbsp;<a onclick=\"FiltrerData('36')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_previo_origen\" name=\"col_fecha_previo_origen\">"+Arrays.toString(array_list_fecha_previo_origen)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo en destino&nbsp;<a onclick=\"FiltrerData('37')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_previo_destino\" name=\"col_fecha_previo_destino\">"+Arrays.toString(array_list_fecha_previo_destino)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Resultado Previo&nbsp;<a onclick=\"FiltrerData('38')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_resultado_previo\" name=\"col_fecha_resultado_previo\">"+Arrays.toString(array_list_fecha_resultado_previo)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Proforma Final&nbsp;<a onclick=\"FiltrerData('39')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_proforma_final\" name=\"col_proforma_final\">"+Arrays.toString(array_list_proforma_final)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere permiso&nbsp;<a onclick=\"FiltrerData('40')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_permiso\" name=\"col_permiso\">"+Arrays.toString(array_list_permiso)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha envío Fichas/notas&nbsp;<a onclick=\"FiltrerData('41')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_envio\" name=\"col_fecha_envio\">"+Arrays.toString(array_list_fecha_envio)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Recepción de permisos tramit.&nbsp;<a onclick=\"FiltrerData('42')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_recepcion_perm\" name=\"col_fecha_recepcion_perm\">"+Arrays.toString(array_list_fecha_recepcion_perm)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick=\"FiltrerData('43')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_activacion_perm\" name=\"col_fecha_activacion_perm\">"+Arrays.toString(array_list_fecha_activacion_perm)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick=\"FiltrerData('44')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_permisos_aut\" name=\"col_fecha_permisos_aut\">"+Arrays.toString(array_list_fecha_permisos_aut)+"</select></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#CC9D77;\">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick=\"FiltrerData('45')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_co_pref_arancelaria\" name=\"col_co_pref_arancelaria\">"+Arrays.toString(array_list_co_pref_arancelaria)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Aplico Preferencia Arancelaria&nbsp;<a onclick=\"FiltrerData('46')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_aplic_pref_arancelaria\" name=\"col_aplic_pref_arancelaria\">"+Arrays.toString(array_list_aplic_pref_arancelaria)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere UVA&nbsp;<a onclick=\"FiltrerData('47')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_req_uva\" name=\"col_req_uva\">"+Arrays.toString(array_list_req_uva)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Requiere CA&nbsp;<a onclick=\"FiltrerData('48')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_req_ca\" name=\"col_req_ca\">"+Arrays.toString(array_list_req_ca)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Fecha Recepción CA&nbsp;<a onclick=\"FiltrerData('49')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_recepcion_ca\" name=\"col_fecha_recepcion_ca\">"+Arrays.toString(array_list_fecha_recepcion_ca)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Número de Constancia CA&nbsp;<a onclick=\"FiltrerData('50')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_num_constancia_ca\" name=\"col_num_constancia_ca\">"+Arrays.toString(array_list_num_constancia_ca)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Monto CA&nbsp;<a onclick=\"FiltrerData('51')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_monto_ca\" name=\"col_monto_ca\">"+Arrays.toString(array_list_monto_ca)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Documentos Completos&nbsp;<a onclick=\"FiltrerData('52')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_doc_completos\" name=\"col_fecha_doc_completos\">"+Arrays.toString(array_list_fecha_doc_completos)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Pago Pedimento&nbsp;<a onclick=\"FiltrerData('53')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_pago_pedimento\" name=\"col_fecha_pago_pedimento\">"+Arrays.toString(array_list_fecha_pago_pedimento)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Solicitud de transporte&nbsp;<a onclick=\"FiltrerData('54')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_solicitud_transporte\" name=\"col_fecha_solicitud_transporte\">"+Arrays.toString(array_list_fecha_solicitud_transporte)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Modulacion&nbsp;<a onclick=\"FiltrerData('55')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_modulacion\" name=\"col_fecha_modulacion\">"+Arrays.toString(array_list_fecha_modulacion)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Modalidad&nbsp;<a onclick=\"FiltrerData('56')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_modalidad\" name=\"col_modalidad\">"+Arrays.toString(array_list_modalidad)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Resultado Modulacion&nbsp;<a onclick=\"FiltrerData('57')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_resultado_modulacion\" name=\"col_resultado_modulacion\">"+Arrays.toString(array_list_resultado_modulacion)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Reconocimiento&nbsp;<a onclick=\"FiltrerData('58')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_reconocimiento\" name=\"col_fecha_reconocimiento\">"+Arrays.toString(array_list_fecha_reconocimiento)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Liberacion&nbsp;<a onclick=\"FiltrerData('59')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_liberacion\" name=\"col_fecha_liberacion\">"+Arrays.toString(array_list_fecha_liberacion)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Origen&nbsp;<a onclick=\"FiltrerData('60')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_sello_origen\" name=\"col_sello_origen\">"+Arrays.toString(array_list_sello_origen)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Final&nbsp;<a onclick=\"FiltrerData('61')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_sello_final\" name=\"col_sello_final\">"+Arrays.toString(array_list_sello_final)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha de retencion por la autoridad&nbsp;<a onclick=\"FiltrerData('62')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_retencion_aut\" name=\"col_fecha_retencion_aut\">"+Arrays.toString(array_list_fecha_retencion_aut)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick=\"FiltrerData('63')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_liberacion_aut\" name=\"col_fecha_liberacion_aut\">"+Arrays.toString(array_list_fecha_liberacion_aut)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Estatus de la operación&nbsp;<a onclick=\"FiltrerData('64')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_estatus_operacion\" name=\"col_festatus_operacion\">"+Arrays.toString(array_list_estatus_operacion)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo Atraso&nbsp;<a onclick=\"FiltrerData('65')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_motivo_atraso\" name=\"col_motivo_atraso\">"+Arrays.toString(array_list_motivo_atraso)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Observaciones&nbsp;<a onclick=\"FiltrerData('66')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_observaciones\" name=\"col_observaciones\">"+Arrays.toString(array_list_observaciones)+"</select></th> ";                                   
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"filtrerCheckbox(this,1)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<a onclick=\"filtrerCheckbox(this,2)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"filtrerCheckbox(this,3)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"filtrerCheckbox(this,4)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"filtrerCheckbox(this,5)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Division&nbsp;<a onclick=\"filtrerCheckbox(this,6)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Shipment ID&nbsp;<a onclick=\"filtrerCheckbox(this,7)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Container&nbsp;<a onclick=\"filtrerCheckbox(this,8)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">BL/AWB/PRO&nbsp;<a onclick=\"filtrerCheckbox(this,9)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">LoadType&nbsp;<a onclick=\"filtrerCheckbox(this,10)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Quantity&nbsp;<a onclick=\"filtrerCheckbox(this,11)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POD&nbsp;<a onclick=\"filtrerCheckbox(this,12)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Departure from POL&nbsp;<a onclick=\"filtrerCheckbox(this,13)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">ETA REAL Port of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,14)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Eta DC&nbsp;<a onclick=\"filtrerCheckbox(this,15)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Inbound notification&nbsp;<a onclick=\"filtrerCheckbox(this,16)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POL&nbsp;<a onclick=\"filtrerCheckbox(this,17)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">A.A.&nbsp;<a onclick=\"filtrerCheckbox(this,18)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Mes de Venta&nbsp;<a onclick=\"filtrerCheckbox(this,19)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Prioridad Si/No&nbsp;<a onclick=\"filtrerCheckbox(this,20)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">País Origen&nbsp;<a onclick=\"filtrerCheckbox(this,21)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Size Container&nbsp;<a onclick=\"filtrerCheckbox(this,22)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Valor USD&nbsp;<a onclick=\"filtrerCheckbox(this,23)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">ETA Port Of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,24)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Agente Aduanal&nbsp;<a onclick=\"filtrerCheckbox(this,25)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento A1&nbsp;<a onclick=\"filtrerCheckbox(this,26)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1&nbsp;<a onclick=\"filtrerCheckbox(this,27)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 1&nbsp;<a onclick=\"filtrerCheckbox(this,28)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1 (2do)&nbsp;<a onclick=\"filtrerCheckbox(this,29)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 2&nbsp;<a onclick=\"filtrerCheckbox(this,30)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Recepción Documentos&nbsp;<a onclick=\"filtrerCheckbox(this,31)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Recinto&nbsp;<a onclick=\"filtrerCheckbox(this,32)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Naviera / Forwarder&nbsp;<a onclick=\"filtrerCheckbox(this,33)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Buque&nbsp;<a onclick=\"filtrerCheckbox(this,34)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Revalidación/Liberación de BL&nbsp;<a onclick=\"filtrerCheckbox(this,35)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo Origen&nbsp;<a onclick=\"filtrerCheckbox(this,36)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo en destino&nbsp;<a onclick=\"filtrerCheckbox(this,37)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Resultado Previo&nbsp;<a onclick=\"filtrerCheckbox(this,38)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Proforma Final&nbsp;<a onclick=\"filtrerCheckbox(this,39)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere permiso&nbsp;<a onclick=\"filtrerCheckbox(this,40)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha envío Fichas/notas&nbsp;<a onclick=\"filtrerCheckbox(this,41)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Recepción de permisos tramit.&nbsp;<a onclick=\"filtrerCheckbox(this,42)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,43)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,44)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#CC9D77;\">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,45)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Aplico Preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,46)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere UVA&nbsp;<a onclick=\"filtrerCheckbox(this,47)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Requiere CA&nbsp;<a onclick=\"filtrerCheckbox(this,48)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Fecha Recepción CA&nbsp;<a onclick=\"filtrerCheckbox(this,49)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Número de Constancia CA&nbsp;<a onclick=\"filtrerCheckbox(this,50)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Monto CA&nbsp;<a onclick=\"filtrerCheckbox(this,51)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Documentos Completos&nbsp;<a onclick=\"filtrerCheckbox(this,52)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Pago Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,53)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Solicitud de transporte&nbsp;<a onclick=\"filtrerCheckbox(this,54)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,55)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Modalidad&nbsp;<a onclick=\"filtrerCheckbox(this,56)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Resultado Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,57)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Reconocimiento&nbsp;<a onclick=\"filtrerCheckbox(this,58)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Liberacion&nbsp;<a onclick=\"filtrerCheckbox(this,59)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Origen&nbsp;<a onclick=\"filtrerCheckbox(this,60)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Final&nbsp;<a onclick=\"filtrerCheckbox(this,61)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha de retencion por la autoridad&nbsp;<a onclick=\"filtrerCheckbox(this,62)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick=\"filtrerCheckbox(this,63)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Estatus de la operación&nbsp;<a onclick=\"filtrerCheckbox(this,64)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo Atraso&nbsp;<a onclick=\"filtrerCheckbox(this,65)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Observaciones&nbsp;<a onclick=\"filtrerCheckbox(this,66)\"><i class=\"fa fa-search\"></i></a></th> ";                                   
 
             if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF 
 
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a NOVA&nbsp;<a onclick=\"FiltrerData('67')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_llegada_a_nova\" name=\"col_llegada_a_nova\">"+Arrays.toString(array_list_llegada_a_nova)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a Globe trade SD&nbsp;<a onclick=\"FiltrerData('68')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_llegada_a_globe_trade_sd\" name=\"col_llegada_a_globe_trade_sd\">"+Arrays.toString(array_list_llegada_a_globe_trade_sd)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Archivo M&nbsp;<a onclick=\"FiltrerData('69')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_archivo_m\" name=\"col_archivo_m\">"+Arrays.toString(array_list_archivo_m)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha de Archivo M&nbsp;<a onclick=\"FiltrerData('70')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_archivo_m\" name=\"col_fecha_archivo_m\">"+Arrays.toString(array_list_fecha_archivo_m)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha Solicitud de Manipulacion&nbsp;<a onclick=\"FiltrerData('71')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_solicit_manip\" name=\"col_fecha_solicit_manip\">"+Arrays.toString(array_list_fecha_solicit_manip)+"</select></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de vencimiento de Manipulacion&nbsp;<a onclick=\"FiltrerData('72')\"><i class=\"fa fa-search\"></i></a>  &nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_vencim_manip\" name=\"col_fecha_vencim_manip\">"+Arrays.toString(array_list_fecha_vencim_manip)+"</select></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick=\"FiltrerData('73')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_confirm_clave_pedim\" name=\"col_fecha_confirm_clave_pedim\">"+Arrays.toString(array_list_fecha_confirm_clave_pedim)+"</select></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de Recepcion de Incrementables&nbsp;<a onclick=\"FiltrerData('74')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_recep_increment\" name=\"col_fecha_recep_increment\">"+Arrays.toString(array_list_fecha_recep_increment)+"</select></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">T&E&nbsp;<a onclick=\"FiltrerData('75')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_t_e\" name=\"col_t_e\">"+Arrays.toString(array_list_t_e)+"</select></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha de Vencimiento del Inbound&nbsp;<a onclick=\"FiltrerData('76')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_vencim_inbound\" name=\"col_fecha_vencim_inbound\">"+Arrays.toString(array_list_fecha_vencim_inbound)+"</select></th> ";
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a NOVA&nbsp;<a onclick=\"filtrerCheckbox(this,67)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a Globe trade SD&nbsp;<a onclick=\"filtrerCheckbox(this,68)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,69)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha de Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,70)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha Solicitud de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,71)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de vencimiento de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,72)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,73)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de Recepcion de Incrementables&nbsp;<a onclick=\"filtrerCheckbox(this,74)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">T&E&nbsp;<a onclick=\"filtrerCheckbox(this,75)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha de Vencimiento del Inbound&nbsp;<a onclick=\"filtrerCheckbox(this,76)\"><i class=\"fa fa-search\"></i></a></th> ";
 
             }
 
             if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">No. BULTOS&nbsp;<a onclick=\"FiltrerData('77')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_no_bultos\" name=\"col_no_bultos\">"+Arrays.toString(array_list_no_bultos)+"</select> </th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Peso (KG)&nbsp;<a onclick=\"FiltrerData('78')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_peso_kg\" name=\"col_peso_kg\">"+Arrays.toString(array_list_peso_kg)+"</select> </th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Transferencia&nbsp;<a onclick=\"FiltrerData('79')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_transferencia\" name=\"col_transferencia\">"+Arrays.toString(array_list_transferencia)+"</select> </th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Inicio Etiquetado&nbsp;<a onclick=\"FiltrerData('80')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_inicio_etiquetado\" name=\"col_fecha_inicio_etiquetado\">"+Arrays.toString(array_list_fecha_inicio_etiquetado)+"</select> </th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Termino Etiquetado&nbsp;<a onclick=\"FiltrerData('81')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fecha_termino_etiquetado\" name=\"col_fecha_termino_etiquetado\">"+Arrays.toString(array_list_fecha_termino_etiquetado)+"</select> </th> " 
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Hora de termino Etiquetado&nbsp;<a onclick=\"FiltrerData('82')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_hora_termino_etiquetado\" name=\"col_hora_termino_etiquetado\">"+Arrays.toString(array_list_hora_termino_etiquetado)+"</select> </th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor&nbsp;<a onclick=\"FiltrerData('83')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_proveedor\" name=\"col_proveedor\">"+Arrays.toString(array_list_proveedor)+"</select></th> " 
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor de Carga&nbsp;<a onclick=\"FiltrerData('84')\"><i class=\"fa fa-search\"></i></a> &nbsp;<select multiple class=\"custom-select\" id=\"col_proveedor_carga\" name=\"col_proveedor_carga\">"+Arrays.toString(array_list_proveedor_carga)+"</select></th> ";
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">No. BULTOS&nbsp;<a onclick=\"filtrerCheckbox(this,77)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Peso (KG)&nbsp;<a onclick=\"filtrerCheckbox(this,78)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Transferencia&nbsp;<a onclick=\"filtrerCheckbox(this,79)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Inicio Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,80)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,81)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Hora de termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,82)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor&nbsp;<a onclick=\"filtrerCheckbox(this,83)\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor de Carga&nbsp;<a onclick=\"filtrerCheckbox(this,84)\"><i class=\"fa fa-search\"></i></a></th> ";
 
             }
-
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"FiltrerData('85')\"><i class=\"fa fa-search\"></i></a>&nbsp;<select multiple class=\"custom-select\" id=\"col_fy\" name=\"col_fy\">"+Arrays.toString(array_list_fy)+"</select></th> "
+ 
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"filtrerCheckbox(this,85)\"><i class=\"fa fa-search\"></i></a></th> "
                           + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
                           + "         </tr> "
                           + "     </thead> "
