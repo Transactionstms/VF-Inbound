@@ -1771,3 +1771,7 @@ function parametrizacionValoresEstatusOperacion(contador) {
     }
 
 }
+
+function clearFiltres(){
+    location.reload();
+}

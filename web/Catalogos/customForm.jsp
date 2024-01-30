@@ -914,25 +914,25 @@
                 let selectElement85 = '<%=list_fy%>';
         </script>
         <!-- JavaScript files-->
-        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Sweetalert -->
         <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
-        <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Validaciones Celdas -->
-        <script src="../lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
         <!-- Elementos Html Celdas -->
-        <script src="../lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
         <!-- Upload/Download Excel -->
-        <script src="../lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/upload_file_customs.js" type="text/javascript"></script>
         <!-- Filtrer Checkbox -->
-        <script src="../lib/validationsInbound/customs/filtrerCheckbox.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/filtrerCheckbox.js" type="text/javascript"></script>
         <!-- Calendarios -->
-        <script src="../lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
         <!-- Multiselect -->
-        <script src="../lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/Multiselect2_4.0.13/js/select2.min.js" type="text/javascript"></script>
         <!-- fruitsSelect value -->
-        <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
