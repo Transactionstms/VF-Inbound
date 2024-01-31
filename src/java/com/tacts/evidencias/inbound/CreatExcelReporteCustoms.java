@@ -25,7 +25,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  */
 public class CreatExcelReporteCustoms {
 
-    public static String crearAPartirDeArrayListReporteEventosCustoms(String tipoAgente, String tipoFiltro, String id, String fechaInicial, String fechaFinal) {
+    public static String crearAPartirDeArrayListReporteEventosCustoms(String consultaReporte, String nameAgentType) {
 
         ArrayList<excelReporteEventosCustoms> eventosCustoms = new ArrayList<>();
         ServiceDAO dao = new ServiceDAO();
@@ -33,8 +33,8 @@ public class CreatExcelReporteCustoms {
 
         try {
 
-            Statement stmt = dao.conectar().prepareStatement(fac.consultarEventosCustoms(tipoAgente, tipoFiltro, id));
-            ResultSet rs = stmt.executeQuery(fac.consultarEventosCustoms(tipoAgente, tipoFiltro, id));
+            Statement stmt = dao.conectar().prepareStatement(consultaReporte);
+            ResultSet rs = stmt.executeQuery(consultaReporte);
             while (rs.next()) {
                 eventosCustoms.add(new excelReporteEventosCustoms(
                         rs.getString(1), // evento 
@@ -135,7 +135,7 @@ public class CreatExcelReporteCustoms {
         HSSFCellStyle style = workbook.createCellStyle();
 
         final String nombreArchivo = "ReporteEventosCustoms.xls";
-        Sheet hoja = workbook.createSheet("Detalle Eventos Customs " + tipoAgente);
+        Sheet hoja = workbook.createSheet("Detalle Eventos Customs " + nameAgentType);
 
         String[] encabezados = {
                 "Evento",

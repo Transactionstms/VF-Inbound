@@ -4,7 +4,6 @@
     Author     : luis_
 --%>
 
-<%@page import="com.tacts.evidencias.inbound.CreatExcelReporteCustoms"%>
 <%@page import="com.pantalla.BLPantalla"%>
 <%@page import="com.pantalla.Pantalla"%>
 <%@page import="java.util.HashSet"%>
@@ -86,7 +85,6 @@
                 String UserId = (String) ownsession.getAttribute("login.user_id_number");
 
                 ConsultasQuery fac = new ConsultasQuery();
-                CreatExcelReporteCustoms excel = new CreatExcelReporteCustoms();
                
                 //String fechaInicial = request.getParameter("fechaInicial");
                 //String fechaFinal = request.getParameter("fechaFinal");
@@ -98,7 +96,6 @@
                 String AgentType = "";
                 String idPlantilla = "";
                 String namePlantilla = ""; 
-                String pathExcelCustoms = "";
                 int cont = 1;
                 
                 //Lista de valores filtros checkbox:
@@ -290,11 +287,6 @@
 
                         }
                     }
-                
-            //Generación de Excel
-            pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosCustoms(AgentType, "0", "0", fechaInicial, fechaFinal);
-            System.out.println("Path File Excel: " + pathExcelCustoms);
-        
         %>
         <div class="card-body">
             <div class="contenedor">
@@ -426,33 +418,14 @@
             }   
                 let selectElement85 = '<%=list_fy%>';
         </script>
-        <script>
-            document.getElementById("downloadLinkEventCustoms").addEventListener("click", function() {
-                // Realizar una solicitud al servlet para descargar el archivo
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", "<%=request.getContextPath()%>/DownloadExcelEventsCustoms", true);
-                xhr.responseType = "blob";
-
-                xhr.onload = function() {
-                    // Crear un enlace y hacer clic en él para iniciar la descarga
-                    var blob = new Blob([xhr.response], { type: "application/octet-stream" });
-                    var link = document.createElement("a");
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = "ReporteEventosCustoms.xls";
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                };
-
-                xhr.send();
-            });
-        </script>
         <!-- JavaScript files-->
         <script src="<%=request.getContextPath()%>/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Actions js -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/reporteCustoms/customsForms.js" type="text/javascript"></script>
         <!-- Filtrer Checkbox -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/reporteCustoms/filtrerCheckbox.js" type="text/javascript"></script>
+        <!-- Download Excel -->
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/reporteCustoms/downloadExcel.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
