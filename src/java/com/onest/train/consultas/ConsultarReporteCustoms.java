@@ -1161,8 +1161,8 @@ public class ConsultarReporteCustoms extends HttpServlet {
                             + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                             + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
                             + " WHERE TIE.ESTADO = 1 "
-                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date('01/10/2023','dd/mm/yyyy') "
-                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('18/12/2023','dd/mm/yyyy') "
+                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date((SELECT MIN(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
+                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
                             + " AND tid.division_nombre <> 'No/DSN' "
                             + " AND gtn.load_type_final IS NOT NULL ";
                             //+ " AND GTN.ESTATUS <> 19 ";
@@ -1743,7 +1743,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultarCustoms.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarReporteCustoms.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1761,7 +1761,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ConsultarCustoms.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultarReporteCustoms.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
