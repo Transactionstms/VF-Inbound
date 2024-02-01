@@ -199,8 +199,8 @@
                 if (db.doDB(fac.consultarEventosCustoms(AgentType,"0","0"))) {
                         for (String[] row : db.getResultado()) {
 
-                            list_referenciaAA += row[30] + "@";
                             list_evento += row[0] + "@";
+                            list_referenciaAA += row[30] + "@";
                             list_responsable += row[1] + "@";
                             list_finalDestination += row[2] + "@";
                             list_brandDivision += row[21] + "@";

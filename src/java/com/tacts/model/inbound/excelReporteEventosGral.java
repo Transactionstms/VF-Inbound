@@ -8,10 +8,10 @@ package com.tacts.model.inbound;
  *
  * @author Desarrollo Tacts
  */
-public class excelReporteEventosCustoms {
+public class excelReporteEventosGral {
     
-    private String evento;
     private String referenciaAA;
+    private String evento;
     private String responsable;
     private String finalDestination;
     private String brandDivision;
@@ -76,29 +76,11 @@ public class excelReporteEventosCustoms {
     private String estatus_operacion;
     private String motivo_atraso;
     private String observaciones;
-    private String llegada_a_nova;
-    private String llegada_a_globe_trade_sd;
-    private String archivo_m;
-    private String fecha_archivo_m;
-    private String fecha_solicit_manip;
-    private String fecha_vencim_manip;
-    private String fecha_confirm_clave_pedim;
-    private String fecha_recep_increment;
-    private String t_e;
-    private String fecha_vencim_inbound;
-    private String no_bultos;
-    private String peso_kg;
-    private String transferencia;
-    private String fecha_inicio_etiquetado;
-    private String fecha_termino_etiquetado;
-    private String hora_termino_etiquetado;
-    private String proveedor;
-    private String proveedor_carga;
     private String fy;
     
-    public excelReporteEventosCustoms(String evento, String referenciaAA, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String containerId, String blAwbPro, String loadType, String quantity, String pod, String estDepartFromPol, String etaRealPortOfDischarge, String estEtaDc, String inboundNotification, String pol, String aa, String fechaMesVenta, String prioridad, String pais_origen, String size_container, String valor_usd, String eta_port_discharge, String agente_aduanal, String pedimento_a1, String pedimento_r1_1er, String motivo_rectificacion_1er, String pedimento_r1_2do, String motivo_rectificacion_2do, String fecha_recepcion_doc, String recinto, String naviera, String buque, String fecha_revalidacion, String fecha_previo_origen, String fecha_previo_destino, String fecha_resultado_previo, String proforma_final, String permiso, String fecha_envio, String fecha_recepcion_perm, String fecha_activacion_perm, String fecha_permisos_aut, String co_pref_arancelaria, String aplic_pref_arancelaria, String req_uva, String req_ca, String fecha_recepcion_ca, String num_constancia_ca, String monto_ca, String fecha_doc_completos, String fecha_pago_pedimento, String fecha_solicitud_transporte, String fecha_modulacion, String modalidad, String resultado_modulacion, String fecha_reconocimiento, String fecha_liberacion, String sello_origen, String sello_final, String fecha_retencion_aut, String fecha_liberacion_aut, String estatus_operacion, String motivo_atraso, String observaciones, String llegada_a_nova, String llegada_a_globe_trade_sd, String archivo_m, String fecha_archivo_m, String fecha_solicit_manip, String fecha_vencim_manip, String fecha_confirm_clave_pedim, String fecha_recep_increment, String t_e, String fecha_vencim_inbound, String no_bultos, String peso_kg, String transferencia, String fecha_inicio_etiquetado, String fecha_termino_etiquetado, String hora_termino_etiquetado, String proveedor, String proveedor_carga, String fy) {
-        this.evento = evento;
+    public excelReporteEventosGral(String referenciaAA, String evento, String responsable, String finalDestination, String brandDivision, String division, String shipmentId, String containerId, String blAwbPro, String loadType, String quantity, String pod, String estDepartFromPol, String etaRealPortOfDischarge, String estEtaDc, String inboundNotification, String pol, String aa, String fechaMesVenta, String prioridad, String pais_origen, String size_container, String valor_usd, String eta_port_discharge, String agente_aduanal, String pedimento_a1, String pedimento_r1_1er, String motivo_rectificacion_1er, String pedimento_r1_2do, String motivo_rectificacion_2do, String fecha_recepcion_doc, String recinto, String naviera, String buque, String fecha_revalidacion, String fecha_previo_origen, String fecha_previo_destino, String fecha_resultado_previo, String proforma_final, String permiso, String fecha_envio, String fecha_recepcion_perm, String fecha_activacion_perm, String fecha_permisos_aut, String co_pref_arancelaria, String aplic_pref_arancelaria, String req_uva, String req_ca, String fecha_recepcion_ca, String num_constancia_ca, String monto_ca, String fecha_doc_completos, String fecha_pago_pedimento, String fecha_solicitud_transporte, String fecha_modulacion, String modalidad, String resultado_modulacion, String fecha_reconocimiento, String fecha_liberacion, String sello_origen, String sello_final, String fecha_retencion_aut, String fecha_liberacion_aut, String estatus_operacion, String motivo_atraso, String observaciones, String fy) {
         this.referenciaAA = referenciaAA;
+        this.evento = evento;
         this.responsable = responsable;
         this.finalDestination = finalDestination;
         this.brandDivision = brandDivision;
@@ -163,33 +145,7 @@ public class excelReporteEventosCustoms {
         this.estatus_operacion = estatus_operacion;
         this.motivo_atraso = motivo_atraso;
         this.observaciones = observaciones;
-        this.llegada_a_nova = llegada_a_nova;
-        this.llegada_a_globe_trade_sd = llegada_a_globe_trade_sd;
-        this.archivo_m = archivo_m;
-        this.fecha_archivo_m = fecha_archivo_m;
-        this.fecha_solicit_manip = fecha_solicit_manip;
-        this.fecha_vencim_manip = fecha_vencim_manip;
-        this.fecha_confirm_clave_pedim = fecha_confirm_clave_pedim;
-        this.fecha_recep_increment = fecha_recep_increment;
-        this.t_e = t_e;
-        this.fecha_vencim_inbound = fecha_vencim_inbound;
-        this.no_bultos = no_bultos;
-        this.peso_kg = peso_kg;
-        this.transferencia = transferencia;
-        this.fecha_inicio_etiquetado = fecha_inicio_etiquetado;
-        this.fecha_termino_etiquetado = fecha_termino_etiquetado;
-        this.hora_termino_etiquetado = hora_termino_etiquetado;
-        this.proveedor = proveedor;
-        this.proveedor_carga = proveedor_carga;
         this.fy = fy;
-    }
-
-    public String getEvento() {
-        return evento;
-    }
-
-    public void setEvento(String evento) {
-        this.evento = evento;
     }
 
     public String getReferenciaAA() {
@@ -198,6 +154,14 @@ public class excelReporteEventosCustoms {
 
     public void setReferenciaAA(String referenciaAA) {
         this.referenciaAA = referenciaAA;
+    }
+    
+    public String getEvento() {
+        return evento;
+    }
+
+    public void setEvento(String evento) {
+        this.evento = evento;
     }
 
     public String getResponsable() {
@@ -712,150 +676,6 @@ public class excelReporteEventosCustoms {
         this.observaciones = observaciones;
     }
 
-    public String getLlegada_a_nova() {
-        return llegada_a_nova;
-    }
-
-    public void setLlegada_a_nova(String llegada_a_nova) {
-        this.llegada_a_nova = llegada_a_nova;
-    }
-
-    public String getLlegada_a_globe_trade_sd() {
-        return llegada_a_globe_trade_sd;
-    }
-
-    public void setLlegada_a_globe_trade_sd(String llegada_a_globe_trade_sd) {
-        this.llegada_a_globe_trade_sd = llegada_a_globe_trade_sd;
-    }
-
-    public String getArchivo_m() {
-        return archivo_m;
-    }
-
-    public void setArchivo_m(String archivo_m) {
-        this.archivo_m = archivo_m;
-    }
-
-    public String getFecha_archivo_m() {
-        return fecha_archivo_m;
-    }
-
-    public void setFecha_archivo_m(String fecha_archivo_m) {
-        this.fecha_archivo_m = fecha_archivo_m;
-    }
-
-    public String getFecha_solicit_manip() {
-        return fecha_solicit_manip;
-    }
-
-    public void setFecha_solicit_manip(String fecha_solicit_manip) {
-        this.fecha_solicit_manip = fecha_solicit_manip;
-    }
-
-    public String getFecha_vencim_manip() {
-        return fecha_vencim_manip;
-    }
-
-    public void setFecha_vencim_manip(String fecha_vencim_manip) {
-        this.fecha_vencim_manip = fecha_vencim_manip;
-    }
-
-    public String getFecha_confirm_clave_pedim() {
-        return fecha_confirm_clave_pedim;
-    }
-
-    public void setFecha_confirm_clave_pedim(String fecha_confirm_clave_pedim) {
-        this.fecha_confirm_clave_pedim = fecha_confirm_clave_pedim;
-    }
-
-    public String getFecha_recep_increment() {
-        return fecha_recep_increment;
-    }
-
-    public void setFecha_recep_increment(String fecha_recep_increment) {
-        this.fecha_recep_increment = fecha_recep_increment;
-    }
-
-    public String getT_e() {
-        return t_e;
-    }
-
-    public void setT_e(String t_e) {
-        this.t_e = t_e;
-    }
-
-    public String getFecha_vencim_inbound() {
-        return fecha_vencim_inbound;
-    }
-
-    public void setFecha_vencim_inbound(String fecha_vencim_inbound) {
-        this.fecha_vencim_inbound = fecha_vencim_inbound;
-    }
-
-    public String getNo_bultos() {
-        return no_bultos;
-    }
-
-    public void setNo_bultos(String no_bultos) {
-        this.no_bultos = no_bultos;
-    }
-
-    public String getPeso_kg() {
-        return peso_kg;
-    }
-
-    public void setPeso_kg(String peso_kg) {
-        this.peso_kg = peso_kg;
-    }
-
-    public String getTransferencia() {
-        return transferencia;
-    }
-
-    public void setTransferencia(String transferencia) {
-        this.transferencia = transferencia;
-    }
-
-    public String getFecha_inicio_etiquetado() {
-        return fecha_inicio_etiquetado;
-    }
-
-    public void setFecha_inicio_etiquetado(String fecha_inicio_etiquetado) {
-        this.fecha_inicio_etiquetado = fecha_inicio_etiquetado;
-    }
-
-    public String getFecha_termino_etiquetado() {
-        return fecha_termino_etiquetado;
-    }
-
-    public void setFecha_termino_etiquetado(String fecha_termino_etiquetado) {
-        this.fecha_termino_etiquetado = fecha_termino_etiquetado;
-    }
-
-    public String getHora_termino_etiquetado() {
-        return hora_termino_etiquetado;
-    }
-
-    public void setHora_termino_etiquetado(String hora_termino_etiquetado) {
-        this.hora_termino_etiquetado = hora_termino_etiquetado;
-    }
-
-    public String getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(String proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public String getProveedor_carga() {
-        return proveedor_carga;
-    }
-
-    public void setProveedor_carga(String proveedor_carga) {
-        this.proveedor_carga = proveedor_carga;
-    }
-
     public String getFy() {
         return fy;
     }
@@ -865,6 +685,4 @@ public class excelReporteEventosCustoms {
     }
 }
     
-    
-
     

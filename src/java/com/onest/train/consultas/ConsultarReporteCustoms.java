@@ -231,9 +231,9 @@ public class ConsultarReporteCustoms extends HttpServlet {
             String colorSemaforo = "";
             String sizeSemaforo = "";
             String listStatusOperationEvent = "";
+            String pathExcelCustoms = "";
             String salida = "";
             int cont = 1;
-
             
             //Consultar Información de Agente Aduanal
             if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
@@ -1705,7 +1705,21 @@ public class ConsultarReporteCustoms extends HttpServlet {
                     + "<input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + cont + "\">";
             
             //Generación de Excel
-            String pathExcelCustoms = pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosCustoms(sql,nameAgentType);
+            switch (AgentType) {
+                case "4006":
+                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosAdmin(sql, AgentType, nameAgentType);
+                    break;
+                case "4001":
+                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosLogix(sql, AgentType, nameAgentType);
+                    break;
+                case "4002":
+                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosCusa(sql, AgentType, nameAgentType);
+                    break;
+                default:
+                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType);
+                    break;
+            }
+            
             System.out.println("Path File Excel: " + pathExcelCustoms);
             
             out.print(salida);

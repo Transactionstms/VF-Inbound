@@ -203,7 +203,7 @@
                 caramelo = caramelo.replaceAll(",$", "");
 
                 //Generación de Excel
-                pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosCustoms(AgentType, filterType, id, fechaInicial, fechaFinal);
+                pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosAdmin(AgentType, filterType, id, fechaInicial, fechaFinal);
                 System.out.println("Path File Excel: " + pathExcelCustoms);
 
         %>
