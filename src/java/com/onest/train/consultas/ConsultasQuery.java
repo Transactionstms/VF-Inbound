@@ -2180,8 +2180,8 @@ public class ConsultasQuery {
                + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date('30/11/2023','dd/mm/yyyy') "
                //+ " AND TIE.ID_EVENTO IN (231215,230960) "
                + " AND tid.division_nombre <> 'No/DSN' "
-               + " AND gtn.load_type_final IS NOT NULL "   
-               + " AND GTN.ESTATUS <> 19 ";  
+               + " AND gtn.load_type_final IS NOT NULL " ;  
+               //+ " AND GTN.ESTATUS <> 19 ";  
          
         if(!tipoAgente.equals("4006")){ //VF GENERAL
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') ";  
