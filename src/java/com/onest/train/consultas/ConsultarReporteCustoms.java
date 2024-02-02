@@ -350,7 +350,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
                 }
             }
             if (!columna_pol.equals("")) {
-                String[] selected = columna_pol.split(",");
+                String[] selected = columna_pol.split("@");
                 for (String a : selected) {
                     caramelo_pol += "'" + a + "',";
                 }

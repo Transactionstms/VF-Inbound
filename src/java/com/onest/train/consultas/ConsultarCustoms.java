@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
-import java.util.Arrays;
 
 /**
  *
@@ -348,7 +346,7 @@ public class ConsultarCustoms extends HttpServlet {
                 }
             }
             if (!columna_pol.equals("")) {
-                String[] selected = columna_pol.split(",");
+                String[] selected = columna_pol.split("@");
                 for (String a : selected) {
                     caramelo_pol += "'" + a + "',";
                 }
