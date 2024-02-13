@@ -236,7 +236,7 @@
                     }else if (<%=sql1%> === 30) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logActBatch.jsp?folio=' + fecha;
 
-                    }else if (<%=sql1%> === 31) {
+                    }else if (<%=sql1%> === 31 || <%=sql1%> === 35) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logRDIBatch.jsp?folio=' + fecha;
 
                     }else if (<%=sql1%> === 33) {
