@@ -55,6 +55,7 @@ public class NuevoEvento extends HttpServlet {
                 String eta_plus2          = request.getParameter("eta_plus2");
                 String eta_plus         = request.getParameter("eta_plus");
                 String pol              = request.getParameter("pol");
+                
                 String observacionActual    = request.getParameter("observaciones");
                 String actual_crd       = request.getParameter("actual_crd");
                 //String numEventoDB = request.getParameter("numEventoDB");
@@ -116,7 +117,7 @@ public class NuevoEvento extends HttpServlet {
 "        actual_crd,\n" +
 //"        received_vendor,\n" +
 "        est_departure_pol,\n" +
-//"        departed_pol,\n" +
+"        departed_pol,\n" +
  "        eta_port_discharge,\n" +
  //"        view_docs,\n" +
 "        bodega_id,\n" +
@@ -172,14 +173,14 @@ public class NuevoEvento extends HttpServlet {
 " to_date('"+actual_crd+"','MM/DD/YY'),\n" +
 //" v_fecha1,\n" +
 " to_date('"+est_departure_pol+"','MM/DD/YY'),\n" +
-//" v_fecha3, \n" +
+" to_date('"+est_departure_pol+"','MM/DD/YY'),\n" +
 " to_date('"+eta_port_discharge+"','MM/DD/YY'), \n" +
 //"        pview_docs,\n" +
 "        0,\n" +
 "        20,\n" +
 "        '"+containerActual+"'\n" +
 " \n" +
-"    ,'"+containerActual+"',\n" +
+"    ,'-1',\n" +
 "    '1',\n" +
 //"pCARRIER,\n" +
 //"pVESSEL,\n" +
@@ -220,7 +221,7 @@ public class NuevoEvento extends HttpServlet {
               }
               
          }else{
-             out.print("Este evento ya existe puede modificarlo en el apartado Modificar Evento, pero no puede ");
+             out.print("Este evento ya existe puede modificarlo en el apartado Modificar Evento  ");
          }       
              //   String sqlUpdate="update TRA_INC_GTN_TEST set PLANTILLA_ID='"+gtnId+"' where ID_GTN in ("+gtnId+")";
                 //  update=db.doDB(sqlUpdate);
