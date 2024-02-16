@@ -75,7 +75,7 @@ public class AgregarShipmet extends HttpServlet {
                 String pol              = request.getParameter("pol");
                 String observaciones    = request.getParameter("observaciones");
                 
-                String actual_crd       = request.getParameter("actual_crd");
+             //   String actual_crd       = request.getParameter("actual_crd");
 
                 String evento    = request.getParameter("evento");
                 String ship      = request.getParameter("ship");
@@ -94,6 +94,19 @@ public class AgregarShipmet extends HttpServlet {
                 String emails = "";
                 int contador = 0;
 
+                
+               String observacionActual    = request.getParameter("observaciones");
+               String actual_crd       = request.getParameter("actual_crd");
+
+                String reg1   = request.getParameter("reg1");
+                String reg2   = request.getParameter("reg2");
+                String reg3   = request.getParameter("reg3");
+                
+                String mat2    = request.getParameter("mat2");
+                String carr2   = request.getParameter("carr2");
+                String tcon2   = request.getParameter("tcon2");
+                
+                String peso2   = request.getParameter("peso2"); 
                   
 
                    
@@ -101,7 +114,7 @@ public class AgregarShipmet extends HttpServlet {
                  String sqlEve =" update tra_inb_evento " +
                                 " set  " +
                                 " USER_NID ="+responsable+", " +
-                                " observaciones='"+observaciones+"' " +
+                                " observaciones='"+observacionActual+"' " +
                                 " where ID_EVENTO='"+evento+"' ";
                 // boolean update=db.doDB(sqlEve);
 
@@ -112,14 +125,14 @@ public class AgregarShipmet extends HttpServlet {
 "CONTAINER1      , \n" +
 "BL_AWB_PRO      , \n" +
 "LOAD_TYPE       , \n" +
-"CONTAINER_TYPE  , \n" +
+//"CONTAINER_TYPE  , \n" +
 "OF_PACKAGES     ,        \n" +
 "QUANTITY        ,        \n" +
 "MODE1           , \n" +
 "FINAL_DESTINATION , \n" +
 "PURCHASE_ORDER  , \n" +
 "STYLE1          , \n" +
-"STYLE_DESC      , \n" +
+//"STYLE_DESC      , \n" +
 "POL             , \n" +
 "POD             , \n" +
 "ACTUAL_CRD       ,          \n" +
@@ -150,7 +163,7 @@ public class AgregarShipmet extends HttpServlet {
 "EMBARQUE_AGRUPADOR, \n" +
 "CONSECUTIVO     ,        \n" +
 "URL_POD             , \n" +
-"CARRIER         , \n" +
+//"CARRIER         , \n" +
 "VESSEL              , \n" +
 "VOLUME              , \n" +
 "LAST_MILESTONE      , \n" +
@@ -160,7 +173,14 @@ public class AgregarShipmet extends HttpServlet {
 "CUSTOMER            , \n" +
 "FORWARDER           , \n" +
 "HBL_HAWB            , \n" +
-"TERMINAL_POD        \n" +
+"TERMINAL_POD        ,"
++ "clave,"
++ "DOCTOS_ADUANEROS,"
++ "TIPO_MATERIA," 
++ "STYLE_DESC,"
++ "CARRIER,"
++ "CONTAINER_TYPE,"
++ "PESO " +
 ")select \n" +
 "SHIPMENT_DETAILS, \n" +
 "'"+Brand+"' as BRAND_DIVISION  ,  \n" +
@@ -168,20 +188,20 @@ public class AgregarShipmet extends HttpServlet {
 "CONTAINER1      , \n" +
 "'"+bl+"' as BL_AWB_PRO      , \n" +
 "'"+Load1+"' as LOAD_TYPE       , \n" +
-"CONTAINER_TYPE  , \n" +
+//"CONTAINER_TYPE  , \n" +
 "OF_PACKAGES     ,        \n" +
 "'"+quantity+"' as QUANTITY        ,        \n" +
 "MODE1           , \n" +
 "'"+finaldes+"' as FINAL_DESTINATION , \n" +
 "PURCHASE_ORDER  , \n" +
 "STYLE1          , \n" +
-"STYLE_DESC      , \n" +
+//"STYLE_DESC      , \n" +
 "'"+pol+"' as POL             , \n" +
 "'"+pod+"' as POD             , \n" +
-" ACTUAL_CRD       ,          \n" +//to_date('"+actual_crd+"','MM/DD/YY') as
+" to_date('"+actual_crd+"','MM/DD/YY')       ,          \n" +//to_date('"+actual_crd+"','MM/DD/YY') as
 "RECEIVED_VENDOR  ,          \n" +
 "to_date('"+est_departure_pol+"','MM/DD/YY') as EST_DEPARTURE_POL,          \n" +
-"DEPARTED_POL     ,          \n" +
+"to_date('"+est_departure_pol+"','MM/DD/YY')     ,          \n" +
 "DOCS_PROVIDED_BROKER,          \n" +
 "to_date('"+eta_port_discharge+"','MM/DD/YY') as ETA_PORT_DISCHARGE  ,          \n" +
 "ETA_POD          ,          \n" +
@@ -206,7 +226,7 @@ public class AgregarShipmet extends HttpServlet {
 "EMBARQUE_AGRUPADOR, \n" +
 "CONSECUTIVO     ,        \n" +
 "URL_POD             , \n" +
-"CARRIER         , \n" +
+//"CARRIER         , \n" +
 "VESSEL              , \n" +
 "VOLUME              , \n" +
 "LAST_MILESTONE      , \n" +
@@ -216,7 +236,15 @@ public class AgregarShipmet extends HttpServlet {
 "CUSTOMER            , \n" +
 "FORWARDER           , \n" +
 "HBL_HAWB            , \n" +
-"TERMINAL_POD from tra_inc_gtn_test where ID_GTN=("
+"TERMINAL_POD,"
+     + "'"+reg1+"',"
+                         + "'"+reg2+"',"
+                         + "'"+reg3+"',"
+                            + "'"+mat2+"',"
+                            + "'"+carr2+"',"
+                            + "'"+tcon2+"',"
+                            + "'"+peso2+"'"                     + ""
+                         + " from tra_inc_gtn_test where ID_GTN=("
                          + "SELECT ID_GTN FROM (   SELECT ID_GTN, ROW_NUMBER() OVER (ORDER BY ID_GTN DESC) AS rn   FROM tra_inc_gtn_test where SHIPMENT_ID='"+ship+"') WHERE rn = 1 )";
               
              System.out.println("sqlGtn  "+sqlGtn);        

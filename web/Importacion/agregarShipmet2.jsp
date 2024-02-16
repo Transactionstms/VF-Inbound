@@ -109,6 +109,31 @@
                                                 sbu += "<option value='" + row[0] + "' >" + row[1] + "</option>";
                                             }
                                         }
+                                        
+                                        
+                                        
+                                         String custodia1 = "";
+            String sbuSQL21 = "select CLAVE, DESCRIPCION from  tra_inb_reg_aduanero";
+            if (db.doDB(sbuSQL21)) {
+                for (String[] row : db.getResultado()) {
+                    custodia1 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
+              String custodia2 = "";
+            String sbuSQL22 = "select CLAVE, DESCRIPCIÓN from  TRA_INB_TIPO_MATERIA";
+            if (db.doDB(sbuSQL22)) {
+                for (String[] row : db.getResultado()) {
+                    custodia2 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
+              String custodia3 = "";
+            String sbuSQL23 = "select CLAVE, DESCRIPCION from  TRA_INB_DOCTO_ADUANEROS";
+            if (db.doDB(sbuSQL23)) {
+                for (String[] row : db.getResultado()) {
+                    custodia3 += "<option value='" + row[0] + "' >" + row[0] + "- " + row[1] + "</option>";
+                }
+            }
+            
 
                                         if (db.doDB(fac.consultarEventoFormulario(evento, ship, con))) {
                                             for (String[] row : db.getResultado()) {
@@ -259,12 +284,87 @@
 
 
 
-                                          <!--  <div class="col-md-4 "> 
+                                                    
+                                                    
+                                     <!--********************************-->               
+                                                    
+                                         <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>Observaciones</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..." value="<%=row[25]%>" name="observaciones" id="observaciones" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
+                                                    <input class="form-control" type="text" placeholder="..."  name="observaciones" id="observaciones" onkeyup="this.value = this.value.toUpperCase()" autocomplete="off">
                                                 </div>
-                                            </div> -->
+                                            </div> 
+                                                
+<!--*******************************************************-->
+
+                                            <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>ACTUAL CRD</strong></label>
+                                                    <input class="form-control datepicker" type="text" placeholder="..."   name="actual_crd" id="actual_crd" onchange="diasActualCrd(this.value);">
+                                                </div>
+                                            </div> 
+                                                
+                                                
+                                                
+                                                
+                                                    <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg1">Regimen aduanero</label>
+                                                 <select class="form-select" id="reg1" >
+                                                            <option value="0">Selecciona</option>
+                                                            <%=custodia1%>
+                                                        </select>
+                                            </div>
+                                                        
+                                        <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg2">Documentos Aduaneros</label>
+                                                <select class="form-select" id="reg2" >
+                                                             <option value="0">Selecciona</option>
+                                                            <%=custodia3%>
+                                                        </select>
+                                            </div>
+                                                        
+                                         <div class="col-md-4 mb-4">
+                                                <label class="form-label" for="reg3">Tipo Materia </label>
+                                                 <select class="form-select" id="reg3" >
+                                                            <option value="0">Selecciona</option>
+                                                            <%=custodia2%>
+                                                        </select>
+                                            </div>   
+                                                        
+                                                        
+                                                        
+                                           <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>Material </strong></label>
+                                                    <input class="form-control  " type="text" placeholder="..."  name="mat2" id="mat2"  >
+                                                </div>
+                                            </div> 
+                                                        
+                                         <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>Carrier </strong></label>
+                                                    <input class="form-control  " type="text" placeholder="..."  name="carr2" id="carr2"  >
+                                                </div>
+                                            </div> 
+                                                        
+                                         <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>Tipo Contenedor </strong></label>
+                                                    <input class="form-control  " type="text" placeholder="..."  name="tcon2" id="tcon2"  >
+                                                </div>
+                                            </div>                 
+                                                        
+                                           <div class="col-md-4 "> 
+                                                <div class="mb-3">
+                                                    <label class="form-label text-uppercase"><strong>Peso </strong></label>
+                                                    <input class="form-control " type="text" placeholder="..."  name="peso2" id="peso2"  >
+                                                </div>
+                                            </div>                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                      
 
                                         </div>
 
@@ -314,11 +414,23 @@ async function getData() {
         const eta_plus2         = document.getElementById('eta_plus2').value;
         const eta_plus          = document.getElementById('eta_plus').value;
         const pol               = document.getElementById('pol').value;
-        const observaciones     ='';// document.getElementById('observaciones').value;
+       // const observaciones     ='';// document.getElementById('observaciones').value;
+           const observaciones = document.getElementById('observaciones').value;
+    const actual_crd = document.getElementById('actual_crd').value;
+    
+     let reg1   = document.getElementById('reg1').value;
+     let reg2   = document.getElementById('reg2').value;
+     let reg3   = document.getElementById('reg3').value;
+
+     let mat2   = document.getElementById('mat2').value;
+     let carr2   = document.getElementById('carr2').value;
+     let tcon2   = document.getElementById('tcon2').value;
+     
+     let peso2   = document.getElementById('peso2').value; 
         swal("Espere...!");
 
         try {
-          const data = await fetchData('<%=request.getContextPath()%>/AgregarShipmet?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&evento=<%=evento%>&ship=<%=ship%>&con=<%=con%>' );
+          const data = await fetchData('<%=request.getContextPath()%>/AgregarShipmet?responsable='+responsable+'&finaldes='+finalDestination+'&Brand='+brandDivision+'&sbu_name='+division+'&Shipment='+shipmentId+'&Load1='+loadType+'&quantity='+quantity+'&pod='+pod+'&est_departure_pol='+estDeparturePol+'&eta_port_discharge='+etaRealPort+'&max_flete='+max_flete+'&eta_plus2='+eta_plus2+'&eta_plus='+eta_plus+'&pol='+pol+'&observaciones='+observaciones+'&bl='+bl+'&evento=<%=evento%>&ship=<%=ship%>&con=<%=con%>'+ '&observaciones=' + observaciones + '&bl=' + bl + '&actual_crd=' + actual_crd + '&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&mat2='+mat2+'&carr2='+carr2+'&tcon2='+tcon2+'&peso2='+peso2 );
           console.log(data);
           swal("Modificado");
         } catch (error) {
