@@ -112,7 +112,7 @@
             <div class="contenedor">
                 <div class="columna1"><input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
                 <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" onclick="leerArchivo()"><i class="fa fa-upload"></i></button></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file"><i class="fa fa-download"></i></button></div>
+                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
                 <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="created_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
                 <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
                 <div class="columna6"></div>            
