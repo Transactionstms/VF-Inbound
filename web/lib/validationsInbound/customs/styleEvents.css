@@ -311,3 +311,8 @@ a{
         margin-bottom: 5px;
         margin-left: 5px;
     }
+
+    .divResultado{
+        background-color: #3498db;
+        font-size: 27px;
+    }

@@ -3332,4 +3332,3 @@ public class ConsultasQuery {
     }
 
 } 
- 

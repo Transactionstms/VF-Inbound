@@ -440,7 +440,8 @@ let selected_fy="";
                                         +"&columna_hora_termino_etiquetado="+columna_hora_termino_etiquetado
                                         +"&columna_proveedor="+columna_proveedor
                                         +"&columna_proveedor_carga="+columna_proveedor_carga
-                                        +"&columna_fy="+columna_fy);
+                                        +"&columna_fy="+columna_fy
+                                        +"&contSubfiltros="+contSubfiltros);
 
             const response = await fetch(urlCustoms);
             

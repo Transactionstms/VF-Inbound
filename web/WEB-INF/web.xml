@@ -966,6 +966,10 @@
         <servlet-name>ConsultarReporteCustoms</servlet-name>
         <servlet-class>com.onest.train.consultas.ConsultarReporteCustoms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>verificarLecturaExcelInbound</servlet-name>
+        <servlet-class>com.tacts.model.inbound.verificarLecturaExcelInbound</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1926,6 +1930,10 @@
     <servlet-mapping>
         <servlet-name>ConsultarReporteCustoms</servlet-name>
         <url-pattern>/ConsultarReporteCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>verificarLecturaExcelInbound</servlet-name>
+        <url-pattern>/verificarLecturaExcelInbound</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

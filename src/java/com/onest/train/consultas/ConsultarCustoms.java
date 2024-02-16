@@ -131,6 +131,9 @@ public class ConsultarCustoms extends HttpServlet {
             String columna_proveedor = request.getParameter("columna_proveedor").trim();
             String columna_proveedor_carga = request.getParameter("columna_proveedor_carga").trim();
             String columna_fy = request.getParameter("columna_fy").trim();
+            int contSubfiltros = Integer.parseInt(request.getParameter("contSubfiltros"))-1;
+            
+            System.out.println("Contador SubFiltros:" + contSubfiltros);   
             
             //Lista de valores - filtros consulta sql
             String caramelo_referenciaAA ="";
@@ -230,7 +233,93 @@ public class ConsultarCustoms extends HttpServlet {
             String listStatusOperationEvent = "";
             String salida = "";
             int cont = 1;
-
+            
+            //Parametros: Filtros Iniciales (Lista de valores filtros checkbox)
+            String list_evento = "";
+            String list_referenciaAA = "";
+            String list_responsable = "";
+            String list_finalDestination = "";
+            String list_brandDivision = "";
+            String list_division = "";
+            String list_shipmentId = "";
+            String list_containerId = "";
+            String list_blAwbPro = "";
+            String list_loadType = "";
+            String list_quantity = "";
+            String list_pod = "";
+            String list_estDepartFromPol = "";
+            String list_etaRealPortOfDischarge = "";
+            String list_estEtaDc = "";
+            String list_inboundNotification = "";
+            String list_pol = "";
+            String list_aa = "";
+            String list_fechaMesVenta = "";
+            String list_prioridad = "";
+            String list_pais_origen = "";
+            String list_size_container = "";
+            String list_valor_usd = "";
+            String list_eta_port_discharge = "";
+            String list_agente_aduanal = "";
+            String list_pedimento_a1 = "";
+            String list_pedimento_r1_1er = "";
+            String list_motivo_rectificacion_1er = "";
+            String list_pedimento_r1_2do = "";
+            String list_motivo_rectificacion_2do = "";
+            String list_fecha_recepcion_doc = "";
+            String list_recinto = "";
+            String list_naviera = "";
+            String list_buque = "";
+            String list_fecha_revalidacion = "";
+            String list_fecha_previo_origen = "";
+            String list_fecha_previo_destino = "";
+            String list_fecha_resultado_previo = "";
+            String list_proforma_final = "";
+            String list_permiso = "";
+            String list_fecha_envio = "";
+            String list_fecha_recepcion_perm = "";
+            String list_fecha_activacion_perm = "";
+            String list_fecha_permisos_aut = "";
+            String list_co_pref_arancelaria = "";
+            String list_aplic_pref_arancelaria = "";
+            String list_req_uva = "";
+            String list_req_ca = "";
+            String list_fecha_recepcion_ca = "";
+            String list_num_constancia_ca = "";
+            String list_monto_ca = "";
+            String list_fecha_doc_completos = "";
+            String list_fecha_pago_pedimento = "";
+            String list_fecha_solicitud_transporte = "";
+            String list_fecha_modulacion = "";
+            String list_modalidad = "";
+            String list_resultado_modulacion = "";
+            String list_fecha_reconocimiento = "";
+            String list_fecha_liberacion = "";
+            String list_sello_origen = "";
+            String list_sello_final = "";
+            String list_fecha_retencion_aut = "";
+            String list_fecha_liberacion_aut = "";
+            String list_estatus_operacion = "";
+            String list_motivo_atraso = "";
+            String list_observaciones = "";
+            String list_llegada_a_nova = "";
+            String list_llegada_a_globe_trade_sd = "";
+            String list_archivo_m = "";
+            String list_fecha_archivo_m = "";
+            String list_fecha_solicit_manip = "";
+            String list_fecha_vencim_manip = "";
+            String list_fecha_confirm_clave_pedim = "";
+            String list_fecha_recep_increment = "";
+            String list_t_e = "";
+            String list_fecha_vencim_inbound = "";
+            String list_no_bultos = "";
+            String list_peso_kg = "";
+            String list_transferencia = "";
+            String list_fecha_inicio_etiquetado = "";
+            String list_fecha_termino_etiquetado = "";
+            String list_hora_termino_etiquetado = "";
+            String list_proveedor = "";
+            String list_proveedor_carga = "";
+            String list_fy = "";
             
             //Consultar Información de Agente Aduanal
             if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
@@ -1430,110 +1519,204 @@ public class ConsultarCustoms extends HttpServlet {
             if (!caramelo_fy.equals("")) { // FY
                 sql += " AND TIC.FY IN (" + caramelo_fy + ") ";
             }
-            sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC ";
+            sql += " ORDER BY tie.id_evento, "
+                 + " tibd.nombre_bd, "
+                 + " GTN.SHIPMENT_ID ASC ";
+            
+            //Obtener lista de encabezados:
+            if (db.doDB(sql)) {
+                for (String[] row : db.getResultado()) {
+                    
+                    list_referenciaAA += row[30] + "@";
+                    list_evento += row[0] + "@";
+                    list_responsable += row[1] + "@";
+                    list_finalDestination += row[2] + "@";
+                    list_brandDivision += row[21] + "@";
+                    list_division += row[4] + "@";
+                    list_shipmentId += row[5] + "@";
+                    list_containerId += row[6] + "@";
+                    list_blAwbPro += row[7] + "@";
+                    list_loadType += row[8] + "@";
+                    list_quantity += row[9] + "@";
+                    list_pod += row[19] + "@";
+                    list_estDepartFromPol += row[11] + "@";
+                    list_etaRealPortOfDischarge += row[12] + "@";
+                    list_estEtaDc += row[22] + "@";
+                    list_inboundNotification += row[14] + "@";
+                    list_pol += row[20] + "@";
+                    list_aa += row[16] + "@";
+                    list_fechaMesVenta += row[28] + "@";
+                    list_prioridad += row[97] + "@";
+                    list_pais_origen += row[31] + "@";
+                    list_size_container += row[32] + "@";
+                    list_valor_usd += row[33] + "@";
+                    list_eta_port_discharge += row[34] + "@";
+                    list_agente_aduanal += row[35] + "@";
+                    list_pedimento_a1 += row[36] + "@";
+                    list_pedimento_r1_1er += row[37] + "@";
+                    list_motivo_rectificacion_1er += row[38] + "@";
+                    list_pedimento_r1_2do += row[39] + "@";
+                    list_motivo_rectificacion_2do += row[40] + "@";
+                    list_fecha_recepcion_doc += row[41] + "@";
+                    list_recinto += row[42] + "@";
+                    list_naviera += row[43] + "@";
+                    list_buque += row[44] + "@";
+                    list_fecha_revalidacion += row[45] + "@";
+                    list_fecha_previo_origen += row[46] + "@";
+                    list_fecha_previo_destino += row[47] + "@";
+                    list_fecha_resultado_previo += row[48] + "@";
+                    list_proforma_final += row[49] + "@";
+                    list_permiso += row[50] + "@";
+                    list_fecha_envio += row[51] + "@";
+                    list_fecha_recepcion_perm += row[52] + "@";
+                    list_fecha_activacion_perm += row[53] + "@";
+                    list_fecha_permisos_aut += row[54] + "@";
+                    list_co_pref_arancelaria += row[55] + "@";
+                    list_aplic_pref_arancelaria += row[56] + "@";
+                    list_req_uva += row[57] + "@";
+                    list_req_ca += row[58] + "@";
+                    list_fecha_recepcion_ca += row[59] + "@";
+                    list_num_constancia_ca += row[60] + "@";
+                    list_monto_ca += row[61] + "@";
+                    list_fecha_doc_completos += row[62] + "@";
+                    list_fecha_pago_pedimento += row[63] + "@";
+                    list_fecha_solicitud_transporte += row[64] + "@";
+                    list_fecha_modulacion += row[65] + "@";
+                    list_modalidad += row[66] + "@";
+                    list_resultado_modulacion += row[67] + "@";
+                    list_fecha_reconocimiento += row[68] + "@";
+                    list_fecha_liberacion += row[69] + "@";
+                    list_sello_origen += row[70] + "@";
+                    list_sello_final += row[71] + "@";
+                    list_fecha_retencion_aut += row[72] + "@";
+                    list_fecha_liberacion_aut += row[73] + "@";
+                    list_estatus_operacion += row[74] + "@";
+                    list_motivo_atraso += row[75] + "@";
+                    list_observaciones += row[76] + "@";          
+                    list_llegada_a_nova += row[77] + "@";
+                    list_llegada_a_globe_trade_sd += row[78] + "@";
+                    list_archivo_m += row[79] + "@";
+                    list_fecha_archivo_m += row[80] + "@";
+                    list_fecha_solicit_manip += row[81] + "@";
+                    list_fecha_vencim_manip += row[82] + "@";
+                    list_fecha_confirm_clave_pedim += row[83] + "@";
+                    list_fecha_recep_increment += row[84] + "@";
+                    list_t_e += row[85] + "@";
+                    list_fecha_vencim_inbound += row[86] + "@";
+                    list_no_bultos += row[87] + "@";
+                    list_peso_kg += row[88] + "@";
+                    list_transferencia += row[89] + "@";
+                    list_fecha_inicio_etiquetado += row[90] + "@";
+                    list_fecha_termino_etiquetado += row[91] + "@";
+                    list_hora_termino_etiquetado += row[92] + "@";
+                    list_proveedor += row[93] + "@";
+                    list_proveedor_carga += row[94] + "@";
+                    list_fy += row[95] + "@";    
+                }
+            }    
             
         /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
-        
+
                    salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
                           + "     <thead> "
                           + "         <tr> "    
                           + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"filtrerCheckbox(this,1)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<a onclick=\"filtrerCheckbox(this,2)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"filtrerCheckbox(this,3)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"filtrerCheckbox(this,4)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"filtrerCheckbox(this,5)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Division&nbsp;<a onclick=\"filtrerCheckbox(this,6)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Shipment ID&nbsp;<a onclick=\"filtrerCheckbox(this,7)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Container&nbsp;<a onclick=\"filtrerCheckbox(this,8)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">BL/AWB/PRO&nbsp;<a onclick=\"filtrerCheckbox(this,9)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">LoadType&nbsp;<a onclick=\"filtrerCheckbox(this,10)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Quantity&nbsp;<a onclick=\"filtrerCheckbox(this,11)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POD&nbsp;<a onclick=\"filtrerCheckbox(this,12)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Departure from POL&nbsp;<a onclick=\"filtrerCheckbox(this,13)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">ETA REAL Port of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,14)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Eta DC&nbsp;<a onclick=\"filtrerCheckbox(this,15)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Inbound notification&nbsp;<a onclick=\"filtrerCheckbox(this,16)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POL&nbsp;<a onclick=\"filtrerCheckbox(this,17)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">A.A.&nbsp;<a onclick=\"filtrerCheckbox(this,18)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Mes de Venta&nbsp;<a onclick=\"filtrerCheckbox(this,19)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Prioridad Si/No&nbsp;<a onclick=\"filtrerCheckbox(this,20)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">País Origen&nbsp;<a onclick=\"filtrerCheckbox(this,21)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Size Container&nbsp;<a onclick=\"filtrerCheckbox(this,22)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Valor USD&nbsp;<a onclick=\"filtrerCheckbox(this,23)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">ETA Port Of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,24)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Agente Aduanal&nbsp;<a onclick=\"filtrerCheckbox(this,25)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento A1&nbsp;<a onclick=\"filtrerCheckbox(this,26)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1&nbsp;<a onclick=\"filtrerCheckbox(this,27)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 1&nbsp;<a onclick=\"filtrerCheckbox(this,28)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1 (2do)&nbsp;<a onclick=\"filtrerCheckbox(this,29)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 2&nbsp;<a onclick=\"filtrerCheckbox(this,30)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Recepción Documentos&nbsp;<a onclick=\"filtrerCheckbox(this,31)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Recinto&nbsp;<a onclick=\"filtrerCheckbox(this,32)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Naviera / Forwarder&nbsp;<a onclick=\"filtrerCheckbox(this,33)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Buque&nbsp;<a onclick=\"filtrerCheckbox(this,34)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Revalidación/Liberación de BL&nbsp;<a onclick=\"filtrerCheckbox(this,35)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo Origen&nbsp;<a onclick=\"filtrerCheckbox(this,36)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo en destino&nbsp;<a onclick=\"filtrerCheckbox(this,37)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Resultado Previo&nbsp;<a onclick=\"filtrerCheckbox(this,38)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Proforma Final&nbsp;<a onclick=\"filtrerCheckbox(this,39)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere permiso&nbsp;<a onclick=\"filtrerCheckbox(this,40)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha envío Fichas/notas&nbsp;<a onclick=\"filtrerCheckbox(this,41)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Recepción de permisos tramit.&nbsp;<a onclick=\"filtrerCheckbox(this,42)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,43)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,44)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#CC9D77;\">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,45)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Aplico Preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,46)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere UVA&nbsp;<a onclick=\"filtrerCheckbox(this,47)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Requiere CA&nbsp;<a onclick=\"filtrerCheckbox(this,48)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Fecha Recepción CA&nbsp;<a onclick=\"filtrerCheckbox(this,49)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Número de Constancia CA&nbsp;<a onclick=\"filtrerCheckbox(this,50)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Monto CA&nbsp;<a onclick=\"filtrerCheckbox(this,51)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Documentos Completos&nbsp;<a onclick=\"filtrerCheckbox(this,52)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Pago Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,53)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Solicitud de transporte&nbsp;<a onclick=\"filtrerCheckbox(this,54)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,55)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Modalidad&nbsp;<a onclick=\"filtrerCheckbox(this,56)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Resultado Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,57)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Reconocimiento&nbsp;<a onclick=\"filtrerCheckbox(this,58)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Liberacion&nbsp;<a onclick=\"filtrerCheckbox(this,59)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Origen&nbsp;<a onclick=\"filtrerCheckbox(this,60)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Final&nbsp;<a onclick=\"filtrerCheckbox(this,61)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha de retencion por la autoridad&nbsp;<a onclick=\"filtrerCheckbox(this,62)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick=\"filtrerCheckbox(this,63)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Estatus de la operación&nbsp;<a onclick=\"filtrerCheckbox(this,64)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo Atraso&nbsp;<a onclick=\"filtrerCheckbox(this,65)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Observaciones&nbsp;<a onclick=\"filtrerCheckbox(this,66)\"><i class=\"fa fa-search\"></i></a></th> ";                                   
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#333F4F;\">Referencia AA&nbsp;<a onclick=\"filtrerCheckbox(this,1,'"+list_referenciaAA+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Evento <strong style=\"color:red\">*</strong>&nbsp;<a onclick=\"filtrerCheckbox(this,2,'"+list_evento+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Responsable&nbsp;<a onclick=\"filtrerCheckbox(this,3,'"+list_responsable+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Final Destination&nbsp;<a onclick=\"filtrerCheckbox(this,4,'"+list_finalDestination+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Brand-Division&nbsp;<a onclick=\"filtrerCheckbox(this,5,'"+list_brandDivision+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Division&nbsp;<a onclick=\"filtrerCheckbox(this,6,'"+list_division+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Shipment ID&nbsp;<a onclick=\"filtrerCheckbox(this,7,'"+list_shipmentId+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Container&nbsp;<a onclick=\"filtrerCheckbox(this,8,'"+list_containerId+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">BL/AWB/PRO&nbsp;<a onclick=\"filtrerCheckbox(this,9,'"+list_blAwbPro+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">LoadType&nbsp;<a onclick=\"filtrerCheckbox(this,10,'"+list_loadType+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Quantity&nbsp;<a onclick=\"filtrerCheckbox(this,11,'"+list_quantity+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POD&nbsp;<a onclick=\"filtrerCheckbox(this,12,'"+list_pod+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Departure from POL&nbsp;<a onclick=\"filtrerCheckbox(this,13,'"+list_estDepartFromPol+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">ETA REAL Port of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,14,'"+list_etaRealPortOfDischarge+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Est. Eta DC&nbsp;<a onclick=\"filtrerCheckbox(this,15,'"+list_estEtaDc+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Inbound notification&nbsp;<a onclick=\"filtrerCheckbox(this,16,'"+list_inboundNotification+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">POL&nbsp;<a onclick=\"filtrerCheckbox(this,17,'"+list_pol+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">A.A.&nbsp;<a onclick=\"filtrerCheckbox(this,18,'"+list_aa+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Mes de Venta&nbsp;<a onclick=\"filtrerCheckbox(this,19,'"+list_fechaMesVenta+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Prioridad Si/No&nbsp;<a onclick=\"filtrerCheckbox(this,20,'"+list_prioridad+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">País Origen&nbsp;<a onclick=\"filtrerCheckbox(this,21,'"+list_pais_origen+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Size Container&nbsp;<a onclick=\"filtrerCheckbox(this,22,'"+list_size_container+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Valor USD&nbsp;<a onclick=\"filtrerCheckbox(this,23,'"+list_valor_usd+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">ETA Port Of Discharge&nbsp;<a onclick=\"filtrerCheckbox(this,24,'"+list_eta_port_discharge+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Agente Aduanal&nbsp;<a onclick=\"filtrerCheckbox(this,25,'"+list_agente_aduanal+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento A1&nbsp;<a onclick=\"filtrerCheckbox(this,26,'"+list_pedimento_a1+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1&nbsp;<a onclick=\"filtrerCheckbox(this,27,'"+list_pedimento_r1_1er+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 1&nbsp;<a onclick=\"filtrerCheckbox(this,28,'"+list_motivo_rectificacion_1er+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Pedimento R1 (2do)&nbsp;<a onclick=\"filtrerCheckbox(this,29,'"+list_pedimento_r1_2do+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo rectificación 2&nbsp;<a onclick=\"filtrerCheckbox(this,30,'"+list_motivo_rectificacion_2do+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Recepción Documentos&nbsp;<a onclick=\"filtrerCheckbox(this,31,'"+list_fecha_recepcion_doc+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Recinto&nbsp;<a onclick=\"filtrerCheckbox(this,32,'"+list_recinto+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Naviera / Forwarder&nbsp;<a onclick=\"filtrerCheckbox(this,33,'"+list_naviera+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#e04141;\">Buque&nbsp;<a onclick=\"filtrerCheckbox(this,34,'"+list_buque+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Revalidación/Liberación de BL&nbsp;<a onclick=\"filtrerCheckbox(this,35,'"+list_fecha_revalidacion+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo Origen&nbsp;<a onclick=\"filtrerCheckbox(this,36,'"+list_fecha_previo_origen+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Previo en destino&nbsp;<a onclick=\"filtrerCheckbox(this,37,'"+list_fecha_previo_destino+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Resultado Previo&nbsp;<a onclick=\"filtrerCheckbox(this,38,'"+list_fecha_resultado_previo+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Proforma Final&nbsp;<a onclick=\"filtrerCheckbox(this,39,'"+list_proforma_final+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere permiso&nbsp;<a onclick=\"filtrerCheckbox(this,40,'"+list_permiso+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha envío Fichas/notas&nbsp;<a onclick=\"filtrerCheckbox(this,41,'"+list_fecha_envio+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Recepción de permisos tramit.&nbsp;<a onclick=\"filtrerCheckbox(this,42,'"+list_fecha_recepcion_perm+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Act Permisos (Inic Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,43,'"+list_fecha_activacion_perm+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. Perm. Aut. (Fin de Vigencia)&nbsp;<a onclick=\"filtrerCheckbox(this,44,'"+list_fecha_permisos_aut+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#CC9D77;\">Cuenta con CO para aplicar preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,45,'"+list_co_pref_arancelaria+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Aplico Preferencia Arancelaria&nbsp;<a onclick=\"filtrerCheckbox(this,46,'"+list_aplic_pref_arancelaria+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Requiere UVA&nbsp;<a onclick=\"filtrerCheckbox(this,47,'"+list_req_uva+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Requiere CA&nbsp;<a onclick=\"filtrerCheckbox(this,48,'"+list_req_ca+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Fecha Recepción CA&nbsp;<a onclick=\"filtrerCheckbox(this,49,'"+list_fecha_recepcion_ca+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Número de Constancia CA&nbsp;<a onclick=\"filtrerCheckbox(this,50,'"+list_num_constancia_ca+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#a6a2a2;\">Monto CA&nbsp;<a onclick=\"filtrerCheckbox(this,51,'"+list_monto_ca+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Documentos Completos&nbsp;<a onclick=\"filtrerCheckbox(this,52,'"+list_fecha_doc_completos+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Pago Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,53,'"+list_fecha_pago_pedimento+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha Solicitud de transporte&nbsp;<a onclick=\"filtrerCheckbox(this,54,'"+list_fecha_solicitud_transporte+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,55,'"+list_fecha_modulacion+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Modalidad&nbsp;<a onclick=\"filtrerCheckbox(this,56,'"+list_modalidad+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Resultado Modulacion&nbsp;<a onclick=\"filtrerCheckbox(this,57,'"+list_resultado_modulacion+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Reconocimiento&nbsp;<a onclick=\"filtrerCheckbox(this,58,'"+list_fecha_reconocimiento+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Fecha Liberacion&nbsp;<a onclick=\"filtrerCheckbox(this,59,'"+list_fecha_liberacion+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Origen&nbsp;<a onclick=\"filtrerCheckbox(this,60,'"+list_sello_origen+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Sello Final&nbsp;<a onclick=\"filtrerCheckbox(this,61,'"+list_sello_final+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fecha de retencion por la autoridad&nbsp;<a onclick=\"filtrerCheckbox(this,62,'"+list_fecha_retencion_aut+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#CC9D77;\">Fec. de liberacion por ret. de la aut.&nbsp;<a onclick=\"filtrerCheckbox(this,63,'"+list_fecha_liberacion_aut+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Estatus de la operación&nbsp;<a onclick=\"filtrerCheckbox(this,64,'"+list_estatus_operacion+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Motivo Atraso&nbsp;<a onclick=\"filtrerCheckbox(this,65,'"+list_motivo_atraso+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#CC9D77;\">Observaciones&nbsp;<a onclick=\"filtrerCheckbox(this,66,'"+list_observaciones+"')\"><i class=\"fa fa-search\"></i></a></th> ";                                   
 
             if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF 
 
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a NOVA&nbsp;<a onclick=\"filtrerCheckbox(this,67)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a Globe trade SD&nbsp;<a onclick=\"filtrerCheckbox(this,68)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,69)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha de Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,70)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha Solicitud de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,71)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de vencimiento de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,72)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,73)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de Recepcion de Incrementables&nbsp;<a onclick=\"filtrerCheckbox(this,74)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">T&E&nbsp;<a onclick=\"filtrerCheckbox(this,75)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha de Vencimiento del Inbound&nbsp;<a onclick=\"filtrerCheckbox(this,76)\"><i class=\"fa fa-search\"></i></a></th> ";
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a NOVA&nbsp;<a onclick=\"filtrerCheckbox(this,67,'"+list_llegada_a_nova+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Llegada a Globe trade SD&nbsp;<a onclick=\"filtrerCheckbox(this,68,'"+list_llegada_a_globe_trade_sd+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,69,'"+list_archivo_m+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha de Archivo M&nbsp;<a onclick=\"filtrerCheckbox(this,70,'"+list_fecha_archivo_m+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha Solicitud de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,71,'"+list_fecha_solicit_manip+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de vencimiento de Manipulacion&nbsp;<a onclick=\"filtrerCheckbox(this,72,'"+list_fecha_vencim_manip+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha confirmacion Clave de Pedimento&nbsp;<a onclick=\"filtrerCheckbox(this,73,'"+list_fecha_confirm_clave_pedim+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-6\" style=\"background-color:#1C84C6;\">Fecha de Recepcion de Incrementables&nbsp;<a onclick=\"filtrerCheckbox(this,74,'"+list_fecha_recep_increment+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">T&E&nbsp;<a onclick=\"filtrerCheckbox(this,75,'"+list_t_e+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Fecha de Vencimiento del Inbound&nbsp;<a onclick=\"filtrerCheckbox(this,76,'"+list_fecha_vencim_inbound+"')\"><i class=\"fa fa-search\"></i></a></th> ";
 
             }
 
             if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">No. BULTOS&nbsp;<a onclick=\"filtrerCheckbox(this,77)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Peso (KG)&nbsp;<a onclick=\"filtrerCheckbox(this,78)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Transferencia&nbsp;<a onclick=\"filtrerCheckbox(this,79)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Inicio Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,80)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,81)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Hora de termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,82)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor&nbsp;<a onclick=\"filtrerCheckbox(this,83)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor de Carga&nbsp;<a onclick=\"filtrerCheckbox(this,84)\"><i class=\"fa fa-search\"></i></a></th> ";
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">No. BULTOS&nbsp;<a onclick=\"filtrerCheckbox(this,77,'"+list_no_bultos+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Peso (KG)&nbsp;<a onclick=\"filtrerCheckbox(this,78,'"+list_peso_kg+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Transferencia&nbsp;<a onclick=\"filtrerCheckbox(this,79,'"+list_transferencia+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Inicio Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,80,'"+list_fecha_inicio_etiquetado+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Fecha Termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,81,'"+list_fecha_termino_etiquetado+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-5\" style=\"background-color:#1C84C6;\">Hora de termino Etiquetado&nbsp;<a onclick=\"filtrerCheckbox(this,82,'"+list_hora_termino_etiquetado+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor&nbsp;<a onclick=\"filtrerCheckbox(this,83,'"+list_proveedor+"')\"><i class=\"fa fa-search\"></i></a></th> "
+                          + "             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">Proveedor de Carga&nbsp;<a onclick=\"filtrerCheckbox(this,84,'"+list_proveedor_carga+"')\"><i class=\"fa fa-search\"></i></a></th> ";
 
             }
  
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"filtrerCheckbox(this,85)\"><i class=\"fa fa-search\"></i></a></th> "
+                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"filtrerCheckbox(this,85,'"+list_fy+"')\"><i class=\"fa fa-search\"></i></a></th> "
                           + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
                           + "         </tr> "
                           + "     </thead> "
