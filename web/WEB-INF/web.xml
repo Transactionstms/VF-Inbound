@@ -967,8 +967,16 @@
         <servlet-class>com.onest.train.consultas.ConsultarReporteCustoms</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>NuevoEvento</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.NuevoEvento</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>verificarLecturaExcelInbound</servlet-name>
         <servlet-class>com.tacts.model.inbound.verificarLecturaExcelInbound</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EnalmacenEmbarque</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.EnalmacenEmbarque</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
@@ -1932,8 +1940,16 @@
         <url-pattern>/ConsultarReporteCustoms</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>NuevoEvento</servlet-name>
+        <url-pattern>/NuevoEvento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>verificarLecturaExcelInbound</servlet-name>
         <url-pattern>/verificarLecturaExcelInbound</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnalmacenEmbarque</servlet-name>
+        <url-pattern>/EnalmacenEmbarque</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
