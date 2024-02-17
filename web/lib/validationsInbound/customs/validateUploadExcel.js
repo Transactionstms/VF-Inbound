@@ -153,11 +153,12 @@ function relacion_columnas_excel_generico(posicion, contenido, fila) {
 
 function relacion_columnas_excel_logix(posicion, contenido, fila) {
     let logErrores = "";
-    if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 34 || posicion === 35 || posicion === 44 || posicion === 45) {
+    
+    if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 35) {
         celda = validarNumero_excel(contenido);
-    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 53 || posicion === 59 || posicion === 61) {
+    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 9 || posicion === 34 || posicion === 44 || posicion === 45 || posicion === 53 || posicion === 59 || posicion === 61) {
         celda = validarTexto_excelAlfanumerico_excel(contenido);
-    } else if (posicion === 5 || posicion === 9 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50) {
+    } else if (posicion === 5 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50) {
         celda = validarTexto_excel(contenido);
     } else if (posicion === 10 || posicion === 11 || posicion === 13) {
         celda = formatoNumero_excel(contenido);
@@ -226,7 +227,7 @@ function validarTexto_excelAlfanumerico_excel(contenido) {
 
     let resultado = false;
     
-    if (/^[a-zA-Z0-9\s.-]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
+    if (/^[a-zA-Z0-9\s.ñÑ-]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
         resultado = true;
     }
 
@@ -237,7 +238,7 @@ function validarTexto_excel(contenido) {
 
     let resultado = false;
 
-    if (/^[a-zA-Z\s:]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
+    if (/^[a-zA-ZñÑ\s:]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
         resultado = true;
     }
 
