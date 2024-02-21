@@ -280,7 +280,7 @@
                                             <div class="col-md-4 "> 
                                                 <div class="mb-3">
                                                     <label class="form-label text-uppercase"><strong>LT2</strong></label>
-                                                    <input class="form-control" type="text" placeholder="..."   name="max_flete" id="max_flete" onchange="diasLt2(this.value);">
+                                                    <input class="form-control" type="number" placeholder="..."   name="max_flete" id="max_flete" onchange="diasLt2(this.value);">
                                                 </div>
                                             </div>  
                                             <div class="col-md-4 "> 

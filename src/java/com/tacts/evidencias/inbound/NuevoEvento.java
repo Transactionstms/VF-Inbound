@@ -90,9 +90,9 @@ public class NuevoEvento extends HttpServlet {
          
          if(x==0){
                  String sql2=" Insert into TRA_INB_EVENTO("
-                         + "ID_EVENTO,USER_NID,SHIPMENT_ID,CONTAINER1,BL_AWB_PRO,PLANTILLA_ID,observaciones"
+                         + "ID_EVENTO,USER_NID,SHIPMENT_ID,CONTAINER1,BL_AWB_PRO,PLANTILLA_ID,observaciones,estado"
                          + ")values("
-                         + "'"+numEventoActual+"','"+responsable+"','"+ShipmentActual+"','"+containerActual+"','"+bl+"','"+containerActual+"','"+observacionActual+"')";
+                         + "'"+numEventoActual+"','"+responsable+"','"+ShipmentActual+"','"+containerActual+"','"+bl+"','"+containerActual+"','"+observacionActual+"',1)";
              System.out.println("sql2"+sql2);
              
                  
