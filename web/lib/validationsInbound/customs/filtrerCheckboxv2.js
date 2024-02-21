@@ -25,25 +25,43 @@
 let cadena = "";
 let historic_print = "";
 
+// Crear o inicializar lista de arrays fuera del contexto del filtro.
+let listaDeArraysCheckBoxNotChecked = [];
+const valoresAgrupadosCheckBoxNotChecked = {};
+
+// Crear o inicializar lista de arrays dentro del contexto del filtro.
+let listaDeArraysCheckBoxChecked = [];
+const valoresAgrupadosCheckBoxChecked = {};
+
+/*Contador para la (Información seleccionada) + (Información no seleccionada) */
+let contadorlist = 0;
+let contTotalCheckbox =0;
+let confirm_check = "";
+let confirm_not_check = "";
 
 function filtrerCheckbox(element, tipoFiltro, list) {
     let newElement = "";
     let blocked = "";
-    let contTotalCheckbox =0;
-    let data = "";
+    let data_checked = "";
+    let data_not_checked = "";
     
-    //Consultar el historico de la columna y filtros seleccionados:
-    let historic = print_historic(tipoFiltro); 
+    //Consultar filtros seleccionados
+    let checked = print_historic_checked(tipoFiltro); 
+        
+    //Consultar filtros no seleccionados:
+    let not_checked = print_historic_not_checked(tipoFiltro);  
     
-    //Tomar el numero de columna
-    let partes = historic.split('@');
-    let posicion = parseFloat(partes[0]); //num columna (información ya registrada). Ejemplo: 23
+    /* Si existe selección de lista checked: Igualar la información del Array */
+    if(checked ==="0@0"){
+        data_checked = list;
+    }else{
+        data_checked = checked;
+    } 
     
-    if(posicion !==0){    //Si existe historico madar la lista a la columna
-        data = historic;
-    }else{                //Si no existe tomar la lista del servlet
-        data = list;
-    }
+    /* Si no existe selección de lista no checked: Igualar la información del Array, o en su caso del servlet. */
+    if(not_checked !=="0@0"){                  
+        data_not_checked = not_checked;     
+    } 
         
     /*Consultar si el elemento 'contenedor' existe*/
     if (!document.getElementById("form-popup-"+tipoFiltro)) { 
@@ -86,27 +104,45 @@ function filtrerCheckbox(element, tipoFiltro, list) {
     checkboxOn = tipoFiltro;
     document.getElementById("multiselect" + tipoFiltro).innerHTML = "";
     document.getElementById("multiselect" + tipoFiltro).innerHTML = "<label><input type=\"checkbox\" id=\"seleccionarTodos"+tipoFiltro+"\" onchange=\"seleccionarTodos("+tipoFiltro+")\"> (Seleccionar Todo)</label>";
-    //let data = creacionFiltro(tipoFiltro);
+ 
+    /******************************** Tratar la información seleccionada ********************************/
+    
+    let array_list_checked = eliminarDuplicadosYVacios(data_checked);
+    var parts_cheked = array_list_checked.split('@');
+    
+    //Obtener el total de checkbox checked
+    for (var i = 0; i < parts_cheked.length; i++) {
+        contTotalCheckbox++;  //Al terminar de iterar, el valor lo va inicializar en la 2da iteración de los no seleccionados.
+    }
+    
+    //Rellenar listas cheked
+    if(checked !=="0@0"){
+        confirm_check = "checked";
+    }
+    
+    // Iterate over the array/data_checked
+    for (var i = 0; i < parts_cheked.length; i++) {
+        document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+i+"\" value=\"" + parts_cheked[i] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+")\" "+confirm_check+"> " + parts_cheked[i] + "</label>";
+        contadorlist++;  //Mandar valor a la siguiente iteración, para continuar con el numero de listas de chekbox
+    }
+    
+    /******************************** Tratar la información no seleccionada ********************************/
+    
+    let array_list_not_checked = eliminarDuplicadosYVacios(data_not_checked);
+    var parts_not_checked = array_list_not_checked.split('@');
 
-    /*Tratar información de la celda seleccionada*/
-    let array_list = eliminarDuplicadosYVacios(data);
-    var parts = array_list.split('@');
-    
-    //Obtener el total de checkbox
-    for (var i = 0; i < parts.length; i++) {
-        contTotalCheckbox++;
+    // Iterate over the array/data_not_checked
+    for (var j = 1; j < parts_not_checked.length; j++) {
+        //Rellenar listas no cheked
+        document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+j+"\" value=\"" + parts_not_checked[j] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+")\"> " + parts_not_checked[j] + "</label>";
     }
     
-    // Iterate over the array/data
-    for (var i = 0; i < parts.length; i++) {
-            //Rellenar Filtros
-            document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+i+"\" value=\"" + parts[i] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+","+contTotalCheckbox+")\"> " + parts[i] + "</label>";
-    }
-    
-    //validar si la opción ya existe en el contenedor/div
+    /******************************** validar si alguna de las opciones ya existe en el contenedor/div ********************************/
+   
     if (document.getElementById("checkbox_list-"+tipoFiltro+"-"+i)) {
        seleccionarTodos(tipoFiltro);
     }
+    
 } 
 
 function eliminarDuplicadosYVacios(cadenaConDuplicados) {
@@ -591,9 +627,12 @@ async function obtenerSeleccion(cont) {
             selected_proveedor,
             selected_proveedor_carga,
             selected_fy);
+ 
+    //Crear array con la lista de información seleccionada: (Checkbox seleccionados)
+    add_list_historic_checked(checkboxOn, sendData);   
     
-    //Crear array con la lista de información (columna) seleccionada: (Checkbox no seleccionados)
-    add_list_historic(checkboxOn, notSendData);   
+    //Crear array con la lista de información no seleccionada: (Checkbox no seleccionados)
+    add_list_historic_not_checked(checkboxOn, notSendData);   
 }
 
 function closeForm(cont) {
@@ -679,7 +718,7 @@ function createNewStyleFiltrer(cont){
     document.head.appendChild(styleElement);
 }
 
-function validateCheckboxPrimary(numColumna,contTotalCheckbox){
+function validateCheckboxPrimary(numColumna){
     
     let contCheckboxList = 0;
             
@@ -741,54 +780,110 @@ function cleanSearch(cont){
     document.getElementById("buscadorFiltro-"+cont).value='';
 }
 
-/*********************************** Historico por Columnas ***********************************/
+/*********************************** Historico CheckBox por Columnas ***********************************/
 
-function add_list_historic(numcolumna,list){ 
+function add_list_historic_checked(numcolumna,list){ 
+ 
+    let posicion = parseInt(numcolumna); //num columna (información ya registrada). Ejemplo: 23
+    let info = list;                 //(Información ya registrada). Ejemplo: [1237,455487]
 
-    //Crear la lista de datos
-    for (var i = 0, max = 1; i < max; i++) {
-         cadena += numcolumna+'-['+list+'],';  //Concatenar el num de columna filtrada junto con la lista de elementos no seleccionados.
-    }
-     console.log("list_historic: "+cadena);
-}   
+    //Castear string to array
+    const casteo = info.split(","); 
 
-function print_historic(numcolumna){
-    
-    let list_data = "0@0"; //Si la columna no existe en el indice, mandar un valor por defecto para no enviar el [object Object].
+    // Agregar nuevos elementos a listaDeArraysCheckBoxNotChecked
+    listaDeArraysCheckBoxChecked = listaDeArraysCheckBoxChecked.concat(casteo.filter(element => element.trim() !== "").map((element, index) => {
+        console.log(listaDeArraysCheckBoxChecked);
 
-    if (cadena.replace(/\s/g, "") !== "") {
-        
-        //Eliminar la ultima ','
-        historic_print = cadena.slice(0,-1);   //Ejemplo: 23-[1237,455487];
-    
-        //Obtener el numero de columna, para asignarla como contador en cada indice del array. (Información ya Grabada)
-        let partes = historic_print.split('-');
-        let posicion = parseFloat(partes[0]); //num columna (información ya registrada). Ejemplo: 23
-        let info = partes[1];                 //(Información ya registrada). Ejemplo: [1237,455487]
+        const objetoActual = {
+            index: posicion,
+            value: element
+        };
 
-        //Castear string to array
-        const casteo = info.split(","); 
-
-        //Generar los indices del array (Información ya grabada)
-        const listaDeArrays = casteo.map((element, index) => {
-            return {
-                index: index +1,
-                value: element,
-                contador: posicion  //añadir num columna  (información ya registrada).
-            };
-        });
-
-        //NOTA: [numcolumna] ---> Es el num del (contador/columna) a consultar, dentro de los indices del array. (selección aleatoria)
-        if(listaDeArrays.length >=1 && listaDeArrays[numcolumna] && listaDeArrays[numcolumna].hasOwnProperty('index')){
-            const indice = listaDeArrays[numcolumna].index;              //Indice del array
-            const valor = listaDeArrays[numcolumna].value;               //Valor del indice
-            const contadorColumna = listaDeArrays[numcolumna].contador;  //Contador del indice
-
-            console.log("Indice: " + indice + " Valor: " + valor + " Posición: " + contadorColumna);
-            list_data = contadorColumna+"@"+valor; //Regresar el historico a la columna
+        // Agrupar valores por índice en el nuevo objeto
+        if (!valoresAgrupadosCheckBoxChecked[posicion]) {
+            valoresAgrupadosCheckBoxChecked[posicion] = [];
         }
-    
-    }
 
-   return list_data;
+        valoresAgrupadosCheckBoxChecked[posicion].push(objetoActual);
+
+        return objetoActual;
+    }));
+
 }
+
+function print_historic_checked(numcolumna){
+    
+    let valoresConcatenados = "";  // Inicializamos una variable para acumular los valores
+
+    if (valoresAgrupadosCheckBoxChecked[numcolumna] && valoresAgrupadosCheckBoxChecked[numcolumna].length > 0) {
+        const indices = valoresAgrupadosCheckBoxChecked[numcolumna][0].index; // Tomar el índice del primer elemento
+        
+        for (var i = 0; i < valoresAgrupadosCheckBoxChecked[numcolumna].length; i++) {
+            const valorPorIndice = valoresAgrupadosCheckBoxChecked[numcolumna][i].value;
+            valoresConcatenados += valorPorIndice + "@";  // Concatenamos el valor
+        }
+        valoresConcatenados=valoresConcatenados.slice(0,-1);
+    }else{
+        valoresConcatenados = "0@0";
+    }
+    
+   return valoresConcatenados;
+}
+
+function add_list_historic_not_checked(numcolumna,list){ 
+ 
+    let posicion = parseInt(numcolumna); //num columna (información ya registrada). Ejemplo: 23
+    let info = list;                 //(Información ya registrada). Ejemplo: [1237,455487]
+
+    //Castear string to array
+    const casteo = info.split(","); 
+
+    // Agregar nuevos elementos a listaDeArraysCheckBoxNotChecked
+    listaDeArraysCheckBoxNotChecked = listaDeArraysCheckBoxNotChecked.concat(casteo.filter(element => element.trim() !== "").map((element, index) => {
+        console.log(listaDeArraysCheckBoxNotChecked);
+
+        const objetoActual = {
+            index: posicion,
+            value: element
+        };
+
+        // Agrupar valores por índice en el nuevo objeto
+        if (!valoresAgrupadosCheckBoxNotChecked[posicion]) {
+            valoresAgrupadosCheckBoxNotChecked[posicion] = [];
+        }
+
+        valoresAgrupadosCheckBoxNotChecked[posicion].push(objetoActual);
+
+        return objetoActual;
+    }));
+
+}
+
+function print_historic_not_checked(numcolumna){
+    
+    let valoresConcatenados = "";  // Inicializamos una variable para acumular los valores
+
+    if (valoresAgrupadosCheckBoxNotChecked[numcolumna] && valoresAgrupadosCheckBoxNotChecked[numcolumna].length > 0) {
+        const indices = valoresAgrupadosCheckBoxNotChecked[numcolumna][0].index; // Tomar el índice del primer elemento
+        
+        for (var i = 0; i < valoresAgrupadosCheckBoxNotChecked[numcolumna].length; i++) {
+            const valorPorIndice = valoresAgrupadosCheckBoxNotChecked[numcolumna][i].value;
+            valoresConcatenados += valorPorIndice + "@";  // Concatenamos el valor
+        }
+        valoresConcatenados=valoresConcatenados.slice(0,-1);
+    }else{
+        valoresConcatenados = "0@0";
+    }
+    
+   return valoresConcatenados;
+}
+
+/*destructure('Fazt','Giveaway');
+
+function destructure(args){
+    
+    const fazt = args[0];
+    const giveaway = args[1];
+    
+    const [fazt,giveaway] = args;  
+}*/
