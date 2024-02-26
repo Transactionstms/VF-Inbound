@@ -88,6 +88,18 @@
     //ExcelToOracle excelToOracle = new ExcelToOracle();
     String url1 = nombreFile;
 
+    
+    
+    String protocol = request.getScheme(); // Obtiene el protocolo (HTTP o HTTPS)
+String serverName = request.getServerName(); // Obtiene el nombre del servidor (localhost)
+int serverPort = request.getServerPort(); // Obtiene el puerto del servidor (8080)
+
+// Construye la URL base concatenando el protocolo, el nombre del servidor y el puerto
+String baseURL = protocol + "://" + serverName + ":" + serverPort;
+
+out.println(baseURL); // Imprime la URL base en la salida
+System.out.println("baseURL"+baseURL);
+
     // String mensaje=excelToOracle.ExcelToOracle( sql1,url1 );
 // try{}catch(Exception e){}
 %>
@@ -207,7 +219,9 @@
                       //let urlF='https://www.ta2.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
                       // let urlF='http://74.208.140.125:8080/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
                       //  let urlF = 'http://localhost:8084/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio=' + fecha;
-                      let urlF='https://www.tacts.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+                     // let urlF='https://www.tacts.mx/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
+
+                      let urlF='<%=baseURL%>/Plantillas/SubirExcelSP.jsp?ins=<%=sql1%>&rut=<%=url1%>&folio='+fecha;
 
                     const response = await fetch(urlF); // Realiza la petición Fetch y espera la respuesta
 
@@ -241,6 +255,10 @@
 
                     }else if (<%=sql1%> === 33) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logSCIBatch.jsp?folio=' + fecha;
+
+                    }
+                    else if (<%=sql1%> === 36 || <%=sql1%> === 37) {
+                        window.location.href = '<%=request.getContextPath()%>/Importacion/logibr.jsp?folio=' + fecha;
 
                     }else{
                         
