@@ -485,7 +485,7 @@ function show_fecha_pago_pedimento(i) {
     $('.datepicker-pedimento').flatpickr({
         dateFormat: 'm/d/Y',
         minDate: res,
-        maxDate: new Date().fp_incr(50),
+        //maxDate: new Date().fp_incr(50),
         inline: true
     });
     contModals = i;
@@ -521,7 +521,7 @@ function show_fecha_modulacion(i) {
     $('.datepicker-modulacion').flatpickr({
         dateFormat: 'm/d/Y',
         minDate: res,
-        maxDate: new Date().fp_incr(50),
+        //maxDate: new Date().fp_incr(50),
         inline: true
     });
     contModals = i;
