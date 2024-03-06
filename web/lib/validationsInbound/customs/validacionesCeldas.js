@@ -3,6 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+function validarMonto$(event) { //validarMonto$,.
+    
+    // Evitar el comportamiento predeterminado de pegado
+    event.preventDefault();
+    
+    // Obtener el contenido actual del TD
+    let contenido = event.target.innerText;
+    var patron = /^[\d.,$]+$/g;
+    let resultado = "";
+    
+    // Reemplazar comas por puntos para asegurar el formato decimal
+    resultado = contenido.replace(',', '');
+
+    // Validar si el contenido es un número o un número decimal
+    if (patron.test(resultado)) {
+        // Si es un número o un número decimal válido, permitir que permanezca en el TD
+        event.target.style.color = 'black';
+    } else {
+        // Si no es un número o un número decimal válido, eliminar el contenido y mostrar un color de texto rojo
+        event.target.innerText = "";
+        event.target.style.color = 'red';
+    }
+}
+
 function validarNumero(event) {
     
     // Evitar el comportamiento predeterminado de pegado
@@ -487,6 +511,25 @@ function handlePasteNumber(event) {
   
   if (regex.test(resultado)) {
     event.target.innerText = resultado; 
+    console.log('Contenido no válido. Solo se permiten números o números decimales.');
+  }
+}
+
+function handlePasteMonto$(event) {
+    
+  // Evitar el comportamiento predeterminado de pegado
+  event.preventDefault();
+    
+  var clipboardData = event.clipboardData || window.clipboardData;
+  var pastedData = clipboardData.getData('text');
+  //let resultado = "";
+  var regex = /^[\d.,$]+$/g;
+  
+  // Reemplazar comas por puntos para asegurar el formato decimal
+  //resultado = pastedData.replace(',', '');
+  
+  if (regex.test(pastedData)) {
+    event.target.innerText = pastedData; 
     console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
