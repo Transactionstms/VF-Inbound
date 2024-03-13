@@ -7,12 +7,12 @@ function validarMonto$(event) { //validarMonto$,.
     
     // Evitar el comportamiento predeterminado de pegado
     event.preventDefault();
-    
+
     // Obtener el contenido actual del TD
     let contenido = event.target.innerText;
     var patron = /^[\d.,$]+$/g;
     let resultado = "";
-    
+
     // Reemplazar comas por puntos para asegurar el formato decimal
     resultado = contenido.replace(',', '');
 
@@ -511,7 +511,6 @@ function handlePasteNumber(event) {
   
   if (regex.test(resultado)) {
     event.target.innerText = resultado; 
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
 
@@ -521,7 +520,7 @@ function handlePasteMonto$(event) {
   event.preventDefault();
     
   var clipboardData = event.clipboardData || window.clipboardData;
-  var pastedData = clipboardData.getData('text');
+  var pastedData = clipboardData.getData('text').replace(/[\r\n]+/g, ' ').trim();
   //let resultado = "";
   var regex = /^[\d.,$]+$/g;
   
@@ -530,7 +529,6 @@ function handlePasteMonto$(event) {
   
   if (regex.test(pastedData)) {
     event.target.innerText = pastedData; 
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
 
@@ -647,8 +645,6 @@ function handlePasteFechaEtaPortDischarge(event,i) {
      event.target.innerText = pastedData; 
      
      pedimento(pastedData, i);
-     
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
 
@@ -668,8 +664,6 @@ function handlePasteFechaPagoPedimento(event,i) {
      event.target.innerText = pastedData; 
      
      modulacion(pastedData, i);
-     
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
 
@@ -687,7 +681,5 @@ function handlePasteFecha(event) {
       
      // Actualizar el contenido de la celda con el número filtrado
      event.target.innerText = pastedData;  
-     
-    console.log('Contenido no válido. Solo se permiten números o números decimales.');
   }
 }
