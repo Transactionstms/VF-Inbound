@@ -646,9 +646,9 @@
         <!-- Actions js -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Validaciones Celdas -->
-        <script src="../lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
         <!-- Elementos Html Celdas -->
-        <script src="../lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/elementosCeldas.js" type="text/javascript"></script>
         <!-- lectura de excel validación de celdas -->
         <script src="<%=request.getContextPath()%>/lib/js/xlsx.full.min.js" type="text/javascript"></script>
         <!-- Upload/Download Excel -->
