@@ -41,7 +41,7 @@ import java.sql.Statement;
  */
 public class Email {
 
-    private final String CLAVE = "Tacts23*";
+    private final String CLAVE = "Tacts*24*";
     private final String HOST = "smtp.gmail.com";
     private final String REMITENTE = "alertas1@tacts.mx";
 
@@ -720,7 +720,7 @@ public class Email {
             sesion = Session.getDefaultInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                 }
             });
 
@@ -760,7 +760,7 @@ public class Email {
             Session session = Session.getDefaultInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                 }
             });
             // Session sesion = Session.getDefaultInstance(properties, null);
@@ -818,7 +818,7 @@ public class Email {
             Session session = Session.getDefaultInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                 }
             });
             // Session sesion = Session.getDefaultInstance(properties, null);
@@ -929,7 +929,7 @@ public class Email {
                 Session session = Session.getDefaultInstance(properties,
                         new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                     }
                 });
                 // Session sesion = Session.getDefaultInstance(properties, null);
@@ -1041,7 +1041,7 @@ public class Email {
                 Session session = Session.getDefaultInstance(properties,
                         new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                     }
                 });
                 // Session sesion = Session.getDefaultInstance(properties, null);
@@ -1153,7 +1153,7 @@ public class Email {
                 Session session = Session.getDefaultInstance(properties,
                         new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                     }
                 });
                 // Session sesion = Session.getDefaultInstance(properties, null);
@@ -1266,7 +1266,7 @@ public class Email {
                 Session session = Session.getDefaultInstance(properties,
                         new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                        return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                     }
                 });
                 // Session sesion = Session.getDefaultInstance(properties, null);
@@ -1327,7 +1327,7 @@ public class Email {
             Session session = Session.getDefaultInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts*24*");
                 }
             });
             // Session sesion = Session.getDefaultInstance(properties, null);
