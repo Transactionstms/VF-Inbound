@@ -31,7 +31,8 @@
              String agrupador=request.getParameter("agrupador");
              String titulo=request.getParameter("titulo"); 
               
-             String sql2 =" SELECT DISTINCT 'SHIPTO', "
+             String sql2 =" SELECT DISTINCT"
+                     + " 'SHIPTO', "
 +"     bod.bodega_nombre, "
 +"     bod.rfc, "
 +"     bod.bodega_direccion, "
@@ -54,7 +55,7 @@
 +"      gtn.OF_PACKAGES, "
 +"      gtn.QUANTITY, "
 +"      gtn.volume, "
-+"     nvl(cus.pedimento_r1, nvl(cus.pedimento_r1_2do, ' ')), "
++"     nvl(cus.PEDIMENTO_A1, nvl(cus.pedimento_r1, nvl(pedimento_r1_2do,' '))), "
 +"     to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), "
 +"     gtn.style_desc, "
 +"     nvl(pod.aduana_numero, 0), "
@@ -127,14 +128,11 @@ System.out.println("sql***********"+sql2);
                              <th class="repHdr"><center>Clave Colonia </center></th> 
                              <th class="repHdr"><center>Clave Localidad </center></th> 
                              <th class="repHdr"><center>Clave Municipio </center></th> 
-<th class="repHdr"><center>CONTEINER</center></th>
-
-                            <!-- <th class="repHdr">Orden de compra</th>-->
-                             <th class="repHdr"><center>SHIMPEMNT</center></th>
-                           <!--  <th class="repHdr"><center>Cartón</center></th>-->
-
+                             <th class="repHdr"><center>CONTEINER</center></th> 
+                             <th class="repHdr"><center>SHIMPEMNT</center></th> 
                              <th class="repHdr"><center>Peso</center></th>
-                             <th class="repHdr"><center>Cajas</center></th>
+                             
+        <th class="repHdr"><center>Cajas</center></th>
                              <th class="repHdr"><center>Piezas</center></th>
 
                              <th class="repHdr"><center>Volumen</center></th><!-- - Col 24-->
@@ -196,11 +194,14 @@ System.out.println("sql***********"+sql2);
                                                                             <!--<td class=""><b><%=rs.getString(18)%></b></td>-->
                                                                             <td class=""><b><%=rs.getString(19)%></b></td>
                                                                             <td class=""><b><%=rs.getString(20)%></b></td> <!--cartón-->
+                                                                            
                                                                             <td class=""><b><%=rs.getString(21)%></b></td>
                                                                             <td class=""><b><%=rs.getString(22)%></b></td>
                                                                             <td class=""><b><%=rs.getString(23)%></b></td>
                                                                             <td class=""><b><%=rs.getString(24)%></b></td> <!-- - Col 24-->
+                                                                            
                                                                             <td class=""><b><%=rs.getString(25)%></b></td> <!-- - Col 25-->
+                                                                            
                                                                             <td class=""><b><%=rs.getString(26)%></b></td> <!-- - Col 26-->
                                                                              <td class=""><b><%=rs.getString(38)%></b></td>   <!-- - Col 27-->
                                              
@@ -307,3 +308,6 @@ System.out.println("sql***********"+sql2);
 
 
 
+
+
+  
