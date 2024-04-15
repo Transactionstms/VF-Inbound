@@ -34,7 +34,7 @@ function leerArchivo() {
 
                 valor = datos[i][k];
                 fila = parseInt([i]) + 1;
-                console.log("Núm Celda:" + k + " - Fila: " + [i] + " -  Valor: " + valor);
+                //console.log("Núm Celda:" + k + " - Fila: " + [i] + " -  Valor: " + valor);
                 
                 if (valor === undefined || valor === null) {
                     valor = "";  // Puedes asignar otro valor predeterminado si lo deseas
@@ -77,10 +77,97 @@ function leerArchivo() {
         var resultado = arraySinDuplicadosYVacios.join(',');
 
         if (resultado === "") {
-            logExcel();
+             logExcel();
+             consultarCustoms(selected_referenciaAA, 
+                              selected_evento, 
+                              selected_responsable,
+                              selected_final_destination,
+                              selected_brand_division,
+                              selected_division,
+                              selected_shipmentId,
+                              selected_containerId,
+                              selected_blAwbPro,
+                              selected_loadTypeFinal,
+                              selected_quantity,
+                              selected_pod,
+                              selected_estDepartFromPol,
+                              selected_etaRealPortOfDischarge,
+                              selected_estEtaDc,
+                              selected_inboundNotification,
+                              selected_pol,
+                              selected_aa,
+                              selected_fechaMesVenta,
+                              selected_prioridad,
+                              selected_pais_origen,
+                              selected_size_container,
+                              selected_valor_usd,
+                              selected_eta_port_discharge,
+                              selected_agente_aduanal,
+                              selected_pedimento_a1,
+                              selected_pedimento_r1_1er,
+                              selected_motivo_rectificacion_1er,
+                              selected_pedimento_r1_2do,
+                              selected_motivo_rectificacion_2do,
+                              selected_fecha_recepcion_doc,
+                              selected_recinto,
+                              selected_naviera,
+                              selected_buque,
+                              selected_fecha_revalidacion,
+                              selected_fecha_previo_origen,
+                              selected_fecha_previo_destino,
+                              selected_fecha_resultado_previo,
+                              selected_proforma_final,
+                              selected_permiso,
+                              selected_fecha_envio,
+                              selected_fecha_recepcion_perm,
+                              selected_fecha_activacion_perm,
+                              selected_fecha_permisos_aut,
+                              selected_co_pref_arancelaria,
+                              selected_aplic_pref_arancelaria,
+                              selected_req_uva,
+                              selected_req_ca,
+                              selected_fecha_recepcion_ca,
+                              selected_num_constancia_ca,
+                              selected_monto_ca,
+                              selected_fecha_doc_completos,
+                              selected_fecha_pago_pedimento,
+                              selected_fecha_solicitud_transporte,
+                              selected_fecha_modulacion,
+                              selected_modalidad,
+                              selected_resultado_modulacion,
+                              selected_fecha_reconocimiento,
+                              selected_fecha_liberacion,
+                              selected_sello_origen,
+                              selected_sello_final,
+                              selected_fecha_retencion_aut,
+                              selected_fecha_liberacion_aut,
+                              selected_estatus_operacion,
+                              selected_motivo_atraso,
+                              selected_observaciones,
+                              selected_llegada_a_nova,
+                              selected_llegada_a_globe_trade_sd,
+                              selected_archivo_m,
+                              selected_fecha_archivo_m,
+                              selected_fecha_solicit_manip,
+                              selected_fecha_vencim_manip,
+                              selected_fecha_confirm_clave_pedim,
+                              selected_fecha_recep_increment,
+                              selected_t_e,
+                              selected_fecha_vencim_inbound,
+                              selected_no_bultos,
+                              selected_peso_kg,
+                              selected_transferencia,
+                              selected_fecha_inicio_etiquetado,
+                              selected_fecha_termino_etiquetado,
+                              selected_hora_termino_etiquetado,
+                              selected_proveedor,
+                              selected_proveedor_carga,
+                              selected_fy);
         } else {
             swal("",resultado,"warning");
             ocultarLoader();
+            console.log("Excel con errores");
+            return false;
         }
 
     };
@@ -92,6 +179,7 @@ function leerArchivo() {
 function relacion_columnas_excel_administrador(posicion, contenido, fila) {
 
     let logErrores = "";
+    console.log("!Excel Administrador¡");
 
     if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 34 || posicion === 35) {
         celda = validarNumero_excel(contenido);
@@ -121,15 +209,16 @@ function relacion_columnas_excel_administrador(posicion, contenido, fila) {
 
     return logErrores;
 }
-//7, 15, 45,46,52
+ 
 function relacion_columnas_excel_generico(posicion, contenido, fila) {
+    
     let logErrores = "";
+    console.log("!Excel Generico¡");
+    
     if (posicion === 0 || posicion === 7 || posicion === 34 || posicion === 35) {
         celda = validarNumero_excel(contenido);
-    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 6 || posicion === 12 || posicion === 14 || posicion === 44 || posicion === 45 || posicion === 51) {
+    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 6 || posicion === 12 || posicion === 14 || posicion === 44 || posicion === 45 || posicion === 51 || posicion === 5 || posicion === 9 ||  posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50) {
         celda = validarTexto_excelAlfanumerico_excel(contenido);
-    } else if (posicion === 5 || posicion === 9 ||  posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50) {
-        celda = validarTexto_excel(contenido);
     } else if (posicion === 10 || posicion === 11 || posicion === 13) {
         celda = formatoNumero_excel(contenido);
     } else if (posicion === 8 || posicion === 15 || posicion === 19 || posicion === 20 || posicion === 21 || posicion === 22 || posicion === 25 || posicion === 26 || posicion === 27 || posicion === 28 || posicion === 33 || posicion === 36 || posicion === 37 || posicion === 38 || posicion === 39 || posicion === 42 || posicion === 43 || posicion === 46 || posicion === 47) {
@@ -145,14 +234,16 @@ function relacion_columnas_excel_generico(posicion, contenido, fila) {
     }
 
     if (celda === false) {
-        logErrores = " Error en Fila:(" + fila + ")  Columna:(" + (posicion+1) + "),";
+        logErrores = " Error en Fila:(" + fila + ")  Columna:(" + (posicion+1) + "),"; 
     }
 
     return logErrores;
 }
 
 function relacion_columnas_excel_logix(posicion, contenido, fila) {
+    
     let logErrores = "";
+    console.log("!Excel Logix¡");
     
     if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 35) {
         celda = validarNumero_excel(contenido);
@@ -182,7 +273,10 @@ function relacion_columnas_excel_logix(posicion, contenido, fila) {
 }
 
 function relacion_columnas_excel_cusa(posicion, contenido, fila) {
+    
     let logErrores = "";
+    console.log("!Excel Cusa¡");
+    
     if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 34 || posicion === 35 || posicion === 44 || posicion === 45) {
         celda = validarNumero_excel(contenido);
     } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 51) {
@@ -211,7 +305,6 @@ function relacion_columnas_excel_cusa(posicion, contenido, fila) {
 }
 
 //Expresiones Regulares:
-
 function validarNumero_excel(contenido) {
 
     let resultado = false;
@@ -225,12 +318,12 @@ function validarNumero_excel(contenido) {
 
 function validarTexto_excelAlfanumerico_excel(contenido) {
 
-    let resultado = false;
+   let resultado = true;
     
-    if (/^[a-zA-Z0-9\s.ñÑ-]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
+  /*  if (/^[\w\s.ñÑ!@#$%^&*()-]+$/g.test(contenido) || contenido.replace(/\s/g, "") === "") {
         resultado = true;
     }
-
+*/
     return resultado;
 }
 
@@ -238,7 +331,7 @@ function validarTexto_excel(contenido) {
 
     let resultado = false;
 
-    if (/^[a-zA-ZñÑ\s:]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
+    if (/^[a-zA-ZñÑ\s.:]+$/.test(contenido) || contenido.replace(/\s/g, "") === "") {
         resultado = true;
     }
 

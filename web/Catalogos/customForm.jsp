@@ -4,6 +4,7 @@
     Author     : luis_
 --%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.pantalla.BLPantalla"%>
 <%@page import="com.pantalla.Pantalla"%>
 <%@page import="java.util.HashSet"%>
@@ -16,8 +17,11 @@
 <%@page import="com.onest.oracle.*" %>
 <%@page import="com.onest.misc.*" %>
 <%@page import="com.usuario.Usuario"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+
     Date date = new Date();
     SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
     String fecha = formato.format(date);
@@ -68,7 +72,7 @@
             });
 
             // estado actual
-            console.log(document.readyState);
+            //console.log(document.readyState);
 
             //imprimir los cambios de estado
             document.addEventListener('readystatechange', () => console.log(document.readyState));

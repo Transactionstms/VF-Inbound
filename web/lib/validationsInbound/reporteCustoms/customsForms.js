@@ -283,7 +283,7 @@ let selected_fy="";
             
         try {
             
-            let urlCustoms = encodeURI("../../ConsultarReporteCustoms?columna_referenciaAA="+columna_referenciaAA
+              let urlCustoms = encodeURI("../../ConsultarReporteCustoms?columna_referenciaAA="+columna_referenciaAA
                                         +"&columna_evento="+columna_evento
                                         +"&columna_responsable="+columna_responsable
                                         +"&columna_final_destination="+columna_final_destination
@@ -377,6 +377,8 @@ let selected_fy="";
 
             const data = await response.text();
             document.getElementById('table-scroll').innerHTML = data;
+            
+            
                         
           } catch (error) {
             console.error(error);

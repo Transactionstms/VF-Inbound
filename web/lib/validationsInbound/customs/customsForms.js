@@ -352,11 +352,11 @@ let selected_fy="";
                                     columna_hora_termino_etiquetado,
                                     columna_proveedor,
                                     columna_proveedor_carga,
-                                    columna_fy) {
+                                    columna_fy) {                           
             
         try {
             
-            let urlCustoms = encodeURI("../ConsultarCustoms?columna_referenciaAA="+columna_referenciaAA
+              let urlCustoms = encodeURI("../ConsultarCustoms?columna_referenciaAA="+columna_referenciaAA
                                         +"&columna_evento="+columna_evento
                                         +"&columna_responsable="+columna_responsable
                                         +"&columna_final_destination="+columna_final_destination
@@ -451,7 +451,7 @@ let selected_fy="";
 
             const data = await response.text();
             document.getElementById('table-scroll').innerHTML = data;
-                        
+            
           } catch (error) {
             console.error(error);
         }
@@ -1322,7 +1322,6 @@ function formComplet(idAgenteAduanal, i) {
 
 }
 
-
 /*--------------------------------------------------------------------------
  FUNCIONES - CONSULTA HISTORICO SEMAFORO
  --------------------------------------------------------------------------*/
@@ -1732,7 +1731,6 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
     }
 
 }
-
 
 function validarTextoAlfanumericoObservaciones(td,namecelda,cont) {
   // Obtener el contenido actual del TD
