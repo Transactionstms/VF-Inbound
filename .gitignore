@@ -1,2 +1,8 @@
 /build/
 /dist/
+/wsRestExpCustoms/build/
+/wsRestExpCustoms/nbproject/private/
+/wsRestLogix/build/
+/wsRestLogix/nbproject/private/
+/wsRestRadar/build/
+/wsRestRadar/nbproject/private/
