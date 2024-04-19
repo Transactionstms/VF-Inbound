@@ -66,17 +66,8 @@ function leerArchivo() {
 
             }
         }
-
-        // Dividir la cadena en un array usando la coma como delimitador
-        var array = validar.split(',');
-
-        // Eliminar duplicados y valores vacíos usando un conjunto (Set)
-        var arraySinDuplicadosYVacios = [...new Set(array.filter(item => item.trim() !== ''))];
-
-        // Unir el array sin duplicados y valores vacíos en una cadena usando la coma como separador
-        var resultado = arraySinDuplicadosYVacios.join(',');
-
-        if (resultado === "") {
+        
+        if (validar === "") {
              logExcel();
              consultarCustoms(selected_referenciaAA, 
                               selected_evento, 
