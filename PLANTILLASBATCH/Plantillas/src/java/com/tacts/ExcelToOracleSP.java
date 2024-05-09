@@ -673,7 +673,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?   ,?,?,?,?,?,?,?,?,?,?,  '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  '" + folio + "'  )}");
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -809,7 +809,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2(   ?,?,?,?,?,?,?,?,?,? ,?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,? ,   '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}");
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -1090,7 +1090,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call sp_inb_ibr_1005(   ?,?,?,?,?,?,?,?,?,? ,?,?,?,?,?,?,?,?,?,?,    ?,   '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call sp_inb_ibr_1005( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?, '" + folio + "' )}");
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -1226,7 +1226,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_IBR_1013(   ?,?,? ,?,?,?, ?,?,?,?   ,?,?,?,?,?,?,    '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_IBR_1013(  ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}");
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
