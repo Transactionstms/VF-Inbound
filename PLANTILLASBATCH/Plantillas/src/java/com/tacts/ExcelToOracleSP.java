@@ -673,7 +673,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  '" + folio + "'  )}"); //31
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -683,7 +683,7 @@ public class ExcelToOracleSP {
                 }
                 int yy = 0;
                 //row.getLastCellNum();
-                for (int j = 0; j < 20; j++) {
+                for (int j = 0; j < 30; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
@@ -809,7 +809,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2( ?,?,?,?,?,?,?,?,?,? ,?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,   '" + folio + "'  )}"); //38
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -819,7 +819,7 @@ public class ExcelToOracleSP {
                 }
                 int yy = 0;
                 //row.getLastCellNum();
-                for (int j = 0; j < 26; j++) {
+                for (int j = 0; j < 37; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
@@ -1090,7 +1090,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call sp_inb_ibr_1005( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?, '" + folio + "' )}");
+        CallableStatement statement = connection.prepareCall(" {call sp_inb_ibr_1005( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?, '" + folio + "' )}"); //19
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -1100,7 +1100,7 @@ public class ExcelToOracleSP {
                 }
                 int yy = 0;
                 //row.getLastCellNum();
-                for (int j = 0; j < 21; j++) {
+                for (int j = 0; j < 18; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
@@ -1226,7 +1226,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_IBR_1013(  ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_IBR_1013(  ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}"); //18
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -1236,7 +1236,7 @@ public class ExcelToOracleSP {
                 }
                 int yy = 0;
                 //row.getLastCellNum();
-                for (int j = 0; j < 16; j++) {
+                for (int j = 0; j < 17; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
