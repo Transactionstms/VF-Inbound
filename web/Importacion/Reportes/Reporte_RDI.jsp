@@ -61,61 +61,86 @@
                     agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
                 }
 
-                String sql2 = "   SELECT "
- 
-  +"            evento,"
-  +"            contenedor,"
-  +"            bl,"
-  +"            shipment,"
-  +"            load_type,"
-  +"            lum_brio,"
-  +"            brand,"
-  +"            sbu_name,"
-  +"            pol,"
-  +"            country,"
-  +"            actual_crd,"
-  +"            departure_date,"
-  +"            mx_port,"
-                        + "ATA_CMI,"
-  +"            eta_mx_port,"
-  +"            eta_customer,"
-  +"            nvl(comentarios,' '),"
-  +"            final_dest,"
-  +"            responsable,"
-                        + "CUSTOMER "
-  +"            FROM"
-  +" TRA_INB_RDI WHERE tipo=1013";
+                 String sql2 = "   SELECT "
+                              +"            evento,"
+                              +"            contenedor,"
+                              +"            bl,"
+                              +"            shipment,"
+                              +"            load_type,"
+                              +"            lum_brio,"
+                              +"            brand,"
+                              +"            sbu_name,"
+                              +"            pol,"
+                              +"            country,"
+                              +"            actual_crd,"
+                              +"            departure_date,"
+                              +"            mx_port,"
+                              +"            ATA_CMI,"
+                              +"            eta_mx_port,"
+                              +"            eta_customer,"
+                              +"            nvl(comentarios,' '),"
+                              +"            final_dest,"
+                              +"            responsable,"
+                              +"            CUSTOMER, "
+                              
+                              +"            NVL(INBOUND_NOT,' '), " //row[20]
+                              +"            NVL(AA,' '), "
+                              +"            NVL(PLANTA,' '), "
+                              +"            NVL(LT2,' '), "
+                              +"            NVL(TT,' '), "
+                              +"            NVL(NUM_PEDIMENTO,' '), "
+                              +"            NVL(MES_FACTURACION,' '), "
+                              +"            NVL(FREE_TIME,' '), "
+                              +"            NVL(TODAY,' '), "
+                              +"            NVL(FREE_UNTIL,' '  ) "  //row[29]
+                              
+                              +"            FROM"
+                              +" TRA_INB_RDI WHERE tipo=1013";
                 
-                  String sql3 = " SELECT  "
-  
- +"            evento, "
- +"            contenedor, "
- +"            bl, "
- +"            carrier, "
- +"            shipment, "
- +"            load_type, "
- +"            lum_brio, "
- +"            brand, "
- +"            sbu_name, "
- +"            pol, "
- +"            country, "
- +"            actual_crd, "
- +"            departure_date, "
- +"            mx_port, "
- +"            eta_mx_port, "
- +"            eta_dc, "
- +"            indc_2_days_put_away, "
- +"            arribo_real_dc, "
- +"            nvl(comentarios,' '), "
- +"            requiere_etiquetado, "
- +"            a_123, "
- +"            a_456, "
- +"            inbound_not, "
- +"            aa, "
- +"            responsable, "
- +"            planta "
- +"            FROM "
- +" TRA_INB_RDI WHERE tipo=1005";
+                String sql3 = " SELECT  "
+                             +"            evento, "
+                             +"            contenedor, "
+                             +"            bl, "
+                             +"            carrier, "
+                             +"            shipment, "
+                             +"            load_type, "
+                             +"            lum_brio, "
+                             +"            brand, "
+                             +"            sbu_name, "
+                             +"            pol, "
+                             +"            country, "
+                             +"            actual_crd, "
+                             +"            departure_date, "
+                             +"            mx_port, "
+                             +"            eta_mx_port, "
+                             +"            eta_dc, "
+                             +"            indc_2_days_put_away, "
+                             +"            arribo_real_dc, "
+                             +"            nvl(comentarios,' '), "
+                             +"            requiere_etiquetado, "
+                             +"            a_123, "
+                             +"            a_456, "
+                             +"            inbound_not, "
+                             +"            aa, "
+                             +"            responsable, "
+                             +"            planta, "                            //row[25]
+                             
+                             +"            NVL(TOTAL_LANE,' '), "                           
+                             +"            NVL(LT2_TARGET,' '), "                         
+                             +"            NVL(ACTUAL_LT2,' '), "                           
+                             +"            NVL(LT2_CALIBRATION,' '), "                     
+                             +"            NVL(WORKDAYS,' '), "                            
+                             +"            NVL(OCEAN_TT,' '), "                            
+                             +"            NVL(FREE_DAYS,' '), "                           
+                             +"            NVL(FREE_UNTIL,' '), "                          
+                             +"            NVL(TODAY,' '), "                               
+                             +"            NVL(DESPACHO_DE_ADUANA,' '), "                 
+                             +"            NVL(SALIDA_A_DC,' '), "                        
+                             +"            NVL(CUSTODIA,' '), "                           
+                             +"            NVL(FECHA_DE_RETORNO_DE_VACIO,' '), "            
+                             +"            NVL(COMENTARIOS_ADICIONALES_LOGISTICA,' ') "  //row[39]
+                             +"            FROM "
+                             +" TRA_INB_RDI WHERE tipo=1005";
 
                 int cont = 0;
         %>
@@ -133,16 +158,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
-
-
                                     <div class="card-body">
-
-
-
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">RDI OD 1013 VF</button>
@@ -150,7 +166,6 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">RDI OD 1005 VF</button>
                                             </li>
-
                                         </ul>
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -162,25 +177,36 @@
                                                                 <tr>
                                                                    <tr>
                                                                     <th scope="col" class="font-titulo">EVENTO</th>
-                                                                        <th scope="col" class="font-titulo">CONTENEDOR</th>
-                                                                        <th scope="col" class="font-titulo">BL</th>
-                                                                        <th scope="col" class="font-titulo">SHIPMENT</th>
-                                                                        <th scope="col" class="font-titulo">LOAD_TYPE</th>
-                                                                        <th scope="col" class="font-titulo">LUM_BRIO</th>
-                                                                        <th scope="col" class="font-titulo">BRAND</th>
-                                                                        <th scope="col" class="font-titulo">SBU_NAME</th>
-                                                                        <th scope="col" class="font-titulo">POL</th>
-                                                                        <th scope="col" class="font-titulo">COUNTRY</th>
-                                                                        <th scope="col" class="font-titulo">ACTUAL_CRD</th>
-                                                                        <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
-                                                                        <th scope="col" class="font-titulo">MX_PORT</th> 
-                                                                        <th scope="col" class="font-titulo">ETA_MX_PORT</th>
-                                                                         <th scope="col" class="font-titulo">ATA_CMI</th>
-                                                                        <th scope="col" class="font-titulo">ETA_Customer</th>
-                                                                        <th scope="col" class="font-titulo">Comentarios</th>
-                                                                        <th scope="col" class="font-titulo">Final_Destination</th> 
-                                                                          <th scope="col" class="font-titulo">Responsable</th> 
-                                                                          <th scope="col" class="font-titulo">CUSTOMER</th>
+                                                                    <th scope="col" class="font-titulo">CONTENEDOR</th>
+                                                                    <th scope="col" class="font-titulo">BL</th>
+                                                                    <th scope="col" class="font-titulo">SHIPMENT</th>
+                                                                    <th scope="col" class="font-titulo">LOAD_TYPE</th>
+                                                                    <th scope="col" class="font-titulo">LUM_BRIO</th>
+                                                                    <th scope="col" class="font-titulo">BRAND</th>
+                                                                    <th scope="col" class="font-titulo">SBU_NAME</th>
+                                                                    <th scope="col" class="font-titulo">POL</th>
+                                                                    <th scope="col" class="font-titulo">COUNTRY</th>
+                                                                    <th scope="col" class="font-titulo">ACTUAL_CRD</th>
+                                                                    <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
+                                                                    <th scope="col" class="font-titulo">MX_PORT</th> 
+                                                                    <th scope="col" class="font-titulo">ETA_MX_PORT</th>
+                                                                    <th scope="col" class="font-titulo">ATA_CMI</th>
+                                                                    <th scope="col" class="font-titulo">ETA_Customer</th>
+                                                                    <th scope="col" class="font-titulo">Comentarios</th>
+                                                                    <th scope="col" class="font-titulo">Final_Destination</th> 
+                                                                    <th scope="col" class="font-titulo">Responsable</th> 
+                                                                    <th scope="col" class="font-titulo">CUSTOMER</th>
+                                                                    
+                                                                    <th scope="col" class="font-titulo">INBOUND_NOT</th>
+                                                                    <th scope="col" class="font-titulo">AA</th>
+                                                                    <th scope="col" class="font-titulo">PLANTA</th>
+                                                                    <th scope="col" class="font-titulo">LT2</th>
+                                                                    <th scope="col" class="font-titulo">TT</th>
+                                                                    <th scope="col" class="font-titulo">NUM_PEDIMENTO</th>
+                                                                    <th scope="col" class="font-titulo">MES_FACTURACION</th>
+                                                                    <th scope="col" class="font-titulo">FREE_TIME</th>
+                                                                    <th scope="col" class="font-titulo">TODAY</th>
+                                                                    <th scope="col" class="font-titulo">FREE_UNTIL</th>
                                                                 </tr>         
                                                                 </tr>
                                                             </thead>
@@ -211,6 +237,17 @@
                                                                     <td class="font-texto"> <%=row[17]%></td>
                                                                     <td class="font-texto"> <%=row[18]%></td>
                                                                     <td class="font-texto"> <%=row[19]%></td>
+                                                                    
+                                                                    <td class="font-texto"> <%=row[20]%></td>
+                                                                    <td class="font-texto"> <%=row[21]%></td>
+                                                                    <td class="font-texto"> <%=row[22]%></td>
+                                                                    <td class="font-texto"> <%=row[23]%></td>
+                                                                    <td class="font-texto"> <%=row[24]%></td>
+                                                                    <td class="font-texto"> <%=row[25]%></td>
+                                                                    <td class="font-texto"> <%=row[26]%></td>
+                                                                    <td class="font-texto"> <%=row[27]%></td>
+                                                                    <td class="font-texto"> <%=row[28]%></td>
+                                                                    <td class="font-texto"> <%=row[29]%></td>
                                                                 </tr>
                                                                 <%
                                                                         }
@@ -235,35 +272,50 @@
                                                         <table id="example2" class="display" style="width:300%">
                                                             <thead>
                                                                 <tr>
-<th scope="col" class="font-titulo">EVENTO</th>
+                                                                    <th scope="col" class="font-titulo">EVENTO</th>
 
-<th scope="col" class="font-titulo">CONTENEDOR</th>
-<th scope="col" class="font-titulo">BL</th>
-<th scope="col" class="font-titulo">Carrier</th>
-<th scope="col" class="font-titulo">SHIPMENT</th>
-<th scope="col" class="font-titulo">LOAD_TYPE</th>
-<th scope="col" class="font-titulo">LUM_BRIO</th>
-<th scope="col" class="font-titulo">BRAND</th>
-<th scope="col" class="font-titulo">SBU_NAME</th>
-<th scope="col" class="font-titulo">POL</th>
-<th scope="col" class="font-titulo">COUNTRY</th>
+                                                                    <th scope="col" class="font-titulo">CONTENEDOR</th>
+                                                                    <th scope="col" class="font-titulo">BL</th>
+                                                                    <th scope="col" class="font-titulo">Carrier</th>
+                                                                    <th scope="col" class="font-titulo">SHIPMENT</th>
+                                                                    <th scope="col" class="font-titulo">LOAD_TYPE</th>
+                                                                    <th scope="col" class="font-titulo">LUM_BRIO</th>
+                                                                    <th scope="col" class="font-titulo">BRAND</th>
+                                                                    <th scope="col" class="font-titulo">SBU_NAME</th>
+                                                                    <th scope="col" class="font-titulo">POL</th>
+                                                                    <th scope="col" class="font-titulo">COUNTRY</th>
 
-<th scope="col" class="font-titulo">ACTUAL_CRD</th>
-<th scope="col" class="font-titulo">DEPARTURE_DATE</th>
-<th scope="col" class="font-titulo">MX_PORT</th>
-<th scope="col" class="font-titulo">ETA_MX_PORT</th>
-<th scope="col" class="font-titulo">ETA_DC</th>
-<th scope="col" class="font-titulo">INDC_2_Days_PUT_AWAY</th>
-<th scope="col" class="font-titulo">Arribo_real_DC</th>
-<th scope="col" class="font-titulo">Comentarios</th>
-<th scope="col" class="font-titulo">Requiere_etiquetado</th>
-<th scope="col" class="font-titulo">123</th>
+                                                                    <th scope="col" class="font-titulo">ACTUAL_CRD</th>
+                                                                    <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
+                                                                    <th scope="col" class="font-titulo">MX_PORT</th>
+                                                                    <th scope="col" class="font-titulo">ETA_MX_PORT</th>
+                                                                    <th scope="col" class="font-titulo">ETA_DC</th>
+                                                                    <th scope="col" class="font-titulo">INDC_2_Days_PUT_AWAY</th>
+                                                                    <th scope="col" class="font-titulo">Arribo_real_DC</th>
+                                                                    <th scope="col" class="font-titulo">Comentarios</th>
+                                                                    <th scope="col" class="font-titulo">Requiere_etiquetado</th>
+                                                                    <th scope="col" class="font-titulo">123</th>
 
-<th scope="col" class="font-titulo">456</th>
-<th scope="col" class="font-titulo">Inbound_notification</th>
-<th scope="col" class="font-titulo">AA</th>
-<th scope="col" class="font-titulo">Responsabe</th>
-<th scope="col" class="font-titulo">Planta</th>       
+                                                                    <th scope="col" class="font-titulo">456</th>
+                                                                    <th scope="col" class="font-titulo">Inbound_notification</th>
+                                                                    <th scope="col" class="font-titulo">AA</th>
+                                                                    <th scope="col" class="font-titulo">Responsabe</th>
+                                                                    <th scope="col" class="font-titulo">Planta</th>
+                                                                    
+                                                                    <th scope="col" class="font-titulo">TOTAL_LANE</th>                           
+                                                                    <th scope="col" class="font-titulo">LT2_TARGET</th>                            
+                                                                    <th scope="col" class="font-titulo">ACTUAL_LT2</th>                             
+                                                                    <th scope="col" class="font-titulo">LT2_CALIBRATION</th>                        
+                                                                    <th scope="col" class="font-titulo">WORKDAYS</th>                              
+                                                                    <th scope="col" class="font-titulo">OCEAN_TT</th>                              
+                                                                    <th scope="col" class="font-titulo">FREE_DAYS</th>                             
+                                                                    <th scope="col" class="font-titulo">FREE_UNTIL</th>                            
+                                                                    <th scope="col" class="font-titulo">TODAY</th>                                 
+                                                                    <th scope="col" class="font-titulo">DESPACHO_DE_ADUANA</th>                    
+                                                                    <th scope="col" class="font-titulo">SALIDA_A_DC</th>                           
+                                                                    <th scope="col" class="font-titulo">CUSTODIA</th>                              
+                                                                    <th scope="col" class="font-titulo">FECHA_DE_RETORNO_DE_VACIO</th>             
+                                                                    <th scope="col" class="font-titulo">COMENTARIOS_ADICIONALES_LOGISTICA</th> 
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -272,7 +324,7 @@
                                                                         for (String[] row : db.getResultado()) {
 
                                                                 %>
-                                                                <tr  >
+                                                                <tr>
                                                                     <td class="font-texto"> <%=row[0]%></td>
                                                                     <td class="font-texto"> <%=row[1]%></td>
                                                                     <td class="font-texto"> <%=row[2]%></td>
@@ -302,6 +354,21 @@
                                                                     <td class="font-texto"> <%=row[24]%></td>
                                                                     <td class="font-texto"> <%=row[25]%></td>
                                                                     
+                                                                    <td class="font-texto"> <%=row[26]%></td>
+                                                                    <td class="font-texto"> <%=row[27]%></td>
+                                                                    <td class="font-texto"> <%=row[28]%></td>
+                                                                    <td class="font-texto"> <%=row[29]%></td>
+                                                                    <td class="font-texto"> <%=row[30]%></td>
+                                                                    <td class="font-texto"> <%=row[31]%></td>
+                                                                    <td class="font-texto"> <%=row[32]%></td>
+                                                                    <td class="font-texto"> <%=row[33]%></td>
+                                                                    <td class="font-texto"> <%=row[34]%></td>
+                                                                    <td class="font-texto"> <%=row[35]%></td>
+                                                                    <td class="font-texto"> <%=row[36]%></td>
+                                                                    <td class="font-texto"> <%=row[37]%></td>
+                                                                    <td class="font-texto"> <%=row[38]%></td>
+                                                                    <td class="font-texto"> <%=row[39]%></td>
+                                                                    
                                                                 </tr>
                                                                 <%
                                                                         }
@@ -312,28 +379,16 @@
                                                     </div>
                                                     <br>
                                                     <!-- Botones controles -->
-
                                                 </form>
-
                                             </div>
-
-                                                            
-
                                             </div>
                                         </div>                           
-
-
-
-
-
-
                                     </div>
                                 </div>              
                             </div>
                         </div>   
                     </section>
                 </div>  
-
             </div>
         </div>    
 
