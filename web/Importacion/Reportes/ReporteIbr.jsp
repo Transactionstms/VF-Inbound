@@ -85,24 +85,26 @@
                         + "        nvl(b456,' ')"
                         + "        from TRA_INB_IBR where tipo= 1005 ";
 
-                String sql3 = "select"
-                        + "  EVENTO,"
-                        + " Contenedor,"
-                        + " Shipment,"
-                        + " Load_Type,"
-                        + " LUM_BRIO,"
-                        + " Brand,"
-                        + " Sbu_Name,"
-                        + " nvl(Departure_Port,' '),"
-                        + " Departure_Date,"
-                        + " MX_Port,"
-                        + " ETA_MX_Port,"
-                        + " nvl(ETA_Customer,' '),"
-                        + " nvl(Comentarios,' '),"
-                        + " nvl(Customer,' '),"
-                        + " nvl(ATA_CMI,' '),"
-                        + " nvl(ETA_CUSTOMER2,' ')"
-                        + "        from TRA_INB_IBR where tipo= 1013";
+                String sql3 = " select"
+                            + " EVENTO,"
+                            + " Contenedor,"
+                            + " Shipment,"
+                            + " Load_Type,"
+                            + " LUM_BRIO,"
+                            + " Brand,"
+                            + " Sbu_Name,"
+                            + " nvl(Departure_Port,' '),"
+                            + " Departure_Date,"
+                            + " MX_Port,"
+                            + " ETA_MX_Port,"
+                            + " nvl(ETA_Customer,' '),"
+                            + " nvl(Comentarios,' '),"
+                            + " nvl(Customer,' '),"
+                            + " nvl(ATA_CMI,' '),"
+                            + " nvl(ETA_CUSTOMER2,' '),"
+                            + " NVL(BL,' '), "
+                            + " NVL(COUNTRY,' ') "
+                            + " from TRA_INB_IBR where tipo= 1013";
 
                 int cont = 0;
         %>
@@ -120,16 +122,7 @@
                                             </div>
                                         </div>
                                     </div>
- 
-
-
-
-
-
                                     <div class="card-body">
-
-
-
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">IBR 1005  VF</button>
@@ -137,7 +130,6 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">IBR 1013  VF</button>
                                             </li>
-
                                         </ul>
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -247,6 +239,10 @@
                                                                         <th scope="col" class="font-titulo">Customer</th> 
                                                                         <th scope="col" class="font-titulo">ATA CMI</th>
                                                                         <th scope="col" class="font-titulo">ETA CUSTOMER</th>
+                                                                        
+                                                                        <th scope="col" class="font-titulo">BL</th>
+                                                                        <th scope="col" class="font-titulo">COUNTRY</th>
+                                                                        
    
                                                                     </tr>
                                                                 </thead>
@@ -273,9 +269,8 @@
                                                                         <td class="font-texto"> <%=row[13]%></td>
                                                                         <td class="font-texto"> <%=row[14]%></td>
                                                                         <td class="font-texto"> <%=row[15]%></td> 
-
-                                                                         
-
+                                                                        <td class="font-texto"> <%=row[16]%></td> 
+                                                                        <td class="font-texto"> <%=row[17]%></td> 
                                                                     </tr>
                                                                     <%
                                                                             }
