@@ -21,7 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 /**
  *
  * @author Desarrollo Tacts
@@ -1613,7 +1615,263 @@ public class ConsultarCustoms extends HttpServlet {
                     list_proveedor_carga += row[94] + "@";
                     list_fy += row[95] + "@";    
                 }
-            }    
+            }
+            
+        Set<String> conjunto1 = new LinkedHashSet<>(Arrays.asList(list_referenciaAA.split("@")));
+        list_referenciaAA = String.join("@", conjunto1);
+        
+        Set<String> conjunto2 = new LinkedHashSet<>(Arrays.asList(list_evento.split("@")));
+        list_evento = String.join("@", conjunto2);
+        
+        Set<String> conjunto3 = new LinkedHashSet<>(Arrays.asList(list_responsable.split("@")));
+        list_responsable = String.join("@", conjunto3);        
+        
+        Set<String> conjunto4 = new LinkedHashSet<>(Arrays.asList(list_finalDestination.split("@")));
+        list_finalDestination = String.join("@", conjunto4);   
+
+        Set<String> conjunto5 = new LinkedHashSet<>(Arrays.asList(list_brandDivision.split("@")));
+        list_brandDivision = String.join("@", conjunto5);  
+        
+        Set<String> conjunto6 = new LinkedHashSet<>(Arrays.asList(list_division.split("@")));
+        list_division = String.join("@", conjunto6);   
+        
+        Set<String> conjunto7 = new LinkedHashSet<>(Arrays.asList(list_shipmentId.split("@")));
+        list_shipmentId = String.join("@", conjunto7);   
+        
+        Set<String> conjunto8 = new LinkedHashSet<>(Arrays.asList(list_containerId.split("@")));
+        list_containerId = String.join("@", conjunto8);   
+
+        Set<String> conjunto9 = new LinkedHashSet<>(Arrays.asList(list_blAwbPro.split("@")));
+        list_blAwbPro = String.join("@", conjunto9);   
+
+        Set<String> conjunto10 = new LinkedHashSet<>(Arrays.asList(list_loadType.split("@")));
+        list_loadType = String.join("@", conjunto10);   
+
+        Set<String> conjunto11 = new LinkedHashSet<>(Arrays.asList(list_quantity.split("@")));
+        list_quantity = String.join("@", conjunto11);   
+
+        Set<String> conjunto12 = new LinkedHashSet<>(Arrays.asList(list_pod.split("@")));
+        list_pod = String.join("@", conjunto12);   
+
+        Set<String> conjunto13 = new LinkedHashSet<>(Arrays.asList(list_estDepartFromPol.split("@")));
+        list_estDepartFromPol = String.join("@", conjunto13);   
+
+        Set<String> conjunto14 = new LinkedHashSet<>(Arrays.asList(list_etaRealPortOfDischarge.split("@")));
+        list_etaRealPortOfDischarge = String.join("@", conjunto14);   
+
+        Set<String> conjunto15 = new LinkedHashSet<>(Arrays.asList(list_estEtaDc.split("@")));
+        list_estEtaDc = String.join("@", conjunto15);   
+
+        Set<String> conjunto16 = new LinkedHashSet<>(Arrays.asList(list_inboundNotification.split("@")));
+        list_inboundNotification = String.join("@", conjunto16);    
+
+        Set<String> conjunto17 = new LinkedHashSet<>(Arrays.asList(list_pol.split("@")));
+        list_pol = String.join("@", conjunto17);    
+
+        Set<String> conjunto18 = new LinkedHashSet<>(Arrays.asList(list_aa.split("@")));
+        list_aa = String.join("@", conjunto18);   
+
+        Set<String> conjunto19 = new LinkedHashSet<>(Arrays.asList(list_fechaMesVenta.split("@")));
+        list_fechaMesVenta = String.join("@", conjunto19);   
+
+        Set<String> conjunto20 = new LinkedHashSet<>(Arrays.asList(list_prioridad.split("@")));
+        list_prioridad = String.join("@", conjunto20);   
+
+        Set<String> conjunto21 = new LinkedHashSet<>(Arrays.asList(list_pais_origen.split("@")));
+        list_pais_origen = String.join("@", conjunto21);   
+
+        Set<String> conjunto22 = new LinkedHashSet<>(Arrays.asList(list_size_container.split("@")));
+        list_size_container = String.join("@", conjunto22);   
+
+        Set<String> conjunto23 = new LinkedHashSet<>(Arrays.asList(list_valor_usd.split("@")));
+        list_valor_usd = String.join("@", conjunto23);   
+
+        Set<String> conjunto24 = new LinkedHashSet<>(Arrays.asList(list_eta_port_discharge.split("@")));
+        list_eta_port_discharge = String.join("@", conjunto24);   
+
+        Set<String> conjunto25 = new LinkedHashSet<>(Arrays.asList(list_agente_aduanal.split("@")));
+        list_agente_aduanal = String.join("@", conjunto25);   
+
+        Set<String> conjunto26 = new LinkedHashSet<>(Arrays.asList(list_pedimento_a1.split("@")));
+        list_pedimento_a1 = String.join("@", conjunto26);   
+
+        Set<String> conjunto27 = new LinkedHashSet<>(Arrays.asList(list_pedimento_r1_1er.split("@")));
+        list_pedimento_r1_1er = String.join("@", conjunto27);   
+
+        Set<String> conjunto28 = new LinkedHashSet<>(Arrays.asList(list_motivo_rectificacion_1er.split("@")));
+        list_motivo_rectificacion_1er = String.join("@", conjunto28);   
+
+        Set<String> conjunto29 = new LinkedHashSet<>(Arrays.asList(list_pedimento_r1_2do.split("@")));
+        list_pedimento_r1_2do = String.join("@", conjunto29);   
+
+        Set<String> conjunto30 = new LinkedHashSet<>(Arrays.asList(list_motivo_rectificacion_2do.split("@")));
+        list_motivo_rectificacion_2do = String.join("@", conjunto30);   
+
+        Set<String> conjunto31 = new LinkedHashSet<>(Arrays.asList(list_fecha_recepcion_doc.split("@")));
+        list_fecha_recepcion_doc = String.join("@", conjunto31);   
+
+        Set<String> conjunto32 = new LinkedHashSet<>(Arrays.asList(list_recinto.split("@")));
+        list_recinto = String.join("@", conjunto32);   
+
+        Set<String> conjunto33 = new LinkedHashSet<>(Arrays.asList(list_naviera.split("@")));
+        list_naviera = String.join("@", conjunto33);   
+
+        Set<String> conjunto34 = new LinkedHashSet<>(Arrays.asList(list_buque.split("@")));
+        list_buque = String.join("@", conjunto34);   
+
+        Set<String> conjunto35 = new LinkedHashSet<>(Arrays.asList(list_fecha_revalidacion.split("@")));
+        list_fecha_revalidacion = String.join("@", conjunto35);   
+
+        Set<String> conjunto36 = new LinkedHashSet<>(Arrays.asList(list_fecha_previo_origen.split("@")));
+        list_fecha_previo_origen = String.join("@", conjunto36);   
+
+        Set<String> conjunto37 = new LinkedHashSet<>(Arrays.asList(list_fecha_previo_destino.split("@")));
+        list_fecha_previo_destino = String.join("@", conjunto37);   
+        
+        Set<String> conjunto38 = new LinkedHashSet<>(Arrays.asList(list_fecha_resultado_previo.split("@")));
+        list_fecha_resultado_previo = String.join("@", conjunto38);   
+
+        Set<String> conjunto39 = new LinkedHashSet<>(Arrays.asList(list_proforma_final.split("@")));
+        list_proforma_final = String.join("@", conjunto39);   
+        
+        Set<String> conjunto40 = new LinkedHashSet<>(Arrays.asList(list_permiso.split("@")));
+        list_permiso = String.join("@", conjunto40);   
+
+        Set<String> conjunto41 = new LinkedHashSet<>(Arrays.asList(list_fecha_envio.split("@")));
+        list_fecha_envio = String.join("@", conjunto41);   
+
+        Set<String> conjunto42 = new LinkedHashSet<>(Arrays.asList(list_fecha_recepcion_perm.split("@")));
+        list_fecha_recepcion_perm = String.join("@", conjunto42);   
+
+        Set<String> conjunto43 = new LinkedHashSet<>(Arrays.asList(list_fecha_activacion_perm.split("@")));
+        list_fecha_activacion_perm = String.join("@", conjunto43);   
+        
+        Set<String> conjunto44 = new LinkedHashSet<>(Arrays.asList(list_fecha_permisos_aut.split("@")));
+        list_fecha_permisos_aut = String.join("@", conjunto44);   
+
+        Set<String> conjunto45 = new LinkedHashSet<>(Arrays.asList(list_co_pref_arancelaria.split("@")));
+        list_co_pref_arancelaria = String.join("@", conjunto45);   
+
+        Set<String> conjunto46 = new LinkedHashSet<>(Arrays.asList(list_aplic_pref_arancelaria.split("@")));
+        list_aplic_pref_arancelaria = String.join("@", conjunto46);   
+
+        Set<String> conjunto47 = new LinkedHashSet<>(Arrays.asList(list_req_uva.split("@")));
+        list_req_uva = String.join("@", conjunto47);   
+        
+        Set<String> conjunto48 = new LinkedHashSet<>(Arrays.asList(list_req_ca.split("@")));
+        list_req_ca = String.join("@", conjunto48);   
+
+        Set<String> conjunto49 = new LinkedHashSet<>(Arrays.asList(list_fecha_recepcion_ca.split("@")));
+        list_fecha_recepcion_ca = String.join("@", conjunto49); 
+
+        Set<String> conjunto50 = new LinkedHashSet<>(Arrays.asList(list_num_constancia_ca.split("@")));
+        list_num_constancia_ca = String.join("@", conjunto50); 
+        
+        Set<String> conjunto51 = new LinkedHashSet<>(Arrays.asList(list_monto_ca.split("@")));
+        list_monto_ca = String.join("@", conjunto51);
+        
+        Set<String> conjunto52 = new LinkedHashSet<>(Arrays.asList(list_fecha_doc_completos.split("@")));
+        list_fecha_doc_completos = String.join("@", conjunto52);
+
+        Set<String> conjunto53 = new LinkedHashSet<>(Arrays.asList(list_fecha_pago_pedimento.split("@")));
+        list_fecha_pago_pedimento = String.join("@", conjunto53);
+
+        Set<String> conjunto54 = new LinkedHashSet<>(Arrays.asList(list_fecha_solicitud_transporte.split("@")));
+        list_fecha_solicitud_transporte = String.join("@", conjunto54);
+
+        Set<String> conjunto55 = new LinkedHashSet<>(Arrays.asList(list_fecha_modulacion.split("@")));
+        list_fecha_modulacion = String.join("@", conjunto55);
+
+        Set<String> conjunto56 = new LinkedHashSet<>(Arrays.asList(list_modalidad.split("@")));
+        list_modalidad = String.join("@", conjunto56);
+
+        Set<String> conjunto57 = new LinkedHashSet<>(Arrays.asList(list_resultado_modulacion.split("@")));
+        list_resultado_modulacion = String.join("@", conjunto57);
+
+        Set<String> conjunto58 = new LinkedHashSet<>(Arrays.asList(list_fecha_reconocimiento.split("@")));
+        list_fecha_reconocimiento = String.join("@", conjunto58);
+
+        Set<String> conjunto59 = new LinkedHashSet<>(Arrays.asList(list_fecha_liberacion.split("@")));
+        list_fecha_liberacion = String.join("@", conjunto59);
+
+        Set<String> conjunto60 = new LinkedHashSet<>(Arrays.asList(list_sello_origen.split("@"))); 
+        list_sello_origen = String.join("@", conjunto60);
+
+        Set<String> conjunto61 = new LinkedHashSet<>(Arrays.asList(list_sello_final.split("@")));
+        list_sello_final = String.join("@", conjunto61);
+
+        Set<String> conjunto62 = new LinkedHashSet<>(Arrays.asList(list_fecha_retencion_aut.split("@")));
+        list_fecha_retencion_aut = String.join("@", conjunto62);
+
+        Set<String> conjunto63 = new LinkedHashSet<>(Arrays.asList(list_fecha_liberacion_aut.split("@")));
+        list_fecha_liberacion_aut = String.join("@", conjunto63);
+
+        Set<String> conjunto64 = new LinkedHashSet<>(Arrays.asList(list_estatus_operacion.split("@")));
+        list_estatus_operacion = String.join("@", conjunto64);
+
+        Set<String> conjunto65 = new LinkedHashSet<>(Arrays.asList(list_motivo_atraso.split("@")));
+        list_motivo_atraso = String.join("@", conjunto65);
+
+        Set<String> conjunto66 = new LinkedHashSet<>(Arrays.asList(list_observaciones.split("@")));
+        list_observaciones = String.join("@", conjunto66);
+
+        Set<String> conjunto67 = new LinkedHashSet<>(Arrays.asList(list_llegada_a_nova.split("@")));
+        list_llegada_a_nova = String.join("@", conjunto67);
+
+        Set<String> conjunto68 = new LinkedHashSet<>(Arrays.asList(list_llegada_a_globe_trade_sd.split("@")));
+        list_llegada_a_globe_trade_sd = String.join("@", conjunto68);
+
+        Set<String> conjunto69 = new LinkedHashSet<>(Arrays.asList(list_archivo_m.split("@")));   
+        list_archivo_m = String.join("@", conjunto69);
+
+        Set<String> conjunto70 = new LinkedHashSet<>(Arrays.asList(list_fecha_archivo_m.split("@")));
+        list_fecha_archivo_m = String.join("@", conjunto70);
+
+        Set<String> conjunto71 = new LinkedHashSet<>(Arrays.asList(list_fecha_solicit_manip.split("@")));
+        list_fecha_solicit_manip = String.join("@", conjunto71);
+
+        Set<String> conjunto72 = new LinkedHashSet<>(Arrays.asList(list_fecha_vencim_manip.split("@")));
+        list_fecha_vencim_manip = String.join("@", conjunto72);
+
+        Set<String> conjunto73 = new LinkedHashSet<>(Arrays.asList(list_fecha_confirm_clave_pedim.split("@")));
+        list_fecha_confirm_clave_pedim = String.join("@", conjunto73);
+
+        Set<String> conjunto74 = new LinkedHashSet<>(Arrays.asList(list_fecha_recep_increment.split("@")));
+        list_fecha_recep_increment = String.join("@", conjunto74);
+
+        Set<String> conjunto75 = new LinkedHashSet<>(Arrays.asList(list_t_e.split("@")));
+        list_t_e = String.join("@", conjunto75);
+
+        Set<String> conjunto76 = new LinkedHashSet<>(Arrays.asList(list_fecha_vencim_inbound.split("@")));
+        list_fecha_vencim_inbound = String.join("@", conjunto76);
+
+        Set<String> conjunto77 = new LinkedHashSet<>(Arrays.asList(list_no_bultos.split("@")));
+        list_no_bultos = String.join("@", conjunto77);
+
+        Set<String> conjunto78 = new LinkedHashSet<>(Arrays.asList(list_peso_kg.split("@")));
+        list_peso_kg = String.join("@", conjunto78);
+
+        Set<String> conjunto79 = new LinkedHashSet<>(Arrays.asList(list_transferencia.split("@")));
+        list_transferencia = String.join("@", conjunto79);
+        
+        Set<String> conjunto80 = new LinkedHashSet<>(Arrays.asList(list_fecha_inicio_etiquetado.split("@")));
+        list_fecha_inicio_etiquetado = String.join("@", conjunto80);
+        
+        Set<String> conjunto81 = new LinkedHashSet<>(Arrays.asList(list_fecha_termino_etiquetado.split("@")));
+        list_fecha_termino_etiquetado = String.join("@", conjunto81);
+        
+        Set<String> conjunto82 = new LinkedHashSet<>(Arrays.asList(list_hora_termino_etiquetado.split("@")));
+        list_hora_termino_etiquetado = String.join("@", conjunto82);
+        
+        Set<String> conjunto83 = new LinkedHashSet<>(Arrays.asList(list_proveedor.split("@")));
+        list_proveedor = String.join("@", conjunto83);
+        
+        Set<String> conjunto84 = new LinkedHashSet<>(Arrays.asList(list_proveedor_carga.split("@")));
+        list_proveedor_carga = String.join("@", conjunto84);
+        
+        Set<String> conjunto85 = new LinkedHashSet<>(Arrays.asList(list_fy.split("@")));
+        list_fy = String.join("@", conjunto85);
+
             
         /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
 
