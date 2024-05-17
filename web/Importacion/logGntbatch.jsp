@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="com.tacts.plantillas.Leerexcel"%>
 <%@page import="com.onest.oracle.DB"%>
 <%@page import="com.onest.oracle.DBConfData"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,15 +19,11 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="all,follow">
-
         <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
-       
-    
         <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
- 
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
     </head>
@@ -36,7 +33,8 @@
             DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
             String folio = request.getParameter("folio");
  
-             String max   = "  select MAX(CONSECUTIVO)-2 from tra_inb_gtn_cosecutivo where PLANTILLA='"+folio+"' ";
+             String max   = "   select count(*)-2 from TRA_INB_PASO_GTN where FOLIO='"+folio+"' ";
+              String max2   = "   select count(*) from tra_inc_gtn_test where FOLIO='"+folio+"' ";
              String error = " WITH numeros AS ( "
                      + " "
  + "   SELECT LEVEL AS numero"
@@ -58,6 +56,29 @@ String maxt="";
         for (String[] row : db.getResultado()) {
          maxt=row[0];                                                       
       }}
+   
+    
+    String maxt2="";
+    if (db.doDB(max2)) {
+        for (String[] row : db.getResultado()) {
+         maxt2=row[0];                                                       
+      }}
+
+    
+    String log=" SELECT CONSECUTIVO, CONTAINER1, FOLIO, SHIPMENT_ID, nvl(COMENT,' ')\n" +
+" FROM TRA_INB_PASO_GTN ipg\n" +
+" WHERE NOT EXISTS (\n" +
+"    SELECT 1\n" +
+"    FROM tra_inc_gtn_test tig\n" +
+"    WHERE tig.SHIPMENT_ID = ipg.SHIPMENT_ID\n" +
+"    AND tig.CONTAINER1 = ipg.CONTAINER1\n" +
+"    and tig.FOLIO=ipg.FOLIO\n" +
+") and ipg.folio='"+folio+"' and ipg.consecutivo not in (1,2) order by 1";
+
+//Leerexcel leer=new Leerexcel();
+//String leer1 = leer.leerExcel();
+
+
     %>
     <body>
  
@@ -78,23 +99,43 @@ String maxt="";
                                     <div class="card-body">
                                         <h1 class="mb-3">Registros: <%=maxt%> </h1>
                                          <h3> No se pudieron insertar las siguientes filas porfavor revise datos </h3>
-                                         <ol class="list-group list-group-flush mb-5"  style="  overflow: auto;  max-height: 300px; ">
- 
+                                      
+                                             
+                                              <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
+                                                <table id="example2" class="display" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="font-titulo">FILA   </th>	
+                                                            <th scope="col" class="font-titulo">CONTAINER </th>
+                                                            <th scope="col" class="font-titulo">SHIPMENT  </th> 
+                                                            <th scope="col" class="font-titulo">OBS  </th> 
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
 
                                          <%
-                                                            if (db.doDB(error)) {
+                                                            if (db.doDB(log)) {
                                                                 for (String[] row : db.getResultado()) {
 
                                                         %>
-                  <li class="list-group-item"><%=row[0]%></li>                                      
+                                                          <tr>
+                                                            <th class="font-numero"><%=row[0]%></th>	
+                                                            <td class="font-numero"><%=row[1]%></td>
+                                                            <td class="font-texto"> <%=row[3]%></td> 
+                                                            <td class="font-texto"> <%=row[4]%></td> 
+                                                        </tr>                                    
                                                          
                                                         <%
                                                                 }
                                                             }
                                                         %>
-                        </ol>                                
+                          </tbody>
+                                                </table>
+                                            </div>
+                          
+                          <br><br><br>
                         
-                        <h3 class="mb-3 mt-5"> Datos Guardados</h3>
+                        <h3 class="mb-3 mt-5"> Datos Guardados  <%=maxt2%></h3>
                                                         
                                         <form id="uploadFileFormData1" name="uploadFileFormData1"> 
                                             <br>
