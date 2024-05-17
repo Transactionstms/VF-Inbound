@@ -18,15 +18,17 @@ import java.util.concurrent.Executors;
 
 public class ExcelToOracle {
 
+        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
+        String username = "VANS39TEST";
+        String password = "XUKidn49N875RBH54Cq2";
+        
     public ExcelToOracle() {
 
     }
 
     public String Insert(String insertSql, String inputFile2,String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+      
         String errorM="";
         String correcto = "";
 

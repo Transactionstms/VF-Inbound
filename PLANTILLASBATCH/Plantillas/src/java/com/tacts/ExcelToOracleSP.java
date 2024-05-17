@@ -18,6 +18,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class ExcelToOracleSP {
+    
+    public String urlG      = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
+    public String usernameG = "VANS39TEST";
+    public String passwordG = "XUKidn49N875RBH54Cq2";
 
     public ExcelToOracleSP() {
 
@@ -27,10 +31,10 @@ public class ExcelToOracleSP {
     public String InsertSpDSN(String insertSql, String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
+        String url = urlG;
 
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -174,10 +178,10 @@ public class ExcelToOracleSP {
     public String InsertSp(String insertSql, String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
+        String url = urlG;
 
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -256,16 +260,18 @@ public class ExcelToOracleSP {
                         System.out.println("correcto1-" + i);
 
                     } catch (SQLException e) {
-                        System.out.println("error1-----" + i + "-----------");
+                        System.out.println("error1T1-----" + i + "-----------");
                         errorM += "</p>Error al insertar el registro en la posición: " + (i - batchSize + 1) + "</p>";
 
                         int[] updateCounts = statement.executeBatch();
                         for (int index = 0; index < updateCounts.length; index++) {
                             if (updateCounts[index] == Statement.EXECUTE_FAILED) {
                                 // Registro del registro que no se pudo insertar
+                                 System.out.println("error1T2-----" + i + "-----------");
                                 System.out.println("Error al insertar el registro en la posición: " + (i - batchSize + index + 1));
                                 errorM += "</p>Error al insertar el registro en la posición: " + (i - batchSize + index + 1) + "</p>";
                             } else {
+                                  System.out.println("error1T3-----" + i + "-----------");
                                 errorM += "<p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
                             }
                         }
@@ -281,15 +287,18 @@ public class ExcelToOracleSP {
                 System.out.println("correcto2" + batchSize + 1);
             } catch (SQLException e) {
                 System.out.println("error2-----" + e + "-----------");
+                  System.out.println("error1T4-----" + e + "-----------");
                 errorM += "</p>Error al insertar el registro en la posición: " + (batchSize + 1) + "</p>";
 
                 int[] updateCounts = statement.executeBatch();
                 for (int index = 0; index < updateCounts.length; index++) {
                     if (updateCounts[index] == Statement.EXECUTE_FAILED) {
                         // Registro del registro que no se pudo insertar
+                          System.out.println("error1T5-----" + (batchSize + index + 1) + "-----------");
                         System.out.println("Error al insertar el registro en la posición: " + (batchSize + index + 1));
                         errorM += "</p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
                     } else {
+                         System.out.println("error1T6-----" + (batchSize + index + 1) + "-----------");
                         errorM += "<p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
                     }
                 }
@@ -320,9 +329,9 @@ public class ExcelToOracleSP {
 
     public String InsertSpACT( String folio) throws Exception {
         
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
     
@@ -367,9 +376,9 @@ public class ExcelToOracleSP {
 
     public String InsertSpACTExc( String folio) throws Exception {
         
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
     
@@ -416,9 +425,9 @@ public class ExcelToOracleSP {
       //ACTUALIZA DIVISION SCI
      public String actDivisionSCI( ) throws Exception {
         
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
     
@@ -465,9 +474,9 @@ public class ExcelToOracleSP {
     //ACTUALIZA DIVISION
      public String actDivision( ) throws Exception {
         
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
     
@@ -515,9 +524,9 @@ public class ExcelToOracleSP {
     public String InsertSpActETA_ATC(String insertSql, String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -650,9 +659,9 @@ public class ExcelToOracleSP {
       public String InsertSpRDI( String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -787,9 +796,9 @@ public class ExcelToOracleSP {
         public String InsertSpRDI2( String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -929,9 +938,9 @@ public class ExcelToOracleSP {
         public String InsertSpSCI( String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -1070,9 +1079,9 @@ public class ExcelToOracleSP {
         public String InsertSpibr1( String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
@@ -1206,9 +1215,9 @@ public class ExcelToOracleSP {
         public String InsertSpibr2( String inputFile2, String folio) throws Exception {
         // Configura la conexión a la base de datos Oracle
         String mensaje = " ";
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
-        String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String url = urlG;
+        String username = usernameG;
+        String password = passwordG;
         Connection connection = DriverManager.getConnection(url, username, password);
 
         int timeout = 1600000; // 30 minutos
