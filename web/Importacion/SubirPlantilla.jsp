@@ -75,10 +75,10 @@
                                         <div class="mb-3">  
                                             <div class="row">
 
-                                                <div class="col-lg-3">
+                                                <div class="col-2">
                                                 </div> 
 
-                                                <div class="col-md-6 col-lg-3 mb-4">
+                                                <div class="col-6   mb-4">
                                                     <div class="card h-100">
                                                         <div class="card-header py-4">
                                                             <h6 class="card-heading"><%=nombre%>                </h6>
@@ -90,22 +90,24 @@
                                                         <form action="<%=request.getContextPath()%>/Importacion/subirExcel.jsp?nombre=<%=nombre%>.xls&idp=<%=idPlantilla%>" id="gfichero" method = "post" enctype="multipart/form-data"  >
 
 
-                                                            <div class="card-body pt-3"> 
-                                                                <div class="mb-3">
-                                                                    <label for="input-id" class="form-label">Selecciona </label>
-                                                                    <input class="form-control" type="file" id="input-id" name="input-id"
-                                                                           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                                                                </div>
+                                                            <div class="card-body"> 
+                                                                 <div class="col-12">
+                                                                        <div class="mb-3">
+                                                                            <label for="input-id" class="form-label">Selecciona </label>
+                                                                            <input class="form-control" type="file" id="input-id" name="input-id"
+                                                                                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                                        </div>
 
 
-                                                                <div class="row position-relative" style="top: 10px;">
-                                                                    <div class="col-6 text-center">
+                                                                        <div class="row position-relative" style="top: 10px;">
+                                                                            <div class="col-6 text-center">
 
-                                                                        <button class="btn float-start btn-primary" id="created_file" type="button" >Descargar</button>
-                                                                    </div>
-                                                                    <div class="col-6 text-center">
-                                                                        <button class="btn float-end btn-success"  type="submit"  >Subir</button><!--id="upload_file"-->
-                                                                    </div>
+                                                                                <button class="btn float-start btn-primary" id="created_file" type="button" >Descargar</button>
+                                                                            </div>
+                                                                            <div class="col-6 text-center">
+                                                                                <button class="btn float-end btn-success"  type="submit"  >Subir</button><!--id="upload_file"-->
+                                                                            </div>
+                                                                        </div> 
                                                                 </div>
                                                             </div>
 

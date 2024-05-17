@@ -209,7 +209,8 @@ System.out.println("baseURL"+baseURL);
             
             
             window.onload = fetchData();
-          
+         let reloadRealizado = localStorage.getItem('reloadRealizado') === 'true';
+
 
             async function fetchData() {
                 console.log('aqui');
@@ -266,9 +267,22 @@ System.out.println("baseURL"+baseURL);
 
                     console.log(data); // Utiliza los datos recibidos  
                 } catch (error) {
-                    document.getElementById('espere').innerHTML = 'Error por favor intente nuevamente';
-                    document.getElementById('loader').style.display = 'none';
-                    console.error('Error en la solicitud:', error);
+                 
+               
+                        if (!reloadRealizado) {
+                            document.getElementById('espere').innerHTML = 'Error, por favor inténtelo nuevamente';
+                            document.getElementById('loader').style.display = 'none';
+                            console.error('Error en la solicitud:', error);
+                            localStorage.setItem('reloadRealizado', 'true'); // Establecer la bandera en el localStorage
+                            window.location.reload();
+                        } else {
+                              document.getElementById('espere').innerHTML = 'Error, por favor inténtelo nuevamente';
+                            document.getElementById('loader').style.display = 'none';
+                            console.error('Error en la solicitud:', error);
+                            console.log('Reload ya realizado, evitando bucle infinito.');
+                            localStorage.setItem('reloadRealizado', 'false');
+                        }
+    
                 }
             }
 
