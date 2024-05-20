@@ -1487,7 +1487,7 @@
         <!-- Actions js -->
         <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Download/Upload Excel -->
-        <script src="../lib/validationsInbound/customs/readExcel.js" type="text/javascript"></script>
+        <!--<script src="../lib/validationsInbound/customs/readExcel.js" type="text/javascript"></script>-->
         <!-- fruitsSelect value -->
         <script src="../lib/validationsInbound/customs/fruitsSelect.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
