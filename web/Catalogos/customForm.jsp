@@ -66,7 +66,7 @@
                 }
 
                 if (document.readyState === "complete") {
-                     document.getElementById("loaderMsg").innerHTML = "complete";
+                     document.getElementById("loaderMsg").innerHTML = "Cargando";
                 }
 
             });
