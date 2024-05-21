@@ -1099,7 +1099,7 @@ public class ExcelToOracleSP {
         
 
         // Recorre las filas del archivo de Excel y realiza las inserciones
-        int batchSize = 100; // Tamaño del lote para las inserciones
+        int batchSize = 20; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
         CallableStatement statement = connection.prepareCall(" {call sp_inb_ibr_1005(   ?,?,?,?,?,?,?,?,?,?    ,?,?,?,?,?,?,?,?, '" + folio + "'  )}");

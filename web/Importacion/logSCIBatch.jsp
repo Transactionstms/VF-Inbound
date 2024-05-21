@@ -156,7 +156,7 @@
 
                                                         %>
                                                         <tr>
-                                                            <td class="font-texto"> <%=row[0]%></td> 
+                                                         <!--   <td class="font-texto"> <%=row[0]%></td> -->
                                                             <td class="font-texto"> <%=row[1]%></td> 
                                                             <td class="font-texto"> <%=row[2]%></td> 
                                                             <td class="font-texto"> <%=row[3]%></td> 
@@ -193,6 +193,7 @@
                                                             <td class="font-texto"> <%=row[34]%></td> 
                                                             <td class="font-texto"> <%=row[35]%></td> 
                                                             <td class="font-texto"> <%=row[36]%></td> 
+                                                              <td class="font-texto"> <%=row[37]%></td> 
                                                         </tr>
                                                         <%
                                                                 }

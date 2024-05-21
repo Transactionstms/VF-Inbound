@@ -64,7 +64,7 @@ String maxt="";
       }}
 
     
-    String log=" SELECT CONSECUTIVO, CONTAINER1, FOLIO, SHIPMENT_ID, nvl(COMENT,' ')\n" +
+    String log=" SELECT CONSECUTIVO, CONTAINER1, FOLIO, SHIPMENT_ID, nvl(COMENT,'Favor de validar')\n" +
 " FROM TRA_INB_PASO_GTN ipg\n" +
 " WHERE NOT EXISTS (\n" +
 "    SELECT 1\n" +
@@ -97,7 +97,7 @@ String maxt="";
                                     </div>
                                     <div class="card-body">
                                         <h1 class="mb-3">Registros: <%=maxt%> </h1>
-                                         <h3> No se pudieron insertar las siguientes filas porfavor revise datos </h3>
+                                         <h3> Se detectaron las siguientes incidencias, favor de validar.</h3>
                                       
                                              
                                               <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
@@ -115,9 +115,14 @@ String maxt="";
                                          <%
                                                             if (db.doDB(log)) {
                                                                 for (String[] row : db.getResultado()) {
+                                                                   String bg=""; 
+ if(row[4].equals("Favor de validar")){
+     bg="bg-danger";
+ 
+ }
 
                                                         %>
-                                                          <tr>
+                                                          <tr class="<%=bg%>" >
                                                             <th class="font-numero"><%=row[0]%></th>	
                                                             <td class="font-numero"><%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[3]%></td> 

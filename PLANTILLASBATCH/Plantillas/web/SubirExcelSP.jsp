@@ -156,6 +156,9 @@
                  mensaje=   excelToOracleSP.InsertSpSCI(ruta,folio); 
                 excelToOracleSP.actDivisionSCI();
                 
+                
+                //AGREGAR SBU GTN
+                
                 }
                  else if(insertSql22.equals("35")){
                     
