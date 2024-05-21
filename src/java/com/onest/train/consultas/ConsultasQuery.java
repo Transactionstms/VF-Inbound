@@ -2165,14 +2165,14 @@ public class ConsultasQuery {
        /*102*/ + " NVL(TAA.PATENTE_AGENTE_ADUANERO,'0000'), "
        /*103*/ + " NVL(TO_CHAR(GTN.FECHA_IMPORTACION, 'DD/MM/YY'),'-') "
                 + " FROM TRA_INB_EVENTO TIE "
-                + " LEFT JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
+                + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                 + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
-                + " LEFT JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
-                + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
-                + " LEFT JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
-                + " LEFT JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
-                + " LEFT JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
-                + " LEFT JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
+                + " INNER JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
+                + " INNER JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
+                + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
+                + " INNER JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
+                + " INNER JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
+                + " INNER JOIN SUM_QUANTITY SQ ON SQ.SHIPMENT_ID = GTN.SHIPMENT_ID AND SQ.CONTAINER1 = GTN.CONTAINER1 "
                 + " LEFT JOIN TRA_INB_CUSTOMS TIC ON GTN.SHIPMENT_ID = TIC.SHIPMENT_ID "
                 + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                 + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
@@ -2180,7 +2180,8 @@ public class ConsultasQuery {
                 + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date((SELECT MIN(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
                 + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
                 + " AND tid.division_nombre <> 'No/DSN' "
-                + " AND gtn.load_type_final IS NOT NULL " ;  
+                + " AND gtn.load_type_final IS NOT NULL " 
+                + " AND tie.id_evento >= 240000 ";
          
         if(!tipoAgente.equals("4006")){ //VF GENERAL
           sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + tipoAgente + "') ";  
