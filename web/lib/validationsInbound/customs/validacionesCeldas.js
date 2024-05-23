@@ -318,7 +318,7 @@ function formatoNumero(event,i,nameCelda) {
 }
 
 
-function formatoFecha(event) {
+/*function formatoFecha(event) {
     
    // Evitar el comportamiento predeterminado de pegado
    event.preventDefault();
@@ -339,7 +339,39 @@ function formatoFecha(event) {
 
   // Actualizar el contenido de la celda con la fecha filtrada
   event.target.innerText = fechaFiltrada;
+}*/
+
+function formatoFecha(valor) {
+    
+   // Evitar el comportamiento predeterminado de pegado
+   //event.preventDefault();
+    
+  // Obtener el contenido actual de la celda
+  //var valor = event.target.innerText;
+
+  // Filtrar caracteres no numéricos
+  var fechaFiltrada = valor.replace(/\D/g, '');
+
+  // Limitar la longitud total a 8 caracteres (formato: MMDDYYYY)
+  fechaFiltrada = fechaFiltrada.slice(0, 8);
+
+  // Convertir el mes numérico a texto
+  var mesTexto = '';
+  var mesNumerico = parseInt(fechaFiltrada.slice(0, 2), 10);
+  var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  if (mesNumerico >= 1 && mesNumerico <= 12) {
+    mesTexto = meses[mesNumerico - 1];
+  }
+
+  // Aplicar el formato MM/DD/YYYY
+  if (fechaFiltrada.length > 1) {
+    fechaFiltrada = mesTexto + '/' + fechaFiltrada.slice(2, 4) + '/' + fechaFiltrada.slice(4, 8);
+  }
+
+  // Actualizar el contenido de la celda con la fecha filtrada
+  return fechaFiltrada;
 }
+
 
 function formatoDosDigitos(texto) {
   // Agregar un cero al principio si el texto tiene solo un dígito

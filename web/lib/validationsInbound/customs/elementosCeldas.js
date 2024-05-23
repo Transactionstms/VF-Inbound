@@ -20,7 +20,10 @@ function show_eta_port_discharge(data, i) {
     
 }
 
-function hide_eta_port_discharge(data) {
+function hide_eta_port_discharge(value) {
+    
+    let data = formatoFecha(value);
+    
     $("#modal_show_eta_port_discharge").modal("hide");
     document.getElementById("eta_port_discharge[" + contModals + "]").innerHTML = data;
     pedimento(data, contModals);
@@ -45,7 +48,8 @@ function show_fecha_recepcion_doc(data, i) {
     contModals = i;
 }
 
-function hide_fecha_recepcion_doc(data) {
+function hide_fecha_recepcion_doc(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_recepcion_doc[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_doc").modal("hide");
@@ -59,7 +63,8 @@ function show_fecha_revalidacion(data, i) {
     contModals = i;
 }
 
-function hide_fecha_revalidacion(data) {
+function hide_fecha_revalidacion(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_revalidacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_revalidacion").modal("hide");
@@ -73,7 +78,8 @@ function show_fecha_previo_origen(data, i) {
     contModals = i;
 }
 
-function hide_fecha_previo_origen(data) {
+function hide_fecha_previo_origen(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_previo_origen[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_previo_origen").modal("hide");
@@ -87,7 +93,8 @@ function show_fecha_previo_destino(data, i) {
     contModals = i;
 }
 
-function hide_fecha_previo_destino(data) {
+function hide_fecha_previo_destino(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_previo_destino[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_previo_destino").modal("hide");
@@ -101,7 +108,8 @@ function show_fecha_resultado_previo(data, i) {
     contModals = i;
 }
 
-function hide_fecha_resultado_previo(data) {
+function hide_fecha_resultado_previo(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_resultado_previo[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_resultado_previo").modal("hide");
@@ -115,7 +123,8 @@ function show_proforma_final(data, i) {
     contModals = i;
 }
 
-function hide_proforma_final(data) {
+function hide_proforma_final(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("proforma_final[" + contModals + "]").innerHTML = data;
     $("#modal_proforma_final").modal("hide");
@@ -179,7 +188,8 @@ function show_fecha_envio(data, nameCelda, i) {
     }
 }
 
-function hide_fecha_envio(data) {
+function hide_fecha_envio(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_envio[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_envio").modal("hide");
@@ -202,7 +212,8 @@ function show_fecha_recepcion_perm(data, nameCelda, i) {
     }
 }
 
-function hide_fecha_recepcion_perm(data) {
+function hide_fecha_recepcion_perm(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_recepcion_perm[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_perm").modal("hide");
@@ -226,7 +237,8 @@ function show_fecha_activacion_perm(data, nameCelda, i) {
     
 }
 
-function hide_fecha_activacion_perm(data) {
+function hide_fecha_activacion_perm(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_activacion_perm[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_activacion_perm").modal("hide");
@@ -249,7 +261,8 @@ function show_fecha_permisos_aut(data, nameCelda, i) {
     }
 }
 
-function hide_fecha_permisos_aut(data) {
+function hide_fecha_permisos_aut(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_permisos_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_permisos_aut").modal("hide");
@@ -434,7 +447,8 @@ function show_fecha_recepcion_ca(data, nameCelda, i) {
     }
 }
 
-function hide_fecha_recepcion_ca(data) {
+function hide_fecha_recepcion_ca(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_recepcion_ca[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recepcion_ca").modal("hide");
@@ -470,7 +484,8 @@ function show_fecha_doc_completos(data, i) {
     contModals = i;
 }
 
-function hide_fecha_doc_completos(data) {
+function hide_fecha_doc_completos(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_doc_completos[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_doc_completos").modal("hide");
@@ -491,7 +506,8 @@ function show_fecha_pago_pedimento(i) {
     contModals = i;
 }
 
-function hide_fecha_pago_pedimento(data) {
+function hide_fecha_pago_pedimento(value) {
+    let data = formatoFecha(value);
     $("#modal_fecha_pago_pedimento").modal("hide");
     contModals;
     document.getElementById("fecha_pago_pedimento[" + contModals + "]").innerHTML =data;
@@ -506,7 +522,8 @@ function show_fecha_solicitud_transporte(data, i) {
     contModals = i;
 }
 
-function hide_fecha_solicitud_transporte(data) {
+function hide_fecha_solicitud_transporte(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_solicitud_transporte[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_solicitud_transporte").modal("hide");
@@ -527,7 +544,8 @@ function show_fecha_modulacion(i) {
     contModals = i;
 }
 
-function hide_fecha_modulacion(data) {
+function hide_fecha_modulacion(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_modulacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_modulacion").modal("hide");
@@ -620,7 +638,8 @@ function show_fecha_reconocimiento(data, i) {
     contModals = i;
 }
 
-function hide_fecha_reconocimiento(data) {
+function hide_fecha_reconocimiento(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_reconocimiento[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_reconocimiento").modal("hide");
@@ -634,7 +653,8 @@ function show_fecha_liberacion(data, i) {
     contModals = i;
 }
 
-function hide_fecha_liberacion(data) {
+function hide_fecha_liberacion(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_liberacion[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_liberacion").modal("hide");
@@ -648,7 +668,8 @@ function show_fecha_retencion_aut(data, i) {
     contModals = i;
 }
 
-function hide_fecha_retencion_aut(data) {
+function hide_fecha_retencion_aut(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_retencion_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_retencion_aut").modal("hide");
@@ -662,7 +683,8 @@ function show_fecha_liberacion_aut(data, i) {
     contModals = i;
 }
 
-function hide_fecha_liberacion_aut(data) {
+function hide_fecha_liberacion_aut(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_liberacion_aut[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_liberacion_aut").modal("hide");
@@ -676,7 +698,8 @@ function show_llegada_a_nova(data, i) {
     contModals = i;
 }
 
-function hide_llegada_a_nova(data) {
+function hide_llegada_a_nova(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("llegada_a_nova[" + contModals + "]").innerHTML = data;
     $("#modal_llegada_a_nova").modal("hide");
@@ -690,7 +713,8 @@ function show_llegada_a_globe_trade_sd(data, i) {
     contModals = i;
 }
 
-function hide_llegada_a_globe_trade_sd(data) {
+function hide_llegada_a_globe_trade_sd(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("llegada_a_globe_trade_sd[" + contModals + "]").innerHTML = data;
     $("#modal_llegada_a_globe_trade_sd").modal("hide");
@@ -704,7 +728,8 @@ function show_fecha_archivo_m(data, i) {
     contModals = i;
 }
 
-function hide_fecha_archivo_m(data) {
+function hide_fecha_archivo_m(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_archivo_m[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_archivo_m").modal("hide");
@@ -718,7 +743,8 @@ function show_fecha_solicit_manip(data, i) {
     contModals = i;
 }
 
-function hide_fecha_solicit_manip(data) {
+function hide_fecha_solicit_manip(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_solicit_manip[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_solicit_manip").modal("hide");
@@ -732,7 +758,8 @@ function show_fecha_vencim_manip(data, i) {
     contModals = i;
 }
 
-function hide_fecha_vencim_manip(data) {
+function hide_fecha_vencim_manip(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_vencim_manip[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_vencim_manip").modal("hide");
@@ -746,7 +773,8 @@ function show_fecha_confirm_clave_pedim(data, i) {
     contModals = i;
 }
 
-function hide_fecha_confirm_clave_pedim(data) {
+function hide_fecha_confirm_clave_pedim(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_confirm_clave_pedim[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_confirm_clave_pedim").modal("hide");
@@ -760,7 +788,8 @@ function show_fecha_recep_increment(data, i) {
     contModals = i;
 }
 
-function hide_fecha_recep_increment(data) {
+function hide_fecha_recep_increment(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_recep_increment[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_recep_increment").modal("hide");
@@ -774,7 +803,8 @@ function show_fecha_vencim_inbound(data, i) {
     contModals = i;
 }
 
-function hide_fecha_vencim_inbound(data) {
+function hide_fecha_vencim_inbound(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_vencim_inbound[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_vencim_inbound").modal("hide");
@@ -824,7 +854,8 @@ function show_fecha_inicio_etiquetado(data, i) {
     contModals = i;
 }
 
-function hide_fecha_inicio_etiquetado(data) {
+function hide_fecha_inicio_etiquetado(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_inicio_etiquetado[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_inicio_etiquetado").modal("hide");
@@ -838,7 +869,8 @@ function show_fecha_termino_etiquetado(data, i) {
     contModals = i;
 }
 
-function hide_fecha_termino_etiquetado(data) {
+function hide_fecha_termino_etiquetado(value) {
+    let data = formatoFecha(value);
     contModals;
     document.getElementById("fecha_termino_etiquetado[" + contModals + "]").innerHTML = data;
     $("#modal_fecha_termino_etiquetado").modal("hide");

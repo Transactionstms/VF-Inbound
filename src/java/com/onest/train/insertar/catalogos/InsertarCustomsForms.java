@@ -15,6 +15,9 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -141,13 +144,21 @@ public class InsertarCustomsForms extends HttpServlet {
             String customs = "";
             String salida = "0";
             
+            // Crear un mapa de nombres de meses a números de mes
+            Map<String, Integer> mapaMeses = new HashMap<>();
+            mapaMeses.put("Enero", 1);
+            mapaMeses.put("Febrero", 2);
+            mapaMeses.put("Marzo", 3);
+            mapaMeses.put("Abril", 4);
+            mapaMeses.put("Mayo", 5);
+            mapaMeses.put("Junio", 6);
+            mapaMeses.put("Julio", 7);
+            mapaMeses.put("Agosto", 8);
+            mapaMeses.put("Septiembre", 9);
+            mapaMeses.put("Octubre", 10);
+            mapaMeses.put("Noviembre", 11);
+            mapaMeses.put("Diciembre", 12);
             
-            // create SimpleDateFormat object with source string date format: Tratamiento 1
-            SimpleDateFormat sdfSource = new SimpleDateFormat("MM/dd/yyyy"); 
-            
-            // create SimpleDateFormat object with desired date format:       Tratamiento 2
-            SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
-              
               for (int i=numCustomsInicial; i<=numCustomsFinal; i++){
                   
                   //Parametros Indicadores
@@ -165,8 +176,18 @@ public class InsertarCustomsForms extends HttpServlet {
                  
                   eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]").trim();                //fecha   
                   if(!eta_port_discharge.equals("")){
-                      Date date1 = sdfSource.parse(eta_port_discharge);                                                           //parse the string into Date object
-                      eta_port_discharge = sdfDestination.format(date1);                                                          //parse the date into another format
+                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = eta_port_discharge.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      eta_port_discharge = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;
                   } 
                   
                   agente_aduanal = request.getParameter("agente_aduanal[" + i + "]").trim();            
@@ -178,8 +199,18 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]").trim();               //fecha  
                   if(!fecha_recepcion_doc.equals("")){
-                      Date date2 = sdfSource.parse(fecha_recepcion_doc);                                                           //parse the string into Date object
-                      fecha_recepcion_doc = sdfDestination.format(date2);                                                          //parse the date into another format
+                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_recepcion_doc.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_recepcion_doc = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;
                   }
                   
                   recinto = request.getParameter("recinto[" + i + "]").trim();
@@ -188,58 +219,148 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]").trim();                 //fecha 
                   if(!fecha_revalidacion.equals("")){
-                      Date date3 = sdfSource.parse(fecha_revalidacion);                                                            //parse the string into Date object
-                      fecha_revalidacion = sdfDestination.format(date3);                                                           //parse the date into another format
+                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_revalidacion.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_revalidacion = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;                                                          //parse the date into another format
                   }
                   
                   fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]").trim();               //fecha 
                   if(!fecha_previo_origen.equals("")){
-                      Date date4 = sdfSource.parse(fecha_previo_origen);                                                           //parse the string into Date object
-                      fecha_previo_origen = sdfDestination.format(date4);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_previo_origen.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_previo_origen = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]").trim();             //fecha 
                   if(!fecha_previo_destino.equals("")){
-                      Date date5 = sdfSource.parse(fecha_previo_destino);                                                          //parse the string into Date object
-                      fecha_previo_destino = sdfDestination.format(date5);                                                         //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_previo_destino.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_previo_destino = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]").trim();         //fecha 
                   if(!fecha_resultado_previo.equals("")){
-                      Date date6 = sdfSource.parse(fecha_resultado_previo);                                                        //parse the string into Date object
-                      fecha_resultado_previo = sdfDestination.format(date6);                                                       //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_resultado_previo.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_resultado_previo = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   proforma_final = request.getParameter("proforma_final[" + i + "]").trim();                  //fecha  
                   if(!proforma_final.equals("")){
-                      Date date20 = sdfSource.parse(proforma_final);                                                               //parse the string into Date object
-                      proforma_final = sdfDestination.format(date20);                                                              //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = proforma_final.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      proforma_final = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   permiso = request.getParameter("permiso[" + i + "]").trim();                   
                   
                   fecha_envio = request.getParameter("fecha_envio[" + i + "]").trim();                               //fecha  
                   if(!fecha_envio.equals("")){
-                      Date date7 = sdfSource.parse(fecha_envio);                                                                   //parse the string into Date object
-                      fecha_envio = sdfDestination.format(date7);                                                                  //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_envio.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_envio = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]").trim();             //fecha 
                   if(!fecha_recepcion_perm.equals("")){
-                      Date date8 = sdfSource.parse(fecha_recepcion_perm);                                                          //parse the string into Date object
-                      fecha_recepcion_perm = sdfDestination.format(date8);                                                         //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_recepcion_perm.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_recepcion_perm = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]").trim();           //fecha 
                   if(!fecha_activacion_perm.equals("")){
-                      Date date9 = sdfSource.parse(fecha_activacion_perm);                                                         //parse the string into Date object
-                      fecha_activacion_perm = sdfDestination.format(date9);                                                        //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_activacion_perm.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_activacion_perm = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]").trim();                 //fecha 
                   if(!fecha_permisos_aut.equals("")){
-                      Date date10 = sdfSource.parse(fecha_permisos_aut);                                                           //parse the string into Date object
-                      fecha_permisos_aut = sdfDestination.format(date10);                                                          //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_permisos_aut.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_permisos_aut = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   co_pref_arancelaria = request.getParameter("co_pref_arancelaria[" + i + "]").trim();       
@@ -249,8 +370,18 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]").trim();                  //fecha 
                   if(!fecha_recepcion_ca.equals("")){
-                      Date date11 = sdfSource.parse(fecha_recepcion_ca);                                                            //parse the string into Date object
-                      fecha_recepcion_ca = sdfDestination.format(date11);                                                           //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_recepcion_ca.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_recepcion_ca = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   num_constancia_ca = request.getParameter("num_constancia_ca[" + i + "]").trim();   
@@ -258,26 +389,66 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]").trim();                 //fecha 
                   if(!fecha_doc_completos.equals("")){
-                      Date date12 = sdfSource.parse(fecha_doc_completos);                                                            //parse the string into Date object
-                      fecha_doc_completos = sdfDestination.format(date12);                                                           //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_doc_completos.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_doc_completos = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]").trim();               //fecha 
                   if(!fecha_pago_pedimento.equals("")){
-                      Date date13 = sdfSource.parse(fecha_pago_pedimento);                                                           //parse the string into Date object
-                      fecha_pago_pedimento = sdfDestination.format(date13);                                                          //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_pago_pedimento.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_pago_pedimento = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]").trim();   //fecha 
                   if(!fecha_solicitud_transporte.equals("")){
-                      Date date14 = sdfSource.parse(fecha_solicitud_transporte);                                                     //parse the string into Date object
-                      fecha_solicitud_transporte = sdfDestination.format(date14);                                                    //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_solicitud_transporte.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_solicitud_transporte = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]").trim();                       //fecha 
                   if(!fecha_modulacion.equals("")){
-                      Date date15 = sdfSource.parse(fecha_modulacion);                                                               //parse the string into Date object
-                      fecha_modulacion = sdfDestination.format(date15);                                                              //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_modulacion.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_modulacion = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   modalidad = request.getParameter("modalidad[" + i + "]").trim();                 
@@ -285,14 +456,34 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]").trim();               //fecha 
                   if(!fecha_reconocimiento.equals("")){
-                      Date date16 = sdfSource.parse(fecha_reconocimiento);                                                           //parse the string into Date object
-                      fecha_reconocimiento = sdfDestination.format(date16);                                                          //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_reconocimiento.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_reconocimiento = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]").trim();                       //fecha 
                   if(!fecha_liberacion.equals("")){                  
-                      Date date17 = sdfSource.parse(fecha_liberacion);                                                               //parse the string into Date object
-                      fecha_liberacion = sdfDestination.format(date17);                                                              //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_liberacion.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_liberacion = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
@@ -300,14 +491,34 @@ public class InsertarCustomsForms extends HttpServlet {
                   
                   fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]").trim();                 //fecha 
                   if(!fecha_retencion_aut.equals("")){
-                      Date date18 = sdfSource.parse(fecha_retencion_aut);                                                            //parse the string into Date object
-                      fecha_retencion_aut = sdfDestination.format(date18);                                                           //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_retencion_aut.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_retencion_aut = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]").trim();               //fecha 
                   if(!fecha_liberacion_aut.equals("")){                  
-                      Date date19 = sdfSource.parse(fecha_liberacion_aut);                                                           //parse the string into Date object
-                      fecha_liberacion_aut = sdfDestination.format(date19);                                                          //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_liberacion_aut.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_liberacion_aut = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   estatus_operacion_actual = request.getParameter("estatus_operacion[" + i + "]").trim();         
@@ -320,54 +531,134 @@ public class InsertarCustomsForms extends HttpServlet {
                
                 llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]").trim();                                 //fecha 
                 if(!llegada_a_nova.equals("")){                  
-                  Date date21 = sdfSource.parse(llegada_a_nova);                                                           //parse the string into Date object
-                  llegada_a_nova = sdfDestination.format(date21);                                                          //parse the date into another format
+                                       
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = llegada_a_nova.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      llegada_a_nova = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                 
                 llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]").trim();             //fecha 
                 if(!llegada_a_globe_trade_sd.equals("")){                  
-                  Date date22 = sdfSource.parse(llegada_a_globe_trade_sd);                                                           //parse the string into Date object
-                  llegada_a_globe_trade_sd = sdfDestination.format(date22);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = llegada_a_globe_trade_sd.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      llegada_a_globe_trade_sd = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 archivo_m = request.getParameter("archivo_m[" + i + "]").trim(); 
                 
                 fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]").trim();                               //fecha  
                 if(!fecha_archivo_m.equals("")){                  
-                  Date date23 = sdfSource.parse(fecha_archivo_m);                                                           //parse the string into Date object
-                  fecha_archivo_m = sdfDestination.format(date23);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_archivo_m.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_archivo_m = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]").trim();                       //fecha 
                 if(!fecha_solicit_manip.equals("")){                  
-                  Date date24 = sdfSource.parse(fecha_solicit_manip);                                                           //parse the string into Date object
-                  fecha_solicit_manip = sdfDestination.format(date24);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_solicit_manip.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_solicit_manip = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]").trim();                         //fecha 
                 if(!fecha_vencim_manip.equals("")){                  
-                  Date date25 = sdfSource.parse(fecha_vencim_manip);                                                           //parse the string into Date object
-                  fecha_vencim_manip = sdfDestination.format(date25);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_vencim_manip.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_vencim_manip = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]").trim();           //fecha 
                 if(!fecha_confirm_clave_pedim.equals("")){                  
-                  Date date26 = sdfSource.parse(fecha_confirm_clave_pedim);                                                           //parse the string into Date object
-                  fecha_confirm_clave_pedim = sdfDestination.format(date26);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_confirm_clave_pedim.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_confirm_clave_pedim = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]").trim();                   //fecha 
                 if(!fecha_recep_increment.equals("")){                  
-                  Date date27 = sdfSource.parse(fecha_recep_increment);                                                           //parse the string into Date object
-                  fecha_recep_increment = sdfDestination.format(date27);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_recep_increment.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_recep_increment = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 t_e = request.getParameter("t_e[" + i + "]").trim(); 
                 
                 fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]").trim();                     //fecha 
                 if(!fecha_vencim_inbound.equals("")){                  
-                  Date date28 = sdfSource.parse(fecha_vencim_inbound);                                                           //parse the string into Date object
-                  fecha_vencim_inbound = sdfDestination.format(date28);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_vencim_inbound.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_vencim_inbound = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
             }
@@ -380,14 +671,34 @@ public class InsertarCustomsForms extends HttpServlet {
                 
                 fecha_inicio_etiquetado= request.getParameter("fecha_inicio_etiquetado[" + i + "]").trim();                //fecha 
                 if(!fecha_inicio_etiquetado.equals("")){                  
-                  Date date29 = sdfSource.parse(fecha_inicio_etiquetado);                                                           //parse the string into Date object
-                  fecha_inicio_etiquetado = sdfDestination.format(date29);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_inicio_etiquetado.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_inicio_etiquetado = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]").trim();             //fecha 
                 if(!fecha_termino_etiquetado.equals("")){                  
-                  Date date30 = sdfSource.parse(fecha_termino_etiquetado);                                                           //parse the string into Date object
-                  fecha_termino_etiquetado = sdfDestination.format(date30);                                                          //parse the date into another format
+                                      
+                      // Dividir la cadena de entrada en partes
+                      String[] partesFecha = fecha_termino_etiquetado.split("/");
+                      String mes = partesFecha[0];
+                      String dia = partesFecha[1];
+                      String anio = partesFecha[2];
+
+                      // Obtener el número de mes a partir del nombre del mes
+                      int numeroMes = mapaMeses.get(mes);
+
+                      // Construir la fecha en formato "MM/dd/yyyy"
+                      fecha_termino_etiquetado = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                 }
                                 
                 hora_termino_etiquetado = request.getParameter("hora_termino_etiquetado[" + i + "]").trim(); 
