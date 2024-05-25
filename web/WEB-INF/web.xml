@@ -978,6 +978,22 @@
         <servlet-name>EnalmacenEmbarque</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.EnalmacenEmbarque</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultarCustomsBacheo</servlet-name>
+        <servlet-class>com.onest.train.consultas.ConsultarCustomsBacheo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Autocomplete</servlet-name>
+        <servlet-class>com.onest.train.consultas.Autocomplete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AutocompletePOL</servlet-name>
+        <servlet-class>com.onest.train.consultas.AutocompletePOL</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertarPOL</servlet-name>
+        <servlet-class>com.onest.train.insertar.catalogos.InsertarPOL</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1950,6 +1966,22 @@
     <servlet-mapping>
         <servlet-name>EnalmacenEmbarque</servlet-name>
         <url-pattern>/EnalmacenEmbarque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultarCustomsBacheo</servlet-name>
+        <url-pattern>/ConsultarCustomsBacheo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Autocomplete</servlet-name>
+        <url-pattern>/Autocomplete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AutocompletePOL</servlet-name>
+        <url-pattern>/AutocompletePOL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertarPOL</servlet-name>
+        <url-pattern>/InsertarPOL</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -1,0 +1,56 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 24/05/2024, 07:42:01 PM
+    Author     : User_Windows10
+*/
+
+input[type="text"] {
+    width: 300px;
+    height: 50px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px; /* o el tamaño máximo que desees */
+}
+
+.columna1, .columna2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px; /* Espacio entre columnas */
+}
+
+.scroll-container {
+    width: 100%;
+    max-width: 600px; /* o el tamaño máximo que desees */
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 20px; /* Espacio superior para separar el botón del contenido anterior */
+}

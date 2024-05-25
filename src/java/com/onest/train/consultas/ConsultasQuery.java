@@ -3331,5 +3331,28 @@ public class ConsultasQuery {
           sql = "SELECT DISTINCT NVL(ESTATUS,0) FROM TRA_INC_GTN_TEST WHERE SHIPMENT_ID = '"+shipment_id+"' ";
           return sql;
     }
-
+    
+    public String consultarDetalleBLAWBPRO(String data){
+        sql = " SELECT DISTINCT "
+            + " TIE.ID_EVENTO, "
+            + " TIGT.SHIPMENT_ID, "
+            + " TIGT.CONTAINER1, "
+            + " TIGT.BL_AWB_PRO, "
+            + " NVL(TIPP.NOMBRE_POL,'SIN INFORMACION'), " 
+            + " NVL(TIPPD.NOMBRE_POD,'SIN INFORMACION') " 
+            + " FROM TRA_INC_GTN_TEST TIGT "
+            + " INNER JOIN TRA_INB_EVENTO TIE ON TIGT.PLANTILLA_ID = TIE.PLANTILLA_ID "
+            + " INNER JOIN TRA_INB_POL TIPP ON TIGT.POL = TIPP.ID_POL "
+            + " INNER JOIN TRA_INB_POD TIPPD ON TIGT.POD = TIPPD.ID_POD "
+            + " WHERE TIGT.SHIPMENT_ID = '"+data+"' " 
+            + " OR TIGT.CONTAINER1 = '"+data+"' " 
+            + " OR TIE.ID_EVENTO = '"+data+"' ";
+          return sql;
+    }
+    
+    public String consultarIdPol(){
+          sql = "SELECT MAX(ID_POL)+1 FROM TRA_INB_POL_PASO WHERE STATUS = 1";
+          return sql;
+    }
+  
 } 

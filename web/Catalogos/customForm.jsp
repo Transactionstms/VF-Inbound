@@ -723,7 +723,7 @@
         <!-- Sweetalert -->
         <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
-        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Validaciones Celdas -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
         <!-- Elementos Html Celdas -->
