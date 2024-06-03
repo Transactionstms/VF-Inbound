@@ -11,7 +11,7 @@ package com.tacts.sql;
  */
 public class Configuracion {
     
-   private String servidor;
+    private String servidor;
     private String sid;
     private String usuario;
     private String password;
@@ -19,10 +19,10 @@ public class Configuracion {
     
     private void leerArchivo() {
         this.servidor = "74.208.140.125";
-        this.sid = "tacts125";
-        this.usuario = "VANS39TEST";
+        this.sid =      "tacts125";
+        this.usuario =  "VANS39TEST";
         this.password = "XUKidn49N875RBH54Cq2";
-        this.puerto = "1521";
+        this.puerto =   "1521";
     }
 
     public Configuracion() {

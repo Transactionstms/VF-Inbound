@@ -5,16 +5,11 @@
  */
 package com.tacts.dao;
 
-import com.google.gson.Gson;
-import com.tacts.model.CustomModel;
 import com.tacts.sql.Conexion;
 import com.tacts.sql.Configuracion;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import com.tacts.model.RegistrosModel;
 import wsRadar.ConsumowsRadar;
 
 /**
@@ -37,6 +32,7 @@ public class TmsCustoms {
         ConsumowsRadar Consumows=new ConsumowsRadar();
         String contenidoRADAR = "";
         String id = "";
+        String data = "";
         
         try {
             
@@ -49,11 +45,13 @@ public class TmsCustoms {
                
                if(!rs.getString(6).equals("")){
                   id = "&shipmentId="+rs.getString(6);
+                  data = rs.getString(6);
                }else{
                   id = "&container="+rs.getString(7); 
+                  data = rs.getString(7); 
                }
                
-               contenidoRADAR = Consumows.ConsumoRADAR("asignaciones?idCliente=489"+id); 
+               contenidoRADAR = Consumows.ConsumoRADAR("asignaciones?idCliente=489"+id, data);  
            }
            
             this.cnBaseDeDatos.Cerrar(sp1);
