@@ -723,7 +723,7 @@
         <!-- Sweetalert -->
         <script src="<%=request.getContextPath()%>/lib/SweetAlert1.1.3/js/sweetalert.min.js" type="text/javascript"></script>
         <!-- Actions js -->
-        <script src="../lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/customsForms.js" type="text/javascript"></script>
         <!-- Validaciones Celdas -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/validacionesCeldas.js" type="text/javascript"></script>
         <!-- Elementos Html Celdas -->
@@ -737,7 +737,7 @@
         <!-- Filtrer Checkbox -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/filtrerCheckboxv2.js" type="text/javascript"></script>
         <!-- Calendarios -->
-        <script src="<%=request.getContextPath()%>/lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
+        <script src="../lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>
