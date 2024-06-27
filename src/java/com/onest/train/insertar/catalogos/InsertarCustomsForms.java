@@ -146,18 +146,18 @@ public class InsertarCustomsForms extends HttpServlet {
             
             // Crear un mapa de nombres de meses a números de mes
             Map<String, Integer> mapaMeses = new HashMap<>();
-            mapaMeses.put("Enero", 1);
-            mapaMeses.put("Febrero", 2);
-            mapaMeses.put("Marzo", 3);
-            mapaMeses.put("Abril", 4);
-            mapaMeses.put("Mayo", 5);
-            mapaMeses.put("Junio", 6);
-            mapaMeses.put("Julio", 7);
-            mapaMeses.put("Agosto", 8);
-            mapaMeses.put("Septiembre", 9);
-            mapaMeses.put("Octubre", 10);
-            mapaMeses.put("Noviembre", 11);
-            mapaMeses.put("Diciembre", 12);
+            mapaMeses.put("Ene", 1);
+            mapaMeses.put("Feb", 2);
+            mapaMeses.put("Mar", 3);
+            mapaMeses.put("Abr", 4);
+            mapaMeses.put("May", 5);
+            mapaMeses.put("Jun", 6);
+            mapaMeses.put("Jul", 7);
+            mapaMeses.put("Ago", 8);
+            mapaMeses.put("Sep", 9);
+            mapaMeses.put("Oct", 10);
+            mapaMeses.put("Nov", 11);
+            mapaMeses.put("Dic", 12);
             
               for (int i=numCustomsInicial; i<=numCustomsFinal; i++){
                   
