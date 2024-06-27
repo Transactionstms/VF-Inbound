@@ -339,7 +339,7 @@ public class ConsumowsLogix {
                                     d_register_traficotms,
                                     d_updated_traficotms);
                             cs7.execute();
-                            System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms);
+                            System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms + " y número de shipment: " + shipmentId_traficotms);
                             System.out.println("-------------------------------------------------------------------------------------------------");
                             customs++;
 
