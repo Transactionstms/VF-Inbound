@@ -347,13 +347,13 @@ public class ConsultarCustoms extends HttpServlet {
                 }
             }
             if (!columna_evento.equals("")) {
-                String[] selected = columna_evento.split("@");
+                String[] selected = columna_evento.split(",");
                 for (String a : selected) {
                     caramelo_evento += a + ",";
                 }
             }
             if (!columna_responsable.equals("")) {
-                String[] selected = columna_responsable.split("@");
+                String[] selected = columna_responsable.split(",");
                 for (String a : selected) {
                     caramelo_responsable += "'" + a + "',";
                 }

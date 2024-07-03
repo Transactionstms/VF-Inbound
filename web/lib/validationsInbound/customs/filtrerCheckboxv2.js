@@ -59,8 +59,10 @@ function filtrerCheckbox(element, tipoFiltro, list) {
     } 
     
     /* Si no existe selección de lista no checked: Igualar la información del Array, o en su caso del servlet. */
-    if(not_checked !=="0@0"){                  
-        data_not_checked = not_checked;     
+    if(not_checked ==="0@0"){                  
+        data_not_checked = "NA";     
+    }else{
+        data_not_checked = not_checked;
     } 
         
     /*Consultar si el elemento 'contenedor' existe*/
@@ -108,18 +110,19 @@ function filtrerCheckbox(element, tipoFiltro, list) {
     /******************************** Tratar la información seleccionada ********************************/
     
     let array_list_checked = eliminarDuplicadosYVacios(data_checked);
+        
     var parts_cheked = array_list_checked.split('@');
-    
+
     //Obtener el total de checkbox checked
     for (var i = 0; i < parts_cheked.length; i++) {
         contTotalCheckbox++;  //Al terminar de iterar, el valor lo va inicializar en la 2da iteración de los no seleccionados.
     }
-    
+
     //Rellenar listas cheked
     if(checked !=="0@0"){
         confirm_check = "checked";
     }
-    
+
     // Iterate over the array/data_checked
     for (var i = 0; i < parts_cheked.length; i++) {
         document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+i+"\" value=\"" + parts_cheked[i] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+")\" "+confirm_check+"> " + parts_cheked[i] + "</label>";
@@ -129,12 +132,17 @@ function filtrerCheckbox(element, tipoFiltro, list) {
     /******************************** Tratar la información no seleccionada ********************************/
     
     let array_list_not_checked = eliminarDuplicadosYVacios(data_not_checked);
-    var parts_not_checked = array_list_not_checked.split('@');
+    
+    if(array_list_not_checked !== "NA"){
+        
+        var parts_not_checked = array_list_not_checked.split('@');
 
-    // Iterate over the array/data_not_checked
-    for (var j = 1; j < parts_not_checked.length; j++) {
-        //Rellenar listas no cheked
-        document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+j+"\" value=\"" + parts_not_checked[j] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+")\"> " + parts_not_checked[j] + "</label>";
+        // Iterate over the array/data_not_checked
+        for (var j = 0; j < parts_not_checked.length; j++) {
+           //Rellenar listas no cheked
+           document.getElementById("multiselect" + tipoFiltro).innerHTML += "<label><input type=\"checkbox\" id=\"checkbox_list-"+tipoFiltro+"-"+j+"\" value=\"" + parts_not_checked[j] + "\" onclick=\"validateCheckboxPrimary("+tipoFiltro+")\"> " + parts_not_checked[j] + "</label>";
+        }
+        
     }
     
     /******************************** validar si alguna de las opciones ya existe en el contenedor/div ********************************/
@@ -146,14 +154,24 @@ function filtrerCheckbox(element, tipoFiltro, list) {
 } 
 
 function eliminarDuplicadosYVacios(cadenaConDuplicados) {
-    // Dividir la cadena en un array usando la coma como delimitador
-    var array = cadenaConDuplicados.split('@');
+    
+    // Valor retorno
+    var resultado;
+    
+    if(cadenaConDuplicados !== "NA"){
+        
+        // Dividir la cadena en un array usando la coma como delimitador
+        var array = cadenaConDuplicados.split('@');
 
-    // Eliminar duplicados y valores vacíos usando un conjunto (Set)
-    var arraySinDuplicadosYVacios = [...new Set(array.filter(item => item.trim() !== ''))];
+        // Eliminar duplicados y valores vacíos usando un conjunto (Set)
+        var arraySinDuplicadosYVacios = [...new Set(array.filter(item => item.trim() !== ''))];
 
-    // Unir el array sin duplicados y valores vacíos en una cadena usando la coma como separador
-    var resultado = arraySinDuplicadosYVacios.join('@');
+        // Unir el array sin duplicados y valores vacíos en una cadena usando la coma como separador
+        resultado = arraySinDuplicadosYVacios.join('@');
+        
+    }else{
+        resultado = "NA";
+    }
 
     return resultado;
 }
@@ -729,7 +747,9 @@ function validateCheckboxPrimary(numColumna){
         
         //Recorrer la lista, para reactivar la opción '(Seleccionar Todo)', si todas las opciones estan activas.
         for (var i = 0, max = contTotalCheckbox; i < max; i++) {
-            if(document.getElementById('checkbox_list-'+numColumna+'-'+i).checked === true){
+            
+            let option = document.getElementById('checkbox_list-'+numColumna+'-'+i);
+            if(option.checked === true){
                 contCheckboxList++; 
             }
         }
