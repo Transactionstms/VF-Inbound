@@ -341,19 +341,19 @@ public class ConsultarCustoms extends HttpServlet {
     /*  ----------------------------- FILTROS MULTISELECT ENCABEZADOS  -----------------------------  */  
     
             if (!columna_referenciaAA.equals("")) { 
-                String[] selected = columna_referenciaAA.split(",");
+                String[] selected = columna_referenciaAA.split("@");
                 for (String a : selected) {
                     caramelo_referenciaAA += "'" + a + "',";
                 }
             }
             if (!columna_evento.equals("")) {
-                String[] selected = columna_evento.split(",");
+                String[] selected = columna_evento.split("@");
                 for (String a : selected) {
                     caramelo_evento += a + ",";
                 }
             }
             if (!columna_responsable.equals("")) {
-                String[] selected = columna_responsable.split(",");
+                String[] selected = columna_responsable.split("@");
                 for (String a : selected) {
                     caramelo_responsable += "'" + a + "',";
                 }
@@ -365,73 +365,73 @@ public class ConsultarCustoms extends HttpServlet {
                 }
             }
             if (!columna_brand_division.equals("")) {
-                String[] selected = columna_brand_division.split(",");
+                String[] selected = columna_brand_division.split("@");
                 for (String a : selected) {
                     caramelo_brand_division += "'" + a + "',";
                 }
             }
             if (!columna_division.equals("")) {
-                String[] selected = columna_division.split(",");
+                String[] selected = columna_division.split("@");
                 for (String a : selected) {
                     caramelo_division += "'" + a + "',";
                 }
             }
             if (!columna_shipmentId.equals("")) {
-                String[] selected = columna_shipmentId.split(",");
+                String[] selected = columna_shipmentId.split("@");
                 for (String a : selected) {
                     caramelo_shipmentId += "'" + a + "',";
                 }
             }
             if (!columna_containerId.equals("")) {
-                String[] selected = columna_containerId.split(",");
+                String[] selected = columna_containerId.split("@");
                 for (String a : selected) {
                     caramelo_containerId += "'" + a + "',";
                 }
             }
             if (!columna_blAwbPro.equals("")) {
-                String[] selected = columna_blAwbPro.split(",");
+                String[] selected = columna_blAwbPro.split("@");
                 for (String a : selected) {
                     caramelo_blAwbPro += "'" + a + "',";
                 }
             }
             if (!columna_loadTypeFinal.equals("")) {
-                String[] selected = columna_loadTypeFinal.split(",");
+                String[] selected = columna_loadTypeFinal.split("@");
                 for (String a : selected) {
                     caramelo_loadTypeFinal += "'" + a + "',";
                 }
             }
             if (!columna_quantity.equals("")) {
-                String[] selected = columna_quantity.split(",");
+                String[] selected = columna_quantity.split("@");
                 for (String a : selected) {
                     caramelo_quantity += a + ",";
                 }
             }
             if (!columna_pod.equals("")) {
-                String[] selected = columna_pod.split(",");
+                String[] selected = columna_pod.split("@");
                 for (String a : selected) {
                     caramelo_pod += "'" + a + "',";
                 }
             }
             if (!columna_estDepartFromPol.equals("")) {
-                String[] selected = columna_estDepartFromPol.split(",");
+                String[] selected = columna_estDepartFromPol.split("@");
                 for (String a : selected) {
                     caramelo_estDepartFromPol += "'" + a + "',";
                 }
             }
             if (!columna_etaRealPortOfDischarge.equals("")) {
-                String[] selected = columna_etaRealPortOfDischarge.split(",");
+                String[] selected = columna_etaRealPortOfDischarge.split("@");
                 for (String a : selected) {
                     caramelo_etaRealPortOfDischarge += "'" + a + "',";
                 }
             }
             if (!columna_estEtaDc.equals("")) {
-                String[] selected = columna_estEtaDc.split(",");
+                String[] selected = columna_estEtaDc.split("@");
                 for (String a : selected) {
                     caramelo_estEtaDc += "'" + a + "',";
                 }
             }
             if (!columna_inboundNotification.equals("")) {
-                String[] selected = columna_inboundNotification.split(",");
+                String[] selected = columna_inboundNotification.split("@");
                 for (String a : selected) {
                     caramelo_inboundNotification += "'" + a + "',";
                 }
@@ -443,295 +443,295 @@ public class ConsultarCustoms extends HttpServlet {
                 }
             }
             if (!columna_aa.equals("")) {
-                String[] selected = columna_aa.split(",");
+                String[] selected = columna_aa.split("@");
                 for (String a : selected) {
                     caramelo_aa += "'" + a + "',";
                 }
             }
             if (!columna_fechaMesVenta.equals("")) {
-                String[] selected = columna_fechaMesVenta.split(",");
+                String[] selected = columna_fechaMesVenta.split("@");
                 for (String a : selected) {
                     caramelo_fechaMesVenta += "'" + a + "',";
                 }
             }
             if (!columna_prioridad.equals("")) {
-                String[] selected = columna_prioridad.split(",");
+                String[] selected = columna_prioridad.split("@");
                 for (String a : selected) {
                     caramelo_prioridad += "'" + a + "',";
                 }
             }
             if (!columna_pais_origen.equals("")) {
-                String[] selected = columna_pais_origen.split(",");
+                String[] selected = columna_pais_origen.split("@");
                 for (String a : selected) {
                     caramelo_pais_origen += "'" + a + "',";
                 }
             }
             if (!columna_size_container.equals("")) {
-                String[] selected = columna_size_container.split(",");
+                String[] selected = columna_size_container.split("@");
                 for (String a : selected) {
                     caramelo_size_container += "'" + a + "',";
                 }
             }
             if (!columna_valor_usd.equals("")) {
-                String[] selected = columna_valor_usd.split(",");
+                String[] selected = columna_valor_usd.split("@");
                 for (String a : selected) {
                     caramelo_valor_usd += "'" + a + "',";
                 }
             }
             if (!columna_eta_port_discharge.equals("")) {
-                String[] selected = columna_eta_port_discharge.split(",");
+                String[] selected = columna_eta_port_discharge.split("@");
                 for (String a : selected) {
                     caramelo_eta_port_discharge += "'" + a + "',";
                 }
             }
             if (!columna_agente_aduanal.equals("")) {
-                String[] selected = columna_agente_aduanal.split(",");
+                String[] selected = columna_agente_aduanal.split("@");
                 for (String a : selected) {
                     caramelo_agente_aduanal += "'" + a + "',";
                 }
             }
             if (!columna_pedimento_a1.equals("")) {
-                String[] selected = columna_pedimento_a1.split(",");
+                String[] selected = columna_pedimento_a1.split("@");
                 for (String a : selected) {
                     caramelo_pedimento_a1 += "'" + a + "',";
                 }
             }
             if (!columna_pedimento_r1_1er.equals("")) {
-                String[] selected = columna_pedimento_r1_1er.split(",");
+                String[] selected = columna_pedimento_r1_1er.split("@");
                 for (String a : selected) {
                     caramelo_pedimento_r1_1er += "'" + a + "',";
                 }
             }
             if (!columna_motivo_rectificacion_1er.equals("")) {
-                String[] selected = columna_motivo_rectificacion_1er.split(",");
+                String[] selected = columna_motivo_rectificacion_1er.split("@");
                 for (String a : selected) {
                     caramelo_motivo_rectificacion_1er += "'" + a + "',";
                 }
             }
             if (!columna_pedimento_r1_2do.equals("")) {
-                String[] selected = columna_pedimento_r1_2do.split(",");
+                String[] selected = columna_pedimento_r1_2do.split("@");
                 for (String a : selected) {
                     caramelo_pedimento_r1_2do += "'" + a + "',";
                 }
             }
             if (!columna_motivo_rectificacion_2do.equals("")) {
-                String[] selected = columna_motivo_rectificacion_2do.split(",");
+                String[] selected = columna_motivo_rectificacion_2do.split("@");
                 for (String a : selected) {
                     caramelo_motivo_rectificacion_2do += "'" + a + "',";
                 }
             }
             if (!columna_fecha_recepcion_doc.equals("")) {
-                String[] selected = columna_fecha_recepcion_doc.split(",");
+                String[] selected = columna_fecha_recepcion_doc.split("@");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_doc += "'" + a + "',";
                 }
             }
             if (!columna_recinto.equals("")) {
-                String[] selected = columna_recinto.split(",");
+                String[] selected = columna_recinto.split("@");
                 for (String a : selected) {
                     caramelo_recinto += "'" + a + "',";
                 }
             }
             if (!columna_naviera.equals("")) {
-                String[] selected = columna_naviera.split(",");
+                String[] selected = columna_naviera.split("@");
                 for (String a : selected) {
                     caramelo_naviera += "'" + a + "',";
                 }
             }
             if (!columna_buque.equals("")) {
-                String[] selected = columna_buque.split(",");
+                String[] selected = columna_buque.split("@");
                 for (String a : selected) {
                     caramelo_buque += "'" + a + "',";
                 }
             }
             if (!columna_fecha_revalidacion.equals("")) {
-                String[] selected = columna_fecha_revalidacion.split(",");
+                String[] selected = columna_fecha_revalidacion.split("@");
                 for (String a : selected) {
                     caramelo_fecha_revalidacion += "'" + a + "',";
                 }
             }
             if (!columna_fecha_previo_origen.equals("")) {
-                String[] selected = columna_fecha_previo_origen.split(",");
+                String[] selected = columna_fecha_previo_origen.split("@");
                 for (String a : selected) {
                     caramelo_fecha_previo_origen += "'" + a + "',";
                 }
             }
             if (!columna_fecha_previo_destino.equals("")) {
-                String[] selected = columna_fecha_previo_destino.split(",");
+                String[] selected = columna_fecha_previo_destino.split("@");
                 for (String a : selected) {
                     caramelo_fecha_previo_destino += "'" + a + "',";
                 }
             }
             if (!columna_fecha_resultado_previo.equals("")) {
-                String[] selected = columna_fecha_resultado_previo.split(",");
+                String[] selected = columna_fecha_resultado_previo.split("@");
                 for (String a : selected) {
                     caramelo_fecha_resultado_previo += "'" + a + "',";
                 }
             }
             if (!columna_proforma_final.equals("")) {
-                String[] selected = columna_proforma_final.split(",");
+                String[] selected = columna_proforma_final.split("@");
                 for (String a : selected) {
                     caramelo_proforma_final += "'" + a + "',";
                 }
             }
             if (!columna_permiso.equals("")) {
-                String[] selected = columna_permiso.split(",");
+                String[] selected = columna_permiso.split("@");
                 for (String a : selected) {
                     caramelo_permiso += "'" + a + "',";
                 }
             }
             if (!columna_fecha_envio.equals("")) {
-                String[] selected = columna_fecha_envio.split(",");
+                String[] selected = columna_fecha_envio.split("@");
                 for (String a : selected) {
                     caramelo_fecha_envio += "'" + a + "',";
                 }
             }
             if (!columna_fecha_recepcion_perm.equals("")) {
-                String[] selected = columna_fecha_recepcion_perm.split(",");
+                String[] selected = columna_fecha_recepcion_perm.split("@");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_perm += "'" + a + "',";
                 }
             }
             if (!columna_fecha_activacion_perm.equals("")) {
-                String[] selected = columna_fecha_activacion_perm.split(",");
+                String[] selected = columna_fecha_activacion_perm.split("@");
                 for (String a : selected) {
                     caramelo_fecha_activacion_perm += "'" + a + "',";
                 }
             }
             if (!columna_fecha_permisos_aut.equals("")) {
-                String[] selected = columna_fecha_permisos_aut.split(",");
+                String[] selected = columna_fecha_permisos_aut.split("@");
                 for (String a : selected) {
                     caramelo_fecha_permisos_aut += "'" + a + "',";
                 }
             }
             if (!columna_co_pref_arancelaria.equals("")) {
-                String[] selected = columna_co_pref_arancelaria.split(",");
+                String[] selected = columna_co_pref_arancelaria.split("@");
                 for (String a : selected) {
                     caramelo_co_pref_arancelaria += "'" + a + "',";
                 }
             }
             if (!columna_aplic_pref_arancelaria.equals("")) {
-                String[] selected = columna_aplic_pref_arancelaria.split(",");
+                String[] selected = columna_aplic_pref_arancelaria.split("@");
                 for (String a : selected) {
                     caramelo_aplic_pref_arancelaria += "'" + a + "',";
                 }
             }
             if (!columna_req_uva.equals("")) {
-                String[] selected = columna_req_uva.split(",");
+                String[] selected = columna_req_uva.split("@");
                 for (String a : selected) {
                     caramelo_req_uva += "'" + a + "',";
                 }
             }
             if (!columna_req_ca.equals("")) {
-                String[] selected = columna_req_ca.split(",");
+                String[] selected = columna_req_ca.split("@");
                 for (String a : selected) {
                     caramelo_req_ca += "'" + a + "',";
                 }
             }
             if (!columna_fecha_recepcion_ca.equals("")) {
-                String[] selected = columna_fecha_recepcion_ca.split(",");
+                String[] selected = columna_fecha_recepcion_ca.split("@");
                 for (String a : selected) {
                     caramelo_fecha_recepcion_ca += "'" + a + "',";
                 }
             }
             if (!columna_num_constancia_ca.equals("")) {
-                String[] selected = columna_num_constancia_ca.split(",");
+                String[] selected = columna_num_constancia_ca.split("@");
                 for (String a : selected) {
                     caramelo_num_constancia_ca += a + ",";
                 }
             }
             if (!columna_monto_ca.equals("")) {
-                String[] selected = columna_monto_ca.split(",");
+                String[] selected = columna_monto_ca.split("@");
                 for (String a : selected) {
                     caramelo_monto_ca += a + ",";
                 }
             }
             if (!columna_fecha_doc_completos.equals("")) {
-                String[] selected = columna_fecha_doc_completos.split(",");
+                String[] selected = columna_fecha_doc_completos.split("@");
                 for (String a : selected) {
                     caramelo_fecha_doc_completos += "'" + a + "',";
                 }
             }
             if (!columna_fecha_pago_pedimento.equals("")) {
-                String[] selected = columna_fecha_pago_pedimento.split(",");
+                String[] selected = columna_fecha_pago_pedimento.split("@");
                 for (String a : selected) {
                     caramelo_fecha_pago_pedimento += "'" + a + "',";
                 }
             }
             if (!columna_fecha_solicitud_transporte.equals("")) {
-                String[] selected = columna_fecha_solicitud_transporte.split(",");
+                String[] selected = columna_fecha_solicitud_transporte.split("@");
                 for (String a : selected) {
                     caramelo_fecha_solicitud_transporte += "'" + a + "',";
                 }
             }
             if (!columna_fecha_modulacion.equals("")) {
-                String[] selected = columna_fecha_modulacion.split(",");
+                String[] selected = columna_fecha_modulacion.split("@");
                 for (String a : selected) {
                     caramelo_fecha_modulacion += "'" + a + "',";
                 }
             }
             if (!columna_modalidad.equals("")) {
-                String[] selected = columna_modalidad.split(",");
+                String[] selected = columna_modalidad.split("@");
                 for (String a : selected) {
                     caramelo_modalidad += "'" + a + "',";
                 }
             }
             if (!columna_resultado_modulacion.equals("")) {
-                String[] selected = columna_resultado_modulacion.split(",");
+                String[] selected = columna_resultado_modulacion.split("@");
                 for (String a : selected) {
                     caramelo_resultado_modulacion += "'" + a + "',";
                 }
             }
             if (!columna_fecha_reconocimiento.equals("")) {
-                String[] selected = columna_fecha_reconocimiento.split(",");
+                String[] selected = columna_fecha_reconocimiento.split("@");
                 for (String a : selected) {
                     caramelo_fecha_reconocimiento += "'" + a + "',";
                 }
             }
             if (!columna_fecha_liberacion.equals("")) {
-                String[] selected = columna_fecha_liberacion.split(",");
+                String[] selected = columna_fecha_liberacion.split("@");
                 for (String a : selected) {
                     caramelo_fecha_liberacion += "'" + a + "',";
                 }
             }
             if (!columna_sello_origen.equals("")) {
-                String[] selected = columna_sello_origen.split(",");
+                String[] selected = columna_sello_origen.split("@");
                 for (String a : selected) {
                     caramelo_sello_origen += "'" + a + "',";
                 }
             }
             if (!columna_sello_final.equals("")) {
-                String[] selected = columna_sello_final.split(",");
+                String[] selected = columna_sello_final.split("@");
                 for (String a : selected) {
                     caramelo_sello_final += "'" + a + "',";
                 }
             }
             if (!columna_fecha_retencion_aut.equals("")) {
-                String[] selected = columna_fecha_retencion_aut.split(",");
+                String[] selected = columna_fecha_retencion_aut.split("@");
                 for (String a : selected) {
                     caramelo_fecha_retencion_aut += "'" + a + "',";
                 }
             }
             if (!columna_fecha_liberacion_aut.equals("")) {
-                String[] selected = columna_fecha_liberacion_aut.split(",");
+                String[] selected = columna_fecha_liberacion_aut.split("@");
                 for (String a : selected) {
                     caramelo_fecha_liberacion_aut += "'" + a + "',";
                 }
             }
             if (!columna_estatus_operacion.equals("")) {
-                String[] selected = columna_estatus_operacion.split(",");
+                String[] selected = columna_estatus_operacion.split("@");
                 for (String a : selected) {
                     caramelo_estatus_operacion += "'" + a + "',";
                 }
             }
             if (!columna_motivo_atraso.equals("")) {
-                String[] selected = columna_motivo_atraso.split(",");
+                String[] selected = columna_motivo_atraso.split("@");
                 for (String a : selected) {
                     caramelo_motivo_atraso += "'" + a + "',";
                 }
             }
             if (!columna_observaciones.equals("")) {
-                String[] selected = columna_observaciones.split(",");
+                String[] selected = columna_observaciones.split("@");
                 for (String a : selected) {
                     caramelo_observaciones += "'" + a + "',";
                 }
@@ -740,61 +740,61 @@ public class ConsultarCustoms extends HttpServlet {
         if (AgentType.equals("4001") || AgentType.equals("4006")) { //LOGIX Y VF    
             
             if (!columna_llegada_a_nova.equals("")) {
-                String[] selected = columna_llegada_a_nova.split(",");
+                String[] selected = columna_llegada_a_nova.split("@");
                 for (String a : selected) {
                     caramelo_llegada_a_nova += "'" + a + "',";
                 }
             }
             if (!columna_llegada_a_globe_trade_sd.equals("")) {
-                String[] selected = columna_llegada_a_globe_trade_sd.split(",");
+                String[] selected = columna_llegada_a_globe_trade_sd.split("@");
                 for (String a : selected) {
                     caramelo_llegada_a_globe_trade_sd += "'" + a + "',";
                 }
             }
             if (!columna_archivo_m.equals("")) {
-                String[] selected = columna_archivo_m.split(",");
+                String[] selected = columna_archivo_m.split("@");
                 for (String a : selected) {
                     caramelo_archivo_m += "'" + a + "',";
                 }
             }
             if (!columna_fecha_archivo_m.equals("")) {
-                String[] selected = columna_fecha_archivo_m.split(",");
+                String[] selected = columna_fecha_archivo_m.split("@");
                 for (String a : selected) {
                     caramelo_fecha_archivo_m += "'" + a + "',";
                 }
             }
             if (!columna_fecha_solicit_manip.equals("")) {
-                String[] selected = columna_fecha_solicit_manip.split(",");
+                String[] selected = columna_fecha_solicit_manip.split("@");
                 for (String a : selected) {
                     caramelo_fecha_solicit_manip += "'" + a + "',";
                 }
             }
             if (!columna_fecha_vencim_manip.equals("")) {
-                String[] selected = columna_fecha_vencim_manip.split(",");
+                String[] selected = columna_fecha_vencim_manip.split("@");
                 for (String a : selected) {
                     caramelo_fecha_vencim_manip += "'" + a + "',";
                 }
             }
             if (!columna_fecha_confirm_clave_pedim.equals("")) {
-                String[] selected = columna_fecha_confirm_clave_pedim.split(",");
+                String[] selected = columna_fecha_confirm_clave_pedim.split("@");
                 for (String a : selected) {
                     caramelo_fecha_vencim_manip += "'" + a + "',";
                 }
             }
             if (!columna_fecha_recep_increment.equals("")) {
-                String[] selected = columna_fecha_recep_increment.split(",");
+                String[] selected = columna_fecha_recep_increment.split("@");
                 for (String a : selected) {
                     caramelo_fecha_recep_increment += "'" + a + "',";
                 }
             }
             if (!columna_t_e.equals("")) {
-                String[] selected = columna_t_e.split(",");
+                String[] selected = columna_t_e.split("@");
                 for (String a : selected) {
                     caramelo_t_e += "'" + a + "',";
                 }
             }
             if (!columna_fecha_vencim_inbound.equals("")) {
-                String[] selected = columna_fecha_vencim_inbound.split(",");
+                String[] selected = columna_fecha_vencim_inbound.split("@");
                 for (String a : selected) {
                     caramelo_fecha_vencim_inbound += "'" + a + "',";
                 }
@@ -805,49 +805,49 @@ public class ConsultarCustoms extends HttpServlet {
         if (AgentType.equals("4002") || AgentType.equals("4006")) {  //CUSA Y VF
 
             if (!columna_no_bultos.equals("")) {
-                String[] selected = columna_no_bultos.split(",");
+                String[] selected = columna_no_bultos.split("@");
                 for (String a : selected) {
                     caramelo_no_bultos += "'" + a + "',";
                 }
             }
             if (!columna_peso_kg.equals("")) {
-                String[] selected = columna_peso_kg.split(",");
+                String[] selected = columna_peso_kg.split("@");
                 for (String a : selected) {
                     caramelo_peso_kg += "'" + a + "',";
                 }
             }
             if (!columna_transferencia.equals("")) {
-                String[] selected = columna_transferencia.split(",");
+                String[] selected = columna_transferencia.split("@");
                 for (String a : selected) {
                     caramelo_transferencia += "'" + a + "',";
                 }
             }
             if (!columna_fecha_inicio_etiquetado.equals("")) {
-                String[] selected = columna_fecha_inicio_etiquetado.split(",");
+                String[] selected = columna_fecha_inicio_etiquetado.split("@");
                 for (String a : selected) {
                     caramelo_fecha_inicio_etiquetado += "'" + a + "',";
                 }
             }
             if (!columna_fecha_termino_etiquetado.equals("")) {
-                String[] selected = columna_fecha_termino_etiquetado.split(",");
+                String[] selected = columna_fecha_termino_etiquetado.split("@");
                 for (String a : selected) {
                     caramelo_fecha_termino_etiquetado += "'" + a + "',";
                 }
             }
             if (!columna_hora_termino_etiquetado.equals("")) {
-                String[] selected = columna_hora_termino_etiquetado.split(",");
+                String[] selected = columna_hora_termino_etiquetado.split("@");
                 for (String a : selected) {
                     caramelo_hora_termino_etiquetado += "'" + a + "',";
                 }
             }
             if (!columna_proveedor.equals("")) {
-                String[] selected = columna_proveedor.split(",");
+                String[] selected = columna_proveedor.split("@");
                 for (String a : selected) {
                     caramelo_proveedor += "'" + a + "',";
                 }
             }
             if (!columna_proveedor_carga.equals("")) {
-                String[] selected = columna_proveedor_carga.split(",");
+                String[] selected = columna_proveedor_carga.split("@");
                 for (String a : selected) {
                     caramelo_proveedor_carga += "'" + a + "',";
                 }
@@ -855,12 +855,13 @@ public class ConsultarCustoms extends HttpServlet {
             
         }    
             if (!columna_fy.equals("")) {
-                String[] selected = columna_fy.split(",");
+                String[] selected = columna_fy.split("@");
                 for (String a : selected) {
                     caramelo_fy += "'" + a + "',";
                 }
             }
 
+    
             if (!columna_referenciaAA.equals("")) {
                 caramelo_referenciaAA = caramelo_referenciaAA.replaceAll(",$", "");
             }
@@ -1239,7 +1240,7 @@ public class ConsultarCustoms extends HttpServlet {
                + " INNER JOIN TRA_DESTINO_RESPONSABLE BP ON BP.USER_NID = TIE.USER_NID "
                + " INNER JOIN TRA_INC_GTN_TEST GTN ON GTN.PLANTILLA_ID = TIE.PLANTILLA_ID "
                + " INNER JOIN TRA_INB_POD TIP1 ON TIP1.ID_POD = GTN.POD "
-               + " LEFT JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
+               + " INNER JOIN TRA_INB_POL TIP2 ON TIP2.ID_POL = GTN.POL "
                + " INNER JOIN TRA_INB_BRAND_DIVISION TIBD ON TIBD.ID_BD = GTN.BRAND_DIVISION "
                + " INNER JOIN TRA_INB_AGENTE_ADUANAL TAA ON TAA.AGENTE_ADUANAL_ID = TIP1.AGENTE_ADUANAL_ID "
                + " INNER JOIN TRA_INB_DIVISION TID ON TID.ID_DIVISION = GTN.SBU_NAME "
@@ -1252,6 +1253,7 @@ public class ConsultarCustoms extends HttpServlet {
                //+ " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/MM/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/MM/yy') "
                + " AND tid.division_nombre <> 'No/DSN' "
                + " AND gtn.load_type_final IS NOT NULL "
+               + " AND gtn.FINAL_DESTINATION IS NOT NULL "    
                + " AND tie.id_evento >= 240000 ";
 
             if (!AgentType.equals("4006")) { //VF GENERAL
