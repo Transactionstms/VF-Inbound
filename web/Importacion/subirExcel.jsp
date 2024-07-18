@@ -242,7 +242,7 @@ System.out.println("baseURL"+baseURL);
 
                     // Aplica las clases de desplazamiento después de agregar contenido
                     caja.classList.add('overflow-auto');
-                          if(<%=sql1%>===20){
+                          if(<%=sql1%>===20 || <%=sql1%> === 40){
                          window.location.href = '<%=request.getContextPath()%>/Importacion/logGntbatch.jsp?folio=' + fecha;
 
                     }else if(<%=sql1%>===21){

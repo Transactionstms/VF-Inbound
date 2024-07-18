@@ -185,6 +185,17 @@
                
                 
                 }
+                else if(insertSql22.equals("40")){
+                    
+                 ExcelToOracleSP excelToOracleSP=new ExcelToOracleSP();
+                 mensaje=   excelToOracleSP.InsertSpgtn2(insertSql2,ruta,folio); 
+                 
+                  excelToOracleSP.InsertSpACT(folio);
+                  excelToOracleSP.InsertSpACTExc(folio);
+                
+                
+                }
+                
                  
                  else{
                 
