@@ -994,6 +994,10 @@
         <servlet-name>InsertarPOL</servlet-name>
         <servlet-class>com.onest.train.insertar.catalogos.InsertarPOL</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CrearEmbarqueTraslado</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.CrearEmbarqueTraslado</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1982,6 +1986,10 @@
     <servlet-mapping>
         <servlet-name>InsertarPOL</servlet-name>
         <url-pattern>/InsertarPOL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrearEmbarqueTraslado</servlet-name>
+        <url-pattern>/CrearEmbarqueTraslado</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
