@@ -61,86 +61,80 @@
                     agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
                 }
 
-                 String sql2 = "   SELECT "
-                              +"            evento,"
-                              +"            contenedor,"
-                              +"            bl,"
-                              +"            shipment,"
-                              +"            load_type,"
-                              +"            lum_brio,"
-                              +"            brand,"
-                              +"            sbu_name,"
-                              +"            pol,"
-                              +"            country,"
-                              +"            actual_crd,"
-                              +"            departure_date,"
-                              +"            mx_port,"
-                              +"            ATA_CMI,"
-                              +"            eta_mx_port,"
-                              +"            eta_customer,"
-                              +"            nvl(comentarios,' '),"
-                              +"            final_dest,"
-                              +"            responsable,"
-                              +"            CUSTOMER, "
-                              
-                              +"            NVL(INBOUND_NOT,' '), " //row[20]
-                              +"            NVL(AA,' '), "
-                              +"            NVL(PLANTA,' '), "
-                              +"            NVL(LT2,' '), "
-                              +"            NVL(TT,' '), "
-                              +"            NVL(NUM_PEDIMENTO,' '), "
-                              +"            NVL(MES_FACTURACION,' '), "
-                              +"            NVL(FREE_TIME,' '), "
-                              +"            NVL(TODAY,' '), "
-                              +"            NVL(FREE_UNTIL,' '  ) "  //row[29]
-                              
-                              +"            FROM"
-                              +" TRA_INB_RDI WHERE tipo=1013";
-                
+                String sql2 = "   SELECT "
+                        + "            evento,"
+                        + "            contenedor,"
+                        + "            bl,"
+                        + "           CARRIER,"
+                        + "            shipment,"
+                        + "            load_type,"
+                        + "            lum_brio,"
+                        + "            brand,"
+                        + "            sbu_name,"
+                        + "            pol,"
+                        + "            country,"
+                        + "            actual_crd,"
+                        + "            departure_date,"
+                        + "            mx_port,"
+                        + "            ATA_CMI,"
+                        + "            eta_mx_port,"
+                        + "            eta_customer,"
+                        + "            Estatus,"
+                        + "            nvl(comentarios,' '),"
+                        //+"            final_dest,"
+                        //
+                        //
+
+                        + "            NVL(INBOUND_NOT,' '), " //row[20]
+                        + "            NVL(AA,' '), "
+                        + "            responsable,"
+                        + "            NVL(PLANTA,' '), "
+                        + "            NVL(LT2,' '), "
+                        + "            NVL(TT,' '), "
+                        + "            CUSTOMER, "
+                        + "            NVL(NUM_PEDIMENTO,' '), "
+                        + "            NVL(MES_FACTURACION,' ') "
+                        // +"            NVL(FREE_TIME,' '), "
+                        // +"            NVL(TODAY,' '), "
+                        // +"            NVL(FREE_UNTIL,' '  ) "  //row[29]
+
+                        + "            FROM"
+                        + " TRA_INB_RDI WHERE tipo=1013";
+
                 String sql3 = " SELECT  "
-                             +"            evento, "
-                             +"            contenedor, "
-                             +"            bl, "
-                             +"            carrier, "
-                             +"            shipment, "
-                             +"            load_type, "
-                             +"            lum_brio, "
-                             +"            brand, "
-                             +"            sbu_name, "
-                             +"            pol, "
-                             +"            country, "
-                             +"            actual_crd, "
-                             +"            departure_date, "
-                             +"            mx_port, "
-                             +"            eta_mx_port, "
-                             +"            eta_dc, "
-                             +"            indc_2_days_put_away, "
-                             +"            arribo_real_dc, "
-                             +"            nvl(comentarios,' '), "
-                             +"            requiere_etiquetado, "
-                             +"            a_123, "
-                             +"            a_456, "
-                             +"            inbound_not, "
-                             +"            aa, "
-                             +"            responsable, "
-                             +"            planta, "                            //row[25]
-                             
-                             +"            NVL(TOTAL_LANE,' '), "                           
-                             +"            NVL(LT2_TARGET,' '), "                         
-                             +"            NVL(ACTUAL_LT2,' '), "                           
-                             +"            NVL(LT2_CALIBRATION,' '), "                     
-                             +"            NVL(WORKDAYS,' '), "                            
-                             +"            NVL(OCEAN_TT,' '), "                            
-                             +"            NVL(FREE_DAYS,' '), "                           
-                             +"            NVL(FREE_UNTIL,' '), "                          
-                             +"            NVL(TODAY,' '), "                               
-                             +"            NVL(DESPACHO_DE_ADUANA,' '), "                 
-                             +"            NVL(SALIDA_A_DC,' '), "                        
-                             +"            NVL(CUSTODIA,' '), "                           
-                             +"            NVL(FECHA_DE_RETORNO_DE_VACIO,' '), "            
-                             +"            NVL(COMENTARIOS_ADICIONALES_LOGISTICA,' ') "  //row[39]
-                             +"            FROM "
-                             +" TRA_INB_RDI WHERE tipo=1005";
+                        + "            evento, "
+                        + "            contenedor, "
+                        + "            bl, "
+                        + "            carrier, "
+                        + "            shipment, "
+                        + "            load_type, "
+                        + "            VESSEL, "
+                        + "            CONTAINER_TYPE," 
+                        + "            lum_brio, "
+                        + "            brand, "
+                        + "            sbu_name, "
+                        + "            pol, "
+                        + "            country, "
+                        + "            actual_crd, "
+                        + "            departure_date, "
+                        + "            mx_port, "
+                        + "            eta_mx_port, "
+                        + "            eta_dc, "
+                        + "            indc_2_days_put_away, "
+                        + "            arribo_real_dc, "
+                        + "            nvl(comentarios,' '), "
+                        + "            inbound_not, "
+                        + "            aa, "
+                        + "            responsable, "
+                        + "            planta, " //row[25]
+                        + "            NVL(TOTAL_LANE,' '), "
+                        + "            NVL(LT2_TARGET,' '), "
+                        + "            NVL(ACTUAL_LT2,' '), "
+                        + "            NVL(LT2_CALIBRATION,' '), "
+                        + "            NVL(WORKDAYS,' '), "
+                        + "            NVL(OCEAN_TT,' ')  " 
+                        + "            FROM "
+                        + " TRA_INB_RDI WHERE tipo=1005";
 
                 int cont = 0;
         %>
@@ -175,16 +169,18 @@
                                                         <table id="example" class="display" style="width:300%">
                                                             <thead>
                                                                 <tr>
-                                                                   <tr>
+                                                                <tr>
                                                                     <th scope="col" class="font-titulo">EVENTO</th>
                                                                     <th scope="col" class="font-titulo">CONTENEDOR</th>
                                                                     <th scope="col" class="font-titulo">BL</th>
+                                                                    <th scope="col" class="font-titulo">CARRIER</th>
                                                                     <th scope="col" class="font-titulo">SHIPMENT</th>
                                                                     <th scope="col" class="font-titulo">LOAD_TYPE</th>
                                                                     <th scope="col" class="font-titulo">LUM_BRIO</th>
                                                                     <th scope="col" class="font-titulo">BRAND</th>
                                                                     <th scope="col" class="font-titulo">SBU_NAME</th>
                                                                     <th scope="col" class="font-titulo">POL</th>
+                                                                    
                                                                     <th scope="col" class="font-titulo">COUNTRY</th>
                                                                     <th scope="col" class="font-titulo">ACTUAL_CRD</th>
                                                                     <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
@@ -192,21 +188,18 @@
                                                                     <th scope="col" class="font-titulo">ETA_MX_PORT</th>
                                                                     <th scope="col" class="font-titulo">ATA_CMI</th>
                                                                     <th scope="col" class="font-titulo">ETA_Customer</th>
+                                                                    <th scope="col" class="font-titulo">Estatus</th>
                                                                     <th scope="col" class="font-titulo">Comentarios</th>
-                                                                    <th scope="col" class="font-titulo">Final_Destination</th> 
-                                                                    <th scope="col" class="font-titulo">Responsable</th> 
-                                                                    <th scope="col" class="font-titulo">CUSTOMER</th>
-                                                                    
                                                                     <th scope="col" class="font-titulo">INBOUND_NOT</th>
+                                                                    
                                                                     <th scope="col" class="font-titulo">AA</th>
+                                                                    <th scope="col" class="font-titulo">Responsable</th> 
                                                                     <th scope="col" class="font-titulo">PLANTA</th>
                                                                     <th scope="col" class="font-titulo">LT2</th>
                                                                     <th scope="col" class="font-titulo">TT</th>
+                                                                    <th scope="col" class="font-titulo">CUSTOMER</th>
                                                                     <th scope="col" class="font-titulo">NUM_PEDIMENTO</th>
-                                                                    <th scope="col" class="font-titulo">MES_FACTURACION</th>
-                                                                    <th scope="col" class="font-titulo">FREE_TIME</th>
-                                                                    <th scope="col" class="font-titulo">TODAY</th>
-                                                                    <th scope="col" class="font-titulo">FREE_UNTIL</th>
+                                                                    <th scope="col" class="font-titulo">MES_FACTURACION</th> 
                                                                 </tr>         
                                                                 </tr>
                                                             </thead>
@@ -218,6 +211,7 @@
                                                                 %>
                                                                 <tr  >
                                                                     <td class="font-texto"> <%=row[0]%></td>
+                                                                    
                                                                     <td class="font-texto"> <%=row[1]%></td>
                                                                     <td class="font-texto"> <%=row[2]%></td>
                                                                     <td class="font-texto"> <%=row[3]%></td>
@@ -228,26 +222,25 @@
                                                                     <td class="font-texto"> <%=row[8]%> </td>		
                                                                     <td class="font-texto"> <%=row[9]%></td>	
                                                                     <td class="font-texto"> <%=row[10]%></td>
+                                                                    
                                                                     <td class="font-texto"> <%=row[11]%></td>	
                                                                     <td class="font-texto"> <%=row[12]%></td>	
                                                                     <td class="font-texto"> <%=row[13]%></td>
-                                                                    <td class="font-texto"> <%= row[14]%></td>
+                                                                    <td class="font-texto"> <%=row[14]%></td>
                                                                     <td class="font-texto"> <%=row[15]%></td>
                                                                     <td class="font-texto"> <%=row[16]%></td>
                                                                     <td class="font-texto"> <%=row[17]%></td>
                                                                     <td class="font-texto"> <%=row[18]%></td>
-                                                                    <td class="font-texto"> <%=row[19]%></td>
-                                                                    
+                                                                    <td class="font-texto"> <%=row[19]%></td> 
                                                                     <td class="font-texto"> <%=row[20]%></td>
+                                                                    
                                                                     <td class="font-texto"> <%=row[21]%></td>
                                                                     <td class="font-texto"> <%=row[22]%></td>
                                                                     <td class="font-texto"> <%=row[23]%></td>
                                                                     <td class="font-texto"> <%=row[24]%></td>
                                                                     <td class="font-texto"> <%=row[25]%></td>
-                                                                    <td class="font-texto"> <%=row[26]%></td>
-                                                                    <td class="font-texto"> <%=row[27]%></td>
-                                                                    <td class="font-texto"> <%=row[28]%></td>
-                                                                    <td class="font-texto"> <%=row[29]%></td>
+                                                                    <td class="font-texto"> <%=row[26]%></td> 
+                                                                    <td class="font-texto"> <%=row[27]%></td> 
                                                                 </tr>
                                                                 <%
                                                                         }
@@ -264,123 +257,104 @@
                                             </div>
 
                                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                                
-                                                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                                <form id="uploadFileFormData1" name="uploadFileFormData1">
-                                                    <br>
-                                                    <div id="table-scroll" class="table-scroll"  style="height: 100%;">
-                                                        <table id="example2" class="display" style="width:300%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col" class="font-titulo">EVENTO</th>
 
-                                                                    <th scope="col" class="font-titulo">CONTENEDOR</th>
-                                                                    <th scope="col" class="font-titulo">BL</th>
-                                                                    <th scope="col" class="font-titulo">Carrier</th>
-                                                                    <th scope="col" class="font-titulo">SHIPMENT</th>
-                                                                    <th scope="col" class="font-titulo">LOAD_TYPE</th>
-                                                                    <th scope="col" class="font-titulo">LUM_BRIO</th>
-                                                                    <th scope="col" class="font-titulo">BRAND</th>
-                                                                    <th scope="col" class="font-titulo">SBU_NAME</th>
-                                                                    <th scope="col" class="font-titulo">POL</th>
-                                                                    <th scope="col" class="font-titulo">COUNTRY</th>
+                                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                                    <form id="uploadFileFormData1" name="uploadFileFormData1">
+                                                        <br>
+                                                        <div id="table-scroll" class="table-scroll"  style="height: 100%;">
+                                                            <table id="example2" class="display" style="width:300%">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col" class="font-titulo">EVENTO</th>
 
-                                                                    <th scope="col" class="font-titulo">ACTUAL_CRD</th>
-                                                                    <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
-                                                                    <th scope="col" class="font-titulo">MX_PORT</th>
-                                                                    <th scope="col" class="font-titulo">ETA_MX_PORT</th>
-                                                                    <th scope="col" class="font-titulo">ETA_DC</th>
-                                                                    <th scope="col" class="font-titulo">INDC_2_Days_PUT_AWAY</th>
-                                                                    <th scope="col" class="font-titulo">Arribo_real_DC</th>
-                                                                    <th scope="col" class="font-titulo">Comentarios</th>
-                                                                    <th scope="col" class="font-titulo">Requiere_etiquetado</th>
-                                                                    <th scope="col" class="font-titulo">123</th>
+                                                                        <th scope="col" class="font-titulo">CONTENEDOR</th>
+                                                                        <th scope="col" class="font-titulo">BL</th>
+                                                                        <th scope="col" class="font-titulo">Carrier</th>
+                                                                        <th scope="col" class="font-titulo">SHIPMENT</th>
+                                                                        <th scope="col" class="font-titulo">LOAD_TYPE</th>
+                                                                        <th scope="col" class="font-titulo">Vessel</th>
+                                                                        <th scope="col" class="font-titulo">Container_type</th> 
+                                                                        <th scope="col" class="font-titulo">LUM_BRIO</th>
+                                                                        <th scope="col" class="font-titulo">BRAND</th>
+                                                                        <th scope="col" class="font-titulo">SBU_NAME</th>
+                                                                        
+                                                                        <th scope="col" class="font-titulo">POL</th>
+                                                                        <th scope="col" class="font-titulo">COUNTRY</th>
+                                                                        <th scope="col" class="font-titulo">ACTUAL_CRD</th>
+                                                                        <th scope="col" class="font-titulo">DEPARTURE_DATE</th>
+                                                                        <th scope="col" class="font-titulo">MX_PORT</th>
+                                                                        <th scope="col" class="font-titulo">ETA_MX_PORT</th>
+                                                                        <th scope="col" class="font-titulo">ETA_DC</th>
+                                                                        <th scope="col" class="font-titulo">INDC_2_Days_PUT_AWAY</th>
+                                                                        <th scope="col" class="font-titulo">Arribo_real_DC</th>
+                                                                        <th scope="col" class="font-titulo">Comentarios</th>
+                                                                        
+                                                                        <th scope="col" class="font-titulo">Inbound_notification</th>
+                                                                        <th scope="col" class="font-titulo">AA</th>
+                                                                        <th scope="col" class="font-titulo">Responsabe</th>
+                                                                        <th scope="col" class="font-titulo">Planta</th>
+                                                                        <th scope="col" class="font-titulo">TOTAL_LANE</th>                           
+                                                                        <th scope="col" class="font-titulo">LT2_TARGET</th>                            
+                                                                        <th scope="col" class="font-titulo">ACTUAL_LT2</th>                             
+                                                                        <th scope="col" class="font-titulo">LT2_CALIBRATION</th>                        
+                                                                        <th scope="col" class="font-titulo">WORKDAYS</th>                              
+                                                                        <th scope="col" class="font-titulo">OCEAN_TT</th>  
+                                                                        
+                                                                        
+                                                                         
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <%
+                                                                        if (db.doDB(sql3)) {
+                                                                            for (String[] row : db.getResultado()) {
 
-                                                                    <th scope="col" class="font-titulo">456</th>
-                                                                    <th scope="col" class="font-titulo">Inbound_notification</th>
-                                                                    <th scope="col" class="font-titulo">AA</th>
-                                                                    <th scope="col" class="font-titulo">Responsabe</th>
-                                                                    <th scope="col" class="font-titulo">Planta</th>
-                                                                    
-                                                                    <th scope="col" class="font-titulo">TOTAL_LANE</th>                           
-                                                                    <th scope="col" class="font-titulo">LT2_TARGET</th>                            
-                                                                    <th scope="col" class="font-titulo">ACTUAL_LT2</th>                             
-                                                                    <th scope="col" class="font-titulo">LT2_CALIBRATION</th>                        
-                                                                    <th scope="col" class="font-titulo">WORKDAYS</th>                              
-                                                                    <th scope="col" class="font-titulo">OCEAN_TT</th>                              
-                                                                    <th scope="col" class="font-titulo">FREE_DAYS</th>                             
-                                                                    <th scope="col" class="font-titulo">FREE_UNTIL</th>                            
-                                                                    <th scope="col" class="font-titulo">TODAY</th>                                 
-                                                                    <th scope="col" class="font-titulo">DESPACHO_DE_ADUANA</th>                    
-                                                                    <th scope="col" class="font-titulo">SALIDA_A_DC</th>                           
-                                                                    <th scope="col" class="font-titulo">CUSTODIA</th>                              
-                                                                    <th scope="col" class="font-titulo">FECHA_DE_RETORNO_DE_VACIO</th>             
-                                                                    <th scope="col" class="font-titulo">COMENTARIOS_ADICIONALES_LOGISTICA</th> 
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <%
-                                                                    if (db.doDB(sql3)) {
-                                                                        for (String[] row : db.getResultado()) {
+                                                                    %>
+                                                                    <tr>
+                                                                        <td class="font-texto"> <%=row[0]%></td>
+                                                                        <td class="font-texto"> <%=row[1]%></td>
+                                                                        <td class="font-texto"> <%=row[2]%></td>
+                                                                        <td class="font-texto"> <%=row[3]%></td>
+                                                                        <td class="font-texto"> <%=row[4]%></td>
+                                                                        <td class="font-texto"> <%=row[5]%></td>	
+                                                                        <td class="font-texto"> <%=row[6]%></td>	
+                                                                        <td class="font-texto"> <%=row[7]%></td>
+                                                                        <td class="font-texto"> <%=row[8]%> </td>		
+                                                                        <td class="font-texto"> <%=row[9]%></td>	
+                                                                        <td class="font-texto"> <%=row[10]%></td>
+                                                                        <td class="font-texto"> <%=row[11]%></td>	
+                                                                        <td class="font-texto"> <%=row[12]%></td>	
+                                                                        <td class="font-texto"> <%=row[13]%></td>
+                                                                        <td class="font-texto"> <%=row[14]%></td>
+                                                                        <td class="font-texto"> <%=row[15]%></td>
+                                                                        <td class="font-texto"> <%=row[16]%></td>
+                                                                        <td class="font-texto"> <%=row[17]%></td>
+                                                                        <td class="font-texto"> <%=row[18]%></td>
+                                                                        <td class="font-texto"> <%=row[19]%></td>
+                                                                        <td class="font-texto"> <%=row[20]%></td>
+                                                                        <td class="font-texto"> <%=row[21]%></td>
+                                                                        <td class="font-texto"> <%=row[22]%></td>
+                                                                        <td class="font-texto"> <%=row[23]%></td>
+                                                                        <td class="font-texto"> <%=row[24]%></td>
+                                                                        <td class="font-texto"> <%=row[25]%></td>
+                                                                        <td class="font-texto"> <%=row[26]%></td>
+                                                                        <td class="font-texto"> <%=row[27]%></td>
+                                                                        <td class="font-texto"> <%=row[28]%></td>
+                                                                        <td class="font-texto"> <%=row[29]%></td>
+                                                                        <td class="font-texto"> <%=row[30]%></td> 
 
-                                                                %>
-                                                                <tr>
-                                                                    <td class="font-texto"> <%=row[0]%></td>
-                                                                    <td class="font-texto"> <%=row[1]%></td>
-                                                                    <td class="font-texto"> <%=row[2]%></td>
-                                                                    <td class="font-texto"> <%=row[3]%></td>
-                                                                    <td class="font-texto"> <%=row[4]%></td>
-                                                                    <td class="font-texto"> <%=row[5]%></td>	
-                                                                    <td class="font-texto"> <%=row[6]%></td>	
-                                                                    <td class="font-texto"> <%=row[7]%></td>
-                                                                    <td class="font-texto"> <%=row[8]%> </td>		
-                                                                    <td class="font-texto"> <%=row[9]%></td>	
-                                                                    <td class="font-texto"> <%=row[10]%></td>
-                                                                    <td class="font-texto"> <%=row[11]%></td>	
-                                                                    <td class="font-texto"> <%=row[12]%></td>	
-                                                                    <td class="font-texto"> <%=row[13]%></td>
-                                                                    <td class="font-texto"> <%= row[14]%></td>
-                                                                    <td class="font-texto"> <%=row[15]%></td>
-                                                                    <td class="font-texto"> <%=row[16]%></td>
-                                                                    
-                                                                     <td class="font-texto"> <%=row[17]%></td>
-                                                                    <td class="font-texto"> <%= row[18]%></td>
-                                                                    <td class="font-texto"> <%=row[19]%></td>
-                                                                    <td class="font-texto"> <%=row[20]%></td>
-                                                                    
-                                                                    <td class="font-texto"> <%=row[21]%></td>
-                                                                    <td class="font-texto"> <%=row[22]%></td>
-                                                                    <td class="font-texto"> <%=row[23]%></td>
-                                                                    <td class="font-texto"> <%=row[24]%></td>
-                                                                    <td class="font-texto"> <%=row[25]%></td>
-                                                                    
-                                                                    <td class="font-texto"> <%=row[26]%></td>
-                                                                    <td class="font-texto"> <%=row[27]%></td>
-                                                                    <td class="font-texto"> <%=row[28]%></td>
-                                                                    <td class="font-texto"> <%=row[29]%></td>
-                                                                    <td class="font-texto"> <%=row[30]%></td>
-                                                                    <td class="font-texto"> <%=row[31]%></td>
-                                                                    <td class="font-texto"> <%=row[32]%></td>
-                                                                    <td class="font-texto"> <%=row[33]%></td>
-                                                                    <td class="font-texto"> <%=row[34]%></td>
-                                                                    <td class="font-texto"> <%=row[35]%></td>
-                                                                    <td class="font-texto"> <%=row[36]%></td>
-                                                                    <td class="font-texto"> <%=row[37]%></td>
-                                                                    <td class="font-texto"> <%=row[38]%></td>
-                                                                    <td class="font-texto"> <%=row[39]%></td>
-                                                                    
-                                                                </tr>
-                                                                <%
+                                                                    </tr>
+                                                                    <%
+                                                                            }
                                                                         }
-                                                                    }
-                                                                %>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <br>
-                                                    <!-- Botones controles -->
-                                                </form>
-                                            </div>
+                                                                    %>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <br>
+                                                        <!-- Botones controles -->
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>                           
                                     </div>
@@ -451,7 +425,7 @@
                 });
             });
 
-  $(document).ready(function () {
+            $(document).ready(function () {
                 $('#example2').DataTable({
                     dom: 'lBfrtip', // Incluye el elemento de paginación
                     buttons: [

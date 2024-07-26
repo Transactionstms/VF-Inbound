@@ -683,7 +683,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?   ,?,?,?,?,?,?,?,?,?,?,   ?,?,?, ?,?,?, ?,?,?, ?,  '" + folio + "'  )}");
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI( ?,?,?,?,?,?,?,?,?,?   ,?,?,?,?,?,?,?,?,?,?,   ?,?,?, ?,?,?, ?,?,  '" + folio + "'  )}");
         try {
             for (int i = 2; i <= rowCount; i++) {
                 String mensajeReturn = "";
@@ -694,7 +694,7 @@ public class ExcelToOracleSP {
                 int yy = 0;
                 //row.getLastCellNum();
                // for (int j = 0; j < 20; j++) {
-               for (int j = 0; j < 30; j++) {
+               for (int j = 0; j < 28; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
@@ -820,7 +820,7 @@ public class ExcelToOracleSP {
         int batchSize = 100; // Tamaño del lote para las inserciones
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         // PreparedStatement statement = connection.prepareStatement(insertSql);
-          CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2(   ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?, ?,?,?, ?,?,?, ?,   '" + folio + "'  )}");
+          CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2(   ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?, ?,       '" + folio + "'  )}");
        // CallableStatement statement = connection.prepareCall(" {call SP_INB_RDI2(   ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?,  ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?, '" + folio + "'  )}");
 
         try {
@@ -832,7 +832,7 @@ public class ExcelToOracleSP {
                 }
                 int yy = 0;
                 //row.getLastCellNum();
-                for (int j = 0; j < 37; j++) {
+                for (int j = 0; j < 31; j++) {
                     Cell cell = row.getCell(j);
                     if (cell == null) {
                         statement.setNull(j + 1, Types.NULL);
