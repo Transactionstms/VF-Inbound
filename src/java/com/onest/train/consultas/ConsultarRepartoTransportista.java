@@ -92,17 +92,20 @@ public class ConsultarRepartoTransportista extends HttpServlet {
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-      + " where   gtn.EMBARQUE_AGRUPADOR in( select DISTINCT EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE where EMBARQUE_TRANSPORTISTA="+transportista+")"
+      + " where   gtn.EMBARQUE_AGRUPADOR in( (select DISTINCT EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE where EMBARQUE_TRANSPORTISTA="+transportista+"), "
+                 + " (select DISTINCT EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE_TRASLADO where EMBARQUE_TRANSPORTISTA="+transportista+") )"
         +" ORDER BY"
         +"   tie.id_evento";
          
          String sql = " "
                  + "select DISTINCT EMBARQUE_ID,EMBARQUE_AGRUPADOR,TO_CHAR(EMBARQUE_FEC_ENRAMPE, 'MM/DD/YY'),TO_CHAR(EMBARQUE_FEC_INICIO, 'MM/DD/YY')"
-                 + " from TRA_INB_EMBARQUE where EMBARQUE_ESTADO_ID is null and EMBARQUE_TRANSPORTISTA="+transportista
+                 + " from TRA_INB_EMBARQUE where EMBARQUE_ESTADO_ID is null and EMBARQUE_TRANSPORTISTA="+transportista+" UNION "
+                 + "select DISTINCT EMBARQUE_T_ID,EMBARQUE_AGRUPADOR,TO_CHAR(EMBARQUE_FEC_ENRAMPE, 'MM/DD/YY'),TO_CHAR(EMBARQUE_FEC_INICIO, 'MM/DD/YY')"
+                 + " from TRA_INB_EMBARQUE_TRASLADO where EMBARQUE_ESTADO_ID is null and EMBARQUE_TRANSPORTISTA="+transportista+"  "
                  + "";
           System.out.println(sql); 
     
-       String sql2="select  LTRANSPORTE_ID, LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+transportista;
+       String sql2="select  LTRANSPORTE_ID, LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+transportista +"  ";
        ResultSet rs2 = statement2.executeQuery(sql2);
         
         try (PrintWriter out = response.getWriter()) {

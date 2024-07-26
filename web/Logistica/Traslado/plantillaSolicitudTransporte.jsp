@@ -40,20 +40,20 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
         <!-- Prism Syntax Highlighting-->
-        <link rel="stylesheet" href="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.css">
-        <link rel="stylesheet" href="../lib/vendor/prismjs/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/vendor/prismjs/plugins/toolbar/prism-toolbar.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/vendor/prismjs/themes/prism-okaidia.css">
         <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
-        <link rel="stylesheet" href="../lib/css/style.default.css" id="theme-stylesheet">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/css/style.default.css" id="theme-stylesheet">
         <!-- Custom stylesheet - for your changes-->
-        <link rel="stylesheet" href="../lib/css/custom.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/css/custom.css">
         <!-- Favicon-->
-        <link rel="shortcut icon" href="../lib/img/favicon.png">
+        <link rel="shortcut icon" href="<%=request.getContextPath()%>/lib/img/favicon.png">
         <!-- Table css -->
-        <link href="../lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
-        <link href="../lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
+        <link href="<%=request.getContextPath()%>/lib/inbound/conexion/connectionStatus.css" rel="stylesheet" type="text/css"/>
 
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 
@@ -227,7 +227,7 @@
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-                                                                   + " where STATUS_EMBARQUE in (0,14) "+where
+                                                                   + " where STATUS_EMBARQUE=0 "+where
         +" ORDER BY"
         +"   tie.id_evento";
                                                            System.out.println("sql"+sql);
@@ -342,33 +342,14 @@ function nuevoEvento5() {
     }
     
     const data = await response.text();
-    window.location.href =  '<%=request.getContextPath()%>/Logistica/documentosSeleccionados.jsp?op=<%=usr%>'+fool;
+    window.location.href =  '<%=request.getContextPath()%>/Logistica/Traslado/documentosSeleccionados.jsp?op=<%=usr%>'+fool;
     return data;
   } catch (error) {
     console.log('Error:', error.message);
   }
 }
 
-           function nuevoEvento1() {
-                        swal({  title:  "Guardando. . .",    allowEscapeKey:false  });
-                        let checkboxes = document.getElementById("form1").valor; //Array que contiene los checkbox
-                        let cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
-                        let valores = '';
-                        for (var x = 0; x < checkboxes.length; x++) {
-                            if (checkboxes[x].checked) {
-                                console.log(checkboxes[x].value)
-                                valores += checkboxes[x].value + ' or  ';
-                                cont = cont + 1;
-                            }
-                        }
-
-
-                         valores = valores.slice(0, -4); 
-                         console.log(valores);
-                         
-                      window.location.href =  '<%=request.getContextPath()%>/Logistica/documentosSeleccionados.jsp?op='+valores;
-
-                                   }     
+       
                                    
                                    
                                    
@@ -378,19 +359,19 @@ function nuevoEvento5() {
                                    
                                    
         </script>                     
-     <script src="../lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
+     <script src="<%=request.getContextPath()%>/lib/inbound/conexion/connectionStatus.js" type="text/javascript"></script>
         <!-- JavaScript files-->
-        <script src="../lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
         <!-- Main Theme JS File-->
-        <script src="../lib/js/theme.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/js/theme.js"></script>
         <!-- Prism for syntax highlighting-->
-        <script src="../lib/vendor/prismjs/prism.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
-        <script src="../lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/prismjs/prism.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="<%=request.getContextPath()%>/lib/vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
         <!-- actions js -->
-        <script src="../lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
+        <script src="<%=request.getContextPath()%>/lib/inbound/eventos/functionsEvents.js" type="text/javascript"></script>
         <!-- sweetalert -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 

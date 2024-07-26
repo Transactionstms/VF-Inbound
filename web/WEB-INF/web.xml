@@ -998,6 +998,18 @@
         <servlet-name>CrearEmbarqueTraslado</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.CrearEmbarqueTraslado</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MostrarPDF_CFDI_T</servlet-name>
+        <servlet-class>com.transactions.documentos.MostrarPDF_CFDI_T</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>confirmarEmbarqueT</servlet-name>
+        <servlet-class>com.onest.train.consultas.confirmarEmbarqueT</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertarEvidenciaTraslado</servlet-name>
+        <servlet-class>com.onest.train.insertar.catalogos.InsertarEvidenciaTraslado</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -1990,6 +2002,18 @@
     <servlet-mapping>
         <servlet-name>CrearEmbarqueTraslado</servlet-name>
         <url-pattern>/CrearEmbarqueTraslado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarPDF_CFDI_T</servlet-name>
+        <url-pattern>/MostrarPDF_CFDI_T</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>confirmarEmbarqueT</servlet-name>
+        <url-pattern>/confirmarEmbarqueT</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertarEvidenciaTraslado</servlet-name>
+        <url-pattern>/InsertarEvidenciaTraslado</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
