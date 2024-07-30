@@ -48,6 +48,8 @@
         <link href="<%=request.getContextPath()%>/lib/validationsInbound/customs/styleFiltrerCheckbox.css" rel="stylesheet" type="text/css"/>
         <!-- calendarios -->
         <link href="<%=request.getContextPath()%>/lib/calendarios/css/flatpickr.min.css" rel="stylesheet" type="text/css"/>
+        <!-- virtual-scroll -->
+        <script src="https://cdn.jsdelivr.net/npm/virtual-scroll"></script>
         <style>
             .hidden-btn {
                display: none;
@@ -97,6 +99,7 @@
                 String AgentType = "";
                 String idPlantilla = "";
                 String namePlantilla = ""; 
+                int numDataBacheo = 0;
                 int cont = 1;
                 
                 //Consultar Información de Agente Aduanal
@@ -108,9 +111,17 @@
                     }
                 }
                 
-            System.out.println("AgentType: " + AgentType);
-            System.out.println("idPlantilla: " + idPlantilla);
-            System.out.println("namePlantilla: " + namePlantilla);
+                //Consultar núm de registros para iterar bacheo de información 
+                if (db.doDB(fac.consultarDataBacheoInicial(AgentType))) { 
+                    for (String[] rowA : db.getResultado()) {
+                         numDataBacheo ++; 
+                    }
+                }
+                
+                System.out.println("AgentType: " + AgentType);
+                System.out.println("idPlantilla: " + idPlantilla);
+                System.out.println("namePlantilla: " + namePlantilla);
+                System.out.println("numDataBacheo:" + numDataBacheo);
         %>
         <div class="card-body">
             <div class="contenedor">
@@ -637,8 +648,9 @@
         <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
         <script>
             //Parametros: Validaciones
+            let numBacheo =       '<%=numDataBacheo%>';
             let idAgenteAduanal = '<%=AgentType%>'; 
-            let fechaActual = '<%=fecha_actual%>';
+            let fechaActual =     '<%=fecha_actual%>';
             let checkboxOn;
             let contSubfiltros = 0;
             let dataEnd = "";
