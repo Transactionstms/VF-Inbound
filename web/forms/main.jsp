@@ -131,7 +131,7 @@
                             
                             
                            <%
-                                                    if (db.doDB("    select EMBARQUE_ID,'Pendiente de evidencia' from TRA_INB_embarque where EMBARQUE_ESTADO_ID=1 and EMBARQUE_TRANSPORTISTA in (select LTRANSPORTE_ID from TRA_INB_LINEA_TRANSPORTE where USER_NID in (6356,6381,6382,6383,6384,6385,6386,5428,"+UserId+") )")) {
+                                                    if (db.doDB("    select EMBARQUE_ID,'Pendiente de evidencia' from TRA_INB_embarque where EMBARQUE_ESTADO_ID=1 and EMBARQUE_TRANSPORTISTA in (select LTRANSPORTE_ID from TRA_INB_LINEA_TRANSPORTE where USER_NID in ("+UserId+") )")) {
                                                  %>
                    <div class="table-responsive" style="overflow: auto">    
                                                             <div class="tableFixHead">

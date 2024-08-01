@@ -30,8 +30,92 @@
             //response.setContentType("text/html;charset=UTF-8"); 
              String agrupador=request.getParameter("agrupador");
              String titulo=request.getParameter("titulo"); 
+             
+             
+             
               
-             String sql2 =" SELECT DISTINCT"
+             String sql2 =" ";
+                    
+//   ";   
+
+
+
+
+ // Verificar si el string no está vacío
+        if (!titulo.isEmpty()) {
+            // Obtener el primer carácter
+            char firstChar = titulo.charAt(0);
+
+            // Imprimir el primer carácter
+            System.out.println("El string empieza con: " + firstChar);
+
+            // Comparar con una letra específica
+            if (firstChar == 'M') {
+                 sql2= " SELECT DISTINCT"
+                     + " 'SHIPTO', "
++"     pat.bodega_nombre, "
++"     pat.rfc, "
++"     pat.bodega_direccion, "
++"     pat.colonia, "
++"     pat.ciudad, "
++"     pat.bodega_edo, "
++"     pat.destino_cp, "
++"     pat.bodega_direccion, "
++"     pat.no_int, "
++"     pat.no_ext, "
++"     pat.clavelocal, "
++"     pat.clave_mun, "
++"     pat.bodega_pais, "
++"     pat.clave_colonia, "
++"     pat.clavelocal, "
++"     pat.clave_mun, "
++"     'Orden de compra', "
++"     gtn.shipment_id, "
++"      sci.total_actual_wt_kgs, "
++"      gtn.OF_PACKAGES, "
++"      gtn.QUANTITY, "
++"      gtn.volume, "
++"     nvl(cus.PEDIMENTO_A1, nvl(cus.pedimento_r1, nvl(pedimento_r1_2do,' '))), "
++"     to_char(cus.fecha_pago_pedimento, 'mm/dd/yyyy'), "
++"     gtn.style_desc, "
++"     nvl(pod.aduana_numero, 0), "
++"     sty.clave_sat, "
++"     sty.descripcion_sat, "
++"     sty.tipo_embalage, "
++"     sty.embalage_sat, "
+ +"     '0', "
++"     '0', "
++"      sci.total_actual_wt_kgs, "
++"     tie.id_evento, "
++"     gtn.doctos_aduaneros, "
++"     gtn.tipo_materia, "
++"     gtn.clave, "
++"     org.puerto "
++"     || ' - ' "
++"     || org.patio "
++"     || ' - ' "
++"     || org.direccion, "
++"     nvl(org.clave_loc, ' '), "
++"     nvl(org.clave_mun, ' '), "
++"     nvl(org.clave_col, ' '),"
+                     + " gtn.container1 "
++" FROM "
++"     tra_inc_gtn_test gtn "
++"     LEFT JOIN tra_inb_evento   tie ON gtn.plantilla_id = tie.plantilla_id "
++"     LEFT JOIN tra_inb_customs  cus ON cus.shipment_id = gtn.shipment_id "
++"     LEFT JOIN tra_inb_stylesat sty ON sty.style_desc = gtn.style_desc "
++"     LEFT JOIN tra_inb_sci      sci ON sci.original_shipment_id = gtn.shipment_id  and gtn.STYLE_DESC=sci.PRODUCT_CODE "
++"     LEFT JOIN tra_inb_pod      pod ON pod.id_pod = gtn.pod "
++"     LEFT JOIN ontms_bodega     bod ON bod.bodega_id = 2 "
++"     LEFT JOIN TRA_INB_EMBARQUE_TRASLADO embt ON embt.embarque_agrupador = gtn.embarque_agrupador "                    
++"     LEFT JOIN tra_inb_origen   org ON org.origen_id = embt.origen_id "
++"     LEFT JOIN TRA_INB_PATIO   pat ON pat.PATIO_ID = embt.PATIO_ID "
++" WHERE "
++"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"' ";
+                 
+            } else {
+                 
+                sql2 =" SELECT DISTINCT"
                      + " 'SHIPTO', "
 +"     bod.bodega_nombre, "
 +"     bod.rfc, "
@@ -88,11 +172,20 @@
 +"     LEFT JOIN tra_inb_pod      pod ON pod.id_pod = gtn.pod "
 +"     LEFT JOIN ontms_bodega     bod ON bod.bodega_id = 2 "
 +"     LEFT JOIN tra_inb_embarque emb ON emb.embarque_agrupador = gtn.embarque_agrupador "
+//+"     LEFT JOIN TRA_INB_EMBARQUE_TRASLADO embt ON embt.embarque_agrupador = gtn.embarque_agrupador "                    
 +"     LEFT JOIN tra_inb_origen   org ON org.origen_id = emb.origen_id "
+//+"     LEFT JOIN TRA_INB_PATIO   orgp ON orgp.PATIO_ID = embt.PATIO_ID "
 +" WHERE "
-+"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"' ";
-//   ";   
-
++"     GTN.EMBARQUE_AGRUPADOR = '"+agrupador+"'  ";
+                
+                
+            }
+        } else {
+            System.out.println("El string está vacío.");
+        }
+        
+        
+        
 System.out.println("sql***********"+sql2);
         %>
  

@@ -401,6 +401,34 @@
                                                                 }
 
 
+if (camionesValue === '' || camionesValue ===null){
+     swal({title: "Agrega el Camion", allowEscapeKey: false});
+    return;
+}
+if (tipoUnidadValue === '' || tipoUnidadValue ===null){
+     swal({title: "Selecciona Tipo de unidad", allowEscapeKey: false});
+    return;
+}
+if (choferValue === '' || choferValue ===null){
+     swal({title: "Agrega el Chofer", allowEscapeKey: false});
+    return;
+}
+if (dispositivosValue === '' || dispositivosValue ===null){
+     swal({title: "Agrega el Dispositivo", allowEscapeKey: false});
+    return;
+}
+if (relacionEntregaValue === '' || relacionEntregaValue ===null){
+     swal({title: "Selecciona el Tipo de carga", allowEscapeKey: false});
+    return;
+}
+if (autorValue === '' || autorValue ===null){
+     swal({title: "Selecciona  Marca a facturar", allowEscapeKey: false});
+    return;
+}
+if (origen === '' || origen ===null){
+     swal({title: "Selecciona el origen", allowEscapeKey: false});
+    return;
+}
 
 
                                                                 swal({title: "Guardando,Espere...", allowEscapeKey: false});

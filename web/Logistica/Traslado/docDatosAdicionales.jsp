@@ -68,6 +68,16 @@
                     origen += "<option value='" + row[0] + "' >" + row[1] + "</option>";
                 }
             }
+            
+            
+              String pdestino = "";
+            String sbuSQL231 = "select PATIO_ID,BODEGA_NOMBRE ||' - '|| BODEGA_DIRECCION  from TRA_INB_PATIO";
+            if (db.doDB(sbuSQL231)) {
+                for (String[] row : db.getResultado()) {
+                    pdestino += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                }
+            }
+            
 
             
                 String mafacturar = "";
@@ -243,7 +253,13 @@
                                                         </select>
                                                     </div>            
           
-                                                        
+                                               <div class="col-md-3 mb-4">
+                                                        <label class="form-label" >Patio destino</label>
+                                                        <select class="form-select" id="patio" >
+                                                            <option selected value="0">Elija una opcion</option>
+                                                            <%=pdestino%>
+                                                        </select>
+                                                    </div>            
                                                         
                                                   
                                                         
@@ -364,23 +380,24 @@
 
 
 
-                                                                let tranp = document.getElementById('tranporte').value;
-                                                                let fecha = document.getElementById('f_enrampe').value;
-                                                                let f_ini = document.getElementById('f_inicio').value;
+                                                        let tranp = document.getElementById('tranporte').value;
+                                                        let fecha = document.getElementById('f_enrampe').value;
+                                                        let f_ini = document.getElementById('f_inicio').value;
                                                                 
                                                         let camionesValue        = document.getElementById('camiones').value;
                                                         let tipoUnidadValue      = document.getElementById('tipoUnidad').value;
                                                         let choferValue          = document.getElementById('chofer').value;
                                                         let dispositivosValue    = document.getElementById('dispositivos').value;
                                                         let fechaRevisionValue   ='01/01/2023';// document.getElementById('fechaRevision').value;
-                                                        let selloCajaValue       = document.getElementById('selloCaja').value;
+                                                             let selloCajaValue       = document.getElementById('selloCaja').value;
                                                         let relacionEntregaValue = document.getElementById('relacionEntrega').value;
                                                         let fechaFinEntregaValue ='01/01/2023';// document.getElementById('fechaFinEntrega').value;
-                                                        let packingListValue     = document.getElementById('packingList').value;
+                                                            let packingListValue     = document.getElementById('packingList').value;
                                                         let autorValue           = document.getElementById('autor').value;
-                                                        let observacionesValue   = document.getElementById('observaciones').value;
+                                                            let observacionesValue   = document.getElementById('observaciones').value;
 
                                                         let origen   = document.getElementById('origen').value;
+                                                         let patio   = document.getElementById('patio').value;
                                                         let reg1   ='0';// document.getElementById('reg1').value;
                                                         let reg2   ='0';// document.getElementById('reg2').value;
                                                         let reg3   ='0';// document.getElementById('reg3').value;
@@ -400,6 +417,40 @@
                                                                     return;
                                                                 }
 
+if (camionesValue === '' || camionesValue ===null){
+     swal({title: "Agrega el Camion", allowEscapeKey: false});
+    return;
+}
+if (tipoUnidadValue === '' || tipoUnidadValue ===null){
+     swal({title: "Selecciona Tipo de unidad", allowEscapeKey: false});
+    return;
+}
+if (choferValue === '' || choferValue ===null){
+     swal({title: "Agrega el Chofer", allowEscapeKey: false});
+    return;
+}
+if (dispositivosValue === '' || dispositivosValue ===null){
+     swal({title: "Agrega el Dispositivo", allowEscapeKey: false});
+    return;
+}
+if (relacionEntregaValue === '' || relacionEntregaValue ===null){
+     swal({title: "Selecciona el Tipo de carga", allowEscapeKey: false});
+    return;
+}
+if (autorValue === '' || autorValue ===null){
+     swal({title: "Selecciona  Marca a facturar", allowEscapeKey: false});
+    return;
+}
+if (origen === '' || origen ===null){
+     swal({title: "Selecciona el origen", allowEscapeKey: false});
+    return;
+}
+
+if (patio === '' || patio ===null){
+     swal({title: "Selecciona el patio ", allowEscapeKey: false});
+    return;
+}
+
 
 
 
@@ -412,15 +463,15 @@
                                                                var selectedOption1 ='N/A';// selectElement1.options[selectElement1.selectedIndex];
                                                                var selectedValue1  ='1';// selectedOption1.value;
                                                                var selectedText1   ='N/A';//   selectedOption1.textContent;
-   var bandera = '0';
-   if (selectedValue1 == '0') {
-       bandera = '0';
-   } else {
-       bandera = '1';
-   }
+                                                               var bandera = '0';
+                                                                if (selectedValue1 == '0') {
+                                                                    bandera = '0';
+                                                                } else {
+                                                                    bandera = '1';
+                                                                }
 
                                                                 try {
-                                                                    const response = await fetch('<%=request.getContextPath()%>/CrearEmbarqueTraslado?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=<%=opciones%>&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen);
+                                                                    const response = await fetch('<%=request.getContextPath()%>/CrearEmbarqueTraslado?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=<%=opciones%>&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen+'&patio='+patio);
                                                                     if (!response.ok) {
                                                                         throw new Error('Error en la solicitud');
                                                                     }
