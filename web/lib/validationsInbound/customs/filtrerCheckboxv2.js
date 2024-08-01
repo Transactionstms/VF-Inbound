@@ -560,7 +560,7 @@ async function obtenerSeleccion(cont) {
     console.log("Dato Seleccionado: " + dataEnd);
     
     //Generación de Filtros (checkbox):
-    await consultarCustoms(selected_referenciaAA,
+    await consultarCustomsFiltros(selected_referenciaAA,
                             selected_evento,
                             selected_responsable,
                             selected_final_destination,

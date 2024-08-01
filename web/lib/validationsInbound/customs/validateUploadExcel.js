@@ -310,7 +310,7 @@ function ocultarLoader() {
 
 function logExcel() {
     mostrarOcultarDiv('divAMostrarOcultar', true);
-    consultarCustoms(selected_referenciaAA, 
+    consultarCustomsBacheo(selected_referenciaAA, 
                               selected_evento, 
                               selected_responsable,
                               selected_final_destination,

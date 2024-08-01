@@ -135,8 +135,8 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             String columna_proveedor_carga = request.getParameter("columna_proveedor_carga").trim();
             String columna_fy = request.getParameter("columna_fy").trim();
             int contSubfiltros = Integer.parseInt(request.getParameter("contSubfiltros"))-1;
-            String offset = request.getParameter("offset");
-            String next = request.getParameter("next");
+            int offset = Integer.parseInt(request.getParameter("offset"));
+            int next = Integer.parseInt(request.getParameter("next"));
 
             System.out.println("Contador SubFiltros:" + contSubfiltros);   
             
@@ -1529,9 +1529,11 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             }
             sql += " ORDER BY tie.id_evento, "
                  + " tibd.nombre_bd, "
-                 + " GTN.SHIPMENT_ID ASC "
-                 + " OFFSET "+offset+" ROWS FETCH NEXT "+next+" ROWS ONLY ";
-            
+                 + " GTN.SHIPMENT_ID ASC ";
+        
+        if(offset>=1){ //Bacheo por pasos de 1000 registros
+            sql += " OFFSET "+offset+" ROWS FETCH NEXT "+next+" ROWS ONLY ";
+        }    
             //Obtener lista de encabezados:
             if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
