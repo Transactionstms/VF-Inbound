@@ -35,7 +35,7 @@ public class CrearEmbarqueTraslado extends HttpServlet {
                 String f1   = request.getParameter("f1"); 
                 String f2   = request.getParameter("f2"); 
                 String fol  = request.getParameter("fol");  
-                
+                String patio  = request.getParameter("patio"); 
                //   String evento=request.getParameter("evento");
             
              String camionesValue        = request.getParameter("camionesValue");
@@ -57,10 +57,10 @@ String origen   = request.getParameter("origen");
             String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE=13 where EMBARQUE_AGRUPADOR='"+fol+"' ";
             String sqlEmb="insert into TRA_INB_EMBARQUE_TRASLADO "
                     + "(EMBARQUE_AGRUPADOR,EMBARQUE_TRANSPORTISTA,EMBARQUE_FEC_ENRAMPE,EMBARQUE_FEC_INICIO,EMBARQUE_TCUSTODIA,"
-                    + " CAMION_ID,UTRANSPORTE_ID,CHOFER_ID,DSPMOV_ID,EMBARQUE_FEC_REVISION,EMBARQUE_FEC_FIN,EMBARQUE_SELLO_CAJA,EMBARQUE_RELACION_ENT,EMBARQUE_PACKING_LIST,EMBARQUE_AUDITOR,EMBARQUE_OBSERVACIONES,ORIGEN_ID)"//EMBARQUE_ESTADO_ID
+                    + " CAMION_ID,UTRANSPORTE_ID,CHOFER_ID,DSPMOV_ID,EMBARQUE_FEC_REVISION,EMBARQUE_FEC_FIN,EMBARQUE_SELLO_CAJA,EMBARQUE_RELACION_ENT,EMBARQUE_PACKING_LIST,EMBARQUE_AUDITOR,EMBARQUE_OBSERVACIONES,ORIGEN_ID,PATIO_ID)"//EMBARQUE_ESTADO_ID
                     + "values"
                     + "('"+fol+"','"+tran+"',TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),'"+cus+"',"
-                    + "'"+camionesValue+"', "+tipoUnidadValue+",'"+choferValue+"',"+dispositivosValue+", to_date('"+fechaRevisionValue+"','MM/DD/YYYY HH24:MI'), to_date('"+fechaFinEntregaValue+"','MM/DD/YYYY HH24:MI'), '"+selloCajaValue+"','"+relacionEntregaValue+"','"+packingListValue+"','"+autorValue+"','"+observacionesValue+"','"+origen+"'  ) ";
+                    + "'"+camionesValue+"', "+tipoUnidadValue+",'"+choferValue+"',"+dispositivosValue+", to_date('"+fechaRevisionValue+"','MM/DD/YYYY HH24:MI'), to_date('"+fechaFinEntregaValue+"','MM/DD/YYYY HH24:MI'), '"+selloCajaValue+"','"+relacionEntregaValue+"','"+packingListValue+"','"+autorValue+"','"+observacionesValue+"','"+origen+"',"+patio+"  ) ";
          
             System.out.println(sqlGtn);
             boolean update1=db.doDB(sqlGtn);
