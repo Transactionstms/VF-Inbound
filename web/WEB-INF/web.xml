@@ -1010,6 +1010,10 @@
         <servlet-name>InsertarEvidenciaTraslado</servlet-name>
         <servlet-class>com.onest.train.insertar.catalogos.InsertarEvidenciaTraslado</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateEmbarque</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.UpdateEmbarque</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2014,6 +2018,10 @@
     <servlet-mapping>
         <servlet-name>InsertarEvidenciaTraslado</servlet-name>
         <url-pattern>/InsertarEvidenciaTraslado</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEmbarque</servlet-name>
+        <url-pattern>/UpdateEmbarque</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
