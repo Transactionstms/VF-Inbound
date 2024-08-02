@@ -52,7 +52,7 @@
                                                     <input type="text" class="form-control" id="emb" autocomplete="false">
                                                 </div>
                                                 <!--button-->
-                                                <button type="button" class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Entrar</button>
+                                                <button type="button" class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Eliminar Embarque</button>
 
                                             </div>
 
@@ -83,7 +83,7 @@
                    console.log('doc')
                    return;
                }else{
-               window.location.href =  "<%=request.getContextPath()%>/Logistica/subirFactura.jsp?op="+emb.trim();
+               window.location.href =  "<%=request.getContextPath()%>/UpdateEmbarque?op="+emb.trim();
                }
                     
                        }      

@@ -5,12 +5,15 @@
  */
 package com.tacts.evidencias.inbound;
 
+import com.onest.oracle.DB;
+import com.onest.oracle.DBConfData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,29 +21,61 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class UpdateEmbarque extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdateEmbarque</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdateEmbarque at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
+            
+              HttpSession ownsession = request.getSession();
+              DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+            
+    
+             String origen   = request.getParameter("op");                           //, clave='"+reg1+"',DOCTOS_ADUANEROS='"+reg2+"',TIPO_MATERIA='"+reg3+"'    
+            String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE=0,EMBARQUE_AGRUPADOR=null where EMBARQUE_AGRUPADOR=( select EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE  WHERE EMBARQUE_ID = '"+origen+"') ";
+          
+                                        //, clave='"+reg1+"',DOCTOS_ADUANEROS='"+reg2+"',TIPO_MATERIA='"+reg3+"'    
+           
+            
+            boolean update1=db.doDB(sqlGtn); 
+            
+            
+            
+            
+ // Verificar si el string no está vacío
+        if (!origen.isEmpty()) {
+            // Obtener el primer carácter
+            char firstChar = origen.charAt(0);
+
+            // Imprimir el primer carácter
+            System.out.println("El string empieza con: " + firstChar);
+
+            // Comparar con una letra específica
+            if (firstChar == 'M') {
+               String sqlGtn2="update tra_inb_embarque_traslado set EMBARQUE_ESTADO_ID=8 where EMBARQUE_AGRUPADOR=( select EMBARQUE_AGRUPADOR from tra_inb_embarque_traslado  WHERE EMBARQUE_T_ID = '"+origen+"') ";
+           boolean update2=db.doDB(sqlGtn2);
+                  } else {
+                 String sqlGtn2="update TRA_INB_EMBARQUE set EMBARQUE_ESTADO_ID=8 where EMBARQUE_AGRUPADOR=( select EMBARQUE_AGRUPADOR from TRA_INB_EMBARQUE  WHERE EMBARQUE_ID = '"+origen+"') ";
+           boolean update2=db.doDB(sqlGtn2);
+            }
+        } else {
+            System.out.println("El string está vacío.");
+        }
+        
+            
+            
+            
+            
+             if(update1 ){ 
+               
+                    out.print("correcto"); 
+                }else{ 
+                    out.print("error"); 
+                }
+             
+             
+             
+          
         }
     }
 

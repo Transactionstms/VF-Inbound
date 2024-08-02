@@ -24,7 +24,36 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+ <style>
+        .table-scroll {
+            position: relative;
+            max-height: 60%;
+            overflow-y: auto;
+            width: 100%;
+        }
 
+        .table-scroll table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-scroll th,
+        .table-scroll td {
+            padding: 8px 16px;
+            text-align: left;
+        }
+
+        .table-scroll thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 10;
+        }
+
+        .bg-danger {
+            background-color: #f8d7da;
+        }
+    </style>
     </head>
     <%
         try {
@@ -100,11 +129,14 @@ String maxt="";
                                          <h3> Se detectaron las siguientes incidencias, favor de validar.</h3>
                                       
                                              
-                                              <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
-                                                <table id="example2" class="display" style="width:100%">
+                                           <!--   <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
+                                                <table id="example2" class="display" style="width:100%">-->
+                                                    
+                                                      <div id="table-scroll2" class="table-scroll">
+                                                          <table id="example2" class="display">
                                                     <thead>
-                                                        <tr>
-                                                            <th scope="col" class="font-titulo">FILA   </th>	
+                                                        <tr style='color:blue'>
+                                                         <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
                                                             <th scope="col" class="font-titulo">CONTAINER </th>
                                                             <th scope="col" class="font-titulo">SHIPMENT  </th> 
                                                             <th scope="col" class="font-titulo">OBS  </th> 
@@ -123,7 +155,7 @@ String maxt="";
 
                                                         %>
                                                           <tr class="<%=bg%>" >
-                                                            <th class="font-numero"><%=row[0]%></th>	
+                                                         <!--   <th class="font-numero"><%=row[0]%></th>-->	
                                                             <td class="font-numero"><%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[3]%></td> 
                                                             <td class="font-texto"> <%=row[4]%></td> 
