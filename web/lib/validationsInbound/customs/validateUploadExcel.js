@@ -17,9 +17,9 @@ function relacion_columnas_excel_administrador(posicion, contenido, fila) {
 
     if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 34 || posicion === 35) {
         celda = validarNumero_excel(contenido);
-    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 44 || posicion === 45) {
+    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 5 || posicion === 44 || posicion === 45) {
         celda = validarTexto_excelAlfanumerico_excel(contenido);
-    } else if (posicion === 5 || posicion === 9 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50 || posicion === 53 || posicion === 57 || posicion === 58) {
+    } else if (posicion === 9 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50 || posicion === 53 || posicion === 57 || posicion === 58) {
         celda = validarTexto_excel(contenido);
     } else if (posicion === 10 || posicion === 11 || posicion === 13) {
         celda = formatoNumero_excel(contenido);

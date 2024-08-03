@@ -1978,6 +1978,83 @@ function parametrizacionValoresEstatusOperacion(contador) {
 
 }
 
+function leerArchivo() {
+
+    console.log("Lectura de archivo excel");
+
+    var fileInput = document.getElementById('input-id');
+
+    var archivo = fileInput.files[0];
+    var lector = new FileReader();
+
+    lector.onload = function (e) {
+        var contenido = e.target.result;
+        var workbook = XLSX.read(contenido, {type: 'array'});
+
+        var primeraHoja = workbook.SheetNames[0];
+        var hoja = workbook.Sheets[primeraHoja];
+
+        var datos = XLSX.utils.sheet_to_json(hoja, {header: 1});
+
+        // Itera sobre las filas del Excel
+        for (var i = 2; i < datos.length; i++) {
+
+            // Agrega celdas a la nueva fila
+            for (var k = 0; k < datos[i].length; k++) {
+
+                valor = datos[i][k];
+                fila = parseInt([i]) + 1;
+                //console.log("Núm Celda:" + k + " - Fila: " + [i] + " -  Valor: " + valor);
+
+                if (valor === undefined || valor === null) {
+                    valor = "";  // Puedes asignar otro valor predeterminado si lo deseas
+                }
+
+                if(k ===10 || k ===11 || k ===13){
+                    if(valor.replace(/\s/g, "") !== ""){
+                        valor = valor;
+                    }else{
+                        valor = "00 00 0000 0000000";
+                    }
+                }
+
+                if (idAgenteAduanal === "4006") { //ADMINISTRADOR
+                    validar += relacion_columnas_excel_administrador(k, valor, fila);
+                }
+
+                if (idAgenteAduanal === "4001") { //LOGIX
+                    validar += relacion_columnas_excel_logix(k, valor, fila);
+                }
+
+                if (idAgenteAduanal === "4002") {  //CUSA
+                    validar += relacion_columnas_excel_cusa(k, valor, fila);
+                }
+
+                if (idAgenteAduanal !== "4001" && idAgenteAduanal !== "4002" && idAgenteAduanal !== "4006") { //GENERICO 
+                    validar += relacion_columnas_excel_generico(k, valor, fila);
+                }
+
+            }
+
+        }
+
+        setTimeout(() => {
+            if (validar === "") {
+                 c();
+                 //location.reload();
+            } else {
+                swal(validar,"warning");
+                ocultarLoader();
+                return false;
+            }
+        }, 4000);
+
+    }
+
+    lector.readAsArrayBuffer(archivo);
+
+}
+
 function clearFiltres(){
     location.reload();
 }
