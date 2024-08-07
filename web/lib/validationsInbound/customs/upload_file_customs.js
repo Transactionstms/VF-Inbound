@@ -4,13 +4,7 @@
  */
 
 $(document).ready(function () {
-/* 
-    $("#input-id2").fileinput({
-        language: "es",
-        allowedFileExtensions: ["xls", "xlsx"],
-        showUpload: false
-    });
- */
+    
     var documento;
     var input;
 
@@ -75,7 +69,7 @@ $(document).ready(function () {
             $("#alert").removeClass().addClass("alert alert-danger");
             resetInputfile();
         });
-            console.log("Upload File Excel Finalizado");
+            console.log("Agente Aduanal Excel");
     });
 
 

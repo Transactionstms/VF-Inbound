@@ -126,9 +126,9 @@
         <div class="card-body">
             <div class="contenedor">
                 <div class="columna1"><input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" onclick="leerArchivo()"><i class="fa fa-upload"></i></button></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
-                <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="created_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
+                <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" name="upload_file" onclick="leerArchivo()"><i class="fa fa-upload"></i></button></div>
+                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" name="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
+                <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="clear_file" name="clear_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
                 <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
                 <div class="columna6"></div>            
             </div> 
@@ -655,6 +655,9 @@
             let contSubfiltros = 0;
             let dataEnd = "";
             
+           //Inicializar bloqueo de controles para descarga/subida de plantilla:
+           document.getElementById("upload_file").disabled=true; 
+           document.getElementById("created_file").disabled=true;
         </script>
         <!-- JavaScript files-->
         <script src="<%=request.getContextPath()%>/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
