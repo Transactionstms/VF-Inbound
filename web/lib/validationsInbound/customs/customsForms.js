@@ -355,7 +355,7 @@ async function AddPullCustoms() {
             transferencia = document.getElementById("transferencia[" + i + "]").innerHTML;
             fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado[" + i + "]").innerHTML;
             fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado[" + i + "]").innerHTML;
-            hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado[" + i + "]").innerHTML;
+            hora_termino_etiquetado = document.getElementById("time_termino_etiquetado[" + i + "]").innerHTML;
             proveedor = document.getElementById("proveedor[" + i + "]").innerHTML;
             proveedor_carga = document.getElementById("proveedor_carga[" + i + "]").innerHTML;
         }
@@ -711,7 +711,7 @@ async function AddLineCustoms(i) {
         transferencia = document.getElementById("transferencia[" + i + "]").innerHTML;
         fecha_inicio_etiquetado = document.getElementById("fecha_inicio_etiquetado[" + i + "]").innerHTML;
         fecha_termino_etiquetado = document.getElementById("fecha_termino_etiquetado[" + i + "]").innerHTML;
-        hora_termino_etiquetado = document.getElementById("hora_termino_etiquetado[" + i + "]").innerHTML;
+        hora_termino_etiquetado = document.getElementById("time_termino_etiquetado[" + i + "]").innerHTML;
         proveedor = document.getElementById("proveedor[" + i + "]").innerHTML;
         proveedor_carga = document.getElementById("proveedor_carga[" + i + "]").innerHTML;
     }
