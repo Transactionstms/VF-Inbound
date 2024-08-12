@@ -1676,6 +1676,8 @@ async function readExcelFile() {
             // Obtenemos la primera hoja del archivo Excel
             var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
             var range = XLSX.utils.decode_range(firstSheet['!ref']);
+			
+            document.getElementById("divResultado").innerHTML = "";
 
             // Iterar sobre cada fila, empezando desde la tercera fila (índice 2)
             for (var rowNum = 2; rowNum <= range.e.r; rowNum++) {
@@ -1686,19 +1688,18 @@ async function readExcelFile() {
                     var cellAddress = {c: colNum, r: rowNum};
                     var cellRef = XLSX.utils.encode_cell(cellAddress);
                     var cell = firstSheet[cellRef];
-                    var cellValue = (cell ? cell.v : ""); // Asignar "NULL" si la celda está vacía
+                    var cellValue = (cell ? cell.v : "NULL"); // Asignar "NULL" si la celda está vacía
 
                     rowValues.push(cellValue);
-                    concatenatedRowValues += cellValue + (colNum < range.e.c ? "," : ""); // Concatenar valores con coma
+                    concatenatedRowValues += cellValue + (colNum < range.e.c ? "@" : ""); // Concatenar valores con coma
                 }
 
                 mostrarOcultarDiv('divAMostrarOcultar', true);
-                document.getElementById("statusResultado").innerHTML = "Cargando Información......";
-
+				
                 // Enviar el valor concatenado a la función fetch  
-                let res = async enviarValoresFila(concatenatedRowValues);
+                const res = await  enviarValoresFila(concatenatedRowValues);
 
-               console.log("Estatus Servlet: "+res);
+                console.log("Estatus Servlet: "+res);
     
                 if (res) {
 
@@ -1730,17 +1731,22 @@ async function enviarValoresFila(concatenatedRowValues) {
 
     console.log(url);
 
-    fetch(url, {
-        method: 'POST'
-    }).then(r => r.text())
-            .then(data => {
-                if (data) {
-                    res = data;
-                } else {
-                    res = data;
-                }
+    try {
+        // Esperar la respuesta del fetch
+        const response = await fetch(url, {
+            method: 'POST'
+        });
 
-            }).catch(error => console.log(error));
+        // Obtener el texto de la respuesta
+        const data = await response.text();
+
+        // Asignar el resultado a la variable res
+        res = data;
+        
+    } catch (error) {
+        console.log(error);
+    }
+
     return res;
 }
 

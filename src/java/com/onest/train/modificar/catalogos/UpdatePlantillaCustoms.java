@@ -134,7 +134,7 @@ public class UpdatePlantillaCustoms extends HttpServlet {
 
                 if (agente_id.equals("4006")) {              //Plantilla Administrador
 
-                    String[] partes = valores_celdas.split(",");
+                    String[] partes = valores_celdas.split("@");
                     pNUMERO_DE_EVENTO = partes[0];
                     pSHIPMENT_ID = partes[1];
                     pCONTAINER_ID = partes[2];
@@ -211,7 +211,7 @@ public class UpdatePlantillaCustoms extends HttpServlet {
 
                 } else if (agente_id.equals("4004")) {     //Plantilla Generica
 
-                    String[] partes = valores_celdas.split(",");
+                    String[] partes = valores_celdas.split("@");
                     pNUMERO_DE_EVENTO = partes[0];
                     pSHIPMENT_ID = partes[1];
                     pCONTAINER_ID = partes[2];
@@ -270,7 +270,7 @@ public class UpdatePlantillaCustoms extends HttpServlet {
 
                 } else if (agente_id.equals("4002")) {     //Plantilla Cusa
 
-                    String[] partes = valores_celdas.split(",");
+                    String[] partes = valores_celdas.split("@");
                     pNUMERO_DE_EVENTO = partes[0];
                     pSHIPMENT_ID = partes[1];
                     pCONTAINER_ID = partes[2];
@@ -337,7 +337,7 @@ public class UpdatePlantillaCustoms extends HttpServlet {
 
                 } else if (agente_id.equals("4001")) {     //Plantilla Logix
 
-                    String[] partes = valores_celdas.split(",");
+                    String[] partes = valores_celdas.split("@");
                     pNUMERO_DE_EVENTO = partes[0];
                     pSHIPMENT_ID = partes[1];
                     pCONTAINER_ID = partes[2];
