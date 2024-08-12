@@ -1590,7 +1590,6 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                         }
 
                         salida += " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
-                              //+ " <td></td>"
                                 + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
                                 + "</tr>";
 
