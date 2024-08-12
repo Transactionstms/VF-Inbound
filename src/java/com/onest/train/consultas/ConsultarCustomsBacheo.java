@@ -238,94 +238,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             String listStatusOperationEvent = "";
             String salida = "";
             int cont = 1;
-            
-            //Parametros: Filtros Iniciales (Lista de valores filtros checkbox)
-            String list_evento = "";
-            String list_referenciaAA = "";
-            String list_responsable = "";
-            String list_finalDestination = "";
-            String list_brandDivision = "";
-            String list_division = "";
-            String list_shipmentId = "";
-            String list_containerId = "";
-            String list_blAwbPro = "";
-            String list_loadType = "";
-            String list_quantity = "";
-            String list_pod = "";
-            String list_estDepartFromPol = "";
-            String list_etaRealPortOfDischarge = "";
-            String list_estEtaDc = "";
-            String list_inboundNotification = "";
-            String list_pol = "";
-            String list_aa = "";
-            String list_fechaMesVenta = "";
-            String list_prioridad = "";
-            String list_pais_origen = "";
-            String list_size_container = "";
-            String list_valor_usd = "";
-            String list_eta_port_discharge = "";
-            String list_agente_aduanal = "";
-            String list_pedimento_a1 = "";
-            String list_pedimento_r1_1er = "";
-            String list_motivo_rectificacion_1er = "";
-            String list_pedimento_r1_2do = "";
-            String list_motivo_rectificacion_2do = "";
-            String list_fecha_recepcion_doc = "";
-            String list_recinto = "";
-            String list_naviera = "";
-            String list_buque = "";
-            String list_fecha_revalidacion = "";
-            String list_fecha_previo_origen = "";
-            String list_fecha_previo_destino = "";
-            String list_fecha_resultado_previo = "";
-            String list_proforma_final = "";
-            String list_permiso = "";
-            String list_fecha_envio = "";
-            String list_fecha_recepcion_perm = "";
-            String list_fecha_activacion_perm = "";
-            String list_fecha_permisos_aut = "";
-            String list_co_pref_arancelaria = "";
-            String list_aplic_pref_arancelaria = "";
-            String list_req_uva = "";
-            String list_req_ca = "";
-            String list_fecha_recepcion_ca = "";
-            String list_num_constancia_ca = "";
-            String list_monto_ca = "";
-            String list_fecha_doc_completos = "";
-            String list_fecha_pago_pedimento = "";
-            String list_fecha_solicitud_transporte = "";
-            String list_fecha_modulacion = "";
-            String list_modalidad = "";
-            String list_resultado_modulacion = "";
-            String list_fecha_reconocimiento = "";
-            String list_fecha_liberacion = "";
-            String list_sello_origen = "";
-            String list_sello_final = "";
-            String list_fecha_retencion_aut = "";
-            String list_fecha_liberacion_aut = "";
-            String list_estatus_operacion = "";
-            String list_motivo_atraso = "";
-            String list_observaciones = "";
-            String list_llegada_a_nova = "";
-            String list_llegada_a_globe_trade_sd = "";
-            String list_archivo_m = "";
-            String list_fecha_archivo_m = "";
-            String list_fecha_solicit_manip = "";
-            String list_fecha_vencim_manip = "";
-            String list_fecha_confirm_clave_pedim = "";
-            String list_fecha_recep_increment = "";
-            String list_t_e = "";
-            String list_fecha_vencim_inbound = "";
-            String list_no_bultos = "";
-            String list_peso_kg = "";
-            String list_transferencia = "";
-            String list_fecha_inicio_etiquetado = "";
-            String list_fecha_termino_etiquetado = "";
-            String list_hora_termino_etiquetado = "";
-            String list_proveedor = "";
-            String list_proveedor_carga = "";
-            String list_fy = "";
-            
+           
             //Consultar Información de Agente Aduanal
             if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
                 for (String[] rowA : db.getResultado()) {
@@ -1584,12 +1497,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                              // + " <th id=\"columna\"></th> "
                                 + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
                                 + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
-                                + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + ""
-                                + "   <input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"> "
-                                + "   <div id=\"popup" + cont + "\" style=\"display: none;\"> "
-                                + "     <div id=\"mSgError" + cont + "\"></div> "
-                                + "   </div> "
-                                + " </th> "
+                                + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + "<input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"></th> "
                                 + " <td id=\"Responsable[" + cont + "]\">" + row[1] + "</td> "
                                 + " <td id=\"FinalDestination[" + cont + "]\">" + row[2] + "</td> "
                                 + " <td id=\"BrandDivision[" + cont + "]\">" + row[21] + "</td> "
@@ -1676,8 +1584,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                                     + " <td contenteditable=\"true\" oninput=\"validarTextoCheckbox(this)\" id=\"transferencia[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'transferencia'," + cont + ")\" ondblclick=\"show_transferencia(" + cont + ")\" onpaste=\"handlePasteTextCheckBox(event)\">" + row[89] + "</td> "
                                     + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_inicio_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_inicio_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_inicio_etiquetado('" + row[90] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[90] + "</td> "
                                     + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_termino_etiquetado[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_termino_etiquetado'," + cont + ")\" ondblclick=\"show_fecha_termino_etiquetado('" + row[91] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[91] + "</td> "
-                                  //+ " <td contenteditable=\"true\"></td>"
-                                    + " <td><input class=\"form-control\" style=\"border: none; outline: none;\" id=\"hora_termino_etiquetado[" + cont + "]\" name=\"hora_termino_etiquetado[" + cont + "]\" type=\"time\" value=\"" + row[92] + "\" oninput=\"parametrizacionValoresEventoInput('hora_termino_etiquetado'," + cont + ")\" autocomplete=\"off\"></td> "
+                                    + " <td contenteditable=\"true\" id=\"time_termino_etiquetado[" + cont + "]\" onclick=\"onclickTime(" + cont + ")\">" + row[92] + "</td> "
                                     + " <td contenteditable=\"true\" oninput=\"validarTexto(this)\" onkeydown=\"tabuladorVertical(event,'proveedor'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor[" + cont + "]\">" + row[93] + "</td> "
                                     + " <td contenteditable=\"true\" oninput=\"validarTextoParametrizacion(this,'proveedor_carga'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
                         }

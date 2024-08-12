@@ -580,6 +580,10 @@ async function AddPullCustoms() {
             if (!response.ok) {
                 throw new Error('Error en la solicitud');
             }
+            
+             //Crear elemento 'div' para mostrar el log de error/success
+             crearPopup(i);
+        
             const data = await response.text();
 
             if (contadorError > 0) {
@@ -932,6 +936,10 @@ async function AddLineCustoms(i) {
         if (!response.ok) {
             throw new Error('Error en la solicitud');
         }
+        
+        //Crear elemento 'div' para mostrar el log de error/success
+        crearPopup(i);
+        
         const data = await response.text();
 
         if (contadorError > 0) {
@@ -1755,4 +1763,66 @@ async function enviarValoresFila(concatenatedRowValues) {
 
 function clearFiltres() {
     location.reload();
+}
+
+function crearPopup(cont) {
+    // Obtener el elemento <th> por su id
+    var thElement = document.getElementById("elemento" + cont);
+
+    // Verificar si se encontró el elemento <th>
+    if (thElement) {
+        // Crear el contenedor para el mensaje de error
+        var msgErrorDiv = document.createElement('div');
+        msgErrorDiv.id = "mSgError" + cont;
+        msgErrorDiv.style.display = "none"; // Ocultar inicialmente si es necesario
+
+        // Añadir el contenedor de mensaje de error al <th>
+        thElement.appendChild(msgErrorDiv);
+    } else {
+        console.error("No se encontró el elemento <th> con id: " + "elemento" + cont);
+    }
+}
+
+function onclickTime(cont) {
+            // Obtener el elemento <td> que fue clickeado
+            var celda = event.currentTarget;
+
+            // Verificar si ya hay un <input> en la celda
+            if (!celda.querySelector("input")) {
+                // Obtener el valor actual de la celda
+                var valorActual = celda.textContent.trim();
+
+                // Crear el elemento <input>
+                var input = document.createElement("input");
+                input.className = "form-control";
+                input.style.border = "none";
+                input.style.outline = "none";
+                input.id = "hora_termino_etiquetado[" + cont + "]";
+                input.name = "hora_termino_etiquetado[" + cont + "]";
+                input.type = "time";
+                input.value = valorActual;
+                input.setAttribute("oninput", "parametrizacionValoresEventoInput('hora_termino_etiquetado'," + cont + ")");
+                input.autocomplete = "off";
+
+                // Reemplazar el contenido de la celda con el <input>
+                celda.innerHTML = "";
+                celda.appendChild(input);
+
+                // Establecer el foco en el input recién creado
+                input.focus();
+
+                // Añadir un evento para cuando se pierda el foco del input
+                input.addEventListener("blur", function() {
+                    // Actualizar el contenido de la celda con el nuevo valor
+                    celda.textContent = input.value;
+
+                    // Opcional: Puedes llamar a una función adicional aquí si necesitas manejar el nuevo valor
+                });
+            }
+}
+
+// Función para manejar el evento input del elemento <input>
+function parametrizacionValoresEventoInput(tipo, cont) {
+    console.log("Evento input en " + tipo + " con cont: " + cont);
+    // Implementa aquí la lógica necesaria para manejar el evento del input
 }
