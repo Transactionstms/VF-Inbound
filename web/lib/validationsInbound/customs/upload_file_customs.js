@@ -4,11 +4,17 @@
  */
 
 $(document).ready(function () {
-    
+/* 
+    $("#input-id2").fileinput({
+        language: "es",
+        allowedFileExtensions: ["xls", "xlsx"],
+        showUpload: false
+    });
+ */
     var documento;
     var input;
 
-    $("#input-id").change(function () {
+    /*$("#input-id").change(function () {
         input = document.getElementById('input-id');
         var file = input.files[0];
         var fr = new FileReader();
@@ -17,9 +23,9 @@ $(document).ready(function () {
             documento = event.target.result.match(/,(.*)$/)[1];
         };
         fr.readAsDataURL(file);
-    });
+    });*/
 
-    $("#upload_file").click(async function () {
+    /*$("#upload_file").click(async function () {
         //debugger;
         if($("#input-id").val()==''){
             alert('Debe de Seleccionar Documento');
@@ -69,9 +75,8 @@ $(document).ready(function () {
             $("#alert").removeClass().addClass("alert alert-danger");
             resetInputfile();
         });
-            console.log("Agente Aduanal Excel");
-    });
-
+            console.log("Upload File Excel Finalizado");
+    });*/
 
     $("#created_file").click(function () {
         //debugger;

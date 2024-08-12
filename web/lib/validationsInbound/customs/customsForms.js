@@ -181,8 +181,7 @@ let habilitarBacheoInicial = true;
 // Generación de Filtros/Tabla (1er vez)
 $(document).ready(async function () {
     await consultarCustomsBacheo(selected_referenciaAA, selected_evento, selected_responsable, selected_final_destination, selected_brand_division, selected_division, selected_shipmentId, selected_containerId, selected_blAwbPro, selected_loadTypeFinal, selected_quantity, selected_pod, selected_estDepartFromPol, selected_etaRealPortOfDischarge, selected_estEtaDc, selected_inboundNotification, selected_pol, selected_aa, selected_fechaMesVenta, selected_prioridad, selected_pais_origen, selected_size_container, selected_valor_usd, selected_eta_port_discharge, selected_agente_aduanal, selected_pedimento_a1, selected_pedimento_r1_1er, selected_motivo_rectificacion_1er, selected_pedimento_r1_2do, selected_motivo_rectificacion_2do, selected_fecha_recepcion_doc, selected_recinto, selected_naviera, selected_buque, selected_fecha_revalidacion, selected_fecha_previo_origen, selected_fecha_previo_destino, selected_fecha_resultado_previo, selected_proforma_final, selected_permiso, selected_fecha_envio, selected_fecha_recepcion_perm, selected_fecha_activacion_perm, selected_fecha_permisos_aut, selected_co_pref_arancelaria, selected_aplic_pref_arancelaria, selected_req_uva, selected_req_ca, selected_fecha_recepcion_ca, selected_num_constancia_ca, selected_monto_ca, selected_fecha_doc_completos, selected_fecha_pago_pedimento, selected_fecha_solicitud_transporte, selected_fecha_modulacion, selected_modalidad, selected_resultado_modulacion, selected_fecha_reconocimiento, selected_fecha_liberacion, selected_sello_origen, selected_sello_final, selected_fecha_retencion_aut, selected_fecha_liberacion_aut, selected_estatus_operacion, selected_motivo_atraso, selected_observaciones, selected_llegada_a_nova, selected_llegada_a_globe_trade_sd, selected_archivo_m, selected_fecha_archivo_m, selected_fecha_solicit_manip, selected_fecha_vencim_manip, selected_fecha_confirm_clave_pedim, selected_fecha_recep_increment, selected_t_e, selected_fecha_vencim_inbound, selected_no_bultos, selected_peso_kg, selected_transferencia, selected_fecha_inicio_etiquetado, selected_fecha_termino_etiquetado, selected_hora_termino_etiquetado, selected_proveedor, selected_proveedor_carga, selected_fy);
-}
-);
+});
 
 async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, columna_responsable, columna_final_destination, columna_brand_division, columna_division, columna_shipmentId, columna_containerId, columna_blAwbPro, columna_loadTypeFinal, columna_quantity, columna_pod, columna_estDepartFromPol, columna_etaRealPortOfDischarge, columna_estEtaDc, columna_inboundNotification, columna_pol, columna_aa, columna_fechaMesVenta, columna_prioridad, columna_pais_origen, columna_size_container, columna_valor_usd, columna_eta_port_discharge, columna_agente_aduanal, columna_pedimento_a1, columna_pedimento_r1_1er, columna_motivo_rectificacion_1er, columna_pedimento_r1_2do, columna_motivo_rectificacion_2do, columna_fecha_recepcion_doc, columna_recinto, columna_naviera, columna_buque, columna_fecha_revalidacion, columna_fecha_previo_origen, columna_fecha_previo_destino, columna_fecha_resultado_previo, columna_proforma_final, columna_permiso, columna_fecha_envio, columna_fecha_recepcion_perm, columna_fecha_activacion_perm, columna_fecha_permisos_aut, columna_co_pref_arancelaria, columna_aplic_pref_arancelaria, columna_req_uva, columna_req_ca, columna_fecha_recepcion_ca, columna_num_constancia_ca, columna_monto_ca, columna_fecha_doc_completos, columna_fecha_pago_pedimento, columna_fecha_solicitud_transporte, columna_fecha_modulacion, columna_modalidad, columna_resultado_modulacion, columna_fecha_reconocimiento, columna_fecha_liberacion, columna_sello_origen, columna_sello_final, columna_fecha_retencion_aut, columna_fecha_liberacion_aut, columna_estatus_operacion, columna_motivo_atraso, columna_observaciones, columna_llegada_a_nova, columna_llegada_a_globe_trade_sd, columna_archivo_m, columna_fecha_archivo_m, columna_fecha_solicit_manip, columna_fecha_vencim_manip, columna_fecha_confirm_clave_pedim, columna_fecha_recep_increment, columna_t_e, columna_fecha_vencim_inbound, columna_no_bultos, columna_peso_kg, columna_transferencia, columna_fecha_inicio_etiquetado, columna_fecha_termino_etiquetado, columna_hora_termino_etiquetado, columna_proveedor, columna_proveedor_carga, columna_fy) {
 
@@ -194,53 +193,51 @@ async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, colu
 
     try {
         //Iterar Encabezados tabla.
-        let urlCustomsBacheo = encodeURI("../ConsultarFiltrosCustomsBacheo?columna_referenciaAA=" + columna_referenciaAA + "&columna_evento=" + columna_evento + "&columna_responsable=" + columna_responsable + "&columna_final_destination=" + columna_final_destination + "&columna_brand_division=" + columna_brand_division + "&columna_division=" + columna_division + "&columna_shipmentId=" + columna_shipmentId + "&columna_containerId=" + columna_containerId + "&columna_blAwbPro=" + columna_blAwbPro + "&columna_loadTypeFinal=" + columna_loadTypeFinal + "&columna_quantity=" + columna_quantity + "&columna_pod=" + columna_pod + "&columna_estDepartFromPol=" + columna_estDepartFromPol + "&columna_etaRealPortOfDischarge=" + columna_etaRealPortOfDischarge + "&columna_estEtaDc=" + columna_estEtaDc + "&columna_inboundNotification=" + columna_inboundNotification + "&columna_pol=" + columna_pol + "&columna_aa=" + columna_aa + "&columna_fechaMesVenta=" + columna_fechaMesVenta + "&columna_prioridad=" + columna_prioridad + "&columna_pais_origen=" + columna_pais_origen + "&columna_size_container=" + columna_size_container + "&columna_valor_usd=" + columna_valor_usd + "&columna_eta_port_discharge=" + columna_eta_port_discharge + "&columna_agente_aduanal=" + columna_agente_aduanal + "&columna_pedimento_a1=" + columna_pedimento_a1 + "&columna_pedimento_r1_1er=" + columna_pedimento_r1_1er + "&columna_motivo_rectificacion_1er=" + columna_motivo_rectificacion_1er + "&columna_pedimento_r1_2do=" + columna_pedimento_r1_2do + "&columna_motivo_rectificacion_2do=" + columna_motivo_rectificacion_2do + "&columna_fecha_recepcion_doc=" + columna_fecha_recepcion_doc + "&columna_recinto=" + columna_recinto + "&columna_naviera=" + columna_naviera + "&columna_buque=" + columna_buque + "&columna_fecha_revalidacion=" + columna_fecha_revalidacion + "&columna_fecha_previo_origen=" + columna_fecha_previo_origen + "&columna_fecha_previo_destino=" + columna_fecha_previo_destino + "&columna_fecha_resultado_previo=" + columna_fecha_resultado_previo + "&columna_proforma_final=" + columna_proforma_final + "&columna_permiso=" + columna_permiso + "&columna_fecha_envio=" + columna_fecha_envio + "&columna_fecha_recepcion_perm=" + columna_fecha_recepcion_perm + "&columna_fecha_activacion_perm=" + columna_fecha_activacion_perm + "&columna_fecha_permisos_aut=" + columna_fecha_permisos_aut + "&columna_co_pref_arancelaria=" + columna_co_pref_arancelaria + "&columna_aplic_pref_arancelaria=" + columna_aplic_pref_arancelaria + "&columna_req_uva=" + columna_req_uva + "&columna_req_ca=" + columna_req_ca + "&columna_fecha_recepcion_ca=" + columna_fecha_recepcion_ca + "&columna_num_constancia_ca=" + columna_num_constancia_ca + "&columna_monto_ca=" + columna_monto_ca + "&columna_fecha_doc_completos=" + columna_fecha_doc_completos + "&columna_fecha_pago_pedimento=" + columna_fecha_pago_pedimento + "&columna_fecha_solicitud_transporte=" + columna_fecha_solicitud_transporte + "&columna_fecha_modulacion=" + columna_fecha_modulacion + "&columna_modalidad=" + columna_modalidad + "&columna_resultado_modulacion=" + columna_resultado_modulacion + "&columna_fecha_reconocimiento=" + columna_fecha_reconocimiento + "&columna_fecha_liberacion=" + columna_fecha_liberacion + "&columna_sello_origen=" + columna_sello_origen + "&columna_sello_final=" + columna_sello_final + "&columna_fecha_retencion_aut=" + columna_fecha_retencion_aut + "&columna_fecha_liberacion_aut=" + columna_fecha_liberacion_aut + "&columna_estatus_operacion=" + columna_estatus_operacion + "&columna_motivo_atraso=" + columna_motivo_atraso + "&columna_observaciones=" + columna_observaciones + "&columna_llegada_a_nova=" + columna_llegada_a_nova + "&columna_llegada_a_globe_trade_sd=" + columna_llegada_a_globe_trade_sd + "&columna_archivo_m=" + columna_archivo_m + "&columna_fecha_archivo_m=" + columna_fecha_archivo_m + "&columna_fecha_solicit_manip=" + columna_fecha_solicit_manip + "&columna_fecha_vencim_manip=" + columna_fecha_vencim_manip + "&columna_fecha_confirm_clave_pedim=" + columna_fecha_confirm_clave_pedim + "&columna_fecha_recep_increment=" + columna_fecha_recep_increment + "&columna_t_e=" + columna_t_e + "&columna_fecha_vencim_inbound=" + columna_fecha_vencim_inbound + "&columna_no_bultos=" + columna_no_bultos + "&columna_peso_kg=" + columna_peso_kg + "&columna_transferencia=" + columna_transferencia + "&columna_fecha_inicio_etiquetado=" + columna_fecha_inicio_etiquetado + "&columna_fecha_termino_etiquetado=" + columna_fecha_termino_etiquetado + "&columna_hora_termino_etiquetado=" + columna_hora_termino_etiquetado + "&columna_proveedor=" + columna_proveedor + "&columna_proveedor_carga=" + columna_proveedor_carga + "&columna_fy=" + columna_fy + "&contSubfiltros=" + contSubfiltros);
-        const response = await fetch(urlCustomsBacheo);
+        let urlCustomsEncabezados = encodeURI("../ConsultarFiltrosCustomsBacheo?columna_referenciaAA=" + columna_referenciaAA + "&columna_evento=" + columna_evento + "&columna_responsable=" + columna_responsable + "&columna_final_destination=" + columna_final_destination + "&columna_brand_division=" + columna_brand_division + "&columna_division=" + columna_division + "&columna_shipmentId=" + columna_shipmentId + "&columna_containerId=" + columna_containerId + "&columna_blAwbPro=" + columna_blAwbPro + "&columna_loadTypeFinal=" + columna_loadTypeFinal + "&columna_quantity=" + columna_quantity + "&columna_pod=" + columna_pod + "&columna_estDepartFromPol=" + columna_estDepartFromPol + "&columna_etaRealPortOfDischarge=" + columna_etaRealPortOfDischarge + "&columna_estEtaDc=" + columna_estEtaDc + "&columna_inboundNotification=" + columna_inboundNotification + "&columna_pol=" + columna_pol + "&columna_aa=" + columna_aa + "&columna_fechaMesVenta=" + columna_fechaMesVenta + "&columna_prioridad=" + columna_prioridad + "&columna_pais_origen=" + columna_pais_origen + "&columna_size_container=" + columna_size_container + "&columna_valor_usd=" + columna_valor_usd + "&columna_eta_port_discharge=" + columna_eta_port_discharge + "&columna_agente_aduanal=" + columna_agente_aduanal + "&columna_pedimento_a1=" + columna_pedimento_a1 + "&columna_pedimento_r1_1er=" + columna_pedimento_r1_1er + "&columna_motivo_rectificacion_1er=" + columna_motivo_rectificacion_1er + "&columna_pedimento_r1_2do=" + columna_pedimento_r1_2do + "&columna_motivo_rectificacion_2do=" + columna_motivo_rectificacion_2do + "&columna_fecha_recepcion_doc=" + columna_fecha_recepcion_doc + "&columna_recinto=" + columna_recinto + "&columna_naviera=" + columna_naviera + "&columna_buque=" + columna_buque + "&columna_fecha_revalidacion=" + columna_fecha_revalidacion + "&columna_fecha_previo_origen=" + columna_fecha_previo_origen + "&columna_fecha_previo_destino=" + columna_fecha_previo_destino + "&columna_fecha_resultado_previo=" + columna_fecha_resultado_previo + "&columna_proforma_final=" + columna_proforma_final + "&columna_permiso=" + columna_permiso + "&columna_fecha_envio=" + columna_fecha_envio + "&columna_fecha_recepcion_perm=" + columna_fecha_recepcion_perm + "&columna_fecha_activacion_perm=" + columna_fecha_activacion_perm + "&columna_fecha_permisos_aut=" + columna_fecha_permisos_aut + "&columna_co_pref_arancelaria=" + columna_co_pref_arancelaria + "&columna_aplic_pref_arancelaria=" + columna_aplic_pref_arancelaria + "&columna_req_uva=" + columna_req_uva + "&columna_req_ca=" + columna_req_ca + "&columna_fecha_recepcion_ca=" + columna_fecha_recepcion_ca + "&columna_num_constancia_ca=" + columna_num_constancia_ca + "&columna_monto_ca=" + columna_monto_ca + "&columna_fecha_doc_completos=" + columna_fecha_doc_completos + "&columna_fecha_pago_pedimento=" + columna_fecha_pago_pedimento + "&columna_fecha_solicitud_transporte=" + columna_fecha_solicitud_transporte + "&columna_fecha_modulacion=" + columna_fecha_modulacion + "&columna_modalidad=" + columna_modalidad + "&columna_resultado_modulacion=" + columna_resultado_modulacion + "&columna_fecha_reconocimiento=" + columna_fecha_reconocimiento + "&columna_fecha_liberacion=" + columna_fecha_liberacion + "&columna_sello_origen=" + columna_sello_origen + "&columna_sello_final=" + columna_sello_final + "&columna_fecha_retencion_aut=" + columna_fecha_retencion_aut + "&columna_fecha_liberacion_aut=" + columna_fecha_liberacion_aut + "&columna_estatus_operacion=" + columna_estatus_operacion + "&columna_motivo_atraso=" + columna_motivo_atraso + "&columna_observaciones=" + columna_observaciones + "&columna_llegada_a_nova=" + columna_llegada_a_nova + "&columna_llegada_a_globe_trade_sd=" + columna_llegada_a_globe_trade_sd + "&columna_archivo_m=" + columna_archivo_m + "&columna_fecha_archivo_m=" + columna_fecha_archivo_m + "&columna_fecha_solicit_manip=" + columna_fecha_solicit_manip + "&columna_fecha_vencim_manip=" + columna_fecha_vencim_manip + "&columna_fecha_confirm_clave_pedim=" + columna_fecha_confirm_clave_pedim + "&columna_fecha_recep_increment=" + columna_fecha_recep_increment + "&columna_t_e=" + columna_t_e + "&columna_fecha_vencim_inbound=" + columna_fecha_vencim_inbound + "&columna_no_bultos=" + columna_no_bultos + "&columna_peso_kg=" + columna_peso_kg + "&columna_transferencia=" + columna_transferencia + "&columna_fecha_inicio_etiquetado=" + columna_fecha_inicio_etiquetado + "&columna_fecha_termino_etiquetado=" + columna_fecha_termino_etiquetado + "&columna_hora_termino_etiquetado=" + columna_hora_termino_etiquetado + "&columna_proveedor=" + columna_proveedor + "&columna_proveedor_carga=" + columna_proveedor_carga + "&columna_fy=" + columna_fy + "&contSubfiltros=" + contSubfiltros);
+        const response = await fetch(urlCustomsEncabezados);
 
         if (!response.ok) {
             throw new Error('Error en la solicitud');
         }
 
         //Mostrar data/encabezados tabla
-        const data = await response.text();
-        document.getElementById('table-scroll').innerHTML = data;
+        const dataEncabezados = await response.text();
+        document.getElementById('table-scroll').innerHTML = dataEncabezados;
 
-        //Iterar datos por lotes 
+        //Iterar datos por lotes.
         for (let i = 1; i <= numBacheo; i += paso) {
 
-            let offset = i;               //1
-            let next = i + paso - 1;    //1000.....
+            let offset = i; //1
+            let next = i + paso - 1; //1000.....
 
-            let urlCustomsBacheo = encodeURI("../ConsultarCustomsBacheo?columna_referenciaAA=" + columna_referenciaAA + "&columna_evento=" + columna_evento + "&columna_responsable=" + columna_responsable + "&columna_final_destination=" + columna_final_destination + "&columna_brand_division=" + columna_brand_division + "&columna_division=" + columna_division + "&columna_shipmentId=" + columna_shipmentId + "&columna_containerId=" + columna_containerId + "&columna_blAwbPro=" + columna_blAwbPro + "&columna_loadTypeFinal=" + columna_loadTypeFinal + "&columna_quantity=" + columna_quantity + "&columna_pod=" + columna_pod + "&columna_estDepartFromPol=" + columna_estDepartFromPol + "&columna_etaRealPortOfDischarge=" + columna_etaRealPortOfDischarge + "&columna_estEtaDc=" + columna_estEtaDc + "&columna_inboundNotification=" + columna_inboundNotification + "&columna_pol=" + columna_pol + "&columna_aa=" + columna_aa + "&columna_fechaMesVenta=" + columna_fechaMesVenta + "&columna_prioridad=" + columna_prioridad + "&columna_pais_origen=" + columna_pais_origen + "&columna_size_container=" + columna_size_container + "&columna_valor_usd=" + columna_valor_usd + "&columna_eta_port_discharge=" + columna_eta_port_discharge + "&columna_agente_aduanal=" + columna_agente_aduanal + "&columna_pedimento_a1=" + columna_pedimento_a1 + "&columna_pedimento_r1_1er=" + columna_pedimento_r1_1er + "&columna_motivo_rectificacion_1er=" + columna_motivo_rectificacion_1er + "&columna_pedimento_r1_2do=" + columna_pedimento_r1_2do + "&columna_motivo_rectificacion_2do=" + columna_motivo_rectificacion_2do + "&columna_fecha_recepcion_doc=" + columna_fecha_recepcion_doc + "&columna_recinto=" + columna_recinto + "&columna_naviera=" + columna_naviera + "&columna_buque=" + columna_buque + "&columna_fecha_revalidacion=" + columna_fecha_revalidacion + "&columna_fecha_previo_origen=" + columna_fecha_previo_origen + "&columna_fecha_previo_destino=" + columna_fecha_previo_destino + "&columna_fecha_resultado_previo=" + columna_fecha_resultado_previo + "&columna_proforma_final=" + columna_proforma_final + "&columna_permiso=" + columna_permiso + "&columna_fecha_envio=" + columna_fecha_envio + "&columna_fecha_recepcion_perm=" + columna_fecha_recepcion_perm + "&columna_fecha_activacion_perm=" + columna_fecha_activacion_perm + "&columna_fecha_permisos_aut=" + columna_fecha_permisos_aut + "&columna_co_pref_arancelaria=" + columna_co_pref_arancelaria + "&columna_aplic_pref_arancelaria=" + columna_aplic_pref_arancelaria + "&columna_req_uva=" + columna_req_uva + "&columna_req_ca=" + columna_req_ca + "&columna_fecha_recepcion_ca=" + columna_fecha_recepcion_ca + "&columna_num_constancia_ca=" + columna_num_constancia_ca + "&columna_monto_ca=" + columna_monto_ca + "&columna_fecha_doc_completos=" + columna_fecha_doc_completos + "&columna_fecha_pago_pedimento=" + columna_fecha_pago_pedimento + "&columna_fecha_solicitud_transporte=" + columna_fecha_solicitud_transporte + "&columna_fecha_modulacion=" + columna_fecha_modulacion + "&columna_modalidad=" + columna_modalidad + "&columna_resultado_modulacion=" + columna_resultado_modulacion + "&columna_fecha_reconocimiento=" + columna_fecha_reconocimiento + "&columna_fecha_liberacion=" + columna_fecha_liberacion + "&columna_sello_origen=" + columna_sello_origen + "&columna_sello_final=" + columna_sello_final + "&columna_fecha_retencion_aut=" + columna_fecha_retencion_aut + "&columna_fecha_liberacion_aut=" + columna_fecha_liberacion_aut + "&columna_estatus_operacion=" + columna_estatus_operacion + "&columna_motivo_atraso=" + columna_motivo_atraso + "&columna_observaciones=" + columna_observaciones + "&columna_llegada_a_nova=" + columna_llegada_a_nova + "&columna_llegada_a_globe_trade_sd=" + columna_llegada_a_globe_trade_sd + "&columna_archivo_m=" + columna_archivo_m + "&columna_fecha_archivo_m=" + columna_fecha_archivo_m + "&columna_fecha_solicit_manip=" + columna_fecha_solicit_manip + "&columna_fecha_vencim_manip=" + columna_fecha_vencim_manip + "&columna_fecha_confirm_clave_pedim=" + columna_fecha_confirm_clave_pedim + "&columna_fecha_recep_increment=" + columna_fecha_recep_increment + "&columna_t_e=" + columna_t_e + "&columna_fecha_vencim_inbound=" + columna_fecha_vencim_inbound + "&columna_no_bultos=" + columna_no_bultos + "&columna_peso_kg=" + columna_peso_kg + "&columna_transferencia=" + columna_transferencia + "&columna_fecha_inicio_etiquetado=" + columna_fecha_inicio_etiquetado + "&columna_fecha_termino_etiquetado=" + columna_fecha_termino_etiquetado + "&columna_hora_termino_etiquetado=" + columna_hora_termino_etiquetado + "&columna_proveedor=" + columna_proveedor + "&columna_proveedor_carga=" + columna_proveedor_carga + "&columna_fy=" + columna_fy + "&contSubfiltros=" + contSubfiltros + "&offset=" + offset + "&next=" + next);
-            const response = await fetch(urlCustomsBacheo);
+            let urlCustomsBodyBatch = encodeURI("../ConsultarCustomsBacheo?columna_referenciaAA=" + columna_referenciaAA + "&columna_evento=" + columna_evento + "&columna_responsable=" + columna_responsable + "&columna_final_destination=" + columna_final_destination + "&columna_brand_division=" + columna_brand_division + "&columna_division=" + columna_division + "&columna_shipmentId=" + columna_shipmentId + "&columna_containerId=" + columna_containerId + "&columna_blAwbPro=" + columna_blAwbPro + "&columna_loadTypeFinal=" + columna_loadTypeFinal + "&columna_quantity=" + columna_quantity + "&columna_pod=" + columna_pod + "&columna_estDepartFromPol=" + columna_estDepartFromPol + "&columna_etaRealPortOfDischarge=" + columna_etaRealPortOfDischarge + "&columna_estEtaDc=" + columna_estEtaDc + "&columna_inboundNotification=" + columna_inboundNotification + "&columna_pol=" + columna_pol + "&columna_aa=" + columna_aa + "&columna_fechaMesVenta=" + columna_fechaMesVenta + "&columna_prioridad=" + columna_prioridad + "&columna_pais_origen=" + columna_pais_origen + "&columna_size_container=" + columna_size_container + "&columna_valor_usd=" + columna_valor_usd + "&columna_eta_port_discharge=" + columna_eta_port_discharge + "&columna_agente_aduanal=" + columna_agente_aduanal + "&columna_pedimento_a1=" + columna_pedimento_a1 + "&columna_pedimento_r1_1er=" + columna_pedimento_r1_1er + "&columna_motivo_rectificacion_1er=" + columna_motivo_rectificacion_1er + "&columna_pedimento_r1_2do=" + columna_pedimento_r1_2do + "&columna_motivo_rectificacion_2do=" + columna_motivo_rectificacion_2do + "&columna_fecha_recepcion_doc=" + columna_fecha_recepcion_doc + "&columna_recinto=" + columna_recinto + "&columna_naviera=" + columna_naviera + "&columna_buque=" + columna_buque + "&columna_fecha_revalidacion=" + columna_fecha_revalidacion + "&columna_fecha_previo_origen=" + columna_fecha_previo_origen + "&columna_fecha_previo_destino=" + columna_fecha_previo_destino + "&columna_fecha_resultado_previo=" + columna_fecha_resultado_previo + "&columna_proforma_final=" + columna_proforma_final + "&columna_permiso=" + columna_permiso + "&columna_fecha_envio=" + columna_fecha_envio + "&columna_fecha_recepcion_perm=" + columna_fecha_recepcion_perm + "&columna_fecha_activacion_perm=" + columna_fecha_activacion_perm + "&columna_fecha_permisos_aut=" + columna_fecha_permisos_aut + "&columna_co_pref_arancelaria=" + columna_co_pref_arancelaria + "&columna_aplic_pref_arancelaria=" + columna_aplic_pref_arancelaria + "&columna_req_uva=" + columna_req_uva + "&columna_req_ca=" + columna_req_ca + "&columna_fecha_recepcion_ca=" + columna_fecha_recepcion_ca + "&columna_num_constancia_ca=" + columna_num_constancia_ca + "&columna_monto_ca=" + columna_monto_ca + "&columna_fecha_doc_completos=" + columna_fecha_doc_completos + "&columna_fecha_pago_pedimento=" + columna_fecha_pago_pedimento + "&columna_fecha_solicitud_transporte=" + columna_fecha_solicitud_transporte + "&columna_fecha_modulacion=" + columna_fecha_modulacion + "&columna_modalidad=" + columna_modalidad + "&columna_resultado_modulacion=" + columna_resultado_modulacion + "&columna_fecha_reconocimiento=" + columna_fecha_reconocimiento + "&columna_fecha_liberacion=" + columna_fecha_liberacion + "&columna_sello_origen=" + columna_sello_origen + "&columna_sello_final=" + columna_sello_final + "&columna_fecha_retencion_aut=" + columna_fecha_retencion_aut + "&columna_fecha_liberacion_aut=" + columna_fecha_liberacion_aut + "&columna_estatus_operacion=" + columna_estatus_operacion + "&columna_motivo_atraso=" + columna_motivo_atraso + "&columna_observaciones=" + columna_observaciones + "&columna_llegada_a_nova=" + columna_llegada_a_nova + "&columna_llegada_a_globe_trade_sd=" + columna_llegada_a_globe_trade_sd + "&columna_archivo_m=" + columna_archivo_m + "&columna_fecha_archivo_m=" + columna_fecha_archivo_m + "&columna_fecha_solicit_manip=" + columna_fecha_solicit_manip + "&columna_fecha_vencim_manip=" + columna_fecha_vencim_manip + "&columna_fecha_confirm_clave_pedim=" + columna_fecha_confirm_clave_pedim + "&columna_fecha_recep_increment=" + columna_fecha_recep_increment + "&columna_t_e=" + columna_t_e + "&columna_fecha_vencim_inbound=" + columna_fecha_vencim_inbound + "&columna_no_bultos=" + columna_no_bultos + "&columna_peso_kg=" + columna_peso_kg + "&columna_transferencia=" + columna_transferencia + "&columna_fecha_inicio_etiquetado=" + columna_fecha_inicio_etiquetado + "&columna_fecha_termino_etiquetado=" + columna_fecha_termino_etiquetado + "&columna_hora_termino_etiquetado=" + columna_hora_termino_etiquetado + "&columna_proveedor=" + columna_proveedor + "&columna_proveedor_carga=" + columna_proveedor_carga + "&columna_fy=" + columna_fy + "&contSubfiltros=" + contSubfiltros + "&offset=" + offset + "&next=" + next);
+            const response = await fetch(urlCustomsBodyBatch);
 
             if (!response.ok) {
                 throw new Error('Error en la solicitud');
             }
 
-            //Mostrar batch de información inicial
-            const data = await response.text();
-            document.getElementById('data_customs').innerHTML += data;
+            const dataBodyBatch = await response.text();
+            document.getElementById('data_customs').innerHTML += dataBodyBatch;
 
-            //Ocultar loader 
             setTimeout(await ocultarLoader, 2);
         }
 
         //Habilitar controles de para descarga/subida de plantilla:
+        document.getElementById("input-id").disabled = false;
         document.getElementById("upload_file").disabled = false;
         document.getElementById("created_file").disabled = false;
 
     } catch (error) {
         console.error(error);
     }
-
 }
 
 async function consultarCustomsFiltros(columna_referenciaAA, columna_evento, columna_responsable, columna_final_destination, columna_brand_division, columna_division, columna_shipmentId, columna_containerId, columna_blAwbPro, columna_loadTypeFinal, columna_quantity, columna_pod, columna_estDepartFromPol, columna_etaRealPortOfDischarge, columna_estEtaDc, columna_inboundNotification, columna_pol, columna_aa, columna_fechaMesVenta, columna_prioridad, columna_pais_origen, columna_size_container, columna_valor_usd, columna_eta_port_discharge, columna_agente_aduanal, columna_pedimento_a1, columna_pedimento_r1_1er, columna_motivo_rectificacion_1er, columna_pedimento_r1_2do, columna_motivo_rectificacion_2do, columna_fecha_recepcion_doc, columna_recinto, columna_naviera, columna_buque, columna_fecha_revalidacion, columna_fecha_previo_origen, columna_fecha_previo_destino, columna_fecha_resultado_previo, columna_proforma_final, columna_permiso, columna_fecha_envio, columna_fecha_recepcion_perm, columna_fecha_activacion_perm, columna_fecha_permisos_aut, columna_co_pref_arancelaria, columna_aplic_pref_arancelaria, columna_req_uva, columna_req_ca, columna_fecha_recepcion_ca, columna_num_constancia_ca, columna_monto_ca, columna_fecha_doc_completos, columna_fecha_pago_pedimento, columna_fecha_solicitud_transporte, columna_fecha_modulacion, columna_modalidad, columna_resultado_modulacion, columna_fecha_reconocimiento, columna_fecha_liberacion, columna_sello_origen, columna_sello_final, columna_fecha_retencion_aut, columna_fecha_liberacion_aut, columna_estatus_operacion, columna_motivo_atraso, columna_observaciones, columna_llegada_a_nova, columna_llegada_a_globe_trade_sd, columna_archivo_m, columna_fecha_archivo_m, columna_fecha_solicit_manip, columna_fecha_vencim_manip, columna_fecha_confirm_clave_pedim, columna_fecha_recep_increment, columna_t_e, columna_fecha_vencim_inbound, columna_no_bultos, columna_peso_kg, columna_transferencia, columna_fecha_inicio_etiquetado, columna_fecha_termino_etiquetado, columna_hora_termino_etiquetado, columna_proveedor, columna_proveedor_carga, columna_fy) {
-
     try {
 
         //Inicializar bloqueo de controles para descarga/subida de plantilla:
+        document.getElementById("input-id").disabled = true;
         document.getElementById("upload_file").disabled = true;
         document.getElementById("created_file").disabled = true;
 
@@ -251,14 +248,13 @@ async function consultarCustomsFiltros(columna_referenciaAA, columna_evento, col
             throw new Error('Error en la solicitud');
         }
 
-        //Mostrar batch de información filtrada
-        const data = await response.text();
-        document.getElementById('data_customs').innerHTML = data;
+        const dataBodyFiltrers = await response.text();
+        document.getElementById('data_customs').innerHTML = dataBodyFiltrers;
 
-        //Ocultar loader
         setTimeout(await ocultarLoader, 2);
 
         //Habilitar controles de para descarga/subida de plantilla:
+        document.getElementById("input-id").disabled = false;
         document.getElementById("upload_file").disabled = false;
         document.getElementById("created_file").disabled = false;
 
@@ -266,6 +262,7 @@ async function consultarCustomsFiltros(columna_referenciaAA, columna_evento, col
         console.error(error);
     }
 }
+
 /*--------------------------------------------------------------------------
  FUNCIONES - CELDAS TABLA CUSTOMS
  --------------------------------------------------------------------------*/
@@ -351,7 +348,7 @@ async function AddPullCustoms() {
 
         }
 
-        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //CUSA Y VF
 
             no_bultos = document.getElementById("no_bultos[" + i + "]").innerHTML;
             peso_kg = document.getElementById("peso_kg[" + i + "]").innerHTML;
@@ -432,7 +429,7 @@ async function AddPullCustoms() {
                     "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
         }
 
-        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+        if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //CUSA Y VF
 
             urlCustoms += "&no_bultos[" + i + "]=" + no_bultos +
                     "&peso_kg[" + i + "]=" + peso_kg +
@@ -597,7 +594,7 @@ async function AddPullCustoms() {
             cont++;
             let webp = "";
 
-            if (data === "0") {  //Activación Semaforo
+            if (data === "0") { //Activación Semaforo
                 webp = "../img/circle-gray.webp";
             } else if (data === "1") {
                 webp = "../img/circle-green.webp";
@@ -703,7 +700,7 @@ async function AddLineCustoms(i) {
 
     }
 
-    if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+    if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //CUSA Y VF
 
         no_bultos = document.getElementById("no_bultos[" + i + "]").innerHTML;
         peso_kg = document.getElementById("peso_kg[" + i + "]").innerHTML;
@@ -784,7 +781,7 @@ async function AddLineCustoms(i) {
                 "&fecha_vencim_inbound[" + i + "]=" + fecha_vencim_inbound;
     }
 
-    if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") {  //CUSA Y VF
+    if (idAgenteAduanal === "4002" || idAgenteAduanal === "4006") { //CUSA Y VF
 
         urlCustoms += "&no_bultos[" + i + "]=" + no_bultos +
                 "&peso_kg[" + i + "]=" + peso_kg +
@@ -949,7 +946,7 @@ async function AddLineCustoms(i) {
         cont++;
         let webp = "";
 
-        if (data === "0") {  //Activación Semaforo
+        if (data === "0") { //Activación Semaforo
             webp = "../img/circle-gray.webp";
         } else if (data === "1") {
             webp = "../img/circle-green.webp";
@@ -1490,10 +1487,10 @@ function tabuladorVertical(event, namecelda, contador) {
         // Enfocar la celda de abajo
         const nextCell = document.getElementById(nextCellId);
         if (nextCell) {
-            event.preventDefault();  //eliminación del enter
+            event.preventDefault(); //eliminación del enter
             nextCell.focus();
         } else {
-            event.preventDefault();  //eliminación del enter
+            event.preventDefault(); //eliminación del enter
 
         }
     }
@@ -1578,7 +1575,7 @@ function parametrizacionValoresEstatusOperacion(contador) {
 
 }
 
-function leerArchivo() {
+async function leerArchivo() {
 
     console.log("Lectura de archivo excel");
 
@@ -1589,12 +1586,16 @@ function leerArchivo() {
 
     lector.onload = function (e) {
         var contenido = e.target.result;
-        var workbook = XLSX.read(contenido, {type: 'array'});
+        var workbook = XLSX.read(contenido, {
+            type: 'array'
+        });
 
         var primeraHoja = workbook.SheetNames[0];
         var hoja = workbook.Sheets[primeraHoja];
 
-        var datos = XLSX.utils.sheet_to_json(hoja, {header: 1});
+        var datos = XLSX.utils.sheet_to_json(hoja, {
+            header: 1
+        });
 
         // Itera sobre las filas del Excel
         for (var i = 2; i < datos.length; i++) {
@@ -1607,7 +1608,7 @@ function leerArchivo() {
                 //console.log("Núm Celda:" + k + " - Fila: " + [i] + " -  Valor: " + valor);
 
                 if (valor === undefined || valor === null) {
-                    valor = "";  // Puedes asignar otro valor predeterminado si lo deseas
+                    valor = ""; // Puedes asignar otro valor predeterminado si lo deseas
                 }
 
                 if (k === 10 || k === 11 || k === 13) {
@@ -1626,7 +1627,7 @@ function leerArchivo() {
                     validar += relacion_columnas_excel_logix(k, valor, fila);
                 }
 
-                if (idAgenteAduanal === "4002") {  //CUSA
+                if (idAgenteAduanal === "4002") { //CUSA
                     validar += relacion_columnas_excel_cusa(k, valor, fila);
                 }
 
@@ -1638,21 +1639,109 @@ function leerArchivo() {
 
         }
 
-        setTimeout(() => {
-            if (validar === "") {
-                //logExcel();
-                location.reload();
-            } else {
-                swal(validar, "warning");
-                ocultarLoader();
-                return false;
-            }
-        }, 4000);
+        if (validar === "") {
+            //Realizar la lectura del archivo .excel
+            readExcelFile();
+        } else {
+            //Mostrar listado de errores como notificación
+            swal(validar, "warning");
+            ocultarLoader();
+            return false;
+        }
 
     }
 
     lector.readAsArrayBuffer(archivo);
+}
 
+var hasReadFile = false; // Variable para controlar la ejecución de la función
+
+async function readExcelFile() {
+    if (hasReadFile) {
+        console.log("El archivo ya ha sido leído.");
+        return; // Si ya se ha leído el archivo, salir de la función
+    }
+
+    var fileInput = document.getElementById('input-id');
+    var file = fileInput.files[0];
+    if (file) {
+        hasReadFile = true; // Marcar como ejecutado
+        var reader = new FileReader();
+        reader.onload = async function (e) {
+            var data = new Uint8Array(e.target.result);
+            var workbook = XLSX.read(data, {
+                type: 'array'
+            });
+
+            // Obtenemos la primera hoja del archivo Excel
+            var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            var range = XLSX.utils.decode_range(firstSheet['!ref']);
+
+            // Iterar sobre cada fila, empezando desde la tercera fila (índice 2)
+            for (var rowNum = 2; rowNum <= range.e.r; rowNum++) {
+                var concatenatedRowValues = ""; // Reiniciar la variable para cada fila
+                var rowValues = [];
+
+                for (var colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                    var cellAddress = {c: colNum, r: rowNum};
+                    var cellRef = XLSX.utils.encode_cell(cellAddress);
+                    var cell = firstSheet[cellRef];
+                    var cellValue = (cell ? cell.v : ""); // Asignar "NULL" si la celda está vacía
+
+                    rowValues.push(cellValue);
+                    concatenatedRowValues += cellValue + (colNum < range.e.c ? "," : ""); // Concatenar valores con coma
+                }
+
+                mostrarOcultarDiv('divAMostrarOcultar', true);
+                document.getElementById("statusResultado").innerHTML = "Cargando Información......";
+
+                // Enviar el valor concatenado a la función fetch  
+                let res = async enviarValoresFila(concatenatedRowValues);
+
+               console.log("Estatus Servlet: "+res);
+    
+                if (res) {
+
+                    if (rowValues.length > 1) {    // Mostrar el segundo valor de la fila si existe
+                        document.getElementById("divResultado").innerHTML += "<B style=\"color: green;\">✔ El shipment id : || " + rowValues[1] + " || se encuentra registrado en sistema. </B><br>";
+                    }
+
+                } else {
+                    document.getElementById("divResultado").innerHTML += "<B style=\"color: red;\">! El shipment id : ||" + rowValues[1] + "|| no interactuó en sistema, verifique información¡</B><br>";
+                }
+
+            }
+
+            // Mostrar alerta al finalizar la lectura del archivo
+            document.getElementById("statusResultado").innerHTML = "Lectura del archivo Excel completada.";
+            
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        alert("Por favor, seleccione un archivo Excel primero.");
+    }
+}
+
+async function enviarValoresFila(concatenatedRowValues) {
+
+    let agenteAduanal = document.getElementById("idAgenteAduanal").value;
+    let url = "../UpdatePlantillaCustoms?idAgenteAduanal=" + agenteAduanal + "&valores_celdas=" + concatenatedRowValues;
+    let res = "";
+
+    console.log(url);
+
+    fetch(url, {
+        method: 'POST'
+    }).then(r => r.text())
+            .then(data => {
+                if (data) {
+                    res = data;
+                } else {
+                    res = data;
+                }
+
+            }).catch(error => console.log(error));
+    return res;
 }
 
 function clearFiltres() {

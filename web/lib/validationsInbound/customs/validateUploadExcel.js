@@ -17,9 +17,9 @@ function relacion_columnas_excel_administrador(posicion, contenido, fila) {
 
     if (posicion === 0 || posicion === 6 || posicion === 7 || posicion === 34 || posicion === 35) {
         celda = validarNumero_excel(contenido);
-    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 5 || posicion === 44 || posicion === 45) {
+    } else if (posicion === 1 || posicion === 2 || posicion === 3 || posicion === 44 || posicion === 45) {
         celda = validarTexto_excelAlfanumerico_excel(contenido);
-    } else if (posicion === 9 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50 || posicion === 53 || posicion === 57 || posicion === 58) {
+    } else if (posicion === 5 || posicion === 9 || posicion === 12 || posicion === 14 || posicion === 16 || posicion === 17 || posicion === 18 || posicion === 49 || posicion === 50 || posicion === 53 || posicion === 57 || posicion === 58) {
         celda = validarTexto_excel(contenido);
     } else if (posicion === 10 || posicion === 11 || posicion === 13) {
         celda = formatoNumero_excel(contenido);
@@ -310,91 +310,7 @@ function ocultarLoader() {
 
 function logExcel() {
     mostrarOcultarDiv('divAMostrarOcultar', true);
-    consultarCustomsBacheo(selected_referenciaAA, 
-                              selected_evento, 
-                              selected_responsable,
-                              selected_final_destination,
-                              selected_brand_division,
-                              selected_division,
-                              selected_shipmentId,
-                              selected_containerId,
-                              selected_blAwbPro,
-                              selected_loadTypeFinal,
-                              selected_quantity,
-                              selected_pod,
-                              selected_estDepartFromPol,
-                              selected_etaRealPortOfDischarge,
-                              selected_estEtaDc,
-                              selected_inboundNotification,
-                              selected_pol,
-                              selected_aa,
-                              selected_fechaMesVenta,
-                              selected_prioridad,
-                              selected_pais_origen,
-                              selected_size_container,
-                              selected_valor_usd,
-                              selected_eta_port_discharge,
-                              selected_agente_aduanal,
-                              selected_pedimento_a1,
-                              selected_pedimento_r1_1er,
-                              selected_motivo_rectificacion_1er,
-                              selected_pedimento_r1_2do,
-                              selected_motivo_rectificacion_2do,
-                              selected_fecha_recepcion_doc,
-                              selected_recinto,
-                              selected_naviera,
-                              selected_buque,
-                              selected_fecha_revalidacion,
-                              selected_fecha_previo_origen,
-                              selected_fecha_previo_destino,
-                              selected_fecha_resultado_previo,
-                              selected_proforma_final,
-                              selected_permiso,
-                              selected_fecha_envio,
-                              selected_fecha_recepcion_perm,
-                              selected_fecha_activacion_perm,
-                              selected_fecha_permisos_aut,
-                              selected_co_pref_arancelaria,
-                              selected_aplic_pref_arancelaria,
-                              selected_req_uva,
-                              selected_req_ca,
-                              selected_fecha_recepcion_ca,
-                              selected_num_constancia_ca,
-                              selected_monto_ca,
-                              selected_fecha_doc_completos,
-                              selected_fecha_pago_pedimento,
-                              selected_fecha_solicitud_transporte,
-                              selected_fecha_modulacion,
-                              selected_modalidad,
-                              selected_resultado_modulacion,
-                              selected_fecha_reconocimiento,
-                              selected_fecha_liberacion,
-                              selected_sello_origen,
-                              selected_sello_final,
-                              selected_fecha_retencion_aut,
-                              selected_fecha_liberacion_aut,
-                              selected_estatus_operacion,
-                              selected_motivo_atraso,
-                              selected_observaciones,
-                              selected_llegada_a_nova,
-                              selected_llegada_a_globe_trade_sd,
-                              selected_archivo_m,
-                              selected_fecha_archivo_m,
-                              selected_fecha_solicit_manip,
-                              selected_fecha_vencim_manip,
-                              selected_fecha_confirm_clave_pedim,
-                              selected_fecha_recep_increment,
-                              selected_t_e,
-                              selected_fecha_vencim_inbound,
-                              selected_no_bultos,
-                              selected_peso_kg,
-                              selected_transferencia,
-                              selected_fecha_inicio_etiquetado,
-                              selected_fecha_termino_etiquetado,
-                              selected_hora_termino_etiquetado,
-                              selected_proveedor,
-                              selected_proveedor_carga,
-                              selected_fy);
+    consultarCustomsBacheo(selected_referenciaAA, selected_evento, selected_responsable, selected_final_destination, selected_brand_division, selected_division, selected_shipmentId, selected_containerId, selected_blAwbPro, selected_loadTypeFinal, selected_quantity, selected_pod, selected_estDepartFromPol, selected_etaRealPortOfDischarge, selected_estEtaDc, selected_inboundNotification, selected_pol, selected_aa, selected_fechaMesVenta, selected_prioridad, selected_pais_origen, selected_size_container, selected_valor_usd, selected_eta_port_discharge, selected_agente_aduanal, selected_pedimento_a1, selected_pedimento_r1_1er, selected_motivo_rectificacion_1er, selected_pedimento_r1_2do, selected_motivo_rectificacion_2do, selected_fecha_recepcion_doc, selected_recinto, selected_naviera, selected_buque, selected_fecha_revalidacion, selected_fecha_previo_origen, selected_fecha_previo_destino, selected_fecha_resultado_previo, selected_proforma_final, selected_permiso, selected_fecha_envio, selected_fecha_recepcion_perm, selected_fecha_activacion_perm, selected_fecha_permisos_aut, selected_co_pref_arancelaria, selected_aplic_pref_arancelaria, selected_req_uva, selected_req_ca, selected_fecha_recepcion_ca, selected_num_constancia_ca, selected_monto_ca, selected_fecha_doc_completos, selected_fecha_pago_pedimento, selected_fecha_solicitud_transporte, selected_fecha_modulacion, selected_modalidad, selected_resultado_modulacion, selected_fecha_reconocimiento, selected_fecha_liberacion, selected_sello_origen, selected_sello_final, selected_fecha_retencion_aut, selected_fecha_liberacion_aut, selected_estatus_operacion, selected_motivo_atraso, selected_observaciones, selected_llegada_a_nova, selected_llegada_a_globe_trade_sd, selected_archivo_m, selected_fecha_archivo_m, selected_fecha_solicit_manip, selected_fecha_vencim_manip, selected_fecha_confirm_clave_pedim, selected_fecha_recep_increment, selected_t_e, selected_fecha_vencim_inbound, selected_no_bultos, selected_peso_kg, selected_transferencia, selected_fecha_inicio_etiquetado, selected_fecha_termino_etiquetado, selected_hora_termino_etiquetado, selected_proveedor, selected_proveedor_carga, selected_fy);
 }
 
 function mostrarOcultarDiv(id, mostrar) {

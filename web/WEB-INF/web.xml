@@ -1018,6 +1018,18 @@
         <servlet-name>ConsultarFiltrosCustomsBacheo</servlet-name>
         <servlet-class>com.onest.train.consultas.ConsultarFiltrosCustomsBacheo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>uploadFileExcelCustoms</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.uploadFileExcelCustoms</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>uploadExcelCustomsFile</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.uploadExcelCustomsFile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePlantillaCustoms</servlet-name>
+        <servlet-class>com.onest.train.modificar.catalogos.UpdatePlantillaCustoms</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2030,6 +2042,18 @@
     <servlet-mapping>
         <servlet-name>ConsultarFiltrosCustomsBacheo</servlet-name>
         <url-pattern>/ConsultarFiltrosCustomsBacheo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadFileExcelCustoms</servlet-name>
+        <url-pattern>/uploadFileExcelCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadExcelCustomsFile</servlet-name>
+        <url-pattern>/uploadExcelCustomsFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePlantillaCustoms</servlet-name>
+        <url-pattern>/UpdatePlantillaCustoms</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

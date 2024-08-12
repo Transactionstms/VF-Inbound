@@ -124,18 +124,21 @@
                 System.out.println("numDataBacheo:" + numDataBacheo);
         %>
         <div class="card-body">
-            <div class="contenedor">
-                <div class="columna1"><input class="form-control" type="file" id="input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" name="upload_file" onclick="leerArchivo()"><i class="fa fa-upload"></i></button></div>
-                <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" name="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
-                <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="clear_file" name="clear_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
-                <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
-                <div class="columna6"></div>            
-            </div> 
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="contenedor">
+                    <div class="columna1"><input class="form-control" type="file" id="input-id" name= "input-id" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"></div>
+                    <div class="columna2"><button type="button" class="btn btn-primary" title="Subir Plantilla" id="upload_file" name="upload_file" onclick="leerArchivo()"><i class="fa fa-upload"></i></button></div>
+                    <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" name="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
+                    <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="clear_file" name="clear_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
+                    <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
+                    <div class="columna6"></div>            
+                </div> 
+            </form>   
             <!--<input class="form-control" type="text" id="rfcSupport" name="rfcSupport"  value=""  autocomplete="off" oninput="validarInput(this)" onkeyup="this.value = this.value.toUpperCase()">
             <pre id="rfcOK" style="font-family: Arial; font-weight: bold; color:#4d73d1;" size="1"></pre>
             -->
             <div class="scroll-container" id="divAMostrarOcultar">
+                <div align="center" id="statusResultado" name="statusResultado"></div>
                 <div align="center" id="divResultado" name="divResultado"><%=namePlantilla%></div>
             </div>
             <div id="table-scroll" class="table-scroll"></div>
@@ -656,6 +659,7 @@
             let dataEnd = "";
             
            //Inicializar bloqueo de controles para descarga/subida de plantilla:
+           document.getElementById("input-id").disabled=true; 
            document.getElementById("upload_file").disabled=true; 
            document.getElementById("created_file").disabled=true;
         </script>
