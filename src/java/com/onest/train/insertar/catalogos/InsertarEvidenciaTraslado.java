@@ -89,7 +89,7 @@ public class InsertarEvidenciaTraslado extends HttpServlet {
                     filePart1.write(archivoRenombrado.getAbsolutePath());
                     
                     // Guardar la ruta del archivo en la base de datos
-                    String inb_gtn = " UPDATE TRA_INC_GTN_TEST SET URL_POD_T = '"+ archivoRenombrado +"', STATUS_EMBARQUE = 15 WHERE CONTAINER1 = '" + shipmentId + "' ";
+                    String inb_gtn = " UPDATE TRA_INC_GTN_TEST SET URL_POD_T = '"+ archivoRenombrado +"', STATUS_EMBARQUE = 15 WHERE EMBARQUE_AGRUPADOR = '" + shipmentId + "' ";
                     boolean oraOut1 = oraDB.execute(inb_gtn);
 
                 } catch (IOException e) {

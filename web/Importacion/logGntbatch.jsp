@@ -46,13 +46,10 @@
         .table-scroll thead th {
             position: sticky;
             top: 0;
-            background: #fff;
-            z-index: 10;
+             z-index: 10;
         }
 
-        .bg-danger {
-            background-color: #f8d7da;
-        }
+       
     </style>
     </head>
     <%
@@ -134,8 +131,8 @@ String maxt="";
                                                     
                                                       <div id="table-scroll2" class="table-scroll">
                                                           <table id="example2" class="display">
-                                                    <thead>
-                                                        <tr style='color:blue'>
+                                                    <thead style="background-color: #001f3f;">
+                                                        <tr  >
                                                          <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
                                                             <th scope="col" class="font-titulo">CONTAINER </th>
                                                             <th scope="col" class="font-titulo">SHIPMENT  </th> 

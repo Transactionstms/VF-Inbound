@@ -136,8 +136,7 @@
                                                     <tr>
                                                         <th class="repHdr"><strong>EVENTO</strong></th>
                                                      <!--   <th class="repHdr"><strong>SHIPMENT</strong></th>-->
-                                                        <th class="repHdr"><strong>CONTAINER</strong></th>
-                                                        <th class="repHdr"><strong>QUANTITY</strong></th>
+                                                        <th class="repHdr"><strong>CONTAINER</strong></th> 
                                                         <th class="repHdr"><strong>POD</strong></th>
                                                         <th class="repHdr"><strong>BRAND DIVISION</strong></th>
                                                         <th class="repHdr"><strong>EVIDENCIA</strong></th>
@@ -151,10 +150,11 @@
            + " TIEV.ID_EVENTO, " 
            + " '', "
            + " NVL(TIGT.CONTAINER1,' '), "
-           + " NVL(TIGT.QUANTITY,0), "
+           + " ' ', "
            + " NVL(TIP.NOMBRE_POD,' '), "
            + " NVL(TIBD.NOMBRE_BD,' '), "
            + " TIGT.STATUS_EMBARQUE "
+                                                             + " ,TIGT.EMBARQUE_AGRUPADOR "
            + " FROM TRA_INB_EMBARQUE_TRASLADO  TIE "   
            + " INNER JOIN TRA_INC_GTN_TEST TIGT ON TIE.EMBARQUE_AGRUPADOR = TIGT.EMBARQUE_AGRUPADOR " 
            + " INNER JOIN TRA_INB_EVENTO TIEV ON  TIGT.PLANTILLA_ID = TIEV.PLANTILLA_ID " 
@@ -170,8 +170,7 @@
                                                 <tr>
                                                     <td class="repDatNon"><%=row[0]%></td>
                                                   <!--  <td class="repDatNon"><%=row[1]%></td>-->
-                                                    <td class="repDatNon"><%=row[2]%></td>
-                                                    <td class="repDatNon"><%=row[3]%></td>
+                                                    <td class="repDatNon"><%=row[2]%></td> 
                                                     <td class="repDatNon"><%=row[4]%></td>
                                                     <td class="repDatNon"><%=row[5]%></td>
                                                 <%
@@ -179,7 +178,7 @@
                                                         contador++;
                                                 %>
                                                     <td class="repDatNon">
-                                                        <input type="hidden" id="shipmentId<%=contador%>" name="shipmentId<%=contador%>" value="<%=row[2]%>">
+                                                        <input type="hidden" id="shipmentId<%=contador%>" name="shipmentId<%=contador%>" value="<%=row[7]%>">
                                                         <input type="file" id="file<%=contador%>" name="file<%=contador%>" accept=".pdf, .jpg">
                                                     </td>
                                                 <%

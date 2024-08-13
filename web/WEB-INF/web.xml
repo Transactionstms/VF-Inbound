@@ -1030,6 +1030,10 @@
         <servlet-name>UpdatePlantillaCustoms</servlet-name>
         <servlet-class>com.onest.train.modificar.catalogos.UpdatePlantillaCustoms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModEmbarque</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.ModEmbarque</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2054,6 +2058,10 @@
     <servlet-mapping>
         <servlet-name>UpdatePlantillaCustoms</servlet-name>
         <url-pattern>/UpdatePlantillaCustoms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModEmbarque</servlet-name>
+        <url-pattern>/ModEmbarque</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -67,7 +67,10 @@
                         + "        bl,"
                         + "        shipment,"
                         + "        load_type,"
-                        + "        lum_brio,"
+                        + " CASE"
+        + "   WHEN REGEXP_LIKE(LUM_BRIO, '^[0-9]+$') THEN TO_CHAR(TO_NUMBER(LUM_BRIO), 'FM999G999G999G999') "
+        + "   ELSE 'Datos no numéricos' "
+        + "  END AS monto_formateado , " 
                         + "        brand,"
                         + "        sbu_name,"
                         + "        pol,"
@@ -90,7 +93,10 @@
                             + " Contenedor,"
                             + " Shipment,"
                             + " Load_Type,"
-                            + " LUM_BRIO,"
+                            + " CASE"
+        + "   WHEN REGEXP_LIKE(LUM_BRIO, '^[0-9]+$') THEN TO_CHAR(TO_NUMBER(LUM_BRIO), 'FM999G999G999G999') "
+        + "   ELSE 'Datos no numéricos' "
+        + "  END AS monto_formateado , " 
                             + " Brand,"
                             + " Sbu_Name,"
                             + " nvl(Departure_Port,' '),"
@@ -161,10 +167,10 @@
                                                                     <th scope="col" class="font-titulo">INDC + 2 Days PUT AWAY</th>
                                                                     <th scope="col" class="font-titulo">Arribo real a DC</th>
                                                                     <th scope="col" class="font-titulo">COMENTARIOS</th> 
-                                                                    <th scope="col" class="font-titulo">Requiere etiquetado</th> 
+                                                                  <!--  <th scope="col" class="font-titulo">Requiere etiquetado</th> 
                                                                     <th scope="col" class="font-titulo">123</th>
                                                                     
-                                                                    <th scope="col" class="font-titulo">456</th>
+                                                                    <th scope="col" class="font-titulo">456</th>-->
                                                                 </tr>         
                                                                 </tr>
                                                             </thead>
@@ -193,9 +199,9 @@
                                                                     <td class="font-texto"> <%=row[15]%></td>
                                                                     <td class="font-texto"> <%=row[16]%></td>
                                                                     <td class="font-texto"> <%=row[17]%></td>
-                                                                    <td class="font-texto"> <%=row[18]%></td>
+                                                                  <!--  <td class="font-texto"> <%=row[18]%></td>
                                                                     <td class="font-texto"> <%=row[19]%></td>
-                                                                    <td class="font-texto"> <%=row[20]%></td>
+                                                                    <td class="font-texto"> <%=row[20]%></td>-->
                                                                 </tr>
                                                                 <%
                                                                         }

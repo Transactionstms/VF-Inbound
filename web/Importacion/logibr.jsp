@@ -24,7 +24,33 @@
         <!-- Connection Status Red -->
 
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+ <style>
+        .table-scroll {
+            position: relative;
+            max-height: 60%;
+            overflow-y: auto;
+            width: 100%;
+        }
 
+        .table-scroll table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-scroll th,
+        .table-scroll td {
+            padding: 8px 16px;
+            text-align: left;
+        }
+
+        .table-scroll thead th {
+            position: sticky;
+            top: 0;
+             z-index: 10;
+        }
+
+       
+    </style>
     </head>
     <%
         try {
@@ -44,11 +70,17 @@
                     maxt = row[0];
                 }
             }
-            
-String sql22= "  select * from TRA_INB_ibr  where FOLIO='" + folio + "'";
+            //TO_CHAR(sq.suma, 'FM999G999G999G999')
+String sql22= "  select "
+        + "  IDIBR_EVENTO, CONTENEDOR, BL, SHIPMENT, LOAD_TYPE, "
+        + " CASE"
+        + "   WHEN REGEXP_LIKE(LUM_BRIO, '^[0-9]+$') THEN TO_CHAR(TO_NUMBER(LUM_BRIO), 'FM999G999G999G999') "
+        + "   ELSE 'Datos no numéricos' "
+        + "  END AS monto_formateado , " 
+        + " BRAND, SBU_NAME, POL, COUNTRY, ACTUAL_CRD, DEPARTURE_DATE, MX_PORT, ETA_MX_PORT, ETA_DC, INDC_A, ARRIBO_REAL_A_DC, COMENTARIOS, REQUIERE_ETIQUETADO, A123, B456, DEPARTURE_PORT, ETA_CUSTOMER, CUSTOMER, ATA_CMI, FECHA_ACTUAL, EVENTO, ETA_CUSTOMER2, TIPO, FOLIO "
+        + " from TRA_INB_ibr  where FOLIO='" + folio + "'";
     %>
-    <body>
-
+    <body> 
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
@@ -59,7 +91,7 @@ String sql22= "  select * from TRA_INB_ibr  where FOLIO='" + folio + "'";
                                     <div class="col-md-12 card-header justify-content-between">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h2 class="card-heading">Plantilla RDI   </h2>
+                                                <h2 class="card-heading">Plantilla IBR   </h2>
                                             </div>
                                         </div>
                                     </div>
@@ -99,7 +131,7 @@ String sql22= "  select * from TRA_INB_ibr  where FOLIO='" + folio + "'";
                                                               
                                                         %>
                                                         <tr  >
-                                                            
+                                                             <td class="font-texto"> <%=row[26]%></td>
                                                             <td class="font-texto"> <%=row[1]%></td>
                                                             <td class="font-texto"> <%=row[2]%></td>
                                                             <td class="font-texto"> <%=row[3]%></td>
@@ -114,8 +146,7 @@ String sql22= "  select * from TRA_INB_ibr  where FOLIO='" + folio + "'";
                                                             <td class="font-texto"> <%=row[12]%></td>	
                                                             <td class="font-texto"> <%=row[13]%></td>
                                                             <td class="font-texto"> <%= row[14]%></td>
-                                                            <td class="font-texto"> <%=row[15]%></td>
-                                                            <td class="font-texto"> <%=row[16]%></td>
+                                                            <td class="font-texto"> <%=row[15]%></td> 
                                                         </tr>
                                                         <%
                                                                 }

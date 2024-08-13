@@ -50,7 +50,7 @@
                     + " from TRA_INB_EMBARQUE_TRASLADO te"
                     + " left join tra_inb_linea_transporte tt on tt.LTRANSPORTE_ID=te.EMBARQUE_TRANSPORTISTA"
                     + " inner join tra_inc_gtn_test gtn on gtn.EMBARQUE_AGRUPADOR=te.EMBARQUE_AGRUPADOR"
-                    + " WHERE gtn.STATUS_EMBARQUE not in (3,14) "
+                    + " WHERE gtn.STATUS_EMBARQUE not in (3,14,8) "
                     + " AND tt.user_nid = '"+usr+"' "
                     + " AND TRUNC(te.EMBARQUE_FEC_CAPTURA) "
                     + " BETWEEN  TO_DATE('" + f1 + "', 'MM/DD/YYYY') AND TO_DATE('" + f2 + "', 'MM/DD/YYYY')"; 
