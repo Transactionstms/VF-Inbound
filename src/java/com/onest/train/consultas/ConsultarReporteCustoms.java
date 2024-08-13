@@ -1550,16 +1550,16 @@ public class ConsultarReporteCustoms extends HttpServlet {
                     fecha_importacion_registrada = row[102].replaceAll("-", "");
                             
                     if (row[99].equals("1")) {
-                        colorSemaforo = "../../img/circle-green.svg";
+                        colorSemaforo = "../../img/circle-green.webp";
                         sizeSemaforo = "55%";
                     } else if (row[99].equals("2")) {
-                        colorSemaforo = "../../img/circle-yellow.svg";
+                        colorSemaforo = "../../img/circle-yellow.webp";
                         sizeSemaforo = "50%";
                     } else if (row[99].equals("3")) {
-                        colorSemaforo = "../../img/circle-red.svg";
+                        colorSemaforo = "../../img/circle-red.webp";
                         sizeSemaforo = "30%";
                     } else {
-                        colorSemaforo = "../../img/circle-gray.svg";
+                        colorSemaforo = "../../img/circle-gray.webp";
                         sizeSemaforo = "60%";
                     }
 

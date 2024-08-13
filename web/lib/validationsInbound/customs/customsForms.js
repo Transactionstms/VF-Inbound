@@ -600,13 +600,13 @@ async function AddPullCustoms() {
             let webp = "";
 
             if (data === "0") { //Activación Semaforo
-                webp = "../img/circle-gray.svg";
+                webp = "../img/circle-gray.webp";
             } else if (data === "1") {
-                webp = "../img/circle-green.svg";
+                webp = "../img/circle-green.webp";
             } else if (data === "2") {
-                webp = "../img/circle-yellow.svg";
+                webp = "../img/circle-yellow.webp";
             } else if (data === "3") {
-                webp = "../img/circle-red.svg";
+                webp = "../img/circle-red.webp";
             }
 
             //color semaforo
@@ -956,13 +956,13 @@ async function AddLineCustoms(i) {
         let webp = "";
 
         if (data === "0") { //Activación Semaforo
-            webp = "../img/circle-gray.svg";
+            webp = "../img/circle-gray.webp";
         } else if (data === "1") {
-            webp = "../img/circle-green.svg";
+            webp = "../img/circle-green.webp";
         } else if (data === "2") {
-            webp = "../img/circle-yellow.svg";
+            webp = "../img/circle-yellow.webp";
         } else if (data === "3") {
-            webp = "../img/circle-red.svg";
+            webp = "../img/circle-red.webp";
         }
 
         //color semaforo

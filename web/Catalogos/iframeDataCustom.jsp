@@ -892,16 +892,16 @@
                             if(AgentType.equals("4001")||AgentType.equals("4002")||AgentType.equals("4003")||AgentType.equals("4004")||AgentType.equals("4005")||AgentType.equals("4006")){ //LOGIX, CUSA, RADAR, SESMA, RECHY Y VF                                                    
                              
                              if(row[99].equals("1")){
-                                 colorSemaforo = "../img/circle-green.svg";
+                                 colorSemaforo = "../img/circle-green.webp";
                                  sizeSemaforo = "100%";
                              }else if(row[99].equals("2")){
-                                 colorSemaforo = "../img/circle-yellow.svg";
+                                 colorSemaforo = "../img/circle-yellow.webp";
                                  sizeSemaforo = "80%";
                              }else if(row[99].equals("3")){
-                                 colorSemaforo = "../img/circle-red.svg";
+                                 colorSemaforo = "../img/circle-red.webp";
                                  sizeSemaforo = "60%";
                              }else{
-                                 colorSemaforo = "../img/circle-gray.svg";
+                                 colorSemaforo = "../img/circle-gray.webp";
                                  sizeSemaforo = "100%";
                              }
                              
