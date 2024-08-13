@@ -600,13 +600,13 @@ async function AddPullCustoms() {
             let webp = "";
 
             if (data === "0") { //Activación Semaforo
-                webp = "../img/circle-gray.webp";
+                webp = "../img/circle-gray.svg";
             } else if (data === "1") {
-                webp = "../img/circle-green.webp";
+                webp = "../img/circle-green.svg";
             } else if (data === "2") {
-                webp = "../img/circle-yellow.webp";
+                webp = "../img/circle-yellow.svg";
             } else if (data === "3") {
-                webp = "../img/circle-red.webp";
+                webp = "../img/circle-red.svg";
             }
 
             //color semaforo
@@ -956,13 +956,13 @@ async function AddLineCustoms(i) {
         let webp = "";
 
         if (data === "0") { //Activación Semaforo
-            webp = "../img/circle-gray.webp";
+            webp = "../img/circle-gray.svg";
         } else if (data === "1") {
-            webp = "../img/circle-green.webp";
+            webp = "../img/circle-green.svg";
         } else if (data === "2") {
-            webp = "../img/circle-yellow.webp";
+            webp = "../img/circle-yellow.svg";
         } else if (data === "3") {
-            webp = "../img/circle-red.webp";
+            webp = "../img/circle-red.svg";
         }
 
         //color semaforo
@@ -1828,3 +1828,24 @@ function parametrizacionValoresEventoInput(tipo, cont) {
     console.log("Evento input en " + tipo + " con cont: " + cont);
     // Implementa aquí la lógica necesaria para manejar el evento del input
 }
+
+function crearbtnGuardarFila(contador) {
+        // Selecciona la celda por su ID
+        var tdElement = document.getElementById('btn'+contador);
+
+        // Verifica si ya existe el elemento para evitar duplicados
+        if (!tdElement.querySelector('a')) {
+            // Crea el elemento <a> con las clases y atributos necesarios
+            var aElement = document.createElement('a');
+            aElement.className = 'btn btn-primary text-uppercase';
+            aElement.setAttribute('onclick', 'AddLineCustoms('+ contador +')');
+
+            // Crea el elemento <i> para el icono y lo agrega al <a>
+            var iElement = document.createElement('i');
+            iElement.className = 'fa fa-save';
+            aElement.appendChild(iElement);
+
+            // Agrega el elemento <a> dentro de la celda <td>
+            tdElement.appendChild(aElement);
+        }
+    }

@@ -1452,16 +1452,16 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                     fecha_importacion_registrada = row[102].replaceAll("-", "");
                             
                     if (row[99].equals("1")) {
-                        colorSemaforo = "../img/circle-green.webp";
+                        colorSemaforo = "../img/circle-green.svg";
                         sizeSemaforo = "55%";
                     } else if (row[99].equals("2")) {
-                        colorSemaforo = "../img/circle-yellow.webp";
+                        colorSemaforo = "../img/circle-yellow.svg";
                         sizeSemaforo = "50%";
                     } else if (row[99].equals("3")) {
-                        colorSemaforo = "../img/circle-red.webp";
+                        colorSemaforo = "../img/circle-red.svg";
                         sizeSemaforo = "30%";
                     } else {
-                        colorSemaforo = "../img/circle-gray.webp";
+                        colorSemaforo = "../img/circle-gray.svg";
                         sizeSemaforo = "60%";
                     }
 
@@ -1491,7 +1491,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             /*  ----------------------------- CUERPO/DATA DE TABLA  -----------------------------  */
             
                     if (!excluirShipment) {
-                    salida += "<tr id=\"tr<" + cont + "\">"
+                    salida += "<tr id=\"tr<" + cont + "\" onmouseenter=\"crearbtnGuardarFila("+cont+")\">"
                              // + " <th id=\"columna\"></th> "
                                 + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
                                 + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
@@ -1588,7 +1588,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                         }
 
                         salida += " <td contenteditable=\"true\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
-                                + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
+                                    + " <td  id=\"btn"+cont+"\"></td> "
                                 + "</tr>";
 
                          cont++;  //Contabilizar número de registros/batch

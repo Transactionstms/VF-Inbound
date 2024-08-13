@@ -1989,16 +1989,16 @@ public class ConsultarCustoms extends HttpServlet {
                     fecha_importacion_registrada = row[102].replaceAll("-", "");
                             
                     if (row[99].equals("1")) {
-                        colorSemaforo = "../img/circle-green.webp";
+                        colorSemaforo = "../img/circle-green.svg";
                         sizeSemaforo = "55%";
                     } else if (row[99].equals("2")) {
-                        colorSemaforo = "../img/circle-yellow.webp";
+                        colorSemaforo = "../img/circle-yellow.svg";
                         sizeSemaforo = "50%";
                     } else if (row[99].equals("3")) {
-                        colorSemaforo = "../img/circle-red.webp";
+                        colorSemaforo = "../img/circle-red.svg";
                         sizeSemaforo = "30%";
                     } else {
-                        colorSemaforo = "../img/circle-gray.webp";
+                        colorSemaforo = "../img/circle-gray.svg";
                         sizeSemaforo = "60%";
                     }
 
