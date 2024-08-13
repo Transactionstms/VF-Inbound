@@ -1138,7 +1138,8 @@ function formComplet(idAgenteAduanal, i) {
  FUNCIONES - CONSULTA HISTORICO SEMAFORO
  --------------------------------------------------------------------------*/
 function historicoSemaforo(idShipment) {
-    fetch("../ConsultarHistoricoSemaforo?idShipment=" + idShipment, {
+    let urlSemaforo =encodeURI("../ConsultarHistoricoSemaforo?idShipment=" + idShipment);
+    fetch(urlSemaforo, {
         method: 'POST',
     }).then(r => r.text())
             .then(data => {
@@ -1739,12 +1740,12 @@ async function readExcelFile() {
 async function enviarValoresFila(concatenatedRowValues) {
 
     let agenteAduanal = document.getElementById("idAgenteAduanal").value;
-    let url = "../UpdatePlantillaCustoms?idAgenteAduanal=" + agenteAduanal + "&valores_celdas=" + concatenatedRowValues;
+    let urlExcel=encodeURI("../UpdatePlantillaCustoms?idAgenteAduanal=" + agenteAduanal + "&valores_celdas=" + concatenatedRowValues);
     let res = "";
     
     try {
         // Esperar la respuesta del fetch
-        const response = await fetch(url, {
+        const response = await fetch(urlExcel, {
             method: 'POST'
         });
 

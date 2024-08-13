@@ -147,9 +147,9 @@ function filtrerCheckbox(element, tipoFiltro, list) {
     
     /******************************** validar si alguna de las opciones ya existe en el contenedor/div ********************************/
    
-    if (document.getElementById("checkbox_list-"+tipoFiltro+"-"+i)) {
+    /*if (document.getElementById("checkbox_list-"+tipoFiltro+"-"+i)) {
        seleccionarTodos(tipoFiltro);
-    }
+    }*/
     
 } 
 
