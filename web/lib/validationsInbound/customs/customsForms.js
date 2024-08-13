@@ -219,9 +219,10 @@ async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, colu
 
             const dataBodyBatch = await response.text();
             document.getElementById('data_customs').innerHTML += dataBodyBatch;
-
-            setTimeout(await ocultarLoader, 2);
         }
+        
+        //Oculatr loader:
+         setTimeout(await ocultarLoader, 2);
 
         //Habilitar controles de para descarga/subida de plantilla:
         document.getElementById("input-id").disabled = false;
