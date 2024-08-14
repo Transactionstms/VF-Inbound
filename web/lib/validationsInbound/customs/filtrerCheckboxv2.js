@@ -749,9 +749,16 @@ function validateCheckboxPrimary(numColumna){
         for (var i = 0, max = contTotalCheckbox; i < max; i++) {
             
             let option = document.getElementById('checkbox_list-'+numColumna+'-'+i);
-            if(option.checked === true){
-                contCheckboxList++; 
+            
+            //Validar si el elemento existe en el DOM (Actualización de Filtro)
+            if (option !== null) {
+                if (option.checked === true) {
+                    contCheckboxList++;
+                }
+            }else{
+                console.log("Opción 'Selecicionar todos los elementos, se encuentra disponible!'");
             }
+            
         }
         
         //Si la lista de checkbox es completa, se reactiva la opción '(Seleccionar Todo)'.
@@ -898,12 +905,3 @@ function print_historic_not_checked(numcolumna){
    return valoresConcatenados;
 }
 
-/*destructure('Fazt','Giveaway');
-
-function destructure(args){
-    
-    const fazt = args[0];
-    const giveaway = args[1];
-    
-    const [fazt,giveaway] = args;  
-}*/

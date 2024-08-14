@@ -237,7 +237,6 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             String sizeSemaforo = "";
             String listStatusOperationEvent = "";
             String salida = "";
-            int cont = 1;
            
             //Consultar Información de Agente Aduanal
             if (db.doDB(fac.consultarAgenteAduanalCustoms(UserId))) {
@@ -1445,7 +1444,9 @@ public class ConsultarCustomsBacheo extends HttpServlet {
         if(offset>=1){ //Bacheo por pasos de 1000 registros
             sql += " OFFSET "+offset+" ROWS FETCH NEXT "+next+" ROWS ONLY ";
         }    
-
+        
+         int cont = offset;
+         
          if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
                     
@@ -1491,8 +1492,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             /*  ----------------------------- CUERPO/DATA DE TABLA  -----------------------------  */
             
                     if (!excluirShipment) {
-                    salida += "<tr id=\"tr<" + cont + "\" onmouseenter=\"crearbtnGuardarFila("+cont+")\">"
-                             // + " <th id=\"columna\"></th> "
+                    salida += "<tr id=\"tr" + cont + "\" onmouseenter=\"crearbtnGuardarFila("+cont+")\">"
                                 + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
                                 + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
                                 + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + "<input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"></th> "
@@ -1591,9 +1591,10 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                                     + " <td  id=\"btn"+cont+"\"></td> "
                                 + "</tr>";
 
-                         cont++;  //Contabilizar número de registros/batch
                     }
                     
+                     cont++;  //Contabilizar número de registros/batch
+                     
                 }
          }
             
