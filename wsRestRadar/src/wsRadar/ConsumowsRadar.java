@@ -8,6 +8,7 @@ package wsRadar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.send.email.Email;
 import com.tacts.dao.CustomsSql;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -146,6 +147,7 @@ public class ConsumowsRadar {
         String motivo_atraso = "";
         String observaciones = "";
         String containerId = "";
+        String msg_logError = "";
 
         CallableStatement cs7 = null;
         CustomsSql update = new CustomsSql();
@@ -285,13 +287,22 @@ public class ConsumowsRadar {
                                 observaciones,
                                 containerId);
                         cs7.execute();
-                        System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + shipmentId);
+                        System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de shipment id: " + shipmentId);
                         System.out.println("-------------------------------------------------------------------------------------------------");
                         customs++;
 
                     } catch (Exception ex) {
-                        System.out.println("Error al actualizar el siguiente número de evento: " + shipmentId);
-                        System.out.println("Exception:" + ex.toString());
+                        
+                            msg_logError = "¡Error al actualizar el siguiente número de shipment id: " + shipmentId+"!";
+                            
+                            System.out.println(msg_logError);
+                            System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+                            System.out.println("Exception:" + ex.toString());
+                            
+                            //Emisión de email - Log de errores
+                            Email correo = new Email();
+                            correo.alertaRadarWebservice(msg_logError, jsonObject);
+                            
                         return shipmentId;
                     }
 
