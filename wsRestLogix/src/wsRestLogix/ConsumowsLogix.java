@@ -7,6 +7,7 @@ package wsRestLogix;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.send.email.Email;
 import com.tacts.dao.CustomsSql;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import json.JSONObject;
 import com.tacts.sql.Conexion;
 import com.tacts.sql.Configuracion;
 import java.sql.CallableStatement;
+import java.sql.SQLException;
 
 /**
  *
@@ -97,7 +99,7 @@ public class ConsumowsLogix {
     }
 
     //************************ NO SE OCUPAN SON PETICIONES HTTP ************************// 
-    public String ConsumoLOGIX(String shipmentId) {
+    public String ConsumoLOGIX(String shipmentId) throws SQLException {
 
         String TokenURLP = "http://apis.grupologix.com.mx/traficotms";
         String responseLine = null;
@@ -168,6 +170,7 @@ public class ConsumowsLogix {
         String d_expirationInbound_traficotms = "";
         String d_register_traficotms = "";
         String d_updated_traficotms = "";
+        String msg_logError = "";
 
         CallableStatement cs7 = null;
         CustomsSql update = new CustomsSql();
@@ -340,12 +343,21 @@ public class ConsumowsLogix {
                                     d_updated_traficotms);
                             cs7.execute();
                             System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms + " y número de shipment: " + shipmentId_traficotms);
-                            System.out.println("-------------------------------------------------------------------------------------------------");
+                            System.out.println("----------------------------------------------------------------------------------------------------------------------------");
                             customs++;
 
                         } catch (Exception ex) {
-                            System.out.println("Error al actualizar el siguiente número de evento: " + evento_traficotms);
+                            
+                            msg_logError = "¡Error al actualizar el siguiente número de evento: " + evento_traficotms+"!";
+                            
+                            System.out.println(msg_logError);
+                            System.out.println("----------------------------------------------------------------------------------------------------------------------------");
                             System.out.println("Exception:" + ex.toString());
+                            
+                            //Emisión de email - Log de errores
+                            Email correo = new Email();
+                            correo.alertaLogixWebservice(msg_logError, jsonObject);
+                            
                             return evento_traficotms;
                         }
 
