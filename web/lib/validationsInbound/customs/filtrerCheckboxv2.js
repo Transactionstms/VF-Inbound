@@ -38,12 +38,14 @@ let contadorlist = 0;
 let contTotalCheckbox =0;
 let confirm_check = "";
 let confirm_not_check = "";
+let onFiltrers = false;
 
 function filtrerCheckbox(element, tipoFiltro, list) {
     let newElement = "";
     let blocked = "";
     let data_checked = "";
     let data_not_checked = "";
+    historic_print = tipoFiltro;
     
     //Consultar filtros seleccionados
     let checked = print_historic_checked(tipoFiltro); 
@@ -651,6 +653,9 @@ async function obtenerSeleccion(cont) {
     
     //Crear array con la lista de información no seleccionada: (Checkbox no seleccionados)
     add_list_historic_not_checked(checkboxOn, notSendData);   
+    
+    //Activar estatus del filtro cosultado
+    onFiltrers = true;
 }
 
 function closeForm(cont) {

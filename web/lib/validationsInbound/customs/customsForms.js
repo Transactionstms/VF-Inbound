@@ -1728,9 +1728,17 @@ async function readExcelFile() {
 			await mostrarLoader();
 			document.getElementById("loaderMsg").innerHTML = "Cargando";
 			
-			//Actualizar registros
-            await consultarCustomsBacheo(selected_referenciaAA, selected_evento, selected_responsable, selected_final_destination, selected_brand_division, selected_division, selected_shipmentId, selected_containerId, selected_blAwbPro, selected_loadTypeFinal, selected_quantity, selected_pod, selected_estDepartFromPol, selected_etaRealPortOfDischarge, selected_estEtaDc, selected_inboundNotification, selected_pol, selected_aa, selected_fechaMesVenta, selected_prioridad, selected_pais_origen, selected_size_container, selected_valor_usd, selected_eta_port_discharge, selected_agente_aduanal, selected_pedimento_a1, selected_pedimento_r1_1er, selected_motivo_rectificacion_1er, selected_pedimento_r1_2do, selected_motivo_rectificacion_2do, selected_fecha_recepcion_doc, selected_recinto, selected_naviera, selected_buque, selected_fecha_revalidacion, selected_fecha_previo_origen, selected_fecha_previo_destino, selected_fecha_resultado_previo, selected_proforma_final, selected_permiso, selected_fecha_envio, selected_fecha_recepcion_perm, selected_fecha_activacion_perm, selected_fecha_permisos_aut, selected_co_pref_arancelaria, selected_aplic_pref_arancelaria, selected_req_uva, selected_req_ca, selected_fecha_recepcion_ca, selected_num_constancia_ca, selected_monto_ca, selected_fecha_doc_completos, selected_fecha_pago_pedimento, selected_fecha_solicitud_transporte, selected_fecha_modulacion, selected_modalidad, selected_resultado_modulacion, selected_fecha_reconocimiento, selected_fecha_liberacion, selected_sello_origen, selected_sello_final, selected_fecha_retencion_aut, selected_fecha_liberacion_aut, selected_estatus_operacion, selected_motivo_atraso, selected_observaciones, selected_llegada_a_nova, selected_llegada_a_globe_trade_sd, selected_archivo_m, selected_fecha_archivo_m, selected_fecha_solicit_manip, selected_fecha_vencim_manip, selected_fecha_confirm_clave_pedim, selected_fecha_recep_increment, selected_t_e, selected_fecha_vencim_inbound, selected_no_bultos, selected_peso_kg, selected_transferencia, selected_fecha_inicio_etiquetado, selected_fecha_termino_etiquetado, selected_hora_termino_etiquetado, selected_proveedor, selected_proveedor_carga, selected_fy);
-            //location.reload();
+                                                      if(onFiltrers){
+                                                             //Actualizar registros con filtros seleccionados:
+                                                             historic_print = historic_print;
+                                                             await updateExcelFiltrers(historic_print);
+                                                      }else{
+                                                               //Actualizar registros sin filtros seleccionados:
+                                                             await consultarCustomsBacheo(selected_referenciaAA, selected_evento, selected_responsable, selected_final_destination, selected_brand_division, selected_division, selected_shipmentId, selected_containerId, selected_blAwbPro, selected_loadTypeFinal, selected_quantity, selected_pod, selected_estDepartFromPol, selected_etaRealPortOfDischarge, selected_estEtaDc, selected_inboundNotification, selected_pol, selected_aa, selected_fechaMesVenta, selected_prioridad, selected_pais_origen, selected_size_container, selected_valor_usd, selected_eta_port_discharge, selected_agente_aduanal, selected_pedimento_a1, selected_pedimento_r1_1er, selected_motivo_rectificacion_1er, selected_pedimento_r1_2do, selected_motivo_rectificacion_2do, selected_fecha_recepcion_doc, selected_recinto, selected_naviera, selected_buque, selected_fecha_revalidacion, selected_fecha_previo_origen, selected_fecha_previo_destino, selected_fecha_resultado_previo, selected_proforma_final, selected_permiso, selected_fecha_envio, selected_fecha_recepcion_perm, selected_fecha_activacion_perm, selected_fecha_permisos_aut, selected_co_pref_arancelaria, selected_aplic_pref_arancelaria, selected_req_uva, selected_req_ca, selected_fecha_recepcion_ca, selected_num_constancia_ca, selected_monto_ca, selected_fecha_doc_completos, selected_fecha_pago_pedimento, selected_fecha_solicitud_transporte, selected_fecha_modulacion, selected_modalidad, selected_resultado_modulacion, selected_fecha_reconocimiento, selected_fecha_liberacion, selected_sello_origen, selected_sello_final, selected_fecha_retencion_aut, selected_fecha_liberacion_aut, selected_estatus_operacion, selected_motivo_atraso, selected_observaciones, selected_llegada_a_nova, selected_llegada_a_globe_trade_sd, selected_archivo_m, selected_fecha_archivo_m, selected_fecha_solicit_manip, selected_fecha_vencim_manip, selected_fecha_confirm_clave_pedim, selected_fecha_recep_increment, selected_t_e, selected_fecha_vencim_inbound, selected_no_bultos, selected_peso_kg, selected_transferencia, selected_fecha_inicio_etiquetado, selected_fecha_termino_etiquetado, selected_hora_termino_etiquetado, selected_proveedor, selected_proveedor_carga, selected_fy);
+                                                      }
+                                                      
+                                                         //Actualizar registros generica
+                                                         //location.reload();
         };
         reader.readAsArrayBuffer(file);
     } else {
@@ -1849,3 +1857,366 @@ function crearbtnGuardarFila(contador) {
             tdElement.appendChild(aElement);
         }
     }
+    
+async function updateExcelFiltrers(tipoFiltro){
+   
+   let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
+   
+   //Consultar filtros seleccionados
+    let checkboxOn = tipoFiltro;
+    let sendData = print_historic_checked(tipoFiltro); 
+
+    if (checkboxOn === 1) {
+        selected_referenciaAA = sendData;
+    }
+    if (checkboxOn === 2) {
+        selected_evento = sendData;
+    }
+    if (checkboxOn === 3) {
+        selected_responsable = sendData;
+    }
+    if (checkboxOn === 4) {
+        selected_final_destination = sendData;
+    }
+    if (checkboxOn === 5) {
+        selected_brand_division = sendData;
+    }
+    if (checkboxOn === 6) {
+        selected_division = sendData;
+    }
+    if (checkboxOn === 7) {
+        selected_shipmentId = sendData;
+    } 
+    if (checkboxOn === 8) {
+        selected_containerId = sendData;
+    } 
+    if (checkboxOn === 9) {
+        selected_blAwbPro = sendData;
+    }
+    if (checkboxOn === 10) {
+        selected_loadTypeFinal = sendData;
+    }
+    if (checkboxOn === 11) {
+        selected_quantity = sendData;
+    }
+    if (checkboxOn === 12) {
+        selected_pod = sendData;
+    }
+    if (checkboxOn === 13) {
+        selected_estDepartFromPol = sendData;
+    }
+    if (checkboxOn === 14) {
+        selected_etaRealPortOfDischarge = sendData;
+    }
+    if (checkboxOn === 15) {
+        selected_estEtaDc = sendData;
+    }
+    if (checkboxOn === 16) {
+        selected_inboundNotification = sendData;
+    }
+    if (checkboxOn === 17) {
+        selected_pol = sendData;
+    }
+    if (checkboxOn === 18) {
+        selected_aa = sendData;
+    }
+    if (checkboxOn === 19) {
+        selected_fechaMesVenta = sendData;
+    }
+    if (checkboxOn === 20) {
+        selected_prioridad = sendData;
+    }
+    if (checkboxOn === 21) {
+        selected_pais_origen = sendData;
+    }
+    if (checkboxOn === 22) {
+        selected_size_container = sendData;
+    }
+    if (checkboxOn === 23) {
+        selected_valor_usd = sendData;
+    }
+    if (checkboxOn === 24) {
+        selected_eta_port_discharge = sendData;
+    }
+    if (checkboxOn === 25) {
+        selected_agente_aduanal = sendData;
+    }
+    if (checkboxOn === 26) {
+        selected_pedimento_a1 = sendData;
+    }
+    if (checkboxOn === 27) {
+        selected_pedimento_r1_1er = sendData;
+    }
+    if (checkboxOn === 28) {
+        selected_motivo_rectificacion_1er = sendData;
+    }
+    if (checkboxOn === 29) {
+        selected_pedimento_r1_2do = sendData;
+    }
+    if (checkboxOn === 30) {
+        selected_motivo_rectificacion_2do = sendData;
+    }
+    if (checkboxOn === 31) {
+        selected_fecha_recepcion_doc = sendData;
+    }
+    if (checkboxOn === 32) {
+        selected_recinto = sendData;
+    }
+    if (checkboxOn === 33) {
+        selected_naviera = sendData;
+    }
+    if (checkboxOn === 34) {
+        selected_buque = sendData;
+    }
+    if (checkboxOn === 35) {
+        selected_fecha_revalidacion = sendData;
+    }
+    if (checkboxOn === 36) {
+        selected_fecha_previo_origen = sendData;
+    }
+    if (checkboxOn === 37) {
+        selected_fecha_previo_destino = sendData;
+    }
+    if (checkboxOn === 38) {
+        selected_fecha_resultado_previo = sendData;
+    }
+    if (checkboxOn === 39) {
+        selected_proforma_final = sendData;
+    }
+    if (checkboxOn === 40) {
+        selected_permiso = sendData;
+    }
+    if (checkboxOn === 41) {
+        selected_fecha_envio = sendData;
+    }
+    if (checkboxOn === 42) {
+        selected_fecha_recepcion_perm = sendData;
+    }
+    if (checkboxOn === 43) {
+        selected_fecha_activacion_perm = sendData;
+    }
+    if (checkboxOn === 44) {
+        selected_fecha_permisos_aut = sendData;
+    }
+    if (checkboxOn === 45) {
+        selected_co_pref_arancelaria = sendData;
+    }
+    if (checkboxOn === 46) {
+        selected_aplic_pref_arancelaria = sendData;
+    }
+    if (checkboxOn === 47) {
+        selected_req_uva = sendData;
+    }
+    if (checkboxOn === 48) {
+        selected_req_ca = sendData;
+    }
+    if (checkboxOn === 49) {
+        selected_fecha_recepcion_ca = sendData;
+    }
+    if (checkboxOn === 50) {
+        selected_num_constancia_ca = sendData;
+    }
+    if (checkboxOn === 51) {
+        selected_monto_ca = sendData;
+    }
+    if (checkboxOn === 52) {
+        selected_fecha_doc_completos = sendData;
+    }
+    if (checkboxOn === 53) {
+        selected_fecha_pago_pedimento = sendData;
+    }
+    if (checkboxOn === 54) {
+        selected_fecha_solicitud_transporte = sendData;
+    }
+    if (checkboxOn === 55) {
+        selected_fecha_modulacion = sendData;
+    }
+    if (checkboxOn === 56) {
+        selected_modalidad = sendData;
+    }
+    if (checkboxOn === 57) {
+        selected_resultado_modulacion = sendData;
+    }
+    if (checkboxOn === 58) {
+        selected_fecha_reconocimiento = sendData;
+    }
+    if (checkboxOn === 59) {
+        selected_fecha_liberacion = sendData;
+    }
+    if (checkboxOn === 60) {
+        selected_sello_origen = sendData;
+    }
+    if (checkboxOn === 61) {
+        selected_sello_final = sendData;
+    }
+    if (checkboxOn === 62) {
+        selected_fecha_retencion_aut = sendData;
+    }
+    if (checkboxOn === 63) {
+        selected_fecha_liberacion_aut = sendData;
+    }
+    if (checkboxOn === 64) {
+        selected_estatus_operacion = sendData;
+    }
+    if (checkboxOn === 65) {
+        selected_motivo_atraso = sendData;
+    }
+    if (checkboxOn === 66) {
+        selected_observaciones = sendData;
+    }
+
+    if (idAgenteAduanal === '4001' || idAgenteAduanal === '4006') { //LOGIX Y VF  
+
+        if (checkboxOn === 67) {
+            selected_llegada_a_nova = sendData;
+        }
+        if (checkboxOn === 68) {
+            selected_llegada_a_globe_trade_sd = sendData;
+        }
+        if (checkboxOn === 69) {
+            selected_archivo_m = sendData;
+        }
+        if (checkboxOn === 70) {
+            selected_fecha_archivo_m = sendData;
+        }
+        if (checkboxOn === 71) {
+            selected_fecha_solicit_manip = sendData;
+        }
+        if (checkboxOn === 72) {
+            selected_fecha_vencim_manip = sendData;
+        }
+        if (checkboxOn === 73) {
+            selected_fecha_confirm_clave_pedim = sendData;
+        }
+        if (checkboxOn === 74) {
+            selected_fecha_recep_increment = sendData;
+        }
+        if (checkboxOn === 75) {
+            selected_t_e = sendData;
+        }
+        if (checkboxOn === 76) {
+            selected_fecha_vencim_inbound = sendData;
+        }
+
+    }
+
+    if (idAgenteAduanal === '4002' || idAgenteAduanal === '4006') {  //CUSA Y VF
+        
+        if (checkboxOn === 77) {
+            selected_no_bultos = sendData;
+        }
+        if (checkboxOn === 78) {
+            selected_peso_kg = sendData;
+        }
+        if (checkboxOn === 79) {
+            selected_transferencia = sendData;
+        }
+        if (checkboxOn === 80) {
+            selected_fecha_inicio_etiquetado = sendData;
+        }
+        if (checkboxOn === 81) {
+            selected_fecha_termino_etiquetado = sendData;
+        }
+        if (checkboxOn === 82) {
+            selected_hora_termino_etiquetado = sendData;
+        }
+        if (checkboxOn === 83) {
+            selected_proveedor = sendData;
+        }
+        if (checkboxOn === 84) {
+            selected_proveedor_carga = sendData;
+        }
+
+    }
+    
+    if (checkboxOn === 85) {
+        selected_fy = sendData;
+    }	
+
+   //Generación de Filtros (checkbox):
+    await consultarCustomsFiltros(selected_referenciaAA,
+                            selected_evento,
+                            selected_responsable,
+                            selected_final_destination,
+                            selected_brand_division,
+                            selected_division,
+                            selected_shipmentId,
+                            selected_containerId,
+                            selected_blAwbPro,
+                            selected_loadTypeFinal,
+                            selected_quantity,
+                            selected_pod,
+                            selected_estDepartFromPol,
+                            selected_etaRealPortOfDischarge,
+                            selected_estEtaDc,
+                            selected_inboundNotification,
+                            selected_pol,
+                            selected_aa,
+                            selected_fechaMesVenta,
+                            selected_prioridad,
+                            selected_pais_origen,
+                            selected_size_container,
+                            selected_valor_usd,
+                            selected_eta_port_discharge,
+                            selected_agente_aduanal,
+                            selected_pedimento_a1,
+                            selected_pedimento_r1_1er,
+                            selected_motivo_rectificacion_1er,
+                            selected_pedimento_r1_2do,
+                            selected_motivo_rectificacion_2do,
+                            selected_fecha_recepcion_doc,
+                            selected_recinto,
+                            selected_naviera,
+                            selected_buque,
+                            selected_fecha_revalidacion,
+                            selected_fecha_previo_origen,
+                            selected_fecha_previo_destino,
+                            selected_fecha_resultado_previo,
+                            selected_proforma_final,
+                            selected_permiso,
+                            selected_fecha_envio,
+                            selected_fecha_recepcion_perm,
+                            selected_fecha_activacion_perm,
+                            selected_fecha_permisos_aut,
+                            selected_co_pref_arancelaria,
+                            selected_aplic_pref_arancelaria,
+                            selected_req_uva,
+                            selected_req_ca,
+                            selected_fecha_recepcion_ca,
+                            selected_num_constancia_ca,
+                            selected_monto_ca,
+                            selected_fecha_doc_completos,
+                            selected_fecha_pago_pedimento,
+                            selected_fecha_solicitud_transporte,
+                            selected_fecha_modulacion,
+                            selected_modalidad,
+                            selected_resultado_modulacion,
+                            selected_fecha_reconocimiento,
+                            selected_fecha_liberacion,
+                            selected_sello_origen,
+                            selected_sello_final,
+                            selected_fecha_retencion_aut,
+                            selected_fecha_liberacion_aut,
+                            selected_estatus_operacion,
+                            selected_motivo_atraso,
+                            selected_observaciones,
+                            selected_llegada_a_nova,
+                            selected_llegada_a_globe_trade_sd,
+                            selected_archivo_m,
+                            selected_fecha_archivo_m,
+                            selected_fecha_solicit_manip,
+                            selected_fecha_vencim_manip,
+                            selected_fecha_confirm_clave_pedim,
+                            selected_fecha_recep_increment,
+                            selected_t_e,
+                            selected_fecha_vencim_inbound,
+                            selected_no_bultos,
+                            selected_peso_kg,
+                            selected_transferencia,
+                            selected_fecha_inicio_etiquetado,
+                            selected_fecha_termino_etiquetado,
+                            selected_hora_termino_etiquetado,
+                            selected_proveedor,
+                            selected_proveedor_carga,
+                            selected_fy);
+ }    
