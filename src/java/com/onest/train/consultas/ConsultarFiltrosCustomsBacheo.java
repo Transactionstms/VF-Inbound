@@ -1231,7 +1231,7 @@ public class ConsultarFiltrosCustomsBacheo extends HttpServlet {
         /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), "
         /*96*/ + " NVL(TIC.FY,' '), "
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "
-        /*98*/ + " NVL(TIC.PRIORIDAD,'No'), "
+        /*98*/ + " NVL(TIC.PRIORIDAD,'NO'), "
         /*99*/ + " NVL(GTN.ESTATUS,1), "
        /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'0'), "
        /*101*/ + " NVL(TIP1.ADUANA_NUMERO,0), "

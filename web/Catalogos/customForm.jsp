@@ -277,11 +277,11 @@
                             <div class="contenedor_modal">
                                 <div class="columna1_modal">
                                     <input type="checkbox" id="permiso1" name="permiso1" value="Si" onclick="hide_permiso(this.value)">
-                                    <label>Si</label> 
+                                    <label>SI</label> 
                                 </div>
                                 <div class="columna2_modal">
                                     <input type="checkbox" id="permiso2" name="permiso2" value="No" onclick="hide_permiso(this.value)">
-                                    <label>No</label> 
+                                    <label>NO</label> 
                                 </div>
                             </div>   
                     </div>
@@ -333,11 +333,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="co_pref_arancelaria1" name="co_pref_arancelaria1" value="Si" onclick="hide_co_pref_arancelaria(this.value)">
-                                <label>Si</label> 
+                                <label>SI</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="co_pref_arancelaria2" name="co_pref_arancelaria2" value="No" onclick="hide_co_pref_arancelaria(this.value)">
-                                <label>No</label> 
+                                <label>NO</label> 
                             </div>
                         </div>
                     </div>
@@ -353,11 +353,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="aplic_pref_arancelaria1" name="aplic_pref_arancelaria1" value="Si" onclick="hide_aplic_pref_arancelaria(this.value)">
-                                <label>Si</label> 
+                                <label>SI</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="aplic_pref_arancelaria2" name="aplic_pref_arancelaria2" value="No" onclick="hide_aplic_pref_arancelaria(this.value)">
-                                <label>No</label> 
+                                <label>NO</label> 
                             </div>
                         </div>
                     </div>
@@ -373,11 +373,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="req_uva1" name="req_uva1" value="Si" onclick="hide_req_uva(this.value)">
-                                <label>Si</label> 
+                                <label>SI</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="req_uva2" name="req_uva2" value="No" onclick="hide_req_uva(this.value)">
-                                <label>No</label> 
+                                <label>NO</label> 
                             </div>
                         </div>
                     </div>
@@ -393,11 +393,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="req_ca1" name="req_ca1" value="Si" onclick="hide_req_ca(this.value)">
-                                <label>Si</label> 
+                                <label>SI</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="req_ca2" name="req_ca2" value="No" onclick="hide_req_ca(this.value)">
-                                <label>No</label> 
+                                <label>NO</label> 
                             </div>
                         </div>
                     </div>
@@ -458,11 +458,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="modalidad1" name="modalidad1" value="Camión" onclick="hide_modalidad(this.value)">
-                                <label>Camión</label> 
+                                <label>CAMION</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="modalidad2" name="modalidad2" value="Tren" onclick="hide_modalidad(this.value)">
-                                <label>Tren</label> 
+                                <label>TREN</label> 
                             </div>
                         </div>
                     </div>
@@ -478,11 +478,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="resultado_modulacion1" name="resultado_modulacion1" value="Verde" onclick="hide_resultado_modulacion(this.value)">
-                                <label>Verde</label> 
+                                <label>VERDE</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="resultado_modulacion2" name="resultado_modulacion2" value="Rojo" onclick="hide_resultado_modulacion(this.value)">
-                                <label>Rojo</label> 
+                                <label>ROJO</label> 
                             </div>
                         </div>
                     </div>
@@ -607,11 +607,11 @@
                         <div class="contenedor_modal">
                             <div class="columna1_modal">
                                 <input type="checkbox" id="transferencia1" name="transferencia1" value="Si" onclick="hide_transferencia(this.value)">
-                                <label>Si</label> 
+                                <label>SI</label> 
                             </div>
                             <div class="columna2_modal">
                                 <input type="checkbox" id="transferencia2" name="transferencia2" value="No" onclick="hide_transferencia(this.value)">
-                                <label>No</label> 
+                                <label>NO</label> 
                             </div>
                         </div>
                     </div>

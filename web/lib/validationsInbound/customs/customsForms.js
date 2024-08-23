@@ -444,7 +444,7 @@ async function AddPullCustoms() {
 
 
         /* # REGLA 1: */
-        if (permiso === "Si") {
+        if (permiso === "SI") {
 
             if (fecha_envio.replace(/\s/g, "") === "") {
                 contadorError++;
@@ -473,7 +473,7 @@ async function AddPullCustoms() {
         }
 
         /* # REGLA 2: */
-        if (req_ca === "Si") {
+        if (req_ca === "SI") {
 
             if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
                 contadorError++;
@@ -498,7 +498,7 @@ async function AddPullCustoms() {
         /* # REGLA 3: */
         if (idAgenteAduanal != "4005") { //RECHY
 
-            if (resultado_modulacion === "Rojo") {
+            if (resultado_modulacion === "ROJO") {
 
                 if (idAgenteAduanal === "4002") { //CUSA
 
@@ -556,7 +556,8 @@ async function AddPullCustoms() {
         /* RULE #10 ESTATUS: IMPORTADO */
 
         if (estatus_operacion === "19") {
-            var f1 = new Date(fecha_liberacion);
+            var fechaConvertidaLiberacion = convertirFechaLiberacion(fecha_liberacion);
+            var f1 = new Date(fechaConvertidaLiberacion);  
             var f2 = new Date(fechaActual);
 
             if (f1 > f2) {
@@ -567,13 +568,14 @@ async function AddPullCustoms() {
                 fechaMayorActual = "";
             }
 
-            if (fechaMayorActual.replace(/\s/g, "") == "" || pedimento_a1.replace(/\s/g, "") == "" || fecha_pago_pedimento.replace(/\s/g, "") == "") {
+            if (fechaMayorActual.replace(/\s/g, "") == "" ||  pedimento_a1.replace(/\s/g, "") == "" ||  fecha_pago_pedimento.replace(/\s/g, "") == "") {
                 contadorError++;
                 txtErrormSg += "Verifique: Pedimento A1 / Fecha Pago Pedimento / Fecha Liberación.";
                 changeColorByPositionError(i);
                 msgErrorAgenteAduanal(i, idAgenteAduanal);
             }
         }
+
 
         let urlData = encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustomsInicial=" + i + "&numCustomsFinal=" + i + urlCustoms);
         try {
@@ -800,7 +802,7 @@ async function AddLineCustoms(i) {
 
 
     /* # REGLA 1: */
-    if (permiso === "Si") {
+    if (permiso === "SI") {
 
         if (fecha_envio.replace(/\s/g, "") === "") {
             contadorError++;
@@ -829,7 +831,7 @@ async function AddLineCustoms(i) {
     }
 
     /* # REGLA 2: */
-    if (req_ca === "Si") {
+    if (req_ca === "SI") {
 
         if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
             contadorError++;
@@ -854,7 +856,7 @@ async function AddLineCustoms(i) {
     /* # REGLA 3: */
     if (idAgenteAduanal != "4005") { //RECHY
 
-        if (resultado_modulacion === "Rojo") {
+        if (resultado_modulacion === "ROJO") {
 
             if (idAgenteAduanal === "4002") { //CUSA
 
@@ -912,7 +914,8 @@ async function AddLineCustoms(i) {
     /* RULE #10 ESTATUS: IMPORTADO */
 
     if (estatus_operacion === "19") {
-        var f1 = new Date(fecha_liberacion);
+        var fechaConvertidaLiberacion = convertirFechaLiberacion(fecha_liberacion);
+        var f1 = new Date(fechaConvertidaLiberacion);  
         var f2 = new Date(fechaActual);
 
         if (f1 > f2) {
@@ -923,7 +926,7 @@ async function AddLineCustoms(i) {
             fechaMayorActual = "";
         }
 
-        if (fechaMayorActual.replace(/\s/g, "") == "" || pedimento_a1.replace(/\s/g, "") == "" || fecha_pago_pedimento.replace(/\s/g, "") == "") {
+        if (fechaMayorActual.replace(/\s/g, "") == "" ||  pedimento_a1.replace(/\s/g, "") == "" ||  fecha_pago_pedimento.replace(/\s/g, "") == "") {
             contadorError++;
             txtErrormSg += "Verifique: Pedimento A1 / Fecha Pago Pedimento / Fecha Liberación.";
             changeColorByPositionError(i);
@@ -1085,7 +1088,7 @@ function modulacion(datePagoPedimento, i) {
 function cleanResultadoModulacion(modulacion, i, AgentType) {
     let color = "";
 
-    if (modulacion === "Verde") {
+    if (modulacion === "VERDE") {
         document.getElementById("sello_origen[" + i + "]").innerHTML = "";
         color = "#ced4da";
     } else {
@@ -1164,7 +1167,7 @@ function msgErrorAgenteAduanal(i, AgentType) {
         color = "#db7f7f";
     }
 
-    if (AgentType === "4001" || AgentType === "4002" || AgentType === "4006") { //RADAR|SESMA|VF
+    if (AgentType === "4003" || AgentType === "4004" || AgentType === "4006") { //RADAR|SESMA|VF
 
         document.getElementById("pais_origen[" + i + "]").style.borderColor = color;
         document.getElementById("size_container[" + i + "]").style.borderColor = color;
@@ -2220,3 +2223,35 @@ async function updateExcelFiltrers(tipoFiltro){
                             selected_proveedor_carga,
                             selected_fy);
  }    
+ 
+ // Función para convertir la fecha_liberacion
+function convertirFechaLiberacion(fecha_liberacion) {
+    // Mapeo de los meses
+    const meses = {
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12"
+    };
+
+    // Extraer los componentes de la fecha usando una expresión regular
+    const partes = fecha_liberacion.match(/([a-zA-Z]{3})\/(\d{2})\/(\d{4})/);
+    if (partes) {
+        const mes = meses[partes[1]]; // Convertir el nombre del mes a número
+        const dia = partes[2];
+        const año = partes[3];
+        return `${mes}/${dia}/${año}`;
+    }
+    return null; // Devolver null si el formato no es válido
+}
+
+// Uso de la función para obtener la fecha en el formato MM/DD/YYYY
+fecha_liberacion = convertirFechaLiberacion(fecha_liberacion);

@@ -134,7 +134,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             String columna_proveedor = request.getParameter("columna_proveedor").trim();
             String columna_proveedor_carga = request.getParameter("columna_proveedor_carga").trim();
             String columna_fy = request.getParameter("columna_fy").trim();
-            int contSubfiltros = Integer.parseInt(request.getParameter("contSubfiltros"))-1;
+            int contSubfiltros = Integer.parseInt(request.getParameter("contSubfiltros"));
             int offset = Integer.parseInt(request.getParameter("offset"));
             int next = Integer.parseInt(request.getParameter("next"));
 
@@ -1145,7 +1145,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
         /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), "
         /*96*/ + " NVL(TIC.FY,' '), "
         /*97*/ + " NVL(TIC.AGENTE_ADUANAL_ID,0), "
-        /*98*/ + " NVL(TIC.PRIORIDAD,'No'), "
+        /*98*/ + " NVL(TIC.PRIORIDAD,'NO'), "
         /*99*/ + " NVL(GTN.ESTATUS,1), "
        /*100*/ + " NVL(TIC.ESTATUS_SEMAFORO,'0'), "
        /*101*/ + " NVL(TIP1.ADUANA_NUMERO,0), "
@@ -1445,7 +1445,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
             sql += " OFFSET "+offset+" ROWS FETCH NEXT "+next+" ROWS ONLY ";
         }    
         
-         int cont = offset;
+         int cont = contSubfiltros;
          
          if (db.doDB(sql)) {
                 for (String[] row : db.getResultado()) {
