@@ -606,7 +606,7 @@ async function AddPullCustoms() {
             } else {
                 changeColorByPositionSuccess(i);
                 document.getElementById('mSgError' + i).innerHTML = "";
-                msgErrorAgenteAduanal(i, idAgenteAduanal);
+                //msgErrorAgenteAduanal(i, idAgenteAduanal);
             }
 
             urlCustoms = "";
@@ -977,7 +977,7 @@ async function AddLineCustoms(i) {
         } else {
             changeColorByPositionSuccess(i);
             document.getElementById('mSgError' + i).innerHTML = "";
-            msgErrorAgenteAduanal(i, idAgenteAduanal);
+           //msgErrorAgenteAduanal(i, idAgenteAduanal);
         }
 
         urlCustoms = "";
@@ -1190,7 +1190,7 @@ function msgErrorAgenteAduanal(i, AgentType) {
     if (estatus != 19) {
         color = "#ced4da";
     } else {
-        color = "#db7f7f";
+         color = "#db7f7f";
     }
 
     if (AgentType === "4003" || AgentType === "4004" || AgentType === "4006") { //RADAR|SESMA|VF
