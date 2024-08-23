@@ -1362,8 +1362,10 @@ function msgErrorAgenteAduanal(i, AgentType) {
 
 function changeColorByPositionSuccess(i) {
     const table = document.querySelector("table");
+	let cont = i + 1;
+	
     if (table) {
-        const row = table.rows[i]; // Primera fila
+        const row = table.rows[cont]; // Primera fila
         const cell = row.cells[2]; // Primer <td> en la primera fila
 
         if (cell) {
@@ -1375,8 +1377,10 @@ function changeColorByPositionSuccess(i) {
 
 function changeColorByPositionError(i) {
     const table = document.querySelector("table");
+	let cont = i + 1;
+	
     if (table) {
-        const row = table.rows[i]; // Primera fila
+        const row = table.rows[cont]; // Primera fila
         const cell = row.cells[2]; // Primer <td> en la primera fila
 
         if (cell) {
@@ -2243,7 +2247,7 @@ function convertirFechaLiberacion(fecha_liberacion) {
     };
 
     // Extraer los componentes de la fecha usando una expresión regular
-    const partes = fecha_liberacion.match(/([a-zA-Z]{3})\/(\d{2})\/(\d{4})/);
+    const partes = fecha_liberacion.match("/([a-zA-Z]{3})\/(\d{2})\/(\d{4})/");
     if (partes) {
         const mes = meses[partes[1]]; // Convertir el nombre del mes a número
         const dia = partes[2];
@@ -2253,5 +2257,3 @@ function convertirFechaLiberacion(fecha_liberacion) {
     return null; // Devolver null si el formato no es válido
 }
 
-// Uso de la función para obtener la fecha en el formato MM/DD/YYYY
-fecha_liberacion = convertirFechaLiberacion(fecha_liberacion);
