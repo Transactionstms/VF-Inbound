@@ -277,7 +277,7 @@ async function AddPullCustoms() {
     let txtErrormSg = "";
     let fechaMayorActual = "";
 
-    for (let i = 1; i < contadorCustoms; i++) {
+    for (let i = 0; i < contadorCustoms; i++) {
 
         //Parametros Indicadores   
         referenciaAA = document.getElementById("referenciaAA[" + i + "]").innerHTML;
