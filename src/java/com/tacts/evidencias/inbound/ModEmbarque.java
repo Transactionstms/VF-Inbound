@@ -5,12 +5,15 @@
  */
 package com.tacts.evidencias.inbound;
 
+import com.onest.oracle.DB;
+import com.onest.oracle.DBConfData;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,29 +21,89 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ModEmbarque extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ModEmbarque</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ModEmbarque at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
+            
+              HttpSession ownsession = request.getSession();
+              DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
+            
+            String tran = request.getParameter("tran"); 
+            String cus  = request.getParameter("cus"); 
+            String f1   = request.getParameter("f1"); 
+            String f2   = request.getParameter("f2"); 
+            String fol  = request.getParameter("fol");   
+            String camionesValue        = request.getParameter("camionesValue");
+            String tipoUnidadValue      = request.getParameter("tipoUnidadValue");
+            String choferValue          = request.getParameter("choferValue");
+            String dispositivosValue    = request.getParameter("dispositivosValue");
+            String fechaRevisionValue   = request.getParameter("fechaRevisionValue");
+            String selloCajaValue       = request.getParameter("selloCajaValue");
+            String relacionEntregaValue = request.getParameter("relacionEntregaValue");
+            String fechaFinEntregaValue = request.getParameter("fechaFinEntregaValue");
+            String packingListValue     = request.getParameter("packingListValue");
+            String autorValue           = request.getParameter("autorValue");
+            String observacionesValue   = request.getParameter("observacionesValue");
+            String reg1   = request.getParameter("reg1");
+            String reg2   = request.getParameter("reg2");
+            String origen   = request.getParameter("origen");
+           // String sqlGtn="update tra_inc_gtn_test set STATUS_EMBARQUE=2 where EMBARQUE_AGRUPADOR='"+fol+"' ";
+            String sqlEmb="update  TRA_INB_EMBARQUE set"
+                    + ""
+                    + " EMBARQUE_TRANSPORTISTA='"+tran+"',"
+                    + " EMBARQUE_FEC_ENRAMPE=TO_DATE('"+f1+"', 'MM/DD/YYYY HH24:MI'),"
+                    + " EMBARQUE_FEC_INICIO=TO_DATE('"+f2+"', 'MM/DD/YYYY HH24:MI'),"
+                    + " EMBARQUE_TCUSTODIA='"+cus+"',"
+                    + " CAMION_ID='"+camionesValue+"',"
+                    + " UTRANSPORTE_ID="+tipoUnidadValue+","
+                    + " CHOFER_ID='"+choferValue+"',"
+                    + " DSPMOV_ID="+dispositivosValue+","
+                    + " EMBARQUE_FEC_REVISION= to_date('"+fechaRevisionValue+"','MM/DD/YYYY HH24:MI'),"
+                    + " EMBARQUE_FEC_FIN=to_date('"+fechaFinEntregaValue+"','MM/DD/YYYY HH24:MI'),"
+                    + " EMBARQUE_SELLO_CAJA='"+selloCajaValue+"',"
+                    + " EMBARQUE_RELACION_ENT='"+relacionEntregaValue+"',"
+                    + " EMBARQUE_PACKING_LIST='"+packingListValue+"',"
+                    + " EMBARQUE_AUDITOR='"+autorValue+"',"
+                    + " EMBARQUE_OBSERVACIONES='"+observacionesValue+"',"
+                    + " ORIGEN_ID='"+origen+"'"
+                    + " where  EMBARQUE_ID in ('"+fol+"')";
+         
+            System.out.println("*****"+sqlEmb);
+            boolean update2=db.doDB(sqlEmb);
+            
+            
+            
+            
+            
+            
+             if( update2){ 
+                 //  Email correo = new Email();
+                 // try {
+                 //      correo.alertaLiberacionV2(bytes, embarque_id, idLTransporte, nameLTransporte);
+                 //      String transportista = "";  
+                 //      String sbuSQL = "select  LTRANSPORTE_NOMBRE from tra_inb_linea_transporte where LTRANSPORTE_ID="+tran;
+                 //       if (db.doDB(sbuSQL)) {
+                 //            for (String[] row : db.getResultado()) {
+                 //               transportista =   row[0]  ;
+                 //         }
+                 //       }
+                 //     
+                 //     correo.alertaLiberacionV2(null, fol, tran, transportista);
+                 //     
+                 // } catch (SQLException ex) {
+                 //     Logger.getLogger(CrearEmbarque.class.getName()).log(Level.SEVERE, null, ex);
+                 // }
+                    out.print("correcto"); 
+                }else{ 
+                    out.print("error"); 
+                }
+             
+             
+             
+          
         }
     }
 
@@ -84,3 +147,6 @@ public class ModEmbarque extends HttpServlet {
     }// </editor-fold>
 
 }
+
+
+

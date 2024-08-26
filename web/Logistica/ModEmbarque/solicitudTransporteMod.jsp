@@ -1,7 +1,7 @@
 <%-- 
-    Document   : newjsp
+    Document   : solicitudTransporteMod
     Created on : Apr 5, 2023, 2:37:22 PM
-    Author     : dan_i
+    Author     : gr
 --%>
  
 
@@ -117,21 +117,10 @@
                                                     </select>
                                                 </div>-->
                                                <div class="mb-4"> 
-                                                    <label class="form-label">Evento</label>
+                                                    <label class="form-label">Embarque</label>
                                                     <input type="text" class="form-control" id="evento" name="evento"  >
                                                 </div>
-                                             
-                                            
-                                                <div class="mb-4">
-                                                    <label class="form-label">Contenedor</label>
-                                                    <input type="text" class="form-control" id="container" name="container"  >
-                                                </div>
-                                             
-                                                 <div class="mb-4">
-                                                    <label class="form-label">Shipment</label>
-                                                    <input type="text" class="form-control" id="shipment" name="shipment"  >
-                                                </div>
-                                              
+                                        
                                                 <!--button-->
                                                 <button class="btn btn-primary text-nowrap" type="button"  onclick="enviar()">Enviar</button>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -167,44 +156,26 @@
             
             function enviar(){
           var tcarga    ='0';// document.getElementById('tcarga').value;
-          var shipment  = document.getElementById('shipment').value;
-          var container = document.getElementById('container').value;
-          var evento    = document.getElementById('evento').value;
+           var evento    = document.getElementById('evento').value;
           
-         // console.log(tcarga);
-          console.log(shipment);
-          console.log(container);
+          
           console.log(evento);
           
         //  if(tcarga===''    || tcarga===null){    tcarga=0;   }
           
-          if(shipment===''  || shipment===null){  shipment=0;  }else{
-                let opciones =shipment; 
-                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
-                shipment=opcionesEncerradas
-              
-          }
-          if(container==='' || container===null){ container=0; }
-          else{
-                let opciones =container; 
-                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
-                container=opcionesEncerradas
-              
-          }
+       
           if(evento===''    || evento===null){    evento=0;    }
            else{
-                let opciones =evento; 
-                let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
-                evento=opcionesEncerradas
+                //let opciones =evento; 
+               // let opcionesEncerradas = opciones.split(',').map(opcion => "'" + opcion + "'").join(','); 
+               // evento=opcionesEncerradas
               
           }
           
-          
-          console.log(shipment);
-          console.log(container);
+           
           console.log(evento);
           
-       window.location.href =  '<%=request.getContextPath()%>/Logistica/ModEmbarque/docDatosAdicionalesMod.jsp?tcarga='+tcarga+'&shipment='+shipment+'&container='+container+'&evento='+evento;
+       window.location.href =  '<%=request.getContextPath()%>/Logistica/ModEmbarque/docDatosAdicionalesMod.jsp?tcarga='+tcarga+'&evento='+evento;
  
           
             }

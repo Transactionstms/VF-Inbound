@@ -96,15 +96,11 @@
                 }
             }
              String where = "";
-            String opciones = request.getParameter("op");
-            String shipment = request.getParameter("shipment");
-            String container = request.getParameter("container");
-            String evento = request.getParameter("evento");   
-        try{    if(!shipment.equals("0")) { opciones =" (select EMBARQUE_AGRUPADOR from tra_inc_gtn_test  where shipment_id in ("+shipment+") )";}  }catch(Error e){}
-         try{    if(!container.equals("0")){ opciones ="(select EMBARQUE_AGRUPADOR from tra_inc_gtn_test  where container1 in ("+container+") )  ";}  }catch(Error e){}
-         try{    if(!evento.equals("0"))   { opciones =" (select EMBARQUE_AGRUPADOR from tra_inc_gtn_test  where PLANTILLA_ID in"
-                 + " ( (select  PLANTILLA_ID from tra_inb_evento where id_evento in ("+evento+")  ) ) )   " ;}     }catch(Error e){}
-
+            String evento = request.getParameter("evento"); 
+            String op = request.getParameter("op"); 
+              
+      
+String agrupa = "";
          
             String sql = " "
                     + " SELECT DISTINCT"
@@ -115,7 +111,9 @@
                     + " FROM "
                     + "   tra_inb_evento tie"
                     + "   INNER JOIN tra_inc_gtn_test gtn ON gtn.plantilla_id = tie.plantilla_id"
-                    + " where    EMBARQUE_AGRUPADOR in (" + opciones + ")"
+                    + " where    EMBARQUE_AGRUPADOR in ("
+                    + " select EMBARQUE_AGRUPADOR from   TRA_INB_EMBARQUE where  EMBARQUE_ID in ('" + evento + "') "
+                    + ")"
                     + " ORDER BY"
                     + "   tie.id_evento";
 
@@ -137,13 +135,14 @@
          + " NVL(EMBARQUE_PACKING_LIST,' '),"
          + " EMBARQUE_AUDITOR,"
          + " NVL(EMBARQUE_OBSERVACIONES,' '),"
-         + " ORIGEN_ID  from TRA_INB_EMBARQUE where    EMBARQUE_AGRUPADOR in ( " + opciones + " )"//EMBARQUE_ESTADO_ID
+         + " ORIGEN_ID  from TRA_INB_EMBARQUE where  EMBARQUE_ID in ('" + evento + "')"//EMBARQUE_ESTADO_ID
                     ;
 
 
     %>
     <body>
-        <%=sqlEmb%>
+      <!--  <%=sqlEmb%>   <%=sql%> -->
+      
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid ">
@@ -163,7 +162,7 @@
                                             <%
                                                if (db.doDB(sqlEmb)) {
                 for (String[] row : db.getResultado()) {
-                    
+                    agrupa=row[0];
                 
                                             %>
                                          <div class="container">
@@ -402,7 +401,7 @@
 
                                                                 let tranp = document.getElementById('iframeid');
                                                                 let uploa = document.getElementById('uploadBtnid');
-                                                                document.getElementById('pdfiframe').src = "<%=request.getContextPath()%>/Logistica/pdflogistica.jsp?a=<%=opciones%>&email=t&LTRANSPORTE_ID=" + id + "&nameLTransporte=" + nom + "&bc=" + banCus + "&idc=" + idc + "&nomc=" + nomc;
+                                                                document.getElementById('pdfiframe').src = "<%=request.getContextPath()%>/Logistica/pdflogistica.jsp?a=<%=op%>&email=t&LTRANSPORTE_ID=" + id + "&nameLTransporte=" + nom + "&bc=" + banCus + "&idc=" + idc + "&nomc=" + nomc;
                                                                 tranp.style.display = 'block';
                                                                 uploa.style.display = 'none';
                                                             }
@@ -495,7 +494,7 @@ if (origen === '' || origen ===null){
    }
 
                                                                 try {
-                                                                    const response = await fetch('<%=request.getContextPath()%>/CrearEmbarque?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen);
+                                                                    const response = await fetch('<%=request.getContextPath()%>/ModEmbarque?tran=' + tranp + '&cus=' + custo + '&f1=' + fecha + '&f2=' + f_ini + '&fol=<%=evento%>&camionesValue=' + camionesValue +'&tipoUnidadValue=' + tipoUnidadValue +'&choferValue=' + choferValue + '&dispositivosValue=' + dispositivosValue +'&fechaRevisionValue=' + fechaRevisionValue +'&selloCajaValue=' + selloCajaValue +'&relacionEntregaValue=' + relacionEntregaValue +'&fechaFinEntregaValue=' + fechaFinEntregaValue +'&packingListValue=' + packingListValue +'&autorValue=' + autorValue +'&observacionesValue=' + observacionesValue+'&reg1='+reg1+'&reg2='+reg2+'&reg3='+reg3+'&origen='+origen);
                                                                     if (!response.ok) {
                                                                         throw new Error('Error en la solicitud');
                                                                     }
