@@ -1520,7 +1520,7 @@ function tabuladorVertical(event, namecelda, contador) {
     // Verificar si la tecla presionada es Enter
     if (event.key === 'Enter') {
 
-        posicion = parseInt(contador) + 1;
+        posicion = parseInt(contador);
 
         // Obtener el id de la celda de abajo
         const nextCellId = namecelda + "[" + posicion + "]";
@@ -1546,7 +1546,7 @@ function parametrizacionValoresEvento(name_celda, contador) {
     let numCustoms = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 1, max = numCustoms; i < max; i++) {
+    for (var i = 0, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 
@@ -1566,7 +1566,7 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
     let numCustoms = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 1, max = numCustoms; i < max; i++) {
+    for (var i = 0, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 
@@ -1605,7 +1605,7 @@ function parametrizacionValoresEstatusOperacion(contador) {
     let numCustoms = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 1, max = numCustoms; i < max; i++) {
+    for (var i = 0, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 
