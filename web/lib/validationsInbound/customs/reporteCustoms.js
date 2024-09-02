@@ -206,7 +206,7 @@
         var compareWith = "";
 
         // Recorremos todas las filas con contenido de la tabla
-        for (var i = 1; i < tableReg.rows.length; i++)
+        for (var i = 0; i < tableReg.rows.length; i++)
         {
             cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
             found = false;
