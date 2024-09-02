@@ -276,6 +276,7 @@ public class ConsumowsLogix {
                         d_updated_traficotms = jsonObject.getString("d_updated_traficotms").replace("-", "");
 
                         try {
+                            
                             this.cnBaseDeDatos.Iniciar();
                             cs7 = update.actualizarCustomsLogix(this.cnBaseDeDatos,
                                     evento_traficotms,
@@ -346,6 +347,8 @@ public class ConsumowsLogix {
                             System.out.println("----------------------------------------------------------------------------------------------------------------------------");
                             customs++;
 
+                             this.cnBaseDeDatos.Finalizar();
+                             
                         } catch (Exception ex) {
                             
                             msg_logError = "¡Error al actualizar el siguiente número de evento: " + evento_traficotms+"!";

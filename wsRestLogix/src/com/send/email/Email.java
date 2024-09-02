@@ -30,7 +30,7 @@ public class Email {
     
     private String asunto = "Avisos Logix Customs";
     private final String REMITENTE = "alertas1@tacts.mx";
-    private final String CLAVE = "Tacts23*";
+    private final String CLAVE = "Tacts*24*";
     private final String HOST = "smtp.gmail.com";       
     
     public String getAsunto() {
