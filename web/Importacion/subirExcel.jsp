@@ -261,7 +261,12 @@ System.out.println("baseURL"+baseURL);
                     else if (<%=sql1%> === 36 || <%=sql1%> === 37) {
                         window.location.href = '<%=request.getContextPath()%>/Importacion/logibr.jsp?folio=' + fecha;
 
-                    }else{
+                    }
+                    else if (<%=sql1%> === 41) {
+                        window.location.href = '<%=request.getContextPath()%>/Importacion/logibr.jsp?folio=' + fecha;
+
+                    }
+                    else{
                         
                     }
 

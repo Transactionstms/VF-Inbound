@@ -26,12 +26,9 @@
         <!-- Google fonts - Popppins for copy-->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-        <!-- Prism Syntax Highlighting-->
-        <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
+         <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
         <link rel="stylesheet" href="<%=request.getContextPath()%>/lib/css/style.default.css" id="theme-stylesheet">
-        <!-- Custom stylesheet - for your changes-->
-        <!-- Favicon-->
-        <!-- Table css -->
+     
         <link href="<%=request.getContextPath()%>/lib/inbound/eventos/styleEvents.css" rel="stylesheet" type="text/css"/>
         <!-- sweetalert -->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>

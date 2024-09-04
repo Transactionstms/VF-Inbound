@@ -63,7 +63,7 @@
                     }
                     agenteAduanal = "4006," + agenteAduanal.replaceAll(",$", "");
                 }
-                
+    //TO_CHAR(sq.suma, 'FM999G999G999G999')             
 String sql2= "WITH sum_quantity AS ("
         +"   SELECT shipment_id, container1, SUM(quantity) AS suma"
         +"   FROM tra_inc_gtn_test"
@@ -79,7 +79,7 @@ String sql2= "WITH sum_quantity AS ("
         +"   gtn.container1,"
         +"   gtn.bl_awb_pro,"
         +"   gtn.load_type,"
-        +"   sq.suma,"
+        +"   TO_CHAR(sq.suma, 'FM999G999G999G999') ,"
         +"   tip1.NOMBRE_POD,"
         +"   TO_CHAR(gtn.est_departure_pol, 'MM/DD/YY') AS est_departure_pol,"
         +"   TO_CHAR(gtn.eta_port_discharge, 'MM/DD/YY') AS eta_real_port,"
@@ -112,7 +112,7 @@ String sql2= "WITH sum_quantity AS ("
         +"   NVL(TO_CHAR(gtn.eta_plus2, 'MM/DD/YY'), ' ') AS eta_dc,"
         +"   NVL(TO_CHAR(gtn.eta_plus, 'MM/DD/YY'), ' ') AS eta_dc1,"
         +"   NVL(tie.observaciones, ' ') AS observaciones"
-          + " ,nvl(gtn.CANTIDAD_FINAL,sq.suma)"
+          + " ,TO_CHAR(sq.suma, 'FM999G999G999G999') as cf"
         +" FROM"
         +"   tra_inb_evento tie"
         +"   LEFT JOIN tra_destino_responsable bp ON bp.user_nid = tie.user_nid"
@@ -166,7 +166,7 @@ String sql2= "WITH sum_quantity AS ("
                                                             <th scope="col" class="font-titulo">ETA REAL PORT <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">LT2 <strong style="color:white">*</strong></th>
                                                             <th scope="col" class="font-titulo" style="background-color:#C65911">ETA DC  </th>
-                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +2 Days Put Away </th>
+                                                            <th scope="col" class="font-titulo" style="background-color:#C65911"> INDC +3 Days Put Away </th>
                                                             <th scope="col" class="font-titulo">Inbound notification <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">POL <strong style="color:red">*</strong></th>	
                                                             <th scope="col" class="font-titulo">A.A. <strong style="color:red">*</strong></th>

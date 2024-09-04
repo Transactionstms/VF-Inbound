@@ -195,7 +195,15 @@
                 
                 
                 }
+                 else if(insertSql22.equals("41")){
+                    
+                 ExcelToOracleSP excelToOracleSP=new ExcelToOracleSP();
+                 mensaje=   excelToOracleSP.InsertSpbobj(insertSql2,ruta,folio); 
+                 
+               
                 
+                
+                }
                  
                  else{
                 

@@ -61,7 +61,7 @@
             try {
                 HttpSession ownsession = request.getSession();
                 DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
-
+//TO_CHAR(sq.suma, 'FM999G999G999G999') 
                 String sql = ""
                         + "SELECT  DISTINCT"
                         + "  TIE.ID_EVENTO,"
@@ -69,7 +69,7 @@
                         + "  GTN.BL_AWB_PRO,"
                         + "  GTN.SHIPMENT_ID,"
                         + "  GTN.LOAD_TYPE,"
-                        + " (select sum(  tt.QUANTITY ) from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  LUM_BRIO ,"
+                        + " (select TO_CHAR(sum(  tt.QUANTITY ), 'FM999G999G999G999') from TRA_INC_GTN_TEST tt where tt.PLANTILLA_ID =GTN.PLANTILLA_ID   )  LUM_BRIO ,"
                         + "  GTN.BRAND_DIVISION,"
                         + " nvl(dns.SBU_NAME,' ')  ,"
                         + "  GTN.POL,"
@@ -194,7 +194,7 @@ String sql2 = ""
                                                             <th scope="col" class="font-titulo">MX Port </th>
                                                             <th scope="col" class="font-titulo">ETA MX Port </th>
                                                             <th scope="col" class="font-titulo">ETA DC </th>
-                                                            <th scope="col" class="font-titulo">INDC +2 Days Put Away </th>
+                                                            <th scope="col" class="font-titulo">INDC +3 Days Put Away </th>
                                                             <th scope="col" class="font-titulo">Arribo real DC </th>
                                                             <th scope="col" class="font-titulo">Comentarios </th> 
 

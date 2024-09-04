@@ -1492,7 +1492,159 @@ public class ExcelToOracleSP {
 
         
         
+       public String InsertSpbobj(String insertSql, String inputFile2, String folio) throws Exception {
+        // Configura la conexión a la base de datos Oracle
+        String mensaje = " ";
+        String url = urlG;
+
+        String username = usernameG;
+        String password = passwordG;
+        Connection connection = DriverManager.getConnection(url, username, password);
+
+        int timeout = 1600000; // 30 minutos
+        Executor executor = Executors.newSingleThreadExecutor();
+        connection.setNetworkTimeout(executor, timeout);
+
+        String errorM = "";
+        String correcto = "";
+
+        // Abre el archivo de Excel
+        // String inputFile = "D:\\datosdns.xlsx";
+        String inputFile = inputFile2;//"D:\\DSNVN2.xls";
+        FileInputStream inputStream = new FileInputStream(inputFile);
+        Workbook workbook = WorkbookFactory.create(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        // Recorre las filas del archivo de Excel y realiza las inserciones
+        int batchSize = 100; // Tamaño del lote para las inserciones
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        // PreparedStatement statement = connection.prepareStatement(insertSql);
+        CallableStatement statement = connection.prepareCall(" {call SP_INB_BOBJ( ?,?,?,?,?,?,?,?,?,?,   ?,?,?,?,?,?,?,?,?,?,   ?,?,?,?,?,?,?,?,?,?,  "
+                                                                              + " ?,?,?,?,?,?,?,?,?,?,   ?,?,?,?,?,?,?,?,?,?,   ?,?,?,?,?,?,?,?,?,?,  "
+                                                                             + "  ?,?,?,?,?,?,?,?,?,     '" + folio + "'   )}");
+        try {
+            for (int i = 2; i <= rowCount; i++) {
+                String mensajeReturn = "";
+                Row row = sheet.getRow(i);
+                if (row == null) {
+                    continue;
+                }
+                int yy = 0;
+                //row.getLastCellNum()
+                for (int j = 0; j < 69; j++) {
+                    Cell cell = row.getCell(j);
+               //     System.out.println("+++"+j + 1+ cell.getStringCellValue());
+                    if (cell == null) {
+                        statement.setNull(j + 1, Types.NULL);
+                    } else {
+
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                statement.setString(j + 1, cell.getStringCellValue());
+                                break;
+                            case NUMERIC:
+                                statement.setDouble(j + 1, cell.getNumericCellValue());
+                                break;
+                            case BOOLEAN:
+                                statement.setBoolean(j + 1, cell.getBooleanCellValue());
+                                break;
+                            case FORMULA:
+                                statement.setString(j + 1, cell.getCellFormula());
+                                break;
+                            default:
+                                statement.setNull(j + 1, Types.NULL);
+                                break;
+                        }
+                    }
+                    //System.out.println("row.getLastCellNum()+1"+j+1);
+                    yy++;
+                }
+                // statement.setString(j + 1, cell.getCellFormula()); 
+
+                // statement.setString(69,  (i+1)+"" );
+                 
+                statement.addBatch();
+                correcto += "<p>Agregado fila " + i + "</p>";
+                if (i % batchSize == 0) {
+
+                    // statement.executeBatch();
+                    // statement.clearBatch();
+                    // mensaje += "Linea " + i + " insertada";
+                    try {
+                        statement.executeBatch(); // Ejecuta el lote
+                        statement.clearBatch();
+
+                        System.out.println("correcto1-" + i);
+
+                    } catch (SQLException e) {
+                        System.out.println("error1T1-----" + i + "-----------");
+                        errorM += "</p>Error al insertar el registro en la posición: " + (i - batchSize + 1) + "</p>";
+
+                        int[] updateCounts = statement.executeBatch();
+                        for (int index = 0; index < updateCounts.length; index++) {
+                            if (updateCounts[index] == Statement.EXECUTE_FAILED) {
+                                // Registro del registro que no se pudo insertar
+                                 System.out.println("error1T2-----" + i + "-----------");
+                                System.out.println("Error al insertar el registro en la posición: " + (i - batchSize + index + 1));
+                                errorM += "</p>Error al insertar el registro en la posición: " + (i - batchSize + index + 1) + "</p>";
+                            } else {
+                                  System.out.println("error1T3-----" + i + "-----------");
+                                errorM += "<p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+            try {
+                statement.executeBatch(); // Ejecuta el lote
+                // correcto += "<p>Agregado fila " + i + "</p>";
+                System.out.println("correcto2" + batchSize + 1);
+            } catch (SQLException e) {
+                System.out.println("error2-----" + e + "-----------");
+                  System.out.println("error1T4-----" + e + "-----------");
+                errorM += "</p>Error al insertar el registro en la posición: " + (batchSize + 1) + "</p>";
+
+                int[] updateCounts = statement.executeBatch();
+                for (int index = 0; index < updateCounts.length; index++) {
+                    if (updateCounts[index] == Statement.EXECUTE_FAILED) {
+                        // Registro del registro que no se pudo insertar
+                          System.out.println("error1T5-----" + (batchSize + index + 1) + "-----------");
+                        System.out.println("Error al insertar el registro en la posición: " + (batchSize + index + 1));
+                        errorM += "</p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
+                    } else {
+                         System.out.println("error1T6-----" + (batchSize + index + 1) + "-----------");
+                        errorM += "<p>Error al insertar el registro en la posición: " + (batchSize + index + 1) + "</p>";
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("e" + e);
+            e.printStackTrace();
+        }
+         
         
+                
+                 
+         // String gtn =    InsertSpACT (  folio);     
+
+                 
+        connection.close();
+        inputStream.close();
+        statement.close();
+        
+          
+         
+            
+        String respueston =  "<br>"+ errorM + " <br>" + correcto;
+        return respueston;
+    }
+
+           
         
         
         
