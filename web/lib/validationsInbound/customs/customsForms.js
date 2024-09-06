@@ -1015,8 +1015,22 @@ async function AddLineCustoms(i) {
 function pedimento(dateEtaPortDischarge, i) {
 
     if (dateEtaPortDischarge !== "") {
-        document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML = dateEtaPortDischarge;
+        
+        //Conversión de fecha numerica a texto:
+        var fechaConvertidaLiberacion = convertirFechaLiberacion(dateEtaPortDischarge);
+        if (fechaConvertidaLiberacion) {
+
+            // Aumentar un día hábil
+            var f1 = addBusinessDay(fechaConvertidaLiberacion);
+            
+           // Formatear la fecha en "Mon/dd/yyyy"
+           var fechaFormateada = formatDateCustom(f1);
+            
+            document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML = fechaFormateada;
+        }
+        
     }
+    
 }
 
 function cleanPedimento_r1_1er(i) {
@@ -1106,9 +1120,24 @@ function cleanRequerimientoCA(reqCa, i) {
 function modulacion(datePagoPedimento, i) {
 
     if (datePagoPedimento !== "") {
-        document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML = datePagoPedimento;
-        document.getElementById("fecha_modulacion[" + i + "]").innerHTML = datePagoPedimento;
+
+        //Conversión de fecha numerica a texto:
+        var fechaConvertidaLiberacion = convertirFechaLiberacion(datePagoPedimento);
+        if (fechaConvertidaLiberacion) {
+
+            // Aumentar un día hábil
+            var f1 = addBusinessDay(fechaConvertidaLiberacion);
+            
+            // Formatear la fecha en "Mon/dd/yyyy"
+            var fechaFormateada = formatDateCustom(f1);
+           
+            document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML = fechaFormateada;
+            document.getElementById("fecha_modulacion[" + i + "]").innerHTML = fechaFormateada;
+
+        }
+
     }
+    
 }
 
 function cleanResultadoModulacion(modulacion, i, AgentType) {
@@ -2283,4 +2312,14 @@ function convertirFechaLiberacion(fecha_liberacion) {
     return null; // Devolver null si el formato no es válido
 }
 
+// Función para formatear la fecha
+function formatDateCustom(date) {
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
+}
 

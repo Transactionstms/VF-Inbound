@@ -12,11 +12,6 @@ function show_eta_port_discharge(data, i) {
     loadJsPicker();
     document.getElementById("eta_port_discharge").value = data;
     contModals = i;
-    var numRows = i;
-    
-    for(var v = 0; v < numRows; v++){
-        
-    }
     
 }
 
@@ -493,16 +488,26 @@ function hide_fecha_doc_completos(value) {
 }
 
 function show_fecha_pago_pedimento(i) {
+    
     $("#modal_fecha_pago_pedimento").modal("show");
     let res = document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML;
-    document.getElementById("fecha_pago_pedimento").innerHTML =res;
-    
-    $('.datepicker-pedimento').flatpickr({
-        dateFormat: 'm/d/Y',
-        minDate: res,
-        //maxDate: new Date().fp_incr(50),
-        inline: true
-    });
+    document.getElementById("fecha_pago_pedimento").innerHTML = res;
+
+    //Conversión de fecha numerica a texto:
+    var fechaConvertidaLiberacion = convertirFechaLiberacion(res);
+    if (fechaConvertidaLiberacion) {
+
+         // Aumentar un día hábil
+         var f1 = addBusinessDay(fechaConvertidaLiberacion);
+        
+        $('.datepicker-pedimento').flatpickr({
+            dateFormat: 'm/d/Y',
+            minDate: f1,
+            inline: true
+        });
+
+    }
+
     contModals = i;
 }
 
@@ -531,16 +536,25 @@ function hide_fecha_solicitud_transporte(value) {
 }
 
 function show_fecha_modulacion(i) {
+    
     $("#modal_fecha_modulacion").modal("show");
     let res = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
-    document.getElementById("fecha_modulacion").innerHTML =res;
-    
-    $('.datepicker-modulacion').flatpickr({
-        dateFormat: 'm/d/Y',
-        minDate: res,
-        //maxDate: new Date().fp_incr(50),
-        inline: true
-    });
+    document.getElementById("fecha_modulacion").innerHTML = res;
+
+    //Conversión de fecha texto a numerica:
+    var fechaConvertidaLiberacion = convertirFechaLiberacion(res);
+    if (fechaConvertidaLiberacion) {
+     
+         // Aumentar un día hábil
+         var f1 = addBusinessDay(fechaConvertidaLiberacion);
+         
+        $('.datepicker-modulacion').flatpickr({
+            dateFormat: 'm/d/Y',
+            minDate: f1,
+            inline: true
+        });
+
+    }
     contModals = i;
 }
 
@@ -920,3 +934,28 @@ function handleClick(event) {
     alert('Clic detectado en la celda');
   }
 
+function addBusinessDay(date) {
+    const newDate = new Date(date);
+    do {
+        newDate.setDate(newDate.getDate() + 1);
+    } while (newDate.getDay() === 0 || newDate.getDay() === 6 || isHoliday(newDate));
+    return newDate;
+}
+	
+function isHoliday(date) {
+    // Lista de días festivos en México
+    const holidays = [
+        new Date(date.getFullYear(), 0, 1),       // Año Nuevo (1 de enero)
+        new Date(date.getFullYear(), 1, 5),       // Día de la Constitución (5 de febrero)
+        new Date(date.getFullYear(), 2, 21),      // Natalicio de Benito Juárez (21 de marzo)
+        new Date(date.getFullYear(), 4, 1),       // Día del Trabajo (1 de mayo)
+        new Date(date.getFullYear(), 8, 16),      // Día de la Independencia (16 de septiembre)
+        new Date(date.getFullYear(), 10, 2),      // Día de los Muertos (2 de noviembre)
+        new Date(date.getFullYear(), 11, 12),     // Día de la Virgen de Guadalupe (12 de diciembre)
+        new Date(date.getFullYear(), 11, 25)      // Navidad (25 de diciembre)
+    ];
+
+    // Verificar si la fecha proporcionada es un día festivo
+    return holidays.some(holiday => holiday.toDateString() === date.toDateString());
+}
+		
