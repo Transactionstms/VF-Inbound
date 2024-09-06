@@ -132,10 +132,10 @@ function show_permiso(i) {
     let res = document.getElementById("permiso[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_permiso = true;
         check2_permiso = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_permiso = false;
         check2_permiso = true;
     } else {
@@ -151,10 +151,10 @@ function show_permiso(i) {
 function hide_permiso(data) {
     contModals;
     
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_permiso = true;
         check2_permiso = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_permiso = false;
         check2_permiso = true;   
     }
@@ -269,10 +269,10 @@ function show_co_pref_arancelaria(i) {
     let res = document.getElementById("co_pref_arancelaria[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_co_pref_arancelaria1 = true;
         check2_co_pref_arancelaria1 = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_co_pref_arancelaria1 = false;
         check2_co_pref_arancelaria1 = true;
     } else {
@@ -286,10 +286,10 @@ function show_co_pref_arancelaria(i) {
 
 function hide_co_pref_arancelaria(data) {
 
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_co_pref_arancelaria1 = true;
         check2_co_pref_arancelaria1 = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_co_pref_arancelaria1 = false;
         check2_co_pref_arancelaria1 = true;
     } else {
@@ -303,7 +303,7 @@ function hide_co_pref_arancelaria(data) {
     document.getElementById("co_pref_arancelaria[" + contModals + "]").innerHTML = data;
     $("#modal_co_pref_arancelaria").modal("hide");
     
-    if (data == "NO") {
+    if (data == "NO" | data == "No") {
         document.getElementById("aplic_pref_arancelaria[" + contModals + "]").innerHTML = "NO";
     }else{
         document.getElementById("aplic_pref_arancelaria[" + contModals + "]").innerHTML = "";
@@ -316,10 +316,10 @@ function show_aplic_pref_arancelaria(i) {
     let res = document.getElementById("aplic_pref_arancelaria[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_aplic_pref_arancelaria1 = true;
         check2_aplic_pref_arancelaria1 = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_aplic_pref_arancelaria1 = false;
         check2_aplic_pref_arancelaria1 = true;
     } else {
@@ -333,10 +333,10 @@ function show_aplic_pref_arancelaria(i) {
 
 function hide_aplic_pref_arancelaria(data) {
 
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_aplic_pref_arancelaria1 = true;
         check2_aplic_pref_arancelaria1 = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_aplic_pref_arancelaria1 = false;
         check2_aplic_pref_arancelaria1 = true;
     }
@@ -353,10 +353,10 @@ function show_req_uva(i) {
     let res = document.getElementById("req_uva[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_req_uva = true;
         check2_req_uva = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_req_uva = false;
         check2_req_uva = true;
     } else {
@@ -369,10 +369,10 @@ function show_req_uva(i) {
 
 function hide_req_uva(data) {
 
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_req_uva = true;
         check2_req_uva = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_req_uva = false;
         check2_req_uva = true;
     } else {
@@ -392,10 +392,10 @@ function show_req_ca(i) {
     let res = document.getElementById("req_ca[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_req_ca = true;
         check2_req_ca = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_req_ca = false;
         check2_req_ca = true;
     } else {
@@ -410,10 +410,10 @@ function hide_req_ca(data) {
 
     contModals;
     
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_req_ca = true;
         check2_req_ca = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_req_ca = false;
         check2_req_ca = true;
     }
@@ -571,10 +571,10 @@ function show_modalidad(i) {
     let res = document.getElementById("modalidad[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "CAMION") {
+    if (res == "CAMION" | res == "Camion") {
         check1_modalidad = true;
         check2_modalidad = false;
-    } else if (res == "TREN") {
+    } else if (res == "TREN" | res == "Tren") {
         check1_modalidad = false;
         check2_modalidad = true;
     } else {
@@ -587,10 +587,10 @@ function show_modalidad(i) {
 
 function hide_modalidad(data) {
 
-    if (data == "CAMION") {
+    if (data == "CAMION" | data == "Camion") {
         check1_modalidad = true;
         check2_modalidad = false;
-    } else if (data == "TREN") {
+    } else if (data == "TREN" | data == "Tren") {
         check1_modalidad = false;
         check2_modalidad = true;
     }
@@ -611,10 +611,10 @@ function show_resultado_modulacion(i, AgenteType) {
     contModals = i;
     AgenteId = AgenteType;
 
-    if (res == "VERDE") {
+    if (res == "VERDE" | res == "Verde") {
         check1_resultado_modulacion = true;
         check2_resultado_modulacion = false;
-    } else if (res == "ROJO") {
+    } else if (res == "ROJO" | res == "Rojo") {
         check1_resultado_modulacion = false;
         check2_resultado_modulacion = true;
     } else {
@@ -627,10 +627,10 @@ function show_resultado_modulacion(i, AgenteType) {
 
 function hide_resultado_modulacion(data) {
 
-    if (data == "VERDE") {
+    if (data == "VERDE" | data == "Verde") {
         check1_resultado_modulacion = true;
         check2_resultado_modulacion = false;
-    } else if (data == "ROJO") {
+    } else if (data == "ROJO" | data == "Rojo") {
         check1_resultado_modulacion = false;
         check2_resultado_modulacion = true;
     }
@@ -830,10 +830,10 @@ function show_transferencia(i) {
     let res = document.getElementById("transferencia[" + i + "]").innerHTML;
     contModals = i;
 
-    if (res == "SI") {
+    if (res == "SI" | res == "Si") {
         check1_transferencia = true;
         check2_transferencia = false;
-    } else if (res == "NO") {
+    } else if (res == "NO" | res == "No") {
         check1_transferencia = false;
         check2_transferencia = true;
     } else {
@@ -846,10 +846,10 @@ function show_transferencia(i) {
 
 function hide_transferencia(data) {
 
-    if (data == "SI") {
+    if (data == "SI" | data == "Si") {
         check1_transferencia = true;
         check2_transferencia = false;
-    } else if (data == "NO") {
+    } else if (data == "NO" | data == "No") {
         check1_transferencia = false;
         check2_transferencia = true;
     }
@@ -895,7 +895,7 @@ function blocked_cell(nameCelda, i){
     let option = document.getElementById(nameCelda + "[" + i + "]").innerHTML;
     let blocked;
     
-    if(option === "SI"){
+    if(option === "SI" | option === "Si"){
         blocked = false;
     }else{
         blocked = true;

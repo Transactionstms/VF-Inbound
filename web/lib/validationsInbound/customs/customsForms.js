@@ -444,7 +444,7 @@ async function AddPullCustoms() {
 
 
         /* # REGLA 1: */
-        if (permiso === "SI") {
+        if (permiso === "SI" | permiso === "Si" ) {
 
             if (fecha_envio.replace(/\s/g, "") === "") {
                 contadorError++;
@@ -473,7 +473,7 @@ async function AddPullCustoms() {
         }
 
         /* # REGLA 2: */
-        if (req_ca === "SI") {
+        if (req_ca === "SI" | req_ca === "Si") {
 
             if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
                 contadorError++;
@@ -814,7 +814,7 @@ async function AddLineCustoms(i) {
 
 
     /* # REGLA 1: */
-    if (permiso === "SI") {
+    if (permiso === "SI" | permiso ==="Si") {
 
         if (fecha_envio.replace(/\s/g, "") === "") {
             contadorError++;
@@ -843,7 +843,7 @@ async function AddLineCustoms(i) {
     }
 
     /* # REGLA 2: */
-    if (req_ca === "SI") {
+    if (req_ca === "SI" | req_ca === "Si") {
 
         if (fecha_recepcion_ca.replace(/\s/g, "") === "") {
             contadorError++;
@@ -1417,7 +1417,7 @@ function msgErrorAgenteAduanal(i, AgentType) {
 
 function changeColorByPositionSuccess(i) {
     const table = document.querySelector("table");
-	let cont = i + 1;
+	let cont = i+1;
 	
     if (table) {
         const row = table.rows[cont]; // Primera fila
@@ -1432,7 +1432,7 @@ function changeColorByPositionSuccess(i) {
 
 function changeColorByPositionError(i) {
     const table = document.querySelector("table");
-	let cont = i + 1;
+	let cont = i+1;
 	
     if (table) {
         const row = table.rows[cont]; // Primera fila
@@ -1457,19 +1457,6 @@ function mSgErrorLineCustoms(txtErrormSg, i) {
     //Cargar mensaje en label
     document.getElementById('mSgError' + i).innerHTML = msg;
 
-    // Agrega un manejador de eventos al elemento para detectar el paso del cursor
-    elemento.addEventListener('mouseover', mostrarPopup);
-    elemento.addEventListener('mouseout', ocultarPopup);
-
-    // Función para mostrar el popup
-    function mostrarPopup() {
-        popup.style.display = 'block';
-    }
-
-    // Función para ocultar el popup
-    function ocultarPopup() {
-        popup.style.display = 'none';
-    }
 }
 
 function alertclose() {
@@ -1919,7 +1906,21 @@ function crearbtnGuardarFila(contador) {
             tdElement.appendChild(aElement);
         }
     }
-    
+  
+ function openPopupActivity(contador){
+    var element = document.getElementById("mSgError" + contador);
+    if (element) {
+        element.style.display = 'block';
+    } 
+ }   
+ 
+ function closePopupActivity(contador){
+    var element = document.getElementById("mSgError" + contador);
+    if (element) {
+        element.style.display = 'none';
+    } 
+ }   
+ 
 async function updateExcelFiltrers(tipoFiltro){
    
    let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;

@@ -1495,7 +1495,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                     salida += "<tr id=\"tr" + cont + "\" onmouseenter=\"crearbtnGuardarFila("+cont+")\">"
                                 + " <th id=\"columna\"><center><img id=\"imgSemaforo" + cont + "\" src=\"" + colorSemaforo + "\" width=\"" + sizeSemaforo + "\"></center></th> "
                                 + " <th contenteditable=\"true\" oninput=\"validarTextoAlfanumericoReferenciaAA(this,'referenciaAA'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'referenciaAA'," + cont + ")\"  id=\"referenciaAA[" + cont + "]\">" + row[30] + "</th> "
-                                + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\">" + row[0] + "<input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"></th> "
+                                + " <th class=\"font-numero first-column\" id=\"elemento" + cont + "\"  onmouseover=\"openPopupActivity("+cont+")\"  onmouseleave=\"closePopupActivity("+cont+")\">" + row[0] + "<input type=\"hidden\" id=\"evento[" + cont + "]\" name=\"evento[" + cont + "]\" value=\"" + row[0] + "\"></th> "
                                 + " <td id=\"Responsable[" + cont + "]\">" + row[1] + "</td> "
                                 + " <td id=\"FinalDestination[" + cont + "]\">" + row[2] + "</td> "
                                 + " <td id=\"BrandDivision[" + cont + "]\">" + row[21] + "</td> "
