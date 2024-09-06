@@ -101,13 +101,13 @@ $(document).ready(function () {
                 $("#alert").removeClass().addClass("alert alert-success");
             }
             document.getElementById('idClouding').style.display = 'none';
-            resetInputfile();
+            //resetInputfile();
         }).fail(function (data) {
             document.getElementById('divResultado').innerHTML = data;
             document.getElementById('idClouding').style.display = 'none';
             $("#texto").text('Se describen los errores');
             $("#alert").removeClass().addClass("alert alert-danger");
-            resetInputfile();
+            //resetInputfile();
         });
     });
 
@@ -115,9 +115,9 @@ $(document).ready(function () {
         $("#alert").removeClass().addClass("hide");
     });
     
-    function resetInputfile() {
+    /*function resetInputfile() {
         console.log('hola');
         //$('#input-id').fileinput('reset');
-    }
+    }*/
 
 });
