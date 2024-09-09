@@ -84,6 +84,7 @@
         <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loaderMsg" id="loaderMsg"></div>
+            <div id="logPull"></div>
         </div>
         <%
             try {

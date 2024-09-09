@@ -277,14 +277,20 @@ async function AddPullCustoms() {
     await mostrarLoader();
 
     let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
-    let contadorCustoms = document.getElementById("numCustoms").value;
+    let contador =  document.getElementById("numCustoms").value; 
     let contadorError = 0;
     let txtErrormSg = "";
     let fechaMayorActual = "";
-
-    for (let i = 0; i < contadorCustoms; i++) {
+    let contUpdate = 0;
+    
+    let contadorCustoms = Number(contador) -2;
+    
+    for (let i = 1; i <= contadorCustoms; i++) {
+        
+        contUpdate++;
 
         //Parametros Indicadores   
+        console.log("referenciaAA[" + i + "] :  " + referenciaAA);
         referenciaAA = document.getElementById("referenciaAA[" + i + "]").innerHTML;
         evento = document.getElementById("evento[" + i + "]").value;
         shipmentId = document.getElementById("shipmentId[" + i + "]").innerHTML;
@@ -631,7 +637,10 @@ async function AddPullCustoms() {
             //color semaforo
             var imgElement = document.getElementById("imgSemaforo" + i);
             imgElement.src = webp;
-
+   
+            console.log("N° REGISTRO ACTUALIZADO: "+contUpdate);
+            document.getElementById("logPull").innerHTML = "N° REGISTRO ACTUALIZADO: " + contUpdate;
+             
         } catch (error) {
             console.error(error);
         }
@@ -1422,7 +1431,7 @@ function msgErrorAgenteAduanal(i, AgentType) {
 
 function changeColorByPositionSuccess(i) {
     const table = document.querySelector("table");
-	let cont = i+1;
+	let cont = i;
 	
     if (table) {
         const row = table.rows[cont]; // Primera fila
@@ -1433,11 +1442,13 @@ function changeColorByPositionSuccess(i) {
             cell.style.color = "#000000";
         }
     }
+    
+        console.log('changeColorByPositionSuccess: ' + i);
 }
 
 function changeColorByPositionError(i) {
     const table = document.querySelector("table");
-	let cont = i+1;
+	let cont = i;
 	
     if (table) {
         const row = table.rows[cont]; // Primera fila
@@ -1448,6 +1459,8 @@ function changeColorByPositionError(i) {
             cell.style.color = "#000000";
         }
     }
+    
+    console.log('changeColorByPositionSuccess: ' + i);
 }
 
 function mSgErrorLineCustoms(txtErrormSg, i) {
@@ -1461,6 +1474,8 @@ function mSgErrorLineCustoms(txtErrormSg, i) {
 
     //Cargar mensaje en label
     document.getElementById('mSgError' + i).innerHTML = msg;
+    
+    console.log('mSgError' + i + " - " + msg);
 
 }
 

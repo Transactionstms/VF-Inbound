@@ -201,6 +201,14 @@ a{
         justify-content: center;
         align-items: center;
     }
+    
+    .logPull{
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
 
     @keyframes spin {
         0% { transform: rotate(0deg); }
