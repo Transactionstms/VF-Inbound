@@ -136,7 +136,7 @@ String maxt="";
                                                          <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
                                                             <th scope="col" class="font-titulo">CONTAINER </th>
                                                             <th scope="col" class="font-titulo">SHIPMENT  </th> 
-                                                            <th scope="col" class="font-titulo">OBS  </th> 
+                                                            <th scope="col" class="font-titulo">OBSERVACIONES  </th> 
                                                         </tr>
                                                     </thead>
                                                     <tbody>
