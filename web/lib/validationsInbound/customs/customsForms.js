@@ -224,6 +224,8 @@ async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, colu
 
             const dataBodyBatch = await response.text();
             document.getElementById('data_customs').innerHTML += dataBodyBatch;
+            
+            document.getElementById("logPull").innerHTML = "Listando paquete: " + offset + " /  " + next;
         }
         
         //Oculatr loader:
@@ -639,7 +641,7 @@ async function AddPullCustoms() {
             imgElement.src = webp;
    
             console.log("N° REGISTRO ACTUALIZADO: "+contUpdate);
-            document.getElementById("logPull").innerHTML = "N° REGISTRO ACTUALIZADO: " + contUpdate;
+            document.getElementById("logPull").innerHTML = "Actualizando fila: " + contUpdate + " / " + contadorCustoms;
              
         } catch (error) {
             console.error(error);
@@ -1011,6 +1013,8 @@ async function AddLineCustoms(i) {
         //color semaforo
         var imgElement = document.getElementById("imgSemaforo" + i);
         imgElement.src = webp;
+        
+        document.getElementById("logPull").innerHTML = "Actualizando fila: " + i + " / " + i;
 
     } catch (error) {
         console.error(error);
