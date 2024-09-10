@@ -1149,7 +1149,6 @@ function modulacion(datePagoPedimento, i) {
             // Formatear la fecha en "Mon/dd/yyyy"
             var fechaFormateada = formatDateCustom(f1);
            
-            document.getElementById("fecha_pago_pedimento[" + i + "]").innerHTML = fechaFormateada;
             document.getElementById("fecha_modulacion[" + i + "]").innerHTML = fechaFormateada;
 
         }
@@ -1583,10 +1582,12 @@ function parametrizacionValoresEvento(name_celda, contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").innerHTML;
-    let numCustoms = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 0, max = numCustoms; i < max; i++) {
+   let numCustoms = Number(contnum) -2;
+   
+    for (var i = 1, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 
@@ -1603,10 +1604,12 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").value;
-    let numCustoms = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 0, max = numCustoms; i < max; i++) {
+   let numCustoms = Number(contnum) -2;
+   
+    for (var i = 1, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 
@@ -1642,10 +1645,12 @@ function parametrizacionValoresEstatusOperacion(contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById("estatus_operacion[" + contador + "]").value;
-    let numCustoms = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numCustoms").value;
     let listEventos;
 
-    for (var i = 0, max = numCustoms; i < max; i++) {
+   let numCustoms = Number(contnum) -2;
+   
+    for (var i = 1, max = numCustoms; i < max; i++) {
 
         listEventos = document.getElementById("evento[" + i + "]").value;
 

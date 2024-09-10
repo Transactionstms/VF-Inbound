@@ -498,11 +498,11 @@ function show_fecha_pago_pedimento(i) {
     if (fechaConvertidaLiberacion) {
 
          // Aumentar un día hábil
-         var f1 = addBusinessDay(fechaConvertidaLiberacion);
+         //var f1 = addBusinessDay(fechaConvertidaLiberacion);
         
         $('.datepicker-pedimento').flatpickr({
             dateFormat: 'm/d/Y',
-            minDate: f1,
+            minDate: fechaConvertidaLiberacion,
             inline: true
         });
 
@@ -544,13 +544,10 @@ function show_fecha_modulacion(i) {
     //Conversión de fecha texto a numerica:
     var fechaConvertidaLiberacion = convertirFechaLiberacion(res);
     if (fechaConvertidaLiberacion) {
-     
-         // Aumentar un día hábil
-         var f1 = addBusinessDay(fechaConvertidaLiberacion);
-         
+
         $('.datepicker-modulacion').flatpickr({
             dateFormat: 'm/d/Y',
-            minDate: f1,
+            minDate: fechaConvertidaLiberacion,
             inline: true
         });
 
