@@ -1034,8 +1034,9 @@ function pedimento(dateEtaPortDischarge, i) {
 
     if (dateEtaPortDischarge !== "") {
         
-        //Conversión de fecha numerica a texto:
+        //Conversión de fecha texto a númerica:
         var fechaConvertidaLiberacion = convertirFechaLiberacion(dateEtaPortDischarge);
+        
         if (fechaConvertidaLiberacion) {
 
             // Aumentar un día hábil
@@ -1583,13 +1584,15 @@ function parametrizacionValoresEvento(name_celda, contador) {
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").innerHTML;
     let contnum = document.getElementById("numCustoms").value;
-    let listEventos;
 
-   let numCustoms = Number(contnum) -2;
-   
+    let numCustoms = Number(contnum) - 2;
+    console.log("numCustoms" + numCustoms);
+
     for (var i = 1, max = numCustoms; i < max; i++) {
 
-        listEventos = document.getElementById("evento[" + i + "]").value;
+        let listEventos = document.getElementById("evento[" + i + "]").value;
+
+        console.log("Evento: :" + listEventos);
 
         if (contador !== i) {
             if (eventoActual === listEventos) {
@@ -1605,13 +1608,12 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").value;
     let contnum = document.getElementById("numCustoms").value;
-    let listEventos;
 
    let numCustoms = Number(contnum) -2;
    
     for (var i = 1, max = numCustoms; i < max; i++) {
 
-        listEventos = document.getElementById("evento[" + i + "]").value;
+        let listEventos = document.getElementById("evento[" + i + "]").value;
 
         if (contador !== i) {
             if (eventoActual === listEventos) {
@@ -2328,7 +2330,11 @@ function convertirFechaLiberacion(fecha_liberacion) {
         Sep: "09",
         Oct: "10",
         Nov: "11",
-        Dec: "12"
+        Dec: "12",
+        Ene: "01",
+        Abr: "04",
+        Ago: "08",
+        Dic: "12"
     };
 
     // Extraer los componentes de la fecha usando una expresión regular
@@ -2344,8 +2350,23 @@ function convertirFechaLiberacion(fecha_liberacion) {
 
 // Función para formatear la fecha
 function formatDateCustom(date) {
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = [
+        "Jan", 
+        "Feb", 
+        "Mar", 
+        "Apr", 
+        "May", 
+        "Jun", 
+        "Jul", 
+        "Aug", 
+        "Sep", 
+        "Oct", 
+        "Nov", 
+        "Dec", 
+        "Ene", 
+        "Abr",
+        "Ago", 
+        "Dic"];
     const day = date.getDate().toString().padStart(2, '0');
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();

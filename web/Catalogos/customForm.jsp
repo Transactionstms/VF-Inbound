@@ -32,8 +32,8 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Personalizar Customs</title>
@@ -47,9 +47,9 @@
         <!-- Filtrer Checkbox -->
         <link href="<%=request.getContextPath()%>/lib/validationsInbound/customs/styleFiltrerCheckbox.css" rel="stylesheet" type="text/css"/>
         <!-- calendarios -->
-        <link href="<%=request.getContextPath()%>/lib/calendarios/css/flatpickr.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <!-- virtual-scroll -->
-        <script src="https://cdn.jsdelivr.net/npm/virtual-scroll"></script>
+        <!--<script src="https://cdn.jsdelivr.net/npm/virtual-scroll"></script>-->
         <style>
             .hidden-btn {
                display: none;
@@ -683,7 +683,7 @@
         <!-- Filtrer Checkbox -->
         <script src="<%=request.getContextPath()%>/lib/validationsInbound/customs/filtrerCheckboxv2.js" type="text/javascript"></script>
         <!-- Calendarios -->
-        <script src="<%=request.getContextPath()%>/lib/calendarios/js/flatpickr.min.js" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     </body>

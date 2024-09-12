@@ -18,9 +18,11 @@ function show_eta_port_discharge(data, i) {
 function hide_eta_port_discharge(value) {
     
     let data = formatoFecha(value);
-    
+    contModals;
     $("#modal_show_eta_port_discharge").modal("hide");
     document.getElementById("eta_port_discharge[" + contModals + "]").innerHTML = data;
+    console.log("eta_port_discharge: " + data);
+    
     pedimento(data, contModals);
     let color = "";
     
@@ -933,9 +935,12 @@ function handleClick(event) {
 
 function addBusinessDay(date) {
     const newDate = new Date(date);
+    console.log("newDate inicial: " + newDate);
     do {
         newDate.setDate(newDate.getDate() + 1);
     } while (newDate.getDay() === 0 || newDate.getDay() === 6 || isHoliday(newDate));
+
+    console.log("newDate final: " + newDate);
     return newDate;
 }
 	

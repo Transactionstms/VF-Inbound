@@ -36,6 +36,7 @@ public class mappingDate {
             mapaMeses.put("Nov", "Nov");
             mapaMeses.put("Dec", "Dic");
             mapaMeses.put("Ene", "Ene");
+            mapaMeses.put("Abr", "Abr");           
             mapaMeses.put("Ago", "Ago");
             mapaMeses.put("Dic", "Dic");		
 
