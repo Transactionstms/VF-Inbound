@@ -47,11 +47,23 @@
                           + " UPPER(tilt.ltransporte_nombre) "
                           + " FROM tra_inb_linea_transporte tilt "
                           + " WHERE tilt.user_nid = '"+usr+"' ";
-            if (db.doDB(sbuSQL)) {
-                for (String[] row : db.getResultado()) {
-                    transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                if (db.doDB(sbuSQL)) {
+                
+                    for (String[] row : db.getResultado()) {
+                        transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                    }
+                    
+                } else {
+
+                        if (usr == 6456 || usr == 6396) {
+                                if (db.doDB("SELECT ltransporte_id, UPPER(ltransporte_nombre) FROM tra_inb_linea_transporte order by UPPER(ltransporte_nombre) ASC")) {
+                                    for (String[] row : db.getResultado()) {
+                                        transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                                    }
+                                }
+                         }   
+             
                 }
-            }
 
             String custodia = "";
             String sbuSQL2 = "select ID_TC, TC_DESCRIPCION from tra_inb_tipo_custodia";
