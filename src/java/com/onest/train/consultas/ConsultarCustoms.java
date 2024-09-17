@@ -2140,8 +2140,7 @@ public class ConsultarCustoms extends HttpServlet {
             }
             
             salida += " </tbody> "
-                    + "</table> "
-                    + "<input type=\"hidden\" id=\"numCustoms\" name=\"numCustoms\" value=\"" + cont + "\">";
+                    + "</table> ";
             
             out.print(salida);
             oraDB.close(); //cerrar conexión

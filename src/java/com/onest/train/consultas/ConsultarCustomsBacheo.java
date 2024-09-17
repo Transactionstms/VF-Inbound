@@ -1594,10 +1594,12 @@ public class ConsultarCustomsBacheo extends HttpServlet {
                     }
                     
                      cont++;  //Contabilizar número de registros/batch
-                     
+                     System.out.println("contador: " + cont);
                 }
-         }
-            
+                 
+        }
+            salida += "<input type=\"hidden\" id=\"numBacheo\" name=\"numBacheo\" value=\""+cont+"\">";
+            System.out.println("<input type=\"hidden\" id=\"numBacheo\" name=\"numBacheo\" value=\""+cont+"\">");
             out.print(salida);
             oraDB.close(); //cerrar conexión
 

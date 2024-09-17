@@ -639,7 +639,6 @@
         </div> 
         
         <!-- Parametros - Customs -->
-        <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
 
         <!-- Parametros - Generación de Excel -->
@@ -652,7 +651,7 @@
         <img src="../img/loadingCloud.gif" id="idClouding" width="50px" height="50px" name="idClouding" title="Clouding" style="display: none; height: 50px; width: 50px;"/>
         <script>
             //Parametros: Validaciones
-            let numBacheo =       '<%=numDataBacheo%>';
+            let numContCustoms = '<%=numDataBacheo%>';
             let idAgenteAduanal = '<%=AgentType%>'; 
             let fechaActual =     '<%=fecha_actual%>';
             let checkboxOn;

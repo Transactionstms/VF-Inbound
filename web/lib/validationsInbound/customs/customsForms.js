@@ -186,7 +186,8 @@ $(document).ready(async function () {
 async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, columna_responsable, columna_final_destination, columna_brand_division, columna_division, columna_shipmentId, columna_containerId, columna_blAwbPro, columna_loadTypeFinal, columna_quantity, columna_pod, columna_estDepartFromPol, columna_etaRealPortOfDischarge, columna_estEtaDc, columna_inboundNotification, columna_pol, columna_aa, columna_fechaMesVenta, columna_prioridad, columna_pais_origen, columna_size_container, columna_valor_usd, columna_eta_port_discharge, columna_agente_aduanal, columna_pedimento_a1, columna_pedimento_r1_1er, columna_motivo_rectificacion_1er, columna_pedimento_r1_2do, columna_motivo_rectificacion_2do, columna_fecha_recepcion_doc, columna_recinto, columna_naviera, columna_buque, columna_fecha_revalidacion, columna_fecha_previo_origen, columna_fecha_previo_destino, columna_fecha_resultado_previo, columna_proforma_final, columna_permiso, columna_fecha_envio, columna_fecha_recepcion_perm, columna_fecha_activacion_perm, columna_fecha_permisos_aut, columna_co_pref_arancelaria, columna_aplic_pref_arancelaria, columna_req_uva, columna_req_ca, columna_fecha_recepcion_ca, columna_num_constancia_ca, columna_monto_ca, columna_fecha_doc_completos, columna_fecha_pago_pedimento, columna_fecha_solicitud_transporte, columna_fecha_modulacion, columna_modalidad, columna_resultado_modulacion, columna_fecha_reconocimiento, columna_fecha_liberacion, columna_sello_origen, columna_sello_final, columna_fecha_retencion_aut, columna_fecha_liberacion_aut, columna_estatus_operacion, columna_motivo_atraso, columna_observaciones, columna_llegada_a_nova, columna_llegada_a_globe_trade_sd, columna_archivo_m, columna_fecha_archivo_m, columna_fecha_solicit_manip, columna_fecha_vencim_manip, columna_fecha_confirm_clave_pedim, columna_fecha_recep_increment, columna_t_e, columna_fecha_vencim_inbound, columna_no_bultos, columna_peso_kg, columna_transferencia, columna_fecha_inicio_etiquetado, columna_fecha_termino_etiquetado, columna_hora_termino_etiquetado, columna_proveedor, columna_proveedor_carga, columna_fy) {
 
     //Inicializar número total de datos a iterar por lotes de 1000 registros:  
-    numBacheo = numBacheo;
+    //let numBacheo = document.getElementById("numBacheo").value;
+    numContCustoms = numContCustoms;
 
     //Indicar el número de pasos por iteración:   
     const paso = 1000;
@@ -205,7 +206,7 @@ async function consultarCustomsBacheo(columna_referenciaAA, columna_evento, colu
         document.getElementById('table-scroll').innerHTML = dataEncabezados;
 
         //Iterar datos por lotes.
-        for (let i = 1; i <= numBacheo; i += paso) {
+        for (let i = 1; i <= numContCustoms; i += paso) {
 
             let offset = i; //1
             let next = i + paso - 1; //1000....
@@ -279,7 +280,7 @@ async function AddPullCustoms() {
     await mostrarLoader();
 
     let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
-    let contador =  document.getElementById("numCustoms").value; 
+    let contador =  document.getElementById("numBacheo").value; 
     let contadorError = 0;
     let txtErrormSg = "";
     let fechaMayorActual = "";
@@ -292,7 +293,6 @@ async function AddPullCustoms() {
         contUpdate++;
 
         //Parametros Indicadores   
-        console.log("referenciaAA[" + i + "] :  " + referenciaAA);
         referenciaAA = document.getElementById("referenciaAA[" + i + "]").innerHTML;
         evento = document.getElementById("evento[" + i + "]").value;
         shipmentId = document.getElementById("shipmentId[" + i + "]").innerHTML;
@@ -1583,7 +1583,7 @@ function parametrizacionValoresEvento(name_celda, contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").innerHTML;
-    let contnum = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numBacheo").value;
 
     let numCustoms = Number(contnum) - 2;
     console.log("numCustoms" + numCustoms);
@@ -1607,7 +1607,7 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").value;
-    let contnum = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numBacheo").value;
 
    let numCustoms = Number(contnum) -2;
    
@@ -1647,7 +1647,7 @@ function parametrizacionValoresEstatusOperacion(contador) {
 
     let eventoActual = document.getElementById("evento[" + contador + "]").value;
     let valorCeldaActual = document.getElementById("estatus_operacion[" + contador + "]").value;
-    let contnum = document.getElementById("numCustoms").value;
+    let contnum = document.getElementById("numBacheo").value;
     let listEventos;
 
    let numCustoms = Number(contnum) -2;
