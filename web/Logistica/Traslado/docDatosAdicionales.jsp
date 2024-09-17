@@ -51,6 +51,16 @@
                 for (String[] row : db.getResultado()) {
                     transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
                 }
+            } else {
+
+                    if (usr == 6456 || usr == 6396) {
+                            if (db.doDB("SELECT ltransporte_id, UPPER(ltransporte_nombre) FROM tra_inb_linea_transporte order by UPPER(ltransporte_nombre) ASC")) {
+                                for (String[] row : db.getResultado()) {
+                                    transportista += "<option value='" + row[0] + "' >" + row[1] + "</option>";
+                                }
+                            }
+                     }   
+
             }
 
             String custodia = "";
