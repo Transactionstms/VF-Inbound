@@ -132,7 +132,7 @@
                     <div class="columna2"><button type="button" class="btn btn-primary" title="Descargar Plantilla" id="created_file" name="created_file" onclick="logExcel()"><i class="fa fa-download"></i></button></div>
                     <div class="columna4"><button type="button" class="btn btn-primary" title="Limpiar Filtros" id="clear_file" name="clear_file" onclick="clearFiltres()"><i class="fa fa-traffic-light"></i></button><!--<label class="txtColor">Resolución de Pantalla</label>--></div>
                     <div class="columna5"><a class="btn btn-primary text-uppercase" title="Guardado General" onclick="AddPullCustoms()"><i class="fa fa-save"></i></a></div>
-                    <div class="columna6"><button type="button" class="btn btn-primary" title="Actualizar Registros Excel" id="clear_file" name="clear_file" onclick="location.reload()"><i class="fa fa-traffic-light"></i></button>            
+                    <div class="columna6"><button type="button" class="btn btn-primary" title="Actualizar Registros Excel" id="reload" name="reload" onclick="location.reload()"><i class="fa fa-book-open"></i></button></div>           
                 </div> 
             </form>   
             <!--<input class="form-control" type="text" id="rfcSupport" name="rfcSupport"  value=""  autocomplete="off" oninput="validarInput(this)" onkeyup="this.value = this.value.toUpperCase()">

@@ -231,44 +231,45 @@ a{
     }
 
     .columna1 {
-      flex: 3;
+      flex: 2;
       /*background-color: #3498db; 
       padding: 15px;*/
       text-align: left;
     }
 
     .columna2 {
-      flex: .3;
+      flex: .1;
       /*background-color: #33FFF6;
       padding: 15px;*/
       text-align: center;
     }
 
     .columna3 {
-      flex: .3;
+      flex: .1;
       /*background-color: #33DDFF;
       padding: 15px;*/
       text-align: center;
     } 
 
     .columna4 {
-      flex: .3;
+      flex: .1;
       /*background-color: #8BC4C4;
       padding: 15px;*/
       text-align: center;
     } 
 
     .columna5 {
-      flex: .3;
+      flex: .1;
       /*background-color: #3349FF;
       padding: 15px;*/
       text-align: center;
     }  
     
     .columna6 {
-      flex: 3;
+      flex: .1;
       /*background-color: #3349FF;
       padding: 15px;*/
+      text-align: center;
     }  
     
     /* Modal */
