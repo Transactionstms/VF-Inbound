@@ -286,7 +286,7 @@ async function AddPullCustoms() {
     let fechaMayorActual = "";
     let contUpdate = 0;
     
-    let contadorCustoms = Number(contador) -2;
+    let contadorCustoms = Number(contador) -1;
     
     for (let i = 1; i <= contadorCustoms; i++) {
         
@@ -1585,7 +1585,7 @@ function parametrizacionValoresEvento(name_celda, contador) {
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").innerHTML;
     let contnum = document.getElementById("numBacheo").value;
 
-    let numCustoms = Number(contnum) - 2;
+    let numCustoms = Number(contnum);
     console.log("numCustoms" + numCustoms);
 
     for (var i = 1, max = numCustoms; i < max; i++) {
@@ -1609,7 +1609,7 @@ function parametrizacionValoresEventoInput(name_celda, contador) {
     let valorCeldaActual = document.getElementById(name_celda + "[" + contador + "]").value;
     let contnum = document.getElementById("numBacheo").value;
 
-   let numCustoms = Number(contnum) -2;
+   let numCustoms = Number(contnum);
    
     for (var i = 1, max = numCustoms; i < max; i++) {
 
@@ -1650,7 +1650,7 @@ function parametrizacionValoresEstatusOperacion(contador) {
     let contnum = document.getElementById("numBacheo").value;
     let listEventos;
 
-   let numCustoms = Number(contnum) -2;
+   let numCustoms = Number(contnum);
    
     for (var i = 1, max = numCustoms; i < max; i++) {
 
