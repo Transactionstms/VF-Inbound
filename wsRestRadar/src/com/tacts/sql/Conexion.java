@@ -61,9 +61,10 @@ public class Conexion {
                 System.out.print("No es posible cerrar la Conexion");
             }
         }
+        System.out.println("Conexion Cerrada Satisfactoria");
     }
 
-    public void Cerrar(Statement stmt) {
+    public void CerrarStatement(Statement stmt) {
         if (stmt != null) {
             try {
                 stmt.close();
@@ -72,6 +73,8 @@ public class Conexion {
                 // empty catch block
             }
         }
+        
+        System.out.println("Conexion Cerrada Satisfactoria");
     }
 
     public void Finalizar() {
@@ -83,6 +86,8 @@ public class Conexion {
                 // empty catch block
             }
         }
+        
+        System.out.println("Conexion Cerrada Satisfactoria");
     }
 
     public Connection getConexion() {

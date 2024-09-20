@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.send.email;
+import com.google.gson.JsonObject;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -52,7 +53,7 @@ public class Email {
 
     }
     
-    public boolean alertaRadarWebservice(String msg_logError, JSONObject jsonObject) throws SQLException {
+    public boolean alertaRadarWebservice(String msg_logError, JSONObject JsonObject) throws SQLException {
 
         boolean enviado = false;
 
@@ -80,7 +81,7 @@ public class Email {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
-            messageBodyPart.setContent(getRadar(msg_logError, jsonObject), "text/html");
+            messageBodyPart.setContent(getRadar(msg_logError, JsonObject), "text/html");
 
             Multipart multipart = new MimeMultipart();
 

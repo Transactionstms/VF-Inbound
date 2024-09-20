@@ -22,8 +22,9 @@ public class wsRadar {
 
         try {
             
-            String consumoWSRADAR = obj.consultarCustomsRADAR("4003");
+            boolean consumoWSRADAR = obj.consultarCustomsRADAR("4003");
             System.out.println("wsrad.Wsrad.main.radar: (" + consumoWSRADAR + ")");
+            System.out.println("Proceso Finalizado");
 
         } catch (IOException e) {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
