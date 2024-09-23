@@ -45,6 +45,7 @@ public class CustomsSql {
                 String fecha_revalidacion,
                 String fecha_previo_origen,
                 String fecha_previo_destino,
+                String fecha_eta_port_discharge,
                 String fecha_resultado_previo,
                 String proforma_final,
                 String permiso,
@@ -77,8 +78,7 @@ public class CustomsSql {
                 String containerId) {
         try {
            
-            CallableStatement sp = conexion.getConexion().prepareCall("{call SP_INB_WS_CONSUMO_UPLOAD_RADAR_CUSTOMS(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
-                                                                     +"?)}");
+            CallableStatement sp = conexion.getConexion().prepareCall("{call SP_INB_WS_CONSUMO_UPLOAD_RADAR_CUSTOMS(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             sp.setString("referenciaAA", referenciaAA);
             sp.setString("shipmentId", shipmentId);
             sp.setString("pais_origen", pais_origen);
@@ -96,6 +96,7 @@ public class CustomsSql {
             sp.setString("buque", buque);
             sp.setString("fecha_revalidacion", fecha_revalidacion);
             sp.setString("fecha_previo_origen", fecha_previo_origen);
+            sp.setString("fecha_eta_port_discharge", fecha_eta_port_discharge);
             sp.setString("fecha_previo_destino", fecha_previo_destino);
             sp.setString("fecha_resultado_previo", fecha_resultado_previo);
             sp.setString("proforma_final", proforma_final);

@@ -175,6 +175,7 @@ public class ConsumowsRadar {
                                     String buque = jsonObject.getString("buque").replace("null", "");
                                     String fecha_revalidacion = jsonObject.getString("fechaRevalidacionLiberacionBL").replace("null", "");
                                     String fecha_previo_origen = jsonObject.getString("fechaPrevioOrigen").replace("null", "");
+                                    String fecha_eta_port_discharge =  jsonObject.getString("fechaPrevioOrigen").replace("null", "");
                                     String fecha_previo_destino = jsonObject.getString("fechaPrevioEnDestino").replace("null", "");
                                     String fecha_resultado_previo = jsonObject.getString("fechaResultadoPrevio").replace("null", "");
                                     String proforma_final = jsonObject.getString("proformaFinal").replace("null", "");
@@ -227,6 +228,7 @@ public class ConsumowsRadar {
                                                 buque,
                                                 fecha_revalidacion,
                                                 fecha_previo_origen,
+                                                fecha_eta_port_discharge,
                                                 fecha_previo_destino,
                                                 fecha_resultado_previo,
                                                 proforma_final,
