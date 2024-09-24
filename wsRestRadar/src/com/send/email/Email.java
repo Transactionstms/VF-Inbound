@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.send.email;
-import com.google.gson.JsonObject;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -29,9 +26,9 @@ public class Email {
     
     Properties properties = new Properties();
     
-    private String asunto = "Avisos Logix Customs";
+    private String asunto = "Avisos Radar Customs";
     private final String REMITENTE = "alertas1@tacts.mx";
-    private final String CLAVE = "Tacts23*";
+    private final String CLAVE = "Tacts24*";
     private final String HOST = "smtp.gmail.com";       
     
     public String getAsunto() {
@@ -53,18 +50,18 @@ public class Email {
 
     }
     
-    public boolean alertaRadarWebservice(String msg_logError, JSONObject JsonObject) throws SQLException {
+    public boolean alertaRadarWebservice(String msg_logError, String JsonObject) throws SQLException {
 
         boolean enviado = false;
 
         
-        String[] vect = "oamorales@tacts.mx/jlmateos@tacts.mx/".split("/");
+        String[] vect = "jlmateos@tacts.mx/".split("/");
 
         try {
             Session session = Session.getInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts24*");
                 }
             });
             
@@ -106,12 +103,13 @@ public class Email {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            enviado = false;
         }
         return enviado;
 
     }
    
-    private String getRadar(String msg_logError, JSONObject jsonObject){
+    private String getRadar(String msg_logError, String jsonObject){
          String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">"
                         + "    <div style=\"max-width:600px;margin:0 auto\">"
                         + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">"
