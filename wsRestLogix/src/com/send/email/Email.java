@@ -4,8 +4,6 @@
  */
 package com.send.email;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -30,7 +28,7 @@ public class Email {
     
     private String asunto = "Avisos Logix Customs";
     private final String REMITENTE = "alertas1@tacts.mx";
-    private final String CLAVE = "Tacts*24*";
+    private final String CLAVE = "Tacts24*";
     private final String HOST = "smtp.gmail.com";       
     
     public String getAsunto() {
@@ -52,18 +50,18 @@ public class Email {
 
     }
     
-    public boolean alertaLogixWebservice(String msg_logError, JSONObject jsonObject) throws SQLException {
+    public boolean alertaRadarWebservice(String msg_logError, String JsonObject) throws SQLException {
 
         boolean enviado = false;
 
         
-        String[] vect = "oamorales@tacts.mx/jlmateos@tacts.mx/".split("/");
+        String[] vect = "jlmateos@tacts.mx/".split("/");
 
         try {
             Session session = Session.getInstance(properties,
                     new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts23*");
+                    return new PasswordAuthentication("alertas1@tacts.mx", "Tacts24*");
                 }
             });
             
@@ -80,7 +78,7 @@ public class Email {
             BodyPart messageBodyPart = new MimeBodyPart();
 
             // Now set the actual message
-            messageBodyPart.setContent(getLogix(msg_logError, jsonObject), "text/html");
+            messageBodyPart.setContent(getRadar(msg_logError, JsonObject), "text/html");
 
             Multipart multipart = new MimeMultipart();
 
@@ -105,12 +103,13 @@ public class Email {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            enviado = false;
         }
         return enviado;
 
     }
    
-    private String getLogix(String msg_logError, JSONObject jsonObject){
+    private String getRadar(String msg_logError, String jsonObject){
          String mensaje = "<body style=\"font-family: Helvetica,Arial.sans-serif;\">"
                         + "    <div style=\"max-width:600px;margin:0 auto\">"
                         + "        <div style=\"background:#000\\9;font:14px sans-serif;color:#686f7a;border-top:4px solid #;margin-bottom:20px\">"

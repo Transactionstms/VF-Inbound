@@ -1,34 +1,46 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package wsRestLogix;
+package wsrestlogix;
+
+import com.tacts.sql.ConnectionPool;
+import com.tacts.sql.DBConnection;
 import java.io.IOException;
-import com.tacts.dao.TmsCustoms;
-        
+import java.sql.SQLException;
+import java.util.List;
+import json.JSONException;
+
 /**
  *
- * @author grecendiz
+ * @author User_Windows10
  */
-public class wsRestLogix {
+public class WsRestLogix {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws Exception { 
+    public static void main(String[] args) throws IOException, JSONException, SQLException {
+        ConnectionPool connectionPool = new ConnectionPool();
+        DBConnection dbConnection = new DBConnection(connectionPool);
 
-        TmsCustoms obj = new TmsCustoms();
+        String agenteId = "4001";  // Valor para el parámetro de entrada
 
         try {
-            
-            String consumoWSLOGIX = obj.consultarCustomsLOGIX("4001");
-            System.out.println("wsrad.Wsrad.main.logix: (" + consumoWSLOGIX + ")");
-            
-        } catch (IOException e) {
-            System.out.println("Error al escribir en el archivo: " + e.getMessage());
-        }
+            // Llama al método para ejecutar el stored procedure con el parámetro de entrada
+            List<String> result = dbConnection.executeStoredProcedureWithQuery(agenteId);
 
+            // Imprimir los resultados concatenados
+            for (String concatenatedResult : result) {
+                System.out.println("Resultado final: " + concatenatedResult);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Cerrar todas las conexiones del pool
+                connectionPool.closeAllConnections();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
-    
+
 }
