@@ -358,7 +358,7 @@ function formatoFecha(valor) {
   // Convertir el mes numérico a texto
   var mesTexto = '';
   var mesNumerico = parseInt(fechaFiltrada.slice(0, 2), 10);
-  var meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+  var meses = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   if (mesNumerico >= 1 && mesNumerico <= 12) {
     mesTexto = meses[mesNumerico - 1];
   }
