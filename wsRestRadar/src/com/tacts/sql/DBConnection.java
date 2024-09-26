@@ -212,7 +212,7 @@ public class DBConnection {
                                     String buque = jsonObject.getString("buque").replace("null", "");
                                     String fecha_revalidacion = jsonObject.getString("fechaRevalidacionLiberacionBL").replace("null", "");
                                     String fecha_previo_origen = jsonObject.getString("fechaPrevioOrigen").replace("null", "");
-                                    String fecha_eta_port_discharge = jsonObject.getString("fechaPrevioOrigen").replace("null", "");
+                                    String fecha_eta_port_discharge = jsonObject.getString("fechaEntrada").replace("null", "");
                                     String fecha_previo_destino = jsonObject.getString("fechaPrevioEnDestino").replace("null", "");
                                     String fecha_resultado_previo = jsonObject.getString("fechaResultadoPrevio").replace("null", "");
                                     String proforma_final = jsonObject.getString("proformaFinal").replace("null", "");
