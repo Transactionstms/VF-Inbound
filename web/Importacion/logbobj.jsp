@@ -24,7 +24,7 @@
         <!-- Connection Status Red -->
 
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
- <style>
+  <style>
         .table-scroll {
             position: relative;
             max-height: 60%;
@@ -48,12 +48,6 @@
             top: 0;
              z-index: 10;
         }
-.wide-header {
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    padding: 10px 15px;  /* Añade un poco de padding para dar espacio */
-    min-width: 150px !important;    /* Ajusta el valor según sea necesario */
-    width: 150px !important;
-}
 
        
     </style>
@@ -79,7 +73,7 @@
             
 String sql22= "SELECT  "
  + " SHIP_TO_PARTY_NAME, SOLD_TO_PARTY_NAME, SOLD_TO_NUMBER, CONTAINER_NUMBER, BL_NUMBER, REFERENCE_DOC_NUM, LINE_ITEM_REF_NUM1, SHIPMENT_NUMBER, DELIVERY_NUM_INB, PURCHASING_DOC_NUM, REF_PO_LINE, PO_CUT, OUR_REFERENCE, CUST_REF_SO_HDR, STYLE_COLOR, STYLE_COLOR_NAME, AH2_CLASS_DESC, AH3_CLASS_DESC, PO_LINE_OPEN_QTY, QTY_SUPP_CONF, PURCHASE_ORDER_QTY, INB_DELIVERY_QTY, QTY_GOODS_RECEIVED, PREPACK_INDICATOR, RECEIVED_UNITS_PK, PPK, CONTAINER_LOAD, SALES_ORDER_QTY, INB_NET_VALUE, SALES_DIST_DOC_NUM, ACTUAL_EX_FACTORY_DT, ITEM_DELIVERY_DT, SHIPPED_ASN, EST_BL_DEST_DT, DELIVERY_DT_INB, REQ_DELIVERY_DT, CANCEL_DATE, VENDOR_ACCT_NUM, GOODS_SUPPLIER_NAME, GOODS_SUPPLIER_CNTRY, PORT_LOAD_CITY, MODE1, SHIPPING_INSTR, VESSEL_NUMBER, PORT_DISCHARGE_CITY, PORT_DISCHARGE_CNTRY, BL_DEST_CITY_NAME, BL_DEST_CNTRY_CODE, FINAL_DEST_CITY_CNTY, PLANT, BRAND_NAME, SHIP_PARTY_FWD_NAME, SHIP_PARTY_CARR_NAME, DEPARTED_FROM_POL, ETA_AT_POD, ARRIVED_AT_POD, DEPARTED_FROM_POD, SEAL_NUMBER, VOYAGE, CONTAINER_TYPE_NAME, CONTAINER_CARTONS, NET_WEIGHT, CONTAINER_VOLUME, ACTUAL_GOODS_MOVE_DT, DELIVERY_COMPLETE_IND, DEL_INDICATOR_LINE, DEL_INDICATOR_HEAD, CUSTOMS_ENTRY_NBR, MATERIAL_NUM_CUST"
- + " FROM  tra_inb_bobj where FOLIO='" + folio + "'" ;
+ + " FROM  tra_inb_bobj where FOLIO='" + folio + "' FETCH FIRST 1000 ROWS ONLY " ;
     %>
     <body>
 
@@ -99,11 +93,11 @@ String sql22= "SELECT  "
                                     </div>
                                     <div class="card-body">
                                         <h1 class="mb-3">Registros   <%=maxt%> </h1>
-                            
+                                                                          <form id="uploadFileFormData1" name="uploadFileFormData1">
+
 
                                         <div class="card-body">
-                                        <form id="uploadFileFormData1" name="uploadFileFormData1">
-                                             <br>
+                                              <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 100%;">
                                                 <table id="example" class="display" style="width:300%">
                                                     <thead>
@@ -270,8 +264,8 @@ String sql22= "SELECT  "
                                             </div>
                                             <br>
                                             <!-- Botones controles -->
-                                         
-                                        </form>
+                             </form>              
+                                     
                                     </div>
                                     </div>
                                 </div>              
