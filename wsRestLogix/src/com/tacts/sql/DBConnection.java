@@ -14,6 +14,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import json.JSONArray;
@@ -66,7 +68,7 @@ public class DBConnection {
             // Procesar el ResultSet (iterar sobre las filas)
             while (rs.next()) {
                 // Obtener los valores de las dos columnas
-                shipment_id = rs.getString(6);
+                shipment_id = rs.getString(1);
 
                 // Se elimina el último carácter de la cadena string (si no está vacío)
                 if (!shipment_id.isEmpty()) {
@@ -83,7 +85,7 @@ public class DBConnection {
             }
             
             //Emisión de email para registros no procesados:
-            /*if (!data_sin_procesar.equals("")) {
+            /*if (!data_sin_procesar.equals("")  & !valor1.equals("-")) {
                 data_sin_procesar = data_sin_procesar.substring(0, data_sin_procesar.length() - 2);
                 boolean res = sedEmail(data_sin_procesar);
                 if (res) {
@@ -126,10 +128,38 @@ public class DBConnection {
     //Método para consumir el servicio con el token generado y obtener json
     public String ConsumoLOGIX(String path) throws IOException, JSONException, SQLException {
 
+        // Crear un formateador para convertir la fecha al formato MM/DD/YYYY
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy ");
+        
         String TokenURLP = "http://apis.grupologix.com.mx/traficotms";
         String responseLine = null;
         String responseLine2 = "";
         String msg_logError = "";
+        
+        String etaPortDischargeTwo_traficotms  = "";
+        String DocumentRecepcionDate_traficotms  = "";
+        String d_previousOrigin_traficotms  = "";
+        String d_previousDestiny_traficotms  = "";
+        String d_previousResult_traficotms  = "";
+        String finalProforma_traficotms  = "";
+        String d_sendTokens_traficotms  = "";
+        String d_receiptPermitsProcessed_traficotms  = "";
+        String d_PermitActivation_traficotms  = "";
+        String d_AuthorizedPermits_traficotms  = "";
+        String d_receiptCA_traficotms  = "";
+        String d_completeDocuments_traficotms  = "";
+        String d_paidPed_traficotms  = "";
+        String d_transportRequest_traficotms  = "";
+        String d_modulation_traficotms  = "";
+        String arrivalNOVA_traficotms  = "";
+        String arrivalGlobalTradeSD_traficotms  = "";
+        String d_archiveM_traficotms  = "";
+        String d_requestHandling_traficotms  = "";
+        String d_handlingExpiration_traficotms  = "";
+        String d_keyConfirmationPed_traficotms  = "";
+        String d_incrementalReception_traficotms  = "";
+        String d_register_traficotms  = "";
+        String d_updated_traficotms  = "";
 
         try {
 
@@ -166,74 +196,194 @@ public class DBConnection {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                        String id_traficotms = jsonObject.getString("id_traficotms").replace("-", "");
-                        String evento_traficotms = jsonObject.getString("evento_traficotms").replace("-", "");
-                        String shipmentId_traficotms = jsonObject.getString("shipmentId_traficotms").replace("-", "");
-                        String countryOrigin_traficotms = jsonObject.getString("countryOrigin_traficotms").replace("-", "");
-                        String sizeContainer_traficotms = jsonObject.getString("sizeContainer_traficotms").replace("-", "");
-                        String valueDlls_traficotms = jsonObject.getString("valueDlls_traficotms").replace("-", "");
-                        String etaPortDischargeTwo_traficotms = jsonObject.getString("etaPortDischargeTwo_traficotms").replace("-", "");
-                        String AA_traficotms = jsonObject.getString("AA_traficotms").replace("-", "");
-                        String yearPed_traficotms = jsonObject.getString("yearPed_traficotms").replace("-", "");
-                        String aaPat_traficotms = jsonObject.getString("aaPat_traficotms").replace("-", "");
-                        String customHouse_traficotms = jsonObject.getString("customHouse_traficotms").replace("-", "");
-                        String noPed_traficotms = jsonObject.getString("noPed_traficotms").replace("-", "");
-                        String noPedRect1_traficotms = jsonObject.getString("noPedRect1_traficotms").replace("-", "");
-                        String noPedComment1_traficotms = jsonObject.getString("noPedComment1_traficotms").replace("-", "");
-                        String noPedRect2_traficotms = jsonObject.getString("noPedRect2_traficotms").replace("-", "");
-                        String noPedComment2_traficotms = jsonObject.getString("noPedComment2_traficotms").replace("-", "");
-                        String DocumentRecepcionDate_traficotms = jsonObject.getString("DocumentRecepcionDate_traficotms").replace("-", "");
-                        String enclosure_traficotms = jsonObject.getString("enclosure_traficotms").replace("-", "");
-                        String shippingCompany_traficotms = jsonObject.getString("shippingCompany_traficotms").replace("-", "");
-                        String vessel_traficotms = jsonObject.getString("vessel_traficotms").replace("-", "");
-                        String revalidationDate_traficotms = jsonObject.getString("revalidationDate_traficotms").replace("-", "");
-                        String d_previousOrigin_traficotms = jsonObject.getString("d_previousOrigin_traficotms").replace("-", "");
-                        String d_previousDestiny_traficotms = jsonObject.getString("d_previousDestiny_traficotms").replace("-", "");
-                        String d_previousResult_traficotms = jsonObject.getString("d_previousResult_traficotms").replace("-", "");
-                        String finalProforma_traficotms = jsonObject.getString("finalProforma_traficotms").replace("-", "");
-                        String permissionRequired_traficotms = jsonObject.getString("permissionRequired_traficotms").replace("-", "");
-                        String d_sendTokens_traficotms = jsonObject.getString("d_sendTokens_traficotms").replace("-", "");
-                        String d_receiptPermitsProcessed_traficotms = jsonObject.getString("d_receiptPermitsProcessed_traficotms").replace("-", "");
-                        String d_PermitActivation_traficotms = jsonObject.getString("d_PermitActivation_traficotms").replace("-", "");
-                        String d_AuthorizedPermits_traficotms = jsonObject.getString("d_AuthorizedPermits_traficotms").replace("-", "");
-                        String AccountwithCO_traficotms = jsonObject.getString("AccountwithCO_traficotms").replace("-", "");
-                        String TariffPreferenceCO_traficotms = jsonObject.getString("TariffPreferenceCO_traficotms").replace("-", "");
-                        String requiresUVA_traficotms = jsonObject.getString("requiresUVA_traficotms").replace("-", "");
-                        String RequiresCA_traficotms = jsonObject.getString("RequiresCA_traficotms").replace("-", "");
-                        String d_receiptCA_traficotms = jsonObject.getString("RequiresCA_traficotms").replace("-", "");
-                        String certificateNumberCA_traficotms = jsonObject.getString("certificateNumberCA_traficotms").replace("-", "");
-                        String amountCA_traficotms = jsonObject.getString("amountCA_traficotms").replace("-", "");
-                        String d_completeDocuments_traficotms = jsonObject.getString("d_completeDocuments_traficotms").replace("-", "");
-                        String d_paidPed_traficotms = jsonObject.getString("d_paidPed_traficotms").replace("-", "");
-                        String d_transportRequest_traficotms = jsonObject.getString("d_transportRequest_traficotms").replace("-", "");
-                        String d_modulation_traficotms = jsonObject.getString("d_modulation_traficotms").replace("-", "");
-                        String modality_traficotms = jsonObject.getString("modality_traficotms").replace("-", "");
-                        String modulationResult_traficotms = jsonObject.getString("modulationResult_traficotms").replace("-", "");
-                        String d_recognition_traficotms = jsonObject.getString("d_recognition_traficotms").replace("-", "");
-                        String d_release_traficotms = jsonObject.getString("d_release_traficotms").replace("-", "");
-                        String originSeal_traficotms = jsonObject.getString("originSeal_traficotms").replace("-", "");
-                        String endStamp_traficotms = jsonObject.getString("endStamp_traficotms").replace("-", "");
-                        String d_retentionAuthority_traficotms = jsonObject.getString("d_retentionAuthority_traficotms").replace("-", "");
-                        String d_withHoldingAuthorityRelease_traficotms = jsonObject.getString("d_withHoldingAuthorityRelease_traficotms").replace("-", "");
-                        String OperationStatus_traficotms = jsonObject.getString("OperationStatus_traficotms").replace("-", "");
-                        String reasonDelay_traficotms = jsonObject.getString("reasonDelay_traficotms").replace("-", "");
-                        String comments_traficotms = jsonObject.getString("comments_traficotms").replace("-", "");
-                        String arrivalNOVA_traficotms = jsonObject.getString("arrivalNOVA_traficotms").replace("-", "");
-                        String arrivalGlobalTradeSD_traficotms = jsonObject.getString("arrivalGlobalTradeSD_traficotms").replace("-", "");
-                        String archiveM_traficotms = jsonObject.getString("archiveM_traficotms").replace("-", "");
-                        String d_archiveM_traficotms = jsonObject.getString("d_archiveM_traficotms").replace("-", "");
-                        String d_requestHandling_traficotms = jsonObject.getString("d_requestHandling_traficotms").replace("-", "");
-                        String d_handlingExpiration_traficotms = jsonObject.getString("d_handlingExpiration_traficotms").replace("-", "");
-                        String d_keyConfirmationPed_traficotms = jsonObject.getString("d_keyConfirmationPed_traficotms").replace("-", "");
-                        String d_incrementalReception_traficotms = jsonObject.getString("d_incrementalReception_traficotms").replace("-", "");
-                        String tande_traficotms = jsonObject.getString("tande_traficotms").replace("-", "");
-                        String d_expirationInbound_traficotms = jsonObject.getString("d_expirationInbound_traficotms").replace("-", "");
-                        String d_register_traficotms = jsonObject.getString("d_register_traficotms").replace("-", "");
-                        String d_updated_traficotms = jsonObject.getString("d_updated_traficotms").replace("-", "");
+                        String id_traficotms = jsonObject.getString("id_traficotms").replace(" ", "").replace("\"", "");
+                        String evento_traficotms = jsonObject.getString("evento_traficotms").replace(" ", "").replace("\"", "");
+                        String shipmentId_traficotms = jsonObject.getString("shipmentId_traficotms").replace(" ", "").replace("\"", "");
+                        String countryOrigin_traficotms = jsonObject.getString("countryOrigin_traficotms").replace(" ", "").replace("\"", "");
+                        String sizeContainer_traficotms = jsonObject.getString("sizeContainer_traficotms").replace(" ", "").replace("\"", "");
+                        String valueDlls_traficotms = jsonObject.getString("valueDlls_traficotms").replace(" ", "").replace("\"", "");
+                        String AA_traficotms = jsonObject.getString("AA_traficotms").replace(" ", "").replace("\"", "");
+                        String yearPed_traficotms = jsonObject.getString("yearPed_traficotms").replace(" ", "").replace("\"", "");
+                        String aaPat_traficotms = jsonObject.getString("aaPat_traficotms").replace(" ", "").replace("\"", "");
+                        String customHouse_traficotms = jsonObject.getString("customHouse_traficotms").replace(" ", "").replace("\"", "");
+                        String noPed_traficotms = jsonObject.getString("noPed_traficotms").replace(" ", "").replace("\"", "");
+                        String noPedRect1_traficotms = jsonObject.getString("noPedRect1_traficotms").replace(" ", "").replace("\"", "");
+                        String noPedComment1_traficotms = jsonObject.getString("noPedComment1_traficotms").replace(" ", "").replace("\"", "");
+                        String noPedRect2_traficotms = jsonObject.getString("noPedRect2_traficotms").replace(" ", "").replace("\"", "");
+                        String noPedComment2_traficotms = jsonObject.getString("noPedComment2_traficotms").replace(" ", "").replace("\"", "");
+                        String enclosure_traficotms = jsonObject.getString("enclosure_traficotms").replace(" ", "").replace("\"", "");
+                        String shippingCompany_traficotms = jsonObject.getString("shippingCompany_traficotms").replace(" ", "").replace("\"", "");
+                        String vessel_traficotms = jsonObject.getString("vessel_traficotms").replace(" ", "").replace("\"", "");
+                        String revalidationDate_traficotms = jsonObject.getString("revalidationDate_traficotms").replace(" ", "").replace("\"", "");
+                        String permissionRequired_traficotms = jsonObject.getString("permissionRequired_traficotms").replace(" ", "").replace("\"", "");
+                        String AccountwithCO_traficotms = jsonObject.getString("AccountwithCO_traficotms").replace(" ", "").replace("\"", "");
+                        String TariffPreferenceCO_traficotms = jsonObject.getString("TariffPreferenceCO_traficotms").replace(" ", "").replace("\"", "");
+                        String requiresUVA_traficotms = jsonObject.getString("requiresUVA_traficotms").replace(" ", "").replace("\"", "");
+                        String RequiresCA_traficotms = jsonObject.getString("RequiresCA_traficotms").replace(" ", "").replace("\"", "");
+                        String certificateNumberCA_traficotms = jsonObject.getString("certificateNumberCA_traficotms").replace(" ", "").replace("\"", "");
+                        String amountCA_traficotms = jsonObject.getString("amountCA_traficotms").replace(" ", "").replace("\"", "");
+                        String modality_traficotms = jsonObject.getString("modality_traficotms").replace(" ", "").replace("\"", "");
+                        String modulationResult_traficotms = jsonObject.getString("modulationResult_traficotms").replace(" ", "").replace("\"", "");
+                        String d_recognition_traficotms = jsonObject.getString("d_recognition_traficotms").replace(" ", "").replace("\"", "");
+                        String d_release_traficotms = jsonObject.getString("d_release_traficotms").replace(" ", "").replace("\"", "");
+                        String originSeal_traficotms = jsonObject.getString("originSeal_traficotms").replace(" ", "").replace("\"", "");
+                        String endStamp_traficotms = jsonObject.getString("endStamp_traficotms").replace(" ", "").replace("\"", "");
+                        String d_retentionAuthority_traficotms = jsonObject.getString("d_retentionAuthority_traficotms").replace(" ", "").replace("\"", "");
+                        String d_withHoldingAuthorityRelease_traficotms = jsonObject.getString("d_withHoldingAuthorityRelease_traficotms").replace(" ", "").replace("\"", "");
+                        String OperationStatus_traficotms = jsonObject.getString("OperationStatus_traficotms").replace(" ", "").replace("\"", "");
+                        String reasonDelay_traficotms = jsonObject.getString("reasonDelay_traficotms").replace(" ", "").replace("\"", "");
+                        String comments_traficotms = jsonObject.getString("comments_traficotms").replace(" ", "").replace("\"", "");
+                        String archiveM_traficotms = jsonObject.getString("archiveM_traficotms").replace(" ", "").replace("\"", "");
+                        String tande_traficotms = jsonObject.getString("tande_traficotms").replace(" ", "").replace("\"", "");
+                        String d_expirationInbound_traficotms = jsonObject.getString("d_expirationInbound_traficotms").replace(" ", "").replace("\"", "");
+                        
+                        String valor1 = jsonObject.getString("etaPortDischargeTwo_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor1.equals("")  & !valor1.equals("-")) {
+                            LocalDate date1 = LocalDate.parse(valor1);                    // Parsear la fecha al objeto LocalDate
+                            etaPortDischargeTwo_traficotms = date1.format(formatter);   // Formatear la fecha al nuevo formato
+                        }
 
+                        String valor2 = jsonObject.getString("DocumentRecepcionDate_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor2.equals("")  & !valor2.equals("-")) {
+                            LocalDate date2 = LocalDate.parse(valor2);                          // Parsear la fecha al objeto LocalDate
+                            DocumentRecepcionDate_traficotms = date2.format(formatter);   // Formatear la fecha al nuevo formato       
+                        }
+
+                        String valor3 = jsonObject.getString("d_previousOrigin_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor3.equals("")  & !valor3.equals("-")) {
+                            LocalDate date3 = LocalDate.parse(valor3);                    // Parsear la fecha al objeto LocalDate
+                            d_previousOrigin_traficotms = date3.format(formatter);       // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor4 = jsonObject.getString("d_previousDestiny_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor4.equals("")  & !valor4.equals("-")) {
+                            LocalDate date4 = LocalDate.parse(valor4);                    // Parsear la fecha al objeto LocalDate
+                            d_previousDestiny_traficotms = date4.format(formatter);      // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor5 = jsonObject.getString("d_previousResult_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor5.equals("")  &  !valor5.equals("-")) {
+                            LocalDate date5 = LocalDate.parse(valor5);                    // Parsear la fecha al objeto LocalDate
+                            d_previousResult_traficotms = date5.format(formatter);        // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor6 = jsonObject.getString("finalProforma_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor6.equals("")  & !valor6.equals("-")) {
+                            LocalDate date6 = LocalDate.parse(valor6);                    // Parsear la fecha al objeto LocalDate
+                            finalProforma_traficotms = date6.format(formatter);             // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor7 = jsonObject.getString("d_sendTokens_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor7.equals("")  & !valor7.equals("-")) {
+                            LocalDate date7 = LocalDate.parse(valor7);                    // Parsear la fecha al objeto LocalDate
+                            d_sendTokens_traficotms = date7.format(formatter);             // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor8 = jsonObject.getString("d_receiptPermitsProcessed_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor8.equals("")  & !valor8.equals("-")) {
+                            LocalDate date8 = LocalDate.parse(valor8);                             // Parsear la fecha al objeto LocalDate
+                            d_receiptPermitsProcessed_traficotms = date8.format(formatter);   // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor9 = jsonObject.getString("d_PermitActivation_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor9.equals("")  & !valor9.equals("-")) {
+                            LocalDate date9 = LocalDate.parse(valor9);                    // Parsear la fecha al objeto LocalDate
+                            d_PermitActivation_traficotms = date9.format(formatter);      // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor10 = jsonObject.getString("d_AuthorizedPermits_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor10.equals("")  & !valor10.equals("-")) {
+                            LocalDate date10 = LocalDate.parse(valor10);                    // Parsear la fecha al objeto LocalDate
+                            d_AuthorizedPermits_traficotms = date10.format(formatter);   // Formatear la fecha al nuevo formato                            
+                        }
+
+                        String valor11 = jsonObject.getString("d_receiptCA_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor11.equals("")  & !valor11.equals("-")) {
+                            LocalDate date11 = LocalDate.parse(valor11);                    // Parsear la fecha al objeto LocalDate
+                            d_receiptCA_traficotms = date11.format(formatter);               // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor12 = jsonObject.getString("d_completeDocuments_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor12.equals("")  & !valor12.equals("-")) {
+                            LocalDate date12 = LocalDate.parse(valor12);                       // Parsear la fecha al objeto LocalDate
+                            d_completeDocuments_traficotms = date12.format(formatter);   // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor13 = jsonObject.getString("d_paidPed_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor13.equals("")  & !valor13.equals("-")) {
+                            LocalDate date13 = LocalDate.parse(valor13);                    // Parsear la fecha al objeto LocalDate
+                            d_paidPed_traficotms = date13.format(formatter);                  // Formatear la fecha al nuevo formato                            
+                        }
+
+                        String valor14 = jsonObject.getString("d_transportRequest_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor14.equals("")  & !valor14.equals("-")) {
+                            LocalDate date14 = LocalDate.parse(valor14);                    // Parsear la fecha al objeto LocalDate
+                            d_transportRequest_traficotms = date14.format(formatter);    // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor15 = jsonObject.getString("d_modulation_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor15.equals("")  & !valor15.equals("-")) {
+                            LocalDate date15 = LocalDate.parse(valor15);                    // Parsear la fecha al objeto LocalDate
+                            d_modulation_traficotms = date15.format(formatter);             // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor16 = jsonObject.getString("arrivalNOVA_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor16.equals("")  & !valor16.equals("-")) {
+                            LocalDate date16 = LocalDate.parse(valor16);                    // Parsear la fecha al objeto LocalDate
+                            arrivalNOVA_traficotms = date16.format(formatter);               // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor17 = jsonObject.getString("arrivalGlobalTradeSD_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor17.equals("")  & !valor17.equals("-")) {
+                            LocalDate date17 = LocalDate.parse(valor17);                    // Parsear la fecha al objeto LocalDate
+                            arrivalGlobalTradeSD_traficotms = date17.format(formatter);   // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor18 = jsonObject.getString("d_archiveM_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor18.equals("")  & !valor18.equals("-")) {
+                            LocalDate date18 = LocalDate.parse(valor18);                    // Parsear la fecha al objeto LocalDate
+                            d_archiveM_traficotms = date18.format(formatter);                 // Formatear la fecha al nuevo formato                             
+                        }
+
+                        String valor19 = jsonObject.getString("d_requestHandling_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor19.equals("")  & !valor19.equals("-")) {
+                            LocalDate date19 = LocalDate.parse(valor19);                    // Parsear la fecha al objeto LocalDate
+                            d_requestHandling_traficotms = date19.format(formatter);      // Formatear la fecha al nuevo formato                                
+                        }
+
+                        String valor20 = jsonObject.getString("d_handlingExpiration_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor20.equals("")  & !valor20.equals("-")) {
+                            LocalDate date20 = LocalDate.parse(valor20);                    // Parsear la fecha al objeto LocalDate
+                            d_handlingExpiration_traficotms = date20.format(formatter);   // Formatear la fecha al nuevo formato                                
+                        }
+
+                        String valor21 = jsonObject.getString("d_keyConfirmationPed_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor21.equals("")  & !valor21.equals("-")) {
+                            LocalDate date21 = LocalDate.parse(valor21);                     // Parsear la fecha al objeto LocalDate
+                            d_keyConfirmationPed_traficotms = date21.format(formatter);   // Formatear la fecha al nuevo formato                                
+                        }
+
+                        String valor22 = jsonObject.getString("d_incrementalReception_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor22.equals("")  & !valor22.equals("-")) {
+                            LocalDate date22 = LocalDate.parse(valor22);                        // Parsear la fecha al objeto LocalDate
+                            d_incrementalReception_traficotms = date22.format(formatter);   // Formatear la fecha al nuevo formato                                
+                        }
+
+                        String valor23 = jsonObject.getString("d_register_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor23.equals("")  & !valor23.equals("-")) {
+                            LocalDate date23 = LocalDate.parse(valor23);                    // Parsear la fecha al objeto LocalDate
+                            d_register_traficotms = date23.format(formatter);                   // Formatear la fecha al nuevo formato                                
+                        }
+
+                       /* String valor24 = jsonObject.getString("d_updated_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor24.equals("")  & !valor24.equals("-")) {
+                            LocalDate date24 = LocalDate.parse(valor24);                    // Parsear la fecha al objeto LocalDate
+                            d_updated_traficotms = date24.format(formatter);                  // Formatear la fecha al nuevo formato                               
+                        }*/
+                        
                         try {
 
-                            insertUsingStoredProcedure(evento_traficotms, shipmentId_traficotms, countryOrigin_traficotms, sizeContainer_traficotms, valueDlls_traficotms, etaPortDischargeTwo_traficotms, AA_traficotms, yearPed_traficotms, aaPat_traficotms, customHouse_traficotms, noPed_traficotms, noPedRect1_traficotms, noPedComment1_traficotms, noPedRect2_traficotms, noPedComment2_traficotms, DocumentRecepcionDate_traficotms, enclosure_traficotms, shippingCompany_traficotms, vessel_traficotms, revalidationDate_traficotms, d_previousOrigin_traficotms, d_previousDestiny_traficotms, d_previousResult_traficotms, finalProforma_traficotms, permissionRequired_traficotms, d_sendTokens_traficotms, d_receiptPermitsProcessed_traficotms, d_PermitActivation_traficotms, d_AuthorizedPermits_traficotms, AccountwithCO_traficotms, TariffPreferenceCO_traficotms, requiresUVA_traficotms, RequiresCA_traficotms, d_receiptCA_traficotms, certificateNumberCA_traficotms, amountCA_traficotms, d_completeDocuments_traficotms, d_paidPed_traficotms, d_transportRequest_traficotms, d_modulation_traficotms, modality_traficotms, modulationResult_traficotms, d_recognition_traficotms, d_release_traficotms, originSeal_traficotms, endStamp_traficotms, d_retentionAuthority_traficotms, d_withHoldingAuthorityRelease_traficotms, OperationStatus_traficotms, reasonDelay_traficotms, comments_traficotms, arrivalNOVA_traficotms, arrivalGlobalTradeSD_traficotms, archiveM_traficotms, d_archiveM_traficotms, d_requestHandling_traficotms, d_handlingExpiration_traficotms, d_keyConfirmationPed_traficotms, d_incrementalReception_traficotms, tande_traficotms, d_expirationInbound_traficotms, d_register_traficotms, d_updated_traficotms);
+                            insertUsingStoredProcedure(evento_traficotms, shipmentId_traficotms, countryOrigin_traficotms, sizeContainer_traficotms, valueDlls_traficotms, etaPortDischargeTwo_traficotms, AA_traficotms, yearPed_traficotms, aaPat_traficotms, customHouse_traficotms, noPed_traficotms, noPedRect1_traficotms, noPedComment1_traficotms, noPedRect2_traficotms, noPedComment2_traficotms, DocumentRecepcionDate_traficotms, enclosure_traficotms, shippingCompany_traficotms, vessel_traficotms, revalidationDate_traficotms, d_previousOrigin_traficotms, d_previousDestiny_traficotms, d_previousResult_traficotms, finalProforma_traficotms, permissionRequired_traficotms, d_sendTokens_traficotms, d_receiptPermitsProcessed_traficotms, d_PermitActivation_traficotms, d_AuthorizedPermits_traficotms, AccountwithCO_traficotms, TariffPreferenceCO_traficotms, requiresUVA_traficotms, RequiresCA_traficotms, d_receiptCA_traficotms, certificateNumberCA_traficotms, amountCA_traficotms, d_completeDocuments_traficotms, d_paidPed_traficotms, d_transportRequest_traficotms, d_modulation_traficotms, modality_traficotms, modulationResult_traficotms, d_recognition_traficotms, d_release_traficotms, originSeal_traficotms, endStamp_traficotms, d_retentionAuthority_traficotms, d_withHoldingAuthorityRelease_traficotms, OperationStatus_traficotms, reasonDelay_traficotms, comments_traficotms, arrivalNOVA_traficotms, arrivalGlobalTradeSD_traficotms, archiveM_traficotms, d_archiveM_traficotms, d_requestHandling_traficotms, d_handlingExpiration_traficotms, d_keyConfirmationPed_traficotms, d_incrementalReception_traficotms, tande_traficotms, d_expirationInbound_traficotms, d_register_traficotms);
 
                             System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms + " y número de shipment: " + shipmentId_traficotms);
                             System.out.println("----------------------------------------------------------------------------------------------------------------------------");
@@ -272,7 +422,7 @@ public class DBConnection {
     }
 
     // Método para ejecutar un insert (store procedure)
-    public void insertUsingStoredProcedure(String evento_traficotms, String shipmentId_traficotms, String countryOrigin_traficotms, String sizeContainer_traficotms, String valueDlls_traficotms, String etaPortDischargeTwo_traficotms, String AA_traficotms, String yearPed_traficotms, String aaPat_traficotms, String customHouse_traficotms, String noPed_traficotms, String noPedRect1_traficotms, String noPedComment1_traficotms, String noPedRect2_traficotms, String noPedComment2_traficotms, String DocumentRecepcionDate_traficotms, String enclosure_traficotms, String shippingCompany_traficotms, String vessel_traficotms, String revalidationDate_traficotms, String d_previousOrigin_traficotms, String d_previousDestiny_traficotms, String d_previousResult_traficotms, String finalProforma_traficotms, String permissionRequired_traficotms, String d_sendTokens_traficotms, String d_receiptPermitsProcessed_traficotms, String d_PermitActivation_traficotms, String d_AuthorizedPermits_traficotms, String AccountwithCO_traficotms, String TariffPreferenceCO_traficotms, String requiresUVA_traficotms, String RequiresCA_traficotms, String d_receiptCA_traficotms, String certificateNumberCA_traficotms, String amountCA_traficotms, String d_completeDocuments_traficotms, String d_paidPed_traficotms, String d_transportRequest_traficotms, String d_modulation_traficotms, String modality_traficotms, String modulationResult_traficotms, String d_recognition_traficotms, String d_release_traficotms, String originSeal_traficotms, String endStamp_traficotms, String d_retentionAuthority_traficotms, String d_withHoldingAuthorityRelease_traficotms, String OperationStatus_traficotms, String reasonDelay_traficotms, String comments_traficotms, String arrivalNOVA_traficotms, String arrivalGlobalTradeSD_traficotms, String archiveM_traficotms, String d_archiveM_traficotms, String d_requestHandling_traficotms, String d_handlingExpiration_traficotms, String d_keyConfirmationPed_traficotms, String d_incrementalReception_traficotms, String tande_traficotms, String d_expirationInbound_traficotms, String d_register_traficotms, String d_updated_traficotms) throws SQLException {
+    public void insertUsingStoredProcedure(String evento_traficotms, String shipmentId_traficotms, String countryOrigin_traficotms, String sizeContainer_traficotms, String valueDlls_traficotms, String etaPortDischargeTwo_traficotms, String AA_traficotms, String yearPed_traficotms, String aaPat_traficotms, String customHouse_traficotms, String noPed_traficotms, String noPedRect1_traficotms, String noPedComment1_traficotms, String noPedRect2_traficotms, String noPedComment2_traficotms, String DocumentRecepcionDate_traficotms, String enclosure_traficotms, String shippingCompany_traficotms, String vessel_traficotms, String revalidationDate_traficotms, String d_previousOrigin_traficotms, String d_previousDestiny_traficotms, String d_previousResult_traficotms, String finalProforma_traficotms, String permissionRequired_traficotms, String d_sendTokens_traficotms, String d_receiptPermitsProcessed_traficotms, String d_PermitActivation_traficotms, String d_AuthorizedPermits_traficotms, String AccountwithCO_traficotms, String TariffPreferenceCO_traficotms, String requiresUVA_traficotms, String RequiresCA_traficotms, String d_receiptCA_traficotms, String certificateNumberCA_traficotms, String amountCA_traficotms, String d_completeDocuments_traficotms, String d_paidPed_traficotms, String d_transportRequest_traficotms, String d_modulation_traficotms, String modality_traficotms, String modulationResult_traficotms, String d_recognition_traficotms, String d_release_traficotms, String originSeal_traficotms, String endStamp_traficotms, String d_retentionAuthority_traficotms, String d_withHoldingAuthorityRelease_traficotms, String OperationStatus_traficotms, String reasonDelay_traficotms, String comments_traficotms, String arrivalNOVA_traficotms, String arrivalGlobalTradeSD_traficotms, String archiveM_traficotms, String d_archiveM_traficotms, String d_requestHandling_traficotms, String d_handlingExpiration_traficotms, String d_keyConfirmationPed_traficotms, String d_incrementalReception_traficotms, String tande_traficotms, String d_expirationInbound_traficotms, String d_register_traficotms) throws SQLException {
         Connection conn = null;
         CallableStatement callableStmt = null;
 
@@ -285,7 +435,7 @@ public class DBConnection {
 
             // Construir la llamada al procedimiento con parámetros
             StringBuilder procedureCall = new StringBuilder("{call ");
-            procedureCall.append(storedProcedureName).append("(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            procedureCall.append(storedProcedureName).append("(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
             callableStmt = conn.prepareCall(procedureCall.toString());
 
@@ -352,7 +502,6 @@ public class DBConnection {
             callableStmt.setString("tande_traficotms", tande_traficotms);
             callableStmt.setString("d_expirationInbound_traficotms", d_expirationInbound_traficotms);
             callableStmt.setString("d_register_traficotms", d_register_traficotms);
-            callableStmt.setString("d_updated_traficotms", d_updated_traficotms);
             callableStmt.registerOutParameter("resultado", java.sql.Types.REF_CURSOR);
 
             // Ejecutar el procedimiento almacenado
