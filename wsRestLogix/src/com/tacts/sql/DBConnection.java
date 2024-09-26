@@ -159,7 +159,6 @@ public class DBConnection {
         String d_keyConfirmationPed_traficotms  = "";
         String d_incrementalReception_traficotms  = "";
         String d_register_traficotms  = "";
-        String d_updated_traficotms  = "";
 
         try {
 
@@ -203,10 +202,21 @@ public class DBConnection {
                         String sizeContainer_traficotms = jsonObject.getString("sizeContainer_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String valueDlls_traficotms = jsonObject.getString("valueDlls_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String AA_traficotms = jsonObject.getString("AA_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
+                       
                         String yearPed_traficotms = jsonObject.getString("yearPed_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
-                        String aaPat_traficotms = jsonObject.getString("aaPat_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String customHouse_traficotms = jsonObject.getString("customHouse_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
-                        String noPed_traficotms = jsonObject.getString("noPed_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
+                        String aaPat_traficotms = jsonObject.getString("aaPat_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
+                        String num_pedimento = jsonObject.getString("noPed_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
+                    
+                        // Asegurar que cada variable cumpla con las limitaciones de longitud
+                        yearPed_traficotms = ajustarLongitud(yearPed_traficotms, 2);
+                        customHouse_traficotms = ajustarLongitud(customHouse_traficotms, 2);
+                        aaPat_traficotms = ajustarLongitud(aaPat_traficotms, 4);
+                        num_pedimento = ajustarLongitud(num_pedimento, 7); 
+
+                        // Concatenar las variables con un espacio entre cada una  
+                        String noPed_traficotms = yearPed_traficotms + " " + customHouse_traficotms + " " + aaPat_traficotms + " " + num_pedimento;
+
                         String noPedRect1_traficotms = jsonObject.getString("noPedRect1_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String noPedComment1_traficotms = jsonObject.getString("noPedComment1_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String noPedRect2_traficotms = jsonObject.getString("noPedRect2_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
@@ -374,12 +384,6 @@ public class DBConnection {
                             LocalDate date23 = LocalDate.parse(valor23);                    // Parsear la fecha al objeto LocalDate
                             d_register_traficotms = date23.format(formatter);                   // Formatear la fecha al nuevo formato                                
                         }
-
-                       /* String valor24 = jsonObject.getString("d_updated_traficotms").replace(" ", "").replace("\"", "");
-                        if (!valor24.equals("")  & !valor24.equals("-")) {
-                            LocalDate date24 = LocalDate.parse(valor24);                    // Parsear la fecha al objeto LocalDate
-                            d_updated_traficotms = date24.format(formatter);                  // Formatear la fecha al nuevo formato                               
-                        }*/
                         
                         try {
 
@@ -540,6 +544,14 @@ public class DBConnection {
         boolean send = correo.alertaRadarWebservice("¡Error al actualizar los siguientes números de shipment id: ", objeto);
 
         return send;
+    }
+    
+    private static String ajustarLongitud(String valor, int longitud) {
+        if (valor.length() > longitud) {
+            return valor.substring(0, longitud);  // Limitar si excede
+        } else {
+            return String.format("%1$" + longitud + "s", valor).replace(' ', '0');  // Rellenar con ceros
+        }
     }
 
 }
