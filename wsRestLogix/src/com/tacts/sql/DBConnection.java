@@ -155,6 +155,9 @@ public class DBConnection {
         String d_keyConfirmationPed_traficotms  = "";
         String d_incrementalReception_traficotms  = "";
         String d_register_traficotms  = "";
+        String d_recognition_traficotms = "";
+        String d_release_traficotms = "";
+        String d_expirationInbound_traficotms = "";
 
         try {
 
@@ -230,8 +233,6 @@ public class DBConnection {
                         String amountCA_traficotms = jsonObject.getString("amountCA_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String modality_traficotms = jsonObject.getString("modality_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String modulationResult_traficotms = jsonObject.getString("modulationResult_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
-                        String d_recognition_traficotms = jsonObject.getString("d_recognition_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
-                        String d_release_traficotms = jsonObject.getString("d_release_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String originSeal_traficotms = jsonObject.getString("originSeal_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String endStamp_traficotms = jsonObject.getString("endStamp_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String d_retentionAuthority_traficotms = jsonObject.getString("d_retentionAuthority_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
@@ -241,7 +242,6 @@ public class DBConnection {
                         String comments_traficotms = jsonObject.getString("comments_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String archiveM_traficotms = jsonObject.getString("archiveM_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         String tande_traficotms = jsonObject.getString("tande_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
-                        String d_expirationInbound_traficotms = jsonObject.getString("d_expirationInbound_traficotms").replace("-", "").replace(" ", "").replace("\"", "");
                         
                         String valor1 = jsonObject.getString("etaPortDischargeTwo_traficotms").replace(" ", "").replace("\"", "");
                         if (!valor1.equals("")  & !valor1.equals("-")) {
@@ -381,8 +381,35 @@ public class DBConnection {
                             d_register_traficotms = date23.format(formatter);                   // Formatear la fecha al nuevo formato                                
                         }
                         
+                        String valor24 = jsonObject.getString("d_recognition_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor24.equals("")  & !valor24.equals("-")) {
+                            LocalDate date24 = LocalDate.parse(valor24);                    // Parsear la fecha al objeto LocalDate
+                            d_recognition_traficotms = date24.format(formatter);                   // Formatear la fecha al nuevo formato                                
+                        }
+                        
+                        String valor25 = jsonObject.getString("d_release_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor25.equals("")  & !valor25.equals("-")) {
+                            LocalDate date25 = LocalDate.parse(valor25);                    // Parsear la fecha al objeto LocalDate
+                            d_release_traficotms = date25.format(formatter);                   // Formatear la fecha al nuevo formato                                
+                        }
+                        
+                        String valor26 = jsonObject.getString("d_expirationInbound_traficotms").replace(" ", "").replace("\"", "");
+                        if (!valor26.equals("")  & !valor26.equals("-")) {
+                            LocalDate date26 = LocalDate.parse(valor26);                    // Parsear la fecha al objeto LocalDate
+                            d_expirationInbound_traficotms = date26.format(formatter);                   // Formatear la fecha al nuevo formato                                
+                        }
+                        
                         try {
 
+                            System.out.println("------------------------------------------------------------------------");
+                            
+                            System.out.println("shipmentId_traficotms: " + shipmentId_traficotms);
+                            System.out.println("RECONOCIMENTO: " + d_recognition_traficotms);
+                            System.out.println("LIBERACION: " + d_release_traficotms);
+                            System.out.println("VENCIMIENTO: " + d_expirationInbound_traficotms);
+                            
+                            System.out.println("------------------------------------------------------------------------");
+                            
                             insertUsingStoredProcedure(evento_traficotms, shipmentId_traficotms, countryOrigin_traficotms, sizeContainer_traficotms, valueDlls_traficotms, etaPortDischargeTwo_traficotms, AA_traficotms, yearPed_traficotms, aaPat_traficotms, customHouse_traficotms, noPed_traficotms, noPedRect1_traficotms, noPedComment1_traficotms, noPedRect2_traficotms, noPedComment2_traficotms, DocumentRecepcionDate_traficotms, enclosure_traficotms, shippingCompany_traficotms, vessel_traficotms, revalidationDate_traficotms, d_previousOrigin_traficotms, d_previousDestiny_traficotms, d_previousResult_traficotms, finalProforma_traficotms, permissionRequired_traficotms, d_sendTokens_traficotms, d_receiptPermitsProcessed_traficotms, d_PermitActivation_traficotms, d_AuthorizedPermits_traficotms, AccountwithCO_traficotms, TariffPreferenceCO_traficotms, requiresUVA_traficotms, RequiresCA_traficotms, d_receiptCA_traficotms, certificateNumberCA_traficotms, amountCA_traficotms, d_completeDocuments_traficotms, d_paidPed_traficotms, d_transportRequest_traficotms, d_modulation_traficotms, modality_traficotms, modulationResult_traficotms, d_recognition_traficotms, d_release_traficotms, originSeal_traficotms, endStamp_traficotms, d_retentionAuthority_traficotms, d_withHoldingAuthorityRelease_traficotms, OperationStatus_traficotms, reasonDelay_traficotms, comments_traficotms, arrivalNOVA_traficotms, arrivalGlobalTradeSD_traficotms, archiveM_traficotms, d_archiveM_traficotms, d_requestHandling_traficotms, d_handlingExpiration_traficotms, d_keyConfirmationPed_traficotms, d_incrementalReception_traficotms, tande_traficotms, d_expirationInbound_traficotms, d_register_traficotms);
 
                             System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms + " y número de shipment: " + shipmentId_traficotms);
@@ -482,8 +509,8 @@ public class DBConnection {
             callableStmt.setString("d_modulation_traficotms", d_modulation_traficotms);
             callableStmt.setString("modality_traficotms", modality_traficotms);
             callableStmt.setString("modulationResult_traficotms", modulationResult_traficotms);
-            callableStmt.setString("d_recognition_traficotms", d_recognition_traficotms);
-            callableStmt.setString("d_release_traficotms", d_release_traficotms);
+            callableStmt.setString("d_recognition_traficotms", d_recognition_traficotms);                             //FECHA RECONOCIMENTO
+            callableStmt.setString("d_release_traficotms", d_release_traficotms);                                         //FECHA LIBERACION
             callableStmt.setString("originSeal_traficotms", originSeal_traficotms);
             callableStmt.setString("endStamp_traficotms", endStamp_traficotms);
             callableStmt.setString("d_retentionAuthority_traficotms", d_retentionAuthority_traficotms);
@@ -500,7 +527,7 @@ public class DBConnection {
             callableStmt.setString("d_keyConfirmationPed_traficotms", d_keyConfirmationPed_traficotms);
             callableStmt.setString("d_incrementalReception_traficotms", d_incrementalReception_traficotms);
             callableStmt.setString("tande_traficotms", tande_traficotms);
-            callableStmt.setString("d_expirationInbound_traficotms", d_expirationInbound_traficotms);
+            callableStmt.setString("d_expirationInbound_traficotms", d_expirationInbound_traficotms);        //FECHA VENCIMIENTO
             callableStmt.setString("d_register_traficotms", d_register_traficotms);
             callableStmt.registerOutParameter("resultado", java.sql.Types.REF_CURSOR);
 
