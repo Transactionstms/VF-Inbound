@@ -76,7 +76,11 @@ public class DBConnection {
                     System.out.println("Cadena de Shipments: " + shipment_id);
 
                     // Método para consumir el servicio con el token generado y obtener json
-                    ConsumoLOGIX(shipment_id);
+                    
+                    //if(shipment_id.equals("V000183406")|shipment_id.equals("V000179661")|shipment_id.equals("V000180685")|shipment_id.equals("V000180108")|shipment_id.equals("V000183405")){
+                        ConsumoLOGIX(shipment_id);
+                    //}
+                   
                     System.out.println("N° Iteración: " + cont);
 
                 } else {
@@ -84,14 +88,6 @@ public class DBConnection {
                 }
             }
             
-            //Emisión de email para registros no procesados:
-            /*if (!data_sin_procesar.equals("")  & !valor1.equals("-")) {
-                data_sin_procesar = data_sin_procesar.substring(0, data_sin_procesar.length() - 2);
-                boolean res = sedEmail(data_sin_procesar);
-                if (res) {
-                    System.out.println("¡Lista de shipments sin información, envíada por correo!");
-                }
-            }*/
             System.out.println("shipment_id: " + shipment_id);
 
         } catch (SQLException e) {
@@ -129,7 +125,7 @@ public class DBConnection {
     public String ConsumoLOGIX(String path) throws IOException, JSONException, SQLException {
 
         // Crear un formateador para convertir la fecha al formato MM/DD/YYYY
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy ");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy ");
         
         String TokenURLP = "http://apis.grupologix.com.mx/traficotms";
         String responseLine = null;
