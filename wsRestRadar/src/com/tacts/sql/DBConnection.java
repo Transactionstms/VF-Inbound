@@ -45,26 +45,22 @@ public class DBConnection {
         System.out.println("Conexión D.B inicializada!");
     }
 
-    // Método para ejecutar una consulta (store procedure)
-    public List<String> executeStoredProcedureWithQuery(String agenteId) throws IOException, JSONException, SQLException {
+    //Método para obtener el contador de registros (store procedure)
+    public Integer InicializarContadorRadar(String agenteId) throws IOException, JSONException, SQLException {
         Connection conn = null;
         CallableStatement callableStmt = null;
-        ResultSet rs = null;
-        List<String> resultList = new ArrayList<>();
-        String shipment_id = "";
-        int cont = 0;
+        ResultSet rs = null; 
+        int numRegistros = 0;
 
         try {
             // Obtiene la conexión del pool
             conn = connectionPool.getConnection();
 
             // Preparar el procedimiento almacenado con un parámetro de entrada
-            callableStmt = conn.prepareCall("{call SP_INB_CUSTOMS_WSCONSUM_RADAR(?,?)}");
+            callableStmt = conn.prepareCall("{call SP_INB_NUM_REGISTROS_CUSTOMS_WSCONSUM_RADAR(?,?)}");
 
             // Asignar el parámetro de entrada usando índice 1
             callableStmt.setString(1, agenteId);  // Primer parámetro de entrada (pAgenteAduanal)
-
-            // Registrar el parámetro de salida como SYS_REFCURSOR (usando Types.REF_CURSOR)
             callableStmt.registerOutParameter(2, java.sql.Types.REF_CURSOR);
 
             // Ejecutar el procedimiento almacenado
@@ -72,43 +68,127 @@ public class DBConnection {
 
             // Obtener el SYS_REFCURSOR del parámetro de salida y convertirlo a ResultSet
             rs = (ResultSet) callableStmt.getObject(2);
-
+            int num = 0;
+            
             // Procesar el ResultSet (iterar sobre las filas)
             while (rs.next()) {
-                // Obtener los valores de las dos columnas
-                shipment_id += "asignaciones?idCliente=489&shipmentId=" + rs.getString(1).trim() + "&container=" + rs.getString(2).trim() + "@";
+                 num++;
+            }
+            
+            numRegistros = num;
+           System.out.println("Impresión: " + numRegistros); 
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Cerrar el ResultSet
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
-            // Se elimina el último carácter de la cadena string (si no está vacío)
-            if (!shipment_id.isEmpty()) {
-                shipment_id = shipment_id.substring(0, shipment_id.length() - 1);
-
-                System.out.println("Cadena de Shipments: " + shipment_id);
-
-                // Dividir la cadena en un array usando split() si no está vacío
-                String[] arrayValores = shipment_id.split("@");
-
-                // Iterar sobre el array de valores
-                for (String path : arrayValores) {
-                    cont++;
-
-                    // Método para consumir el servicio con el token generado y obtener json
-                    ConsumoRADAR(path);
-                    System.out.println("N° Iteración: " + cont);
+            // Cerrar el CallableStatement y devolver la conexión al pool
+            if (callableStmt != null) {
+                try {
+                    callableStmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } else {
-                System.out.println("No hay valores para procesar.");
             }
 
-            //Emisión de email para registros no procesados:
-            /*if (!data_sin_procesar.equals("")) {
-                data_sin_procesar = data_sin_procesar.substring(0, data_sin_procesar.length() - 2);
-                boolean res = sedEmail(data_sin_procesar);
-                if (res) {
-                    System.out.println("¡Lista de shipments sin información, envíada por correo!");
-                }
-            }*/
+            // Liberar la conexión al pool
+            if (conn != null) {
+                connectionPool.releaseConnection(conn);
+            }
+        }
 
+        //Impresión de contador total de registros:
+        System.out.println("Total de registros a actualizar (Agente Aduanal - RADAR): " + numRegistros);
+        
+        // Retornar la lista de resultados concatenados
+        return numRegistros;
+    }
+    
+    // Método para ejecutar una consulta (store procedure)
+    public List<String> executeStoredProcedureWithQuery(String agenteId) throws IOException, JSONException, SQLException {
+
+        Connection conn = null;
+        CallableStatement callableStmt = null;
+        ResultSet rs = null;
+        List<String> resultList = new ArrayList<>();
+        String shipment_id = "";
+        int cont = 0;
+
+        //Consultar el número total de registros:
+        int numCustoms = InicializarContadorRadar(agenteId);
+
+        //Se iguala valor obtenido del método para inicializar el conteo del lote
+        int numContCustoms = numCustoms;
+
+        // Define el paso que se desea  (marcapasos)
+        int paso = 1000;
+
+        try {
+            // Obtiene la conexión del pool
+            conn = connectionPool.getConnection();
+
+            // Iterar datos por lotes
+            for (int i = 1; i <= numContCustoms; i += paso) {
+
+                int offset = i;                // 1
+                int next = i + paso - 1; // 1000....
+
+                // Preparar el procedimiento almacenado con un parámetro de entrada
+                callableStmt = conn.prepareCall("{call SP_INB_CUSTOMS_WSCONSUM_RADAR(?,?,?,?)}");
+
+                // Asignar el parámetro de entrada usando índice 1
+                callableStmt.setString(1, agenteId);   // Primer parámetro de entrada (pAgenteAduanal)
+                callableStmt.setInt(2, offset);            // Inicio del lote
+                callableStmt.setInt(3, next);              // Fin del lote
+                callableStmt.registerOutParameter(4, java.sql.Types.REF_CURSOR);
+
+                // Ejecutar el procedimiento almacenado
+                callableStmt.execute();
+
+                // Obtener el SYS_REFCURSOR del parámetro de salida y convertirlo a ResultSet
+                rs = (ResultSet) callableStmt.getObject(4);
+
+                // Procesar el ResultSet (iterar sobre las filas)
+                while (rs.next()) {
+                    // Obtener los valores de las dos columnas
+                    shipment_id += "asignaciones?idCliente=489&shipmentId=" + rs.getString(1).trim() + "&container=" + rs.getString(2).trim() + "@";
+                }
+                
+                //shipment_id += "asignaciones?idCliente=489&shipmentId=V000200214&container=MRKU3702410@";
+
+                // Se elimina el último carácter de la cadena string (si no está vacío)
+                if (!shipment_id.isEmpty()) {
+                    shipment_id = shipment_id.substring(0, shipment_id.length() - 1);
+
+                    System.out.println("Cadena de Shipments: " + shipment_id);
+
+                    // Dividir la cadena en un array usando split() si no está vacío
+                    String[] arrayValores = shipment_id.split("@");
+
+                    // Iterar sobre el array de valores
+                    for (String path : arrayValores) {
+                        cont++;
+
+                        // Método para consumir el servicio con el token generado y obtener json
+                        ConsumoRADAR(path);
+                        System.out.println("N° Iteración: " + cont);
+                    }
+
+                } else {
+                    System.out.println("No hay valores para procesar.");
+                }
+                
+                System.out.println("Posición de Lote:  " + next);
+            }
+            
             System.out.println("shipment_id: " + shipment_id);
 
         } catch (SQLException e) {
@@ -447,6 +527,7 @@ public class DBConnection {
         }
     }
 
+    //Método para emisión de correo
     public boolean sedEmail(String objeto) throws IOException, SQLException {
         //Emisión de email - Log de errores
         Email correo = new Email();

@@ -401,15 +401,6 @@ public class DBConnection {
                         
                         try {
 
-                            System.out.println("------------------------------------------------------------------------");
-                            
-                            System.out.println("shipmentId_traficotms: " + shipmentId_traficotms);
-                            System.out.println("RECONOCIMENTO: " + d_recognition_traficotms);
-                            System.out.println("LIBERACION: " + d_release_traficotms);
-                            System.out.println("VENCIMIENTO: " + d_expirationInbound_traficotms);
-                            
-                            System.out.println("------------------------------------------------------------------------");
-                            
                             insertUsingStoredProcedure(evento_traficotms, shipmentId_traficotms, countryOrigin_traficotms, sizeContainer_traficotms, valueDlls_traficotms, etaPortDischargeTwo_traficotms, AA_traficotms, yearPed_traficotms, aaPat_traficotms, customHouse_traficotms, noPed_traficotms, noPedRect1_traficotms, noPedComment1_traficotms, noPedRect2_traficotms, noPedComment2_traficotms, DocumentRecepcionDate_traficotms, enclosure_traficotms, shippingCompany_traficotms, vessel_traficotms, revalidationDate_traficotms, d_previousOrigin_traficotms, d_previousDestiny_traficotms, d_previousResult_traficotms, finalProforma_traficotms, permissionRequired_traficotms, d_sendTokens_traficotms, d_receiptPermitsProcessed_traficotms, d_PermitActivation_traficotms, d_AuthorizedPermits_traficotms, AccountwithCO_traficotms, TariffPreferenceCO_traficotms, requiresUVA_traficotms, RequiresCA_traficotms, d_receiptCA_traficotms, certificateNumberCA_traficotms, amountCA_traficotms, d_completeDocuments_traficotms, d_paidPed_traficotms, d_transportRequest_traficotms, d_modulation_traficotms, modality_traficotms, modulationResult_traficotms, d_recognition_traficotms, d_release_traficotms, originSeal_traficotms, endStamp_traficotms, d_retentionAuthority_traficotms, d_withHoldingAuthorityRelease_traficotms, OperationStatus_traficotms, reasonDelay_traficotms, comments_traficotms, arrivalNOVA_traficotms, arrivalGlobalTradeSD_traficotms, archiveM_traficotms, d_archiveM_traficotms, d_requestHandling_traficotms, d_handlingExpiration_traficotms, d_keyConfirmationPed_traficotms, d_incrementalReception_traficotms, tande_traficotms, d_expirationInbound_traficotms, d_register_traficotms);
 
                             System.out.println("(TRA_INB_CUSTOMS) Se actualizó en sistema, el siguiente número de evento: " + evento_traficotms + " y número de shipment: " + shipmentId_traficotms);

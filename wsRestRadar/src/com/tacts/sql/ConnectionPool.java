@@ -17,7 +17,7 @@ import java.util.Queue;
 
 public class ConnectionPool {
 
-    private static final int MAX_CONNECTIONS = 5; // Número máximo de conexiones en el pool
+    private static final int MAX_CONNECTIONS = 8; // Número máximo de conexiones en el pool
     private static final String DB_URL = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125"; // Cambia a la URL de tu base de datos
     private static final String DB_USER = "VANS39TEST";
     private static final String DB_PASSWORD = "XUKidn49N875RBH54Cq2";
