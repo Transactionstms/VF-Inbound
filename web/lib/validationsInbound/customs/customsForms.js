@@ -570,11 +570,17 @@ async function AddPullCustoms() {
         if (estatus_operacion === "19") {
             // Convertir fecha_liberacion y asignar a una variable separada
             var fechaConvertidaLiberacion = convertirFechaLiberacion(fecha_liberacion);
+ 
+           console.log("fechaConvertidaLiberacion: " + fechaConvertidaLiberacion);
 
             // Asegurarse de que la fechaConvertidaLiberacion sea válida antes de continuar
+            //Feb/28/24
             if (fechaConvertidaLiberacion) {
                 var f1 = new Date(fechaConvertidaLiberacion);
                 var f2 = new Date(fechaActual);
+                
+                console.log("Fecha Liberación 1: " + f1);             
+                console.log("Fecha Liberación 2: " + f2);
 
                 if (f1 > f2) {
                     fechaMayorActual = "";
