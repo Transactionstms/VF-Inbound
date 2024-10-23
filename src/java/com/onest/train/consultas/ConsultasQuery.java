@@ -3355,6 +3355,11 @@ public class ConsultasQuery {
           return sql;
     }
     
+    public String consultarIdPod(){
+          sql = "SELECT MAX(ID_POD)+1 FROM TRA_INB_POD_PASO WHERE STATUS = 1";
+          return sql;
+    }
+    
     public String consultarDataBacheoInicial(String AgentType){
         
             sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "

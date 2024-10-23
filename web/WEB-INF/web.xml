@@ -1034,6 +1034,14 @@
         <servlet-name>ModEmbarque</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.ModEmbarque</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AutocompletePOD</servlet-name>
+        <servlet-class>com.onest.train.consultas.AutocompletePOD</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertarPOD</servlet-name>
+        <servlet-class>com.onest.train.insertar.catalogos.InsertarPOD</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2062,6 +2070,14 @@
     <servlet-mapping>
         <servlet-name>ModEmbarque</servlet-name>
         <url-pattern>/ModEmbarque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AutocompletePOD</servlet-name>
+        <url-pattern>/AutocompletePOD</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertarPOD</servlet-name>
+        <url-pattern>/InsertarPOD</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
