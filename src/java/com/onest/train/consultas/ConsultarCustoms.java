@@ -48,6 +48,10 @@ public class ConsultarCustoms extends HttpServlet {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy");
             String dateDay = formato.format(date);
 
+            
+            
+           
+              
             String columna_referenciaAA = request.getParameter("columna_referenciaAA").trim();
             String columna_evento = request.getParameter("columna_evento").trim();
             String columna_responsable = request.getParameter("columna_responsable").trim();
@@ -2089,7 +2093,7 @@ public class ConsultarCustoms extends HttpServlet {
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_doc_completos[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_doc_completos'," + cont + ")\" ondblclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[62] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_pago_pedimento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_pago_pedimento'," + cont + ")\" ondblclick=\"show_fecha_pago_pedimento(" + cont + ")\" onpaste=\"handlePasteFechaPagoPedimento(event," + cont + ")\">" + row[63] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_solicitud_transporte[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicitud_transporte'," + cont + ")\" ondblclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[64] + "</td> "
-                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion(" + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
+                                + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion('" + row[65] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
                                 + " <td contenteditable=\"true\" id=\"modalidad[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'modalidad'," + cont + ")\" ondblclick=\"show_modalidad(" + cont + ")\" onpaste=\"handlePasteText(event)\">" + row[66] + "</td> "
                                 + " <td contenteditable=\"true\" id=\"resultado_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'resultado_modulacion'," + cont + ")\" ondblclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\" onpaste=\"handlePasteText(event)\">" + row[67] + "</td> "
                                 + " <td contenteditable=\"true\" oninput=\"formatoFecha(event)\" id=\"fecha_reconocimiento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_reconocimiento'," + cont + ")\" ondblclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[68] + "</td> "
