@@ -16,6 +16,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import json.JSONArray;
@@ -155,11 +157,12 @@ public class DBConnection {
 
                 // Obtener el SYS_REFCURSOR del parámetro de salida y convertirlo a ResultSet
                 rs = (ResultSet) callableStmt.getObject(4);
-
+                System.out.println("aqui1");
                 // Procesar el ResultSet (iterar sobre las filas)
                 while (rs.next()) {
                     // Obtener los valores de las dos columnas
                     shipment_id += "asignaciones?idCliente=489&shipmentId=" + rs.getString(1).trim() + "&container=" + rs.getString(2).trim() + "@";
+                    System.out.println("shipment_id"+shipment_id);
                 }
                 
                 //shipment_id += "asignaciones?idCliente=489&shipmentId=V000200214&container=MRKU3702410@";
@@ -226,6 +229,7 @@ public class DBConnection {
     public String ConsumoRADAR(String path) throws IOException, JSONException, SQLException {
 
         String tokenURL = "https://uat-sco.radarholding.com:51012/ws/" + path;
+        System.out.println("tokenURL"+tokenURL);
         String token = getToken();
         String name = "";
 
@@ -275,56 +279,83 @@ public class DBConnection {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                     // Procesar cada objeto JSON
-                                    String referenciaAA = jsonObject.getString("referenciaAA").replace("null", "");
-                                    String shipmentId = jsonObject.getString("shipmentId").replace("null", "");
-                                    String pais_origen = jsonObject.getString("paisOrigen").replace("null", "");
-                                    String size_container = jsonObject.getString("sizeContainer").replace("null", "");
-                                    String valor_usd = jsonObject.getString("valorUSD").replace("null", "");
-                                    String agente_aduanal = jsonObject.getString("agenteAduanalNombre").replace("null", "");
-                                    String pedimento_a1 = jsonObject.getString("pedimentoA1").replace("null", "");
-                                    String pedimento_r1_1er = jsonObject.getString("pedimentoR1").replace("null", "");
-                                    String motivo_rectificacion_1er = jsonObject.getString("motivoR1").replace("null", "");
-                                    String pedimento_r1_2do = jsonObject.getString("pedimentoR2").replace("null", "");
-                                    String motivo_rectificacion_2do = jsonObject.getString("motivoR2").replace("null", "");
-                                    String fecha_recepcion_doc = jsonObject.getString("fechaRecepcionDocumentos").replace("null", "");
-                                    String recinto = jsonObject.getString("recinto").replace("null", "");
-                                    String naviera = jsonObject.getString("navieraForwarder").replace("null", "");
-                                    String buque = jsonObject.getString("buque").replace("null", "");
-                                    String fecha_revalidacion = jsonObject.getString("fechaRevalidacionLiberacionBL").replace("null", "");
-                                    String fecha_previo_origen = jsonObject.getString("fechaPrevioOrigen").replace("null", "");
-                                    String fecha_eta_port_discharge = jsonObject.getString("fechaEntrada").replace("null", "");
-                                    String fecha_previo_destino = jsonObject.getString("fechaPrevioEnDestino").replace("null", "");
-                                    String fecha_resultado_previo = jsonObject.getString("fechaResultadoPrevio").replace("null", "");
-                                    String proforma_final = jsonObject.getString("proformaFinal").replace("null", "");
-                                    String permiso = jsonObject.getString("requierePermiso").replace("null", "");
-                                    String fecha_envio = jsonObject.getString("fechaEnvioFichasNotas").replace("null", "");
-                                    String fecha_recepcion_perm = jsonObject.getString("fechaRecepcionPermisosTramitados").replace("null", "");
-                                    String fecha_activacion_perm = jsonObject.getString("fechaActivacionPermisos").replace("null", "");
-                                    String fecha_permisos_aut = jsonObject.getString("fechaPermisosAutorizados").replace("null", "");
-                                    String co_pref_arancelaria = jsonObject.getString("cuentaConCOParaAplicarPreferenciaArancelaria").replace("null", "");
-                                    String aplic_pref_arancelaria = jsonObject.getString("aplicoPreferenciaArancelariaCORazon").replace("null", "");
-                                    String req_uva = jsonObject.getString("requiereUVA").replace("null", "");
-                                    String req_ca = jsonObject.getString("requiereCA").replace("null", "");
-                                    String fecha_recepcion_ca = jsonObject.getString("fechaRecepcionCA").replace("null", "");
-                                    String num_constancia_ca = jsonObject.getString("numeroDeConstanciaCA").replace("null", "");
-                                    String monto_ca = jsonObject.getString("montoCA").replace("null", "");
-                                    String fecha_doc_completos = jsonObject.getString("fechaDocumentosCompletos").replace("null", "");
-                                    String fecha_pago_pedimento = jsonObject.getString("fechaPagoPedimento").replace("null", "");
-                                    String fecha_solicitud_transporte = jsonObject.getString("fechaSolicitudDeTransporte").replace("null", "");
-                                    String fecha_modulacion = jsonObject.getString("fechaModulacion").replace("null", "");
-                                    String modalidad = jsonObject.getString("modalidadCamionTren").replace("null", "");
-                                    String resultado_modulacion = jsonObject.getString("resultadoModulacionVerdeRojo").replace("null", "");
-                                    String fecha_reconocimiento = jsonObject.getString("fechaReconocimiento").replace("null", "");
-                                    String fecha_liberacion = jsonObject.getString("fechaLiberacion").replace("null", "");
-                                    String sello_origen = jsonObject.getString("selloOrigen").replace("null", "");
-                                    String sello_final = jsonObject.getString("selloFinal").replace("null", "");
-                                    String fecha_retencion_aut = jsonObject.getString("fechaDeRetencionPorLaAutoridad").replace("null", "");
-                                    String fecha_liberacion_aut = jsonObject.getString("fechaDeLiberacionPorRetencionDeLaAutoridad").replace("null", "");
-                                    String estatus_operacion = jsonObject.getString("estatusDeLaOperacion").replace("null", "");
-                                    String motivo_atraso = jsonObject.getString("motivoAtraso").replace("null", "");
-                                    String observaciones = jsonObject.getString("observaciones").replace("null", "");
-                                    String containerId = jsonObject.getString("container").replace("null", "");
-
+                                    String referenciaAA = jsonObject.getString("referenciaAA");
+                                    String shipmentId = jsonObject.getString("shipmentId");
+                                    String pais_origen = jsonObject.getString("paisOrigen");
+                                    String size_container = jsonObject.getString("sizeContainer");
+                                    String valor_usd = jsonObject.getString("valorUSD");
+                                    String agente_aduanal = jsonObject.getString("agenteAduanalNombre");
+                                    String pedimento_a1 = jsonObject.getString("pedimentoA1");
+                                    String pedimento_r1_1er = jsonObject.getString("pedimentoR1");
+                                    String motivo_rectificacion_1er = jsonObject.getString("motivoR1");
+                                    String pedimento_r1_2do = jsonObject.getString("pedimentoR2");
+                                    String motivo_rectificacion_2do = jsonObject.getString("motivoR2");
+                                    String recinto = jsonObject.getString("recinto");
+                                    String naviera = jsonObject.getString("navieraForwarder");
+                                    String buque = jsonObject.getString("buque"); 
+                                    String permiso = jsonObject.getString("requierePermiso"); 
+                                    String co_pref_arancelaria = jsonObject.getString("cuentaConCOParaAplicarPreferenciaArancelaria");
+                                    String aplic_pref_arancelaria = jsonObject.getString("aplicoPreferenciaArancelariaCORazon");
+                                    String req_uva = jsonObject.getString("requiereUVA");
+                                    String req_ca = jsonObject.getString("requiereCA"); 
+                                    String num_constancia_ca = jsonObject.getString("numeroDeConstanciaCA");
+                                    String monto_ca = jsonObject.getString("montoCA"); 
+                                    String modalidad = jsonObject.getString("modalidadCamionTren");
+                                    String resultado_modulacion = jsonObject.getString("resultadoModulacionVerdeRojo"); 
+                                    String sello_origen = jsonObject.getString("selloOrigen");
+                                    String sello_final = jsonObject.getString("selloFinal"); 
+                                    String estatus_operacion = jsonObject.getString("estatusDeLaOperacion");
+                                    String motivo_atraso = jsonObject.getString("motivoAtraso");
+                                    String observaciones = jsonObject.getString("observaciones");
+                                    String containerId = jsonObject.getString("container");
+                                    
+                                    
+                                    
+                                    String fecha_recepcion_doc = jsonObject.getString("fechaRecepcionDocumentos");
+                                    String fecha_revalidacion = jsonObject.getString("fechaRevalidacionLiberacionBL");
+                                    String fecha_previo_origen = jsonObject.getString("fechaPrevioOrigen");
+                                    String fecha_previo_destino = jsonObject.getString("fechaPrevioEnDestino");
+                                    String fecha_resultado_previo = jsonObject.getString("fechaResultadoPrevio");
+                                    String proforma_final = jsonObject.getString("proformaFinal");
+                                    String fecha_envio = jsonObject.getString("fechaEnvioFichasNotas");
+                                    String fecha_recepcion_perm = jsonObject.getString("fechaRecepcionPermisosTramitados");
+                                    String fecha_activacion_perm = jsonObject.getString("fechaActivacionPermisos");
+                                    String fecha_permisos_aut = jsonObject.getString("fechaPermisosAutorizados");
+                                    String fecha_recepcion_ca = jsonObject.getString("fechaRecepcionCA");
+                                    String fecha_doc_completos = jsonObject.getString("fechaDocumentosCompletos");
+                                    String fecha_pago_pedimento = jsonObject.getString("fechaPagoPedimento");
+                                    String fecha_solicitud_transporte = jsonObject.getString("fechaSolicitudDeTransporte");
+                                    String fecha_modulacion = jsonObject.getString("fechaModulacion");
+                                    String fecha_reconocimiento = jsonObject.getString("fechaReconocimiento");
+                                    String fecha_liberacion = jsonObject.getString("fechaLiberacion");
+                                    String fecha_retencion_aut = jsonObject.getString("fechaDeRetencionPorLaAutoridad");
+                                    String fecha_liberacion_aut = jsonObject.getString("fechaDeLiberacionPorRetencionDeLaAutoridad");
+                                    String fecha_eta_port_discharge = jsonObject.getString("fechaEntrada");
+                                  
+                                    
+        fecha_recepcion_doc = validateDate(fecha_recepcion_doc, "fecha_recepcion_doc");
+        fecha_revalidacion = validateDate(fecha_revalidacion, "fecha_revalidacion");
+        fecha_previo_origen = validateDate(fecha_previo_origen, "fecha_previo_origen");
+        fecha_previo_destino = validateDate(fecha_previo_destino, "fecha_previo_destino");
+        fecha_resultado_previo = validateDate(fecha_resultado_previo, "fecha_resultado_previo");
+        proforma_final = validateDate(proforma_final, "proforma_final");
+        fecha_envio = validateDate(fecha_envio, "fecha_envio");
+        fecha_recepcion_perm = validateDate(fecha_recepcion_perm, "fecha_recepcion_perm");
+        fecha_activacion_perm = validateDate(fecha_activacion_perm, "fecha_activacion_perm");
+        fecha_permisos_aut = validateDate(fecha_permisos_aut, "fecha_permisos_aut");
+        fecha_recepcion_ca = validateDate(fecha_recepcion_ca, "fecha_recepcion_ca");
+        fecha_doc_completos = validateDate(fecha_doc_completos, "fecha_doc_completos");
+        fecha_pago_pedimento = validateDate(fecha_pago_pedimento, "fecha_pago_pedimento");
+        fecha_solicitud_transporte = validateDate(fecha_solicitud_transporte, "fecha_solicitud_transporte");
+        fecha_modulacion = validateDate(fecha_modulacion, "fecha_modulacion");
+        fecha_reconocimiento = validateDate(fecha_reconocimiento, "fecha_reconocimiento");
+        fecha_liberacion = validateDate(fecha_liberacion, "fecha_liberacion");
+        fecha_retencion_aut = validateDate(fecha_retencion_aut, "fecha_retencion_aut");
+        fecha_liberacion_aut = validateDate(fecha_liberacion_aut, "fecha_liberacion_aut");
+        fecha_eta_port_discharge=validateDate(fecha_eta_port_discharge, "fecha_eta_port_discharge");
+    
+                                    
+                                    
                                     //Enviar data a método que procesa el store procedure
                                     insertUsingStoredProcedure(referenciaAA, shipmentId, pais_origen, size_container, valor_usd, agente_aduanal, pedimento_a1, pedimento_r1_1er, motivo_rectificacion_1er, pedimento_r1_2do, motivo_rectificacion_2do, fecha_recepcion_doc, recinto, naviera, buque, fecha_revalidacion, fecha_previo_origen, fecha_eta_port_discharge, fecha_previo_destino, fecha_resultado_previo, proforma_final, permiso, fecha_envio, fecha_recepcion_perm, fecha_activacion_perm, fecha_permisos_aut, co_pref_arancelaria, aplic_pref_arancelaria, req_uva, req_ca, fecha_recepcion_ca, num_constancia_ca, monto_ca, fecha_doc_completos, fecha_pago_pedimento, fecha_solicitud_transporte, fecha_modulacion, modalidad, resultado_modulacion, fecha_reconocimiento, fecha_liberacion, sello_origen, sello_final, fecha_retencion_aut, fecha_liberacion_aut, estatus_operacion, motivo_atraso, observaciones, containerId);
 
@@ -362,6 +393,16 @@ public class DBConnection {
         return name;
     }
 
+    
+     private static String validateDate(String date, String dateName) {
+        if (date != null && !date.equalsIgnoreCase("null") && !date.equals("") && !date.equals("-")) {
+            System.out.println(dateName + ": " + date);
+            return date;
+        } else {
+            System.err.println(dateName + " is invalid: " + date);
+            return null;
+        }
+    }
     // Método para ejecutar un insert (store procedure)
     public void insertUsingStoredProcedure(String referenciaAA, String shipmentId, String pais_origen, String size_container, String valor_usd, String agente_aduanal, String pedimento_a1, String pedimento_r1_1er, String motivo_rectificacion_1er, String pedimento_r1_2do, String motivo_rectificacion_2do, String fecha_recepcion_doc, String recinto, String naviera, String buque, String fecha_revalidacion, String fecha_previo_origen, String fecha_eta_port_discharge, String fecha_previo_destino, String fecha_resultado_previo, String proforma_final, String permiso, String fecha_envio, String fecha_recepcion_perm, String fecha_activacion_perm, String fecha_permisos_aut, String co_pref_arancelaria, String aplic_pref_arancelaria, String req_uva, String req_ca, String fecha_recepcion_ca, String num_constancia_ca, String monto_ca, String fecha_doc_completos, String fecha_pago_pedimento, String fecha_solicitud_transporte, String fecha_modulacion, String modalidad, String resultado_modulacion, String fecha_reconocimiento, String fecha_liberacion, String sello_origen, String sello_final, String fecha_retencion_aut, String fecha_liberacion_aut, String estatus_operacion, String motivo_atraso, String observaciones, String containerId) throws SQLException {
         Connection conn = null;
@@ -381,55 +422,55 @@ public class DBConnection {
             callableStmt = conn.prepareCall(procedureCall.toString());
 
             // Asignar los valores de los parámetros al procedimiento almacenado
-            callableStmt.setString("referenciaAA", referenciaAA);
-            callableStmt.setString("shipmentId", shipmentId);
-            callableStmt.setString("pais_origen", pais_origen);
-            callableStmt.setString("size_container", size_container);
-            callableStmt.setString("valor_usd", valor_usd);
-            callableStmt.setString("agente_aduanal", agente_aduanal);
-            callableStmt.setString("pedimento_a1", pedimento_a1);
-            callableStmt.setString("pedimento_r1_1er", pedimento_r1_1er);
-            callableStmt.setString("motivo_rectificacion_1er", motivo_rectificacion_1er);
-            callableStmt.setString("pedimento_r1_2do", pedimento_r1_2do);
-            callableStmt.setString("motivo_rectificacion_2do", motivo_rectificacion_2do);
-            callableStmt.setString("fecha_recepcion_doc", fecha_recepcion_doc);
-            callableStmt.setString("recinto", recinto);
-            callableStmt.setString("naviera", naviera);
-            callableStmt.setString("buque", buque);
-            callableStmt.setString("fecha_revalidacion", fecha_revalidacion);
-            callableStmt.setString("fecha_previo_origen", fecha_previo_origen);
-            callableStmt.setString("fecha_eta_port_discharge", fecha_eta_port_discharge);
-            callableStmt.setString("fecha_previo_destino", fecha_previo_destino);
-            callableStmt.setString("fecha_resultado_previo", fecha_resultado_previo);
-            callableStmt.setString("proforma_final", proforma_final);
-            callableStmt.setString("permiso", permiso);
-            callableStmt.setString("fecha_envio", fecha_envio);
-            callableStmt.setString("fecha_recepcion_perm", fecha_recepcion_perm);
-            callableStmt.setString("fecha_activacion_perm", fecha_activacion_perm);
-            callableStmt.setString("fecha_permisos_aut", fecha_permisos_aut);
-            callableStmt.setString("co_pref_arancelaria", co_pref_arancelaria);
-            callableStmt.setString("aplic_pref_arancelaria", aplic_pref_arancelaria);
-            callableStmt.setString("req_uva", req_uva);
-            callableStmt.setString("req_ca", req_ca);
-            callableStmt.setString("fecha_recepcion_ca", fecha_recepcion_ca);
-            callableStmt.setString("num_constancia_ca", num_constancia_ca);
-            callableStmt.setString("monto_ca", monto_ca);
-            callableStmt.setString("fecha_doc_completos", fecha_doc_completos);
-            callableStmt.setString("fecha_pago_pedimento", fecha_pago_pedimento);
-            callableStmt.setString("fecha_solicitud_transporte", fecha_solicitud_transporte);
-            callableStmt.setString("fecha_modulacion", fecha_modulacion);
-            callableStmt.setString("modalidad", modalidad);
-            callableStmt.setString("resultado_modulacion", resultado_modulacion);
-            callableStmt.setString("fecha_reconocimiento", fecha_reconocimiento);
-            callableStmt.setString("fecha_liberacion", fecha_liberacion);
-            callableStmt.setString("sello_origen", sello_origen);
-            callableStmt.setString("sello_final", sello_final);
-            callableStmt.setString("fecha_retencion_aut", fecha_retencion_aut);
-            callableStmt.setString("fecha_liberacion_aut", fecha_liberacion_aut);
-            callableStmt.setString("estatus_operacion", estatus_operacion);
-            callableStmt.setString("motivo_atraso", motivo_atraso);
-            callableStmt.setString("observaciones", observaciones);
-            callableStmt.setString("containerId", containerId);
+            callableStmt.setString("preferenciaAA", referenciaAA);
+            callableStmt.setString("pshipmentId", shipmentId);
+            callableStmt.setString("ppais_origen", pais_origen);
+            callableStmt.setString("psize_container", size_container);
+            callableStmt.setString("pvalor_usd", valor_usd);
+            callableStmt.setString("pagente_aduanal", agente_aduanal);
+            callableStmt.setString("ppedimento_a1", pedimento_a1);
+            callableStmt.setString("ppedimento_r1_1er", pedimento_r1_1er);
+            callableStmt.setString("pmotivo_rectificacion_1er", motivo_rectificacion_1er);
+            callableStmt.setString("ppedimento_r1_2do", pedimento_r1_2do);
+            callableStmt.setString("pmotivo_rectificacion_2do", motivo_rectificacion_2do);
+            callableStmt.setString("pfecha_recepcion_doc", fecha_recepcion_doc);
+            callableStmt.setString("precinto", recinto);
+            callableStmt.setString("pnaviera", naviera);
+            callableStmt.setString("pbuque", buque);
+            callableStmt.setString("pfecha_revalidacion", fecha_revalidacion);
+            callableStmt.setString("pfecha_previo_origen", fecha_previo_origen);
+            callableStmt.setString("pfecha_eta_port_discharge", fecha_eta_port_discharge);
+            callableStmt.setString("pfecha_previo_destino", fecha_previo_destino);
+            callableStmt.setString("pfecha_resultado_previo", fecha_resultado_previo);
+            callableStmt.setString("pproforma_final", proforma_final);
+            callableStmt.setString("ppermiso", permiso);
+            callableStmt.setString("pfecha_envio", fecha_envio);
+            callableStmt.setString("pfecha_recepcion_perm", fecha_recepcion_perm);
+            callableStmt.setString("pfecha_activacion_perm", fecha_activacion_perm);
+            callableStmt.setString("pfecha_permisos_aut", fecha_permisos_aut);
+            callableStmt.setString("pco_pref_arancelaria", co_pref_arancelaria);
+            callableStmt.setString("paplic_pref_arancelaria", aplic_pref_arancelaria);
+            callableStmt.setString("preq_uva", req_uva);
+            callableStmt.setString("preq_ca", req_ca);
+            callableStmt.setString("pfecha_recepcion_ca", fecha_recepcion_ca);
+            callableStmt.setString("pnum_constancia_ca", num_constancia_ca);
+            callableStmt.setString("pmonto_ca", monto_ca);
+            callableStmt.setString("pfecha_doc_completos", fecha_doc_completos);
+            callableStmt.setString("pfecha_pago_pedimento", fecha_pago_pedimento);
+            callableStmt.setString("pfecha_solicitud_transporte", fecha_solicitud_transporte);
+            callableStmt.setString("pfecha_modulacion", fecha_modulacion);
+            callableStmt.setString("pmodalidad", modalidad);
+            callableStmt.setString("presultado_modulacion", resultado_modulacion);
+            callableStmt.setString("pfecha_reconocimiento", fecha_reconocimiento);
+            callableStmt.setString("pfecha_liberacion", fecha_liberacion);
+            callableStmt.setString("psello_origen", sello_origen);
+            callableStmt.setString("psello_final", sello_final);
+            callableStmt.setString("pfecha_retencion_aut", fecha_retencion_aut);
+            callableStmt.setString("pfecha_liberacion_aut", fecha_liberacion_aut);
+            callableStmt.setString("pestatus_operacion", estatus_operacion);
+            callableStmt.setString("pmotivo_atraso", motivo_atraso);
+            callableStmt.setString("pobservaciones", observaciones);
+            callableStmt.setString("pcontainerId", containerId);
             callableStmt.registerOutParameter("resultado", java.sql.Types.REF_CURSOR);
 
             // Ejecutar el procedimiento almacenado
@@ -502,7 +543,7 @@ public class DBConnection {
                     // Procesar el JSON de la respuesta
                     JSONObject jsonResponse = new JSONObject(responseBody);
                     JSONObject jsonData = jsonResponse.getJSONObject("data");
-                    return jsonData.getString("token").replace("null", "");
+                    return jsonData.getString("token");
                 } else {
                     // Si no es 200 OK, imprimir más detalles
                     System.err.println("Error al obtener el token: HTTP " + statusCode);
