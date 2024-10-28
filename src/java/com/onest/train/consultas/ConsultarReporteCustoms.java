@@ -1042,7 +1042,14 @@ public class ConsultarReporteCustoms extends HttpServlet {
             }
 
         /*  ----------------------------- DATA/CONSULTA DE TABLA  -----------------------------  */    
-            
+              String filtros1 = request.getParameter("f1");
+              String filtros2 = request.getParameter("f2");
+              String filtro=" ";
+              if(filtros1.equals("1")){
+                   filtro += " AND TIP1.AGENTE_ADUANAL_ID IN (" + filtros2 + ") ";
+              }
+              
+              
             sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
                 + " SELECT DISTINCT "
                     /*1*/ + " TIE.ID_EVENTO, "
@@ -1056,10 +1063,10 @@ public class ConsultarReporteCustoms extends HttpServlet {
                     /*9*/ + " GTN.LOAD_TYPE_FINAL, "
                     /*10*/ + " SQ.SUMA, "
                     /*11*/ + " TIP1.NOMBRE_POD, "
-                    /*12*/ + " REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY'),' '), '01/01/1970', ' '), "
-                    /*13*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY'),' '), '01/01/1970', ' '), "
+                    /*12*/ + " REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'MON/DD/YY'),' '), '01/01/1970', ' '), "
+                    /*13*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MON/DD/YY'),' '), '01/01/1970', ' '), "
                     /*14*/ + " NVL(GTN.MAX_FLETE, 0) AS EST_ETA_DC, "
-                    /*15*/ + " REPLACE(NVL(TO_CHAR(GTN.FECHA_CAPTURA, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*15*/ + " REPLACE(NVL(TO_CHAR(GTN.FECHA_CAPTURA, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*16*/ + " TIP2.NOMBRE_POL, "
                     /*17*/ + " NVL(TAA.AGENTE_ADUANAL_NOMBRE, ' ') AS AGENTE_ADUANAL, "
                     /*18*/ + " GTN.PLANTILLA_ID, "
@@ -1067,76 +1074,76 @@ public class ConsultarReporteCustoms extends HttpServlet {
                     /*20*/ + " TIP1.NOMBRE_POD, "
                     /*21*/ + " TIP2.NOMBRE_POL, "
                     /*22*/ + " TIBD.NOMBRE_BD, "
-                    /*23*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PLUS2, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*24*/ + " REPLACE(NVL(TO_CHAR(TIE.EST_ETA_DC, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*25*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PLUS, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*23*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PLUS2, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*24*/ + " REPLACE(NVL(TO_CHAR(TIE.EST_ETA_DC, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*25*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PLUS, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*26*/ + " NVL(TIE.OBSERVACIONES, ' ') AS OBSERVACIONES, "
                     /*27*/ + " TIE.ESTATUS_EVENTO, "
                     /*28*/ + " NVL(TIE.REFERENCIA_AA,' '), "
-                    /*29*/ + " REPLACE(NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*29*/ + " REPLACE(NVL(TO_CHAR(TIE.FECHA_CAPTURA, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*30*/ + " NVL(TIE.PRIORIDAD,' '), "
                     /*31*/ + " NVL(TIC.REFERENCIA_AA,' '), "
                     /*32*/ + " NVL(TIC.PAIS_ORIGEN,' '), "
                     /*33*/ + " NVL(TIC.SIZE_CONTAINER,' '), "
                     /*34*/ + " NVL(TIC.VALOR_USD,' '), "
-                    /*35*/ + " REPLACE(NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*35*/ + " REPLACE(NVL(TO_CHAR(TIC.ETA_PORT_OF_DISCHARGE, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*36*/ + " NVL(TIC.AGENTE_ADUANAL,' '), "
                     /*37*/ + " NVL(TIC.PEDIMENTO_A1,' '), "
                     /*38*/ + " NVL(TIC.PEDIMENTO_R1,' '), "
                     /*39*/ + " NVL(TIC.MOTIVO_RECTIFICACION_1,' '), "
                     /*40*/ + " NVL(TIC.PEDIMENTO_R1_2DO,' '), "
                     /*41*/ + " NVL(TIC.MOTIVO_RECTIFICACION_2,' '), "
-                    /*42*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*42*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEPCION_DOCUMENTOS, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*43*/ + " NVL(TIC.RECINTO,' '), "
                     /*44*/ + " NVL(TIC.NAVIERA_FORWARDER,' '), "
                     /*45*/ + " NVL(TIC.BUQUE,' '), "
-                    /*46*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*47*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*48*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*49*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*50*/ + " REPLACE(NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*46*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_REVALID_LIBE_BL, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*47*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PREVIO_ORIGEN, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*48*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PREVIO_DESTINO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*49*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RESULTADO_PREVIO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*50*/ + " REPLACE(NVL(TO_CHAR(TIC.PROFORMA_FINAL, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*51*/ + " NVL(TIC.REQUIERE_PERMISO,' '), "
-                    /*52*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*53*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*54*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*55*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*52*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_ENVIO_FICHAS_NOTAS, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*53*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_RECEPCION_PERMISOS_TRAMIT, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*54*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_ACT_PERMISOS, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*55*/ + " REPLACE(NVL(TO_CHAR(TIC.FEC_PERM_AUT, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*56*/ + " NVL(TIC.CO_APLIC_PREF_ARANCELARIA,' '), "
                     /*57*/ + " NVL(TIC.APLIC_PREF_ARANCELARIA_CO,' '), "
                     /*58*/ + " NVL(TIC.REQUIERE_UVA,' '), "
                     /*59*/ + " NVL(TIC.REQUIERE_CA,' '), "
-                    /*60*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*60*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEPCION_CA, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*61*/ + " NVL(TIC.NÚMERO_CONSTANCIA_CA,' '), "
                     /*62*/ + " NVL(TIC.MONTO_CA,' '), "
-                    /*63*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*64*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*65*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*66*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_MODULACION, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*63*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_DOCUMENTOS_COMPLETOS, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*64*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_PAGO_PEDIMENTO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*65*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_SOLICITUD_TRANSPORTE, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*66*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_MODULACION, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*67*/ + " NVL(TIC.MODALIDAD_CAMION_TREN,' '), "
                     /*68*/ + " NVL(TIC.RESULT_MODULACION_VERDE_ROJO,' '), "
-                    /*69*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*70*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*69*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECONOCIMIENTO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*70*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_LIBERACION, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*71*/ + " NVL(TIC.SELLO_ORIGEN,' '), "
                     /*72*/ + " NVL(TIC.SELLO_FINAL,' '), "
-                    /*73*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*74*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*73*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RETENCION_AUTORIDAD, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*74*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_LIB_POR_RET_AUT, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*75*/ + " NVL(TEC.DESCRIPCION_ESTADO,' '), "
                     /*76*/ + " NVL(TIC.MOTIVO_ATRASO,' '), "
                     /*77*/ + " NVL(TIC.OBSERVACIONES,' '), "
-                    /*78*/ + " REPLACE(NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*79*/ + " REPLACE(NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*78*/ + " REPLACE(NVL(TO_CHAR(TIC.LLEGADA_A_NOVA, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*79*/ + " REPLACE(NVL(TO_CHAR(TIC.LLEGADA_A_GLOBE_TRADE_SD, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*80*/ + " NVL(TIC.ARCHIVO_M,' '), "
-                    /*81*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*82*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*83*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*84*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*85*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*81*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_ARCHIVO_M, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*82*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_SOLICIT_MANIP, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*83*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_VENCIM_MANIP, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*84*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_CONFIRM_CLAVE_PEDIM, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*85*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_RECEP_INCREMENT, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*86*/ + " NVL(TIC.T_E,' '), "
-                    /*87*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*87*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_VENCIM_INBOUND, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*88*/ + " NVL(TIC.NO_BULTOS,' '), "
                     /*89*/ + " NVL(TIC.PESO_KG,' '), "
                     /*90*/ + " NVL(TIC.TRANSFERENCIA,' '), "
-                    /*91*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
-                    /*92*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'MM/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*91*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_INICIO_ETIQUETADO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
+                    /*92*/ + " REPLACE(NVL(TO_CHAR(TIC.FECHA_TERMINO_ETIQUETADO, 'MON/DD/YYYY'),' '), '01/01/1970', ' '), "
                     /*93*/ + " NVL(TIC.HORA_TERMINO_ETIQUETADO,' '), "
                     /*94*/ + " NVL(TIC.PROVEEDOR,' '), "
                     /*95*/ + " NVL(TIC.PROVEEDOR_CARGA,' '), "
@@ -1161,11 +1168,11 @@ public class ConsultarReporteCustoms extends HttpServlet {
                             + " LEFT JOIN TRA_ESTADOS_CUSTOMS TEC ON GTN.ESTATUS = TEC.ID_ESTADO "
                             + " LEFT JOIN TRA_INB_SEMAFORO TISE ON TIC.SHIPMENT_ID = TISE.SHIPMENT_ID "
                             + " WHERE TIE.ESTADO = 1 "
-                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date((SELECT MIN(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
-                            + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
-                            + " AND tid.division_nombre <> 'No/DSN' "
-                            + " AND gtn.load_type_final IS NOT NULL "
-                            + " AND tie.id_evento >= 240000 ";
+                       //     + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') >= to_date((SELECT MIN(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
+                       //      + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
+                       //    + " AND tid.division_nombre <> 'No/DSN' "
+                     // + " AND gtn.load_type_final IS NOT NULL "
+                            + " AND tie.id_evento >= 240000 "+filtro ;
 
             if (!AgentType.equals("4006")) { //VF GENERAL
                 sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + AgentType + "') ";
@@ -1435,8 +1442,13 @@ public class ConsultarReporteCustoms extends HttpServlet {
             if (!caramelo_fy.equals("")) { // FY
                 sql += " AND TIC.FY IN (" + caramelo_fy + ") ";
             }
-            sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC ";
+            sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC FETCH FIRST 10000 ROWS ONLY";
             
+              if(filtros1.equals("1")){
+                  pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType,"2");
+              }
+             
+             
         /*  ----------------------------- ENCABEZADOS DE TABLA  -----------------------------  */        
         
                    salida +=" <table id=\"main-table\" class=\"main-table\" style=\"table-layout:fixed; width:1800%;\"> "
@@ -1538,8 +1550,9 @@ public class ConsultarReporteCustoms extends HttpServlet {
 
             }
  
-                   salida +="             <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"filtrerCheckbox(this,85)\"><i class=\"fa fa-search\"></i></a></th> "
-                          + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
+                   salida +="        "
+                        //   + "     <th class=\"col-sm-4\" style=\"background-color:#1C84C6;\">FY&nbsp;<a onclick=\"filtrerCheckbox(this,85)\"><i class=\"fa fa-search\"></i></a></th> "
+                       //   + "             <th class=\"col-sm-1\" style=\"background-color:#FFFFFF;\"></th> "
                           + "         </tr> "
                           + "     </thead> "
                           + "<tbody>   "; 
@@ -1650,7 +1663,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
                                 + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_doc_completos[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_doc_completos'," + cont + ")\" ondblclick=\"show_fecha_doc_completos('" + row[63] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[62] + "</td> "
                                 + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_pago_pedimento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_pago_pedimento'," + cont + ")\" ondblclick=\"show_fecha_pago_pedimento(" + cont + ")\" onpaste=\"handlePasteFechaPagoPedimento(event," + cont + ")\">" + row[63] + "</td> "
                                 + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_solicitud_transporte[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_solicitud_transporte'," + cont + ")\" ondblclick=\"show_fecha_solicitud_transporte('" + row[64] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[64] + "</td> "
-                                + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion(" + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
+                                + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_modulacion'," + cont + ")\" ondblclick=\"show_fecha_modulacion('" + row[64] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[65] + "</td> "
                                 + " <td contenteditable=\"false\" id=\"modalidad[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'modalidad'," + cont + ")\" ondblclick=\"show_modalidad(" + cont + ")\" onpaste=\"handlePasteText(event)\">" + row[66] + "</td> "
                                 + " <td contenteditable=\"false\" id=\"resultado_modulacion[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'resultado_modulacion'," + cont + ")\" ondblclick=\"show_resultado_modulacion(" + cont + "," + AgentType + ")\" onpaste=\"handlePasteText(event)\">" + row[67] + "</td> "
                                 + " <td contenteditable=\"false\" oninput=\"formatoFecha(event)\" id=\"fecha_reconocimiento[" + cont + "]\" onkeydown=\"tabuladorVertical(event,'fecha_reconocimiento'," + cont + ")\" ondblclick=\"show_fecha_reconocimiento('" + row[68] + "'," + cont + ")\" onpaste=\"handlePasteFecha(event)\">" + row[68] + "</td> "
@@ -1689,8 +1702,9 @@ public class ConsultarReporteCustoms extends HttpServlet {
                                     + " <td contenteditable=\"false\" oninput=\"validarTextoParametrizacion(this,'proveedor_carga'," + cont + ")\" onkeydown=\"tabuladorVertical(event,'proveedor_carga'," + cont + ")\" onpaste=\"handlePasteText(event)\" id=\"proveedor_carga[" + cont + "]\">" + row[94] + "</td> ";
                         }
 
-                        salida += " <td contenteditable=\"false\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
-                                + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
+                        salida += ""
+                                //+ " <td contenteditable=\"false\" oninput=\"validarTextoAlfanumericoSnParametrizacion(this)\" onkeydown=\"tabuladorVertical(event,'fy'," + cont + ")\" onpaste=\"handlePasteAlfanumerico(event)\" id=\"fy[" + cont + "]\">" + row[95] + "</td> "
+                               // + " <td><a class=\"btn btn-primary text-uppercase\" onclick=\"AddLineCustoms(" + cont + ")\"><i class=\"fa fa-save\"></i></a></td> "
                                 + "</tr>";
 
                         cont++;
@@ -1716,13 +1730,13 @@ public class ConsultarReporteCustoms extends HttpServlet {
                     pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosCusa(sql, AgentType, nameAgentType);
                     break;
                 default:
-                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType);
+                    pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType,"1");
                     break;
             }
             
             System.out.println("Path File Excel: " + pathExcelCustoms);
             
-            out.print(salida);
+            out.println(salida);
             oraDB.close(); //cerrar conexión
 
         }
@@ -1776,3 +1790,5 @@ public class ConsultarReporteCustoms extends HttpServlet {
     }// </editor-fold>
 
 } 
+
+
