@@ -23,9 +23,9 @@ public class ExcelToOracle {
     public  String ExcelToOracle( String urlD,String sql) throws Exception{
         String mensaje="";
           // Configura la conexión a la base de datos Oracle
-        String url = "jdbc:oracle:thin:@74.208.140.125:1521:tacts125";
+        String url = "jdbc:oracle:thin:@74.208.140.125:1695:tacts125";
         String username = "VANS39TEST";
-        String password = "XUKidn49N875RBH54Cq2";
+        String password = "xQoPXqAYBjz9hSdirJaCyw_a";
         Connection connection = DriverManager.getConnection(url, username, password);
         System.out.println("urlD"+urlD);
         System.out.println("sql"+sql);

@@ -348,7 +348,7 @@ public class CreatExcelReporteCustoms {
 
     }
 
-    public static String crearAPartirDeArrayListReporteEventosGral(String consultaReporte, String AgentType, String nameAgentType) {
+    public static String crearAPartirDeArrayListReporteEventosGral(String consultaReporte, String AgentType, String nameAgentType,String id) {
 
         ArrayList<excelReporteEventosGral> eventosCustoms = new ArrayList<>();
         ServiceDAO dao = new ServiceDAO();
@@ -359,6 +359,7 @@ public class CreatExcelReporteCustoms {
             Statement stmt = dao.conectar().prepareStatement(consultaReporte);
             ResultSet rs = stmt.executeQuery(consultaReporte);
             while (rs.next()) {
+                System.out.println("rs.getString(1)************************"+rs.getString(1));
                 eventosCustoms.add(new excelReporteEventosGral(
                         rs.getString(31), // referenciaAA	
                         rs.getString(1), // evento 
@@ -439,7 +440,7 @@ public class CreatExcelReporteCustoms {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFCellStyle style = workbook.createCellStyle();
 
-        final String nombreArchivo = "ReporteEventosCustoms.xls";
+        final String nombreArchivo = "ReporteEventosCustoms"+id+".xls";
         Sheet hoja = workbook.createSheet("Detalle Eventos Customs " + nameAgentType);
 
         String[] encabezados = {

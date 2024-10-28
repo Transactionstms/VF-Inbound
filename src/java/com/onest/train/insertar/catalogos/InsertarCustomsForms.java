@@ -46,7 +46,7 @@ public class InsertarCustomsForms extends HttpServlet {
         ConsultasQuery fac = new ConsultasQuery();                     //Objeto para consultas 
         SimpleDateFormat formato = new SimpleDateFormat("mm/dd/yyyy"); //Objeto para calcular días de despacho (SEMAFORO)
         CrearSemaforoCustoms obj = new CrearSemaforoCustoms();
-        
+        System.out.println("*********************************************************************************************************************************************");
         try{
                     
             String idAgenteAduanal = request.getParameter("idAgenteAduanal"); 
@@ -167,9 +167,11 @@ public class InsertarCustomsForms extends HttpServlet {
             mapaMeses.put("Nov", 11);
             mapaMeses.put("Dec", 12);
 
-            
+             System.out.println("numCustomsInicial"+numCustomsInicial);
+             System.out.println("numCustomsFinal"+numCustomsFinal);
+             
               for (int i=numCustomsInicial; i<=numCustomsFinal; i++){
-                  
+                  System.out.println("referenciaAA[" + i + "]");
                   //Parametros Indicadores
                   String referenciaAA = request.getParameter("referenciaAA[" + i + "]").trim(); 
                   String evento = request.getParameter("evento[" + i + "]").trim();
@@ -184,8 +186,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   valor_usd = request.getParameter("valor_usd[" + i + "]").trim();                
                  
                   eta_port_discharge = request.getParameter("eta_port_discharge[" + i + "]").trim();                //fecha   
-                  if(!eta_port_discharge.equals("")){
-                      
+                //  if(!eta_port_discharge.equals("")){
+                 if (eta_port_discharge != null && !eta_port_discharge.equals("") && !eta_port_discharge.equalsIgnoreCase("null")) {
+                      System.out.println(" if eta_port_discharge");
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = eta_port_discharge.split("/");
                       String mes = partesFecha[0];
@@ -207,8 +210,10 @@ public class InsertarCustomsForms extends HttpServlet {
                   motivo_rectificacion_2do = request.getParameter("motivo_rectificacion_2do[" + i + "]").trim();  
                   
                   fecha_recepcion_doc = request.getParameter("fecha_recepcion_doc[" + i + "]").trim();               //fecha  
-                  if(!fecha_recepcion_doc.equals("")){
-                      
+                  System.out.println("antes  fecha_recepcion_doc.equals"+fecha_recepcion_doc);
+                  //if(!fecha_recepcion_doc.equals("") || !fecha_recepcion_doc.equals("null") || !fecha_recepcion_doc is null ){
+                  if (fecha_recepcion_doc != null && !fecha_recepcion_doc.equals("") && !fecha_recepcion_doc.equalsIgnoreCase("null")) {
+    
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_recepcion_doc.split("/");
                       String mes = partesFecha[0];
@@ -227,8 +232,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   buque = request.getParameter("buque[" + i + "]").trim();
                   
                   fecha_revalidacion = request.getParameter("fecha_revalidacion[" + i + "]").trim();                 //fecha 
-                  if(!fecha_revalidacion.equals("")){
-                      
+                  System.out.println("antes fecha_revalidacion"+fecha_revalidacion);
+                 // if(!fecha_revalidacion.equals("")){
+                   if (fecha_revalidacion != null && !fecha_revalidacion.equals("") && !fecha_revalidacion.equalsIgnoreCase("null")) {    
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_revalidacion.split("/");
                       String mes = partesFecha[0];
@@ -243,7 +249,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_previo_origen = request.getParameter("fecha_previo_origen[" + i + "]").trim();               //fecha 
-                  if(!fecha_previo_origen.equals("")){
+                 // if(!fecha_previo_origen.equals("")){
+                       if (fecha_previo_origen != null && !fecha_previo_origen.equals("") && !fecha_previo_origen.equalsIgnoreCase("null")) { 
                                       
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_previo_origen.split("/");
@@ -259,7 +266,8 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_previo_destino = request.getParameter("fecha_previo_destino[" + i + "]").trim();             //fecha 
-                  if(!fecha_previo_destino.equals("")){
+                 // if(!fecha_previo_destino.equals("")){
+                      if (fecha_previo_destino != null && !fecha_previo_destino.equals("") && !fecha_previo_destino.equalsIgnoreCase("null")) { 
                                       
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_previo_destino.split("/");
@@ -275,8 +283,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_resultado_previo = request.getParameter("fecha_resultado_previo[" + i + "]").trim();         //fecha 
-                  if(!fecha_resultado_previo.equals("")){
-                                      
+                  
+                  //if(!fecha_resultado_previo.equals("")){
+                   if (fecha_resultado_previo != null && !fecha_resultado_previo.equals("") && !fecha_resultado_previo.equalsIgnoreCase("null")) {                     
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_resultado_previo.split("/");
                       String mes = partesFecha[0];
@@ -291,8 +300,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   proforma_final = request.getParameter("proforma_final[" + i + "]").trim();                  //fecha  
-                  if(!proforma_final.equals("")){
-                                       
+                 // if(!proforma_final.equals("")){
+                   if (proforma_final != null && !proforma_final.equals("") && !proforma_final.equalsIgnoreCase("null")) {                     
+                                        
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = proforma_final.split("/");
                       String mes = partesFecha[0];
@@ -309,8 +319,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   permiso = request.getParameter("permiso[" + i + "]").trim();                   
                   
                   fecha_envio = request.getParameter("fecha_envio[" + i + "]").trim();                               //fecha  
-                  if(!fecha_envio.equals("")){
-                                       
+                //  if(!fecha_envio.equals("")){
+                   if (fecha_envio != null && !fecha_envio.equals("") && !fecha_envio.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_envio.split("/");
                       String mes = partesFecha[0];
@@ -325,8 +336,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_recepcion_perm = request.getParameter("fecha_recepcion_perm[" + i + "]").trim();             //fecha 
-                  if(!fecha_recepcion_perm.equals("")){
-                                       
+                 // if(!fecha_recepcion_perm.equals("")){
+                   if (fecha_recepcion_perm != null && !fecha_recepcion_perm.equals("") && !fecha_recepcion_perm.equalsIgnoreCase("null")) {                     
+                                            
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_recepcion_perm.split("/");
                       String mes = partesFecha[0];
@@ -341,8 +353,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_activacion_perm = request.getParameter("fecha_activacion_perm[" + i + "]").trim();           //fecha 
-                  if(!fecha_activacion_perm.equals("")){
-                                       
+                 // if(!fecha_activacion_perm.equals("")){
+                     if (fecha_activacion_perm != null && !fecha_activacion_perm.equals("") && !fecha_activacion_perm.equalsIgnoreCase("null")) {                     
+                                        
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_activacion_perm.split("/");
                       String mes = partesFecha[0];
@@ -357,8 +370,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_permisos_aut = request.getParameter("fecha_permisos_aut[" + i + "]").trim();                 //fecha 
-                  if(!fecha_permisos_aut.equals("")){
-                                       
+                  //if(!fecha_permisos_aut.equals("")){
+                     if (fecha_permisos_aut != null && !fecha_permisos_aut.equals("") && !fecha_permisos_aut.equalsIgnoreCase("null")) {                     
+                                           
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_permisos_aut.split("/");
                       String mes = partesFecha[0];
@@ -378,8 +392,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   req_ca = request.getParameter("req_ca[" + i + "]").trim();   
                   
                   fecha_recepcion_ca = request.getParameter("fecha_recepcion_ca[" + i + "]").trim();                  //fecha 
-                  if(!fecha_recepcion_ca.equals("")){
-                                       
+                 // if(!fecha_recepcion_ca.equals("")){
+                     if (fecha_recepcion_ca != null && !fecha_recepcion_ca.equals("") && !fecha_recepcion_ca.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_recepcion_ca.split("/");
                       String mes = partesFecha[0];
@@ -397,8 +412,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   monto_ca = request.getParameter("monto_ca[" + i + "]").trim();   
                   
                   fecha_doc_completos = request.getParameter("fecha_doc_completos[" + i + "]").trim();                 //fecha 
-                  if(!fecha_doc_completos.equals("")){
-                                       
+                  //if(!fecha_doc_completos.equals("")){
+                     if (fecha_doc_completos != null && !fecha_doc_completos.equals("") && !fecha_doc_completos.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_doc_completos.split("/");
                       String mes = partesFecha[0];
@@ -413,8 +429,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_pago_pedimento = request.getParameter("fecha_pago_pedimento[" + i + "]").trim();               //fecha 
-                  if(!fecha_pago_pedimento.equals("")){
-                                       
+                //  if(!fecha_pago_pedimento.equals("")){
+                      if (fecha_pago_pedimento != null && !fecha_pago_pedimento.equals("") && !fecha_pago_pedimento.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_pago_pedimento.split("/");
                       String mes = partesFecha[0];
@@ -429,8 +446,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_solicitud_transporte = request.getParameter("fecha_solicitud_transporte[" + i + "]").trim();   //fecha 
-                  if(!fecha_solicitud_transporte.equals("")){
-                                       
+                  //if(!fecha_solicitud_transporte.equals("")){
+                    if (fecha_solicitud_transporte != null && !fecha_solicitud_transporte.equals("") && !fecha_solicitud_transporte.equalsIgnoreCase("null")) {                     
+                                            
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_solicitud_transporte.split("/");
                       String mes = partesFecha[0];
@@ -445,8 +463,10 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_modulacion = request.getParameter("fecha_modulacion[" + i + "]").trim();                       //fecha 
-                  if(!fecha_modulacion.equals("")){
-                                       
+                 // if(!fecha_modulacion.equals("")){
+                       if (fecha_modulacion != null && !fecha_modulacion.equals("") && !fecha_modulacion.equalsIgnoreCase("null")) {                     
+                      
+                           
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_modulacion.split("/");
                       String mes = partesFecha[0];
@@ -464,8 +484,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   resultado_modulacion = request.getParameter("resultado_modulacion[" + i + "]").trim();      
                   
                   fecha_reconocimiento = request.getParameter("fecha_reconocimiento[" + i + "]").trim();               //fecha 
-                  if(!fecha_reconocimiento.equals("")){
-                                       
+                 // if(!fecha_reconocimiento.equals("")){
+                     if (fecha_reconocimiento != null && !fecha_reconocimiento.equals("") && !fecha_reconocimiento.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_reconocimiento.split("/");
                       String mes = partesFecha[0];
@@ -480,8 +501,10 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_liberacion = request.getParameter("fecha_liberacion[" + i + "]").trim();                       //fecha 
-                  if(!fecha_liberacion.equals("")){                  
-                                       
+                 // if(!fecha_liberacion.equals("")){   
+                       if (fecha_liberacion != null && !fecha_liberacion.equals("") && !fecha_liberacion.equalsIgnoreCase("null")) {                     
+                      
+                                  System.out.println("fecha_liberacion"+fecha_liberacion);     
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_liberacion.split("/");
                       String mes = partesFecha[0];
@@ -492,15 +515,16 @@ public class InsertarCustomsForms extends HttpServlet {
                       int numeroMes = mapaMeses.get(mes);
 
                       // Construir la fecha en formato "MM/dd/yyyy"
-                      fecha_liberacion = String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
+                      fecha_liberacion =mes+"/"+dia+"/"+anio ;// String.format("%02d", numeroMes) + "/" + dia + "/" + anio;     
                   }
                   
                   sello_origen = request.getParameter("sello_origen[" + i + "]").trim();              
                   sello_final = request.getParameter("sello_final[" + i + "]").trim();               
                   
                   fecha_retencion_aut = request.getParameter("fecha_retencion_aut[" + i + "]").trim();                 //fecha 
-                  if(!fecha_retencion_aut.equals("")){
-                                       
+                //  if(!fecha_retencion_aut.equals("")){
+                    if (fecha_retencion_aut != null && !fecha_retencion_aut.equals("") && !fecha_retencion_aut.equalsIgnoreCase("null")) {                     
+                                          
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_retencion_aut.split("/");
                       String mes = partesFecha[0];
@@ -515,8 +539,9 @@ public class InsertarCustomsForms extends HttpServlet {
                   }
                   
                   fecha_liberacion_aut = request.getParameter("fecha_liberacion_aut[" + i + "]").trim();               //fecha 
-                  if(!fecha_liberacion_aut.equals("")){                  
-                                       
+                //  if(!fecha_liberacion_aut.equals("")){                  
+                   if (fecha_liberacion_aut != null && !fecha_liberacion_aut.equals("") && !fecha_liberacion_aut.equalsIgnoreCase("null")) {                     
+                                           
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_liberacion_aut.split("/");
                       String mes = partesFecha[0];
@@ -539,8 +564,9 @@ public class InsertarCustomsForms extends HttpServlet {
             if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                
                 llegada_a_nova = request.getParameter("llegada_a_nova[" + i + "]").trim();                                 //fecha 
-                if(!llegada_a_nova.equals("")){                  
-                                       
+              //  if(!llegada_a_nova.equals("")){                  
+                   if (llegada_a_nova != null && !llegada_a_nova.equals("") && !llegada_a_nova.equalsIgnoreCase("null")) {                     
+                                            
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = llegada_a_nova.split("/");
                       String mes = partesFecha[0];
@@ -555,8 +581,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                 
                 llegada_a_globe_trade_sd = request.getParameter("llegada_a_globe_trade_sd[" + i + "]").trim();             //fecha 
-                if(!llegada_a_globe_trade_sd.equals("")){                  
-                                      
+               // if(!llegada_a_globe_trade_sd.equals("")){                  
+                  if (llegada_a_globe_trade_sd != null && !llegada_a_globe_trade_sd.equals("") && !llegada_a_globe_trade_sd.equalsIgnoreCase("null")) {                     
+                                          
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = llegada_a_globe_trade_sd.split("/");
                       String mes = partesFecha[0];
@@ -573,8 +600,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 archivo_m = request.getParameter("archivo_m[" + i + "]").trim(); 
                 
                 fecha_archivo_m = request.getParameter("fecha_archivo_m[" + i + "]").trim();                               //fecha  
-                if(!fecha_archivo_m.equals("")){                  
-                                      
+               // if(!fecha_archivo_m.equals("")){                  
+                   if (fecha_archivo_m != null && !fecha_archivo_m.equals("") && !fecha_archivo_m.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_archivo_m.split("/");
                       String mes = partesFecha[0];
@@ -589,8 +617,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
                 fecha_solicit_manip = request.getParameter("fecha_solicit_manip[" + i + "]").trim();                       //fecha 
-                if(!fecha_solicit_manip.equals("")){                  
-                                      
+              //  if(!fecha_solicit_manip.equals("")){                  
+                    if (fecha_solicit_manip != null && !fecha_solicit_manip.equals("") && !fecha_solicit_manip.equalsIgnoreCase("null")) {                     
+                                        
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_solicit_manip.split("/");
                       String mes = partesFecha[0];
@@ -605,8 +634,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
                 fecha_vencim_manip = request.getParameter("fecha_vencim_manip[" + i + "]").trim();                         //fecha 
-                if(!fecha_vencim_manip.equals("")){                  
-                                      
+               // if(!fecha_vencim_manip.equals("")){                  
+                  if (fecha_vencim_manip != null && !fecha_vencim_manip.equals("") && !fecha_vencim_manip.equalsIgnoreCase("null")) {                     
+                                          
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_vencim_manip.split("/");
                       String mes = partesFecha[0];
@@ -621,8 +651,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
                 fecha_confirm_clave_pedim = request.getParameter("fecha_confirm_clave_pedim[" + i + "]").trim();           //fecha 
-                if(!fecha_confirm_clave_pedim.equals("")){                  
-                                      
+             //   if(!fecha_confirm_clave_pedim.equals("")){                  
+                     if (fecha_confirm_clave_pedim != null && !fecha_confirm_clave_pedim.equals("") && !fecha_confirm_clave_pedim.equalsIgnoreCase("null")) {                     
+                                     
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_confirm_clave_pedim.split("/");
                       String mes = partesFecha[0];
@@ -637,8 +668,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
                 fecha_recep_increment = request.getParameter("fecha_recep_increment[" + i + "]").trim();                   //fecha 
-                if(!fecha_recep_increment.equals("")){                  
-                                      
+               // if(!fecha_recep_increment.equals("")){                  
+                     if (fecha_recep_increment != null && !fecha_recep_increment.equals("") && !fecha_recep_increment.equalsIgnoreCase("null")) {                     
+                                           
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_recep_increment.split("/");
                       String mes = partesFecha[0];
@@ -655,8 +687,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 t_e = request.getParameter("t_e[" + i + "]").trim(); 
                 
                 fecha_vencim_inbound = request.getParameter("fecha_vencim_inbound[" + i + "]").trim();                     //fecha 
-                if(!fecha_vencim_inbound.equals("")){                  
-                                      
+                //if(!fecha_vencim_inbound.equals("")){                  
+                      if (fecha_vencim_inbound != null && !fecha_vencim_inbound.equals("") && !fecha_vencim_inbound.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_vencim_inbound.split("/");
                       String mes = partesFecha[0];
@@ -671,7 +704,7 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
             }
-            
+                  System.out.println(" antes idAgenteAduanal"+idAgenteAduanal);
             if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){ //CUSA Y VF
                  
                 no_bultos = request.getParameter("no_bultos[" + i + "]").trim(); 
@@ -695,8 +728,9 @@ public class InsertarCustomsForms extends HttpServlet {
                 }
                                 
                 fecha_termino_etiquetado = request.getParameter("fecha_termino_etiquetado[" + i + "]").trim();             //fecha 
-                if(!fecha_termino_etiquetado.equals("")){                  
-                                      
+               // if(!fecha_termino_etiquetado.equals("")){                  
+                      if (fecha_termino_etiquetado != null && !fecha_termino_etiquetado.equals("") && !fecha_termino_etiquetado.equalsIgnoreCase("null")) {                     
+                                         
                       // Dividir la cadena de entrada en partes
                       String[] partesFecha = fecha_termino_etiquetado.split("/");
                       String mes = partesFecha[0];
@@ -718,7 +752,7 @@ public class InsertarCustomsForms extends HttpServlet {
            
               //Consultar Estatus de Operación del shipment
 
-                      
+                      System.out.println("estatus_operacion_actual"+estatus_operacion_actual);
                       if (estatus_operacion_actual.equals(estatus_importado)) { 
                       
                           if (db.doDB(fac.consultarEstatusImportacion(shipmentId))) {
@@ -738,6 +772,7 @@ public class InsertarCustomsForms extends HttpServlet {
             
             //Consultar existencia de Shipmentd para el tipo de registro:
             String valExist = "SELECT DISTINCT CUSTREG_ID FROM TRA_INB_CUSTOMS WHERE SHIPMENT_ID = '" + shipmentId + "'"; //";
+                  System.out.println("valExist"+valExist);
             boolean oraOut = oraDB.execute(valExist);
             
             if(oraOut){
@@ -753,110 +788,139 @@ public class InsertarCustomsForms extends HttpServlet {
                                                  + " MOTIVO_RECTIFICACION_1 = '" + motivo_rectificacion_1er + "', "   
                                                  + " PEDIMENTO_R1_2DO = '" + pedimento_r1_2do + "', "           
                                                  + " MOTIVO_RECTIFICACION_2 = '" + motivo_rectificacion_2do + "', ";   
-                        //if(!fecha_recepcion_doc.trim().equals("")){        
+                        //if(!fecha_recepcion_doc.trim().equals("null")){ 
+                            if (fecha_recepcion_doc != null && !fecha_recepcion_doc.equals("") && !fecha_recepcion_doc.equalsIgnoreCase("null")) {
+
                                 insertarCustoms += " FECHA_RECEPCION_DOCUMENTOS = TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YYYY'), ";
-                        //}        
+                        }        
                                 insertarCustoms += " RECINTO = '" + recinto + "', "     
                                                  + " NAVIERA_FORWARDER = '" + naviera + "', "     
                                                  + " BUQUE = '" + buque + "', "; 
-                        //if(!fecha_revalidacion.trim().equals("")){        
+                        //if(!fecha_revalidacion.trim().equals("null")){  
+                          if (fecha_revalidacion != null && !fecha_revalidacion.equals("") && !fecha_revalidacion.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_REVALID_LIBE_BL = TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YYYY'), "; 
-                        //}  
-                        //if(!fecha_previo_origen.trim().equals("")){
+                         }  
+                        //if(!fecha_previo_origen.trim().equals("null")){
+                          if (fecha_previo_origen != null && !fecha_previo_origen.equals("") && !fecha_previo_origen.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_PREVIO_ORIGEN = TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YYYY'), "; 
-                       // } 
-                        //if(!fecha_previo_destino.trim().equals("")){
+                        } 
+                        //if(!fecha_previo_destino.trim().equals("null")){
+                          if (fecha_previo_destino != null && !fecha_previo_destino.equals("") && !fecha_previo_destino.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_PREVIO_DESTINO = TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YYYY'), ";
-                        //}        
-                       // if(!fecha_resultado_previo.trim().equals("")){
+                        }        
+                       // if(!fecha_resultado_previo.trim().equals("null")){
+                         if (fecha_resultado_previo != null && !fecha_resultado_previo.equals("") && !fecha_resultado_previo.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_RESULTADO_PREVIO = TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YYYY'), ";    
-                        //}       
-                        //if(!proforma_final.trim().equals("")){
+                        }       
+                        //if(!proforma_final.trim().equals("null")){
+                          if (proforma_final != null && !proforma_final.equals("") && !proforma_final.equalsIgnoreCase("null")) {
                                 insertarCustoms += " PROFORMA_FINAL = TO_DATE('" + proforma_final + "', 'MM/DD/YYYY'), ";  
-                       // }        
+                        }        
                                 insertarCustoms += " REQUIERE_PERMISO = '" + permiso + "', ";
-                        //if(!fecha_envio.trim().equals("")){        
+                        //if(!fecha_envio.trim().equals("null")){     
+                          if (fecha_envio != null && !fecha_envio.equals("") && !fecha_envio.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_ENVIO_FICHAS_NOTAS = TO_DATE('" + fecha_envio + "', 'MM/DD/YYYY'), "; 
-                       // }        
-                       // if(!fecha_recepcion_perm.trim().equals("")){
+                        }        
+                       // if(!fecha_recepcion_perm.trim().equals("null")){
+                         if (fecha_recepcion_perm != null && !fecha_recepcion_perm.equals("") && !fecha_recepcion_perm.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FEC_RECEPCION_PERMISOS_TRAMIT = TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YYYY'), ";  
-                        //}
-                        //if(!fecha_activacion_perm.trim().equals("")){
+                       }
+                        //if(!fecha_activacion_perm.trim().equals("null")){
+                          if (fecha_activacion_perm != null && !fecha_activacion_perm.equals("") && !fecha_activacion_perm.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FEC_ACT_PERMISOS = TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YYYY'), ";
-                       // }    
-                       // if(!fecha_permisos_aut.trim().equals("")){
+                        }    
+                       // if(!fecha_permisos_aut.trim().equals("null")){
+                         if (fecha_permisos_aut != null && !fecha_permisos_aut.equals("") && !fecha_permisos_aut.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FEC_PERM_AUT = TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YYYY'), "; 
-                        //}        
+                       }        
                                 insertarCustoms += " CO_APLIC_PREF_ARANCELARIA = '" + co_pref_arancelaria + "', "        
                                                  + " APLIC_PREF_ARANCELARIA_CO = '" + aplic_pref_arancelaria + "', "     
                                                  + " REQUIERE_UVA = '" + req_uva + "', "     
                                                  + " REQUIERE_CA = '" + req_ca + "', ";   
-                        //if(!fecha_recepcion_ca.trim().equals("")){        
+                        //if(!fecha_recepcion_ca.trim().equals("null")){  
+                          if (fecha_recepcion_ca != null && !fecha_recepcion_ca.equals("") && !fecha_recepcion_ca.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_RECEPCION_CA = TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YYYY'), ";  
-                       // }        
+                        }        
                                 insertarCustoms += " NÚMERO_CONSTANCIA_CA = '" + num_constancia_ca + "', "   
                                                  + " MONTO_CA = '" + monto_ca + "', ";   
-                        //if(!fecha_doc_completos.trim().equals("")){        
+                        //if(!fecha_doc_completos.trim().equals("null")){ 
+                          if (fecha_doc_completos != null && !fecha_doc_completos.equals("") && !fecha_doc_completos.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_DOCUMENTOS_COMPLETOS = TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YYYY'), "; 
-                        //}  
-                       // if(!fecha_pago_pedimento.trim().equals("")){
+                       }  
+                       // if(!fecha_pago_pedimento.trim().equals("null")){
+                         if (fecha_pago_pedimento != null && !fecha_pago_pedimento.equals("") && !fecha_pago_pedimento.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_PAGO_PEDIMENTO = TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YYYY'), "; 
-                        //}
-                       // if(!fecha_solicitud_transporte.trim().equals("")){
+                        }
+                       // if(!fecha_solicitud_transporte.trim().equals("null")){
+                         if (fecha_solicitud_transporte != null && !fecha_solicitud_transporte.equals("") && !fecha_solicitud_transporte.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_SOLICITUD_TRANSPORTE = TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YYYY'), "; 
-                        //}
-                        //if(!fecha_modulacion.trim().equals("")){
+                        }
+                        //if(!fecha_modulacion.trim().equals("null")){
+                          if (fecha_modulacion != null && !fecha_modulacion.equals("") && !fecha_modulacion.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_MODULACION = TO_DATE('" + fecha_modulacion + "', 'MM/DD/YYYY'), ";
-                       // }        
+                        }        
                                 insertarCustoms += " MODALIDAD_CAMION_TREN = '" + modalidad + "', "                  
                                                  + " RESULT_MODULACION_VERDE_ROJO = '" + resultado_modulacion + "', ";   
-                       // if(!fecha_reconocimiento.trim().equals("")){        
+                       // if(!fecha_reconocimiento.trim().equals("null")){  
+                         if (fecha_reconocimiento != null && !fecha_reconocimiento.equals("") && !fecha_reconocimiento.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_RECONOCIMIENTO = TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YYYY'), ";  
-                        //} 
-                        //if(!fecha_liberacion.trim().equals("")){
-                                insertarCustoms += " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), ";    
-                        //}                
+                        } 
+                        //if(!fecha_liberacion.trim().equals("null")){
+                          if (fecha_liberacion != null && !fecha_liberacion.equals("") && !fecha_liberacion.equalsIgnoreCase("null")) {
+                                insertarCustoms += " FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), ";    ///**********
+                        }         
+                        System.out.println(" FECHA_LIBERACION = TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), ");
+                        
                                 insertarCustoms += " SELLO_ORIGEN = '" + sello_origen + "', "               
                                                  + " SELLO_FINAL = '" + sello_final + "', ";    
-                        //if(!fecha_retencion_aut.trim().equals("")){        
+                        //if(!fecha_retencion_aut.trim().equals("null")){ 
+                          if (fecha_retencion_aut != null && !fecha_retencion_aut.equals("") && !fecha_retencion_aut.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_RETENCION_AUTORIDAD = TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YYYY'), ";
-                        //}   
-                       // if(!fecha_liberacion_aut.trim().equals("")){
+                        }   
+                       // if(!fecha_liberacion_aut.trim().equals("null")){
+                         if (fecha_liberacion_aut != null && !fecha_liberacion_aut.equals("") && !fecha_liberacion_aut.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_LIB_POR_RET_AUT = TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), ";   
-                        //}        
+                         }        
                                 insertarCustoms += " ESTATUS_OPERACION = '" + estatus_operacion_actual + "', "          
                                                  + " MOTIVO_ATRASO = '" + motivo_atraso + "', "              
                                                  + " OBSERVACIONES = '" + observaciones + "', ";   
             
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
                     
-                        //if(!llegada_a_nova.trim().equals("")){        
+                        //if(!llegada_a_nova.trim().equals("null")){        
                                 insertarCustoms += " LLEGADA_A_NOVA = TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), "; 
                         //}        
-                        //if(!llegada_a_globe_trade_sd.trim().equals("")){        
+                        //if(!llegada_a_globe_trade_sd.trim().equals("null")){ 
+                          if (llegada_a_globe_trade_sd != null && !llegada_a_globe_trade_sd.equals("") && !llegada_a_globe_trade_sd.equalsIgnoreCase("null")) {
                                 insertarCustoms += " LLEGADA_A_GLOBE_TRADE_SD = TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YYYY'), "; 
-                        //}       
+                        }       
                                 insertarCustoms += " ARCHIVO_M = '" + archivo_m + "', "; 
 
-                        //if(!fecha_archivo_m.trim().equals("")){        
+                        //if(!fecha_archivo_m.trim().equals("null")){    
+                          if (fecha_archivo_m != null && !fecha_archivo_m.equals("") && !fecha_archivo_m.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_ARCHIVO_M = TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YYYY'), ";  
-                       // }        
-                        //if(!fecha_solicit_manip.trim().equals("")){        
+                        }        
+                        //if(!fecha_solicit_manip.trim().equals("null")){  
+                          if (fecha_solicit_manip != null && !fecha_solicit_manip.equals("") && !fecha_solicit_manip.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_SOLICIT_MANIP = TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YYYY'), ";  
-                        //}        
-                        //if(!fecha_vencim_manip.trim().equals("")){        
+                        }        
+                        //if(!fecha_vencim_manip.trim().equals("null")){   
+                          if (fecha_vencim_manip != null && !fecha_vencim_manip.equals("") && !fecha_vencim_manip.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_VENCIM_MANIP = TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YYYY'), ";  
-                        //}        
-                        //if(!fecha_confirm_clave_pedim.trim().equals("")){        
+                        }        
+                        //if(!fecha_confirm_clave_pedim.trim().equals("null")){ 
+                          if (fecha_confirm_clave_pedim != null && !fecha_confirm_clave_pedim.equals("") && !fecha_confirm_clave_pedim.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_CONFIRM_CLAVE_PEDIM = TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YYYY'), ";  
-                        //}        
-                       // if(!fecha_recep_increment.trim().equals("")){        
+                       }        
+                       // if(!fecha_recep_increment.trim().equals("null")){  
+                         if (fecha_recep_increment != null && !fecha_recep_increment.equals("") && !fecha_recep_increment.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_RECEP_INCREMENT = TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YYYY'), ";   
-                        //}        
+                        }        
                                 insertarCustoms += " T_E = '" + t_e + "', "; 
-                        //if(!fecha_vencim_inbound.trim().equals("")){        
+                        //if(!fecha_vencim_inbound.trim().equals("null")){   
+                          if (fecha_vencim_inbound != null && !fecha_vencim_inbound.equals("") && !fecha_vencim_inbound.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_VENCIM_INBOUND = TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YYYY'), ";
-                        //}        
+                        }        
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //CUSA Y VF
@@ -864,13 +928,14 @@ public class InsertarCustomsForms extends HttpServlet {
                                 insertarCustoms += " NO_BULTOS = '" + no_bultos + "', " 
                                                  + " PESO_KG = '" + peso_kg + "', "  
                                                  + " TRANSFERENCIA = '" + transferencia + "', ";  
-                       // if(!fecha_inicio_etiquetado.trim().equals("")){        
-
+                       // if(!fecha_inicio_etiquetado.trim().equals("null")){        
+                        if (fecha_inicio_etiquetado != null && !fecha_inicio_etiquetado.equals("") && !fecha_inicio_etiquetado.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_INICIO_ETIQUETADO = TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YYYY'), ";
-                       // }        
-                       // if(!fecha_termino_etiquetado.trim().equals("")){        
+                        }        
+                       // if(!fecha_termino_etiquetado.trim().equals("null")){ 
+                         if (fecha_termino_etiquetado != null && !fecha_termino_etiquetado.equals("") && !fecha_termino_etiquetado.equalsIgnoreCase("null")) {
                                 insertarCustoms += " FECHA_TERMINO_ETIQUETADO = TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YYYY'), ";
-                       // }        
+                       }        
                                 insertarCustoms += " HORA_TERMINO_ETIQUETADO = '" + hora_termino_etiquetado + "', "  
                                                  + " PROVEEDOR = '" + proveedor + "', "  
                                                  + " PROVEEDOR_CARGA = '" + proveedor_carga + "', "; 
@@ -884,8 +949,9 @@ public class InsertarCustomsForms extends HttpServlet {
                                                  + " PRIORIDAD = '" + prioridad + "', "
                                                  + " USER_NID = '" + UserId + "' "
                                                  + " WHERE SHIPMENT_ID = '" + shipmentId + "' ";
-                    
-            }else{   
+                 System.out.println("if"+insertarCustoms);   
+            }else{
+                System.out.println("else"+insertarCustoms);
                 
                 //oraDB.connect(dbData.getUser(), dbData.getPassword()); /* CONEXIÓN */
                 
@@ -903,121 +969,122 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " PEDIMENTO_R1, "          
                                                   + " MOTIVO_RECTIFICACION_1, "  
                                                   + " PEDIMENTO_R1_2DO, "          
-                                                  + " MOTIVO_RECTIFICACION_2, ";  
-                        if(!fecha_recepcion_doc.trim().equals("")){         
+                                                  + " MOTIVO_RECTIFICACION_2, "; 
+                                   System.out.println("else1 "+insertarCustoms);
+                     //   if(!fecha_recepcion_doc.trim().equals("null")){         
                                  insertarCustoms += " FECHA_RECEPCION_DOCUMENTOS, ";   
-                        }         
+                    //    }         
                                  insertarCustoms += " RECINTO, "    
                                                   + " NAVIERA_FORWARDER, "    
                                                   + " BUQUE, ";  
-                        if(!fecha_revalidacion.trim().equals("")){         
+                    //    if(!fecha_revalidacion.trim().equals("null")){         
                                  insertarCustoms += " FECHA_REVALID_LIBE_BL, ";
-                        }
-                        if(!fecha_previo_origen.trim().equals("")){
+                   //     }
+                    //    if(!fecha_previo_origen.trim().equals("null")){
                                  insertarCustoms += " FECHA_PREVIO_ORIGEN, "; 
-                        } 
-                        if(!fecha_previo_destino.trim().equals("")){
+                  //      } 
+                  //      if(!fecha_previo_destino.trim().equals("null")){
                                  insertarCustoms += " FECHA_PREVIO_DESTINO, ";  
-                        }     
-                        if(!fecha_resultado_previo.trim().equals("")){
+                  //      }     
+                       // if(!fecha_resultado_previo.trim().equals("null")){
                                  insertarCustoms += " FECHA_RESULTADO_PREVIO, "; 
-                        }
-                        if(!proforma_final.trim().equals("")){
+                       // }
+                        //if(!proforma_final.trim().equals("null")){
                                  insertarCustoms += " PROFORMA_FINAL, "; 
-                        }        
+                        //}        
                                  insertarCustoms += " REQUIERE_PERMISO, ";     
-                        if(!fecha_envio.trim().equals("")){         
+                        //if(!fecha_envio.trim().equals("null")){         
                                  insertarCustoms += " FECHA_ENVIO_FICHAS_NOTAS, ";   
-                        }
-                        if(!fecha_recepcion_perm.trim().equals("")){
+                        //}
+                       // if(!fecha_recepcion_perm.trim().equals("null")){
                                  insertarCustoms += " FEC_RECEPCION_PERMISOS_TRAMIT, ";     
-                        }         
-                        if(!fecha_activacion_perm.trim().equals("")){
+                       // }         
+                       //// if(!fecha_activacion_perm.trim().equals("null")){
                                  insertarCustoms += " FEC_ACT_PERMISOS, ";     
-                        }     
-                        if(!fecha_permisos_aut.trim().equals("")){
+                       // }     
+                       // if(!fecha_permisos_aut.trim().equals("null")){
                                  insertarCustoms += " FEC_PERM_AUT, ";  
-                        }         
+                       // }         
                                  insertarCustoms += " CO_APLIC_PREF_ARANCELARIA, "       
                                                   + " APLIC_PREF_ARANCELARIA_CO, "    
                                                   + " REQUIERE_UVA, "    
                                                   + " REQUIERE_CA, ";  
-                        if(!fecha_recepcion_ca.trim().equals("")){         
+                       // if(!fecha_recepcion_ca.trim().equals("null")){         
                                  insertarCustoms += " FECHA_RECEPCION_CA, "; 
-                        }         
+                       // }         
                                  insertarCustoms += " NÚMERO_CONSTANCIA_CA, "  
                                                   + " MONTO_CA, ";  
-                        if(!fecha_doc_completos.trim().equals("")){         
+                       // if(!fecha_doc_completos.trim().equals("null")){         
                                  insertarCustoms += " FECHA_DOCUMENTOS_COMPLETOS, ";     
-                        }
-                        if(!fecha_pago_pedimento.trim().equals("")){
+                       // }
+                       // if(!fecha_pago_pedimento.trim().equals("null")){
                                  insertarCustoms += " FECHA_PAGO_PEDIMENTO, ";     
-                        }     
-                        if(!fecha_solicitud_transporte.trim().equals("")){
+                       // }     
+                        //if(!fecha_solicitud_transporte.trim().equals("null")){
                                  insertarCustoms += " FECHA_SOLICITUD_TRANSPORTE, ";
-                        }         
-                        if(!fecha_modulacion.trim().equals("")){
+                       // }         
+                       // if(!fecha_modulacion.trim().equals("null")){
                                  insertarCustoms += " FECHA_MODULACION, "; 
-                        }         
+                      //  }         
                                  insertarCustoms += " MODALIDAD_CAMION_TREN, "                 
                                                   + " RESULT_MODULACION_VERDE_ROJO, "; 
-                        if(!fecha_reconocimiento.trim().equals("")){         
+                        //if(!fecha_reconocimiento.trim().equals("null")){         
                                  insertarCustoms += " FECHA_RECONOCIMIENTO, "; 
-                        }     
-                        if(!fecha_liberacion.trim().equals("")){
+                        //}     
+                        //if(!fecha_liberacion.trim().equals("null")){
                                  insertarCustoms += " FECHA_LIBERACION, ";  
-                        }                 
+                        //}                 
                                  insertarCustoms += " SELLO_ORIGEN, "              
                                                   + " SELLO_FINAL, "; 
-                        if(!fecha_retencion_aut.trim().equals("")){         
+                       // if(!fecha_retencion_aut.trim().equals("null")){         
                                  insertarCustoms += " FECHA_RETENCION_AUTORIDAD, ";    
-                        }         
-                        if(!fecha_liberacion_aut.trim().equals("")){
+                       // }         
+                       // if(!fecha_liberacion_aut.trim().equals("null")){
                                  insertarCustoms += " FECHA_LIB_POR_RET_AUT, ";  
-                        }         
+                       // }         
                                  insertarCustoms += " ESTATUS_OPERACION, "         
                                                   + " MOTIVO_ATRASO, "             
                                                   + " OBSERVACIONES, ";        
 
                if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
-                        if(!llegada_a_nova.trim().equals("")){        
+                       // if(!llegada_a_nova.trim().equals("null")){        
                                 insertarCustoms += " LLEGADA_A_NOVA, ";
-                        }   
-                        if(!llegada_a_globe_trade_sd.trim().equals("")){
+                       // }   
+                       // if(!llegada_a_globe_trade_sd.trim().equals("null")){
                                 insertarCustoms += " LLEGADA_A_GLOBE_TRADE_SD, "; 
-                        }       
+                      //  }       
                                 insertarCustoms += " ARCHIVO_M, "; 
-                        if(!fecha_archivo_m.trim().equals("")){       
+                        //if(!fecha_archivo_m.trim().equals("null")){       
                                 insertarCustoms += " FECHA_ARCHIVO_M, "; 
-                        }
-                        if(!fecha_solicit_manip.trim().equals("")){
+                       // }
+                       // if(!fecha_solicit_manip.trim().equals("null")){
                                 insertarCustoms += " FECHA_SOLICIT_MANIP, "; 
-                        }    
-                        if(!fecha_vencim_manip.trim().equals("")){
+                       // }    
+                       // if(!fecha_vencim_manip.trim().equals("null")){
                                 insertarCustoms += " FECHA_VENCIM_MANIP, "; 
-                        }
-                        if(!fecha_confirm_clave_pedim.trim().equals("")){
+                       // }
+                       // if(!fecha_confirm_clave_pedim.trim().equals("null")){
                                 insertarCustoms += " FECHA_CONFIRM_CLAVE_PEDIM, "; 
-                        }   
-                        if(!fecha_recep_increment.trim().equals("")){
+                       // }   
+                       // if(!fecha_recep_increment.trim().equals("null")){
                                 insertarCustoms += " FECHA_RECEP_INCREMENT, ";
-                        }        
+                       // }        
                                 insertarCustoms += " T_E, "; 
-                        if(!fecha_vencim_inbound.trim().equals("")){        
+                        //if(!fecha_vencim_inbound.trim().equals("null")){        
                                 insertarCustoms += " FECHA_VENCIM_INBOUND, ";
-                        }        
+                        //}        
                 }
-                
+                  System.out.println("else2"+insertarCustoms);
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //CUSA Y VF
                                 insertarCustoms += " NO_BULTOS, "
                                                  + " PESO_KG, " 
                                                  + " TRANSFERENCIA, "; 
-                        if(!fecha_inicio_etiquetado.trim().equals("")){        
+                        //if(!fecha_inicio_etiquetado.trim().equals("null")){        
                                 insertarCustoms += " FECHA_INICIO_ETIQUETADO, "; 
-                        }   
-                        if(!fecha_termino_etiquetado.trim().equals("")){
+                        //}   
+                        //if(!fecha_termino_etiquetado.trim().equals("null")){
                                 insertarCustoms += " FECHA_TERMINO_ETIQUETADO, "; 
-                        }        
+                        //}        
                                 insertarCustoms += " HORA_TERMINO_ETIQUETADO, " 
                                                  + " PROVEEDOR, " 
                                                  + " PROVEEDOR_CARGA, ";
@@ -1048,121 +1115,234 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " '" + motivo_rectificacion_1er + "', "
                                                   + " '" + pedimento_r1_2do + "', "          
                                                   + " '" + motivo_rectificacion_2do + "', ";  
-                        if(!fecha_recepcion_doc.trim().equals("")){         
+                      //  if(!fecha_recepcion_doc.trim().equals("null")){  
+                             if (fecha_recepcion_doc != null && !fecha_recepcion_doc.equals("") && !fecha_recepcion_doc.equalsIgnoreCase("null")) {
                                  insertarCustoms += " TO_DATE('" + fecha_recepcion_doc + "', 'MM/DD/YYYY'), ";     
-                        }         
+                               }  else{
+                             insertarCustoms +="null,";
+                             }       
                                  insertarCustoms += " '" + recinto + "', " 
                                                   + " '" + naviera + "', " 
                                                   + " '" + buque + "', "; 
-                        if(!fecha_revalidacion.trim().equals("")){         
+                       // if(!fecha_revalidacion.trim().equals("null")){   
+                              if (fecha_revalidacion != null && !fecha_revalidacion.equals("") && !fecha_revalidacion.equalsIgnoreCase("null")) {
                                  insertarCustoms += " TO_DATE('" + fecha_revalidacion + "', 'MM/DD/YYYY'), ";    
-                        }     
-                        if(!fecha_previo_origen.trim().equals("")){
+                        }   else{
+                             insertarCustoms +="null,";
+                             }    
+                      //  if(!fecha_previo_origen.trim().equals("null")){
+                             if (fecha_previo_origen != null && !fecha_previo_origen.equals("") && !fecha_previo_origen.equalsIgnoreCase("null")) {
                                  insertarCustoms += " TO_DATE('" + fecha_previo_origen + "', 'MM/DD/YYYY'), ";   
-                        }  
-                        if(!fecha_previo_destino.trim().equals("")){
+                        }   else{
+                             insertarCustoms +="null,";
+                             } 
+                       // if(!fecha_previo_destino.trim().equals("null")){
+                             if (fecha_previo_destino != null && !fecha_previo_destino.equals("") && !fecha_previo_destino.equalsIgnoreCase("null")) {
+                        
                                 insertarCustoms += " TO_DATE('" + fecha_previo_destino + "', 'MM/DD/YYYY'), ";    
-                        } 
-                        if(!fecha_resultado_previo.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             } 
+                       // if(!fecha_resultado_previo.trim().equals("null")){
+                             if (fecha_resultado_previo != null && !fecha_resultado_previo.equals("") && !fecha_resultado_previo.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_resultado_previo + "', 'MM/DD/YYYY'), ";
-                        }      
-                        if(!proforma_final.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }      
+                       // if(!proforma_final.trim().equals("null")){
+                             if (proforma_final != null && !proforma_final.equals("") && !proforma_final.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + proforma_final + "', 'MM/DD/YYYY'), "; 
-                        }         
+                        }   else{
+                             insertarCustoms +="null,";
+                             }        
                                  insertarCustoms += " '" + permiso + "', ";   
-                        if(!fecha_envio.trim().equals("")){         
+                       // if(!fecha_envio.trim().equals("null")){ 
+                             if (fecha_envio != null && !fecha_envio.equals("") && !fecha_envio.equalsIgnoreCase("null")) {
+                                
                                  insertarCustoms += " TO_DATE('" + fecha_envio + "', 'MM/DD/YYYY'), "; 
-                        }         
-                        if(!fecha_recepcion_perm.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
+                      //  if(!fecha_recepcion_perm.trim().equals("null")){
+                             if (fecha_recepcion_perm != null && !fecha_recepcion_perm.equals("") && !fecha_recepcion_perm.equalsIgnoreCase("null")) {
+                      
                                  insertarCustoms += " TO_DATE('" + fecha_recepcion_perm + "', 'MM/DD/YYYY'), "; 
-                        }    
-                        if(!fecha_activacion_perm.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }    
+                        //if(!fecha_activacion_perm.trim().equals("null")){
+                             if (fecha_activacion_perm != null && !fecha_activacion_perm.equals("") && !fecha_activacion_perm.equalsIgnoreCase("null")) {
+                         
                                  insertarCustoms += " TO_DATE('" + fecha_activacion_perm + "', 'MM/DD/YYYY'), ";
-                        }   
-                        if(!fecha_permisos_aut.trim().equals("")){
+                        }   else{
+                             insertarCustoms +="null,";
+                             }  
+                        //if(!fecha_permisos_aut.trim().equals("null")){
+                             if (fecha_permisos_aut != null && !fecha_permisos_aut.equals("") && !fecha_permisos_aut.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_permisos_aut + "', 'MM/DD/YYYY'), ";   
-                        }         
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
                                  insertarCustoms += " '" + co_pref_arancelaria + "', "       
                                                   + " '" + aplic_pref_arancelaria + "', "    
                                                   + " '" + req_uva + "', "   
                                                   + " '" + req_ca + "', ";   
-                        if(!fecha_recepcion_ca.trim().equals("")){         
+                      //  if(!fecha_recepcion_ca.trim().equals("null")){ 
+                             if (fecha_recepcion_ca != null && !fecha_recepcion_ca.equals("") && !fecha_recepcion_ca.equalsIgnoreCase("null")) {
+                                
                                  insertarCustoms += " TO_DATE('" + fecha_recepcion_ca + "', 'MM/DD/YYYY'), ";   
-                        }         
+                        }   else{
+                             insertarCustoms +="null,";
+                             }        
                                  insertarCustoms += " '" + num_constancia_ca + "', "   
                                                   + " '" + monto_ca + "', ";  
-                        if(!fecha_doc_completos.trim().equals("")){         
+                       // if(!fecha_doc_completos.trim().equals("null")){  
+                             if (fecha_doc_completos != null && !fecha_doc_completos.equals("") && !fecha_doc_completos.equalsIgnoreCase("null")) {
+                             
                                  insertarCustoms += " TO_DATE('" + fecha_doc_completos + "', 'MM/DD/YYYY'), ";    
-                        }         
-                        if(!fecha_pago_pedimento.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
+                       // if(!fecha_pago_pedimento.trim().equals("null")){
+                             if (fecha_pago_pedimento != null && !fecha_pago_pedimento.equals("") && !fecha_pago_pedimento.equalsIgnoreCase("null")) {
+                       
                                  insertarCustoms += " TO_DATE('" + fecha_pago_pedimento + "', 'MM/DD/YYYY'), ";
-                        }         
-                        if(!fecha_solicitud_transporte.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
+                       // if(!fecha_solicitud_transporte.trim().equals("null")){
+                             if (fecha_solicitud_transporte != null && !fecha_solicitud_transporte.equals("") && !fecha_solicitud_transporte.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_solicitud_transporte + "', 'MM/DD/YYYY'), ";  
-                        }
-                        if(!fecha_modulacion.trim().equals("")){
+                        } else{
+                             insertarCustoms +="null,";
+                             } 
+                        //if(!fecha_modulacion.trim().equals("null")){
+                             if (fecha_modulacion != null && !fecha_modulacion.equals("") && !fecha_modulacion.equalsIgnoreCase("null")) {
+                         
                                  insertarCustoms += " TO_DATE('" + fecha_modulacion + "', 'MM/DD/YYYY'), ";   
-                        }         
+                        } else{
+                             insertarCustoms +="null,";
+                             }          
                                  insertarCustoms += " '" + modalidad + "', "                 
                                                   + " '" + resultado_modulacion + "', ";   
-                        if(!fecha_reconocimiento.trim().equals("")){         
+                       // if(!fecha_reconocimiento.trim().equals("null")){  
+                             if (fecha_reconocimiento != null && !fecha_reconocimiento.equals("") && !fecha_reconocimiento.equalsIgnoreCase("null")) {
+                               
                                  insertarCustoms += " TO_DATE('" + fecha_reconocimiento + "', 'MM/DD/YYYY'), ";    
-                        }         
-                        if(!fecha_liberacion.trim().equals("")){
+                        } else{
+                             insertarCustoms +="null,";
+                             }          
+                       // if(!fecha_liberacion.trim().equals("null")){
+                             if (fecha_liberacion != null && !fecha_liberacion.equals("") && !fecha_liberacion.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_liberacion + "', 'MM/DD/YYYY'), "; 
-                        }         
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
                                  insertarCustoms += " '" + sello_origen + "', "              
                                                   + " '" + sello_final + "', "; 
-                        if(!fecha_retencion_aut.trim().equals("")){         
+                       // if(!fecha_retencion_aut.trim().equals("null")){   
+                             if (fecha_retencion_aut != null && !fecha_retencion_aut.equals("") && !fecha_retencion_aut.equalsIgnoreCase("null")) {
+                              
                                  insertarCustoms += " TO_DATE('" + fecha_retencion_aut + "', 'MM/DD/YYYY'), ";  
-                        }         
-                        if(!fecha_liberacion_aut.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
+                       // if(!fecha_liberacion_aut.trim().equals("null")){
+                             if (fecha_liberacion_aut != null && !fecha_liberacion_aut.equals("") && !fecha_liberacion_aut.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_liberacion_aut + "', 'MM/DD/YYYY'), "; 
-                        }                 
+                        }  else{
+                             insertarCustoms +="null,";
+                             }                 
                                  insertarCustoms +=  " '" + estatus_operacion_actual + "', "         
                                                    + " '" + motivo_atraso + "', "             
                                                    + " '" + observaciones + "', "; 
                 
                 if(idAgenteAduanal.equals("4001")||idAgenteAduanal.equals("4006")){ //LOGIX Y VF
 
-                        if(!llegada_a_nova.trim().equals("")){        
+                       // if(!llegada_a_nova.trim().equals("null")){  
+                             if (llegada_a_nova != null && !llegada_a_nova.equals("") && !llegada_a_nova.equalsIgnoreCase("null")) {
+                              
                                  insertarCustoms += " TO_DATE('" + llegada_a_nova + "', 'MM/DD/YYYY'), ";    
-                        } 
-                        if(!llegada_a_globe_trade_sd.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             } 
+                       // if(!llegada_a_globe_trade_sd.trim().equals("null")){
+                             if (llegada_a_globe_trade_sd != null && !llegada_a_globe_trade_sd.equals("") && !llegada_a_globe_trade_sd.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + llegada_a_globe_trade_sd + "', 'MM/DD/YYYY'), ";  
-                        }         
+                        }   else{
+                             insertarCustoms +="null,";
+                             }        
                                  insertarCustoms += " '" + archivo_m + "', ";
-                        if(!fecha_archivo_m.trim().equals("")){         
+                       // if(!fecha_archivo_m.trim().equals("null")){   
+                             if (fecha_archivo_m != null && !fecha_archivo_m.equals("") && !fecha_archivo_m.equalsIgnoreCase("null")) {
+                              
                                  insertarCustoms += " TO_DATE('" + fecha_archivo_m + "', 'MM/DD/YYYY'), ";   
-                        }         
-                        if(!fecha_solicit_manip.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
+                       // if(!fecha_solicit_manip.trim().equals("null")){
+                             if (fecha_solicit_manip != null && !fecha_solicit_manip.equals("") && !fecha_solicit_manip.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_solicit_manip + "', 'MM/DD/YYYY'), ";   
-                        } 
-                        if(!fecha_vencim_manip.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             } 
+                      //  if(!fecha_vencim_manip.trim().equals("null")){
+                             if (fecha_vencim_manip != null && !fecha_vencim_manip.equals("") && !fecha_vencim_manip.equalsIgnoreCase("null")) {
+                         
                                  insertarCustoms += " TO_DATE('" + fecha_vencim_manip + "', 'MM/DD/YYYY'), ";    
-                        }       
-                        if(!fecha_confirm_clave_pedim.trim().equals("")){
+                        } else{
+                             insertarCustoms +="null,";
+                             }        
+                       // if(!fecha_confirm_clave_pedim.trim().equals("null")){
+                             if (fecha_confirm_clave_pedim != null && !fecha_confirm_clave_pedim.equals("") && !fecha_confirm_clave_pedim.equalsIgnoreCase("null")) {
+                         
                                  insertarCustoms += " TO_DATE('" + fecha_confirm_clave_pedim + "', 'MM/DD/YYYY'), ";
-                        }     
-                        if(!fecha_recep_increment.trim().equals("")){
+                        }  else{
+                             insertarCustoms +="null,";
+                             }     
+                      //  if(!fecha_recep_increment.trim().equals("null")){
+                             if (fecha_recep_increment != null && !fecha_recep_increment.equals("") && !fecha_recep_increment.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_recep_increment + "', 'MM/DD/YYYY'), "; 
-                        }         
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
                                  insertarCustoms += " '" + t_e + "', ";
-                        if(!fecha_vencim_inbound.trim().equals("")){         
+                       // if(!fecha_vencim_inbound.trim().equals("null")){ 
+                             if (fecha_vencim_inbound != null && !fecha_vencim_inbound.equals("") && !fecha_vencim_inbound.equalsIgnoreCase("null")) {
+                                
                                  insertarCustoms += " TO_DATE('" + fecha_vencim_inbound + "', 'MM/DD/YYYY'), ";    
-                        }         
+                        }  else{
+                             insertarCustoms +="null,";
+                             }         
                 }
                 
                 if(idAgenteAduanal.equals("4002")||idAgenteAduanal.equals("4006")){  //Cusa ó VF
                                  insertarCustoms += " '" + no_bultos + "', "
                                                   + " '" + peso_kg + "', "
                                                   + " '" + transferencia + "', ";
-                        if(!fecha_inicio_etiquetado.trim().equals("")){
+                      //  if(!fecha_inicio_etiquetado.trim().equals("null")){
+                             if (fecha_inicio_etiquetado != null && !fecha_inicio_etiquetado.equals("") && !fecha_inicio_etiquetado.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_inicio_etiquetado + "', 'MM/DD/YYYY'), ";  
-                        }
-                        if(!fecha_termino_etiquetado.trim().equals("")){
+                        } else{
+                             insertarCustoms +="null,";
+                             } 
+                       // if(!fecha_termino_etiquetado.trim().equals("null")){
+                             if (fecha_termino_etiquetado != null && !fecha_termino_etiquetado.equals("") && !fecha_termino_etiquetado.equalsIgnoreCase("null")) {
+                        
                                  insertarCustoms += " TO_DATE('" + fecha_termino_etiquetado + "', 'MM/DD/YYYY'), ";    
-                        }
+                        } else{
+                             insertarCustoms +="null,";
+                             } 
                                  insertarCustoms += " '" + hora_termino_etiquetado + "', "
                                                   + " '" + proveedor + "', "
                                                   + " '" + proveedor_carga + "', "; 
@@ -1177,7 +1357,10 @@ public class InsertarCustomsForms extends HttpServlet {
                                                   + " TO_DATE(SYSDATE, 'DD/MM/YYYY'), "    //INSERTAR DEFAULT        
                                                   + " '20', "
                                                   + " '" + UserId + "') ";  
+                                  System.out.println("else3"+insertarCustoms);
             }      
+            
+                  System.out.println("insertarCustoms"+insertarCustoms);
                     boolean oraOut1 = oraDB.execute(insertarCustoms);  
                 
                 
@@ -1197,7 +1380,8 @@ public class InsertarCustomsForms extends HttpServlet {
                     
         /************************************* Proceso para activar semaforo /*************************************/
        
-                if(!eta_port_discharge.trim().equals("")){ 
+              //  if(!eta_port_discharge.trim().equals("null")){ 
+                      if (eta_port_discharge != null && !eta_port_discharge.equals("") && !eta_port_discharge.equalsIgnoreCase("null")) {
                     
                     // create SimpleDateFormat object with source string date format: Tratamiento 1
                     SimpleDateFormat sdfSource2 = new SimpleDateFormat("yyyy-MM-dd"); 
