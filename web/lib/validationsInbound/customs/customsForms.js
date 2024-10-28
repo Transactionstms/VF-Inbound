@@ -276,7 +276,7 @@ async function consultarCustomsFiltros(columna_referenciaAA, columna_evento, col
  FUNCIONES - CELDAS TABLA CUSTOMS
  --------------------------------------------------------------------------*/
 async function AddPullCustoms() {
-
+   console.log('guardar');
     await mostrarLoader();
 
     let idAgenteAduanal = document.getElementById("idAgenteAduanal").value;
@@ -569,6 +569,7 @@ async function AddPullCustoms() {
         /* RULE #10 ESTATUS: IMPORTADO */
         if (estatus_operacion === "19") {
             // Convertir fecha_liberacion y asignar a una variable separada
+               console.log("fechaConvertidaLiberacion: " + fecha_liberacion);
             var fechaConvertidaLiberacion = convertirFechaLiberacion(fecha_liberacion);
  
            console.log("fechaConvertidaLiberacion: " + fechaConvertidaLiberacion);
@@ -607,6 +608,7 @@ async function AddPullCustoms() {
                 msgErrorAgenteAduanal(i, idAgenteAduanal);
             }
         }
+        console.log("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustomsInicial=" + i + "&numCustomsFinal=" + i + urlCustoms);
 
         let urlData = encodeURI("../InsertarCustomsForms?idAgenteAduanal=" + idAgenteAduanal + "&numCustomsInicial=" + i + "&numCustomsFinal=" + i + urlCustoms);
         try {
@@ -2322,7 +2324,7 @@ async function updateExcelFiltrers(tipoFiltro){
  }    
  
 // Función para convertir la fecha_liberacion
-function convertirFechaLiberacion(fecha_liberacion) {
+function convertirFechaLiberacionerror(fecha_liberacion) {
     // Mapeo de los meses
     const meses = {
         Jan: "01",
@@ -2344,15 +2346,86 @@ function convertirFechaLiberacion(fecha_liberacion) {
     };
 
     // Extraer los componentes de la fecha usando una expresión regular
-    const partes = fecha_liberacion.match(/([a-zA-Z]{3})\/(\d{2})\/(\d{4})/);
-    if (partes) {
-        const mes = meses[partes[1]]; // Convertir el nombre del mes a número
-        const dia = partes[2];
-        const año = partes[3];
-        return `${mes}/${dia}/${año}`;
+   // const partes = fecha_liberacion.match(/([a-zA-Z]{3})\/(\d{2})\/(\d{4})/);
+    const partes = fecha_liberacion.split('/');
+   
+        const mes = meses[partes[0]]; // Convertir el nombre del mes a número
+        const dia = partes[1];
+        const año = partes[2];
+          console.log(`${mes} `);
+          console.log(`${dia} `);
+          console.log(`${año}`);
+          if (año.length === 2) {
+        // Suponiendo que los años 00-99 pertenecen al siglo XXI (2000+)
+        // Si se quiere ajustar para otro siglo, se puede cambiar la lógica
+        año ='20'+año;
     }
-    return null; // Devolver null si el formato no es válido
+    console.log(`${mes}/${dia}/${año}`);
+        return `${mes}/${dia}/${año}`;
+  
+ }
+
+
+function convertirFechaLiberacion(fecha_liberacion) {
+    // Mapeo de los meses
+    const meses = {
+        Jan: "01",
+        Feb: "02",
+        Mar: "03",
+        Apr: "04",
+        May: "05",
+        Jun: "06",
+        Jul: "07",
+        Aug: "08",
+        Sep: "09",
+        Oct: "10",
+        Nov: "11",
+        Dec: "12",
+        Ene: "01",
+        Abr: "04",
+        Ago: "08",
+        Dic: "12"
+    };
+
+    // Verificar si la fecha es nula, indefinida o no es un string
+    if (!fecha_liberacion || typeof fecha_liberacion !== 'string') {
+        return null;
+    }
+
+    // Intentar dividir la fecha
+    const partes = fecha_liberacion.split('/');
+    
+    
+    
+    // Verificar si el split tuvo éxito y si tenemos los componentes necesarios
+    if (partes.length !== 3) {
+        return null;
+    }
+
+    const mes = meses[partes[0]]; // Convertir el nombre del mes a número
+    const dia = partes[1];
+    let año = partes[2]
+     console.log(`${mes} `);
+          console.log(`${dia} `);
+          console.log(`${año}`);
+    // Asegurarse de que el año tenga 4 caracteres
+     console.log(`${mes}/${dia}/${año}`);
+      console.log('+año.lengthaño.length'+año.length);
+    if (año.length === 2) {
+        año = '20'+año; // Suponiendo que el siglo es XXI
+    }
+     // Asegurarse de que el año siempre retorne solo los dos últimos dígitos
+    //año = año.slice(-2);
+    console.log(`${mes}/${dia}/${año}`);
+    // Verificar si el mes es válido (existe en el mapeo)
+    if (!mes) {
+        return null;
+    }
+
+    // Formatear la fecha en el formato MM/DD/YYYY
+    return `${mes}/${dia}/${año}`;
 }
+
 
 // Función para formatear la fecha
 function formatDateCustom(date) {

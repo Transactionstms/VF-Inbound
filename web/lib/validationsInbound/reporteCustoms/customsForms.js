@@ -282,7 +282,8 @@ let selected_fy="";
                                     columna_fy) {
             
         try {
-            
+            var f1 = document.getElementById("f1").value;
+            var f2 = document.getElementById("f2").value;
               let urlCustoms = encodeURI("../../ConsultarReporteCustoms?columna_referenciaAA="+columna_referenciaAA
                                         +"&columna_evento="+columna_evento
                                         +"&columna_responsable="+columna_responsable
@@ -367,7 +368,10 @@ let selected_fy="";
                                         +"&columna_hora_termino_etiquetado="+columna_hora_termino_etiquetado
                                         +"&columna_proveedor="+columna_proveedor
                                         +"&columna_proveedor_carga="+columna_proveedor_carga
-                                        +"&columna_fy="+columna_fy);
+                                        +"&columna_fy="+columna_fy
+                                        +"&f1="+f1
+                                        +"&f2="+f2
+                                        );
 
             const response = await fetch(urlCustoms);
             

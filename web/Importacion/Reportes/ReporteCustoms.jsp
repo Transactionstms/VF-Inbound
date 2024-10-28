@@ -91,6 +91,10 @@
                 String fechaInicial = "01/10/2023";
                 String fechaFinal = "24/01/2024";
                 
+                
+                String f = request.getParameter("f");
+                String f2 = request.getParameter("f2");
+                
                 //Parametros Generales
                 String idDivision = "20";
                 String AgentType = "";
@@ -194,11 +198,11 @@
                         namePlantilla = rowA[2];
                     }
                 }
-                
+                System.out.println(fac.consultarEventosCustoms(AgentType,"0","0"));
                 //Listar columnas para encabeazdos
                 if (db.doDB(fac.consultarEventosCustoms(AgentType,"0","0"))) {
                         for (String[] row : db.getResultado()) {
-
+System.out.println("row[0] "+row[0]);
                             list_evento += row[0] + "@";
                             list_referenciaAA += row[30] + "@";
                             list_responsable += row[1] + "@";
@@ -307,6 +311,11 @@
         <input type="hidden" id="numCustoms" name="numCustoms" value="<%=cont%>">
         <input type="hidden" id="idAgenteAduanal" name="idAgenteAduanal" value="<%=AgentType%>">
 
+        
+        <input type="hidden" name="f1" value="<%=f%>" id="f1"/>
+        <input type="hidden" name="f2" value="<%=f2%>" id="f2"/>
+       
+        
         <!-- Parametros - Generación de Excel -->
         <input type="hidden" name="idPlantilla" value="<%=idPlantilla%>" id="idPlantilla"/>
         <input type="hidden" name="idOpcion" value="1" id="idOpcion"/>

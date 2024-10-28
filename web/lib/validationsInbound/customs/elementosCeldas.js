@@ -537,24 +537,28 @@ function hide_fecha_solicitud_transporte(value) {
     parametrizacionValoresEvento("fecha_solicitud_transporte",contModals); 
 }
 
-function show_fecha_modulacion(i) {
+function show_fecha_modulacion(data, i) {
     
     $("#modal_fecha_modulacion").modal("show");
-    let res = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
-    document.getElementById("fecha_modulacion").innerHTML = res;
-
-    //Conversión de fecha texto a numerica:
-    var fechaConvertidaLiberacion = convertirFechaLiberacion(res);
-    if (fechaConvertidaLiberacion) {
-
-        $('.datepicker-modulacion').flatpickr({
-            dateFormat: 'm/d/Y',
-            minDate: fechaConvertidaLiberacion,
-            inline: true
-        });
-
-    }
+     loadJsPicker();
+    document.getElementById("fecha_modulacion").value = data;
     contModals = i;
+    
+    //let res = document.getElementById("fecha_modulacion[" + i + "]").innerHTML;
+    //document.getElementById("fecha_modulacion").innerHTML = res;
+//
+    ////Conversión de fecha texto a numerica:
+    //var fechaConvertidaLiberacion = convertirFechaLiberacion(res);
+    //if (fechaConvertidaLiberacion) {
+//
+    //    $('.datepicker-modulacion').flatpickr({
+    //        dateFormat: 'm/d/Y',
+    //        minDate: fechaConvertidaLiberacion,
+    //        inline: true
+    //    });
+//
+    //}
+    //contModals = i;
 }
 
 function hide_fecha_modulacion(value) {

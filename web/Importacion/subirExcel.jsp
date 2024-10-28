@@ -7,6 +7,7 @@
 
 
 
+<%@page import="com.onest.graficas.StoredProcedureExample"%>
 <%@page import="com.tacts.plantillas.ExcelToOracle"%>
 <%@page import="com.onest.oracle.DB"%>
 <%@page import="com.onest.oracle.OracleDB"%>
@@ -244,7 +245,10 @@ System.out.println("baseURL"+baseURL);
                     caja.classList.add('overflow-auto');
                           if(<%=sql1%>===20 || <%=sql1%> === 40){
                          window.location.href = '<%=request.getContextPath()%>/Importacion/logGntbatch.jsp?folio=' + fecha;
+                         console.log('<%=request.getContextPath()%>/Importacion/logGntbatch.jsp?folio=' + fecha)
 
+                       
+                                         
                     }else if(<%=sql1%>===21){
                          window.location.href = '<%=request.getContextPath()%>/Importacion/logDsnBatch.jsp?folio=' + fecha;
 
@@ -263,7 +267,7 @@ System.out.println("baseURL"+baseURL);
 
                     }
                     else if (<%=sql1%> === 41) {
-                        window.location.href = '<%=request.getContextPath()%>/Importacion/logibr.jsp?folio=' + fecha;
+                        window.location.href = '<%=request.getContextPath()%>/Importacion/logbobj.jsp?folio=' + fecha;
 
                     }
                     else{
