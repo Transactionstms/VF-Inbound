@@ -1042,6 +1042,18 @@
         <servlet-name>InsertarPOD</servlet-name>
         <servlet-class>com.onest.train.insertar.catalogos.InsertarPOD</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExcelRepCustom</servlet-name>
+        <servlet-class>com.onest.train.consultas.ExcelRepCustom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DownloadExcelEventsCustomsNom</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.DownloadExcelEventsCustomsNom</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>enviarMailRC</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.enviarMailRC</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2078,6 +2090,18 @@
     <servlet-mapping>
         <servlet-name>InsertarPOD</servlet-name>
         <url-pattern>/InsertarPOD</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExcelRepCustom</servlet-name>
+        <url-pattern>/ExcelRepCustom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadExcelEventsCustomsNom</servlet-name>
+        <url-pattern>/DownloadExcelEventsCustomsNom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>enviarMailRC</servlet-name>
+        <url-pattern>/enviarMailRC</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
