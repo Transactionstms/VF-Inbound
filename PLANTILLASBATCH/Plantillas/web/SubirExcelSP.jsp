@@ -188,10 +188,15 @@
                 else if(insertSql22.equals("40")){
                     
                  ExcelToOracleSP excelToOracleSP=new ExcelToOracleSP();
-                 mensaje=   excelToOracleSP.InsertSpgtn2(insertSql2,ruta,folio); 
                  
-                  excelToOracleSP.InsertSpACT(folio);
-                  excelToOracleSP.InsertSpACTExc(folio);
+                 
+                 mensaje=   excelToOracleSP.InsertSpgtn23(insertSql2,ruta,folio); 
+                 
+                 //boolean primeraStore1= excelToOracleSP.InsertSpACT(folio);
+                
+                 //String primeraStore2= excelToOracleSP.InsertSpACTExc(folio);
+                 
+               //  mensaje+=" - "+primeraStore1+" - "+primeraStore2;
                 
                 
                 }
@@ -201,6 +206,22 @@
                  mensaje=   excelToOracleSP.InsertSpbobj(insertSql2,ruta,folio); 
                  
                
+                
+                
+                }
+                 
+                  else if(insertSql22.equals("100")){
+                    
+                  ExcelToOracleSP excelToOracleSP=new ExcelToOracleSP();
+                 
+                 
+                  
+                 boolean primeraStore1= excelToOracleSP.InsertSpACT(folio);
+                
+                 String primeraStore2= excelToOracleSP.InsertSpACTExc(folio);
+                 
+               mensaje+=" - "+primeraStore1+" - "+primeraStore2;
+                
                 
                 
                 }
@@ -217,3 +238,15 @@
 
 %>
 <%=mensaje%>
+ 
+
+
+<%
+
+ 
+
+
+
+
+
+%>
