@@ -10,6 +10,7 @@ package com.transactions.mailsender.jdbc;
  * @author grecendiz
  */
 import com.dao.ServiceDAO;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -743,6 +745,67 @@ public class Email {
             }
             return enviado;
         }
+    }
+    
+    
+    public boolean correoExcelinbo(String recipient,String subject, String messageBody, String filePath){
+        //    sendEmailWithAttachment("correo_destino@gmail.com", "Reporte con Excel", "Adjunto encontrarás el archivo Excel.", excelFilePath);
+   // private static void sendEmailWithAttachment(String recipient, String subject, String messageBody, String filePath) {
+
+    boolean res=false;
+    
+    String host = HOST;
+        final String user = REMITENTE;  // Cambiar por tu correo
+        final String password = CLAVE;    // Cambiar por tu contraseña
+       String excelFilePath = filePath;
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "587");
+
+        // Crear una sesión con autenticación
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, password);
+            }
+        });
+
+        try {
+            // Crear el mensaje
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
+            message.setSubject(subject);
+
+            // Crear el cuerpo del mensaje
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(messageBody);
+
+            // Crear el archivo adjunto
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(filePath);
+            attachmentPart.setDataHandler(new DataHandler(source));
+            attachmentPart.setFileName(new File(filePath).getName());
+
+            // Juntar el mensaje con el adjunto
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(attachmentPart);
+
+            message.setContent(multipart);
+
+            // Enviar el mensaje
+            Transport.send(message);
+            System.out.println("Correo enviado con éxito!");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.err.println("Error al enviar el correo: " + e.getMessage());
+        }
+    
+    return res;
     }
     
 }

@@ -11,7 +11,7 @@ public  class GenericJdbc {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
            // connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.89.176:1521:orcldb18c","VANS39TEST","UKidn49N875RBH54Cq2");
-         connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.140.125:1521:tacts125","VANS39TEST","XUKidn49N875RBH54Cq2");
+         connection = DriverManager.getConnection("jdbc:oracle:thin:@74.208.140.125:1695:tacts125","VANS39TEST","xQoPXqAYBjz9hSdirJaCyw_a");
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

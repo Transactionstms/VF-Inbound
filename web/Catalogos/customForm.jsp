@@ -428,7 +428,7 @@
         <div class="modal fade text-start" id="modal_fecha_pago_pedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <input class="form-control datepicker-pedimento" value="" id="fecha_pago_pedimento" name="fecha_pago_pedimento" type="text" autocomplete="off" onchange="hide_fecha_pago_pedimento(this.value)">
+                    <input class="form-control datepicker" value="" id="fecha_pago_pedimento" name="fecha_pago_pedimento" type="text" autocomplete="off" onchange="hide_fecha_pago_pedimento(this.value)">
                 </div>
             </div>
         </div> 
@@ -446,7 +446,7 @@
         <div class="modal fade text-start" id="modal_fecha_modulacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <input class="form-control datepicker-modulacion" value="" id="fecha_modulacion" name="fecha_modulacion" type="text" autocomplete="off" onchange="hide_fecha_modulacion(this.value)">
+                    <input class="form-control datepicker" value="" id="fecha_modulacion" name="fecha_modulacion" type="text" autocomplete="off" onchange="hide_fecha_modulacion(this.value)">
                 </div>
             </div>
         </div> 

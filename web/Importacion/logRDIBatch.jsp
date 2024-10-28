@@ -72,6 +72,10 @@
             
 String sql22= "  select NVL(EVENTO,ID_RDI),CONTENEDOR,BL,SHIPMENT,LOAD_TYPE,LUM_BRIO,BRAND,SBU_NAME,POL,COUNTRY,ACTUAL_CRD,DEPARTURE_DATE,MX_PORT,ETA_MX_PORT,ETA_DC,INDC_2_DAYS_PUT_AWAY,ARRIBO_REAL_DC"
           +" from tra_inb_rdi  where FOLIO='" + folio + "'";
+
+
+
+ String error = " select * from tra_inb_RDI_paso WHERE folio='"+folio+"' ";
     %>
     <body>
 
@@ -92,6 +96,53 @@ String sql22= "  select NVL(EVENTO,ID_RDI),CONTENEDOR,BL,SHIPMENT,LOAD_TYPE,LUM_
                                     <div class="card-body">
                                         <h1 class="mb-3">Registros   <%=maxt%> </h1>
                             
+                                        
+                                        
+                                          <h3> Se detectaron las siguientes incidencias, favor de validar.</h3>
+
+
+                                        <!--   <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
+                                             <table id="example2" class="display" style="width:100%">-->
+
+                                        <div id="table-scroll2" class="table-scroll">
+                                            <table id="example2" class="display">
+                                                <thead style="background-color: #001f3f;">
+                                                    <tr  >
+                                                        <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
+                                                        <th scope="col" class="font-titulo">CONTAINER </th>
+                                                        <th scope="col" class="font-titulo">SHIPMENT  </th> 
+                                                        <th scope="col" class="font-titulo">OBSERVACIONES  </th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <%
+                                                        if (db.doDB(error)) {
+                                                            for (String[] row : db.getResultado()) {
+                                                                String bg = "";
+                                                                if (row[4].equals("Favor de validar")) {
+                                                                    bg = "bg-danger";
+
+                                                                }
+
+                                                    %>
+                                                    <tr class="<%=bg%>" >
+                                                   <!--   <th class="font-numero"><%=row[0]%></th>-->	
+                                                        <td class="font-numero"><%=row[1]%></td>
+                                                        <td class="font-texto"> <%=row[3]%></td> 
+                                                        <td class="font-texto"> <%=row[4]%></td> 
+                                                    </tr>                                    
+
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <br><br><br>
+                                        
 
                                         <div class="card-body">
                                         <form id="uploadFileFormData1" name="uploadFileFormData1">

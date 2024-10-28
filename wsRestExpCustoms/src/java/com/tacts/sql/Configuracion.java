@@ -21,8 +21,8 @@ public class Configuracion {
         this.servidor = "74.208.140.125";
         this.sid = "tacts125";
         this.usuario = "VANS39TEST";
-        this.password = "XUKidn49N875RBH54Cq2";
-        this.puerto = "1521";
+        this.password = "xQoPXqAYBjz9hSdirJaCyw_a";
+        this.puerto = "1695";
     }
 
     public Configuracion() {

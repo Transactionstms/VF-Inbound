@@ -4,7 +4,8 @@
     Author     : grecendiz
 --%>
 
- 
+
+<%@page import="com.onest.graficas.StoredProcedureExample"%>
 <%@page import="com.onest.oracle.DB"%>
 <%@page import="com.onest.oracle.DBConfData"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,89 +25,94 @@
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
         <!-- Connection Status Red -->
         <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
- <style>
-        .table-scroll {
-            position: relative;
-            max-height: 60%;
-            overflow-y: auto;
-            width: 100%;
-        }
+        <style>
+            .table-scroll {
+                position: relative;
+                max-height: 60%;
+                overflow-y: auto;
+                width: 100%;
+            }
 
-        .table-scroll table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+            .table-scroll table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-        .table-scroll th,
-        .table-scroll td {
-            padding: 8px 16px;
-            text-align: left;
-        }
+            .table-scroll th,
+            .table-scroll td {
+                padding: 8px 16px;
+                text-align: left;
+            }
 
-        .table-scroll thead th {
-            position: sticky;
-            top: 0;
-             z-index: 10;
-        }
+            .table-scroll thead th {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
 
-       
-    </style>
+
+        </style>
     </head>
     <%
         try {
             HttpSession ownsession = request.getSession();
             DB db = new DB((DBConfData) ownsession.getAttribute("db.data"));
             String folio = request.getParameter("folio");
- 
-             String max   = "   select count(*)-2 from TRA_INB_PASO_GTN where FOLIO='"+folio+"' ";
-              String max2   = "   select count(*) from tra_inc_gtn_test where FOLIO='"+folio+"' ";
-             String error = " WITH numeros AS ( "
-                     + " "
- + "   SELECT LEVEL AS numero"
- + "   FROM DUAL"
- + "   CONNECT BY LEVEL <= (select MAX(CONSECUTIVO) from tra_inb_gtn_cosecutivo where PLANTILLA='"+folio+"')"
- + " )"
- + " SELECT numero"
- + " FROM numeros"
- + " WHERE numero NOT IN ("
- + "   SELECT CONSECUTIVO"
- + "   FROM tra_inb_gtn_cosecutivo  where PLANTILLA='"+folio+"' "
- + " ) and  numero not in (1,2) "
- + " ORDER BY numero ";
-             
-String sql2=" select SHIPMENT_ID, CONTAINER1, BL_AWB_PRO from tra_inc_gtn_test  where folio='"+folio+"' ";
 
-String maxt="";
-    if (db.doDB(max)) {
-        for (String[] row : db.getResultado()) {
-         maxt=row[0];                                                       
-      }}
-   
-    
-    String maxt2="";
-    if (db.doDB(max2)) {
-        for (String[] row : db.getResultado()) {
-         maxt2=row[0];                                                       
-      }}
+            String max = "   select count(*)-2 from TRA_INB_PASO_GTN where FOLIO='" + folio + "' ";
+            String max2 = "   select count(*) from tra_inc_gtn_test where FOLIO='" + folio + "' ";
+            String error = " WITH numeros AS ( "
+                    + " "
+                    + "   SELECT LEVEL AS numero"
+                    + "   FROM DUAL"
+                    + "   CONNECT BY LEVEL <= (select MAX(CONSECUTIVO) from tra_inb_gtn_cosecutivo where PLANTILLA='" + folio + "')"
+                    + " )"
+                    + " SELECT numero"
+                    + " FROM numeros"
+                    + " WHERE numero NOT IN ("
+                    + "   SELECT CONSECUTIVO"
+                    + "   FROM tra_inb_gtn_cosecutivo  where PLANTILLA='" + folio + "' "
+                    + " ) and  numero not in (1,2) "
+                    + " ORDER BY numero ";
 
-    
-    String log=" SELECT CONSECUTIVO, CONTAINER1, FOLIO, SHIPMENT_ID, nvl(COMENT,'Favor de validar')\n" +
-" FROM TRA_INB_PASO_GTN ipg\n" +
-" WHERE NOT EXISTS (\n" +
-"    SELECT 1\n" +
-"    FROM tra_inc_gtn_test tig\n" +
-"    WHERE tig.SHIPMENT_ID = ipg.SHIPMENT_ID\n" +
-"    AND tig.CONTAINER1 = ipg.CONTAINER1\n" +
-"    and tig.FOLIO=ipg.FOLIO\n" +
-") and ipg.folio='"+folio+"' and ipg.consecutivo not in (1,2) order by 1";
+            String sql2 = " select SHIPMENT_ID, CONTAINER1, BL_AWB_PRO from tra_inc_gtn_test  where folio='" + folio + "' ";
+
+            String maxt = "";
+            if (db.doDB(max)) {
+                for (String[] row : db.getResultado()) {
+                    maxt = row[0];
+                }
+            }
+
+            String maxt2 = "";
+            if (db.doDB(max2)) {
+                for (String[] row : db.getResultado()) {
+                    maxt2 = row[0];
+                }
+            }
+
+            String log = " SELECT CONSECUTIVO, CONTAINER1, FOLIO, SHIPMENT_ID, nvl(COMENT,'Favor de validar')\n"
+                    + " FROM TRA_INB_PASO_GTN ipg\n"
+                    + " WHERE NOT EXISTS (\n"
+                    + "    SELECT 1\n"
+                    + "    FROM tra_inc_gtn_test tig\n"
+                    + "    WHERE tig.SHIPMENT_ID = ipg.SHIPMENT_ID\n"
+                    + "    AND tig.CONTAINER1 = ipg.CONTAINER1\n"
+                    + "    and tig.FOLIO=ipg.FOLIO\n"
+                    + ") and ipg.folio='" + folio + "' and ipg.consecutivo not in (1,2) and    ipg.COMENT  NOT LIKE '%El SHIPMENT_ID ya se encuentra en sistema%'"
+                    + "OR"
+                    + " ipg.folio='" + folio + "' and ipg.consecutivo not in (1,2) AND PASO=1 and    ipg.COMENT  NOT LIKE '%El SHIPMENT_ID ya se encuentra en sistema%' "
+                    + " order by 1";
 
 //Leerexcel leer=new Leerexcel();
 //String leer1 = leer.leerExcel();
+            StoredProcedureExample tt = new StoredProcedureExample();
+            tt.StoredProcedureExample1(folio);
 
 
     %>
     <body>
- 
+
         <div class="d-flex align-items-stretch">
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
@@ -123,53 +129,53 @@ String maxt="";
                                     </div>
                                     <div class="card-body">
                                         <h1 class="mb-3">Registros: <%=maxt%> </h1>
-                                         <h3> Se detectaron las siguientes incidencias, favor de validar.</h3>
-                                      
-                                             
-                                           <!--   <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
-                                                <table id="example2" class="display" style="width:100%">-->
-                                                    
-                                                      <div id="table-scroll2" class="table-scroll">
-                                                          <table id="example2" class="display">
-                                                    <thead style="background-color: #001f3f;">
-                                                        <tr  >
-                                                         <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
-                                                            <th scope="col" class="font-titulo">CONTAINER </th>
-                                                            <th scope="col" class="font-titulo">SHIPMENT  </th> 
-                                                            <th scope="col" class="font-titulo">OBSERVACIONES  </th> 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                        <h3> Se detectaron las siguientes incidencias, favor de validar.</h3>
 
-                                         <%
-                                                            if (db.doDB(log)) {
-                                                                for (String[] row : db.getResultado()) {
-                                                                   String bg=""; 
- if(row[4].equals("Favor de validar")){
-     bg="bg-danger";
- 
- }
 
-                                                        %>
-                                                          <tr class="<%=bg%>" >
-                                                         <!--   <th class="font-numero"><%=row[0]%></th>-->	
-                                                            <td class="font-numero"><%=row[1]%></td>
-                                                            <td class="font-texto"> <%=row[3]%></td> 
-                                                            <td class="font-texto"> <%=row[4]%></td> 
-                                                        </tr>                                    
-                                                         
-                                                        <%
+                                        <!--   <div id="table-scroll2" class="table-scroll"  style="height: 60%;">
+                                             <table id="example2" class="display" style="width:100%">-->
+
+                                        <div id="table-scroll2" class="table-scroll">
+                                            <table id="example2" class="display">
+                                                <thead style="background-color: #001f3f;">
+                                                    <tr  >
+                                                        <!--   <th scope="col" class="font-titulo">FILA   </th>-->	
+                                                        <th scope="col" class="font-titulo">CONTAINER </th>
+                                                        <th scope="col" class="font-titulo">SHIPMENT  </th> 
+                                                        <th scope="col" class="font-titulo">OBSERVACIONES  </th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <%
+                                                        if (db.doDB(log)) {
+                                                            for (String[] row : db.getResultado()) {
+                                                                String bg = "";
+                                                                if (row[4].equals("Favor de validar")) {
+                                                                    bg = "bg-danger";
+
                                                                 }
+
+                                                    %>
+                                                    <tr class="<%=bg%>" >
+                                                   <!--   <th class="font-numero"><%=row[0]%></th>-->	
+                                                        <td class="font-numero"><%=row[1]%></td>
+                                                        <td class="font-texto"> <%=row[3]%></td> 
+                                                        <td class="font-texto"> <%=row[4]%></td> 
+                                                    </tr>                                    
+
+                                                    <%
                                                             }
-                                                        %>
-                          </tbody>
-                                                </table>
-                                            </div>
-                          
-                          <br><br><br>
-                        
-                        <h3 class="mb-3 mt-5"> Datos Guardados  <%=maxt2%></h3>
-                                                        
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <br><br><br>
+
+                                        <h3 class="mb-3 mt-5"> Datos Guardados  <%=maxt2%></h3>
+
                                         <form id="uploadFileFormData1" name="uploadFileFormData1"> 
                                             <br>
                                             <div id="table-scroll" class="table-scroll"  style="height: 60%;">
