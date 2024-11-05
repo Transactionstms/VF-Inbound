@@ -2,6 +2,7 @@
     Document   : logRDIBatch
     Created on : 16-OCT-2023, 12:28:15
     Author     : grecendiz
+D:\git\VF-Inbound\web/Importacion/logRDIBatch.jsp
 --%> 
 <%@page import="com.onest.oracle.DB"%>
 <%@page import="com.onest.oracle.DBConfData"%>
@@ -90,6 +91,8 @@ String sql22= "  select NVL(EVENTO,ID_RDI),CONTENEDOR,BL,SHIPMENT,LOAD_TYPE,LUM_
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <h2 class="card-heading">Plantilla RDI   </h2>
+          <a class="btn btn-primary text-nowrap" id="uploadBtnid" name="uploadBtnid" role="button" onclick="save()">Enviar correo</a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -216,6 +219,8 @@ String sql22= "  select NVL(EVENTO,ID_RDI),CONTENEDOR,BL,SHIPMENT,LOAD_TYPE,LUM_
 
             </div>
         </div>   
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- Conexión estatus red -->                    
         <script src='https://code.jquery.com/jquery-3.5.1.js'></script>
         <script src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js'></script>
@@ -253,6 +258,40 @@ String sql22= "  select NVL(EVENTO,ID_RDI),CONTENEDOR,BL,SHIPMENT,LOAD_TYPE,LUM_
                 });
             });
 
+
+  async function save(){
+        
+      Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera un momento',
+            allowOutsideClick: false, // Evita que se cierre al hacer clic fuera
+            allowEscapeKey: false,    // Evita que se cierre con la tecla Escape
+            showConfirmButton: false, // Oculta el botón de confirmación
+            didOpen: () => {
+              Swal.showLoading(); // Activa el ícono de carga
+            }
+          });
+
+        //let agenteId = document.getElementById("agenteId").value;
+
+            try {
+                const response = await fetch("../EnviarCorreoRDI?folio=<%=folio%>");   
+                if (!response.ok) {
+                  throw new Error('Error en la solicitud');   
+                }
+                const data = await response.text();
+                
+              
+                  Swal.close();
+               // swal("", "Información actualizada", "success");
+               // alertclose();
+                //location.reload();
+
+            } catch (error) {
+              console.error(error);
+            }
+    }
+    
 
         </script>
     </body>

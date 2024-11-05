@@ -55,32 +55,32 @@ public class ModificarEvento extends HttpServlet {
                 SimpleDateFormat sdfDestination = new SimpleDateFormat("MM/dd/yyyy");
                 
                 /***********************************************************************/
-                String numEventoActual = request.getParameter("numEventoActual").trim();
-                String ShipmentActual = request.getParameter("ShipmentActual").trim();
-                String containerActual       = request.getParameter("containerActual").trim();
+                String numEventoActual = request.getParameter("numEventoActual");
+                String ShipmentActual = request.getParameter("ShipmentActual");
+                String containerActual       = request.getParameter("containerActual");
                 /***********************************************************************/
-                String numEventoOld = request.getParameter("numEventoOld").trim();
-                String shipmenIdOld = request.getParameter("shipmenIdOld").trim();
-                String containerOld = request.getParameter("containerOld").trim();
+                String numEventoOld = request.getParameter("numEventoOld");
+                String shipmenIdOld = request.getParameter("shipmenIdOld");
+                String containerOld = request.getParameter("containerOld");
                 /***********************************************************************/
                 
-                String responsable = request.getParameter("responsable").trim();
-                String finaldes    = request.getParameter("finaldes").trim();
-                String Brand       = request.getParameter("Brand").trim();
-                String sbu_name = request.getParameter("sbu_name").trim();
-                String Load1    = request.getParameter("Load1").trim();
+                String responsable = request.getParameter("responsable");
+                String finaldes    = request.getParameter("finaldes");
+                String Brand       = request.getParameter("Brand");
+                String sbu_name = request.getParameter("sbu_name");
+                String Load1    = request.getParameter("Load1");
                 int quantity            = Integer.parseInt(request.getParameter("quantity"));
-                String pod               = request.getParameter("pod").trim();
-                String est_departure_pol = request.getParameter("est_departure_pol").trim();
-                String eta_port_discharge = request.getParameter("eta_port_discharge").trim();
-                String max_flete          = request.getParameter("max_flete").trim();
-                String eta_plus2          = request.getParameter("eta_plus2").trim();
-                String eta_plus         = request.getParameter("eta_plus").trim();
-                String pol              = request.getParameter("pol").trim();
-                String observacionActual    = request.getParameter("observaciones").trim();
-                String actual_crd       = request.getParameter("actual_crd").trim();
-                //String numEventoDB = request.getParameter("numEventoDB").trim();
-                String bl       = request.getParameter("bl").trim();
+                String pod               = request.getParameter("pod");
+                String est_departure_pol = request.getParameter("est_departure_pol");
+                String eta_port_discharge = request.getParameter("eta_port_discharge");
+                String max_flete          = request.getParameter("max_flete");
+                String eta_plus2          = request.getParameter("eta_plus2");
+                String eta_plus         = request.getParameter("eta_plus");
+                String pol              = request.getParameter("pol");
+                String observacionActual    = request.getParameter("observaciones");
+                String actual_crd       = request.getParameter("actual_crd");
+                //String numEventoDB = request.getParameter("numEventoDB");
+                String bl       = request.getParameter("bl");
 
                 String reg1   = request.getParameter("reg1");
                 String reg2   = request.getParameter("reg2");
@@ -128,14 +128,15 @@ public class ModificarEvento extends HttpServlet {
 
                         /* Comparación de información(formulario) vs información(base de datos) */
                         if (db.doDB(fac.consultarEventoFormulario(evento, shipmenIdOld, containerOld))) {
+                            System.out.println("fac.consultarEventoFormulario(evento, shipmenIdOld, containerOld)"+fac.consultarEventoFormulario(evento, shipmenIdOld, containerOld));
                             for (String[] row : db.getResultado()) {
-                                
+                                System.out.println("row[6]"+row[6]);
                                 if(!numEventoOld.equals(evento)){   //ok
                                    caramelo += " Número de evento: " + evento + "@";
                                    contador++;
                                 }
     /*RULE #2*/                            
-                                if(!row[6].trim().equals(containerActual)){    
+                                if(!row[6].equals(containerActual)){    
                                     caramelo += " Container*: " + containerActual + "@";
                                     contador++;
                                 }
@@ -143,31 +144,33 @@ public class ModificarEvento extends HttpServlet {
                                 System.out.println("Container Anterior:" + row[6]);
                                 System.out.println("Container Actual:" + containerActual);
                                 
-                                if(!row[7].trim().equals(bl)){
+                                if(!row[7].equals(bl)){
                                    caramelo += " BL/ AWB/ PRO: " + bl + "@";
                                    contador++;
                                 }
                                 
-                                if(!row[26].trim().equals(responsable)){
+                                if(!row[26].equals(responsable)){
+                                    
                                     String REs="";
                                      if (db.doDB("select DISTINCT RESPONSABLE from tra_destino_responsable where USER_NID="+responsable)) {
                                         for (String[] rowRes : db.getResultado()) {
                                                 REs=rowRes[0];
                                         }}
                                     
-                                    
+                                    System.out.println("select DISTINCT RESPONSABLE from tra_destino_responsable where USER_NID="+responsable);
                                     
                                     
                                    caramelo += " Responsable: " + REs + "@";
                                    contador++;
                                 }
-                                
-                                if(!row[2].trim().equals(finaldes)){
+                                System.out.println("1");
+                                        
+                                if(!row[2].equals(finaldes)){
                                    caramelo += " Final Destination (Shipment): " + finaldes + "@";
                                    contador++;
                                 }
                                 
-                                if(!row[3].trim().equals(Brand)){
+                                if(!row[3].equals(Brand)){
                                      String REs="";
                                      if (db.doDB(" select  NOMBRE_BD from tra_inb_brand_division where ID_BD="+Brand)) {
                                         for (String[] rowRes : db.getResultado()) {
@@ -177,7 +180,7 @@ public class ModificarEvento extends HttpServlet {
                                    contador++;
                                 }
                                 
-                                if(!row[27].trim().equals(sbu_name)){
+                                if(!row[27].equals(sbu_name)){
                                     
                                     String REs="";
                                      if (db.doDB(" select  DIVISION_NOMBRE from tra_inb_division where ID_DIVISION="+sbu_name)) {
@@ -188,16 +191,16 @@ public class ModificarEvento extends HttpServlet {
                                    contador++;
                                 }
     /*RULE #3*/                             
-                                if(!row[5].trim().equals(ShipmentActual)){
+                                if(!row[5].equals(ShipmentActual)){
                                    caramelo += " Shipment ID: " + ShipmentActual + "@";
                                    contador++;
                                 }
                                 
-                                if(!row[22].trim().equals(Load1)){
+                                if(!row[22].equals(Load1)){
                                    caramelo += " Load Type: " + Load1 + "@";
                                    contador++;
                                 }
-    /*RULE #4*/                             
+    /*RULE #4*/                      System.out.println("2");       
                                 /************************************ Validación QUANTITY ********************************************/
                                 if(Integer.parseInt(sbu_name)!=0){   /*(campo:SUBNAME !=0) ---> (TOMA CAMPO: CANTIDAD FINAL)*/
                                     valorNewQuantity = Integer.parseInt(row[30]); //2023
@@ -211,7 +214,7 @@ public class ModificarEvento extends HttpServlet {
                                 }
                                 /***************************************************************************************************/
                                 
-                                if(!row[10].trim().equals(pod)){
+                                if(!row[10].equals(pod)){
                                     
                                     
                                      String REs="";
@@ -223,8 +226,8 @@ public class ModificarEvento extends HttpServlet {
                                    caramelo += " POD: " + REs + "@";
                                    contador++;
                                 }
-                                
-                                if(!row[11].trim().equals("")){ 
+                                System.out.println("3");
+                                if(!row[11].equals("")){ 
                                     Date date1 = sdfSource.parse(row[11]);  
                                     fecha1_est_departure_pol = sdfDestination.format(date1);
                                
@@ -234,7 +237,7 @@ public class ModificarEvento extends HttpServlet {
                                     }
                                 }
                                 
-                                if(!row[12].trim().equals("")){
+                                if(!row[12].equals("")){
                                     Date date2 = sdfSource.parse(row[12]); 
                                     fecha2_eta_port_discharge = sdfDestination.format(date2);
                                 
@@ -244,12 +247,12 @@ public class ModificarEvento extends HttpServlet {
                                     }
                                 }
                                 
-                                if(!row[13].trim().equals(max_flete)){
+                                if(!row[13].equals(max_flete)){
                                    caramelo += " LT2: " + max_flete + "@";
                                    contador++;
                                 }
                                 
-                                if(!row[23].trim().equals("")){
+                                if(!row[23].equals("")){
                                     Date date3 = sdfSource.parse(row[23]); 
                                     fecha3_eta_plus2 = sdfDestination.format(date3);
 
@@ -259,7 +262,7 @@ public class ModificarEvento extends HttpServlet {
                                     }
                                 }    
                                  
-                                if(!row[24].trim().equals("")){    
+                                if(!row[24].equals("")){    
                                     Date date4 = sdfSource.parse(row[24]); 
                                     fecha4_eta_plus = sdfDestination.format(date4);
                                 
@@ -269,7 +272,7 @@ public class ModificarEvento extends HttpServlet {
                                     }
                                 } 
                             
-                                if(!row[28].trim().equals(pol)){
+                                if(!row[28].equals(pol)){
                                     
                                        String REs="";
                                      if (db.doDB("select  NOMBRE_POL from tra_inb_pol where ID_POL="+pol)) {
@@ -282,12 +285,12 @@ public class ModificarEvento extends HttpServlet {
                                 } 
                                 
                                 observacionOld = row[25]; //parametro para update (tra_inb_evento)
-                                if(!observacionOld.trim().equals(observacionActual)){
+                                if(!observacionOld.equals(observacionActual)){
                                    caramelo += " Observaciones: " + observacionActual + "@";
                                    contador++;
                                 }
                                 
-                                if(!row[29].trim().equals("")){
+                                if(!row[29].equals("")){
                                     Date date5 = sdfSource.parse(row[29]); 
                                     fecha5_actual_crd = sdfDestination.format(date5);
                                 
@@ -336,27 +339,27 @@ public class ModificarEvento extends HttpServlet {
                         sqlGtn += "QUANTITY = '"+quantity+"', ";
                                 }
                     /***************************************************************************************************/       
-                    
+                    System.out.println("4");
                       sqlGtn += " pod='"+pod+"', " +
                                 " max_flete='"+max_flete+"', ";
                  
-                            if(!est_departure_pol.trim().equals("")){ 
+                            if(!est_departure_pol.equals("")){ 
                        sqlGtn+= " est_departure_pol =to_date('"+est_departure_pol+"','MM/DD/YY'), ";
                             }  
                             
-                            if(!eta_port_discharge.trim().equals("")){ 
+                            if(!eta_port_discharge.equals("")){ 
                        sqlGtn+= " eta_port_discharge=to_date('"+eta_port_discharge+"','MM/DD/YY'), ";
                             } 
                        
-                            if(!eta_plus2.trim().equals("")){ 
+                            if(!eta_plus2.equals("")){ 
                        sqlGtn+= " eta_plus2=to_date('"+eta_plus2+"', 'MM/DD/YY'), ";
                             } 
                             
-                            if(!eta_plus.trim().equals("")){ 
+                            if(!eta_plus.equals("")){ 
                        sqlGtn+= " eta_plus=to_date('"+eta_plus+"','MM/DD/YY'), " ;
                             } 
                        
-                            if(!actual_crd.trim().equals("")){ 
+                            if(!actual_crd.equals("")){ 
                        sqlGtn+= " ACTUAL_CRD =to_date('"+actual_crd+"','MM/DD/YY'), ";
                             }    
                             
@@ -366,7 +369,7 @@ public class ModificarEvento extends HttpServlet {
                                 " and shipment_id='"+shipmenIdOld+"'";
                 updateGtn =db.doDB(sqlGtn);
                 
-                if(!observacionOld.trim().equals(observacionActual)){ /*ejecutar solo si la observación es diferente al historico*/
+                if(!observacionOld.equals(observacionActual)){ /*ejecutar solo si la observación es diferente al historico*/
                         sqlEve =" update tra_inb_evento " +
                                 " set  " +
                                 " USER_NID ="+responsable+", " +
@@ -378,7 +381,7 @@ public class ModificarEvento extends HttpServlet {
                  if(updateGtn){
                      salida = true;
                  }
-                
+                System.out.println("5");
                  out.print(salida);
                  
            } catch (Exception e) {

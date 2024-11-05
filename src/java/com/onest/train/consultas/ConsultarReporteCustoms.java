@@ -1172,7 +1172,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
                        //      + " AND to_date(trunc(tie.FECHA_CAPTURA),'dd/mm/yy') <= to_date((SELECT MAX(TO_DATE(FECHA_CAPTURA, 'DD/MM/YYYY')) FROM TRA_INB_EVENTO WHERE ESTADO = 1),'dd/mm/yy') "
                        //    + " AND tid.division_nombre <> 'No/DSN' "
                      // + " AND gtn.load_type_final IS NOT NULL "
-                            + " AND tie.id_evento >= 240000 "+filtro ;
+                            + " AND tie.id_evento >= 240000  and GTN.FINAL_DESTINATION not in ('OD1013 MARKETING MEXICO') "+filtro ;
 
             if (!AgentType.equals("4006")) { //VF GENERAL
                 sql += " AND TIP1.AGENTE_ADUANAL_ID IN ('" + AgentType + "') ";
@@ -1442,7 +1442,7 @@ public class ConsultarReporteCustoms extends HttpServlet {
             if (!caramelo_fy.equals("")) { // FY
                 sql += " AND TIC.FY IN (" + caramelo_fy + ") ";
             }
-            sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC FETCH FIRST 10000 ROWS ONLY";
+            sql += " ORDER BY tie.id_evento, tibd.nombre_bd, GTN.SHIPMENT_ID ASC    FETCH FIRST 10000 ROWS ONLY";
             
               if(filtros1.equals("1")){
                   pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType,"2");

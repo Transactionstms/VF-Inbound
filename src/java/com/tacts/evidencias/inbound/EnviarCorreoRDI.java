@@ -13,9 +13,6 @@ import com.tacts.evidencias.facturacion.Email;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,15 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.tacts.evidencias.inbound.CreatExcel;
 
 /**
  *
- * @author luis_
+ * @author grecendiz
  */
-public class AlertaInbound extends HttpServlet {
-    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+public class EnviarCorreoRDI extends HttpServlet {
+
+      protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
     try (PrintWriter out = response.getWriter()) {
@@ -49,48 +45,46 @@ public class AlertaInbound extends HttpServlet {
         String cve = (String) ownsession.getAttribute("cbdivcuenta");
         
         String agenteAduanal = request.getParameter("agenteAduanal");
+        String folio = request.getParameter("folio");
         String rutaFichero = "";
         String emails = "";
  
       
 String idAA="";
 String nomAA="";
-        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO,AGENTE_ADUANAL_NOMBRE FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
-        if (db.doDB(consulta)) {
+      //  String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO,AGENTE_ADUANAL_NOMBRE FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (" + agenteAduanal + ") AND ESTATUS = 1 AND CBDIV_ID = 20";
+        
+      
+      String sql1=" select DISTINCT ad.AGENTE_ADUANAL_ID, ad.CORREO,ad.AGENTE_ADUANAL_NOMBRE from tra_inb_evento  ev \n" +
+" inner join TRA_INC_GTN_TEST gtn on gtn.CONTAINER1=ev.CONTAINER1 \n" +
+" inner join tra_inb_pod pod on pod.ID_POD=gtn.pod\n" +
+" inner join tra_inb_agente_aduanal ad on ad.AGENTE_ADUANAL_ID=pod.AGENTE_ADUANAL_ID\n" +
+" where FOLIO_RDI='"+folio+"'";
+      
+      
+        String consulta = "SELECT DISTINCT AGENTE_ADUANAL_ID, CORREO,AGENTE_ADUANAL_NOMBRE FROM TRA_INB_AGENTE_ADUANAL WHERE AGENTE_ADUANAL_ID IN (100) AND ESTATUS = 1 AND CBDIV_ID = 20";
+        
+      if (db.doDB(sql1)) {
             for (String[] rowE : db.getResultado()) {
-                rutaFichero = CreatExcel.crearAPartirDeArrayList(rowE[0]);
-                emails = rowE[1];  
+                rutaFichero = CreateExcelRdi.crearAPartirDeArrayList(rowE[0],folio);
+                emails =  rowE[1];  
                 idAA=rowE[0];
                 nomAA=rowE[2];
-                //ya no se enviara correo desde aqui 
-               //  correo.alertaModificarEventos(emails,rutaFichero.trim(),idAA,nomAA);
+                //desde rdi
+                  correo.alertaModificarEventos(emails,rutaFichero.trim(),idAA,nomAA);
                 
             }
         }
         
        // emails+="jlmateos@tacts.mx";
          
-       
-       
-       
-         if (db.doDB(fac.consultarEventosNuevos(agenteAduanal))) {
-            for (String[] row : db.getResultado()) {
-                
-                if(!row[4].equals("No/DSN")){
-                    
-                    String LoadTypeFinal = "UPDATE TRA_INC_GTN_TEST SET LOAD_TYPE_FINAL = '" + row[22] + "' WHERE PLANTILLA_ID = '" + row[17] + "'";
-                    boolean oraOut1 = oraDB.execute(LoadTypeFinal);
-
-                    String estatusInicial = "UPDATE TRA_INB_EVENTO SET ESTATUS_EVENTO = 1, PRIORIDAD = 'No' WHERE PLANTILLA_ID = '" + row[17] + "'";
+         String estatusInicial = "UPDATE TRA_INB_EVENTO SET FEC_ACTUALIZO = SYSDATE,ESTATUS_CORREO=1 ,ESTATUS_EVENTO=1 WHERE FOLIO_RDI = '"+folio+"'";
                     boolean oraOut2 = oraDB.execute(estatusInicial);
-                       
-                }
-
-            }
-        } 
+       
+      
          
          
-         
+         out.print("Enviado");
          oraDB.close(); //cerrar conexión
             
         }

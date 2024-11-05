@@ -23,8 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author grecendiz
  */
-public class ExcelRepCustom extends HttpServlet {
-
+public class ExcelRepCustomInt extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,7 +45,10 @@ public class ExcelRepCustom extends HttpServlet {
             String cve = (String) ownsession.getAttribute("cbdivcuenta");
             OracleDB oraDB = new OracleDB(dbData.getIPv4(), dbData.getPuerto(), dbData.getSid());
             oraDB.connect(dbData.getUser(), dbData.getPassword());
-          String filtros2 = request.getParameter("f2");
+             String filtros2 = request.getParameter("f2");
+             String valores  = request.getParameter("val");
+             
+             System.out.println("va"+valores);
             
             String  sql = " WITH SUM_QUANTITY AS (SELECT SHIPMENT_ID, CONTAINER1, SUM(QUANTITY) AS SUMA FROM TRA_INC_GTN_TEST GROUP BY SHIPMENT_ID, CONTAINER1) "
                 + " SELECT DISTINCT "
@@ -186,9 +188,22 @@ public class ExcelRepCustom extends HttpServlet {
 
              
                       
-            
+         // Crear un List<Integer> vacío
+        List<Integer> numeros = new ArrayList<>();
+
+        // Dividir la cadena en un array de strings usando la coma como separador
+        String[] partes =  valores.split(",");
+
+        // Convertir cada parte en un Integer y agregarla a la lista
+        for (String parte : partes) {
+            numeros.add(Integer.parseInt(parte.trim())); // Convertir y agregar a la lista
+        }
+
+        // Imprimir la lista resultante
+        System.out.println("Contenido del List: " + numeros);
+        
 //                       crearAPartirDeArrayListReporteEventosGral
-             pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGral(sql, AgentType, nameAgentType,"2");
+             pathExcelCustoms = excel.crearAPartirDeArrayListReporteEventosGralINC(sql, AgentType, nameAgentType,"2",numeros);
             
             
         }

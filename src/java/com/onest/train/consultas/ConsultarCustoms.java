@@ -1146,7 +1146,7 @@ public class ConsultarCustoms extends HttpServlet {
          /*7*/ + " GTN.CONTAINER1, "
          /*8*/ + " GTN.BL_AWB_PRO, "
          /*9*/ + " GTN.LOAD_TYPE_FINAL, "
-        /*10*/ + " SQ.SUMA, "
+        /*10*/ + "  gtn.CANTIDAD_FINAL, "
         /*11*/ + " TIP1.NOMBRE_POD, "
         /*12*/ + " REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'Mon/DD/YY'),' '), '12/30/1899', ' '), "
         /*13*/ + " REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'Mon/DD/YY'),' '), '12/30/1899', ' '), "

@@ -36,13 +36,17 @@
 
             String max = "  SELECT AGENTE_ADUANAL_ID, AGENTE_ADUANAL_NOMBRE FROM  tra_inb_agente_aduanal order by 2 ";
             
-        
+        String option="";
+        String optionD=" ";
             if (db.doDB(max)) {
                 for (String[] row : db.getResultado()) {
-                   String maxt = row[0];
+                   
+                      optionD += row[0]+",";
+                   option+=" <option value='"+row[0]+"'>"+row[1]+"</option>";
                 }
             }
  
+            String default1 = optionD.substring(0, optionD.length() - 1);
 
 
     %>
@@ -67,20 +71,9 @@
                               <br><br>  
                             <div class="container mt-12">
                                 <select class="selectpicker form-control" multiple aria-label="Selecciona" data-live-search="true" id="mSelect">
-                                    <%
-                                                if (db.doDB(max)) {
-                                                    for (String[] row : db.getResultado()) {
-                                                       String maxt = row[0];
-                   %>
-                      
-                   <option value="<%=row[0]%>"><%=row[1]%></option>
-                    
-                                    <%
-                                                    }
-                                                }
-                                    %>
-                                 
-                                </select>
+                                    <option value="<%=default1%>">Todos</option>   
+                                                     <%=option%>
+                                 </select>
                               </div>
                                     <br><br>
                     <div class="container mt-12"> 
@@ -191,7 +184,7 @@ Swal.fire({
          console.log('res-'+mselect);
     try {
         //Iterar Encabezados tabla.
-        let ExcelRepCustom = encodeURI("<%=request.getContextPath()%>/ExcelRepCustom?f2=" + mselect );
+        let ExcelRepCustom = encodeURI("<%=request.getContextPath()%>/ExcelRepCustom?f2="+mselect );
         const response = await fetch(ExcelRepCustom);
 
         console.log(response);

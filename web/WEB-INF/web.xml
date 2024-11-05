@@ -1054,6 +1054,14 @@
         <servlet-name>enviarMailRC</servlet-name>
         <servlet-class>com.tacts.evidencias.inbound.enviarMailRC</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EnviarCorreoRDI</servlet-name>
+        <servlet-class>com.tacts.evidencias.inbound.EnviarCorreoRDI</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExcelRepCustomInt</servlet-name>
+        <servlet-class>com.onest.train.consultas.ExcelRepCustomInt</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ExcelGenericoServlet</servlet-name>
         <url-pattern>/cexcel</url-pattern>
@@ -2102,6 +2110,14 @@
     <servlet-mapping>
         <servlet-name>enviarMailRC</servlet-name>
         <url-pattern>/enviarMailRC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnviarCorreoRDI</servlet-name>
+        <url-pattern>/EnviarCorreoRDI</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExcelRepCustomInt</servlet-name>
+        <url-pattern>/ExcelRepCustomInt</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

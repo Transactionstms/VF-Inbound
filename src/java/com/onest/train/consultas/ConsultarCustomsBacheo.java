@@ -1057,7 +1057,7 @@ public class ConsultarCustomsBacheo extends HttpServlet {
          /*7*/ + " GTN.CONTAINER1, "
          /*8*/ + " GTN.BL_AWB_PRO, "
          /*9*/ + " GTN.LOAD_TYPE_FINAL, "
-        /*10*/ + " SQ.SUMA, "
+        /*10*/ + "  gtn.CANTIDAD_FINAL, "
         /*11*/ + " TIP1.NOMBRE_POD, "
         /*12*/ + " CASE WHEN nvl(to_char(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY'), ' ') =  '30/12/1899' THEN ' ' WHEN  nvl(to_char(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY'), ' ') =  '30/12/1999' THEN ' ' ELSE TO_CHAR(TO_DATE(GTN.EST_DEPARTURE_POL, 'DD/MM/YYYY'), 'Mon/DD/YY') END, "  
         /*13*/ + " CASE WHEN nvl(to_char(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY'), ' ') =  '30/12/1899' THEN ' ' WHEN  nvl(to_char(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY'), ' ') =  '30/12/1999' THEN ' ' ELSE TO_CHAR(TO_DATE(GTN.ETA_PORT_DISCHARGE, 'DD/MM/YYYY'), 'Mon/DD/YY') END, "  

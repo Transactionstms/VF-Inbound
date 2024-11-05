@@ -123,7 +123,8 @@ String sql2= "WITH sum_quantity AS ("
         +"   LEFT JOIN tra_inb_agente_aduanal taa ON taa.agente_aduanal_id = tip1.agente_aduanal_id"
         +"   LEFT JOIN tra_inb_division tid ON tid.id_division = gtn.sbu_name"
         +"   LEFT JOIN sum_quantity sq ON sq.shipment_id = gtn.shipment_id AND sq.container1 = gtn.container1"
-        +"   WHERE gtn.final_destination <> 'MARKETING MEXICO' "
+        +"   WHERE   "
+        + "   tie.id_evento >= 240000 AND  GTN.FINAL_DESTINATION not in ('OD1013 MARKETING MEXICO')"
         +" ORDER BY"
         +"   tie.id_evento";
 

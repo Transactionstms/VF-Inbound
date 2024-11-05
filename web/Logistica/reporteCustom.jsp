@@ -69,7 +69,7 @@
 "                     GTN.CONTAINER1, \n" +
 "                     GTN.BL_AWB_PRO, \n" +
 "                     GTN.LOAD_TYPE_FINAL, \n" +
-"                     SQ.SUMA, \n" +
+"                      gtn.CANTIDAD_FINAL, \n" +
 "                     TIP1.NOMBRE_POD, \n" +
 "                     REPLACE(NVL(TO_CHAR(GTN.EST_DEPARTURE_POL, 'MM/DD/YY'),' '), '01/01/1970', ' '), \n" +
 "                     REPLACE(NVL(TO_CHAR(GTN.ETA_PORT_DISCHARGE, 'MM/DD/YY'),' '), '01/01/1970', ' '), \n" +
